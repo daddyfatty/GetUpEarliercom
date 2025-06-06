@@ -9,7 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { Search, Camera, Scan, Book, Plus, X, Droplets } from "lucide-react";
+import { Search, Camera, Scan, Book, Plus, X, Droplets, Wine } from "lucide-react";
 import type { FoodEntry, WaterIntake } from "@shared/schema";
 
 // Mock current user - in a real app, this would come from auth context
@@ -27,6 +27,12 @@ export default function Tracker() {
     protein: "",
     carbs: "",
     fat: "",
+  });
+
+  const [isAddAlcoholOpen, setIsAddAlcoholOpen] = useState(false);
+  const [alcoholForm, setAlcoholForm] = useState({
+    type: "beer", // beer or wine
+    quantity: "1",
   });
 
   const { toast } = useToast();
@@ -110,6 +116,58 @@ export default function Tracker() {
   const handleAddWater = () => {
     const currentGlasses = waterIntake?.glasses || 0;
     updateWaterMutation.mutate(currentGlasses + 1);
+  };
+
+  const handleAddAlcohol = () => {
+    const quantity = parseInt(alcoholForm.quantity);
+    if (!quantity || quantity <= 0) {
+      toast({ title: "Please enter a valid quantity", variant: "destructive" });
+      return;
+    }
+
+    let calories = 0;
+    let foodName = "";
+    let unit = "";
+
+    if (alcoholForm.type === "beer") {
+      calories = 160 * quantity;
+      foodName = `Beer (${quantity} ${quantity === 1 ? "bottle" : "bottles"})`;
+      unit = "bottles";
+    } else if (alcoholForm.type === "wine") {
+      // Wine options: 1/4, 1/2, 1 bottle - 610 calories per full bottle
+      let bottleEquivalent = 0;
+      if (alcoholForm.quantity === "0.25") {
+        bottleEquivalent = 0.25;
+        foodName = "Wine (1/4 bottle)";
+      } else if (alcoholForm.quantity === "0.5") {
+        bottleEquivalent = 0.5;
+        foodName = "Wine (1/2 bottle)";
+      } else {
+        bottleEquivalent = quantity;
+        foodName = `Wine (${quantity} ${quantity === 1 ? "bottle" : "bottles"})`;
+      }
+      calories = Math.round(610 * bottleEquivalent);
+      unit = "bottles";
+    }
+
+    addFoodMutation.mutate({
+      userId: CURRENT_USER_ID,
+      date: new Date(selectedDate),
+      mealType: "snack", // Alcohol goes under snacks
+      foodName,
+      quantity,
+      unit,
+      calories,
+      protein: 0,
+      carbs: alcoholForm.type === "beer" ? Math.round(quantity * 13) : Math.round(quantity * 4), // Approximate carbs
+      fat: 0,
+    });
+
+    setIsAddAlcoholOpen(false);
+    setAlcoholForm({
+      type: "beer",
+      quantity: "1",
+    });
   };
 
   // Calculate daily totals
@@ -289,10 +347,63 @@ export default function Tracker() {
                     <span className="text-sm font-medium">Scan</span>
                   </Button>
                   
-                  <Button variant="outline" className="p-4 h-auto flex flex-col gap-2" disabled>
-                    <Book className="w-6 h-6 text-primary" />
-                    <span className="text-sm font-medium">Recipe</span>
-                  </Button>
+                  <Dialog open={isAddAlcoholOpen} onOpenChange={setIsAddAlcoholOpen}>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" className="p-4 h-auto flex flex-col gap-2">
+                        <Wine className="w-6 h-6 text-purple-600" />
+                        <span className="text-sm font-medium">Alcohol</span>
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Add Alcohol</DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div>
+                          <Label htmlFor="alcoholType">Type</Label>
+                          <Select value={alcoholForm.type} onValueChange={(value) => setAlcoholForm({ ...alcoholForm, type: value })}>
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="beer">Beer (160 cal each)</SelectItem>
+                              <SelectItem value="wine">Wine (610 cal per bottle)</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        <div>
+                          <Label htmlFor="alcoholQuantity">Quantity</Label>
+                          {alcoholForm.type === "wine" ? (
+                            <Select value={alcoholForm.quantity} onValueChange={(value) => setAlcoholForm({ ...alcoholForm, quantity: value })}>
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="0.25">1/4 bottle (153 cal)</SelectItem>
+                                <SelectItem value="0.5">1/2 bottle (305 cal)</SelectItem>
+                                <SelectItem value="1">1 bottle (610 cal)</SelectItem>
+                                <SelectItem value="2">2 bottles (1,220 cal)</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          ) : (
+                            <Input
+                              id="alcoholQuantity"
+                              type="number"
+                              min="1"
+                              value={alcoholForm.quantity}
+                              onChange={(e) => setAlcoholForm({ ...alcoholForm, quantity: e.target.value })}
+                              placeholder="Number of beers"
+                            />
+                          )}
+                        </div>
+                        
+                        <Button onClick={handleAddAlcohol} disabled={addFoodMutation.isPending} className="w-full">
+                          {addFoodMutation.isPending ? "Adding..." : "Add to Tracker"}
+                        </Button>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
 
                 {/* Food Search */}
