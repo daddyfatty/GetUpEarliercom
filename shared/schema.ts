@@ -9,6 +9,9 @@ export const users = pgTable("users", {
   password: text("password").notNull(),
   isAdmin: boolean("is_admin").default(false),
   subscriptionTier: text("subscription_tier").default("free"), // free, pro, premium
+  stripeCustomerId: text("stripe_customer_id"),
+  stripeSubscriptionId: text("stripe_subscription_id"),
+  paypalCustomerId: text("paypal_customer_id"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -99,6 +102,9 @@ export const waterIntake = pgTable("water_intake", {
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   createdAt: true,
+  stripeCustomerId: true,
+  stripeSubscriptionId: true,
+  paypalCustomerId: true,
 });
 
 export const insertRecipeSchema = createInsertSchema(recipes).omit({

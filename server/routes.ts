@@ -2,6 +2,23 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertUserSchema, insertRecipeSchema, insertWorkoutSchema, insertGoalSchema, insertFoodEntrySchema } from "@shared/schema";
+import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal";
+
+// Check if Stripe is configured
+const STRIPE_CONFIGURED = !!process.env.STRIPE_SECRET_KEY;
+
+// Import Stripe only if configured
+let stripe: any = null;
+if (STRIPE_CONFIGURED) {
+  try {
+    const Stripe = require("stripe");
+    stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: "2023-10-16",
+    });
+  } catch (error) {
+    console.warn("Stripe SDK not available or configuration invalid");
+  }
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Authentication routes

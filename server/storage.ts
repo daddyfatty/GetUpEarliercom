@@ -82,6 +82,9 @@ export class MemStorage implements IStorage {
       password: "admin123", // In real app, this would be hashed
       isAdmin: true,
       subscriptionTier: "premium",
+      stripeCustomerId: null,
+      stripeSubscriptionId: null,
+      paypalCustomerId: null,
       createdAt: new Date(),
     };
     this.users.set(adminUser.id, adminUser);
@@ -94,6 +97,9 @@ export class MemStorage implements IStorage {
       password: "user123",
       isAdmin: false,
       subscriptionTier: "free",
+      stripeCustomerId: null,
+      stripeSubscriptionId: null,
+      paypalCustomerId: null,
       createdAt: new Date(),
     };
     this.users.set(regularUser.id, regularUser);
@@ -210,6 +216,9 @@ export class MemStorage implements IStorage {
     const user: User = { 
       ...insertUser, 
       id, 
+      stripeCustomerId: null,
+      stripeSubscriptionId: null,
+      paypalCustomerId: null,
       createdAt: new Date() 
     };
     this.users.set(id, user);
