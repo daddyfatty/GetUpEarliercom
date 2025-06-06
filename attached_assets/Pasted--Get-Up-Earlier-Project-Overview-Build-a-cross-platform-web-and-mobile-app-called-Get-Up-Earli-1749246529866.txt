@@ -1,0 +1,97 @@
+"Get Up Earlier"
+Project Overview:
+Build a cross-platform (web and mobile) app called Get Up Earlier for Personal Training, Nutrition, and Accountability Coaching. The app should help users bridge the gap from inactivity and poor diet to strength and healthy habits, and also serve as a platform for selling a continuously updated recipe book (digital and hardcopy). The app should support a subscription model and integrate with Shopify or Webflow for e-commerce functionality.
+
+Core Features
+1. Clean Eating Recipes & Book Sales
+
+Library of clean eating recipes, with clear messaging that new recipes and information are added regularly.
+
+Admin portal to easily add/update recipes.
+
+Promote and sell a digital download and hardcopy of the "Get Up Earlier" recipe book within the app.
+
+Buyers receive updates or new editions as recipes are added.
+
+Integrate with Shopify for book sales and order management, or with Webflow for marketing and digital downloads.
+
+2. Subscription Model
+
+Offer subscription tiers (e.g., monthly, annual, family/group) for premium content and features.
+
+Support free trial or freemium access with upsell to premium.
+
+Integrate subscription management through Shopify (preferred) or Webflow (if possible).
+
+3. Calorie & Food Tracker
+
+Users can enter food type, weight, volume, or upload a photo for calorie estimation.
+
+Optional: Barcode scanning for quick food entry.
+
+Nutrition dashboard for daily/weekly tracking.
+
+4. Workout Library
+
+Simple, searchable workout library with instructions.
+
+Admin can add/update workouts over time.
+
+5. Accountability & Coaching
+
+Goal setting, progress tracking, reminders, and motivational messages.
+
+Option for users to connect with a coach or accountability partner.
+
+6. Community Integration
+
+Integrate with a public Facebook group for open discussion and support.
+
+In-app access or deep link to join/view group.
+
+7. Notifications & Updates
+
+Notify users when new recipes, workouts, or book updates are added.
+
+8. Admin Portal
+
+Easy-to-use admin interface for managing recipes, workouts, book content, and notifications.
+
+Technical Requirements
+Cross-platform: Use a framework like React Native or Flutter for both web and mobile support.
+
+E-commerce Integration:
+
+Shopify: For robust product sales (digital/hardcopy book), subscription management, and order fulfillment.
+
+Webflow: For marketing pages, lead capture, and embedding app features or purchase links.
+
+Clean, user-friendly UI: Modern, accessible, and intuitive design.
+
+Scalable & Modular: Codebase should be easy to maintain and expand with new features.
+
+Example Prompt to Paste in Replit
+Build a cross-platform (web and mobile) app called "Get Up Earlier" for Personal Training, Nutrition & Accountability Coaching.
+Features:
+
+Recipe library (admin can add/update; users see that new recipes/info are added regularly)
+
+Promote and sell a digital download and hardcopy of the "Get Up Earlier" recipe book; integrate with Shopify for sales, updates, and order management (or Webflow for marketing and digital downloads)
+
+Subscription model for premium features, with free trial/freemium tier; manage subscriptions via Shopify or Webflow
+
+Calorie and food tracker (food entry by type, weight, volume, photo upload, optional barcode scan); nutrition dashboard
+
+Simple workout library (admin can add/update workouts)
+
+Accountability tools (goal setting, progress tracking, reminders, motivational messages)
+
+Facebook group integration for open discussion
+
+Notifications for new content and updates
+
+Admin portal for easy content management
+
+Use React Native or Flutter for cross-platform support
+
+Clean, modern, user-friendly UI; scalable and easy to update
