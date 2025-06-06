@@ -1,7 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Star, Leaf, Clock, TrendingUp } from "lucide-react";
+import { useLocation } from "wouter";
 
 export function BookPromotion() {
+  const [, navigate] = useLocation();
+
+  const handlePurchase = (type: string) => {
+    navigate(`/checkout?type=${type}`);
+  };
+
   return (
     <section className="py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -40,6 +47,7 @@ export function BookPromotion() {
                 <Button 
                   size="lg"
                   className="bg-white text-primary hover:bg-gray-100 font-semibold"
+                  onClick={() => handlePurchase('digital')}
                 >
                   Digital Download - $29
                 </Button>
@@ -47,6 +55,7 @@ export function BookPromotion() {
                   size="lg"
                   variant="outline"
                   className="border-2 border-white text-white hover:bg-white hover:text-primary font-semibold"
+                  onClick={() => handlePurchase('hardcopy')}
                 >
                   Hardcopy - $39
                 </Button>

@@ -11,6 +11,8 @@ import Workouts from "@/pages/workouts";
 import Tracker from "@/pages/tracker";
 import Goals from "@/pages/goals";
 import Admin from "@/pages/admin";
+import Checkout from "@/pages/checkout";
+import Subscribe from "@/pages/subscribe";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -25,6 +27,8 @@ function Router() {
           <Route path="/tracker" component={Tracker} />
           <Route path="/goals" component={Goals} />
           <Route path="/admin" component={Admin} />
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/subscribe" component={Subscribe} />
           <Route component={NotFound} />
         </Switch>
       </main>

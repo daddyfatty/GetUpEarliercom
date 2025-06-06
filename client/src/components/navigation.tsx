@@ -23,6 +23,7 @@ export function Navigation() {
     { href: "/workouts", label: "Workouts" },
     { href: "/tracker", label: "Tracker" },
     { href: "/goals", label: "Goals" },
+    { href: "/subscribe", label: "Subscribe" },
   ];
 
   const handleLogin = async (e: React.FormEvent) => {
