@@ -57,7 +57,7 @@ export function Navigation() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/">
-              <h1 className="text-2xl font-bold text-primary cursor-pointer">Get Up Earlier</h1>
+              <h1 className="text-2xl font-bold text-primary cursor-pointer font-brand">Get Up Earlier</h1>
             </Link>
 
             {/* Desktop Navigation */}
