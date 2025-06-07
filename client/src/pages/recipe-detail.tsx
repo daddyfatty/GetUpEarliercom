@@ -59,6 +59,9 @@ export default function RecipeDetail() {
       case 'vegan': return '🌱';
       case 'keto': return '🥑';
       case 'paleo': return '🍖';
+      case 'carnivore': return '🥩';
+      case 'high-carb-low-fat': return '🍝';
+      case 'high-protein': return '💪';
       default: return null;
     }
   };
