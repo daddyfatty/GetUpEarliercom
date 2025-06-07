@@ -134,11 +134,11 @@ export default function Tracker() {
       foodName = `Beer (${quantity} ${quantity === 1 ? "bottle" : "bottles"})`;
       unit = "bottles";
     } else if (alcoholForm.type === "wine") {
-      // Wine options: 1/4, 1/2, 1 bottle - 610 calories per full bottle
+      // Wine options: 1 glass, 1/2 bottle, 1 bottle - 610 calories per full bottle
       let bottleEquivalent = 0;
-      if (alcoholForm.quantity === "0.25") {
-        bottleEquivalent = 0.25;
-        foodName = "Wine (1/4 bottle)";
+      if (alcoholForm.quantity === "glass") {
+        bottleEquivalent = 0.2; // 1 glass = 1/5 bottle (5 glasses per bottle)
+        foodName = "Wine (1 glass)";
       } else if (alcoholForm.quantity === "0.5") {
         bottleEquivalent = 0.5;
         foodName = "Wine (1/2 bottle)";
@@ -147,7 +147,7 @@ export default function Tracker() {
         foodName = `Wine (${quantity} ${quantity === 1 ? "bottle" : "bottles"})`;
       }
       calories = Math.round(610 * bottleEquivalent);
-      unit = "bottles";
+      unit = alcoholForm.quantity === "glass" ? "glasses" : "bottles";
     }
 
     addFoodMutation.mutate({
@@ -386,10 +386,9 @@ export default function Tracker() {
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="0.25">1/4 bottle (153 cal)</SelectItem>
+                                <SelectItem value="glass">1 glass (122 cal)</SelectItem>
                                 <SelectItem value="0.5">1/2 bottle (305 cal)</SelectItem>
                                 <SelectItem value="1">1 bottle (610 cal)</SelectItem>
-                                <SelectItem value="2">2 bottles (1,220 cal)</SelectItem>
                               </SelectContent>
                             </Select>
                           ) : (
