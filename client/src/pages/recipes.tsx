@@ -177,13 +177,7 @@ export default function Recipes() {
           </>
         )}
 
-        {recipes.length > 0 && (
-          <div className="text-center mt-12">
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Showing {recipes.length} recipe{recipes.length !== 1 ? 's' : ''}
-            </p>
-          </div>
-        )}
+
       </div>
     </div>
   );
