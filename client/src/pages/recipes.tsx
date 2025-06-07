@@ -22,9 +22,13 @@ export default function Recipes() {
       
       const response = await fetch(`/api/recipes?${params.toString()}`);
       if (!response.ok) throw new Error("Failed to fetch recipes");
-      return response.json();
+      const data = await response.json();
+      console.log("Fetched recipes:", data.length, data);
+      return data;
     },
   });
+
+  console.log("Current recipes state:", recipes, "isLoading:", isLoading);
 
   if (isLoading) {
     return (
