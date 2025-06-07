@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { Menu, Bell, User, LogOut } from "lucide-react";
-import logoPath from "@assets/getupeariler_logo.png";
+import logoPath from "@assets/logo_1749324568864.png";
 
 export function Navigation() {
   const [location] = useLocation();
@@ -61,7 +61,7 @@ export function Navigation() {
               <img 
                 src={logoPath} 
                 alt="Get Up Earlier" 
-                className="h-10 w-auto"
+                className="h-12 w-auto max-w-[200px] object-contain"
               />
             </Link>
 
