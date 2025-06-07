@@ -9,8 +9,7 @@ export function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 font-brand">
-              Get Up Earlier.{" "}
-              <span className="text-blue-200">Get Stronger.</span>
+              Personal Training, Nutrition & Accountability Coaching
             </h1>
             <p className="text-xl mb-8 text-blue-100">
               Bridge the gap from inactivity and poor diet to strength and healthy habits. 
