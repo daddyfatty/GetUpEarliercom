@@ -23,7 +23,6 @@ export default function Tracker() {
     quantity: "",
     unit: "grams",
     mealType: "breakfast",
-    calories: "",
     protein: "",
     carbs: "",
     fat: "",
@@ -59,7 +58,6 @@ export default function Tracker() {
         quantity: "",
         unit: "grams",
         mealType: "breakfast",
-        calories: "",
         protein: "",
         carbs: "",
         fat: "",
@@ -94,7 +92,7 @@ export default function Tracker() {
   });
 
   const handleAddFood = () => {
-    if (!foodForm.foodName || !foodForm.quantity || !foodForm.calories) {
+    if (!foodForm.foodName || !foodForm.quantity) {
       toast({ title: "Please fill in required fields", variant: "destructive" });
       return;
     }
@@ -106,7 +104,7 @@ export default function Tracker() {
       foodName: foodForm.foodName,
       quantity: parseInt(foodForm.quantity),
       unit: foodForm.unit,
-      calories: parseInt(foodForm.calories),
+      calories: 0, // Remove calorie tracking
       protein: parseInt(foodForm.protein) || 0,
       carbs: parseInt(foodForm.carbs) || 0,
       fat: parseInt(foodForm.fat) || 0,
@@ -157,7 +155,7 @@ export default function Tracker() {
       foodName,
       quantity,
       unit,
-      calories,
+      calories: 0, // Remove calorie tracking
       protein: 0,
       carbs: alcoholForm.type === "beer" ? Math.round(quantity * 13) : Math.round(quantity * 4), // Approximate carbs
       fat: 0,
@@ -173,12 +171,11 @@ export default function Tracker() {
   // Calculate daily totals
   const dailyTotals = foodEntries.reduce(
     (totals, entry) => ({
-      calories: totals.calories + entry.calories,
       protein: totals.protein + (entry.protein || 0),
       carbs: totals.carbs + (entry.carbs || 0),
       fat: totals.fat + (entry.fat || 0),
     }),
-    { calories: 0, protein: 0, carbs: 0, fat: 0 }
+    { protein: 0, carbs: 0, fat: 0 }
   );
 
   // Group entries by meal type
@@ -191,7 +188,6 @@ export default function Tracker() {
 
   // Daily goals
   const goals = {
-    calories: 2000,
     protein: 150,
     carbs: 250,
     fat: 67,
@@ -287,17 +283,7 @@ export default function Tracker() {
                           </div>
                         </div>
                         
-                        <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <Label htmlFor="calories">Calories *</Label>
-                            <Input
-                              id="calories"
-                              type="number"
-                              value={foodForm.calories}
-                              onChange={(e) => setFoodForm({ ...foodForm, calories: e.target.value })}
-                              placeholder="95"
-                            />
-                          </div>
+                        <div className="grid grid-cols-1 gap-4">
                           <div>
                             <Label htmlFor="protein">Protein (g)</Label>
                             <Input
@@ -493,19 +479,7 @@ export default function Tracker() {
                 <CardTitle>Today's Summary</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* Calories Progress */}
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium">Calories</span>
-                    <span className="text-sm text-gray-500">
-                      {dailyTotals.calories} / {goals.calories}
-                    </span>
-                  </div>
-                  <Progress value={(dailyTotals.calories / goals.calories) * 100} className="h-3" />
-                  <p className="text-xs text-gray-500 mt-1">
-                    {Math.max(0, goals.calories - dailyTotals.calories)} remaining
-                  </p>
-                </div>
+
 
                 {/* Macros */}
                 <div className="space-y-4">
