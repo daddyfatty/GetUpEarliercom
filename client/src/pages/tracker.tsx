@@ -347,7 +347,7 @@ export default function Tracker() {
                       <DialogHeader>
                         <DialogTitle>Add Alcohol</DialogTitle>
                         <p className="text-sm text-gray-600 dark:text-gray-300">
-                          Track beer and wine consumption with automatic calorie calculation.
+                          Track beer and wine consumption for nutrition monitoring.
                         </p>
                       </DialogHeader>
                       <div className="space-y-4">
@@ -358,8 +358,8 @@ export default function Tracker() {
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="beer">Beer (160 cal each)</SelectItem>
-                              <SelectItem value="wine">Wine (610 cal per bottle)</SelectItem>
+                              <SelectItem value="beer">Beer</SelectItem>
+                              <SelectItem value="wine">Wine</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -372,9 +372,9 @@ export default function Tracker() {
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="glass">1 glass (122 cal)</SelectItem>
-                                <SelectItem value="0.5">1/2 bottle (305 cal)</SelectItem>
-                                <SelectItem value="1">1 bottle (610 cal)</SelectItem>
+                                <SelectItem value="glass">1 glass</SelectItem>
+                                <SelectItem value="0.5">1/2 bottle</SelectItem>
+                                <SelectItem value="1">1 bottle</SelectItem>
                               </SelectContent>
                             </Select>
                           ) : (
@@ -447,7 +447,7 @@ export default function Tracker() {
                                   <div>
                                     <p className="font-medium text-gray-900 dark:text-white">{entry.foodName}</p>
                                     <p className="text-sm text-gray-500">
-                                      {entry.quantity} {entry.unit}, {entry.calories} cal
+                                      {entry.quantity} {entry.unit}
                                     </p>
                                   </div>
                                 </div>
