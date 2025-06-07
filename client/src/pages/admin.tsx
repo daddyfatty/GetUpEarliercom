@@ -64,7 +64,7 @@ export default function Admin() {
     imageUrl: "",
   });
 
-  // Fetch data (hooks must be called before any conditional returns)
+  // Fetch data - all hooks must be called before conditional returns
   const { data: recipes = [] } = useQuery<Recipe[]>({
     queryKey: ["/api/recipes"],
   });
@@ -106,15 +106,6 @@ export default function Admin() {
       </div>
     );
   }
-
-  // Fetch data
-  const { data: recipes = [] } = useQuery<Recipe[]>({
-    queryKey: ["/api/recipes"],
-  });
-
-  const { data: workouts = [] } = useQuery<Workout[]>({
-    queryKey: ["/api/workouts"],
-  });
 
   // Recipe mutations
   const createRecipeMutation = useMutation({
@@ -170,6 +161,18 @@ export default function Admin() {
     },
   });
 
+  const deleteWorkoutMutation = useMutation({
+    mutationFn: (id: number) => apiRequest("DELETE", `/api/workouts/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/workouts"] });
+      toast({ title: "Workout deleted successfully!" });
+    },
+    onError: () => {
+      toast({ title: "Failed to delete workout", variant: "destructive" });
+    },
+  });
+
+  // Helper functions
   const resetRecipeForm = () => {
     setRecipeForm({
       title: "",
@@ -204,7 +207,9 @@ export default function Admin() {
 
   const handleRecipeSubmit = () => {
     const data = {
-      ...recipeForm,
+      title: recipeForm.title,
+      description: recipeForm.description,
+      category: recipeForm.category,
       prepTime: parseInt(recipeForm.prepTime),
       servings: parseInt(recipeForm.servings),
       calories: parseInt(recipeForm.calories),
@@ -214,6 +219,7 @@ export default function Admin() {
       ingredients: recipeForm.ingredients.split('\n').filter(i => i.trim()),
       instructions: recipeForm.instructions.split('\n').filter(i => i.trim()),
       dietType: recipeForm.dietType || null,
+      imageUrl: recipeForm.imageUrl || null,
     };
 
     if (editingRecipe) {
@@ -233,6 +239,7 @@ export default function Admin() {
         name: exercise,
         description: exercise,
       })),
+      imageUrl: workoutForm.imageUrl || null,
     };
 
     createWorkoutMutation.mutate(data);
@@ -258,14 +265,13 @@ export default function Admin() {
     setIsRecipeDialogOpen(true);
   };
 
-  // Mock analytics data
   const analytics = {
     totalUsers: 1247,
-    activeUsers: 856,
+    activeUsers: 892,
     totalRecipes: recipes.length,
     totalWorkouts: workouts.length,
-    newUsersThisWeek: 73,
-    engagementRate: 85,
+    newUsersThisWeek: 34,
+    engagementRate: 78
   };
 
   const recentActivity = [
@@ -339,12 +345,16 @@ export default function Admin() {
           </Card>
         </div>
 
+        {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Content Management */}
+          {/* Management Panel */}
           <div className="lg:col-span-2">
             <Card>
               <CardHeader>
-                <CardTitle>Content Management</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <BarChart3 className="w-5 h-5" />
+                  Content Management
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <Tabs defaultValue="recipes" className="w-full">
@@ -355,18 +365,21 @@ export default function Admin() {
                   
                   <TabsContent value="recipes" className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <h3 className="text-lg font-semibold">Manage Recipes</h3>
+                      <h3 className="text-lg font-semibold">Recipe Management</h3>
                       <Dialog open={isRecipeDialogOpen} onOpenChange={setIsRecipeDialogOpen}>
                         <DialogTrigger asChild>
-                          <Button onClick={() => { setEditingRecipe(null); resetRecipeForm(); }}>
+                          <Button onClick={() => {
+                            setEditingRecipe(null);
+                            resetRecipeForm();
+                          }}>
                             <Plus className="w-4 h-4 mr-2" />
                             Add Recipe
                           </Button>
                         </DialogTrigger>
-                        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                           <DialogHeader>
                             <DialogTitle>
-                              {editingRecipe ? "Edit Recipe" : "Add New Recipe"}
+                              {editingRecipe ? "Edit Recipe" : "Create New Recipe"}
                             </DialogTitle>
                           </DialogHeader>
                           <div className="grid grid-cols-2 gap-4">
@@ -389,8 +402,19 @@ export default function Admin() {
                                   <SelectItem value="lunch">Lunch</SelectItem>
                                   <SelectItem value="dinner">Dinner</SelectItem>
                                   <SelectItem value="snack">Snack</SelectItem>
+                                  <SelectItem value="smoothie">Smoothie</SelectItem>
                                 </SelectContent>
                               </Select>
+                            </div>
+                            <div className="col-span-2">
+                              <Label>Description *</Label>
+                              <Textarea
+                                value={recipeForm.description}
+                                onChange={(e) => setRecipeForm({ ...recipeForm, description: e.target.value })}
+                                placeholder="Recipe description"
+                                className="resize-none"
+                                rows={3}
+                              />
                             </div>
                             <div>
                               <Label>Diet Type</Label>
@@ -399,13 +423,12 @@ export default function Admin() {
                                   <SelectValue placeholder="Select diet type" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  <SelectItem value="vegetarian">Vegetarian</SelectItem>
                                   <SelectItem value="vegan">Vegan</SelectItem>
+                                  <SelectItem value="vegetarian">Vegetarian</SelectItem>
                                   <SelectItem value="keto">Keto</SelectItem>
                                   <SelectItem value="paleo">Paleo</SelectItem>
-                                  <SelectItem value="carnivore">Carnivore</SelectItem>
-                                  <SelectItem value="high-carb-low-fat">High Carb Low Fat</SelectItem>
-                                  <SelectItem value="high-protein">High Protein</SelectItem>
+                                  <SelectItem value="gluten-free">Gluten-Free</SelectItem>
+                                  <SelectItem value="dairy-free">Dairy-Free</SelectItem>
                                 </SelectContent>
                               </Select>
                             </div>
@@ -460,7 +483,7 @@ export default function Admin() {
                                 type="number"
                                 value={recipeForm.fat}
                                 onChange={(e) => setRecipeForm({ ...recipeForm, fat: e.target.value })}
-                                placeholder="16"
+                                placeholder="15"
                               />
                             </div>
                             <div>
@@ -468,74 +491,59 @@ export default function Admin() {
                               <Input
                                 value={recipeForm.imageUrl}
                                 onChange={(e) => setRecipeForm({ ...recipeForm, imageUrl: e.target.value })}
-                                placeholder="https://..."
+                                placeholder="https://example.com/image.jpg"
+                              />
+                            </div>
+                            <div className="col-span-2">
+                              <Label>Ingredients (one per line) *</Label>
+                              <Textarea
+                                value={recipeForm.ingredients}
+                                onChange={(e) => setRecipeForm({ ...recipeForm, ingredients: e.target.value })}
+                                placeholder="2 cups quinoa&#10;1 avocado&#10;2 tbsp olive oil"
+                                className="resize-none"
+                                rows={4}
+                              />
+                            </div>
+                            <div className="col-span-2">
+                              <Label>Instructions (one per line) *</Label>
+                              <Textarea
+                                value={recipeForm.instructions}
+                                onChange={(e) => setRecipeForm({ ...recipeForm, instructions: e.target.value })}
+                                placeholder="Cook quinoa according to package instructions&#10;Slice avocado&#10;Mix ingredients and serve"
+                                className="resize-none"
+                                rows={4}
                               />
                             </div>
                           </div>
-                          <div>
-                            <Label>Description *</Label>
-                            <Textarea
-                              value={recipeForm.description}
-                              onChange={(e) => setRecipeForm({ ...recipeForm, description: e.target.value })}
-                              placeholder="Recipe description"
-                            />
+                          <div className="flex justify-end gap-2 mt-4">
+                            <Button variant="outline" onClick={() => setIsRecipeDialogOpen(false)}>
+                              Cancel
+                            </Button>
+                            <Button onClick={handleRecipeSubmit}>
+                              {editingRecipe ? "Update" : "Create"} Recipe
+                            </Button>
                           </div>
-                          <div>
-                            <Label>Ingredients (one per line) *</Label>
-                            <Textarea
-                              value={recipeForm.ingredients}
-                              onChange={(e) => setRecipeForm({ ...recipeForm, ingredients: e.target.value })}
-                              placeholder="1 cup quinoa&#10;2 cups vegetables&#10;1 avocado"
-                              rows={4}
-                            />
-                          </div>
-                          <div>
-                            <Label>Instructions (one per line) *</Label>
-                            <Textarea
-                              value={recipeForm.instructions}
-                              onChange={(e) => setRecipeForm({ ...recipeForm, instructions: e.target.value })}
-                              placeholder="Cook quinoa according to package directions&#10;Roast vegetables at 400°F for 20 minutes&#10;Assemble bowl with quinoa, vegetables, and avocado"
-                              rows={4}
-                            />
-                          </div>
-                          <Button 
-                            onClick={handleRecipeSubmit}
-                            disabled={createRecipeMutation.isPending || updateRecipeMutation.isPending}
-                            className="w-full"
-                          >
-                            {editingRecipe ? "Update Recipe" : "Create Recipe"}
-                          </Button>
                         </DialogContent>
                       </Dialog>
                     </div>
-
+                    
                     <div className="space-y-2">
                       {recipes.map((recipe) => (
-                        <div key={recipe.id} className="flex items-center justify-between p-3 border rounded-lg">
+                        <div key={recipe.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                           <div>
                             <h4 className="font-medium">{recipe.title}</h4>
-                            <div className="flex items-center space-x-2">
-                              <Badge variant="outline">{recipe.category}</Badge>
-                              <span className="text-sm text-gray-500">{recipe.calories} cal</span>
-                            </div>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              {recipe.category} • {recipe.calories} calories
+                            </p>
                           </div>
-                          <div className="flex items-center space-x-2">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => openEditRecipe(recipe)}
-                            >
+                          <div className="flex gap-2">
+                            <Button size="sm" variant="outline" onClick={() => openEditRecipe(recipe)}>
                               <Edit className="w-4 h-4" />
                             </Button>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => {
-                                if (confirm("Are you sure you want to delete this recipe?")) {
-                                  deleteRecipeMutation.mutate(recipe.id);
-                                }
-                              }}
-                              className="text-red-600 hover:text-red-700"
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              onClick={() => deleteRecipeMutation.mutate(recipe.id)}
                             >
                               <Trash2 className="w-4 h-4" />
                             </Button>
@@ -547,7 +555,7 @@ export default function Admin() {
                   
                   <TabsContent value="workouts" className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <h3 className="text-lg font-semibold">Manage Workouts</h3>
+                      <h3 className="text-lg font-semibold">Workout Management</h3>
                       <Dialog open={isWorkoutDialogOpen} onOpenChange={setIsWorkoutDialogOpen}>
                         <DialogTrigger asChild>
                           <Button onClick={resetWorkoutForm}>
@@ -555,9 +563,9 @@ export default function Admin() {
                             Add Workout
                           </Button>
                         </DialogTrigger>
-                        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                        <DialogContent className="max-w-2xl">
                           <DialogHeader>
-                            <DialogTitle>Add New Workout</DialogTitle>
+                            <DialogTitle>Create New Workout</DialogTitle>
                           </DialogHeader>
                           <div className="grid grid-cols-2 gap-4">
                             <div>
@@ -575,12 +583,23 @@ export default function Admin() {
                                   <SelectValue placeholder="Select category" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  <SelectItem value="strength">Strength</SelectItem>
                                   <SelectItem value="cardio">Cardio</SelectItem>
-                                  <SelectItem value="hiit">HIIT</SelectItem>
+                                  <SelectItem value="strength">Strength</SelectItem>
                                   <SelectItem value="flexibility">Flexibility</SelectItem>
+                                  <SelectItem value="hiit">HIIT</SelectItem>
+                                  <SelectItem value="yoga">Yoga</SelectItem>
                                 </SelectContent>
                               </Select>
+                            </div>
+                            <div className="col-span-2">
+                              <Label>Description *</Label>
+                              <Textarea
+                                value={workoutForm.description}
+                                onChange={(e) => setWorkoutForm({ ...workoutForm, description: e.target.value })}
+                                placeholder="Workout description"
+                                className="resize-none"
+                                rows={3}
+                              />
                             </div>
                             <div>
                               <Label>Difficulty *</Label>
@@ -614,66 +633,59 @@ export default function Admin() {
                               />
                             </div>
                             <div>
+                              <Label>Equipment (comma-separated)</Label>
+                              <Input
+                                value={workoutForm.equipment}
+                                onChange={(e) => setWorkoutForm({ ...workoutForm, equipment: e.target.value })}
+                                placeholder="dumbbells, mat"
+                              />
+                            </div>
+                            <div className="col-span-2">
+                              <Label>Exercises (one per line) *</Label>
+                              <Textarea
+                                value={workoutForm.exercises}
+                                onChange={(e) => setWorkoutForm({ ...workoutForm, exercises: e.target.value })}
+                                placeholder="Push-ups&#10;Squats&#10;Plank"
+                                className="resize-none"
+                                rows={4}
+                              />
+                            </div>
+                            <div>
                               <Label>Image URL</Label>
                               <Input
                                 value={workoutForm.imageUrl}
                                 onChange={(e) => setWorkoutForm({ ...workoutForm, imageUrl: e.target.value })}
-                                placeholder="https://..."
+                                placeholder="https://example.com/image.jpg"
                               />
                             </div>
                           </div>
-                          <div>
-                            <Label>Description *</Label>
-                            <Textarea
-                              value={workoutForm.description}
-                              onChange={(e) => setWorkoutForm({ ...workoutForm, description: e.target.value })}
-                              placeholder="Workout description"
-                            />
+                          <div className="flex justify-end gap-2 mt-4">
+                            <Button variant="outline" onClick={() => setIsWorkoutDialogOpen(false)}>
+                              Cancel
+                            </Button>
+                            <Button onClick={handleWorkoutSubmit}>
+                              Create Workout
+                            </Button>
                           </div>
-                          <div>
-                            <Label>Equipment (comma separated)</Label>
-                            <Input
-                              value={workoutForm.equipment}
-                              onChange={(e) => setWorkoutForm({ ...workoutForm, equipment: e.target.value })}
-                              placeholder="dumbbells, mat, resistance bands"
-                            />
-                          </div>
-                          <div>
-                            <Label>Exercises (one per line) *</Label>
-                            <Textarea
-                              value={workoutForm.exercises}
-                              onChange={(e) => setWorkoutForm({ ...workoutForm, exercises: e.target.value })}
-                              placeholder="Push-ups&#10;Squats&#10;Plank"
-                              rows={4}
-                            />
-                          </div>
-                          <Button 
-                            onClick={handleWorkoutSubmit}
-                            disabled={createWorkoutMutation.isPending}
-                            className="w-full"
-                          >
-                            Create Workout
-                          </Button>
                         </DialogContent>
                       </Dialog>
                     </div>
-
+                    
                     <div className="space-y-2">
                       {workouts.map((workout) => (
-                        <div key={workout.id} className="flex items-center justify-between p-3 border rounded-lg">
+                        <div key={workout.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                           <div>
                             <h4 className="font-medium">{workout.title}</h4>
-                            <div className="flex items-center space-x-2">
-                              <Badge variant="outline">{workout.category}</Badge>
-                              <Badge variant="outline">{workout.difficulty}</Badge>
-                              <span className="text-sm text-gray-500">{workout.duration} min</span>
-                            </div>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              {workout.category} • {workout.duration} min • {workout.caloriesBurned} cal
+                            </p>
                           </div>
-                          <div className="flex items-center space-x-2">
-                            <Button variant="ghost" size="sm">
-                              <Edit className="w-4 h-4" />
-                            </Button>
-                            <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700">
+                          <div className="flex gap-2">
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              onClick={() => deleteWorkoutMutation.mutate(workout.id)}
+                            >
                               <Trash2 className="w-4 h-4" />
                             </Button>
                           </div>
@@ -686,69 +698,37 @@ export default function Admin() {
             </Card>
           </div>
 
-          {/* Recent Activity & Analytics */}
-          <div className="space-y-6">
+          {/* Recent Activity */}
+          <div>
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
+                <CardTitle className="flex items-center gap-2">
                   <Bell className="w-5 h-5" />
-                  <span>Recent Activity</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {recentActivity.map((activity) => (
-                    <div key={activity.id} className="flex items-center space-x-3 py-2 border-b border-gray-100 dark:border-gray-700 last:border-0">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                        activity.type === "recipe" ? "bg-primary/20" :
-                        activity.type === "workout" ? "bg-accent/20" : "bg-secondary/20"
-                      }`}>
-                        {activity.type === "recipe" ? (
-                          <Utensils className={`w-4 h-4 ${activity.type === "recipe" ? "text-primary" : ""}`} />
-                        ) : activity.type === "workout" ? (
-                          <Dumbbell className="w-4 h-4 text-accent" />
-                        ) : (
-                          <Users className="w-4 h-4 text-secondary" />
-                        )}
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-900 dark:text-white">
-                          {activity.action}
-                        </p>
-                        <p className="text-xs text-gray-500">{activity.item}</p>
-                      </div>
-                      <span className="text-xs text-gray-500">{activity.time}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <BarChart3 className="w-5 h-5" />
-                  <span>Quick Stats</span>
+                  Recent Activity
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-300">Weekly Signups</span>
-                    <span className="text-sm font-medium text-green-600">+73</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-300">Recipe Views</span>
-                    <span className="text-sm font-medium">12.4k</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-300">Workout Completions</span>
-                    <span className="text-sm font-medium">3.2k</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-300">Engagement Rate</span>
-                    <span className="text-sm font-medium text-primary">85%</span>
-                  </div>
+                  {recentActivity.map((activity) => (
+                    <div key={activity.id} className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div className="flex-shrink-0">
+                        {activity.type === "recipe" && <Utensils className="w-4 h-4 text-secondary" />}
+                        {activity.type === "workout" && <Dumbbell className="w-4 h-4 text-primary" />}
+                        {activity.type === "user" && <Users className="w-4 h-4 text-accent" />}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                          {activity.action}
+                        </p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400">
+                          {activity.item}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-500">
+                          {activity.time}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
