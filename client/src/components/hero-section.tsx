@@ -8,13 +8,13 @@ export function HeroSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-              Transform Your Health,{" "}
-              <span className="text-emerald-200">One Day Earlier</span>
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 font-brand">
+              Get Up Earlier.{" "}
+              <span className="text-blue-200">Get Stronger.</span>
             </h1>
-            <p className="text-xl mb-8 text-emerald-100">
-              Bridge the gap from inactivity to strength with personalized nutrition, 
-              workouts, and accountability coaching.
+            <p className="text-xl mb-8 text-blue-100">
+              Bridge the gap from inactivity and poor diet to strength and healthy habits. 
+              Personal training, nutrition coaching, and accountability that actually works.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/recipes">
