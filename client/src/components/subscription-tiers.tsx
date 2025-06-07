@@ -6,33 +6,33 @@ import { Check, X } from "lucide-react";
 export function SubscriptionTiers() {
   const tiers = [
     {
-      name: "Free",
+      name: "Free Trial",
       price: 0,
-      description: "Perfect to get started",
+      description: "Get started with clean eating basics",
       features: [
-        { name: "Basic recipe library (50+ recipes)", included: true },
-        { name: "Simple calorie tracking", included: true },
-        { name: "Basic workout library", included: true },
-        { name: "Community access", included: true },
-        { name: "Advanced nutrition tracking", included: false },
-        { name: "Personalized meal plans", included: false },
-        { name: "1-on-1 coaching sessions", included: false },
+        { name: "Access to 20+ clean eating recipes", included: true },
+        { name: "Basic food and calorie tracking", included: true },
+        { name: "Essential workout library", included: true },
+        { name: "Facebook community access", included: true },
+        { name: "Recipe book previews", included: true },
+        { name: "Full nutrition tracking", included: false },
+        { name: "Personal coaching sessions", included: false },
       ],
-      buttonText: "Current Plan",
+      buttonText: "Start Free Trial",
       buttonVariant: "outline" as const,
       popular: false,
     },
     {
-      name: "Pro",
+      name: "Get Up Earlier Pro",
       price: 19,
-      description: "Everything you need to succeed",
+      description: "Complete clean eating & training system",
       features: [
-        { name: "Full recipe library (200+ recipes)", included: true },
-        { name: "Advanced nutrition tracking", included: true },
-        { name: "Personalized meal plans", included: true },
-        { name: "Premium workout library", included: true },
-        { name: "Progress analytics", included: true },
-        { name: "Recipe book access", included: true },
+        { name: "Full clean eating recipe library (200+ recipes)", included: true },
+        { name: "Complete 'Get Up Earlier' recipe book (digital)", included: true },
+        { name: "Advanced nutrition & macro tracking", included: true },
+        { name: "Personal training workout library", included: true },
+        { name: "Goal setting & accountability tools", included: true },
+        { name: "Regular recipe book updates", included: true },
         { name: "1-on-1 coaching sessions", included: false },
       ],
       buttonText: "Start Free Trial",
@@ -40,19 +40,19 @@ export function SubscriptionTiers() {
       popular: true,
     },
     {
-      name: "Premium",
-      price: 39,
-      description: "For serious health enthusiasts",
+      name: "Elite Coaching",
+      price: 79,
+      description: "Complete personal training & accountability",
       features: [
-        { name: "Everything in Pro", included: true },
-        { name: "1-on-1 coaching sessions (2/month)", included: true },
-        { name: "Custom workout programming", included: true },
-        { name: "Supplement recommendations", included: true },
-        { name: "Priority support", included: true },
-        { name: "Early access to new features", included: true },
-        { name: "Hardcopy recipe book included", included: true },
+        { name: "Everything in Get Up Earlier Pro", included: true },
+        { name: "Weekly 1-on-1 coaching sessions", included: true },
+        { name: "Custom workout & nutrition programming", included: true },
+        { name: "Physical 'Get Up Earlier' recipe book shipped", included: true },
+        { name: "Direct access via text & email", included: true },
+        { name: "Supplement & lifestyle recommendations", included: true },
+        { name: "Accountability check-ins & progress tracking", included: true },
       ],
-      buttonText: "Start Free Trial",
+      buttonText: "Book Consultation",
       buttonVariant: "secondary" as const,
       popular: false,
     },
@@ -62,11 +62,11 @@ export function SubscriptionTiers() {
     <section className="py-16 bg-gray-100 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Choose Your Plan
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 font-brand">
+            Transform Your Life with Get Up Earlier
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Start your journey with our free plan, or unlock premium features for faster results.
+            Access clean eating recipes, personal training workouts, and accountability coaching. Plus get the continuously updated "Get Up Earlier" recipe book.
           </p>
         </div>
 

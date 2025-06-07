@@ -44,9 +44,10 @@ export function NewsletterSignup() {
     <section className="py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="hero-gradient rounded-3xl p-8 md:p-12 text-white">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Stay Updated</h2>
-          <p className="text-xl mb-8 text-emerald-100">
-            Get weekly nutrition tips, new recipes, and exclusive content delivered to your inbox.
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-brand">Get Up Earlier Newsletter</h2>
+          <p className="text-xl mb-8 text-blue-100">
+            Weekly clean eating tips, accountability coaching insights, and new recipe updates. 
+            Join the community bridging the gap from poor habits to healthy living.
           </p>
           
           <form onSubmit={handleSubmit} className="max-w-md mx-auto">
@@ -69,8 +70,8 @@ export function NewsletterSignup() {
             </div>
           </form>
           
-          <p className="text-sm text-emerald-200 mt-4">
-            No spam, unsubscribe anytime. Join 50,000+ health enthusiasts!
+          <p className="text-sm text-blue-200 mt-4">
+            No spam, unsubscribe anytime. Join 1,000+ people transforming their health!
           </p>
         </div>
       </div>

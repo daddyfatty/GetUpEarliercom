@@ -15,31 +15,31 @@ export function BookPromotion() {
         <div className="hero-gradient rounded-3xl p-8 md:p-12 text-white">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-5xl font-bold mb-6">
+              <h2 className="text-3xl md:text-5xl font-bold mb-6 font-brand">
                 Get Up Earlier
-                <span className="block text-emerald-200">Recipe Book</span>
+                <span className="block text-blue-200">Recipe Book</span>
               </h2>
-              <p className="text-xl mb-8 text-emerald-100">
-                Over 150+ clean eating recipes with detailed nutrition information, 
-                meal prep guides, and weekly meal plans. Updated regularly with new seasonal recipes.
+              <p className="text-xl mb-8 text-blue-100">
+                Transform your relationship with food through clean eating recipes designed for personal training clients. 
+                Bridge the gap from poor diet to healthy habits with nutrition that actually works.
               </p>
               
               <div className="grid grid-cols-2 gap-6 mb-8">
                 <div className="text-center">
                   <div className="text-3xl font-bold mb-2">150+</div>
-                  <div className="text-emerald-200">Recipes</div>
+                  <div className="text-blue-200">Clean Recipes</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold mb-2">12</div>
-                  <div className="text-emerald-200">Categories</div>
+                  <div className="text-blue-200">Categories</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-2">Weekly</div>
-                  <div className="text-emerald-200">Updates</div>
+                  <div className="text-3xl font-bold mb-2">Lifetime</div>
+                  <div className="text-blue-200">Updates</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold mb-2">4.9★</div>
-                  <div className="text-emerald-200">Rating</div>
+                  <div className="text-blue-200">Rating</div>
                 </div>
               </div>
 
