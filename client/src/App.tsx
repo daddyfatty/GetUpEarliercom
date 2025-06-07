@@ -7,6 +7,7 @@ import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import Home from "@/pages/home";
 import Recipes from "@/pages/recipes";
+import RecipeDetail from "@/pages/recipe-detail";
 import Workouts from "@/pages/workouts";
 import Tracker from "@/pages/tracker";
 import Goals from "@/pages/goals";
@@ -23,6 +24,7 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/recipes" component={Recipes} />
+          <Route path="/recipes/:id" component={RecipeDetail} />
           <Route path="/workouts" component={Workouts} />
           <Route path="/tracker" component={Tracker} />
           <Route path="/goals" component={Goals} />

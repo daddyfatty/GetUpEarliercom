@@ -29,7 +29,7 @@ export function HeroSection() {
                 <Button 
                   size="lg"
                   variant="outline"
-                  className="border-2 border-white text-white hover:bg-white hover:text-primary font-semibold"
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-11 rounded-md px-8 border-2 border-white text-white hover:bg-white hover:text-primary font-semibold bg-[#61c493]"
                 >
                   View Recipes
                 </Button>
