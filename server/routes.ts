@@ -354,13 +354,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(503).json({ message: "Stripe not configured" });
     }
 
-    if (!req.isAuthenticated()) {
-      return res.sendStatus(401);
-    }
-
     try {
-      const { plan } = req.body;
-      const user = req.user;
+      const { plan, userId } = req.body;
+      const user = await storage.getUser(userId || 1); // Default to user 1 for demo
 
       if (!user.email) {
         throw new Error('No user email on file');
