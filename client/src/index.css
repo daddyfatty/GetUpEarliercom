@@ -27,7 +27,7 @@
   
   /* GetUpEarlier Header Colors */
   --navy: 229 64% 5%; /* #060918 - Very dark navy blue for header */
-  --orange: 25 85% 55%; /* Orange for hover effects */
+  --orange: 0 84% 60%; /* #ef4444 - Red for hover effects */
 }
 
 .dark {
