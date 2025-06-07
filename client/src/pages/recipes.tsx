@@ -13,7 +13,17 @@ export default function Recipes() {
   const [dietFilter, setDietFilter] = useState("all");
 
   const { data: recipes = [], isLoading } = useQuery<Recipe[]>({
-    queryKey: ["/api/recipes", { search: searchQuery, category: categoryFilter !== "all" ? categoryFilter : undefined, dietType: dietFilter !== "all" ? dietFilter : undefined }],
+    queryKey: ["/api/recipes", searchQuery, categoryFilter, dietFilter],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      if (searchQuery) params.append("search", searchQuery);
+      if (categoryFilter !== "all") params.append("category", categoryFilter);
+      if (dietFilter !== "all") params.append("dietType", dietFilter);
+      
+      const response = await fetch(`/api/recipes?${params.toString()}`);
+      if (!response.ok) throw new Error("Failed to fetch recipes");
+      return response.json();
+    },
   });
 
   if (isLoading) {
