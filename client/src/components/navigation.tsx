@@ -54,14 +54,14 @@ export function Navigation() {
   return (
     <nav className="bg-[hsl(var(--navy))] shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/">
               <img 
                 src={logoPath} 
                 alt="Get Up Earlier" 
-                className="h-12 w-auto max-w-[200px] object-contain"
+                className="h-16 w-auto max-w-[300px] object-contain"
               />
             </Link>
 
