@@ -24,7 +24,7 @@ export default function RecipeDetail() {
     );
   }
 
-  if (error || !recipe) {
+  if (error || (!isLoading && !recipe)) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -36,6 +36,18 @@ export default function RecipeDetail() {
               Back to Recipes
             </Button>
           </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // Show loading state if still loading or recipe data is incomplete
+  if (isLoading || !recipe) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#61c493] mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-300">Loading recipe...</p>
         </div>
       </div>
     );
@@ -93,11 +105,11 @@ export default function RecipeDetail() {
               </div>
               
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                {recipe.title}
+                {recipe.title || 'Recipe'}
               </h1>
               
               <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
-                {recipe.description}
+                {recipe.description || 'No description available'}
               </p>
             </div>
 
@@ -118,7 +130,7 @@ export default function RecipeDetail() {
               <Card>
                 <CardContent className="p-4 text-center">
                   <Clock className="w-6 h-6 text-[#61c493] mx-auto mb-2" />
-                  <div className="font-semibold text-gray-900 dark:text-white">{recipe.prepTime} min</div>
+                  <div className="font-semibold text-gray-900 dark:text-white">{recipe.prepTime || 0} min</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Prep Time</div>
                 </CardContent>
               </Card>
@@ -126,7 +138,7 @@ export default function RecipeDetail() {
               <Card>
                 <CardContent className="p-4 text-center">
                   <Users className="w-6 h-6 text-[#61c493] mx-auto mb-2" />
-                  <div className="font-semibold text-gray-900 dark:text-white">{recipe.servings}</div>
+                  <div className="font-semibold text-gray-900 dark:text-white">{recipe.servings || 0}</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Servings</div>
                 </CardContent>
               </Card>
@@ -134,7 +146,7 @@ export default function RecipeDetail() {
               <Card>
                 <CardContent className="p-4 text-center">
                   <ChefHat className="w-6 h-6 text-[#61c493] mx-auto mb-2" />
-                  <div className="font-semibold text-gray-900 dark:text-white">{recipe.protein}g</div>
+                  <div className="font-semibold text-gray-900 dark:text-white">{recipe.protein || 0}g</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Protein</div>
                 </CardContent>
               </Card>
@@ -142,7 +154,7 @@ export default function RecipeDetail() {
               <Card>
                 <CardContent className="p-4 text-center">
                   <Leaf className="w-6 h-6 text-[#61c493] mx-auto mb-2" />
-                  <div className="font-semibold text-gray-900 dark:text-white">{recipe.carbs}g</div>
+                  <div className="font-semibold text-gray-900 dark:text-white">{recipe.carbs || 0}g</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Carbs</div>
                 </CardContent>
               </Card>
@@ -155,7 +167,7 @@ export default function RecipeDetail() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
-                  {recipe.instructions.map((instruction, index) => (
+                  {(recipe.instructions || []).map((instruction, index) => (
                     <div key={index} className="flex gap-4">
                       <div className="flex-shrink-0 w-8 h-8 bg-[#61c493] text-white rounded-full flex items-center justify-center font-semibold text-sm">
                         {index + 1}
@@ -179,7 +191,7 @@ export default function RecipeDetail() {
               </CardHeader>
               <CardContent>
                 <ul className="space-y-3">
-                  {recipe.ingredients.map((ingredient, index) => (
+                  {(recipe.ingredients || []).map((ingredient, index) => (
                     <li key={index} className="flex items-start gap-3">
                       <div className="w-2 h-2 bg-[#61c493] rounded-full mt-2 flex-shrink-0"></div>
                       <span className="text-gray-700 dark:text-gray-300">{ingredient}</span>
@@ -198,15 +210,15 @@ export default function RecipeDetail() {
                 <div className="space-y-3">
                   <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                     <span className="text-gray-600 dark:text-gray-400">Protein</span>
-                    <span className="font-semibold text-gray-900 dark:text-white">{recipe.protein}g</span>
+                    <span className="font-semibold text-gray-900 dark:text-white">{recipe.protein || 0}g</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                     <span className="text-gray-600 dark:text-gray-400">Carbohydrates</span>
-                    <span className="font-semibold text-gray-900 dark:text-white">{recipe.carbs}g</span>
+                    <span className="font-semibold text-gray-900 dark:text-white">{recipe.carbs || 0}g</span>
                   </div>
                   <div className="flex justify-between items-center py-2">
                     <span className="text-gray-600 dark:text-gray-400">Fat</span>
-                    <span className="font-semibold text-gray-900 dark:text-white">{recipe.fat}g</span>
+                    <span className="font-semibold text-gray-900 dark:text-white">{recipe.fat || 0}g</span>
                   </div>
                 </div>
               </CardContent>
