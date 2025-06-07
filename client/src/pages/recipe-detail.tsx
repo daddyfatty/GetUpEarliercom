@@ -10,7 +10,13 @@ export default function RecipeDetail() {
   const { id } = useParams();
   
   const { data: recipe, isLoading, error } = useQuery<Recipe>({
-    queryKey: ["/api/recipes", parseInt(id!)],
+    queryKey: ["/api/recipes", id],
+    queryFn: async () => {
+      const response = await fetch(`/api/recipes/${id}`);
+      if (!response.ok) throw new Error("Recipe not found");
+      return response.json();
+    },
+    enabled: !!id,
   });
 
   if (isLoading) {

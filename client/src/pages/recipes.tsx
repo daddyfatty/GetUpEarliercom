@@ -153,14 +153,6 @@ export default function Recipes() {
         </div>
 
         {/* Recipe Grid */}
-        <div className="mb-8">
-          <div className="text-center mb-4">
-            <span className="text-gray-600 dark:text-gray-400">
-              Found {recipes.length} recipes
-            </span>
-          </div>
-        </div>
-        
         {recipes.length === 0 ? (
           <div className="text-center py-16">
             <div className="w-32 h-32 bg-gradient-to-br from-[#61c493]/20 to-[#61c493]/5 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -182,15 +174,23 @@ export default function Recipes() {
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            {recipes.map((recipe) => (
-              <div key={recipe.id} className="border-2 border-red-500 p-4">
-                <h3 className="text-lg font-bold">{recipe.title}</h3>
-                <p>{recipe.description}</p>
-                <RecipeCard recipe={recipe} />
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+              {recipes.map((recipe) => (
+                <RecipeCard key={recipe.id} recipe={recipe} />
+              ))}
+            </div>
+            
+            {/* Results Summary */}
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 bg-white dark:bg-gray-800 px-6 py-3 rounded-full shadow-sm border border-gray-200 dark:border-gray-700">
+                <div className="w-2 h-2 bg-[#61c493] rounded-full"></div>
+                <span className="text-gray-700 dark:text-gray-300 font-medium">
+                  {recipes.length} recipe{recipes.length !== 1 ? 's' : ''} found
+                </span>
               </div>
-            ))}
-          </div>
+            </div>
+          </>
         )}
 
 
