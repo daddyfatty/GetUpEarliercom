@@ -71,7 +71,7 @@ export function Navigation() {
                 {navItems.map((item) => (
                   <Link key={item.href} href={item.href}>
                     <span
-                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer ${
+                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer uppercase font-heading ${
                         location === item.href
                           ? "text-[hsl(var(--orange))] bg-white/10"
                           : "text-white hover:text-[hsl(var(--orange))]"
@@ -84,7 +84,7 @@ export function Navigation() {
                 {isAdmin && (
                   <Link href="/admin">
                     <span
-                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer ${
+                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer uppercase font-heading ${
                         location === "/admin"
                           ? "text-[hsl(var(--orange))] bg-white/10"
                           : "text-white hover:text-[hsl(var(--orange))]"
@@ -243,7 +243,7 @@ export function Navigation() {
                   {navItems.map((item) => (
                     <Link key={item.href} href={item.href}>
                       <span
-                        className={`block px-3 py-2 rounded-md text-base font-medium cursor-pointer ${
+                        className={`block px-3 py-2 rounded-md text-base font-medium cursor-pointer uppercase font-heading ${
                           location === item.href
                             ? "text-primary bg-primary/10"
                             : "text-gray-900 hover:text-primary dark:text-gray-100 dark:hover:text-primary"
