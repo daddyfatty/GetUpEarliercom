@@ -24,6 +24,10 @@
   --destructive-foreground: 0 0% 100%;
   --ring: 214 89% 52%;
   --radius: 0.5rem;
+  
+  /* GetUpEarlier Header Colors */
+  --navy: 220 40% 20%; /* Navy blue for header background */
+  --orange: 25 85% 55%; /* Orange for hover effects */
 }
 
 .dark {

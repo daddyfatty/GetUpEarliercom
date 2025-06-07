@@ -51,13 +51,13 @@ export function Navigation() {
   };
 
   return (
-    <nav className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+    <nav className="bg-[hsl(var(--navy))] shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/">
-              <h1 className="text-2xl font-bold text-primary cursor-pointer font-brand">Get Up Earlier</h1>
+              <h1 className="text-2xl font-bold text-white cursor-pointer font-brand">Get Up Earlier</h1>
             </Link>
 
             {/* Desktop Navigation */}
@@ -68,8 +68,8 @@ export function Navigation() {
                     <span
                       className={`px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer ${
                         location === item.href
-                          ? "text-primary bg-primary/10"
-                          : "text-gray-500 hover:text-primary dark:text-gray-300 dark:hover:text-primary"
+                          ? "text-[hsl(var(--orange))] bg-white/10"
+                          : "text-white hover:text-[hsl(var(--orange))]"
                       }`}
                     >
                       {item.label}
@@ -81,8 +81,8 @@ export function Navigation() {
                     <span
                       className={`px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer ${
                         location === "/admin"
-                          ? "text-primary bg-primary/10"
-                          : "text-gray-500 hover:text-primary dark:text-gray-300 dark:hover:text-primary"
+                          ? "text-[hsl(var(--orange))] bg-white/10"
+                          : "text-white hover:text-[hsl(var(--orange))]"
                       }`}
                     >
                       Admin
