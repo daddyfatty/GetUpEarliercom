@@ -104,6 +104,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/recipes", async (req, res) => {
     try {
       const recipeData = insertRecipeSchema.parse(req.body);
+      
+      // Auto-calculate nutrition if not provided
+      if (!recipeData.calories || recipeData.calories === 0) {
+        const { calculateNutrition } = await import("./nutrition-calculator");
+        const nutrition = calculateNutrition(recipeData.ingredients, recipeData.servings);
+        
+        Object.assign(recipeData, nutrition);
+      }
+      
       const recipe = await storage.createRecipe(recipeData);
       res.status(201).json(recipe);
     } catch (error) {
