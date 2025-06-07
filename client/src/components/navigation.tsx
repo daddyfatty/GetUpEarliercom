@@ -81,19 +81,7 @@ export function Navigation() {
                     </span>
                   </Link>
                 ))}
-                {isAdmin && (
-                  <Link href="/admin">
-                    <span
-                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer uppercase font-heading ${
-                        location === "/admin"
-                          ? "text-[hsl(var(--orange))] bg-white/10"
-                          : "text-white hover:text-[hsl(var(--orange))]"
-                      }`}
-                    >
-                      Admin
-                    </span>
-                  </Link>
-                )}
+
               </div>
             </div>
           </div>
