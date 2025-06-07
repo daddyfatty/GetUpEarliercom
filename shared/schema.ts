@@ -27,6 +27,14 @@ export const recipes = pgTable("recipes", {
   protein: integer("protein").notNull(), // in grams
   carbs: integer("carbs").notNull(), // in grams
   fat: integer("fat").notNull(), // in grams
+  fiber: integer("fiber"), // in grams
+  sugar: integer("sugar"), // in grams
+  sodium: integer("sodium"), // in mg
+  vitaminC: integer("vitamin_c"), // in mg
+  vitaminD: integer("vitamin_d"), // in IU
+  calcium: integer("calcium"), // in mg
+  iron: integer("iron"), // in mg
+  potassium: integer("potassium"), // in mg
   ingredients: jsonb("ingredients").$type<string[]>().notNull(),
   instructions: jsonb("instructions").$type<string[]>().notNull(),
   imageUrl: text("image_url"),

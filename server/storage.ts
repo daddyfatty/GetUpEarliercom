@@ -104,7 +104,20 @@ export class MemStorage implements IStorage {
     };
     this.users.set(regularUser.id, regularUser);
 
-    // Seed recipes
+    // Helper function to create complete nutritional profiles
+    const createNutritionalProfile = (base: any, micronutrients: any) => ({
+      ...base,
+      fiber: micronutrients.fiber || 0,
+      sugar: micronutrients.sugar || 0,
+      sodium: micronutrients.sodium || 0,
+      vitaminC: micronutrients.vitaminC || 0,
+      vitaminD: micronutrients.vitaminD || 0,
+      calcium: micronutrients.calcium || 0,
+      iron: micronutrients.iron || 0,
+      potassium: micronutrients.potassium || 0,
+    });
+
+    // Seed recipes with comprehensive nutritional data
     const sampleRecipes: Recipe[] = [
       {
         id: this.currentId++,
@@ -118,6 +131,14 @@ export class MemStorage implements IStorage {
         protein: 18,
         carbs: 52,
         fat: 16,
+        fiber: 12,
+        sugar: 8,
+        sodium: 245,
+        vitaminC: 45,
+        vitaminD: 0,
+        calcium: 180,
+        iron: 6,
+        potassium: 890,
         ingredients: ["1 cup quinoa", "1 avocado", "2 cups mixed vegetables", "2 tbsp tahini", "1 lemon"],
         instructions: ["Cook quinoa", "Roast vegetables", "Prepare tahini dressing", "Assemble bowl"],
         imageUrl: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3",
@@ -135,6 +156,14 @@ export class MemStorage implements IStorage {
         protein: 25,
         carbs: 35,
         fat: 12,
+        fiber: 8,
+        sugar: 18,
+        sodium: 180,
+        vitaminC: 25,
+        vitaminD: 120,
+        calcium: 220,
+        iron: 4,
+        potassium: 650,
         ingredients: ["1 cup oats", "2 eggs", "1 banana", "1 scoop protein powder", "1 cup berries"],
         instructions: ["Blend oats into flour", "Mix all ingredients", "Cook pancakes", "Top with berries"],
         imageUrl: "https://images.unsplash.com/photo-1528207776546-365bb710ee93?ixlib=rb-4.0.3",
@@ -152,6 +181,14 @@ export class MemStorage implements IStorage {
         protein: 35,
         carbs: 20,
         fat: 28,
+        fiber: 6,
+        sugar: 12,
+        sodium: 320,
+        vitaminC: 35,
+        vitaminD: 280,
+        calcium: 120,
+        iron: 2,
+        potassium: 780,
         ingredients: ["2 salmon fillets", "2 cups vegetables", "2 tbsp herbs", "1 tbsp olive oil"],
         instructions: ["Season salmon", "Roast vegetables", "Cook salmon", "Serve together"],
         imageUrl: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixlib=rb-4.0.3",
