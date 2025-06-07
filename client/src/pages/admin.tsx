@@ -27,7 +27,10 @@ import {
 import type { Recipe, Workout } from "@shared/schema";
 
 export default function Admin() {
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, isLoading } = useAuth();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  
   const [isRecipeDialogOpen, setIsRecipeDialogOpen] = useState(false);
   const [isWorkoutDialogOpen, setIsWorkoutDialogOpen] = useState(false);
   const [editingRecipe, setEditingRecipe] = useState<Recipe | null>(null);
@@ -61,8 +64,26 @@ export default function Admin() {
     imageUrl: "",
   });
 
-  const { toast } = useToast();
-  const queryClient = useQueryClient();
+  // Fetch data (hooks must be called before any conditional returns)
+  const { data: recipes = [] } = useQuery<Recipe[]>({
+    queryKey: ["/api/recipes"],
+  });
+
+  const { data: workouts = [] } = useQuery<Workout[]>({
+    queryKey: ["/api/workouts"],
+  });
+
+  // Show loading while authentication is being checked
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-300">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   // Redirect if not admin
   if (!isAdmin) {
