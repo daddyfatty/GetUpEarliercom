@@ -229,6 +229,9 @@ export default function Tracker() {
                     <DialogContent>
                       <DialogHeader>
                         <DialogTitle>Add Food Entry</DialogTitle>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                          Add a food item to track your daily nutrition intake.
+                        </p>
                       </DialogHeader>
                       <div className="space-y-4">
                         <div className="grid grid-cols-2 gap-4">
@@ -357,6 +360,9 @@ export default function Tracker() {
                     <DialogContent>
                       <DialogHeader>
                         <DialogTitle>Add Alcohol</DialogTitle>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                          Track beer and wine consumption with automatic calorie calculation.
+                        </p>
                       </DialogHeader>
                       <div className="space-y-4">
                         <div>

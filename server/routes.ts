@@ -11,12 +11,16 @@ const STRIPE_CONFIGURED = !!process.env.STRIPE_SECRET_KEY;
 let stripe: any = null;
 if (STRIPE_CONFIGURED) {
   try {
-    const Stripe = require("stripe");
-    stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2023-10-16",
+    import("stripe").then((Stripe) => {
+      stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: "2023-10-16",
+      });
+      console.log("Stripe configured successfully");
+    }).catch((error) => {
+      console.warn("Stripe SDK not available or configuration invalid:", error);
     });
   } catch (error) {
-    console.warn("Stripe SDK not available or configuration invalid");
+    console.warn("Failed to initialize Stripe:", error);
   }
 }
 
