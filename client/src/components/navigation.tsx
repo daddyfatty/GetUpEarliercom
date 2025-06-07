@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 import { Menu, Bell, User, LogOut } from "lucide-react";
+import logoPath from "@assets/getupeariler_logo.png";
 
 export function Navigation() {
   const [location] = useLocation();
@@ -57,7 +58,11 @@ export function Navigation() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/">
-              <h1 className="text-2xl font-bold text-white cursor-pointer font-brand">Get Up Earlier</h1>
+              <img 
+                src={logoPath} 
+                alt="Get Up Earlier" 
+                className="h-10 w-auto"
+              />
             </Link>
 
             {/* Desktop Navigation */}
@@ -97,7 +102,7 @@ export function Navigation() {
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6 space-x-4">
               {isAuthenticated && (
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10">
                   <Bell className="w-4 h-4" />
                 </Button>
               )}
@@ -106,7 +111,7 @@ export function Navigation() {
                 <>
                   <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
                     <DialogTrigger asChild>
-                      <Button variant="ghost">Login</Button>
+                      <Button variant="ghost" className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10">Login</Button>
                     </DialogTrigger>
                     <DialogContent>
                       <DialogHeader>
@@ -154,7 +159,7 @@ export function Navigation() {
                   
                   <Dialog open={isRegisterOpen} onOpenChange={setIsRegisterOpen}>
                     <DialogTrigger asChild>
-                      <Button className="bg-primary hover:bg-primary/90">Sign Up</Button>
+                      <Button className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90 text-white">Sign Up</Button>
                     </DialogTrigger>
                     <DialogContent>
                       <DialogHeader>
@@ -212,10 +217,10 @@ export function Navigation() {
                 </>
               ) : (
                 <>
-                  <Button className="bg-primary hover:bg-primary/90">
+                  <Button className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90 text-white">
                     Upgrade to Pro
                   </Button>
-                  <Button variant="ghost" onClick={logout}>
+                  <Button variant="ghost" onClick={logout} className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10">
                     <User className="w-4 h-4 mr-2" />
                     {user?.username}
                     <LogOut className="w-4 h-4 ml-2" />
