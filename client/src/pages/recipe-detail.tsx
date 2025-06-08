@@ -169,7 +169,7 @@ export default function RecipeDetail() {
                         className="w-full h-48 object-cover rounded-xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
                         onClick={() => setSelectedImage(imageUrl)}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-xl"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-xl pointer-events-none"></div>
                     </div>
                   ))}
                 </div>
@@ -182,7 +182,7 @@ export default function RecipeDetail() {
                   className="w-full h-64 md:h-96 object-cover rounded-2xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
                   onClick={() => setSelectedImage(recipe.imageUrl)}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl pointer-events-none"></div>
               </div>
             )}
 
