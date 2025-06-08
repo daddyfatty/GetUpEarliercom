@@ -37,6 +37,7 @@ export const recipes = pgTable("recipes", {
   dietType: jsonb("diet_type").$type<string[]>().notNull(), // vegetarian, vegan, keto, paleo, high-protein
   prepTime: integer("prep_time").notNull(), // in minutes
   servings: integer("servings").notNull(),
+  servingSize: text("serving_size"), // e.g., "1 cup", "4 oz", "150g"
   calories: integer("calories").notNull(),
   protein: integer("protein").notNull(), // in grams
   carbs: integer("carbs").notNull(), // in grams

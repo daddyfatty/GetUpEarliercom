@@ -404,8 +404,10 @@ export default function RecipeDetail() {
               <Card>
                 <CardContent className="p-4 text-center">
                   <Users className="w-6 h-6 text-[#ef4444] mx-auto mb-2" />
-                  <div className="font-semibold text-gray-900 dark:text-white">{recipe.servings || 0}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Servings</div>
+                  <div className="font-semibold text-gray-900 dark:text-white">
+                    {(recipe as any).servingSize || `${recipe.servings} servings`}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Serving Size</div>
                 </CardContent>
               </Card>
               

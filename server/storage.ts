@@ -128,6 +128,7 @@ export class MemStorage implements IStorage {
         dietType: ["high-protein"],
         prepTime: 25,
         servings: 4,
+        servingSize: "1.5 cups (6 oz)",
         calories: 420,
         protein: 24,
         carbs: 26,
