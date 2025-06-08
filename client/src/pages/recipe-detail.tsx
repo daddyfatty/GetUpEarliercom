@@ -222,12 +222,39 @@ export default function RecipeDetail() {
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <Link href="/recipes">
-            <Button variant="ghost" className="mb-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Recipes
-            </Button>
-          </Link>
+          <div className="flex items-center justify-between">
+            <Link href="/recipes">
+              <Button variant="ghost">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Recipes
+              </Button>
+            </Link>
+            
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => toggleFavoriteMutation.mutate()}
+                disabled={toggleFavoriteMutation.isPending || favoriteLoading}
+                className="flex items-center gap-2"
+              >
+                <Heart 
+                  className={`w-5 h-5 ${favoriteStatus?.isFavorited ? 'fill-red-500 text-red-500' : 'text-gray-500'}`} 
+                />
+                {favoriteStatus?.isFavorited ? 'Favorited' : 'Add to Favorites'}
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={generatePDF}
+                className="flex items-center gap-2"
+              >
+                <Printer className="w-4 h-4" />
+                Print
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
 

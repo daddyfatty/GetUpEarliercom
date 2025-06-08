@@ -24,6 +24,7 @@ export function Navigation() {
     { href: "/workouts", label: "Workouts" },
     { href: "/tracker", label: "Tracker" },
     { href: "/goals", label: "Goals" },
+    { href: "/profile", label: "Profile" },
     { href: "/subscribe", label: "Subscribe" },
   ];
 
