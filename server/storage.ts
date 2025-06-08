@@ -254,7 +254,7 @@ export class MemStorage implements IStorage {
           "Stir in grated Parmesan cheese. Taste and adjust seasoning",
           "Serve hot over cooked white rice"
         ],
-        imageUrl: "/attached_assets/download - 2025-06-08T053914.181_1749375589078.png",
+        imageUrl: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
         createdAt: new Date(),
       },
       {
