@@ -109,6 +109,29 @@ export const waterIntake = pgTable("water_intake", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+export const favoriteRecipes = pgTable("favorite_recipes", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  recipeId: integer("recipe_id").notNull().references(() => recipes.id),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const mealPlans = pgTable("meal_plans", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  name: text("name").notNull().default("My Meal Plan"),
+  date: timestamp("date").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const mealPlanRecipes = pgTable("meal_plan_recipes", {
+  id: serial("id").primaryKey(),
+  mealPlanId: integer("meal_plan_id").notNull().references(() => mealPlans.id),
+  recipeId: integer("recipe_id").notNull().references(() => recipes.id),
+  mealType: text("meal_type").notNull(), // breakfast, lunch, dinner, snack
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   createdAt: true,
@@ -147,6 +170,21 @@ export const insertWaterIntakeSchema = createInsertSchema(waterIntake).omit({
   createdAt: true,
 });
 
+export const insertFavoriteRecipeSchema = createInsertSchema(favoriteRecipes).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertMealPlanSchema = createInsertSchema(mealPlans).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertMealPlanRecipeSchema = createInsertSchema(mealPlanRecipes).omit({
+  id: true,
+  createdAt: true,
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type Recipe = typeof recipes.$inferSelect;
@@ -161,3 +199,9 @@ export type Achievement = typeof achievements.$inferSelect;
 export type InsertAchievement = z.infer<typeof insertAchievementSchema>;
 export type WaterIntake = typeof waterIntake.$inferSelect;
 export type InsertWaterIntake = z.infer<typeof insertWaterIntakeSchema>;
+export type FavoriteRecipe = typeof favoriteRecipes.$inferSelect;
+export type InsertFavoriteRecipe = z.infer<typeof insertFavoriteRecipeSchema>;
+export type MealPlan = typeof mealPlans.$inferSelect;
+export type InsertMealPlan = z.infer<typeof insertMealPlanSchema>;
+export type MealPlanRecipe = typeof mealPlanRecipes.$inferSelect;
+export type InsertMealPlanRecipe = z.infer<typeof insertMealPlanRecipeSchema>;

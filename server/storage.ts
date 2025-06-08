@@ -1,4 +1,4 @@
-import type { User, Recipe, Workout, Goal, FoodEntry, Achievement, WaterIntake, InsertUser, InsertRecipe, InsertWorkout, InsertGoal, InsertFoodEntry, InsertAchievement, InsertWaterIntake } from "../shared/schema";
+import type { User, Recipe, Workout, Goal, FoodEntry, Achievement, WaterIntake, FavoriteRecipe, MealPlan, MealPlanRecipe, InsertUser, InsertRecipe, InsertWorkout, InsertGoal, InsertFoodEntry, InsertAchievement, InsertWaterIntake, InsertFavoriteRecipe, InsertMealPlan, InsertMealPlanRecipe } from "../shared/schema";
 
 export interface IStorage {
   // User methods
@@ -42,6 +42,21 @@ export interface IStorage {
   // Water intake methods
   getUserWaterIntake(userId: number, date: Date): Promise<WaterIntake | undefined>;
   updateWaterIntake(userId: number, date: Date, glasses: number): Promise<WaterIntake>;
+
+  // User favorites methods
+  getUserFavoriteRecipes(userId: number): Promise<Recipe[]>;
+  addFavoriteRecipe(userId: number, recipeId: number): Promise<FavoriteRecipe>;
+  removeFavoriteRecipe(userId: number, recipeId: number): Promise<boolean>;
+  isRecipeFavorited(userId: number, recipeId: number): Promise<boolean>;
+
+  // Meal plan methods
+  getUserMealPlans(userId: number): Promise<MealPlan[]>;
+  getMealPlan(id: number): Promise<MealPlan | undefined>;
+  createMealPlan(mealPlan: InsertMealPlan): Promise<MealPlan>;
+  deleteMealPlan(id: number): Promise<boolean>;
+  getMealPlanRecipes(mealPlanId: number): Promise<(MealPlanRecipe & { recipe: Recipe })[]>;
+  addRecipeToMealPlan(mealPlanId: number, recipeId: number, mealType: string): Promise<MealPlanRecipe>;
+  removeRecipeFromMealPlan(mealPlanId: number, recipeId: number): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -52,6 +67,9 @@ export class MemStorage implements IStorage {
   private foodEntries: Map<number, FoodEntry>;
   private achievements: Map<number, Achievement>;
   private waterIntakes: Map<number, WaterIntake>;
+  private favoriteRecipes: Map<number, FavoriteRecipe>;
+  private mealPlans: Map<number, MealPlan>;
+  private mealPlanRecipes: Map<number, MealPlanRecipe>;
   private currentId: number;
 
   constructor() {
@@ -62,6 +80,9 @@ export class MemStorage implements IStorage {
     this.foodEntries = new Map();
     this.achievements = new Map();
     this.waterIntakes = new Map();
+    this.favoriteRecipes = new Map();
+    this.mealPlans = new Map();
+    this.mealPlanRecipes = new Map();
     this.currentId = 1;
     this.seedData();
   }
