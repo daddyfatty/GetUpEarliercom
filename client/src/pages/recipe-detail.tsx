@@ -52,7 +52,7 @@ export default function RecipeDetail() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#61c493] mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ef4444] mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-300">Loading recipe...</p>
         </div>
       </div>
@@ -103,7 +103,7 @@ export default function RecipeDetail() {
             {/* Recipe Header */}
             <div>
               <div className="flex flex-wrap gap-2 mb-4">
-                <Badge className="bg-[#61c493]/10 text-[#61c493] hover:bg-[#61c493]/20">
+                <Badge className="bg-[#ef4444]/10 text-[#ef4444] hover:bg-[#ef4444]/20">
                   {getCategoryEmoji(recipe.category)} {recipe.category}
                 </Badge>
                 {recipe.dietType && (
@@ -138,7 +138,7 @@ export default function RecipeDetail() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <Card>
                 <CardContent className="p-4 text-center">
-                  <Clock className="w-6 h-6 text-[#61c493] mx-auto mb-2" />
+                  <Clock className="w-6 h-6 text-[#ef4444] mx-auto mb-2" />
                   <div className="font-semibold text-gray-900 dark:text-white">{recipe.prepTime || 0} min</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Prep Time</div>
                 </CardContent>
@@ -146,7 +146,7 @@ export default function RecipeDetail() {
               
               <Card>
                 <CardContent className="p-4 text-center">
-                  <Users className="w-6 h-6 text-[#61c493] mx-auto mb-2" />
+                  <Users className="w-6 h-6 text-[#ef4444] mx-auto mb-2" />
                   <div className="font-semibold text-gray-900 dark:text-white">{recipe.servings || 0}</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Servings</div>
                 </CardContent>
@@ -154,7 +154,7 @@ export default function RecipeDetail() {
               
               <Card>
                 <CardContent className="p-4 text-center">
-                  <ChefHat className="w-6 h-6 text-[#61c493] mx-auto mb-2" />
+                  <ChefHat className="w-6 h-6 text-[#ef4444] mx-auto mb-2" />
                   <div className="font-semibold text-gray-900 dark:text-white">{recipe.protein || 0}g</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Protein</div>
                 </CardContent>
@@ -162,7 +162,7 @@ export default function RecipeDetail() {
               
               <Card>
                 <CardContent className="p-4 text-center">
-                  <Leaf className="w-6 h-6 text-[#61c493] mx-auto mb-2" />
+                  <Leaf className="w-6 h-6 text-[#ef4444] mx-auto mb-2" />
                   <div className="font-semibold text-gray-900 dark:text-white">{recipe.carbs || 0}g</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Carbs</div>
                 </CardContent>
@@ -178,7 +178,7 @@ export default function RecipeDetail() {
                 <div className="space-y-6">
                   {(recipe.instructions || []).map((instruction, index) => (
                     <div key={index} className="flex gap-4">
-                      <div className="flex-shrink-0 w-8 h-8 bg-[#61c493] text-white rounded-full flex items-center justify-center font-semibold text-sm">
+                      <div className="flex-shrink-0 w-8 h-8 bg-[#ef4444] text-white rounded-full flex items-center justify-center font-semibold text-sm">
                         {index + 1}
                       </div>
                       <p className="text-gray-700 dark:text-gray-300 leading-relaxed pt-1">
@@ -202,7 +202,7 @@ export default function RecipeDetail() {
                 <ul className="space-y-3">
                   {(recipe.ingredients || []).map((ingredient, index) => (
                     <li key={index} className="flex items-start gap-3">
-                      <div className="w-2 h-2 bg-[#61c493] rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="w-2 h-2 bg-[#ef4444] rounded-full mt-2 flex-shrink-0"></div>
                       <span className="text-gray-700 dark:text-gray-300">{ingredient}</span>
                     </li>
                   ))}
@@ -217,7 +217,7 @@ export default function RecipeDetail() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  <div className="bg-[#61c493]/10 p-3 rounded-lg mb-4">
+                  <div className="bg-[#ef4444]/10 p-3 rounded-lg mb-4">
                     <div className="text-center">
                       <div className="text-2xl font-bold text-gray-900 dark:text-white">{recipe.calories || 0}</div>
                       <div className="text-sm text-gray-600 dark:text-gray-400">Total Calories</div>
@@ -285,7 +285,7 @@ export default function RecipeDetail() {
 
             {/* Action Buttons */}
             <div className="space-y-3">
-              <Button className="w-full bg-[#61c493] hover:bg-[#61c493]/90 text-white py-3 text-lg font-semibold">
+              <Button className="w-full bg-[#ef4444] hover:bg-[#ef4444]/90 text-white py-3 text-lg font-semibold">
                 Add to Meal Plan
               </Button>
               <Button variant="outline" className="w-full py-3 text-lg">
