@@ -4,7 +4,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription, DialogHeader } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, Clock, Users, ChefHat, Leaf, X, Printer, Download, Heart } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -18,6 +21,12 @@ export default function RecipeDetail() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [mealPlanDialog, setMealPlanDialog] = useState(false);
+  const [mealPlanData, setMealPlanData] = useState({
+    name: "",
+    date: new Date().toISOString().split('T')[0],
+    mealType: "breakfast"
+  });
 
   const generatePDF = () => {
     if (!recipe) return;
@@ -120,9 +129,8 @@ export default function RecipeDetail() {
   });
 
   // Check if recipe is favorited
-  const { data: favoriteStatus, isLoading: favoriteLoading } = useQuery({
-    queryKey: ["/api/users", CURRENT_USER_ID, "favorites", id, "check"],
-    queryFn: () => apiRequest("GET", `/api/users/${CURRENT_USER_ID}/favorites/${id}/check`),
+  const { data: favoriteStatus, isLoading: favoriteLoading } = useQuery<{ isFavorited: boolean }>({
+    queryKey: [`/api/users/${CURRENT_USER_ID}/favorites/${id}/check`],
     enabled: !!id,
   });
 
@@ -136,8 +144,8 @@ export default function RecipeDetail() {
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/users", CURRENT_USER_ID, "favorites", id, "check"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/users", CURRENT_USER_ID, "favorites"] });
+      queryClient.invalidateQueries({ queryKey: [`/api/users/${CURRENT_USER_ID}/favorites/${id}/check`] });
+      queryClient.invalidateQueries({ queryKey: [`/api/users/${CURRENT_USER_ID}/favorites`] });
       toast({
         title: favoriteStatus?.isFavorited ? "Removed from Favorites" : "Added to Favorites",
         description: favoriteStatus?.isFavorited 
@@ -149,6 +157,45 @@ export default function RecipeDetail() {
       toast({
         title: "Error",
         description: "Failed to update favorites. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Create meal plan mutation
+  const createMealPlanMutation = useMutation({
+    mutationFn: async () => {
+      // First create the meal plan
+      const mealPlan = await apiRequest("POST", `/api/users/${CURRENT_USER_ID}/meal-plans`, {
+        name: mealPlanData.name,
+        date: new Date(mealPlanData.date)
+      });
+      
+      // Then add the recipe to the meal plan
+      await apiRequest("POST", `/api/meal-plans/${mealPlan.id}/recipes`, {
+        recipeId: parseInt(id!),
+        mealType: mealPlanData.mealType
+      });
+      
+      return mealPlan;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`/api/users/${CURRENT_USER_ID}/meal-plans`] });
+      setMealPlanDialog(false);
+      setMealPlanData({
+        name: "",
+        date: new Date().toISOString().split('T')[0],
+        mealType: "breakfast"
+      });
+      toast({
+        title: "Added to Meal Plan",
+        description: "Recipe has been added to your meal plan successfully.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to add recipe to meal plan. Please try again.",
         variant: "destructive",
       });
     },
