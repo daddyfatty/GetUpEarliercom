@@ -19,8 +19,8 @@ export const recipes = pgTable("recipes", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   description: text("description").notNull(),
-  category: text("category").notNull(), // breakfast, lunch, dinner, snack
-  dietType: text("diet_type"), // vegetarian, vegan, keto, paleo
+  category: jsonb("category").$type<string[]>().notNull(), // breakfast, lunch, dinner, snack, dessert, finicky-kid-friendly
+  dietType: jsonb("diet_type").$type<string[]>().notNull(), // vegetarian, vegan, keto, paleo, high-protein
   prepTime: integer("prep_time").notNull(), // in minutes
   servings: integer("servings").notNull(),
   calories: integer("calories").notNull(),

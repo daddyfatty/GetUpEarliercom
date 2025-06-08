@@ -37,9 +37,17 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
         )}
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-2">
-            <Badge className={getCategoryColor(recipe.category)}>
-              {recipe.category}
-            </Badge>
+            <div className="flex flex-wrap gap-1">
+              {Array.isArray(recipe.category) ? recipe.category.map((cat, index) => (
+                <Badge key={index} className={getCategoryColor(cat)}>
+                  {cat}
+                </Badge>
+              )) : (
+                <Badge className={getCategoryColor(recipe.category)}>
+                  {recipe.category}
+                </Badge>
+              )}
+            </div>
             <span className="text-gray-500 dark:text-gray-400 text-sm flex items-center">
               <Clock className="w-4 h-4 mr-1" />
               {recipe.prepTime} min

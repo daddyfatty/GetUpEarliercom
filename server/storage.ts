@@ -103,8 +103,8 @@ export class MemStorage implements IStorage {
         id: this.currentId++,
         title: "Ground Chicken Breast Quick Goulash",
         description: "Easy one-pot goulash with Bell & Evans ground chicken breast, vegetables, and San Marzano tomatoes served over Kirkland rice",
-        category: "dinner",
-        dietType: "high-protein",
+        category: ["dinner"],
+        dietType: ["high-protein"],
         prepTime: 25,
         servings: 4,
         calories: 420,
@@ -246,8 +246,8 @@ export class MemStorage implements IStorage {
     return recipes.filter(recipe => {
       const matchesQuery = recipe.title.toLowerCase().includes(query.toLowerCase()) ||
                           recipe.description.toLowerCase().includes(query.toLowerCase());
-      const matchesCategory = !category || recipe.category === category;
-      const matchesDietType = !dietType || recipe.dietType === dietType;
+      const matchesCategory = !category || (Array.isArray(recipe.category) ? recipe.category.includes(category) : recipe.category === category);
+      const matchesDietType = !dietType || (Array.isArray(recipe.dietType) ? recipe.dietType.includes(dietType) : recipe.dietType === dietType);
       
       return matchesQuery && matchesCategory && matchesDietType;
     });

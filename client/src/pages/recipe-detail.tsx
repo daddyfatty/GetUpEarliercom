@@ -103,10 +103,20 @@ export default function RecipeDetail() {
             {/* Recipe Header */}
             <div>
               <div className="flex flex-wrap gap-2 mb-4">
-                <Badge className="bg-[#ef4444]/10 text-[#ef4444] hover:bg-[#ef4444]/20">
-                  {getCategoryEmoji(recipe.category)} {recipe.category}
-                </Badge>
-                {recipe.dietType && (
+                {Array.isArray(recipe.category) ? recipe.category.map((cat, index) => (
+                  <Badge key={index} className="bg-[#ef4444]/10 text-[#ef4444] hover:bg-[#ef4444]/20">
+                    {getCategoryEmoji(cat)} {cat}
+                  </Badge>
+                )) : (
+                  <Badge className="bg-[#ef4444]/10 text-[#ef4444] hover:bg-[#ef4444]/20">
+                    {getCategoryEmoji(recipe.category)} {recipe.category}
+                  </Badge>
+                )}
+                {recipe.dietType && Array.isArray(recipe.dietType) ? recipe.dietType.map((diet, index) => (
+                  <Badge key={index} variant="outline">
+                    {getDietIcon(diet)} {diet}
+                  </Badge>
+                )) : recipe.dietType && (
                   <Badge variant="outline">
                     {getDietIcon(recipe.dietType)} {recipe.dietType}
                   </Badge>
