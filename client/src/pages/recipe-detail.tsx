@@ -1,13 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "wouter";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Clock, Users, ChefHat, Leaf } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { ArrowLeft, Clock, Users, ChefHat, Leaf, X } from "lucide-react";
 import type { Recipe } from "@shared/schema";
 
 export default function RecipeDetail() {
   const { id } = useParams();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
   const { data: recipe, isLoading, error } = useQuery<Recipe>({
     queryKey: ["/api/recipes", id],
@@ -164,10 +167,7 @@ export default function RecipeDetail() {
                         src={imageUrl} 
                         alt={`${recipe.title} - Photo ${index + 1}`}
                         className="w-full h-48 object-cover rounded-xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
-                        onClick={() => {
-                          // Open image in modal or larger view
-                          window.open(imageUrl, '_blank');
-                        }}
+                        onClick={() => setSelectedImage(imageUrl)}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-xl"></div>
                     </div>
@@ -179,7 +179,8 @@ export default function RecipeDetail() {
                 <img 
                   src={recipe.imageUrl} 
                   alt={recipe.title}
-                  className="w-full h-64 md:h-96 object-cover rounded-2xl shadow-lg"
+                  className="w-full h-64 md:h-96 object-cover rounded-2xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
+                  onClick={() => setSelectedImage(recipe.imageUrl)}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
               </div>
@@ -346,6 +347,29 @@ export default function RecipeDetail() {
           </div>
         </div>
       </div>
+
+      {/* Image Lightbox Modal */}
+      <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+        <DialogContent className="max-w-4xl w-full p-0 bg-transparent border-none">
+          <div className="relative">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full"
+              onClick={() => setSelectedImage(null)}
+            >
+              <X className="w-6 h-6" />
+            </Button>
+            {selectedImage && (
+              <img
+                src={selectedImage}
+                alt="Full size recipe image"
+                className="w-full h-auto max-h-[90vh] object-contain rounded-lg"
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
