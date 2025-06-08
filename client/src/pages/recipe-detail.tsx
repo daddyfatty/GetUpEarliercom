@@ -543,11 +543,81 @@ export default function RecipeDetail() {
 
             {/* Action Buttons */}
             <div className="space-y-3">
-              <Button className="w-full bg-[#ef4444] hover:bg-[#ef4444]/90 text-white py-3 text-lg font-semibold">
-                Add to Meal Plan
-              </Button>
-              <Button variant="outline" className="w-full py-3 text-lg">
-                Save Recipe
+              <Dialog open={mealPlanDialog} onOpenChange={setMealPlanDialog}>
+                <DialogTrigger asChild>
+                  <Button className="w-full bg-[#ef4444] hover:bg-[#ef4444]/90 text-white py-3 text-lg font-semibold">
+                    Add to Meal Plan
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Add to Meal Plan</DialogTitle>
+                    <DialogDescription>
+                      Create a new meal plan and add this recipe to it.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="mealPlanName">Meal Plan Name</Label>
+                      <Input
+                        id="mealPlanName"
+                        placeholder="e.g., Weekly Meal Plan"
+                        value={mealPlanData.name}
+                        onChange={(e) => setMealPlanData({ ...mealPlanData, name: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="mealPlanDate">Date</Label>
+                      <Input
+                        id="mealPlanDate"
+                        type="date"
+                        value={mealPlanData.date}
+                        onChange={(e) => setMealPlanData({ ...mealPlanData, date: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="mealType">Meal Type</Label>
+                      <Select
+                        value={mealPlanData.mealType}
+                        onValueChange={(value) => setMealPlanData({ ...mealPlanData, mealType: value })}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select meal type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="breakfast">Breakfast</SelectItem>
+                          <SelectItem value="lunch">Lunch</SelectItem>
+                          <SelectItem value="dinner">Dinner</SelectItem>
+                          <SelectItem value="snack">Snack</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex gap-2 pt-4">
+                      <Button
+                        variant="outline"
+                        onClick={() => setMealPlanDialog(false)}
+                        className="flex-1"
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={() => createMealPlanMutation.mutate()}
+                        disabled={createMealPlanMutation.isPending || !mealPlanData.name}
+                        className="flex-1 bg-[#ef4444] hover:bg-[#ef4444]/90"
+                      >
+                        {createMealPlanMutation.isPending ? "Adding..." : "Add to Plan"}
+                      </Button>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+              <Button 
+                variant="outline" 
+                className="w-full py-3 text-lg"
+                onClick={() => toggleFavoriteMutation.mutate()}
+                disabled={toggleFavoriteMutation.isPending || favoriteLoading}
+              >
+                {favoriteStatus?.isFavorited ? 'Remove from Favorites' : 'Save Recipe'}
               </Button>
               <div className="grid grid-cols-2 gap-2">
                 <Button 
