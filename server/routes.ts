@@ -1,4 +1,5 @@
 import type { Express } from "express";
+import express from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertUserSchema, insertRecipeSchema, insertWorkoutSchema, insertGoalSchema, insertFoodEntrySchema } from "@shared/schema";
@@ -25,6 +26,9 @@ if (STRIPE_CONFIGURED) {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Serve static assets
+  app.use('/assets', express.static('./attached_assets'));
+  
   // Authentication routes
   app.post("/api/auth/login", async (req, res) => {
     try {
