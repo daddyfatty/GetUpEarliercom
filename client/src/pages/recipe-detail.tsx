@@ -13,7 +13,25 @@ export default function RecipeDetail() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const generatePDF = () => {
-    // Create a clean print-friendly version
+    if (!recipe) return;
+    
+    // Create formatted content for printing
+    const ingredientsList = (recipe.ingredients || '').toString()
+      .split('\n')
+      .filter(item => item.trim())
+      .map(item => `<li>${item.trim()}</li>`)
+      .join('');
+      
+    const instructionsList = (recipe.instructions || '').toString()
+      .split('\n')
+      .filter(item => item.trim())
+      .map(item => `<li>${item.trim()}</li>`)
+      .join('');
+
+    const categoryBadges = Array.isArray(recipe.category) 
+      ? recipe.category.map(cat => `<span class="badge">${cat}</span>`).join('') 
+      : recipe.category ? `<span class="badge">${recipe.category}</span>` : '';
+
     const printWindow = window.open('', '_blank');
     if (!printWindow) return;
 
@@ -22,276 +40,66 @@ export default function RecipeDetail() {
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>${recipe?.title || 'Recipe'} - Get Up Earlier</title>
+    <title>${recipe.title} - Get Up Earlier</title>
     <style>
-        @page {
-            margin: 0.75in;
-            size: letter;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: white;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #ef4444;
-            padding-bottom: 20px;
-        }
-        .brand {
-            color: #ef4444;
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .recipe-title {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #1a1a1a;
-        }
-        .recipe-meta {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-        .meta-item {
-            text-align: center;
-            padding: 8px 16px;
-            border: 1px solid #e5e5e5;
-            border-radius: 8px;
-        }
-        .meta-label {
-            font-size: 12px;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .meta-value {
-            font-size: 18px;
-            font-weight: bold;
-            color: #ef4444;
-        }
-        .badges {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .badge {
-            display: inline-block;
-            background: #ef4444;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            margin: 0 5px;
-        }
-        .section {
-            margin-bottom: 30px;
-        }
-        .section-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #ef4444;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 5px;
-        }
-        .ingredients-list {
-            columns: 2;
-            column-gap: 30px;
-            list-style: none;
-        }
-        .ingredients-list li {
-            margin-bottom: 8px;
-            padding-left: 20px;
-            position: relative;
-            break-inside: avoid;
-        }
-        .ingredients-list li:before {
-            content: "•";
-            color: #ef4444;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-        .instructions-list {
-            list-style: none;
-            counter-reset: step-counter;
-        }
-        .instructions-list li {
-            margin-bottom: 15px;
-            padding-left: 40px;
-            position: relative;
-            counter-increment: step-counter;
-        }
-        .instructions-list li:before {
-            content: counter(step-counter);
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: #ef4444;
-            color: white;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        .story-section {
-            background: #fef7e0;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #f59e0b;
-            margin: 20px 0;
-        }
-        .story-title {
-            color: #92400e;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .nutrition-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin: 20px 0;
-        }
-        .nutrition-item {
-            text-align: center;
-            padding: 10px;
-            border: 1px solid #e5e5e5;
-            border-radius: 8px;
-        }
-        .nutrition-value {
-            font-size: 16px;
-            font-weight: bold;
-            color: #ef4444;
-        }
-        .nutrition-label {
-            font-size: 12px;
-            color: #666;
-            text-transform: uppercase;
-        }
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            color: #666;
-            font-size: 12px;
-            border-top: 1px solid #e5e5e5;
-            padding-top: 20px;
-        }
-        @media print {
-            body { -webkit-print-color-adjust: exact; }
-        }
+        @page { margin: 0.75in; size: letter; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: white; }
+        .header { text-align: center; margin-bottom: 30px; border-bottom: 3px solid #ef4444; padding-bottom: 20px; }
+        .brand { color: #ef4444; font-size: 24px; font-weight: bold; margin-bottom: 5px; }
+        .recipe-title { font-size: 28px; font-weight: bold; margin-bottom: 10px; color: #1a1a1a; }
+        .recipe-meta { display: flex; justify-content: center; gap: 30px; margin: 20px 0; flex-wrap: wrap; }
+        .meta-item { text-align: center; padding: 8px 16px; border: 1px solid #e5e5e5; border-radius: 8px; }
+        .meta-label { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+        .meta-value { font-size: 18px; font-weight: bold; color: #ef4444; }
+        .badges { text-align: center; margin: 20px 0; }
+        .badge { display: inline-block; background: #ef4444; color: white; padding: 4px 12px; border-radius: 20px; font-size: 14px; margin: 0 5px; }
+        .section { margin-bottom: 30px; }
+        .section-title { font-size: 20px; font-weight: bold; color: #ef4444; margin-bottom: 15px; border-bottom: 2px solid #f0f0f0; padding-bottom: 5px; }
+        .ingredients-list { columns: 2; column-gap: 30px; list-style: none; }
+        .ingredients-list li { margin-bottom: 8px; padding-left: 20px; position: relative; break-inside: avoid; }
+        .ingredients-list li:before { content: "•"; color: #ef4444; font-weight: bold; position: absolute; left: 0; }
+        .instructions-list { list-style: none; counter-reset: step-counter; }
+        .instructions-list li { margin-bottom: 15px; padding-left: 40px; position: relative; counter-increment: step-counter; }
+        .instructions-list li:before { content: counter(step-counter); position: absolute; left: 0; top: 0; background: #ef4444; color: white; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; }
+        .story-section { background: #fef7e0; padding: 20px; border-radius: 10px; border-left: 4px solid #f59e0b; margin: 20px 0; }
+        .story-title { color: #92400e; font-size: 18px; font-weight: bold; margin-bottom: 10px; }
+        .nutrition-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0; }
+        .nutrition-item { text-align: center; padding: 10px; border: 1px solid #e5e5e5; border-radius: 8px; }
+        .nutrition-value { font-size: 16px; font-weight: bold; color: #ef4444; }
+        .nutrition-label { font-size: 12px; color: #666; text-transform: uppercase; }
+        .footer { margin-top: 40px; text-align: center; color: #666; font-size: 12px; border-top: 1px solid #e5e5e5; padding-top: 20px; }
+        @media print { body { -webkit-print-color-adjust: exact; } }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="brand">Get Up Earlier</div>
-        <h1 class="recipe-title">${recipe?.title || ''}</h1>
-        <div class="badges">
-            ${Array.isArray(recipe?.category) 
-              ? recipe.category.map(cat => `<span class="badge">${cat}</span>`).join('') 
-              : recipe?.category ? `<span class="badge">${recipe.category}</span>` : ''}
-            ${recipe?.dietType ? `<span class="badge">${recipe.dietType}</span>` : ''}
-        </div>
+        <h1 class="recipe-title">${recipe.title}</h1>
+        <div class="badges">${categoryBadges}${recipe.dietType ? `<span class="badge">${recipe.dietType}</span>` : ''}</div>
         <div class="recipe-meta">
-            <div class="meta-item">
-                <div class="meta-value">${recipe?.prepTime || 0}</div>
-                <div class="meta-label">Minutes</div>
-            </div>
-            <div class="meta-item">
-                <div class="meta-value">${recipe?.servings || 0}</div>
-                <div class="meta-label">Servings</div>
-            </div>
-            <div class="meta-item">
-                <div class="meta-value">${recipe?.calories || 0}</div>
-                <div class="meta-label">Calories</div>
-            </div>
-            <div class="meta-item">
-                <div class="meta-value">${recipe?.protein || 0}g</div>
-                <div class="meta-label">Protein</div>
-            </div>
+            <div class="meta-item"><div class="meta-value">${recipe.prepTime || 0}</div><div class="meta-label">Minutes</div></div>
+            <div class="meta-item"><div class="meta-value">${recipe.servings || 0}</div><div class="meta-label">Servings</div></div>
+            <div class="meta-item"><div class="meta-value">${recipe.calories || 0}</div><div class="meta-label">Calories</div></div>
+            <div class="meta-item"><div class="meta-value">${recipe.protein || 0}g</div><div class="meta-label">Protein</div></div>
         </div>
     </div>
-
-    ${recipe?.content ? `
-    <div class="story-section">
-        <h3 class="story-title">Recipe Story</h3>
-        <div>${recipe.content.replace(/\n/g, '<br>')}</div>
-    </div>
-    ` : ''}
-
-    <div class="section">
-        <h2 class="section-title">Ingredients</h2>
-        <ul class="ingredients-list">
-            ${(recipe?.ingredients || '').toString().split('\n').map((ingredient: string) => 
-              ingredient.trim() ? `<li>${ingredient.trim()}</li>` : ''
-            ).join('')}
-        </ul>
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">Instructions</h2>
-        <ol class="instructions-list">
-            ${Array.isArray(recipe?.instructions) 
-              ? recipe.instructions.map((instruction: string) => 
-                  instruction.trim() ? `<li>${instruction.trim()}</li>` : ''
-                ).join('') 
-              : recipe?.instructions?.split('\n').map((instruction: string) => 
-                  instruction.trim() ? `<li>${instruction.trim()}</li>` : ''
-                ).join('') || ''}
-        </ol>
-    </div>
-
-    <div class="section">
-        <h2 class="section-title">Nutrition Information</h2>
-        <div class="nutrition-grid">
-            <div class="nutrition-item">
-                <div class="nutrition-value">${recipe?.carbs || 0}g</div>
-                <div class="nutrition-label">Carbs</div>
-            </div>
-            <div class="nutrition-item">
-                <div class="nutrition-value">${recipe?.fat || 0}g</div>
-                <div class="nutrition-label">Fat</div>
-            </div>
-            <div class="nutrition-item">
-                <div class="nutrition-value">${recipe?.fiber || 0}g</div>
-                <div class="nutrition-label">Fiber</div>
-            </div>
-            <div class="nutrition-item">
-                <div class="nutrition-value">${recipe?.sodium || 0}mg</div>
-                <div class="nutrition-label">Sodium</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer">
-        <p>Recipe from Get Up Earlier | Healthy Living Made Simple</p>
-        <p>Generated on ${new Date().toLocaleDateString()}</p>
-    </div>
+    ${recipe.content ? `<div class="story-section"><h3 class="story-title">Recipe Story</h3><div>${recipe.content.replace(/\n/g, '<br>')}</div></div>` : ''}
+    <div class="section"><h2 class="section-title">Ingredients</h2><ul class="ingredients-list">${ingredientsList}</ul></div>
+    <div class="section"><h2 class="section-title">Instructions</h2><ol class="instructions-list">${instructionsList}</ol></div>
+    <div class="section"><h2 class="section-title">Nutrition Information</h2><div class="nutrition-grid">
+        <div class="nutrition-item"><div class="nutrition-value">${recipe.carbs || 0}g</div><div class="nutrition-label">Carbs</div></div>
+        <div class="nutrition-item"><div class="nutrition-value">${recipe.fat || 0}g</div><div class="nutrition-label">Fat</div></div>
+        <div class="nutrition-item"><div class="nutrition-value">${recipe.fiber || 0}g</div><div class="nutrition-label">Fiber</div></div>
+        <div class="nutrition-item"><div class="nutrition-value">${recipe.sodium || 0}mg</div><div class="nutrition-label">Sodium</div></div>
+    </div></div>
+    <div class="footer"><p>Recipe from Get Up Earlier | Healthy Living Made Simple</p><p>Generated on ${new Date().toLocaleDateString()}</p></div>
 </body>
 </html>`;
 
     printWindow.document.write(printHTML);
     printWindow.document.close();
-    
-    // Wait for content to load, then trigger print dialog and save as PDF
-    setTimeout(() => {
-      printWindow.print();
-    }, 500);
+    setTimeout(() => printWindow.print(), 500);
   };
   
   const { data: recipe, isLoading, error } = useQuery<Recipe>({
