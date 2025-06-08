@@ -294,6 +294,105 @@ export class MemStorage implements IStorage {
   async createAchievement(achievement: InsertAchievement): Promise<Achievement> { throw new Error("Not implemented"); }
   async getUserWaterIntake(userId: number, date: Date): Promise<WaterIntake | undefined> { return undefined; }
   async updateWaterIntake(userId: number, date: Date, glasses: number): Promise<WaterIntake> { throw new Error("Not implemented"); }
+
+  // User favorites methods
+  async getUserFavoriteRecipes(userId: number): Promise<Recipe[]> {
+    const favorites = Array.from(this.favoriteRecipes.values()).filter(fav => fav.userId === userId);
+    const recipes = favorites.map(fav => this.recipes.get(fav.recipeId)).filter(recipe => recipe !== undefined) as Recipe[];
+    return recipes;
+  }
+
+  async addFavoriteRecipe(userId: number, recipeId: number): Promise<FavoriteRecipe> {
+    const favorite: FavoriteRecipe = {
+      id: this.currentId++,
+      userId,
+      recipeId,
+      createdAt: new Date(),
+    };
+    this.favoriteRecipes.set(favorite.id, favorite);
+    return favorite;
+  }
+
+  async removeFavoriteRecipe(userId: number, recipeId: number): Promise<boolean> {
+    const favorite = Array.from(this.favoriteRecipes.values()).find(
+      fav => fav.userId === userId && fav.recipeId === recipeId
+    );
+    if (favorite) {
+      this.favoriteRecipes.delete(favorite.id);
+      return true;
+    }
+    return false;
+  }
+
+  async isRecipeFavorited(userId: number, recipeId: number): Promise<boolean> {
+    return Array.from(this.favoriteRecipes.values()).some(
+      fav => fav.userId === userId && fav.recipeId === recipeId
+    );
+  }
+
+  // Meal plan methods
+  async getUserMealPlans(userId: number): Promise<MealPlan[]> {
+    return Array.from(this.mealPlans.values()).filter(plan => plan.userId === userId);
+  }
+
+  async getMealPlan(id: number): Promise<MealPlan | undefined> {
+    return this.mealPlans.get(id);
+  }
+
+  async createMealPlan(mealPlan: InsertMealPlan): Promise<MealPlan> {
+    const plan: MealPlan = {
+      id: this.currentId++,
+      ...mealPlan,
+      createdAt: new Date(),
+    };
+    this.mealPlans.set(plan.id, plan);
+    return plan;
+  }
+
+  async deleteMealPlan(id: number): Promise<boolean> {
+    // Remove all recipes from the meal plan first
+    const planRecipes = Array.from(this.mealPlanRecipes.values()).filter(
+      mpr => mpr.mealPlanId === id
+    );
+    planRecipes.forEach(mpr => this.mealPlanRecipes.delete(mpr.id));
+    
+    return this.mealPlans.delete(id);
+  }
+
+  async getMealPlanRecipes(mealPlanId: number): Promise<(MealPlanRecipe & { recipe: Recipe })[]> {
+    const planRecipes = Array.from(this.mealPlanRecipes.values()).filter(
+      mpr => mpr.mealPlanId === mealPlanId
+    );
+    
+    return planRecipes.map(mpr => {
+      const recipe = this.recipes.get(mpr.recipeId);
+      if (!recipe) throw new Error(`Recipe ${mpr.recipeId} not found`);
+      return { ...mpr, recipe };
+    });
+  }
+
+  async addRecipeToMealPlan(mealPlanId: number, recipeId: number, mealType: string): Promise<MealPlanRecipe> {
+    const mealPlanRecipe: MealPlanRecipe = {
+      id: this.currentId++,
+      mealPlanId,
+      recipeId,
+      mealType,
+      createdAt: new Date(),
+    };
+    this.mealPlanRecipes.set(mealPlanRecipe.id, mealPlanRecipe);
+    return mealPlanRecipe;
+  }
+
+  async removeRecipeFromMealPlan(mealPlanId: number, recipeId: number): Promise<boolean> {
+    const mealPlanRecipe = Array.from(this.mealPlanRecipes.values()).find(
+      mpr => mpr.mealPlanId === mealPlanId && mpr.recipeId === recipeId
+    );
+    if (mealPlanRecipe) {
+      this.mealPlanRecipes.delete(mealPlanRecipe.id);
+      return true;
+    }
+    return false;
+  }
 }
 
 export const storage = new MemStorage();

@@ -424,6 +424,175 @@ export async function registerRoutes(app: Express): Promise<Server> {
     await capturePaypalOrder(req, res);
   });
 
+  // User favorites routes
+  app.get("/api/users/:userId/favorites", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const favorites = await storage.getUserFavoriteRecipes(userId);
+      res.json(favorites);
+    } catch (error: any) {
+      console.error("Error fetching user favorites:", error);
+      res.status(500).json({ message: "Error fetching favorites: " + error.message });
+    }
+  });
+
+  app.post("/api/users/:userId/favorites", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { recipeId } = req.body;
+      
+      if (!recipeId) {
+        return res.status(400).json({ message: "Recipe ID is required" });
+      }
+
+      const favorite = await storage.addFavoriteRecipe(userId, recipeId);
+      res.json(favorite);
+    } catch (error: any) {
+      console.error("Error adding favorite:", error);
+      res.status(500).json({ message: "Error adding favorite: " + error.message });
+    }
+  });
+
+  app.delete("/api/users/:userId/favorites/:recipeId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const recipeId = parseInt(req.params.recipeId);
+      
+      const removed = await storage.removeFavoriteRecipe(userId, recipeId);
+      if (removed) {
+        res.json({ message: "Favorite removed successfully" });
+      } else {
+        res.status(404).json({ message: "Favorite not found" });
+      }
+    } catch (error: any) {
+      console.error("Error removing favorite:", error);
+      res.status(500).json({ message: "Error removing favorite: " + error.message });
+    }
+  });
+
+  app.get("/api/users/:userId/favorites/:recipeId/check", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const recipeId = parseInt(req.params.recipeId);
+      
+      const isFavorited = await storage.isRecipeFavorited(userId, recipeId);
+      res.json({ isFavorited });
+    } catch (error: any) {
+      console.error("Error checking favorite status:", error);
+      res.status(500).json({ message: "Error checking favorite status: " + error.message });
+    }
+  });
+
+  // Meal plan routes
+  app.get("/api/users/:userId/meal-plans", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const mealPlans = await storage.getUserMealPlans(userId);
+      res.json(mealPlans);
+    } catch (error: any) {
+      console.error("Error fetching meal plans:", error);
+      res.status(500).json({ message: "Error fetching meal plans: " + error.message });
+    }
+  });
+
+  app.post("/api/users/:userId/meal-plans", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { name, date } = req.body;
+      
+      if (!date) {
+        return res.status(400).json({ message: "Date is required" });
+      }
+
+      const mealPlan = await storage.createMealPlan({
+        userId,
+        name: name || "My Meal Plan",
+        date: new Date(date),
+      });
+      res.json(mealPlan);
+    } catch (error: any) {
+      console.error("Error creating meal plan:", error);
+      res.status(500).json({ message: "Error creating meal plan: " + error.message });
+    }
+  });
+
+  app.get("/api/meal-plans/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const mealPlan = await storage.getMealPlan(id);
+      
+      if (!mealPlan) {
+        return res.status(404).json({ message: "Meal plan not found" });
+      }
+      
+      res.json(mealPlan);
+    } catch (error: any) {
+      console.error("Error fetching meal plan:", error);
+      res.status(500).json({ message: "Error fetching meal plan: " + error.message });
+    }
+  });
+
+  app.delete("/api/meal-plans/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const deleted = await storage.deleteMealPlan(id);
+      
+      if (deleted) {
+        res.json({ message: "Meal plan deleted successfully" });
+      } else {
+        res.status(404).json({ message: "Meal plan not found" });
+      }
+    } catch (error: any) {
+      console.error("Error deleting meal plan:", error);
+      res.status(500).json({ message: "Error deleting meal plan: " + error.message });
+    }
+  });
+
+  app.get("/api/meal-plans/:id/recipes", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const recipes = await storage.getMealPlanRecipes(id);
+      res.json(recipes);
+    } catch (error: any) {
+      console.error("Error fetching meal plan recipes:", error);
+      res.status(500).json({ message: "Error fetching meal plan recipes: " + error.message });
+    }
+  });
+
+  app.post("/api/meal-plans/:id/recipes", async (req, res) => {
+    try {
+      const mealPlanId = parseInt(req.params.id);
+      const { recipeId, mealType } = req.body;
+      
+      if (!recipeId || !mealType) {
+        return res.status(400).json({ message: "Recipe ID and meal type are required" });
+      }
+
+      const mealPlanRecipe = await storage.addRecipeToMealPlan(mealPlanId, recipeId, mealType);
+      res.json(mealPlanRecipe);
+    } catch (error: any) {
+      console.error("Error adding recipe to meal plan:", error);
+      res.status(500).json({ message: "Error adding recipe to meal plan: " + error.message });
+    }
+  });
+
+  app.delete("/api/meal-plans/:id/recipes/:recipeId", async (req, res) => {
+    try {
+      const mealPlanId = parseInt(req.params.id);
+      const recipeId = parseInt(req.params.recipeId);
+      
+      const removed = await storage.removeRecipeFromMealPlan(mealPlanId, recipeId);
+      if (removed) {
+        res.json({ message: "Recipe removed from meal plan successfully" });
+      } else {
+        res.status(404).json({ message: "Recipe not found in meal plan" });
+      }
+    } catch (error: any) {
+      console.error("Error removing recipe from meal plan:", error);
+      res.status(500).json({ message: "Error removing recipe from meal plan: " + error.message });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -1,15 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams, Link } from "wouter";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { ArrowLeft, Clock, Users, ChefHat, Leaf, X, Printer, Download } from "lucide-react";
+import { ArrowLeft, Clock, Users, ChefHat, Leaf, X, Printer, Download, Heart } from "lucide-react";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 import type { Recipe } from "@shared/schema";
+
+// Mock user ID for demo - in real app this would come from auth
+const CURRENT_USER_ID = 1;
 
 export default function RecipeDetail() {
   const { id } = useParams();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const generatePDF = () => {
@@ -110,6 +117,41 @@ export default function RecipeDetail() {
       return response.json();
     },
     enabled: !!id,
+  });
+
+  // Check if recipe is favorited
+  const { data: favoriteStatus, isLoading: favoriteLoading } = useQuery({
+    queryKey: ["/api/users", CURRENT_USER_ID, "favorites", id, "check"],
+    queryFn: () => apiRequest("GET", `/api/users/${CURRENT_USER_ID}/favorites/${id}/check`),
+    enabled: !!id,
+  });
+
+  // Toggle favorite mutation
+  const toggleFavoriteMutation = useMutation({
+    mutationFn: async () => {
+      if (favoriteStatus?.isFavorited) {
+        await apiRequest("DELETE", `/api/users/${CURRENT_USER_ID}/favorites/${id}`);
+      } else {
+        await apiRequest("POST", `/api/users/${CURRENT_USER_ID}/favorites`, { recipeId: parseInt(id!) });
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/users", CURRENT_USER_ID, "favorites", id, "check"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/users", CURRENT_USER_ID, "favorites"] });
+      toast({
+        title: favoriteStatus?.isFavorited ? "Removed from Favorites" : "Added to Favorites",
+        description: favoriteStatus?.isFavorited 
+          ? "Recipe removed from your favorites." 
+          : "Recipe added to your favorites.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to update favorites. Please try again.",
+        variant: "destructive",
+      });
+    },
   });
 
   if (isLoading) {
