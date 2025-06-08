@@ -47,9 +47,18 @@ export default function Admin() {
     protein: "",
     carbs: "",
     fat: "",
+    fiber: "",
+    sugar: "",
+    sodium: "",
+    vitaminC: "",
+    vitaminD: "",
+    calcium: "",
+    iron: "",
+    potassium: "",
     ingredients: "",
     instructions: "",
     imageUrl: "",
+    gallery: "",
   });
 
   const [workoutForm, setWorkoutForm] = useState({
