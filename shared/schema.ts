@@ -37,6 +37,7 @@ export const recipes = pgTable("recipes", {
   potassium: integer("potassium"), // in mg
   ingredients: jsonb("ingredients").$type<string[]>().notNull(),
   instructions: jsonb("instructions").$type<string[]>().notNull(),
+  content: text("content"), // Rich text content for recipe story/description
   imageUrl: text("image_url"),
   gallery: jsonb("gallery").$type<string[]>(),
   createdAt: timestamp("created_at").defaultNow(),

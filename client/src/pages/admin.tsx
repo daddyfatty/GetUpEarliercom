@@ -57,6 +57,7 @@ export default function Admin() {
     potassium: "",
     ingredients: "",
     instructions: "",
+    content: "",
     imageUrl: "",
     gallery: "",
   });
@@ -196,7 +197,9 @@ export default function Admin() {
       fat: "",
       ingredients: "",
       instructions: "",
+      content: "",
       imageUrl: "",
+      gallery: "",
     });
   };
 
@@ -423,6 +426,16 @@ export default function Admin() {
                                 placeholder="Recipe description"
                                 className="resize-none"
                                 rows={3}
+                              />
+                            </div>
+                            <div className="col-span-2">
+                              <Label>Recipe Story</Label>
+                              <Textarea
+                                value={recipeForm.content}
+                                onChange={(e) => setRecipeForm({ ...recipeForm, content: e.target.value })}
+                                placeholder="Share your authentic recipe story - cooking tips, ingredient preferences, personal touches..."
+                                className="resize-none"
+                                rows={4}
                               />
                             </div>
                             <div>

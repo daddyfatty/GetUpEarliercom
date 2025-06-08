@@ -142,6 +142,7 @@ export class MemStorage implements IStorage {
           "Stir in grated Parmesan cheese. Taste and adjust seasoning",
           "Serve hot over cooked white rice"
         ],
+        content: "An easy one I make with Bell & Evans ground chicken breast is a quick goulash! I chop up onions and a fresh green pepper (but you can use any color) and sauté them for a bit with salt, pepper, and granulated California garlic (Kirkland). Then, I throw in the pound of ground chicken breast and break it up into the peppers and onions while seasoning to taste with basil, oregano, and a little parsley. Once the chicken is white and cooked, I throw in a can of crushed tomatoes (see pic—these are my favorite tomatoes at Whole Foods). Once bubbling, bring it down to simmer for a few minutes, add some Parmesan and more salt and pepper. Then, we usually have this over white rice (frozen pouches from Trader Joe's).",
         imageUrl: "/assets/download - 2025-06-08T053914.181_1749376059784.png",
         gallery: [
           "/assets/download - 2025-06-08T053908.812_1749376059784.png",

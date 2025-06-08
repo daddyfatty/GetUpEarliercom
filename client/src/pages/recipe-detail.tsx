@@ -140,6 +140,19 @@ export default function RecipeDetail() {
               </p>
             </div>
 
+            {/* Recipe Story/Content */}
+            {(recipe as any).content && (
+              <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl p-6 border border-amber-100 dark:border-amber-800">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                  <ChefHat className="w-5 h-5 text-amber-600 dark:text-amber-400 mr-2" />
+                  Recipe Story
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
+                  {(recipe as any).content}
+                </p>
+              </div>
+            )}
+
             {/* Recipe Gallery */}
             {((recipe as any).gallery && (recipe as any).gallery.length > 0) ? (
               <div className="space-y-4">
