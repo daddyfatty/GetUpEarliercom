@@ -1,18 +1,32 @@
-import { pgTable, text, serial, integer, boolean, timestamp, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, jsonb, varchar, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+// Session storage table for Replit Auth
+export const sessions = pgTable(
+  "sessions",
+  {
+    sid: varchar("sid").primaryKey(),
+    sess: jsonb("sess").notNull(),
+    expire: timestamp("expire").notNull(),
+  },
+  (table) => [index("IDX_session_expire").on(table.expire)],
+);
+
+// User storage table for Replit Auth
 export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
-  email: text("email").notNull().unique(),
-  password: text("password").notNull(),
+  id: varchar("id").primaryKey().notNull(), // Replit user ID
+  email: varchar("email").unique(),
+  firstName: varchar("first_name"),
+  lastName: varchar("last_name"),
+  profileImageUrl: varchar("profile_image_url"),
   isAdmin: boolean("is_admin").default(false),
   subscriptionTier: text("subscription_tier").default("free"), // free, pro, premium
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),
   paypalCustomerId: text("paypal_customer_id"),
   createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const recipes = pgTable("recipes", {
@@ -65,7 +79,7 @@ export const workouts = pgTable("workouts", {
 
 export const goals = pgTable("goals", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(),
+  userId: varchar("user_id").notNull(),
   title: text("title").notNull(),
   description: text("description"),
   type: text("type").notNull(), // weight_loss, exercise_frequency, water_intake, custom
@@ -79,7 +93,7 @@ export const goals = pgTable("goals", {
 
 export const foodEntries = pgTable("food_entries", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(),
+  userId: varchar("user_id").notNull(),
   date: timestamp("date").notNull(),
   mealType: text("meal_type").notNull(), // breakfast, lunch, dinner, snack
   foodName: text("food_name").notNull(),

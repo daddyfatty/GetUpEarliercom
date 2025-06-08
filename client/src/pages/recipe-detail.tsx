@@ -11,15 +11,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft, Clock, Users, ChefHat, Leaf, X, Printer, Download, Heart } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 import type { Recipe } from "@shared/schema";
-
-// Mock user ID for demo - in real app this would come from auth
-const CURRENT_USER_ID = 1;
 
 export default function RecipeDetail() {
   const { id } = useParams();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { user, isAuthenticated } = useAuth();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [mealPlanDialog, setMealPlanDialog] = useState(false);
   const [mealPlanData, setMealPlanData] = useState({
@@ -130,22 +129,22 @@ export default function RecipeDetail() {
 
   // Check if recipe is favorited
   const { data: favoriteStatus, isLoading: favoriteLoading } = useQuery<{ isFavorited: boolean }>({
-    queryKey: [`/api/users/${CURRENT_USER_ID}/favorites/${id}/check`],
-    enabled: !!id,
+    queryKey: [`/api/users/${user?.id}/favorites/${id}/check`],
+    enabled: !!id && !!user?.id,
   });
 
   // Toggle favorite mutation
   const toggleFavoriteMutation = useMutation({
     mutationFn: async () => {
       if (favoriteStatus?.isFavorited) {
-        await apiRequest("DELETE", `/api/users/${CURRENT_USER_ID}/favorites/${id}`);
+        await apiRequest("DELETE", `/api/users/${user?.id}/favorites/${id}`);
       } else {
-        await apiRequest("POST", `/api/users/${CURRENT_USER_ID}/favorites`, { recipeId: parseInt(id!) });
+        await apiRequest("POST", `/api/users/${user?.id}/favorites`, { recipeId: parseInt(id!) });
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [`/api/users/${CURRENT_USER_ID}/favorites/${id}/check`] });
-      queryClient.invalidateQueries({ queryKey: [`/api/users/${CURRENT_USER_ID}/favorites`] });
+      queryClient.invalidateQueries({ queryKey: [`/api/users/${user?.id}/favorites/${id}/check`] });
+      queryClient.invalidateQueries({ queryKey: [`/api/users/${user?.id}/favorites`] });
       toast({
         title: favoriteStatus?.isFavorited ? "Removed from Favorites" : "Added to Favorites",
         description: favoriteStatus?.isFavorited 
