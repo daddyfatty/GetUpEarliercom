@@ -165,7 +165,7 @@ export default function RecipeDetail() {
   const createMealPlanMutation = useMutation({
     mutationFn: async () => {
       // First create the meal plan
-      const mealPlan = await apiRequest("POST", `/api/users/${CURRENT_USER_ID}/meal-plans`, {
+      const mealPlan = await apiRequest("POST", `/api/users/${user?.id}/meal-plans`, {
         name: mealPlanData.name,
         date: new Date(mealPlanData.date)
       });
@@ -179,7 +179,7 @@ export default function RecipeDetail() {
       return mealPlan;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [`/api/users/${CURRENT_USER_ID}/meal-plans`] });
+      queryClient.invalidateQueries({ queryKey: [`/api/users/${user?.id}/meal-plans`] });
       setMealPlanDialog(false);
       setMealPlanData({
         name: "",

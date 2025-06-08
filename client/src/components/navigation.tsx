@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Menu, Bell, User, LogOut } from "lucide-react";
 import logoPath from "@assets/logo_1749324568864.png";
@@ -14,9 +14,8 @@ export function Navigation() {
   const [location] = useLocation();
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-  const [loginForm, setLoginForm] = useState({ email: "", password: "" });
-  const [registerForm, setRegisterForm] = useState({ username: "", email: "", password: "" });
-  const { user, isAuthenticated, isAdmin, login, register, logout } = useAuth();
+  const [loginForm, setLoginForm] = useState({ email: "" });
+  const { user, isAuthenticated, login, logout } = useAuth();
   const { toast } = useToast();
 
   const navItems = [
@@ -31,24 +30,12 @@ export function Navigation() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(loginForm.email, loginForm.password);
+      login(loginForm.email);
       setIsLoginOpen(false);
-      setLoginForm({ email: "", password: "" });
+      setLoginForm({ email: "" });
       toast({ title: "Welcome back!" });
     } catch (error) {
       toast({ title: "Login failed", description: "Please check your credentials", variant: "destructive" });
-    }
-  };
-
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await register(registerForm.username, registerForm.email, registerForm.password);
-      setIsRegisterOpen(false);
-      setRegisterForm({ username: "", email: "", password: "" });
-      toast({ title: "Account created successfully!" });
-    } catch (error) {
-      toast({ title: "Registration failed", description: "Please try again", variant: "destructive" });
     }
   };
 
