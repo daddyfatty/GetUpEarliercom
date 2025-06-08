@@ -89,20 +89,12 @@ export default function Home() {
       {/* Stats Section */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-            <div className="p-6">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-primary" />
-              </div>
-              <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">50,000+</div>
-              <div className="text-gray-600 dark:text-gray-300">Active Users</div>
-            </div>
-            
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="p-6">
               <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Star className="w-8 h-8 text-accent" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">200+</div>
+              <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">50+</div>
               <div className="text-gray-600 dark:text-gray-300">Healthy Recipes</div>
             </div>
             
