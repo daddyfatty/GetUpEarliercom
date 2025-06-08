@@ -14,8 +14,10 @@ export function Navigation() {
   const [location] = useLocation();
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-  const [loginForm, setLoginForm] = useState({ email: "" });
+  const [loginForm, setLoginForm] = useState({ email: "", password: "" });
+  const [registerForm, setRegisterForm] = useState({ username: "", email: "", password: "" });
   const { user, isAuthenticated, login, logout } = useAuth();
+  const isAdmin = user?.email === "admin@getupear.lier.com";
   const { toast } = useToast();
 
   const navItems = [
@@ -32,10 +34,22 @@ export function Navigation() {
     try {
       login(loginForm.email);
       setIsLoginOpen(false);
-      setLoginForm({ email: "" });
+      setLoginForm({ email: "", password: "" });
       toast({ title: "Welcome back!" });
     } catch (error) {
       toast({ title: "Login failed", description: "Please check your credentials", variant: "destructive" });
+    }
+  };
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      login(registerForm.email); // For demo purposes, just log in with the email
+      setIsRegisterOpen(false);
+      setRegisterForm({ username: "", email: "", password: "" });
+      toast({ title: "Account created successfully!" });
+    } catch (error) {
+      toast({ title: "Registration failed", description: "Please try again", variant: "destructive" });
     }
   };
 
@@ -198,7 +212,7 @@ export function Navigation() {
                   </Button>
                   <Button variant="ghost" onClick={logout} className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10">
                     <User className="w-4 h-4 mr-2" />
-                    {user?.username}
+                    {user?.firstName || user?.email}
                     <LogOut className="w-4 h-4 ml-2" />
                   </Button>
                 </>
@@ -257,7 +271,7 @@ export function Navigation() {
                           Upgrade to Pro
                         </Button>
                         <Button variant="outline" onClick={logout} className="w-full">
-                          Logout ({user?.username})
+                          Logout ({user?.firstName || user?.email})
                         </Button>
                       </div>
                     )}

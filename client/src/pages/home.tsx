@@ -7,7 +7,7 @@ import { WorkoutCard } from "@/components/workout-card";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { Clock, TrendingUp, Users, Star } from "lucide-react";
+import { Clock, TrendingUp, Users, Star, ChefHat } from "lucide-react";
 import type { Recipe, Workout } from "@shared/schema";
 
 export default function Home() {
