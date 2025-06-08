@@ -7,7 +7,7 @@ import { WorkoutCard } from "@/components/workout-card";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { Clock, TrendingUp, Users, Star } from "lucide-react";
+import { Clock, TrendingUp, Star, ChefHat } from "lucide-react";
 import type { Recipe, Workout } from "@shared/schema";
 
 export default function Home() {
@@ -92,7 +92,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="p-6">
               <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Star className="w-8 h-8 text-accent" />
+                <ChefHat className="w-8 h-8 text-accent" />
               </div>
               <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">50+</div>
               <div className="text-gray-600 dark:text-gray-300">Healthy Recipes</div>
