@@ -2,6 +2,8 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Trophy } from "lucide-react";
 
+import _20250517_073713_00_00_08_03_Still003 from "@assets/20250517_073713.00_00_08_03.Still003.jpg";
+
 export function HeroSection() {
   return (
     <section className="hero-gradient text-white">
@@ -38,7 +40,7 @@ export function HeroSection() {
           
           <div className="relative">
             <img 
-              src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
+              src={_20250517_073713_00_00_08_03_Still003} 
               alt="People exercising outdoors" 
               className="rounded-2xl shadow-2xl w-full h-auto"
             />
