@@ -412,16 +412,16 @@ export default function RecipeDetail() {
               <Card>
                 <CardContent className="p-4 text-center">
                   <ChefHat className="w-6 h-6 text-[#ef4444] mx-auto mb-2" />
-                  <div className="font-semibold text-gray-900 dark:text-white">{recipe.protein || 0}g</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Protein</div>
+                  <div className="font-semibold text-gray-900 dark:text-white">{recipe.calories || 0}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Calories per serving</div>
                 </CardContent>
               </Card>
               
               <Card>
                 <CardContent className="p-4 text-center">
                   <Leaf className="w-6 h-6 text-[#ef4444] mx-auto mb-2" />
-                  <div className="font-semibold text-gray-900 dark:text-white">{recipe.carbs || 0}g</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Carbs</div>
+                  <div className="font-semibold text-gray-900 dark:text-white">{recipe.protein || 0}g</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Protein</div>
                 </CardContent>
               </Card>
             </div>
