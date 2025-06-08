@@ -103,7 +103,7 @@ export class MemStorage implements IStorage {
         id: this.currentId++,
         title: "Ground Chicken Breast Quick Goulash",
         description: "Easy one-pot goulash with Bell & Evans ground chicken breast, vegetables, and San Marzano tomatoes served over Kirkland rice",
-        category: "dinner",
+        category: "High Protein",
         dietType: "clean-eating",
         prepTime: 25,
         servings: 4,
