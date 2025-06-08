@@ -118,7 +118,7 @@ export function BookPromotion() {
           </div>
           
           <div className="text-center">
-            <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 bg-[#0d5effc9]">
               <Clock className="w-8 h-8 text-accent" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
