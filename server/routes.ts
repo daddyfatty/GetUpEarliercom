@@ -27,7 +27,7 @@ if (STRIPE_CONFIGURED) {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Serve static assets
-  app.use('/assets', express.static('./attached_assets'));
+  app.use('/assets', express.static('/home/runner/workspace/attached_assets'));
   
   // Authentication routes
   app.post("/api/auth/login", async (req, res) => {
