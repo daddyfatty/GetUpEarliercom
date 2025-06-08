@@ -104,22 +104,30 @@ export default function RecipeDetail() {
             <div>
               <div className="flex flex-wrap gap-2 mb-4">
                 {Array.isArray(recipe.category) ? recipe.category.map((cat, index) => (
-                  <Badge key={index} className="bg-[#ef4444]/10 text-[#ef4444] hover:bg-[#ef4444]/20">
-                    {getCategoryEmoji(cat)} {cat}
-                  </Badge>
+                  <Link key={index} href={`/recipes?category=${encodeURIComponent(cat)}`}>
+                    <Badge className="bg-[#ef4444]/10 text-[#ef4444] hover:bg-[#ef4444]/20 cursor-pointer transition-colors">
+                      {getCategoryEmoji(cat)} {cat}
+                    </Badge>
+                  </Link>
                 )) : (
-                  <Badge className="bg-[#ef4444]/10 text-[#ef4444] hover:bg-[#ef4444]/20">
-                    {getCategoryEmoji(recipe.category)} {recipe.category}
-                  </Badge>
+                  <Link href={`/recipes?category=${encodeURIComponent(recipe.category)}`}>
+                    <Badge className="bg-[#ef4444]/10 text-[#ef4444] hover:bg-[#ef4444]/20 cursor-pointer transition-colors">
+                      {getCategoryEmoji(recipe.category)} {recipe.category}
+                    </Badge>
+                  </Link>
                 )}
                 {recipe.dietType && Array.isArray(recipe.dietType) ? recipe.dietType.map((diet, index) => (
-                  <Badge key={index} variant="outline">
-                    {getDietIcon(diet)} {diet}
-                  </Badge>
+                  <Link key={index} href={`/recipes?dietType=${encodeURIComponent(diet)}`}>
+                    <Badge variant="outline" className="cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
+                      {getDietIcon(diet)} {diet}
+                    </Badge>
+                  </Link>
                 )) : recipe.dietType && (
-                  <Badge variant="outline">
-                    {getDietIcon(recipe.dietType)} {recipe.dietType}
-                  </Badge>
+                  <Link href={`/recipes?dietType=${encodeURIComponent(recipe.dietType)}`}>
+                    <Badge variant="outline" className="cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
+                      {getDietIcon(recipe.dietType)} {recipe.dietType}
+                    </Badge>
+                  </Link>
                 )}
               </div>
               

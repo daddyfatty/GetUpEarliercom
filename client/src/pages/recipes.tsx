@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { RecipeCard } from "@/components/recipe-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,10 +15,25 @@ import { apiRequest } from "@/lib/queryClient";
 import type { Recipe } from "@shared/schema";
 
 export default function Recipes() {
+  const [location] = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [dietFilter, setDietFilter] = useState("all");
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+
+  // Handle URL parameters for filtering
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.split('?')[1] || '');
+    const categoryParam = urlParams.get('category');
+    const dietParam = urlParams.get('dietType');
+    
+    if (categoryParam) {
+      setCategoryFilter(categoryParam);
+    }
+    if (dietParam) {
+      setDietFilter(dietParam);
+    }
+  }, [location]);
   
   const [recipeForm, setRecipeForm] = useState({
     title: "",
@@ -118,6 +134,8 @@ export default function Recipes() {
                     <SelectItem value="lunch">☀️ Lunch</SelectItem>
                     <SelectItem value="dinner">🌙 Dinner</SelectItem>
                     <SelectItem value="snack">🥜 Snacks</SelectItem>
+                    <SelectItem value="dessert">🍰 Dessert</SelectItem>
+                    <SelectItem value="finicky-kid-friendly">👶 Finicky Kid Friendly</SelectItem>
                   </SelectContent>
                 </Select>
                 
