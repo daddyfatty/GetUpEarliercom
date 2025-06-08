@@ -97,12 +97,12 @@ export class MemStorage implements IStorage {
     this.users.set(adminUser.id, adminUser);
     this.users.set(regularUser.id, regularUser);
 
-    // Seed recipes with comprehensive nutritional data and gallery support
+    // Seed with your authentic Ground Chicken Breast Quick Goulash recipe
     const sampleRecipes: Recipe[] = [
       {
         id: this.currentId++,
         title: "Ground Chicken Breast Quick Goulash",
-        description: "Easy one-pot goulash with Bell & Evans ground chicken breast, vegetables, and tomatoes served over rice",
+        description: "Easy one-pot goulash with Bell & Evans ground chicken breast, vegetables, and San Marzano tomatoes served over Kirkland rice",
         category: "dinner",
         dietType: "clean-eating",
         prepTime: 25,
@@ -122,7 +122,7 @@ export class MemStorage implements IStorage {
         ingredients: [
           "1 lb Bell & Evans ground chicken breast",
           "1 large onion, diced",
-          "1 bell pepper, diced",
+          "1 bell pepper, diced", 
           "2 cloves garlic, minced",
           "1 can (14.5 oz) San Marzano crushed tomatoes",
           "2 tablespoons tomato paste",
@@ -136,7 +136,7 @@ export class MemStorage implements IStorage {
           "Heat olive oil in a large skillet over medium-high heat",
           "Add ground chicken breast and cook until browned, breaking up with spoon",
           "Add diced onion and bell pepper. Cook 5-7 minutes until vegetables soften",
-          "Add minced garlic and cook another minute until fragrant",
+          "Add minced garlic and cook another minute until fragrant", 
           "Stir in tomato paste, paprika, and thyme. Cook 1-2 minutes",
           "Pour in crushed tomatoes and stir well. Bring to gentle boil, then reduce heat and simmer 5-10 minutes",
           "Stir in grated Parmesan cheese. Taste and adjust seasoning",
@@ -145,7 +145,7 @@ export class MemStorage implements IStorage {
         imageUrl: "/attached_assets/download - 2025-06-08T053914.181_1749376059784.png",
         gallery: [
           "/attached_assets/download - 2025-06-08T053908.812_1749376059784.png",
-          "/attached_assets/download - 2025-06-08T053914.181_1749376059784.png", 
+          "/attached_assets/download - 2025-06-08T053914.181_1749376059784.png",
           "/attached_assets/download - 2025-06-08T053921.230_1749376059785.png"
         ],
         createdAt: new Date(),
@@ -200,8 +200,16 @@ export class MemStorage implements IStorage {
   async createRecipe(insertRecipe: InsertRecipe): Promise<Recipe> {
     const recipe: Recipe = { 
       id: this.currentId++, 
-      ...insertRecipe,
+      title: insertRecipe.title,
+      description: insertRecipe.description,
+      category: insertRecipe.category,
       dietType: insertRecipe.dietType ?? null,
+      prepTime: insertRecipe.prepTime,
+      servings: insertRecipe.servings,
+      calories: insertRecipe.calories,
+      protein: insertRecipe.protein,
+      carbs: insertRecipe.carbs,
+      fat: insertRecipe.fat,
       fiber: insertRecipe.fiber ?? null,
       sugar: insertRecipe.sugar ?? null,
       sodium: insertRecipe.sodium ?? null,
@@ -210,6 +218,8 @@ export class MemStorage implements IStorage {
       calcium: insertRecipe.calcium ?? null,
       iron: insertRecipe.iron ?? null,
       potassium: insertRecipe.potassium ?? null,
+      ingredients: insertRecipe.ingredients,
+      instructions: insertRecipe.instructions,
       imageUrl: insertRecipe.imageUrl ?? null,
       gallery: insertRecipe.gallery ?? null,
       createdAt: new Date()
