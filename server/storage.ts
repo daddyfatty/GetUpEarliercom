@@ -142,6 +142,7 @@ export class MemStorage implements IStorage {
         ingredients: ["2 pastured eggs", "1 medium roasted sweet potato", "1 cup organic spinach", "1/4 avocado", "1 tbsp hemp hearts", "Sea salt and black pepper"],
         instructions: ["Roast sweet potato at 400°F for 25 minutes until tender", "Sauté spinach with a pinch of salt until wilted", "Cook eggs to your preference (scrambled or over-easy)", "Dice avocado and sweet potato into bite-sized pieces", "Assemble bowl with spinach base, top with eggs, sweet potato, avocado and hemp hearts"],
         imageUrl: "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-4.0.3",
+        gallery: null,
         createdAt: new Date(),
       },
       {
@@ -167,6 +168,7 @@ export class MemStorage implements IStorage {
         ingredients: ["1 cup oats", "2 eggs", "1 banana", "1 scoop protein powder", "1 cup berries"],
         instructions: ["Blend oats into flour", "Mix all ingredients", "Cook pancakes", "Top with berries"],
         imageUrl: "https://images.unsplash.com/photo-1528207776546-365bb710ee93?ixlib=rb-4.0.3",
+        gallery: null,
         createdAt: new Date(),
       },
       {
@@ -254,7 +256,12 @@ export class MemStorage implements IStorage {
           "Stir in grated Parmesan cheese. Taste and adjust seasoning",
           "Serve hot over cooked white rice"
         ],
-        imageUrl: "https://images.unsplash.com/photo-1574484284002-952d92456975?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+        imageUrl: "/attached_assets/download - 2025-06-08T053914.181_1749376059784.png",
+        gallery: [
+          "/attached_assets/download - 2025-06-08T053908.812_1749376059784.png",
+          "/attached_assets/download - 2025-06-08T053914.181_1749376059784.png", 
+          "/attached_assets/download - 2025-06-08T053921.230_1749376059785.png"
+        ],
         createdAt: new Date(),
       },
       {

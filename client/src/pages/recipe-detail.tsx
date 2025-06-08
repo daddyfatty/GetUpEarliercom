@@ -122,8 +122,28 @@ export default function RecipeDetail() {
               </p>
             </div>
 
-            {/* Recipe Image */}
-            {recipe.imageUrl && (
+            {/* Recipe Gallery */}
+            {((recipe as any).gallery && (recipe as any).gallery.length > 0) ? (
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Recipe Photos</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {((recipe as any).gallery as string[]).map((imageUrl: string, index: number) => (
+                    <div key={index} className="relative">
+                      <img 
+                        src={imageUrl} 
+                        alt={`${recipe.title} - Photo ${index + 1}`}
+                        className="w-full h-48 object-cover rounded-xl shadow-lg cursor-pointer hover:scale-105 transition-transform"
+                        onClick={() => {
+                          // Open image in modal or larger view
+                          window.open(imageUrl, '_blank');
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-xl"></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : recipe.imageUrl && (
               <div className="relative">
                 <img 
                   src={recipe.imageUrl} 

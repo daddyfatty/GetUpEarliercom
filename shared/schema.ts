@@ -38,6 +38,7 @@ export const recipes = pgTable("recipes", {
   ingredients: jsonb("ingredients").$type<string[]>().notNull(),
   instructions: jsonb("instructions").$type<string[]>().notNull(),
   imageUrl: text("image_url"),
+  gallery: jsonb("gallery").$type<string[]>(),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
