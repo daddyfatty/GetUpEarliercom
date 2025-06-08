@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Star, Leaf, Clock, TrendingUp } from "lucide-react";
 import { useLocation } from "wouter";
 
+import _493414479_10213588193416986_7983427679426833080_n from "@assets/493414479_10213588193416986_7983427679426833080_n.jpg";
+
 export function BookPromotion() {
   const [, navigate] = useLocation();
 
@@ -73,7 +75,7 @@ export function BookPromotion() {
 
             <div className="relative">
               <img 
-                src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=600" 
+                src={_493414479_10213588193416986_7983427679426833080_n} 
                 alt="Get Up Earlier Recipe Book" 
                 className="rounded-2xl shadow-2xl w-full h-auto"
               />
