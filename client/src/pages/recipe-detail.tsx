@@ -23,7 +23,7 @@ export default function RecipeDetail() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#61c493] mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ef4444] mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-300">Loading recipe...</p>
         </div>
       </div>
@@ -37,7 +37,7 @@ export default function RecipeDetail() {
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Recipe not found</h2>
           <p className="text-gray-600 dark:text-gray-300 mb-8">The recipe you're looking for doesn't exist.</p>
           <Link href="/recipes">
-            <Button className="bg-[#61c493] hover:bg-[#61c493]/90">
+            <Button className="bg-[#ef4444] hover:bg-[#ef4444]/90">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Recipes
             </Button>

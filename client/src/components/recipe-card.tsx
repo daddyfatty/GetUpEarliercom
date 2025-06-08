@@ -57,7 +57,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
               <span className="flex items-center">
-                <Dumbbell className="w-4 h-4 text-[#61c493] mr-1" />
+                <Dumbbell className="w-4 h-4 text-[#ef4444] mr-1" />
                 {recipe.protein}g protein
               </span>
               <span className="text-gray-400">•</span>
@@ -66,7 +66,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
             <Button 
               variant="ghost" 
               size="sm"
-              className="text-[#61c493] hover:text-[#61c493]/80 font-medium"
+              className="text-[#ef4444] hover:text-[#ef4444]/80 font-medium"
             >
               View Recipe
               <ArrowRight className="w-4 h-4 ml-1" />
