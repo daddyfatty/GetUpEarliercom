@@ -7,36 +7,46 @@ import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T1
 export default function Coaching() {
   const services = [
     {
-      title: "Personal Training",
-      description: "One-on-one strength training sessions designed for your specific fitness level and goals.",
-      features: ["Custom workout plans", "Proper form instruction", "Progressive overload", "Equipment guidance"],
+      title: "1-on-1 Personal Strength Training",
+      description: "Powerful, distraction-free 30-minute workouts incorporating traditional compound free-weight movements, bodyweight exercises, and outdoor activities.",
       icon: Activity,
       color: "text-blue-600",
       bgColor: "bg-blue-50"
     },
     {
-      title: "Running Coaching",
-      description: "Structured training plans for all distances from 5K to marathon with technique focus.",
-      features: ["Training periodization", "Running form analysis", "Injury prevention", "Race preparation"],
-      icon: Target,
+      title: "Virtual Nutrition Coaching",
+      description: "Providing education on clean eating, understanding calories, healthy digital shopping, and creating personalized, sustainable meal plans.",
+      icon: Heart,
       color: "text-green-600",
       bgColor: "bg-green-50"
     },
     {
-      title: "Nutrition Coaching",
-      description: "Fundamental nutrition education and sustainable healthy eating habit development.",
-      features: ["Macro understanding", "Meal planning", "Intuitive eating", "Lifestyle integration"],
-      icon: Heart,
+      title: "Accountability Coaching",
+      description: "Identify unhealthy habits and break free with small changes, learning to be intuitive in real life without relying on a facility, AI, or an app. 1-on-1 live.",
+      icon: Target,
       color: "text-red-600",
       bgColor: "bg-red-50"
     },
     {
-      title: "Yoga & Mobility",
-      description: "Yoga-inspired stretching and movement practices for flexibility and mindfulness.",
-      features: ["Flexibility improvement", "Stress reduction", "Balance training", "Mind-body connection"],
+      title: "Certified Running Coaching",
+      description: "I work alongside beginner runners to help them break through their own limits. Learn how to progress from never running to completing a 5K, a 5-miler, or more.",
       icon: Users,
       color: "text-purple-600",
       bgColor: "bg-purple-50"
+    },
+    {
+      title: "Private Yoga",
+      description: "Immerse yourself in a personalized yoga experience.",
+      icon: Activity,
+      color: "text-indigo-600",
+      bgColor: "bg-indigo-50"
+    },
+    {
+      title: "Small Group Yoga",
+      description: "Elevate your yoga practice with our semi-private Vinyasa yoga sessions.",
+      icon: Users,
+      color: "text-pink-600",
+      bgColor: "bg-pink-50"
     }
   ];
 
@@ -129,35 +139,35 @@ export default function Coaching() {
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Coaching Services</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Services</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Comprehensive wellness support tailored to your individual needs and goals
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <Card key={index} className="h-full">
+                <Card key={index} className="h-full flex flex-col">
                   <CardHeader>
                     <div className={`w-12 h-12 ${service.bgColor} rounded-lg flex items-center justify-center mb-4`}>
                       <Icon className={`h-6 w-6 ${service.color}`} />
                     </div>
                     <CardTitle className="text-xl">{service.title}</CardTitle>
-                    <CardDescription className="text-base">
+                    <CardDescription className="text-base leading-relaxed">
                       {service.description}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {service.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center text-gray-600">
-                          <div className="w-2 h-2 bg-[hsl(var(--orange))] rounded-full mr-3 flex-shrink-0"></div>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
+                  <CardContent className="flex-1 flex flex-col justify-end">
+                    <Button 
+                      variant="outline" 
+                      className="w-full group"
+                      onClick={() => window.open('https://calendly.com/michaelbakerdigital/30minute', '_blank')}
+                    >
+                      Read More
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
                   </CardContent>
                 </Card>
               );
