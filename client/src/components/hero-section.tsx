@@ -13,7 +13,7 @@ export function HeroSection() {
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 font-brand">Back to Basics: Strength Training, Clean Eating & Accountability</h1>
             <p className="text-xl mb-8 text-blue-100">
               Bridge the gap from inactivity and poor diet to strength and healthy habits. 
-              Personal training, nutrition coaching, and accountability that actually works.
+              Strength training, nutrition coaching, and accountability that actually works.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/recipes">

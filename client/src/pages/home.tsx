@@ -25,14 +25,11 @@ export default function Home() {
   return (
     <div className="w-full">
       <HeroSection />
-      
       {/* Featured Recipes Section */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Featured Recipes
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Latest Recipes</h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Discover nutritious, delicious recipes updated weekly. From quick breakfasts to hearty dinners.
             </p>
@@ -57,7 +54,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Featured Workouts Section */}
       <section className="py-16 bg-gray-100 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -85,7 +81,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Stats Section */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -116,7 +111,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       <BookPromotion />
       <SubscriptionTiers />
       <NewsletterSignup />
