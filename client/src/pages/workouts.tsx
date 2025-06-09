@@ -29,6 +29,10 @@ export default function Workouts() {
     { value: "cardio", label: "Cardio" },
     { value: "flexibility", label: "Flexibility" },
     { value: "hiit", label: "HIIT" },
+    { value: "yoga", label: "Yoga" },
+    { value: "calisthenics", label: "Calisthenics" },
+    { value: "running", label: "Running" },
+    { value: "hiking", label: "Hiking" },
   ];
 
   return (
