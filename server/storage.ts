@@ -275,7 +275,13 @@ export class MemStorage implements IStorage {
           "Break apart and enjoy."
         ],
         content: "I can sustain most normal runs of up to 7 miles fully fasted without problems. If I'm doing intervals or a tempo run within that mile range, I like to have at least a banana beforehand. For 7-14 miles, a banana and a tablespoon of honey work well. Beyond 14 miles, carbs, electrolytes, hydration, and fueling become very important and a bit complicated. And if you plan to run a full marathon, proper fueling is important. Raisin bagels are the fast n easy if you don't have gut issues with grains.",
-        imageUrl: "/attached_assets/image_1749485199260.png",
+        imageUrl: "/attached_assets/download - 2025-06-09T133928.624_1749490827985.png",
+        gallery: [
+          "/attached_assets/download - 2025-06-09T133928.624_1749490827985.png",
+          "/attached_assets/download - 2025-06-09T133933.866_1749490827986.png",
+          "/attached_assets/download - 2025-06-09T133947.197_1749490827986.png"
+        ],
+        videoUrl: null,
         createdAt: new Date(),
       }
     ];
