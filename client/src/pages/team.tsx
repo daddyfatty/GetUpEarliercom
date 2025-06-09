@@ -8,6 +8,7 @@ import ericaPath from "@assets/678ab3d4caec71062e65470f_erddd_1749497849578.jpg"
 import personalTrainerBadge from "@assets/67910d333568168655f4b0e8_Badges-PT (1)_1749504702546.png";
 import nutritionBadge from "@assets/67910ddf1426fe137b7a5cfa_HCTP_INHC_Badge (1)-p-500 (1)_1749504702546.png";
 import runningCoachBadge from "@assets/67910e09c2597e3ff6174ecb_Badges-run-coach (1)_1749504702546.png";
+import rytMikeBadge from "@assets/RYTMIKE_1749505314924.png";
 import eryBadge from "@assets/67910e23033a488a11f42952_erty (1)_1749505199203.png";
 import yaerBadge from "@assets/YAER_1749505224126.png";
 
@@ -44,7 +45,7 @@ export default function Team() {
                   </div>
                   <CardTitle className="text-xl mb-2">Michael Baker</CardTitle>
                   <CardDescription className="mb-4">
-                    Certified Personal Trainer & Nutrition Coach
+                    Certified Personal Trainer, Nutrition Coach & Running Coach
                   </CardDescription>
                   
                   {/* Professional Certification Badges */}
@@ -62,6 +63,11 @@ export default function Team() {
                     <img 
                       src={runningCoachBadge} 
                       alt="ISSA Running Coach Certified" 
+                      className="h-12 w-auto"
+                    />
+                    <img 
+                      src={rytMikeBadge} 
+                      alt="RYT 200 Registered Yoga Teacher" 
                       className="h-12 w-auto"
                     />
                   </div>
