@@ -85,7 +85,9 @@ export function Navigation() {
         isScrolled ? 'shadow-lg' : ''
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-28 md:h-12">
+          <div className={`flex justify-between items-center h-28 transition-all duration-300 ${
+            isScrolled ? 'md:h-20' : 'md:h-12'
+          }`}>
             {/* Mobile Logo */}
             <div className="flex items-center md:hidden">
               <Link href="/">
@@ -105,7 +107,7 @@ export function Navigation() {
                 <img 
                   src={logoPath} 
                   alt="Get Up Earlier" 
-                  className="h-10 w-auto object-contain"
+                  className="h-20 w-auto object-contain"
                 />
               </Link>
             </div>
