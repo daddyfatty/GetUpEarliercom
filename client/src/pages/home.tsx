@@ -47,7 +47,11 @@ export default function Home() {
 
           <div className="text-center mt-12">
             <Link href="/recipes">
-              <Button size="lg" className="bg-primary hover:bg-primary/90">
+              <Button 
+                size="lg" 
+                className="font-semibold text-white hover:opacity-90"
+                style={{ backgroundColor: '#ef4444' }}
+              >
                 View All Recipes
               </Button>
             </Link>
@@ -74,7 +78,11 @@ export default function Home() {
 
           <div className="text-center mt-12">
             <Link href="/workouts">
-              <Button size="lg" className="bg-primary hover:bg-primary/90">
+              <Button 
+                size="lg" 
+                className="font-semibold text-black hover:opacity-90"
+                style={{ backgroundColor: '#B3D7E9' }}
+              >
                 View All Workouts
               </Button>
             </Link>
