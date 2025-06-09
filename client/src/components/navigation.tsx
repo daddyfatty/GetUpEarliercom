@@ -63,7 +63,7 @@ export function Navigation() {
               <img 
                 src={logoPath} 
                 alt="Get Up Earlier" 
-                className="h-20 w-auto max-w-[500px] object-contain"
+                className="h-20 md:h-20 w-auto max-w-[450px] md:max-w-[500px] object-contain"
               />
             </Link>
 
@@ -230,8 +230,8 @@ export function Navigation() {
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="sm" className="text-white hover:text-white hover:bg-white/10">
-                  <Menu className="w-5 h-5" />
+                <Button variant="ghost" size="lg" className="text-white hover:text-white hover:bg-white/10 p-4">
+                  <Menu className="w-8 h-8" />
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-80">
