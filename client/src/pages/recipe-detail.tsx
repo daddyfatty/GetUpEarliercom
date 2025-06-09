@@ -21,11 +21,6 @@ export default function RecipeDetail() {
   const queryClient = useQueryClient();
   const { user, isAuthenticated } = useAuth();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  // Scroll to top when recipe loads
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
   const [mealPlanDialog, setMealPlanDialog] = useState(false);
   const [volumeMultiplier, setVolumeMultiplier] = useState(1);
   const [customServing, setCustomServing] = useState("");
@@ -35,6 +30,11 @@ export default function RecipeDetail() {
     date: new Date().toISOString().split('T')[0],
     mealType: "breakfast"
   });
+
+  // Scroll to top when recipe loads
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
   // Function to parse serving size input and calculate multiplier
   const parseServingInput = (input: string, originalServing: string) => {
@@ -215,6 +215,13 @@ export default function RecipeDetail() {
     },
     enabled: !!id,
   });
+
+  // Initialize custom serving with default value when recipe loads
+  useEffect(() => {
+    if (recipe && (recipe as any).servingSize && !customServing) {
+      setCustomServing((recipe as any).servingSize);
+    }
+  }, [recipe, customServing]);
 
   // Check if recipe is favorited
   const { data: favoriteStatus, isLoading: favoriteLoading } = useQuery<{ isFavorited: boolean }>({
