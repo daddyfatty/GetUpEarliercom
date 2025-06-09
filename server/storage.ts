@@ -166,6 +166,7 @@ export class MemStorage implements IStorage {
         ],
         content: "An easy one I make with Bell & Evans ground chicken breast is a quick goulash! I chop up onions and a fresh green pepper (but you can use any color) and sauté them for a bit with salt, pepper, and granulated California garlic (Kirkland). Then, I throw in the pound of ground chicken breast and break it up into the peppers and onions while seasoning to taste with basil, oregano, and a little parsley. Once the chicken is white and cooked, I throw in a can of crushed tomatoes (see pic—these are my favorite tomatoes at Whole Foods). Once bubbling, bring it down to simmer for a few minutes, add some Parmesan and more salt and pepper. Then, we usually have this over white rice (frozen pouches from Trader Joe's).",
         imageUrl: "/assets/download - 2025-06-08T053914.181_1749376059784.png",
+        videoUrl: null,
         gallery: [
           "/assets/download - 2025-06-08T053908.812_1749376059784.png",
           "/assets/download - 2025-06-08T053914.181_1749376059784.png",
@@ -221,13 +222,13 @@ export class MemStorage implements IStorage {
           "Store in an airtight container."
         ],
         content: "This granola is awesome. It is my go-to carb-loading snack for marathon training and my family eats it up for breakfast or snacking. I created it out of frustration with low-quality store-bought options full of added sugar, seed oils, and tiny bags for high prices. I wanted a cleaner, more natural option with high-quality carbs, healthy fats, and balanced sweetness to fuel my long runs without compromising nutrition. I modeled it after brands like Purely Elizabeth and Grandy Organics but replaced the processed ingredients with raw honey and pure maple syrup as sweeteners and binders, and grass-fed butter for better fats and flavor. Raw honey is perfect for endurance, offering quick, digestible carbs with a low glycemic index for steady energy. It also provides antioxidants and essential minerals like potassium and magnesium to support muscle function and recovery. This granola's mix of slow- and fast-digesting carbs, healthy fats, and protein makes it ideal for carb-loading and supporting energy levels during long runs and workouts.",
-        imageUrl: "/assets/download - 2025-06-09T131947.822_1749489653696.png",
+        imageUrl: "/attached_assets/download - 2025-06-09T131947.822_1749489653696.png",
         videoUrl: "https://www.youtube.com/watch?v=bDovNcN5Dl4",
         gallery: [
-          "/assets/download - 2025-06-09T131947.822_1749489653696.png",
-          "/assets/download - 2025-06-09T131953.710_1749489653696.png",
-          "/assets/download - 2025-06-09T132001.684_1749489653696.png",
-          "/assets/download - 2025-06-09T132007.147_1749489653697.png"
+          "/attached_assets/download - 2025-06-09T131947.822_1749489653696.png",
+          "/attached_assets/download - 2025-06-09T131953.710_1749489653696.png",
+          "/attached_assets/download - 2025-06-09T132001.684_1749489653696.png",
+          "/attached_assets/download - 2025-06-09T132007.147_1749489653697.png"
         ],
         createdAt: new Date(),
       }

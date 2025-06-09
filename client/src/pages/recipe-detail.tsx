@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams, Link } from "wouter";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -21,6 +21,11 @@ export default function RecipeDetail() {
   const queryClient = useQueryClient();
   const { user, isAuthenticated } = useAuth();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  // Scroll to top when recipe loads
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
   const [mealPlanDialog, setMealPlanDialog] = useState(false);
   const [volumeMultiplier, setVolumeMultiplier] = useState(1);
   const [customServing, setCustomServing] = useState("");
