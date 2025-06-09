@@ -51,7 +51,7 @@ export function BookPromotion() {
             <div>
               <h2 className="text-3xl md:text-5xl font-bold mb-6 font-brand">
                 Get Up Earlier
-                <span className="block text-blue-200">Eat Clean & Lean</span>
+                <span className="block text-blue-200">Guide to Eating Clean & Lean</span>
               </h2>
               <p className="text-xl mb-8 text-blue-100">The last diet advice you'll ever need! Recipes and tips to focus on protein, eat real food and hit your target macros, fuel your best life with practical, balanced nutrition. </p>
               
