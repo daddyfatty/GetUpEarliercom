@@ -42,7 +42,7 @@ export function Navigation() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(loginForm.email, loginForm.password);
+      login(loginForm.email);
       setIsLoginOpen(false);
       setLoginForm({ email: "", password: "" });
       toast({ title: "Welcome back!", description: "You've been logged in successfully." });
@@ -54,7 +54,7 @@ export function Navigation() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(registerForm.email, registerForm.password);
+      login(registerForm.email);
       setIsRegisterOpen(false);
       setRegisterForm({ username: "", email: "", password: "" });
       toast({ title: "Account created!", description: "Welcome to Get Up Earlier!" });
@@ -93,6 +93,19 @@ export function Navigation() {
                   src={logoPath} 
                   alt="Get Up Earlier" 
                   className="h-24 w-auto max-w-[600px] object-contain"
+                />
+              </Link>
+            </div>
+
+            {/* Desktop Logo (appears when scrolled) */}
+            <div className={`hidden md:flex items-center transition-all duration-300 ${
+              isScrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+            }`}>
+              <Link href="/">
+                <img 
+                  src={logoPath} 
+                  alt="Get Up Earlier" 
+                  className="h-10 w-auto object-contain"
                 />
               </Link>
             </div>
