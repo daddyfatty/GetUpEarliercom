@@ -16,12 +16,12 @@ export function HeroSection() {
               Strength training, nutrition coaching, and accountability that actually works.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/recipes">
+              <Link href="/workouts">
                 <Button 
                   size="lg"
                   className="bg-white text-primary hover:bg-gray-100 font-semibold"
                 >
-                  Start Free Trial
+                  View Workouts
                 </Button>
               </Link>
               <Link href="/recipes">
