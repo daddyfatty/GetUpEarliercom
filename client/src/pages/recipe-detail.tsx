@@ -509,35 +509,30 @@ export default function RecipeDetail() {
                     </div>
                   </div>
                   
-                  <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Micronutrients</h4>
-                    <div className="space-y-2">
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-gray-600 dark:text-gray-400">Vitamin C</span>
-                        <span className="font-semibold text-gray-900 dark:text-white">{(recipe as any).vitaminC || 0}mg</span>
+                  {(() => {
+                    const micronutrients = [
+                      { name: 'Vitamin C', value: (recipe as any).vitaminC, unit: 'mg' },
+                      { name: 'Vitamin D', value: (recipe as any).vitaminD, unit: 'IU' },
+                      { name: 'Calcium', value: (recipe as any).calcium, unit: 'mg' },
+                      { name: 'Iron', value: (recipe as any).iron, unit: 'mg' },
+                      { name: 'Potassium', value: (recipe as any).potassium, unit: 'mg' },
+                      { name: 'Sodium', value: (recipe as any).sodium, unit: 'mg' }
+                    ].filter(nutrient => nutrient.value && nutrient.value > 0);
+
+                    return micronutrients.length > 0 ? (
+                      <div>
+                        <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Micronutrients</h4>
+                        <div className="space-y-2">
+                          {micronutrients.map((nutrient, index) => (
+                            <div key={index} className="flex justify-between items-center py-1">
+                              <span className="text-gray-600 dark:text-gray-400">{nutrient.name}</span>
+                              <span className="font-semibold text-gray-900 dark:text-white">{nutrient.value}{nutrient.unit}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-gray-600 dark:text-gray-400">Vitamin D</span>
-                        <span className="font-semibold text-gray-900 dark:text-white">{(recipe as any).vitaminD || 0}IU</span>
-                      </div>
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-gray-600 dark:text-gray-400">Calcium</span>
-                        <span className="font-semibold text-gray-900 dark:text-white">{(recipe as any).calcium || 0}mg</span>
-                      </div>
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-gray-600 dark:text-gray-400">Iron</span>
-                        <span className="font-semibold text-gray-900 dark:text-white">{(recipe as any).iron || 0}mg</span>
-                      </div>
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-gray-600 dark:text-gray-400">Potassium</span>
-                        <span className="font-semibold text-gray-900 dark:text-white">{(recipe as any).potassium || 0}mg</span>
-                      </div>
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-gray-600 dark:text-gray-400">Sodium</span>
-                        <span className="font-semibold text-gray-900 dark:text-white">{(recipe as any).sodium || 0}mg</span>
-                      </div>
-                    </div>
-                  </div>
+                    ) : null;
+                  })()}
                 </div>
               </CardContent>
             </Card>
