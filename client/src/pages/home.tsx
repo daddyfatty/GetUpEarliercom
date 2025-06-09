@@ -1,4 +1,5 @@
 import { HeroSection } from "@/components/hero-section";
+import { CoachingSection } from "@/components/coaching-section";
 import { BookPromotion } from "@/components/book-promotion";
 import { SubscriptionTiers } from "@/components/subscription-tiers";
 import { NewsletterSignup } from "@/components/newsletter-signup";
@@ -119,6 +120,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <CoachingSection />
       <BookPromotion />
       <SubscriptionTiers />
       <NewsletterSignup />
