@@ -292,6 +292,52 @@ export class MemStorage implements IStorage {
     sampleRecipes.forEach(recipe => {
       this.recipes.set(recipe.id, recipe);
     });
+
+    // Seed with workout from YouTube video
+    const sampleWorkouts: Workout[] = [
+      {
+        id: this.currentId++,
+        title: "Chest & Biceps Finisher - The Ultimate Push-up Workout - Body Weight & Iron Master Dumbbells",
+        description: "An intense chest and biceps finisher workout combining bodyweight push-ups with dumbbell exercises for maximum muscle engagement and strength building.",
+        category: "strength",
+        duration: 30,
+        difficulty: "intermediate",
+        caloriesBurned: 250,
+        equipment: ["dumbbells", "bodyweight"],
+        exercises: [
+          {
+            name: "Standard Push-ups",
+            sets: 3,
+            reps: "8-12",
+            description: "Classic push-up with hands shoulder-width apart, maintaining straight body line from head to heels"
+          },
+          {
+            name: "Diamond Push-ups", 
+            sets: 2,
+            reps: "6-10",
+            description: "Push-ups with hands forming diamond shape, targeting triceps and inner chest"
+          },
+          {
+            name: "Dumbbell Bicep Curls",
+            sets: 3,
+            reps: "10-15",
+            description: "Standing bicep curls with controlled movement, focusing on muscle contraction"
+          },
+          {
+            name: "Dumbbell Chest Press",
+            sets: 3,
+            reps: "8-12",
+            description: "Chest press lying on bench or floor, full range of motion for chest development"
+          }
+        ],
+        imageUrl: null,
+        createdAt: new Date(),
+      }
+    ];
+
+    sampleWorkouts.forEach(workout => {
+      this.workouts.set(workout.id, workout);
+    });
   }
 
   async getUser(id: number): Promise<User | undefined> {
@@ -391,12 +437,42 @@ export class MemStorage implements IStorage {
   }
 
   // Placeholder implementations for other methods
-  async getWorkouts(): Promise<Workout[]> { return []; }
-  async getWorkout(id: number): Promise<Workout | undefined> { return undefined; }
-  async createWorkout(workout: InsertWorkout): Promise<Workout> { throw new Error("Not implemented"); }
-  async updateWorkout(id: number, updates: Partial<Workout>): Promise<Workout | undefined> { return undefined; }
-  async deleteWorkout(id: number): Promise<boolean> { return false; }
-  async getWorkoutsByCategory(category: string): Promise<Workout[]> { return []; }
+  async getWorkouts(): Promise<Workout[]> { 
+    return Array.from(this.workouts.values()); 
+  }
+  
+  async getWorkout(id: number): Promise<Workout | undefined> { 
+    return this.workouts.get(id); 
+  }
+  
+  async createWorkout(insertWorkout: InsertWorkout): Promise<Workout> { 
+    const workout: Workout = { 
+      id: this.currentId++, 
+      ...insertWorkout, 
+      createdAt: new Date() 
+    };
+    this.workouts.set(workout.id, workout);
+    return workout;
+  }
+  
+  async updateWorkout(id: number, updates: Partial<Workout>): Promise<Workout | undefined> { 
+    const workout = this.workouts.get(id);
+    if (!workout) return undefined;
+    
+    const updatedWorkout = { ...workout, ...updates };
+    this.workouts.set(id, updatedWorkout);
+    return updatedWorkout;
+  }
+  
+  async deleteWorkout(id: number): Promise<boolean> { 
+    return this.workouts.delete(id);
+  }
+  
+  async getWorkoutsByCategory(category: string): Promise<Workout[]> { 
+    return Array.from(this.workouts.values()).filter(workout => 
+      workout.category === category
+    );
+  }
   async getUserGoals(userId: number): Promise<Goal[]> { return []; }
   async getGoal(id: number): Promise<Goal | undefined> { return undefined; }
   async createGoal(goal: InsertGoal): Promise<Goal> { throw new Error("Not implemented"); }
