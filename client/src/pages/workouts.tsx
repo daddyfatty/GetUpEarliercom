@@ -224,15 +224,16 @@ export default function Workouts() {
                         </Button>
                       </Link>
                       {youtubeId && (
-                        <Button 
-                          variant="outline" 
-                          size="sm"
-                          className="flex-1"
-                          onClick={() => window.open(`https://www.youtube.com/watch?v=${youtubeId}`, '_blank')}
-                        >
-                          <Play className="w-4 h-4 mr-2" />
-                          Watch Video
-                        </Button>
+                        <Link href={`/workouts/${workout.id}/video`}>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            className="flex-1"
+                          >
+                            <Play className="w-4 h-4 mr-2" />
+                            Watch Video
+                          </Button>
+                        </Link>
                       )}
                     </div>
                   </CardContent>

@@ -3,17 +3,20 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Clock, Flame, Star, Dumbbell, Play, ArrowLeft, CheckCircle } from "lucide-react";
+import { Clock, Flame, Star, Dumbbell, ArrowLeft, Lock, Crown } from "lucide-react";
 import { Link } from "wouter";
 import type { Workout } from "@shared/schema";
 
-export default function WorkoutDetail() {
+export default function WorkoutVideo() {
   const { id } = useParams();
   
   const { data: workout, isLoading } = useQuery({
     queryKey: ["/api/workouts", id],
     queryFn: () => fetch(`/api/workouts/${id}`).then(res => res.json()),
   });
+
+  // Mock subscription status - this will be replaced with real auth
+  const hasSubscription = true; // Set to false to test paywall
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -97,40 +100,82 @@ export default function WorkoutDetail() {
   const difficultyStars = getDifficultyStars(workout.difficulty);
   const youtubeId = workout.videoUrl ? extractYouTubeId(workout.videoUrl) : null;
 
+  // Paywall Component
+  const PaywallOverlay = () => (
+    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-10">
+      <Card className="max-w-md mx-auto bg-white/95 dark:bg-gray-800/95">
+        <CardHeader className="text-center">
+          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center mb-4">
+            <Crown className="w-8 h-8 text-white" />
+          </div>
+          <CardTitle className="text-2xl text-gray-900 dark:text-white">
+            Premium Content
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="text-center space-y-4">
+          <p className="text-gray-600 dark:text-gray-300">
+            This workout video is available to premium subscribers only. 
+            Unlock access to all workout videos and personalized coaching.
+          </p>
+          <div className="space-y-2">
+            <Link href="/subscribe">
+              <Button className="w-full">
+                <Crown className="w-4 h-4 mr-2" />
+                Upgrade to Premium
+              </Button>
+            </Link>
+            <Link href="/workouts">
+              <Button variant="outline" className="w-full">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Workouts
+              </Button>
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
-          <Link href="/workouts">
+          <Link href={`/workouts/${workout.id}`}>
             <Button variant="outline" className="mb-6">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Workouts
+              Back to Workout Details
             </Button>
           </Link>
 
-          {/* Video Preview Section */}
+          {/* Video Section */}
           {youtubeId && (
             <Card className="mb-8 overflow-hidden bg-white/80 backdrop-blur-sm dark:bg-gray-800/80">
               <div className="aspect-video relative">
-                <img 
-                  src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
-                  alt={workout.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <Link href={`/workouts/${workout.id}/video`}>
-                    <Button size="lg" className="bg-white/90 text-gray-900 hover:bg-white">
-                      <Play className="w-6 h-6 mr-3" />
-                      Watch Video
-                    </Button>
-                  </Link>
-                </div>
+                {hasSubscription ? (
+                  <iframe
+                    src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+                    title={workout.title}
+                    className="w-full h-full"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                ) : (
+                  <>
+                    <img 
+                      src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+                      alt={workout.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <PaywallOverlay />
+                  </>
+                )}
               </div>
             </Card>
           )}
 
-          {/* Workout Header */}
+          {/* Workout Info */}
           <Card className="mb-8 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80">
             <CardHeader>
               <div className="flex items-center justify-between mb-4">
@@ -180,7 +225,34 @@ export default function WorkoutDetail() {
             </CardHeader>
           </Card>
 
-          {/* Equipment Section */}
+          {/* Premium Features Notice */}
+          {!hasSubscription && (
+            <Card className="mb-8 border-primary/20 bg-gradient-to-r from-primary/5 to-accent/5 dark:from-primary/10 dark:to-accent/10">
+              <CardContent className="pt-6">
+                <div className="flex items-center space-x-4">
+                  <div className="flex-shrink-0">
+                    <Lock className="w-8 h-8 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                      Unlock Premium Workout Features
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      Get full access to workout videos, personalized coaching, and detailed exercise breakdowns.
+                    </p>
+                    <Link href="/subscribe">
+                      <Button>
+                        <Crown className="w-4 h-4 mr-2" />
+                        Upgrade Now
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Equipment & Exercises (visible to all) */}
           {workout.equipment && workout.equipment.length > 0 && (
             <Card className="mb-8 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80">
               <CardHeader>
@@ -191,7 +263,7 @@ export default function WorkoutDetail() {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
-                  {workout.equipment.map((item, index) => (
+                  {workout.equipment.map((item: string, index: number) => (
                     <Badge key={index} variant="secondary" className="text-sm">
                       {item}
                     </Badge>
@@ -201,17 +273,16 @@ export default function WorkoutDetail() {
             </Card>
           )}
 
-          {/* Exercises Section */}
           {workout.exercises && workout.exercises.length > 0 && (
             <Card className="mb-8 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80">
               <CardHeader>
                 <CardTitle className="text-xl text-gray-900 dark:text-white">
-                  Exercises ({workout.exercises.length})
+                  Exercise Overview ({workout.exercises.length} exercises)
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {workout.exercises.map((exercise, index) => (
+                <div className="grid gap-4">
+                  {workout.exercises.map((exercise: any, index: number) => (
                     <div key={index} className="border-l-4 border-accent pl-4 py-2">
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="font-semibold text-gray-900 dark:text-white">
@@ -237,32 +308,6 @@ export default function WorkoutDetail() {
               </CardContent>
             </Card>
           )}
-
-          {/* Action Buttons */}
-          <Card className="bg-white/80 backdrop-blur-sm dark:bg-gray-800/80">
-            <CardContent className="pt-6">
-              <div className="flex gap-4">
-                {youtubeId && (
-                  <Button 
-                    size="lg"
-                    onClick={() => window.open(`https://www.youtube.com/watch?v=${youtubeId}`, '_blank')}
-                    className="flex-1"
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Watch on YouTube
-                  </Button>
-                )}
-                <Button 
-                  variant="outline" 
-                  size="lg"
-                  className="flex-1"
-                >
-                  <CheckCircle className="w-5 h-5 mr-2" />
-                  Mark as Complete
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>
