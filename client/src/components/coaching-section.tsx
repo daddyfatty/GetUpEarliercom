@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { Link } from "wouter";
 import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
 
 import _678aad8cfd0dcde677a14418_hike2_p_500 from "@assets/678aad8cfd0dcde677a14418_hike2-p-500.jpg";
@@ -32,20 +33,22 @@ export function CoachingSection() {
               </div>
 
               <div className="mb-8">
-                <div className="flex items-start space-x-4">
-                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 border-4 border-blue-100">
-                    <img 
-                      src={headshotPath} 
-                      alt="Michael Baker" 
-                      className="w-full h-full object-cover"
-                    />
+                <Link href="/about">
+                  <div className="flex items-center space-x-4 cursor-pointer group hover:bg-gray-50 p-3 rounded-lg transition-all duration-200">
+                    <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 border-4 border-blue-100 group-hover:border-blue-200 transition-colors">
+                      <img 
+                        src={headshotPath} 
+                        alt="Michael Baker" 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                      />
+                    </div>
+                    <div className="flex-1 flex items-center">
+                      <p className="text-gray-700 font-medium group-hover:text-blue-600 transition-colors">
+                        Dedicated & authentic health and wellness practitioner
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-gray-700 font-medium">
-                      Dedicated & authentic health and wellness practitioner
-                    </p>
-                  </div>
-                </div>
+                </Link>
               </div>
 
               <div>

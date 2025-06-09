@@ -1,211 +1,181 @@
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Phone, Mail, Calendar, Award, Target, Heart, Users } from "lucide-react";
+import { ArrowLeft, Award, Calendar, Users, Heart, Target, Dumbbell } from "lucide-react";
+
 import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
-import certificationsPath from "@assets/download - 2025-06-09T135407.583_1749492034107.png";
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="bg-[hsl(var(--navy))] text-white py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-6">Meet Our Team</h1>
-          <p className="text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed">
-            Dedicated health and wellness professionals committed to helping you bridge the gap 
-            from inactivity and poor diet to strength and healthy habits.
-          </p>
-        </div>
-      </section>
-
-      {/* Team Profiles */}
-      <section className="py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Michael Baker Profile */}
-          <div className="mb-16">
-            <Card className="overflow-hidden">
-              <div className="grid lg:grid-cols-2 gap-0">
-                {/* Content Side */}
-                <div className="p-8 lg:p-12">
-                  <div className="mb-6">
-                    <div className="flex items-start space-x-4 mb-6">
-                      <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-4 border-blue-100">
-                        <img 
-                          src={headshotPath} 
-                          alt="Michael Baker" 
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div>
-                        <h2 className="text-3xl font-bold text-gray-900 mb-2">Michael Baker</h2>
-                        <p className="text-xl text-blue-600 mb-2">Personal Trainer, Nutrition Coach</p>
-                        <p className="text-gray-600">Founder & Lead Coach</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex flex-wrap gap-3 mb-6">
-                      <div className="flex items-center space-x-2 bg-blue-50 rounded-lg px-3 py-2">
-                        <Calendar className="h-4 w-4 text-blue-600" />
-                        <span className="text-sm font-medium text-blue-800">30 Years Experience</span>
-                      </div>
-                      <div className="flex items-center space-x-2 bg-blue-50 rounded-lg px-3 py-2">
-                        <Phone className="h-4 w-4 text-blue-600" />
-                        <span className="text-sm text-blue-800">12039078902</span>
-                      </div>
-                      <div className="flex items-center space-x-2 bg-blue-50 rounded-lg px-3 py-2">
-                        <Mail className="h-4 w-4 text-blue-600" />
-                        <span className="text-sm text-blue-800">mike@webmbd.com</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4 mb-8">
-                    <p className="text-gray-700 leading-relaxed">
-                      I'm a 50-year-old strength trainer, certified personal trainer, running coach, health coach, and yoga teacher. 
-                      I'm also a former yoga studio owner and dedicated health and wellness practitioner with over 30 years of experience.
-                    </p>
-                    
-                    <p className="text-gray-700 leading-relaxed">
-                      I began Get Up Earlier because getting up earlier was step one in transforming my routine and overall well-being, 
-                      especially after spending years sitting at a computer as a digital professional.
-                    </p>
-                    
-                    <p className="text-gray-700 leading-relaxed">
-                      My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. 
-                      I focus on helping people rely on intuition, providing a personal experience, and introducing them to 
-                      strength training, alternate cardio, and yoga-inspired stretching.
-                    </p>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    <Badge variant="secondary">ISSA Personal Trainer</Badge>
-                    <Badge variant="secondary">ISSA Running Coach</Badge>
-                    <Badge variant="secondary">IIN Health Coach</Badge>
-                    <Badge variant="secondary">RYT 200 Yoga</Badge>
-                  </div>
-
-                  <Button 
-                    className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90 text-white px-6 py-2 font-medium group"
-                    onClick={() => window.open('https://calendly.com/getupearlier', '_blank')}
-                  >
-                    Book Session with Michael
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </div>
-
-                {/* Image Side */}
-                <div className="relative lg:min-h-[500px]">
-                  <img 
-                    src={headshotPath}
-                    alt="Michael Baker - Personal Trainer and Health Coach"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent lg:hidden"></div>
-                </div>
-              </div>
-            </Card>
-          </div>
-
-          {/* Certifications Section for Michael */}
-          <div className="mb-16">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Michael's Professional Certifications</h3>
-            </div>
-            
-            <div className="flex justify-center mb-8">
-              <img 
-                src={certificationsPath}
-                alt="Professional Certifications - ISSA Personal Trainer, ISSA Running Coach, IIN Integrative Nutrition Health Coach, RYT 200 Yoga Alliance"
-                className="max-w-full h-auto"
-              />
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Card>
-                <CardHeader className="text-center">
-                  <Award className="h-8 w-8 text-yellow-600 mx-auto mb-2" />
-                  <CardTitle className="text-lg">ISSA Certified</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-center text-gray-600">Personal Trainer & Running Coach</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="text-center">
-                  <Heart className="h-8 w-8 text-red-500 mx-auto mb-2" />
-                  <CardTitle className="text-lg">IIN Certified</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-center text-gray-600">Integrative Nutrition Health Coach</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="text-center">
-                  <Users className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-                  <CardTitle className="text-lg">RYT 200</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-center text-gray-600">Registered Yoga Teacher</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="text-center">
-                  <Target className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                  <CardTitle className="text-lg">Studio Owner</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-center text-gray-600">Former Yoga Studio Owner</p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-
-          {/* Placeholder for Future Team Members */}
-          <div className="text-center py-12 bg-white rounded-lg border-2 border-dashed border-gray-300">
-            <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-medium text-gray-900 mb-2">More Team Members Coming Soon</h3>
-            <p className="text-gray-600">
-              We're expanding our team of health and wellness professionals to better serve you.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact CTA */}
-      <section className="py-16 bg-[hsl(var(--navy))] text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Work with Our Team?</h2>
-          <p className="text-xl text-blue-200 mb-8 max-w-2xl mx-auto">
-            Connect with Michael Baker to start your health and wellness journey today.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button 
-              size="lg"
-              className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90 text-white px-8 py-3 text-lg font-medium group"
-              onClick={() => window.open('https://calendly.com/getupearlier', '_blank')}
-            >
-              Schedule Free Consultation
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+      {/* Header */}
+      <div className="bg-white dark:bg-gray-900 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <Link href="/">
+            <Button variant="ghost" className="mb-4">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Home
             </Button>
-            
-            <div className="flex items-center space-x-4 text-blue-200">
-              <a href="tel:12039078902" className="flex items-center space-x-2 hover:text-white transition-colors">
-                <Phone className="h-5 w-5" />
-                <span>12039078902</span>
-              </a>
-              <a href="mailto:mike@webmbd.com" className="flex items-center space-x-2 hover:text-white transition-colors">
-                <Mail className="h-5 w-5" />
-                <span>mike@webmbd.com</span>
-              </a>
-            </div>
-          </div>
+          </Link>
         </div>
-      </section>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Hero Section */}
+        <div className="text-center mb-16">
+          <div className="w-32 h-32 rounded-full overflow-hidden mx-auto mb-6 border-8 border-white shadow-xl">
+            <img 
+              src={headshotPath} 
+              alt="Michael Baker" 
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            Michael Baker
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            Dedicated & authentic health and wellness practitioner with over 30 years of experience
+          </p>
+        </div>
+
+        {/* Bio Section */}
+        <Card className="mb-12">
+          <CardContent className="p-8">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">My Story</h2>
+            <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300">
+              <p className="mb-4">
+                Hello, I'm Michael Baker. I am a 50-year-old strength trainer, certified personal trainer, running coach, 
+                health coach, and yoga teacher. I'm also a former yoga studio owner and a digital professional with over 
+                30 years of experience.
+              </p>
+              <p className="mb-4">
+                I began <span className="font-semibold italic text-primary">Get Up Earlier</span> because getting up 
+                earlier was step one in transforming my routine and overall well-being, especially after spending years 
+                sitting at a computer. The name represents more than just waking up early—it's about taking control of 
+                your day, your health, and your life.
+              </p>
+              <p className="mb-4">
+                My approach combines practical strength training, clean eating principles, and accountability coaching 
+                to help bridge the gap from inactivity and poor diet to strength and healthy habits. I believe in 
+                sustainable, realistic changes that fit into real life, not extreme measures that can't be maintained.
+              </p>
+              <p>
+                Through Get Up Earlier, I've helped hundreds of people transform their relationship with fitness and 
+                nutrition, creating lasting change that goes far beyond the gym or kitchen.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Credentials */}
+        <Card className="mb-12">
+          <CardContent className="p-8">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+              <Award className="w-6 h-6 text-primary mr-2" />
+              Certifications & Experience
+            </h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-3">Certifications</h3>
+                <ul className="space-y-2">
+                  <li className="flex items-center">
+                    <Badge variant="outline" className="mr-2">Certified</Badge>
+                    Personal Trainer
+                  </li>
+                  <li className="flex items-center">
+                    <Badge variant="outline" className="mr-2">Certified</Badge>
+                    Running Coach
+                  </li>
+                  <li className="flex items-center">
+                    <Badge variant="outline" className="mr-2">Certified</Badge>
+                    Health Coach
+                  </li>
+                  <li className="flex items-center">
+                    <Badge variant="outline" className="mr-2">Certified</Badge>
+                    Yoga Teacher
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-3">Experience</h3>
+                <ul className="space-y-2 text-gray-600 dark:text-gray-300">
+                  <li className="flex items-center">
+                    <Calendar className="w-4 h-4 text-primary mr-2" />
+                    30+ years in fitness and wellness
+                  </li>
+                  <li className="flex items-center">
+                    <Dumbbell className="w-4 h-4 text-primary mr-2" />
+                    Former yoga studio owner
+                  </li>
+                  <li className="flex items-center">
+                    <Users className="w-4 h-4 text-primary mr-2" />
+                    Digital professional background
+                  </li>
+                  <li className="flex items-center">
+                    <Target className="w-4 h-4 text-primary mr-2" />
+                    Strength training specialist
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Philosophy */}
+        <Card className="mb-12">
+          <CardContent className="p-8">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+              <Heart className="w-6 h-6 text-primary mr-2" />
+              My Philosophy
+            </h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Dumbbell className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-2">Strength Training</h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Building functional strength that enhances daily life and long-term health.
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Heart className="w-8 h-8 text-green-600" />
+                </div>
+                <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-2">Clean Eating</h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Simple, nutritious meals that fuel your body and support your goals.
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-blue-600" />
+                </div>
+                <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-2">Accountability</h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Consistent support and guidance to help you stay on track and achieve lasting results.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* CTA */}
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Ready to Get Started?
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            Let's work together to bridge the gap from where you are to where you want to be.
+          </p>
+          <Link href="/coaching">
+            <Button size="lg" className="bg-primary hover:bg-primary/90">
+              Explore Coaching Options
+            </Button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
