@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
 
+import _678aad8cfd0dcde677a14418_hike2_p_500 from "@assets/678aad8cfd0dcde677a14418_hike2-p-500.jpg";
+
 export function CoachingSection() {
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
@@ -60,7 +62,7 @@ export function CoachingSection() {
             {/* Image Side */}
             <div className="relative lg:min-h-[600px]">
               <img 
-                src={headshotPath}
+                src={_678aad8cfd0dcde677a14418_hike2_p_500}
                 alt="Michael Baker - Personal Trainer and Health Coach"
                 className="w-full h-full object-cover"
               />
