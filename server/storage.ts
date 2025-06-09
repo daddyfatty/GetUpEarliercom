@@ -331,6 +331,7 @@ export class MemStorage implements IStorage {
           }
         ],
         imageUrl: null,
+        videoUrl: "https://youtu.be/2NOc_trrSP8",
         createdAt: new Date(),
       }
     ];
@@ -448,7 +449,10 @@ export class MemStorage implements IStorage {
   async createWorkout(insertWorkout: InsertWorkout): Promise<Workout> { 
     const workout: Workout = { 
       id: this.currentId++, 
-      ...insertWorkout, 
+      ...insertWorkout,
+      imageUrl: insertWorkout.imageUrl ?? null,
+      videoUrl: insertWorkout.videoUrl ?? null,
+      equipment: insertWorkout.equipment ?? null,
       createdAt: new Date() 
     };
     this.workouts.set(workout.id, workout);

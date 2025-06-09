@@ -77,6 +77,7 @@ export const workouts = pgTable("workouts", {
     description: string;
   }[]>().notNull(),
   imageUrl: text("image_url"),
+  videoUrl: text("video_url"), // YouTube video URL
   createdAt: timestamp("created_at").defaultNow(),
 });
 

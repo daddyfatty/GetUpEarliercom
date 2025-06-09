@@ -10,6 +10,7 @@ import Recipes from "@/pages/recipes";
 import RecipeDetail from "@/pages/recipe-detail";
 import RecipeArchive from "@/pages/recipe-archive";
 import Workouts from "@/pages/workouts";
+import WorkoutDetail from "@/pages/workout-detail";
 import Nutrition from "@/pages/nutrition";
 import Tracker from "@/pages/tracker";
 import Goals from "@/pages/goals";
@@ -34,6 +35,7 @@ function Router() {
           <Route path="/recipes/archive" component={RecipeArchive} />
           <Route path="/recipes/:id" component={RecipeDetail} />
           <Route path="/workouts" component={Workouts} />
+          <Route path="/workouts/:id" component={WorkoutDetail} />
           <Route path="/nutrition" component={Nutrition} />
           <Route path="/tracker" component={Tracker} />
           <Route path="/goals" component={Goals} />
