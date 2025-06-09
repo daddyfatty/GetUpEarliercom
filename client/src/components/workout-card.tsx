@@ -56,9 +56,31 @@ export function WorkoutCard({ workout }: WorkoutCardProps) {
 
   const difficultyStars = getDifficultyStars(workout.difficulty);
 
+  // Extract YouTube video ID from video URL
+  const extractYouTubeId = (url: string) => {
+    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+    return match ? match[1] : null;
+  };
+
+  const youtubeId = workout.videoUrl ? extractYouTubeId(workout.videoUrl) : null;
+
   return (
     <Card className="card-hover overflow-hidden">
-      {workout.imageUrl && (
+      {/* YouTube Video Thumbnail */}
+      {youtubeId ? (
+        <div className="relative group">
+          <img 
+            src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+            alt={workout.title}
+            className="w-full h-48 object-cover"
+          />
+          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+            <div className="bg-white/90 dark:bg-gray-800/90 rounded-full p-3 group-hover:scale-110 transition-transform duration-300">
+              <Play className="w-8 h-8 text-primary" />
+            </div>
+          </div>
+        </div>
+      ) : workout.imageUrl && (
         <img 
           src={workout.imageUrl} 
           alt={workout.title}
