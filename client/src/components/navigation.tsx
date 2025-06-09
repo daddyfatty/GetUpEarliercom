@@ -66,7 +66,7 @@ export function Navigation() {
   return (
     <>
       {/* Desktop Header with Centered Logo */}
-      <div className="hidden md:block bg-[hsl(var(--navy))]" style={{ paddingTop: '22px', paddingBottom: '22px' }}>
+      <div className="hidden md:block bg-[hsl(var(--navy))]" style={{ paddingTop: '8px', paddingBottom: '8px' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center">
             <Link href="/">
