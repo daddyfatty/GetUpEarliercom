@@ -20,6 +20,8 @@ import About from "@/pages/about";
 import Coaching from "@/pages/coaching";
 import Contact from "@/pages/contact";
 import Team from "@/pages/team";
+import TeamMichael from "@/pages/team-michael";
+import TeamErica from "@/pages/team-erica";
 import UserProfile from "@/pages/user-profile";
 import Admin from "@/pages/admin";
 import Checkout from "@/pages/checkout";
@@ -53,6 +55,8 @@ function Router() {
           <Route path="/coaching" component={Coaching} />
           <Route path="/contact" component={Contact} />
           <Route path="/team" component={Team} />
+          <Route path="/team/michael" component={TeamMichael} />
+          <Route path="/team/erica" component={TeamErica} />
           <Route path="/profile" component={UserProfile} />
           <Route path="/admin" component={Admin} />
           <Route path="/checkout" component={Checkout} />
