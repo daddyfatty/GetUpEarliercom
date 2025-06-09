@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Menu, Bell, User, LogOut } from "lucide-react";
+import { SiFacebook } from "react-icons/si";
 import logoPath from "@assets/logo_1749324568864.png";
 
 export function Navigation() {
@@ -134,6 +135,15 @@ export function Navigation() {
             {/* Desktop Actions */}
             <div className="hidden md:block">
               <div className="ml-4 flex items-center md:ml-6 space-x-4">
+                <a 
+                  href="https://www.facebook.com/groups/getupearlier" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-white hover:text-[hsl(var(--orange))] transition-colors"
+                >
+                  <SiFacebook className="h-5 w-5" />
+                </a>
+                
                 {isAuthenticated && (
                   <Button variant="ghost" size="sm" className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10">
                     <Bell className="h-4 w-4" />
@@ -267,6 +277,19 @@ export function Navigation() {
                         </span>
                       </Link>
                     ))}
+
+                    {/* Facebook Group Link */}
+                    <div className="pt-4 border-t">
+                      <a 
+                        href="https://www.facebook.com/groups/getupearlier" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-[hsl(var(--orange))] transition-colors"
+                      >
+                        <SiFacebook className="h-5 w-5 mr-3" />
+                        Join Facebook Group
+                      </a>
+                    </div>
 
                     {isAuthenticated ? (
                       <div className="pt-4 border-t">
