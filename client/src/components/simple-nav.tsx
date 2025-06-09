@@ -31,7 +31,7 @@ export function SimpleNavigation() {
         <div className="flex justify-between h-28">
           <div className="flex items-center">
             <Link href="/">
-              <img src={logoPath} alt="Get Up Earlier" className="h-20 md:h-20 w-auto max-w-[450px] md:max-w-[500px] object-contain" />
+              <img src={logoPath} alt="Get Up Earlier" className="h-24 md:h-20 w-auto max-w-[600px] md:max-w-[500px] object-contain" />
             </Link>
           </div>
 
