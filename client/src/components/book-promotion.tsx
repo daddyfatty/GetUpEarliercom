@@ -25,7 +25,7 @@ export function BookPromotion() {
               
               <div className="grid grid-cols-2 gap-6 mb-8">
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-2">150+</div>
+                  <div className="text-3xl font-bold mb-2">50+</div>
                   <div className="text-blue-200">Clean Recipes</div>
                 </div>
                 <div className="text-center">
