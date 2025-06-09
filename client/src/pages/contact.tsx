@@ -124,7 +124,7 @@ export default function Contact() {
               <CardContent className="space-y-4">
                 <Button 
                   className="w-full bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90"
-                  onClick={() => window.open('https://calendly.com/getupearlier', '_blank')}
+                  onClick={() => window.open('https://calendly.com/michaelbakerdigital/30minute', '_blank')}
                 >
                   <Calendar className="h-4 w-4 mr-2" />
                   Book Free 30-Minute Consultation

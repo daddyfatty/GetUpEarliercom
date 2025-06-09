@@ -107,7 +107,7 @@ export default function Coaching() {
               <Button 
                 size="lg"
                 className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90 text-white px-8 py-3 text-lg font-medium group"
-                onClick={() => window.open('https://calendly.com/getupearlier', '_blank')}
+                onClick={() => window.open('https://calendly.com/michaelbakerdigital/30minute', '_blank')}
               >
                 Book Free Consultation
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -198,7 +198,7 @@ export default function Coaching() {
                   </ul>
                   <Button 
                     className="w-full mt-6 bg-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))]/90"
-                    onClick={() => window.open('https://calendly.com/getupearlier', '_blank')}
+                    onClick={() => window.open('https://calendly.com/michaelbakerdigital/30minute', '_blank')}
                   >
                     Get Started
                   </Button>
@@ -252,7 +252,7 @@ export default function Coaching() {
           <Button 
             size="lg"
             className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90 text-white px-8 py-3 text-lg font-medium group"
-            onClick={() => window.open('https://calendly.com/getupearlier', '_blank')}
+            onClick={() => window.open('https://calendly.com/michaelbakerdigital/30minute', '_blank')}
           >
             Schedule Free Consultation
             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />

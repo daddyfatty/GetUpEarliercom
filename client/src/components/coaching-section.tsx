@@ -49,7 +49,7 @@ export function CoachingSection() {
               <div>
                 <Button 
                   className="bg-blue-400 hover:bg-blue-500 text-white px-8 py-3 rounded-lg font-medium text-lg group transition-all duration-200"
-                  onClick={() => window.open('https://calendly.com/getupearlier', '_blank')}
+                  onClick={() => window.open('https://calendly.com/michaelbakerdigital/30minute', '_blank')}
                 >
                   Book A Free 30 Minute Session
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
