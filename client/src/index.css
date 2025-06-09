@@ -79,9 +79,11 @@
 
 /* Custom health and fitness theme styles matching GetUpEarlier.com */
 .hero-gradient {
-  background: linear-gradient(-45deg, #1e40af, #2563eb, #3b82f6, #1d4ed8);
-  background-size: 400% 400%;
-  animation: gradientShift 8s ease-in-out infinite;
+  background: 
+    radial-gradient(ellipse at center bottom, rgba(251, 146, 60, 0.15) 0%, rgba(236, 72, 153, 0.1) 25%, rgba(147, 51, 234, 0.08) 50%, transparent 70%),
+    linear-gradient(-45deg, #0c2340, #1e3a8a, #1e40af, #0f172a);
+  background-size: 100% 100%, 400% 400%;
+  animation: gradientShift 12s ease-in-out infinite;
 }
 
 @keyframes gradientShift {
