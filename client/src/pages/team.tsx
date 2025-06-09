@@ -8,8 +8,8 @@ import ericaPath from "@assets/678ab3d4caec71062e65470f_erddd_1749497849578.jpg"
 import personalTrainerBadge from "@assets/67910d333568168655f4b0e8_Badges-PT (1)_1749504702546.png";
 import nutritionBadge from "@assets/67910ddf1426fe137b7a5cfa_HCTP_INHC_Badge (1)-p-500 (1)_1749504702546.png";
 import runningCoachBadge from "@assets/67910e09c2597e3ff6174ecb_Badges-run-coach (1)_1749504702546.png";
-import eryBadge from "@assets/67910e23033a488a11f42952_erty (1)_1749504702546.png";
-import yogaAllianceBadge from "@assets/67916c3970c6de430a570260_67916c07869e9844f99f5710_download%20(19)_1749504702547.png";
+import eryBadge from "@assets/67910e23033a488a11f42952_erty (1)_1749505199203.png";
+import yaerBadge from "@assets/YAER_1749505224126.png";
 
 export default function Team() {
   return (
@@ -99,8 +99,8 @@ export default function Team() {
                       className="h-12 w-auto"
                     />
                     <img 
-                      src={yogaAllianceBadge} 
-                      alt="Yoga Alliance Certified" 
+                      src={yaerBadge} 
+                      alt="Yoga Alliance E-RYT" 
                       className="h-12 w-auto"
                     />
                   </div>
