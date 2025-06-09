@@ -1,10 +1,51 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Target, Heart, Activity, Users, Star, Calendar } from "lucide-react";
+import { ArrowRight, Target, Heart, Activity, Users, Star, Calendar, CreditCard } from "lucide-react";
+import { SiPaypal } from "react-icons/si";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import PayPalButton from "@/components/PayPalButton";
 import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
 
 export default function Coaching() {
+  const { toast } = useToast();
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+
+  const handleStripeCheckout = async (pkg: any) => {
+    setIsProcessingPayment(true);
+    try {
+      const response = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: pkg.amount,
+          currency: 'usd',
+          description: `${pkg.name} - ${pkg.description}`,
+          isRecurring: pkg.isRecurring
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (data.clientSecret) {
+        // Redirect to Stripe checkout
+        window.location.href = `/checkout?clientSecret=${data.clientSecret}&package=${encodeURIComponent(pkg.name)}`;
+      } else {
+        throw new Error('Failed to create payment intent');
+      }
+    } catch (error) {
+      toast({
+        title: "Payment Error",
+        description: "Failed to initialize payment. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsProcessingPayment(false);
+    }
+  };
   const services = [
     {
       title: "1-on-1 Personal Strength Training",
@@ -52,41 +93,49 @@ export default function Coaching() {
 
   const packages = [
     {
-      name: "Single Session",
+      name: "Individual Session",
       description: "Perfect for getting started or addressing specific needs",
-      price: "Contact for pricing",
-      duration: "60 minutes",
+      price: "$50",
+      duration: "30 minutes",
       features: [
-        "Initial consultation",
-        "Goal setting session",
-        "Custom plan creation",
-        "Follow-up guidance"
-      ]
+        "One-on-one strength training",
+        "Goal assessment",
+        "Personalized recommendations",
+        "Follow-up resources"
+      ],
+      isRecurring: false,
+      amount: 50
     },
     {
-      name: "Monthly Package",
-      description: "Comprehensive monthly coaching with regular check-ins",
-      price: "Contact for pricing",
-      duration: "4 sessions",
+      name: "Monthly Package - 5 Sessions",
+      description: "Consistent support for building lasting habits",
+      price: "$225/mo",
+      duration: "Up to 5 sessions",
       features: [
-        "Weekly coaching sessions",
-        "Ongoing plan adjustments",
+        "Up to 5 monthly sessions",
+        "Custom workout plans",
         "Progress tracking",
-        "Email support between sessions"
-      ]
+        "Email support",
+        "Flexible scheduling"
+      ],
+      isRecurring: true,
+      amount: 225
     },
     {
-      name: "Transformation Program",
-      description: "Complete 12-week lifestyle transformation journey",
-      price: "Contact for pricing",
-      duration: "12 weeks",
+      name: "Monthly Package - 8 Sessions",
+      description: "Comprehensive program for serious transformation",
+      price: "$325/mo",
+      duration: "Up to 8 sessions",
       features: [
-        "Comprehensive assessment",
-        "Custom training & nutrition plan",
-        "Weekly progress reviews",
-        "Habit formation coaching",
-        "Accountability support"
-      ]
+        "Up to 8 monthly sessions",
+        "Complete fitness assessment",
+        "Detailed workout planning",
+        "Priority scheduling",
+        "24/7 text support",
+        "Monthly progress reviews"
+      ],
+      isRecurring: true,
+      amount: 325
     }
   ];
 
@@ -180,7 +229,7 @@ export default function Coaching() {
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Coaching Packages</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Strength Training & Coaching</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Choose the level of support that best fits your goals and lifestyle
             </p>
@@ -206,12 +255,33 @@ export default function Coaching() {
                       </li>
                     ))}
                   </ul>
-                  <Button 
-                    className="w-full mt-6 bg-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))]/90"
-                    onClick={() => window.open('https://calendly.com/michaelbakerdigital/30minute', '_blank')}
-                  >
-                    Get Started
-                  </Button>
+                  <div className="space-y-3 mt-6">
+                    <Button 
+                      className="w-full bg-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))]/90"
+                      onClick={() => handleStripeCheckout(pkg)}
+                      disabled={isProcessingPayment}
+                    >
+                      <CreditCard className="h-4 w-4 mr-2" />
+                      {isProcessingPayment ? 'Processing...' : 'Pay with Card'}
+                    </Button>
+                    
+                    <div className="w-full">
+                      <PayPalButton 
+                        amount={pkg.amount.toString()}
+                        currency="USD"
+                        intent="capture"
+                      />
+                    </div>
+                    
+                    <Button 
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => window.open('https://calendly.com/michaelbakerdigital/30minute', '_blank')}
+                    >
+                      <Calendar className="h-4 w-4 mr-2" />
+                      Book Consultation First
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ))}
