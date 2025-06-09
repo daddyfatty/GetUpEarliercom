@@ -54,6 +54,7 @@ export const recipes = pgTable("recipes", {
   instructions: jsonb("instructions").$type<string[]>().notNull(),
   content: text("content"), // Rich text content for recipe story/description
   imageUrl: text("image_url"),
+  videoUrl: text("video_url"), // YouTube video URL
   gallery: jsonb("gallery").$type<string[]>(),
   createdAt: timestamp("created_at").defaultNow(),
 });
