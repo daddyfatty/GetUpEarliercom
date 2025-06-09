@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, Clock, Users, ChefHat, Leaf, X, Printer, Download, Heart } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
@@ -23,6 +24,7 @@ export default function RecipeDetail() {
   const [mealPlanDialog, setMealPlanDialog] = useState(false);
   const [volumeMultiplier, setVolumeMultiplier] = useState(1);
   const [customServing, setCustomServing] = useState("");
+  const [targetProtein, setTargetProtein] = useState<number | null>(null);
   const [mealPlanData, setMealPlanData] = useState({
     name: "",
     date: new Date().toISOString().split('T')[0],
@@ -52,12 +54,60 @@ export default function RecipeDetail() {
     return Math.round(value * volumeMultiplier);
   };
 
+  // Function to calculate multiplier based on target protein
+  const getProteinBasedMultiplier = () => {
+    if (!targetProtein || !recipe?.protein) return 1;
+    return targetProtein / recipe.protein;
+  };
+
+  // Function to get effective multiplier (protein takes precedence over volume)
+  const getEffectiveMultiplier = () => {
+    return targetProtein ? getProteinBasedMultiplier() : volumeMultiplier;
+  };
+
+  // Function to get adjusted nutrition with effective multiplier
+  const getAdjustedNutritionValue = (value: number) => {
+    return Math.round(value * getEffectiveMultiplier());
+  };
+
+  // Function to get adjusted serving size based on protein target
+  const getAdjustedServingSize = () => {
+    if (!recipe || !(recipe as any).servingSize) return '';
+    
+    const multiplier = getEffectiveMultiplier();
+    if (multiplier === 1) return (recipe as any).servingSize;
+    
+    const originalServing = (recipe as any).servingSize;
+    const match = originalServing.match(/^(\d*\.?\d+)/);
+    if (!match) return `${multiplier.toFixed(1)}x original serving`;
+    
+    const originalValue = parseFloat(match[1]);
+    const newValue = (originalValue * multiplier).toFixed(1);
+    const unit = originalServing.replace(match[1], '').trim();
+    
+    return `${newValue} ${unit}`;
+  };
+
   // Update multiplier when custom serving changes
   const handleServingChange = (value: string) => {
     setCustomServing(value);
+    setTargetProtein(null); // Clear protein target when manually adjusting serving
     if (recipe && (recipe as any).servingSize) {
       const multiplier = parseServingInput(value, (recipe as any).servingSize);
       setVolumeMultiplier(multiplier);
+    }
+  };
+
+  // Handle protein slider change
+  const handleProteinChange = (value: number[]) => {
+    const newProtein = value[0];
+    setTargetProtein(newProtein);
+    setCustomServing(''); // Clear custom serving when using protein adjustment
+    
+    // Update the serving size display
+    const newServingSize = getAdjustedServingSize();
+    if (newServingSize !== (recipe as any)?.servingSize) {
+      setCustomServing(newServingSize);
     }
   };
 
@@ -528,9 +578,9 @@ export default function RecipeDetail() {
                         onChange={(e) => handleServingChange(e.target.value)}
                         className="text-sm"
                       />
-                      {volumeMultiplier !== 1 && (
+                      {getEffectiveMultiplier() !== 1 && (
                         <div className="text-xs text-blue-600 dark:text-blue-400 mt-1">
-                          Nutrition values adjusted by {volumeMultiplier.toFixed(1)}x
+                          Nutrition values adjusted by {getEffectiveMultiplier().toFixed(1)}x
                         </div>
                       )}
                     </div>
@@ -538,7 +588,7 @@ export default function RecipeDetail() {
 
                   <div className="bg-[#ef4444]/10 p-3 rounded-lg mb-4">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-gray-900 dark:text-white">{getAdjustedNutrition(recipe.calories || 0)}</div>
+                      <div className="text-2xl font-bold text-gray-900 dark:text-white">{getAdjustedNutritionValue(recipe.calories || 0)}</div>
                       <div className="text-sm text-gray-600 dark:text-gray-400">Total Calories</div>
                     </div>
                   </div>
@@ -546,25 +596,46 @@ export default function RecipeDetail() {
                   <div className="mb-4">
                     <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Macronutrients</h4>
                     <div className="space-y-2">
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-gray-600 dark:text-gray-400">Protein</span>
-                        <span className="font-semibold text-gray-900 dark:text-white">{getAdjustedNutrition(recipe.protein || 0)}g</span>
+                      <div className="space-y-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600 dark:text-gray-400">Protein Target</span>
+                          <span className="font-semibold text-gray-900 dark:text-white">{targetProtein || getAdjustedNutritionValue(recipe.protein || 0)}g</span>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                            <span>15g</span>
+                            <span>50g+</span>
+                          </div>
+                          <Slider
+                            value={[targetProtein || recipe.protein || 15]}
+                            onValueChange={handleProteinChange}
+                            max={50}
+                            min={15}
+                            step={1}
+                            className="w-full"
+                          />
+                          {targetProtein && (
+                            <div className="text-xs text-[#ef4444] dark:text-red-400">
+                              Adjusted serving: {getAdjustedServingSize()}
+                            </div>
+                          )}
+                        </div>
                       </div>
                       <div className="flex justify-between items-center py-1">
                         <span className="text-gray-600 dark:text-gray-400">Carbohydrates</span>
-                        <span className="font-semibold text-gray-900 dark:text-white">{getAdjustedNutrition(recipe.carbs || 0)}g</span>
+                        <span className="font-semibold text-gray-900 dark:text-white">{getAdjustedNutritionValue(recipe.carbs || 0)}g</span>
                       </div>
                       <div className="flex justify-between items-center py-1">
                         <span className="text-gray-600 dark:text-gray-400">Fat</span>
-                        <span className="font-semibold text-gray-900 dark:text-white">{getAdjustedNutrition(recipe.fat || 0)}g</span>
+                        <span className="font-semibold text-gray-900 dark:text-white">{getAdjustedNutritionValue(recipe.fat || 0)}g</span>
                       </div>
                       <div className="flex justify-between items-center py-1">
                         <span className="text-gray-600 dark:text-gray-400">Fiber</span>
-                        <span className="font-semibold text-gray-900 dark:text-white">{getAdjustedNutrition((recipe as any).fiber || 0)}g</span>
+                        <span className="font-semibold text-gray-900 dark:text-white">{getAdjustedNutritionValue((recipe as any).fiber || 0)}g</span>
                       </div>
                       <div className="flex justify-between items-center py-1">
                         <span className="text-gray-600 dark:text-gray-400">Sugar</span>
-                        <span className="font-semibold text-gray-900 dark:text-white">{getAdjustedNutrition((recipe as any).sugar || 0)}g</span>
+                        <span className="font-semibold text-gray-900 dark:text-white">{getAdjustedNutritionValue((recipe as any).sugar || 0)}g</span>
                       </div>
                     </div>
                   </div>
@@ -586,7 +657,7 @@ export default function RecipeDetail() {
                           {micronutrients.map((nutrient, index) => (
                             <div key={index} className="flex justify-between items-center py-1">
                               <span className="text-gray-600 dark:text-gray-400">{nutrient.name}</span>
-                              <span className="font-semibold text-gray-900 dark:text-white">{getAdjustedNutrition(nutrient.value)}{nutrient.unit}</span>
+                              <span className="font-semibold text-gray-900 dark:text-white">{getAdjustedNutritionValue(nutrient.value)}{nutrient.unit}</span>
                             </div>
                           ))}
                         </div>
