@@ -53,7 +53,7 @@ export function BookPromotion() {
                 Get Up Earlier
                 <span className="block text-blue-200">Eat Clean & Lean</span>
               </h2>
-              <p className="text-xl mb-8 text-blue-100">Recipes and tips to focus on protein, eat real food and hit your target macros, fuel your best life with practical, balanced nutrition. </p>
+              <p className="text-xl mb-8 text-blue-100">The last diet advice you'll ever need! Recipes and tips to focus on protein, eat real food and hit your target macros, fuel your best life with practical, balanced nutrition. </p>
               
               <div className="grid grid-cols-2 gap-6 mb-8">
                 <div className="text-center">
@@ -171,7 +171,6 @@ export function BookPromotion() {
           </div>
         </div>
       </div>
-
       {/* Coming Soon Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="sm:max-w-md">
