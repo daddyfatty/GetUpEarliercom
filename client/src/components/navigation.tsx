@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
@@ -63,7 +63,7 @@ export function Navigation() {
               <img 
                 src={logoPath} 
                 alt="Get Up Earlier" 
-                className="h-16 w-auto max-w-[300px] object-contain"
+                className="h-16 w-auto max-w-[365px] object-contain"
               />
             </Link>
 
@@ -106,6 +106,9 @@ export function Navigation() {
                     <DialogContent>
                       <DialogHeader>
                         <DialogTitle>Login to Your Account</DialogTitle>
+                        <DialogDescription>
+                          Enter your email and password to access your account
+                        </DialogDescription>
                       </DialogHeader>
                       <form onSubmit={handleLogin} className="space-y-4">
                         <div>
@@ -154,6 +157,9 @@ export function Navigation() {
                     <DialogContent>
                       <DialogHeader>
                         <DialogTitle>Create Your Account</DialogTitle>
+                        <DialogDescription>
+                          Fill in your details to create a new account
+                        </DialogDescription>
                       </DialogHeader>
                       <form onSubmit={handleRegister} className="space-y-4">
                         <div>
@@ -224,7 +230,7 @@ export function Navigation() {
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="text-white hover:text-white hover:bg-white/10">
                   <Menu className="w-5 h-5" />
                 </Button>
               </SheetTrigger>
@@ -258,11 +264,112 @@ export function Navigation() {
                           <DialogTrigger asChild>
                             <Button variant="outline" className="w-full">Login</Button>
                           </DialogTrigger>
+                          <DialogContent>
+                            <DialogHeader>
+                              <DialogTitle>Login to Your Account</DialogTitle>
+                              <DialogDescription>
+                                Enter your email and password to access your account
+                              </DialogDescription>
+                            </DialogHeader>
+                            <form onSubmit={handleLogin} className="space-y-4">
+                              <div>
+                                <Label htmlFor="mobile-email">Email</Label>
+                                <Input
+                                  id="mobile-email"
+                                  type="email"
+                                  value={loginForm.email}
+                                  onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
+                                  placeholder="Enter your email"
+                                  required
+                                />
+                              </div>
+                              <div>
+                                <Label htmlFor="mobile-password">Password</Label>
+                                <Input
+                                  id="mobile-password"
+                                  type="password"
+                                  value={loginForm.password}
+                                  onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
+                                  placeholder="Enter your password"
+                                  required
+                                />
+                              </div>
+                              <div className="flex flex-col space-y-2">
+                                <Button type="submit" className="w-full">Login</Button>
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  onClick={() => {
+                                    setIsLoginOpen(false);
+                                    setIsRegisterOpen(true);
+                                  }}
+                                >
+                                  Need an account? Sign up
+                                </Button>
+                              </div>
+                            </form>
+                          </DialogContent>
                         </Dialog>
                         <Dialog open={isRegisterOpen} onOpenChange={setIsRegisterOpen}>
                           <DialogTrigger asChild>
                             <Button className="w-full bg-primary hover:bg-primary/90">Sign Up</Button>
                           </DialogTrigger>
+                          <DialogContent>
+                            <DialogHeader>
+                              <DialogTitle>Create Your Account</DialogTitle>
+                              <DialogDescription>
+                                Fill in your details to create a new account
+                              </DialogDescription>
+                            </DialogHeader>
+                            <form onSubmit={handleRegister} className="space-y-4">
+                              <div>
+                                <Label htmlFor="mobile-username">Username</Label>
+                                <Input
+                                  id="mobile-username"
+                                  type="text"
+                                  value={registerForm.username}
+                                  onChange={(e) => setRegisterForm({ ...registerForm, username: e.target.value })}
+                                  placeholder="Choose a username"
+                                  required
+                                />
+                              </div>
+                              <div>
+                                <Label htmlFor="mobile-reg-email">Email</Label>
+                                <Input
+                                  id="mobile-reg-email"
+                                  type="email"
+                                  value={registerForm.email}
+                                  onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })}
+                                  placeholder="Enter your email"
+                                  required
+                                />
+                              </div>
+                              <div>
+                                <Label htmlFor="mobile-reg-password">Password</Label>
+                                <Input
+                                  id="mobile-reg-password"
+                                  type="password"
+                                  value={registerForm.password}
+                                  onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
+                                  placeholder="Create a password"
+                                  required
+                                />
+                              </div>
+                              <div className="flex flex-col space-y-2">
+                                <Button type="submit" className="w-full">Create Account</Button>
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  onClick={() => {
+                                    setIsRegisterOpen(false);
+                                    setIsLoginOpen(true);
+                                  }}
+                                >
+                                  Already have an account? Login
+                                </Button>
+                              </div>
+                            </form>
+                          </DialogContent>
                         </Dialog>
                       </div>
                     ) : (

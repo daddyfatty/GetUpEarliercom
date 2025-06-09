@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
@@ -31,7 +31,7 @@ export function SimpleNavigation() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/">
-              <img src={logoPath} alt="Get Up Earlier" className="h-16 w-auto max-w-[300px] object-contain" />
+              <img src={logoPath} alt="Get Up Earlier" className="h-16 w-auto max-w-[365px] object-contain" />
             </Link>
           </div>
 
