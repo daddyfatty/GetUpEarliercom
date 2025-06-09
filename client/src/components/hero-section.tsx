@@ -19,7 +19,8 @@ export function HeroSection() {
               <Link href="/workouts">
                 <Button 
                   size="lg"
-                  className="bg-white text-primary hover:bg-gray-100 font-semibold"
+                  className="font-semibold text-black hover:opacity-90"
+                  style={{ backgroundColor: '#B3D7E9' }}
                 >
                   View Workouts
                 </Button>
