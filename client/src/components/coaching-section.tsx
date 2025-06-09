@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import coachingImagePath from "@assets/image_1749491564485.png";
+import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
 
 export function CoachingSection() {
   return (
@@ -23,7 +23,7 @@ export function CoachingSection() {
                 <p className="text-lg text-gray-700 leading-relaxed mb-4">
                   Hello, I'm Michael Baker. I am a 50-year-old strength trainer, certified personal trainer, running coach, health coach, and yoga teacher. I'm also a former yoga studio owner and a{" "}
                   <span className="text-blue-600 font-medium">digital professional</span>{" "}
-                  with over 25 years of experience. I began{" "}
+                  with over 30 years of experience. I began{" "}
                   <span className="font-medium italic">Get Up Earlier</span>{" "}
                   because getting up earlier was step one in transforming my routine and overall well-being, especially after spending years sitting at a computer.
                 </p>
@@ -33,7 +33,7 @@ export function CoachingSection() {
                 <div className="flex items-start space-x-4">
                   <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 border-4 border-blue-100">
                     <img 
-                      src={coachingImagePath} 
+                      src={headshotPath} 
                       alt="Michael Baker" 
                       className="w-full h-full object-cover"
                     />
@@ -60,8 +60,8 @@ export function CoachingSection() {
             {/* Image Side */}
             <div className="relative lg:min-h-[600px]">
               <img 
-                src={coachingImagePath}
-                alt="Personal Training and Coaching"
+                src={headshotPath}
+                alt="Michael Baker - Personal Trainer and Health Coach"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent lg:hidden"></div>

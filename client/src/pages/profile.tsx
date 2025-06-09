@@ -1,334 +1,275 @@
-import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link } from "wouter";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { CalendarIcon, Heart, Plus, Trash2, Clock, Users } from "lucide-react";
-import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
-import type { Recipe, MealPlan } from "@shared/schema";
-
-// Mock user ID for demo - in real app this would come from auth
-const CURRENT_USER_ID = 1;
+import { ArrowRight, Phone, Mail, Calendar, Award, Target, Heart, Users } from "lucide-react";
+import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
+import certificationsPath from "@assets/download - 2025-06-09T135407.583_1749492034107.png";
 
 export default function Profile() {
-  const { toast } = useToast();
-  const queryClient = useQueryClient();
-  const [newMealPlanOpen, setNewMealPlanOpen] = useState(false);
-  const [mealPlanName, setMealPlanName] = useState("");
-  const [mealPlanDate, setMealPlanDate] = useState("");
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <section className="bg-[hsl(var(--navy))] text-white py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="mb-8">
+                <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white/20 mb-6">
+                  <img 
+                    src={headshotPath} 
+                    alt="Michael Baker" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h1 className="text-4xl lg:text-5xl font-bold mb-4">Michael Baker</h1>
+                <p className="text-xl text-blue-200 mb-2">Personal Trainer, Nutrition Coach</p>
+                <p className="text-lg text-blue-100 leading-relaxed">
+                  Bridging the gap from inactivity and poor diet to strength and healthy habits
+                </p>
+              </div>
+              
+              <div className="flex flex-wrap gap-4 mb-8">
+                <div className="flex items-center space-x-2 bg-white/10 rounded-lg px-4 py-2">
+                  <Calendar className="h-5 w-5 text-blue-200" />
+                  <span className="font-medium">30 Years Experience</span>
+                </div>
+                <div className="flex items-center space-x-2 bg-white/10 rounded-lg px-4 py-2">
+                  <Phone className="h-5 w-5 text-blue-200" />
+                  <span>12039078902</span>
+                </div>
+                <div className="flex items-center space-x-2 bg-white/10 rounded-lg px-4 py-2">
+                  <Mail className="h-5 w-5 text-blue-200" />
+                  <span>mike@webmbd.com</span>
+                </div>
+              </div>
 
-  // Fetch user's favorite recipes
-  const { data: favoriteRecipes = [], isLoading: favoritesLoading } = useQuery({
-    queryKey: ["/api/users", CURRENT_USER_ID, "favorites"],
-    queryFn: () => apiRequest("GET", `/api/users/${CURRENT_USER_ID}/favorites`),
-  });
+              <Button 
+                className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90 text-white px-8 py-3 text-lg font-medium group"
+                onClick={() => window.open('https://calendly.com/getupearlier', '_blank')}
+              >
+                Book A Free 30 Minute Session
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
 
-  // Fetch user's meal plans
-  const { data: mealPlans = [], isLoading: mealPlansLoading } = useQuery({
-    queryKey: ["/api/users", CURRENT_USER_ID, "meal-plans"],
-    queryFn: () => apiRequest("GET", `/api/users/${CURRENT_USER_ID}/meal-plans`),
-  });
-
-  // Remove favorite mutation
-  const removeFavoriteMutation = useMutation({
-    mutationFn: async (recipeId: number) => {
-      await apiRequest("DELETE", `/api/users/${CURRENT_USER_ID}/favorites/${recipeId}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/users", CURRENT_USER_ID, "favorites"] });
-      toast({
-        title: "Favorite Removed",
-        description: "Recipe removed from your favorites.",
-      });
-    },
-    onError: (error) => {
-      toast({
-        title: "Error",
-        description: "Failed to remove favorite. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  // Create meal plan mutation
-  const createMealPlanMutation = useMutation({
-    mutationFn: async (data: { name: string; date: string }) => {
-      return await apiRequest("POST", `/api/users/${CURRENT_USER_ID}/meal-plans`, {
-        name: data.name,
-        date: data.date,
-      });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/users", CURRENT_USER_ID, "meal-plans"] });
-      setNewMealPlanOpen(false);
-      setMealPlanName("");
-      setMealPlanDate("");
-      toast({
-        title: "Meal Plan Created",
-        description: "Your new meal plan has been created successfully.",
-      });
-    },
-    onError: (error) => {
-      toast({
-        title: "Error",
-        description: "Failed to create meal plan. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  // Delete meal plan mutation
-  const deleteMealPlanMutation = useMutation({
-    mutationFn: async (mealPlanId: number) => {
-      await apiRequest("DELETE", `/api/meal-plans/${mealPlanId}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/users", CURRENT_USER_ID, "meal-plans"] });
-      toast({
-        title: "Meal Plan Deleted",
-        description: "Meal plan deleted successfully.",
-      });
-    },
-    onError: (error) => {
-      toast({
-        title: "Error",
-        description: "Failed to delete meal plan. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const handleCreateMealPlan = () => {
-    if (!mealPlanName.trim() || !mealPlanDate) {
-      toast({
-        title: "Missing Information",
-        description: "Please provide both a name and date for your meal plan.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    createMealPlanMutation.mutate({
-      name: mealPlanName.trim(),
-      date: mealPlanDate,
-    });
-  };
-
-  if (favoritesLoading || mealPlansLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 p-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="animate-pulse space-y-6">
-            <div className="h-8 bg-gray-200 rounded w-1/3"></div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="h-64 bg-gray-200 rounded-lg"></div>
-              ))}
+            <div className="lg:text-right">
+              <img 
+                src={headshotPath}
+                alt="Michael Baker - Personal Trainer"
+                className="w-full max-w-md mx-auto lg:ml-auto rounded-2xl shadow-2xl"
+              />
             </div>
           </div>
         </div>
-      </div>
-    );
-  }
+      </section>
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto p-6">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">My Profile</h1>
-          <p className="text-gray-600">Manage your favorite recipes and meal plans</p>
+      {/* About Section */}
+      <section className="py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-2xl text-gray-900">About Michael</CardTitle>
+              <CardDescription className="text-lg">
+                Dedicated health and wellness practitioner with over 30 years of experience
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <p className="text-gray-700 leading-relaxed">
+                Hello, I'm Michael Baker. I am a 50-year-old strength trainer, certified personal trainer, running coach, health coach, and yoga teacher. I'm also a former yoga studio owner and a dedicated health and wellness practitioner with over 30 years of experience. I began Get Up Earlier (GetUpEarlier.com) because getting up earlier was step one in transforming my routine and overall well-being, especially after spending years sitting at a computer as a digital professional.
+              </p>
+              
+              <p className="text-gray-700 leading-relaxed">
+                My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus on helping people rely on intuition, providing a personal experience, and introducing them to strength training, alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts.
+              </p>
+              
+              <p className="text-gray-700 leading-relaxed">
+                While my own marathon training or strength achievements might seem extreme, I'm not trying to turn anyone into a bodybuilder or marathon runner. I'm simply showing that, especially beyond 40, 50, 60, and 70 years old, these things are possible. It's about inspiration and helping people make realistic, sustainable changes.
+              </p>
+            </CardContent>
+          </Card>
         </div>
+      </section>
 
-        <Tabs defaultValue="favorites" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="favorites">Favorite Recipes</TabsTrigger>
-            <TabsTrigger value="meal-plans">Meal Plans</TabsTrigger>
-          </TabsList>
+      {/* Certifications */}
+      <section className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Professional Certifications</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Recognized credentials from leading fitness and wellness organizations
+            </p>
+          </div>
+          
+          <div className="flex justify-center">
+            <img 
+              src={certificationsPath}
+              alt="Professional Certifications - ISSA Personal Trainer, ISSA Running Coach, IIN Integrative Nutrition Health Coach, RYT 200 Yoga Alliance"
+              className="max-w-full h-auto"
+            />
+          </div>
 
-          <TabsContent value="favorites" className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-semibold text-gray-900">
-                Your Favorite Recipes ({favoriteRecipes.length})
-              </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+            <Card>
+              <CardHeader className="text-center">
+                <Award className="h-8 w-8 text-yellow-600 mx-auto mb-2" />
+                <CardTitle className="text-lg">ISSA Certified</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-center text-gray-600">Personal Trainer & Running Coach</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="text-center">
+                <Heart className="h-8 w-8 text-red-500 mx-auto mb-2" />
+                <CardTitle className="text-lg">IIN Certified</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-center text-gray-600">Integrative Nutrition Health Coach</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="text-center">
+                <Users className="h-8 w-8 text-purple-600 mx-auto mb-2" />
+                <CardTitle className="text-lg">RYT 200</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-center text-gray-600">Registered Yoga Teacher</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="text-center">
+                <Target className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+                <CardTitle className="text-lg">Studio Owner</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-center text-gray-600">Former Yoga Studio Owner</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Training & Coaching Services</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Personalized approach to help you achieve sustainable health and fitness goals
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">Strength Training</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 mb-4">
+                  Build functional strength and muscle with personalized workout programs designed for your fitness level and goals.
+                </p>
+                <Badge variant="secondary">Beginner to Advanced</Badge>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">Running Coaching</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 mb-4">
+                  Develop endurance and proper running form with structured training plans and technique guidance.
+                </p>
+                <Badge variant="secondary">All Distances</Badge>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">Nutrition Coaching</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 mb-4">
+                  Learn fundamental nutrition concepts and develop healthy eating habits that support your lifestyle.
+                </p>
+                <Badge variant="secondary">Sustainable Habits</Badge>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">Yoga & Stretching</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 mb-4">
+                  Improve flexibility, balance, and mindfulness with yoga-inspired stretching and movement practices.
+                </p>
+                <Badge variant="secondary">Mind-Body Connection</Badge>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">Health Coaching</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 mb-4">
+                  Comprehensive wellness support focusing on sustainable lifestyle changes and habit formation.
+                </p>
+                <Badge variant="secondary">Holistic Approach</Badge>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl">Accountability Coaching</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 mb-4">
+                  Stay motivated and on track with regular check-ins, goal setting, and progress monitoring.
+                </p>
+                <Badge variant="secondary">Consistent Support</Badge>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact CTA */}
+      <section className="py-16 bg-[hsl(var(--navy))] text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Health?</h2>
+          <p className="text-xl text-blue-200 mb-8 max-w-2xl mx-auto">
+            Let's work together to bridge the gap from where you are to where you want to be. 
+            Start with a free 30-minute consultation.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button 
+              size="lg"
+              className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90 text-white px-8 py-3 text-lg font-medium group"
+              onClick={() => window.open('https://calendly.com/getupearlier', '_blank')}
+            >
+              Schedule Free Consultation
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            
+            <div className="flex items-center space-x-4 text-blue-200">
+              <a href="tel:12039078902" className="flex items-center space-x-2 hover:text-white transition-colors">
+                <Phone className="h-5 w-5" />
+                <span>12039078902</span>
+              </a>
+              <a href="mailto:mike@webmbd.com" className="flex items-center space-x-2 hover:text-white transition-colors">
+                <Mail className="h-5 w-5" />
+                <span>mike@webmbd.com</span>
+              </a>
             </div>
-
-            {favoriteRecipes.length === 0 ? (
-              <Card>
-                <CardContent className="flex flex-col items-center justify-center py-12">
-                  <Heart className="h-12 w-12 text-gray-400 mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No favorites yet</h3>
-                  <p className="text-gray-600 text-center mb-4">
-                    Start adding recipes to your favorites to see them here.
-                  </p>
-                  <Link href="/recipes">
-                    <Button>Browse Recipes</Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {favoriteRecipes.map((recipe: Recipe) => (
-                  <Card key={recipe.id} className="overflow-hidden">
-                    <div className="aspect-video relative bg-gray-200">
-                      {recipe.imageUrl && (
-                        <img
-                          src={recipe.imageUrl}
-                          alt={recipe.title}
-                          className="w-full h-full object-cover"
-                        />
-                      )}
-                    </div>
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold text-lg mb-2">{recipe.title}</h3>
-                      <p className="text-gray-600 text-sm mb-3 line-clamp-2">{recipe.description}</p>
-                      
-                      <div className="flex flex-wrap gap-1 mb-3">
-                        {recipe.category?.slice(0, 2).map((cat) => (
-                          <Badge key={cat} variant="secondary" className="text-xs">
-                            {cat}
-                          </Badge>
-                        ))}
-                      </div>
-
-                      <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                        <div className="flex items-center gap-1">
-                          <Clock className="h-4 w-4" />
-                          {recipe.prepTime} min
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Users className="h-4 w-4" />
-                          {recipe.servings} servings
-                        </div>
-                      </div>
-
-                      <div className="flex gap-2">
-                        <Link href={`/recipes/${recipe.id}`} className="flex-1">
-                          <Button variant="outline" size="sm" className="w-full">
-                            View Recipe
-                          </Button>
-                        </Link>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => removeFavoriteMutation.mutate(recipe.id)}
-                          disabled={removeFavoriteMutation.isPending}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </TabsContent>
-
-          <TabsContent value="meal-plans" className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-semibold text-gray-900">
-                Your Meal Plans ({mealPlans.length})
-              </h2>
-              <Dialog open={newMealPlanOpen} onOpenChange={setNewMealPlanOpen}>
-                <DialogTrigger asChild>
-                  <Button>
-                    <Plus className="h-4 w-4 mr-2" />
-                    Create Meal Plan
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Create New Meal Plan</DialogTitle>
-                    <DialogDescription>
-                      Plan your meals for a specific day or week.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="name">Meal Plan Name</Label>
-                      <Input
-                        id="name"
-                        placeholder="e.g., Weekly Meal Plan"
-                        value={mealPlanName}
-                        onChange={(e) => setMealPlanName(e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="date">Date</Label>
-                      <Input
-                        id="date"
-                        type="date"
-                        value={mealPlanDate}
-                        onChange={(e) => setMealPlanDate(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                  <DialogFooter>
-                    <Button
-                      onClick={handleCreateMealPlan}
-                      disabled={createMealPlanMutation.isPending}
-                    >
-                      {createMealPlanMutation.isPending ? "Creating..." : "Create Meal Plan"}
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            </div>
-
-            {mealPlans.length === 0 ? (
-              <Card>
-                <CardContent className="flex flex-col items-center justify-center py-12">
-                  <CalendarIcon className="h-12 w-12 text-gray-400 mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No meal plans yet</h3>
-                  <p className="text-gray-600 text-center mb-4">
-                    Create your first meal plan to organize your weekly meals.
-                  </p>
-                  <Button onClick={() => setNewMealPlanOpen(true)}>
-                    <Plus className="h-4 w-4 mr-2" />
-                    Create Meal Plan
-                  </Button>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {mealPlans.map((mealPlan: MealPlan) => (
-                  <Card key={mealPlan.id}>
-                    <CardHeader>
-                      <CardTitle className="flex items-center justify-between">
-                        <span>{mealPlan.name}</span>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => deleteMealPlanMutation.mutate(mealPlan.id)}
-                          disabled={deleteMealPlanMutation.isPending}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </CardTitle>
-                      <CardDescription>
-                        {new Date(mealPlan.date).toLocaleDateString()}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-gray-600 mb-4">
-                        Created {new Date(mealPlan.createdAt!).toLocaleDateString()}
-                      </p>
-                      <Button variant="outline" className="w-full">
-                        View Meal Plan
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </TabsContent>
-        </Tabs>
-      </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
