@@ -99,7 +99,7 @@ export default function Home() {
                 <Star className="w-8 h-8 text-accent" />
               </div>
               <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">50+</div>
-              <div className="text-gray-600 dark:text-gray-300">Healthy Recipes</div>
+              <div className="text-gray-600 dark:text-gray-300">Clean & Lean Recipes</div>
             </div>
             
             <div className="p-6">

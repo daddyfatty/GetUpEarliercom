@@ -16,6 +16,7 @@ import Goals from "@/pages/goals";
 import About from "@/pages/about";
 import Coaching from "@/pages/coaching";
 import Contact from "@/pages/contact";
+import Team from "@/pages/team";
 import UserProfile from "@/pages/user-profile";
 import Admin from "@/pages/admin";
 import Checkout from "@/pages/checkout";
@@ -39,6 +40,7 @@ function Router() {
           <Route path="/about" component={About} />
           <Route path="/coaching" component={Coaching} />
           <Route path="/contact" component={Contact} />
+          <Route path="/team" component={Team} />
           <Route path="/profile" component={UserProfile} />
           <Route path="/admin" component={Admin} />
           <Route path="/checkout" component={Checkout} />

@@ -42,7 +42,8 @@ export function Navigation() {
   ];
 
   const aboutItems = [
-    { href: "/about", label: "Team" },
+    { href: "/about", label: "About" },
+    { href: "/team", label: "Team" },
     { href: "/coaching", label: "Coaching" },
     { href: "/contact", label: "Contact" },
   ];
