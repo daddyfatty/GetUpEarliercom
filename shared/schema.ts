@@ -35,6 +35,7 @@ export const recipes = pgTable("recipes", {
   description: text("description").notNull(),
   category: jsonb("category").$type<string[]>().notNull(), // breakfast, lunch, dinner, snack, dessert, finicky-kid-friendly
   dietType: jsonb("diet_type").$type<string[]>().notNull(), // vegetarian, vegan, keto, paleo, high-protein
+  tags: jsonb("tags").$type<string[]>(), // breakfast, snack, vegetarian, etc.
   prepTime: integer("prep_time").notNull(), // in minutes
   servings: integer("servings").notNull(),
   servingSize: text("serving_size"), // e.g., "1 cup", "4 oz", "150g"

@@ -8,6 +8,7 @@ import { Footer } from "@/components/footer";
 import Home from "@/pages/home";
 import Recipes from "@/pages/recipes";
 import RecipeDetail from "@/pages/recipe-detail";
+import RecipeArchive from "@/pages/recipe-archive";
 import Workouts from "@/pages/workouts";
 import Nutrition from "@/pages/nutrition";
 import Tracker from "@/pages/tracker";
