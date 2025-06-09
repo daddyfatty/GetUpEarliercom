@@ -3,7 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Clock, Flame, Play, Star, Dumbbell, User } from "lucide-react";
+import { Clock, Flame, Play, Star, Dumbbell, User, Eye } from "lucide-react";
+import { Link } from "wouter";
 import type { Workout } from "@shared/schema";
 
 export default function Workouts() {
@@ -216,9 +217,19 @@ export default function Workouts() {
 
                     {/* Action Buttons */}
                     <div className="flex gap-2">
-                      {youtubeId && (
+                      <Link href={`/workouts/${workout.id}`}>
                         <Button 
                           variant="default" 
+                          size="sm"
+                          className="flex-1"
+                        >
+                          <Eye className="w-4 h-4 mr-2" />
+                          View Details
+                        </Button>
+                      </Link>
+                      {youtubeId && (
+                        <Button 
+                          variant="outline" 
                           size="sm"
                           className="flex-1"
                           onClick={() => window.open(`https://www.youtube.com/watch?v=${youtubeId}`, '_blank')}
@@ -227,14 +238,6 @@ export default function Workouts() {
                           Watch Video
                         </Button>
                       )}
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        className="flex-1"
-                      >
-                        <User className="w-4 h-4 mr-2" />
-                        Start Workout
-                      </Button>
                     </div>
                   </CardContent>
                 </Card>
