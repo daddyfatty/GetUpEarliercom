@@ -44,14 +44,17 @@ export function HeroSection() {
               className="rounded-2xl shadow-2xl w-full h-auto"
             />
             
-            {/* Floating success card */}
-            <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg">
+            {/* Floating Facebook group card */}
+            <div 
+              className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg cursor-pointer hover:shadow-xl transition-shadow"
+              onClick={() => window.open('https://www.facebook.com/groups/getupearlier', '_blank')}
+            >
               <div className="flex items-center space-x-3">
                 <div className="bg-primary p-2 rounded-full">
                   <Trophy className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <p className="font-semibold text-gray-900">500+ Success Stories</p>
+                  <p className="font-semibold text-gray-900">1000+ Members Facebook Group</p>
                   <p className="text-sm text-gray-600">Join the community</p>
                 </div>
               </div>
