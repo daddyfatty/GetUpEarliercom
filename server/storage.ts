@@ -221,13 +221,13 @@ export class MemStorage implements IStorage {
           "Store in an airtight container."
         ],
         content: "This granola is awesome. It is my go-to carb-loading snack for marathon training and my family eats it up for breakfast or snacking. I created it out of frustration with low-quality store-bought options full of added sugar, seed oils, and tiny bags for high prices. I wanted a cleaner, more natural option with high-quality carbs, healthy fats, and balanced sweetness to fuel my long runs without compromising nutrition. I modeled it after brands like Purely Elizabeth and Grandy Organics but replaced the processed ingredients with raw honey and pure maple syrup as sweeteners and binders, and grass-fed butter for better fats and flavor. Raw honey is perfect for endurance, offering quick, digestible carbs with a low glycemic index for steady energy. It also provides antioxidants and essential minerals like potassium and magnesium to support muscle function and recovery. This granola's mix of slow- and fast-digesting carbs, healthy fats, and protein makes it ideal for carb-loading and supporting energy levels during long runs and workouts.",
-        imageUrl: "@assets/download - 2025-06-09T131947.822_1749489653696.png",
+        imageUrl: "/assets/download - 2025-06-09T131947.822_1749489653696.png",
         videoUrl: "https://www.youtube.com/watch?v=bDovNcN5Dl4",
         gallery: [
-          "@assets/download - 2025-06-09T131947.822_1749489653696.png",
-          "@assets/download - 2025-06-09T131953.710_1749489653696.png",
-          "@assets/download - 2025-06-09T132001.684_1749489653696.png",
-          "@assets/download - 2025-06-09T132007.147_1749489653697.png"
+          "/assets/download - 2025-06-09T131947.822_1749489653696.png",
+          "/assets/download - 2025-06-09T131953.710_1749489653696.png",
+          "/assets/download - 2025-06-09T132001.684_1749489653696.png",
+          "/assets/download - 2025-06-09T132007.147_1749489653697.png"
         ],
         createdAt: new Date(),
       }
