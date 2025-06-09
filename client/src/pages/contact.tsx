@@ -50,10 +50,16 @@ export default function Contact() {
       {/* Hero Section */}
       <section className="bg-[hsl(var(--navy))] text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-6">Get In Touch</h1>
-          <p className="text-xl text-blue-200 max-w-2xl mx-auto">
-            Ready to start your health and fitness journey? Let's connect and discuss how we can help you achieve your goals.
-          </p>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-6">Contact Us</h1>
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-white">PERSONAL MEANS PERSONAL</h2>
+            <p className="text-xl text-blue-200">
+              Reach out below or text direct: 203.907.8902
+            </p>
+            <p className="text-lg text-blue-100">
+              100% customized sessions. Let us know your objectives:
+            </p>
+          </div>
         </div>
       </section>
 
@@ -69,9 +75,8 @@ export default function Contact() {
                     <Phone className="h-6 w-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-900 mb-1">Phone</h3>
-                    <p className="text-gray-600">12039078902</p>
-                    <p className="text-sm text-gray-500 mt-1">Available for calls and text messages</p>
+                    <h3 className="font-medium text-gray-900 mb-1">Call or Text</h3>
+                    <p className="text-gray-600">203.907.8902</p>
                   </div>
                 </div>
 
@@ -81,8 +86,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-900 mb-1">Email</h3>
-                    <p className="text-gray-600">mike@webmbd.com</p>
-                    <p className="text-sm text-gray-500 mt-1">Best for detailed inquiries and scheduling</p>
+                    <p className="text-gray-600">Please use the form below</p>
                   </div>
                 </div>
 
@@ -91,9 +95,9 @@ export default function Contact() {
                     <MapPin className="h-6 w-6 text-purple-600" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-900 mb-1">Location</h3>
-                    <p className="text-gray-600">Based in Connecticut</p>
-                    <p className="text-sm text-gray-500 mt-1">In-person and virtual coaching available</p>
+                    <h3 className="font-medium text-gray-900 mb-1">Our Location</h3>
+                    <p className="text-gray-600">455 Ridgeview Road</p>
+                    <p className="text-gray-600">Orange, CT</p>
                   </div>
                 </div>
 
@@ -102,9 +106,9 @@ export default function Contact() {
                     <Clock className="h-6 w-6 text-orange-600" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-900 mb-1">Response Time</h3>
-                    <p className="text-gray-600">Within 24 hours</p>
-                    <p className="text-sm text-gray-500 mt-1">Usually much faster during business hours</p>
+                    <h3 className="font-medium text-gray-900 mb-1">Hours</h3>
+                    <p className="text-gray-600">7 days a week</p>
+                    <p className="text-gray-600">4:45am-2pm EST</p>
                   </div>
                 </div>
               </div>
@@ -133,10 +137,10 @@ export default function Contact() {
                 <Button 
                   variant="outline" 
                   className="w-full"
-                  onClick={() => window.location.href = 'tel:12039078902'}
+                  onClick={() => window.location.href = 'tel:2039078902'}
                 >
                   <Phone className="h-4 w-4 mr-2" />
-                  Call Now: (203) 907-8902
+                  Call or Text: 203.907.8902
                 </Button>
 
                 <Button 
