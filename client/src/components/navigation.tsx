@@ -36,7 +36,8 @@ export function Navigation() {
     { href: "/workouts", label: "Workouts" },
     { href: "/nutrition", label: "Nutrition" },
     { href: "/goals", label: "Goals" },
-    { href: "/profile", label: "Profile" },
+    { href: "/about", label: "About" },
+    ...(isAuthenticated ? [{ href: "/profile", label: "Profile" }] : []),
     ...(isAdmin ? [{ href: "/admin", label: "Admin" }] : []),
   ];
 

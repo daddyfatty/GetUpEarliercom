@@ -12,7 +12,8 @@ import Workouts from "@/pages/workouts";
 import Nutrition from "@/pages/nutrition";
 import Tracker from "@/pages/tracker";
 import Goals from "@/pages/goals";
-import Profile from "@/pages/profile";
+import About from "@/pages/about";
+import UserProfile from "@/pages/user-profile";
 import Admin from "@/pages/admin";
 import Checkout from "@/pages/checkout";
 import Subscribe from "@/pages/subscribe";
@@ -31,7 +32,8 @@ function Router() {
           <Route path="/nutrition" component={Nutrition} />
           <Route path="/tracker" component={Tracker} />
           <Route path="/goals" component={Goals} />
-          <Route path="/profile" component={Profile} />
+          <Route path="/about" component={About} />
+          <Route path="/profile" component={UserProfile} />
           <Route path="/admin" component={Admin} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/subscribe" component={Subscribe} />
