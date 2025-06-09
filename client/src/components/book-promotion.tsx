@@ -21,10 +21,7 @@ export function BookPromotion() {
                 Get Up Earlier
                 <span className="block text-blue-200">Nutrition Blueprint</span>
               </h2>
-              <p className="text-xl mb-8 text-blue-100">
-                Transform your relationship with food through clean eating recipes designed for personal training clients. 
-                Bridge the gap from poor diet to healthy habits with nutrition that actually works.
-              </p>
+              <p className="text-xl mb-8 text-blue-100">Discover real food, focus on protein, and maintain balance across all your macros for practical, everyday nutrition.</p>
               
               <div className="grid grid-cols-2 gap-6 mb-8">
                 <div className="text-center">
