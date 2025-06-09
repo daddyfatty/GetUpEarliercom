@@ -13,6 +13,8 @@ import Nutrition from "@/pages/nutrition";
 import Tracker from "@/pages/tracker";
 import Goals from "@/pages/goals";
 import About from "@/pages/about";
+import Coaching from "@/pages/coaching";
+import Contact from "@/pages/contact";
 import UserProfile from "@/pages/user-profile";
 import Admin from "@/pages/admin";
 import Checkout from "@/pages/checkout";
@@ -33,6 +35,8 @@ function Router() {
           <Route path="/tracker" component={Tracker} />
           <Route path="/goals" component={Goals} />
           <Route path="/about" component={About} />
+          <Route path="/coaching" component={Coaching} />
+          <Route path="/contact" component={Contact} />
           <Route path="/profile" component={UserProfile} />
           <Route path="/admin" component={Admin} />
           <Route path="/checkout" component={Checkout} />

@@ -5,9 +5,10 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
-import { Menu, Bell, User, LogOut } from "lucide-react";
+import { Menu, Bell, User, LogOut, ChevronDown } from "lucide-react";
 import { SiFacebook } from "react-icons/si";
 import logoPath from "@assets/logo_1749324568864.png";
 
@@ -36,9 +37,14 @@ export function Navigation() {
     { href: "/workouts", label: "Workouts" },
     { href: "/nutrition", label: "Nutrition" },
     { href: "/goals", label: "Goals" },
-    { href: "/about", label: "About" },
     ...(isAuthenticated ? [{ href: "/profile", label: "Profile" }] : []),
     ...(isAdmin ? [{ href: "/admin", label: "Admin" }] : []),
+  ];
+
+  const aboutItems = [
+    { href: "/about", label: "Team" },
+    { href: "/coaching", label: "Coaching" },
+    { href: "/contact", label: "Contact" },
   ];
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -130,6 +136,33 @@ export function Navigation() {
                     </span>
                   </Link>
                 ))}
+                
+                {/* About Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <span
+                      className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                        aboutItems.some(item => location === item.href)
+                          ? "text-[hsl(var(--orange))] bg-white/10"
+                          : "text-white hover:text-[hsl(var(--orange))]"
+                      }`}
+                    >
+                      About
+                      <ChevronDown className="ml-1 h-4 w-4" />
+                    </span>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="center" className="bg-white border border-gray-200 shadow-lg">
+                    {aboutItems.map((item) => (
+                      <DropdownMenuItem key={item.href} asChild>
+                        <Link href={item.href}>
+                          <span className="font-medium text-gray-900 hover:text-[hsl(var(--orange))] cursor-pointer w-full">
+                            {item.label}
+                          </span>
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
 
@@ -280,6 +313,24 @@ export function Navigation() {
                         </span>
                       </Link>
                     ))}
+
+                    {/* About Section for Mobile */}
+                    <div className="border-t pt-4">
+                      <div className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">About</div>
+                      {aboutItems.map((item) => (
+                        <Link key={item.href} href={item.href}>
+                          <span
+                            className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading ${
+                              location === item.href
+                                ? "text-[hsl(var(--orange))] bg-orange-50"
+                                : "text-gray-900 hover:text-[hsl(var(--orange))]"
+                            }`}
+                          >
+                            {item.label}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
 
                     {/* Facebook Group Link */}
                     <div className="pt-4 border-t">
