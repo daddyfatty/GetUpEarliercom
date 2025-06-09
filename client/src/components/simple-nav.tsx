@@ -74,6 +74,9 @@ export function SimpleNavigation() {
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Quick Login for Testing</DialogTitle>
+                    <DialogDescription>
+                      Enter any email to simulate login for testing purposes
+                    </DialogDescription>
                   </DialogHeader>
                   <form onSubmit={handleLogin} className="space-y-4">
                     <div>
