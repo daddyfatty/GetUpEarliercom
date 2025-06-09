@@ -19,7 +19,7 @@ export function BookPromotion() {
             <div>
               <h2 className="text-3xl md:text-5xl font-bold mb-6 font-brand">
                 Get Up Earlier
-                <span className="block text-blue-200">Recipe Book</span>
+                <span className="block text-blue-200">Nutrition Blueprint</span>
               </h2>
               <p className="text-xl mb-8 text-blue-100">
                 Transform your relationship with food through clean eating recipes designed for personal training clients. 
