@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -16,26 +16,36 @@ export function Navigation() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [loginForm, setLoginForm] = useState({ email: "", password: "" });
   const [registerForm, setRegisterForm] = useState({ username: "", email: "", password: "" });
+  const [isScrolled, setIsScrolled] = useState(false);
   const { user, isAuthenticated, login, logout } = useAuth();
   const isAdmin = user?.email === "admin@getupear.lier.com";
   const { toast } = useToast();
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const navItems = [
     { href: "/recipes", label: "Recipes" },
     { href: "/workouts", label: "Workouts" },
-    { href: "/tracker", label: "Tracker" },
+    { href: "/nutrition", label: "Nutrition" },
     { href: "/goals", label: "Goals" },
     { href: "/profile", label: "Profile" },
-    { href: "/subscribe", label: "Subscribe" },
+    ...(isAdmin ? [{ href: "/admin", label: "Admin" }] : []),
   ];
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      login(loginForm.email);
+      await login(loginForm.email, loginForm.password);
       setIsLoginOpen(false);
       setLoginForm({ email: "", password: "" });
-      toast({ title: "Welcome back!" });
+      toast({ title: "Welcome back!", description: "You've been logged in successfully." });
     } catch (error) {
       toast({ title: "Login failed", description: "Please check your credentials", variant: "destructive" });
     }
@@ -44,32 +54,52 @@ export function Navigation() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      login(registerForm.email); // For demo purposes, just log in with the email
+      await login(registerForm.email, registerForm.password);
       setIsRegisterOpen(false);
       setRegisterForm({ username: "", email: "", password: "" });
-      toast({ title: "Account created successfully!" });
+      toast({ title: "Account created!", description: "Welcome to Get Up Earlier!" });
     } catch (error) {
       toast({ title: "Registration failed", description: "Please try again", variant: "destructive" });
     }
   };
 
   return (
-    <nav className="bg-[hsl(var(--navy))] shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-28">
-          {/* Logo */}
-          <div className="flex items-center">
+    <>
+      {/* Desktop Header with Centered Logo */}
+      <div className="hidden md:block bg-[hsl(var(--navy))] py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center">
             <Link href="/">
               <img 
                 src={logoPath} 
                 alt="Get Up Earlier" 
-                className="h-24 md:h-20 w-auto max-w-[600px] md:max-w-[500px] object-contain"
+                className="h-32 w-auto max-w-[700px] object-contain"
               />
             </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Sticky Navigation Bar */}
+      <nav className={`bg-[hsl(var(--navy))] shadow-sm sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'shadow-lg' : ''
+      }`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-28 md:h-16">
+            {/* Mobile Logo */}
+            <div className="flex items-center md:hidden">
+              <Link href="/">
+                <img 
+                  src={logoPath} 
+                  alt="Get Up Earlier" 
+                  className="h-24 w-auto max-w-[600px] object-contain"
+                />
+              </Link>
+            </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:block ml-10">
-              <div className="flex items-baseline space-x-4">
+            <div className="hidden md:flex items-center justify-center flex-1">
+              <div className="flex items-baseline space-x-8">
                 {navItems.map((item) => (
                   <Link key={item.href} href={item.href}>
                     <span
@@ -83,312 +113,187 @@ export function Navigation() {
                     </span>
                   </Link>
                 ))}
-
               </div>
             </div>
-          </div>
 
-          {/* Desktop Actions */}
-          <div className="hidden md:block">
-            <div className="ml-4 flex items-center md:ml-6 space-x-4">
-              {isAuthenticated && (
-                <Button variant="ghost" size="sm" className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10">
-                  <Bell className="w-4 h-4" />
-                </Button>
-              )}
-              
-              {!isAuthenticated ? (
-                <>
-                  <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
-                    <DialogTrigger asChild>
-                      <Button variant="ghost" className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10">Login</Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Login to Your Account</DialogTitle>
-                        <DialogDescription>
-                          Enter your email and password to access your account
-                        </DialogDescription>
-                      </DialogHeader>
-                      <form onSubmit={handleLogin} className="space-y-4">
-                        <div>
-                          <Label htmlFor="email">Email</Label>
-                          <Input
-                            id="email"
-                            type="email"
-                            value={loginForm.email}
-                            onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
-                            placeholder="Enter your email"
-                            required
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="password">Password</Label>
-                          <Input
-                            id="password"
-                            type="password"
-                            value={loginForm.password}
-                            onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-                            placeholder="Enter your password"
-                            required
-                          />
-                        </div>
-                        <div className="flex flex-col space-y-2">
-                          <Button type="submit" className="w-full">Login</Button>
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            onClick={() => {
-                              setIsLoginOpen(false);
-                              setIsRegisterOpen(true);
-                            }}
-                          >
-                            Don't have an account? Sign up
-                          </Button>
-                        </div>
-                      </form>
-                    </DialogContent>
-                  </Dialog>
-                  
-                  <Dialog open={isRegisterOpen} onOpenChange={setIsRegisterOpen}>
-                    <DialogTrigger asChild>
-                      <Button className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90 text-white">Sign Up</Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Create Your Account</DialogTitle>
-                        <DialogDescription>
-                          Fill in your details to create a new account
-                        </DialogDescription>
-                      </DialogHeader>
-                      <form onSubmit={handleRegister} className="space-y-4">
-                        <div>
-                          <Label htmlFor="username">Username</Label>
-                          <Input
-                            id="username"
-                            value={registerForm.username}
-                            onChange={(e) => setRegisterForm({ ...registerForm, username: e.target.value })}
-                            placeholder="Choose a username"
-                            required
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="email">Email</Label>
-                          <Input
-                            id="email"
-                            type="email"
-                            value={registerForm.email}
-                            onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })}
-                            placeholder="Enter your email"
-                            required
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="password">Password</Label>
-                          <Input
-                            id="password"
-                            type="password"
-                            value={registerForm.password}
-                            onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
-                            placeholder="Create a password"
-                            required
-                          />
-                        </div>
-                        <div className="flex flex-col space-y-2">
+            {/* Desktop Actions */}
+            <div className="hidden md:block">
+              <div className="ml-4 flex items-center md:ml-6 space-x-4">
+                {isAuthenticated && (
+                  <Button variant="ghost" size="sm" className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10">
+                    <Bell className="h-4 w-4" />
+                  </Button>
+                )}
+
+                {isAuthenticated ? (
+                  <div className="flex items-center space-x-2">
+                    <span className="text-white text-sm">
+                      Welcome, {user?.firstName || user?.email}
+                    </span>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={logout}
+                      className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10"
+                    >
+                      <LogOut className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex space-x-2">
+                    <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
+                      <DialogTrigger asChild>
+                        <Button variant="ghost" size="sm" className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10">
+                          Sign In
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Sign In</DialogTitle>
+                          <DialogDescription>Enter your credentials to access your account</DialogDescription>
+                        </DialogHeader>
+                        <form onSubmit={handleLogin} className="space-y-4">
+                          <div>
+                            <Label htmlFor="login-email">Email</Label>
+                            <Input
+                              id="login-email"
+                              type="email"
+                              value={loginForm.email}
+                              onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
+                              required
+                            />
+                          </div>
+                          <div>
+                            <Label htmlFor="login-password">Password</Label>
+                            <Input
+                              id="login-password"
+                              type="password"
+                              value={loginForm.password}
+                              onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
+                              required
+                            />
+                          </div>
+                          <Button type="submit" className="w-full">Sign In</Button>
+                        </form>
+                      </DialogContent>
+                    </Dialog>
+
+                    <Dialog open={isRegisterOpen} onOpenChange={setIsRegisterOpen}>
+                      <DialogTrigger asChild>
+                        <Button size="sm" className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90">
+                          Sign Up
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>Create Account</DialogTitle>
+                          <DialogDescription>Join Get Up Earlier to start your health journey</DialogDescription>
+                        </DialogHeader>
+                        <form onSubmit={handleRegister} className="space-y-4">
+                          <div>
+                            <Label htmlFor="register-username">Username</Label>
+                            <Input
+                              id="register-username"
+                              type="text"
+                              value={registerForm.username}
+                              onChange={(e) => setRegisterForm({ ...registerForm, username: e.target.value })}
+                              required
+                            />
+                          </div>
+                          <div>
+                            <Label htmlFor="register-email">Email</Label>
+                            <Input
+                              id="register-email"
+                              type="email"
+                              value={registerForm.email}
+                              onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })}
+                              required
+                            />
+                          </div>
+                          <div>
+                            <Label htmlFor="register-password">Password</Label>
+                            <Input
+                              id="register-password"
+                              type="password"
+                              value={registerForm.password}
+                              onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
+                              required
+                            />
+                          </div>
                           <Button type="submit" className="w-full">Create Account</Button>
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            onClick={() => {
-                              setIsRegisterOpen(false);
-                              setIsLoginOpen(true);
-                            }}
-                          >
-                            Already have an account? Login
-                          </Button>
-                        </div>
-                      </form>
-                    </DialogContent>
-                  </Dialog>
-                </>
-              ) : (
-                <>
-                  <Button className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90 text-white">
-                    Upgrade to Pro
-                  </Button>
-                  <Button variant="ghost" onClick={logout} className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10">
-                    <User className="w-4 h-4 mr-2" />
-                    {user?.firstName || user?.email}
-                    <LogOut className="w-4 h-4 ml-2" />
-                  </Button>
-                </>
-              )}
+                        </form>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
 
-          {/* Mobile Menu */}
-          <div className="md:hidden">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="lg" className="text-white hover:text-white hover:bg-white/10 p-6">
-                  <Menu className="w-12 h-12" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-80">
-                <div className="flex flex-col space-y-4 mt-8">
-                  {navItems.map((item) => (
-                    <Link key={item.href} href={item.href}>
-                      <span
-                        className={`block px-3 py-2 rounded-md text-base font-medium cursor-pointer uppercase font-heading ${
-                          location === item.href
-                            ? "text-primary bg-primary/10"
-                            : "text-gray-900 hover:text-primary dark:text-gray-100 dark:hover:text-primary"
-                        }`}
-                      >
-                        {item.label}
-                      </span>
-                    </Link>
-                  ))}
-                  {isAdmin && (
-                    <Link href="/admin">
-                      <span className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-primary dark:text-gray-100 dark:hover:text-primary cursor-pointer">
-                        Admin
-                      </span>
-                    </Link>
-                  )}
-                  
-                  <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
-                    {!isAuthenticated ? (
-                      <div className="space-y-2">
-                        <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
-                          <DialogTrigger asChild>
-                            <Button variant="outline" className="w-full">Login</Button>
-                          </DialogTrigger>
-                          <DialogContent>
-                            <DialogHeader>
-                              <DialogTitle>Login to Your Account</DialogTitle>
-                              <DialogDescription>
-                                Enter your email and password to access your account
-                              </DialogDescription>
-                            </DialogHeader>
-                            <form onSubmit={handleLogin} className="space-y-4">
-                              <div>
-                                <Label htmlFor="mobile-email">Email</Label>
-                                <Input
-                                  id="mobile-email"
-                                  type="email"
-                                  value={loginForm.email}
-                                  onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
-                                  placeholder="Enter your email"
-                                  required
-                                />
-                              </div>
-                              <div>
-                                <Label htmlFor="mobile-password">Password</Label>
-                                <Input
-                                  id="mobile-password"
-                                  type="password"
-                                  value={loginForm.password}
-                                  onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-                                  placeholder="Enter your password"
-                                  required
-                                />
-                              </div>
-                              <div className="flex flex-col space-y-2">
-                                <Button type="submit" className="w-full">Login</Button>
-                                <Button
-                                  type="button"
-                                  variant="ghost"
-                                  onClick={() => {
-                                    setIsLoginOpen(false);
-                                    setIsRegisterOpen(true);
-                                  }}
-                                >
-                                  Need an account? Sign up
-                                </Button>
-                              </div>
-                            </form>
-                          </DialogContent>
-                        </Dialog>
-                        <Dialog open={isRegisterOpen} onOpenChange={setIsRegisterOpen}>
-                          <DialogTrigger asChild>
-                            <Button className="w-full bg-primary hover:bg-primary/90">Sign Up</Button>
-                          </DialogTrigger>
-                          <DialogContent>
-                            <DialogHeader>
-                              <DialogTitle>Create Your Account</DialogTitle>
-                              <DialogDescription>
-                                Fill in your details to create a new account
-                              </DialogDescription>
-                            </DialogHeader>
-                            <form onSubmit={handleRegister} className="space-y-4">
-                              <div>
-                                <Label htmlFor="mobile-username">Username</Label>
-                                <Input
-                                  id="mobile-username"
-                                  type="text"
-                                  value={registerForm.username}
-                                  onChange={(e) => setRegisterForm({ ...registerForm, username: e.target.value })}
-                                  placeholder="Choose a username"
-                                  required
-                                />
-                              </div>
-                              <div>
-                                <Label htmlFor="mobile-reg-email">Email</Label>
-                                <Input
-                                  id="mobile-reg-email"
-                                  type="email"
-                                  value={registerForm.email}
-                                  onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })}
-                                  placeholder="Enter your email"
-                                  required
-                                />
-                              </div>
-                              <div>
-                                <Label htmlFor="mobile-reg-password">Password</Label>
-                                <Input
-                                  id="mobile-reg-password"
-                                  type="password"
-                                  value={registerForm.password}
-                                  onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
-                                  placeholder="Create a password"
-                                  required
-                                />
-                              </div>
-                              <div className="flex flex-col space-y-2">
-                                <Button type="submit" className="w-full">Create Account</Button>
-                                <Button
-                                  type="button"
-                                  variant="ghost"
-                                  onClick={() => {
-                                    setIsRegisterOpen(false);
-                                    setIsLoginOpen(true);
-                                  }}
-                                >
-                                  Already have an account? Login
-                                </Button>
-                              </div>
-                            </form>
-                          </DialogContent>
-                        </Dialog>
+            {/* Mobile Menu */}
+            <div className="md:hidden">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="sm" className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10 h-12 w-12">
+                    <Menu className="h-6 w-6" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                  <div className="flex flex-col space-y-4 mt-8">
+                    {navItems.map((item) => (
+                      <Link key={item.href} href={item.href}>
+                        <span
+                          className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading ${
+                            location === item.href
+                              ? "text-[hsl(var(--orange))] bg-orange-50"
+                              : "text-gray-900 hover:text-[hsl(var(--orange))]"
+                          }`}
+                        >
+                          {item.label}
+                        </span>
+                      </Link>
+                    ))}
+
+                    {isAuthenticated ? (
+                      <div className="pt-4 border-t">
+                        <div className="flex items-center space-x-2 mb-4">
+                          <User className="h-5 w-5 text-gray-500" />
+                          <span className="text-sm text-gray-700">
+                            {user?.firstName || user?.email}
+                          </span>
+                        </div>
+                        <Button 
+                          variant="outline" 
+                          onClick={logout}
+                          className="w-full justify-start"
+                        >
+                          <LogOut className="h-4 w-4 mr-2" />
+                          Sign Out
+                        </Button>
                       </div>
                     ) : (
-                      <div className="space-y-2">
-                        <Button className="w-full bg-primary hover:bg-primary/90">
-                          Upgrade to Pro
+                      <div className="pt-4 border-t space-y-2">
+                        <Button 
+                          variant="outline" 
+                          onClick={() => setIsLoginOpen(true)}
+                          className="w-full"
+                        >
+                          Sign In
                         </Button>
-                        <Button variant="outline" onClick={logout} className="w-full">
-                          Logout ({user?.firstName || user?.email})
+                        <Button 
+                          onClick={() => setIsRegisterOpen(true)}
+                          className="w-full bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90"
+                        >
+                          Sign Up
                         </Button>
                       </div>
                     )}
                   </div>
-                </div>
-              </SheetContent>
-            </Sheet>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 }
