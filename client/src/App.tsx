@@ -9,6 +9,7 @@ import Home from "@/pages/home";
 import Recipes from "@/pages/recipes";
 import RecipeDetail from "@/pages/recipe-detail";
 import Workouts from "@/pages/workouts";
+import Nutrition from "@/pages/nutrition";
 import Tracker from "@/pages/tracker";
 import Goals from "@/pages/goals";
 import Profile from "@/pages/profile";
@@ -27,6 +28,7 @@ function Router() {
           <Route path="/recipes" component={Recipes} />
           <Route path="/recipes/:id" component={RecipeDetail} />
           <Route path="/workouts" component={Workouts} />
+          <Route path="/nutrition" component={Nutrition} />
           <Route path="/tracker" component={Tracker} />
           <Route path="/goals" component={Goals} />
           <Route path="/profile" component={Profile} />
