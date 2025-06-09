@@ -30,6 +30,7 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/recipes" component={Recipes} />
+          <Route path="/recipes/archive" component={RecipeArchive} />
           <Route path="/recipes/:id" component={RecipeDetail} />
           <Route path="/workouts" component={Workouts} />
           <Route path="/nutrition" component={Nutrition} />

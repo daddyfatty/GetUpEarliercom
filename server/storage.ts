@@ -240,6 +240,7 @@ export class MemStorage implements IStorage {
         description: "My long run pregame granola is super light running rocket fuel. My 5th Sunday in a row evolving this recipe: Clean, Light, Crunchy endurance fuel optimized for pre-run carb loading.",
         category: ["breakfast", "snack"],
         dietType: ["vegetarian"],
+        tags: ["breakfast", "snack", "vegetarian", "granola", "endurance"],
         prepTime: 40,
         servings: 8,
         servingSize: "1 cup",

@@ -408,31 +408,38 @@ export default function RecipeDetail() {
             <div>
               <div className="flex flex-wrap gap-2 mb-4">
                 {Array.isArray(recipe.category) ? recipe.category.map((cat, index) => (
-                  <Link key={index} href={`/recipes?category=${encodeURIComponent(cat)}`}>
+                  <Link key={index} href={`/recipes/archive?category=${encodeURIComponent(cat)}`}>
                     <Badge className="bg-[#ef4444]/10 text-[#ef4444] hover:bg-[#ef4444]/20 cursor-pointer transition-colors">
                       {getCategoryEmoji(cat)} {cat}
                     </Badge>
                   </Link>
                 )) : (
-                  <Link href={`/recipes?category=${encodeURIComponent(recipe.category)}`}>
+                  <Link href={`/recipes/archive?category=${encodeURIComponent(recipe.category)}`}>
                     <Badge className="bg-[#ef4444]/10 text-[#ef4444] hover:bg-[#ef4444]/20 cursor-pointer transition-colors">
                       {getCategoryEmoji(recipe.category)} {recipe.category}
                     </Badge>
                   </Link>
                 )}
                 {recipe.dietType && Array.isArray(recipe.dietType) ? recipe.dietType.map((diet, index) => (
-                  <Link key={index} href={`/recipes?dietType=${encodeURIComponent(diet)}`}>
+                  <Link key={index} href={`/recipes/archive?diet=${encodeURIComponent(diet)}`}>
                     <Badge variant="outline" className="cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
                       {getDietIcon(diet)} {diet}
                     </Badge>
                   </Link>
                 )) : recipe.dietType && (
-                  <Link href={`/recipes?dietType=${encodeURIComponent(recipe.dietType)}`}>
+                  <Link href={`/recipes/archive?diet=${encodeURIComponent(recipe.dietType)}`}>
                     <Badge variant="outline" className="cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
                       {getDietIcon(recipe.dietType)} {recipe.dietType}
                     </Badge>
                   </Link>
                 )}
+                {recipe.tags && recipe.tags.map((tag, index) => (
+                  <Link key={index} href={`/recipes/archive?tag=${encodeURIComponent(tag)}`}>
+                    <Badge variant="secondary" className="cursor-pointer transition-colors hover:bg-gray-200 dark:hover:bg-gray-700">
+                      {tag}
+                    </Badge>
+                  </Link>
+                ))}
               </div>
               
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
