@@ -21,7 +21,7 @@ export function BookPromotion() {
                 Get Up Earlier
                 <span className="block text-blue-200">Nutrition Blueprint</span>
               </h2>
-              <p className="text-xl mb-8 text-blue-100">Discover real food, focus on protein, and maintain balance across all your macros for practical, everyday nutrition.</p>
+              <p className="text-xl mb-8 text-blue-100">Track real food, focus on protein and macros, and fuel your best life with practical, balanced nutrition.</p>
               
               <div className="grid grid-cols-2 gap-6 mb-8">
                 <div className="text-center">
@@ -53,7 +53,7 @@ export function BookPromotion() {
                 <Button 
                   size="lg"
                   variant="outline"
-                  className="border-2 border-white text-white hover:bg-white hover:text-blue-900 font-semibold"
+                  className="border-2 border-white text-white hover:bg-white hover:text-primary font-semibold bg-transparent"
                   onClick={() => handlePurchase('hardcopy')}
                 >
                   Hardcopy - $39
