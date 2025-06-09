@@ -240,52 +240,11 @@ export function Navigation() {
                       </DialogContent>
                     </Dialog>
 
-                    <Dialog open={isRegisterOpen} onOpenChange={setIsRegisterOpen}>
-                      <DialogTrigger asChild>
-                        <Button size="sm" className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90">
-                          Sign Up
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>Create Account</DialogTitle>
-                          <DialogDescription>Join Get Up Earlier to start your health journey</DialogDescription>
-                        </DialogHeader>
-                        <form onSubmit={handleRegister} className="space-y-4">
-                          <div>
-                            <Label htmlFor="register-username">Username</Label>
-                            <Input
-                              id="register-username"
-                              type="text"
-                              value={registerForm.username}
-                              onChange={(e) => setRegisterForm({ ...registerForm, username: e.target.value })}
-                              required
-                            />
-                          </div>
-                          <div>
-                            <Label htmlFor="register-email">Email</Label>
-                            <Input
-                              id="register-email"
-                              type="email"
-                              value={registerForm.email}
-                              onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })}
-                              required
-                            />
-                          </div>
-                          <div>
-                            <Label htmlFor="register-password">Password</Label>
-                            <Input
-                              id="register-password"
-                              type="password"
-                              value={registerForm.password}
-                              onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
-                              required
-                            />
-                          </div>
-                          <Button type="submit" className="w-full">Create Account</Button>
-                        </form>
-                      </DialogContent>
-                    </Dialog>
+                    <Link href="/coaching">
+                      <Button size="sm" className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90">
+                        Sign Up
+                      </Button>
+                    </Link>
                   </div>
                 )}
               </div>
@@ -372,12 +331,13 @@ export function Navigation() {
                         >
                           Sign In
                         </Button>
-                        <Button 
-                          onClick={() => setIsRegisterOpen(true)}
-                          className="w-full bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90"
-                        >
-                          Sign Up
-                        </Button>
+                        <Link href="/coaching">
+                          <Button 
+                            className="w-full bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90"
+                          >
+                            Sign Up
+                          </Button>
+                        </Link>
                       </div>
                     )}
                   </div>

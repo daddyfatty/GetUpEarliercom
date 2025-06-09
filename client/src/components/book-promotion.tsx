@@ -1,14 +1,46 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Star, Leaf, Clock, TrendingUp } from "lucide-react";
-import { useLocation } from "wouter";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Star, Leaf, Clock, TrendingUp, Mail, CheckCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 import _493414479_10213588193416986_7983427679426833080_n from "@assets/493414479_10213588193416986_7983427679426833080_n.jpg";
 
 export function BookPromotion() {
-  const [, navigate] = useLocation();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedType, setSelectedType] = useState<string>("");
+  const [email, setEmail] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { toast } = useToast();
 
   const handlePurchase = (type: string) => {
-    navigate(`/checkout?type=${type}`);
+    setSelectedType(type);
+    setIsDialogOpen(true);
+    setIsSubmitted(false);
+    setEmail("");
+  };
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    try {
+      // Here you would normally send to your backend/email service
+      // For now, we'll just show success
+      setIsSubmitted(true);
+      toast({
+        title: "Thank you!",
+        description: "We'll notify you when the book becomes available.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -139,6 +171,73 @@ export function BookPromotion() {
           </div>
         </div>
       </div>
+
+      {/* Coming Soon Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center space-x-2">
+              <Mail className="w-5 h-5 text-primary" />
+              <span>
+                {selectedType === 'digital' ? 'Digital Download' : 'Hard Copy'} - Coming Soon
+              </span>
+            </DialogTitle>
+            <DialogDescription>
+              We're putting the finishing touches on the "Get Up Earlier: Eat Clean & Lean" recipe book. 
+              Enter your email to be notified when it becomes available.
+            </DialogDescription>
+          </DialogHeader>
+          
+          {!isSubmitted ? (
+            <form onSubmit={handleEmailSubmit} className="space-y-4">
+              <div>
+                <Label htmlFor="email">Email Address</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="flex items-center space-x-2 text-sm text-gray-600">
+                <div className="w-4 h-4 bg-primary/10 rounded-full flex items-center justify-center">
+                  <span className="text-xs">💡</span>
+                </div>
+                <span>
+                  {selectedType === 'digital' 
+                    ? 'Digital version will be $29 when released' 
+                    : 'Hard copy will be $39 when released'
+                  }
+                </span>
+              </div>
+              <Button type="submit" className="w-full">
+                Notify Me When Available
+              </Button>
+            </form>
+          ) : (
+            <div className="text-center py-6">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="w-8 h-8 text-green-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                You're on the list!
+              </h3>
+              <p className="text-gray-600 mb-4">
+                We'll send you an email as soon as the book is ready for purchase.
+              </p>
+              <Button 
+                variant="outline" 
+                onClick={() => setIsDialogOpen(false)}
+                className="w-full"
+              >
+                Close
+              </Button>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
