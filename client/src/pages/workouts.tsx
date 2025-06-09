@@ -87,9 +87,7 @@ export default function Workouts() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Powerful Short Sessions</h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Expert-designed workout routines to help you reach your fitness goals
-            </p>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">Strength, Yoga, Guided Runs, and Tutorials to Keep You Moving</p>
           </div>
 
           {/* Category Filters */}
