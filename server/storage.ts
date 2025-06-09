@@ -179,7 +179,7 @@ export class MemStorage implements IStorage {
         title: "Ultimate Running Fuel: Easy Peanut Butter, Cinnamon, Honey Granola Recipe",
         description: "100% organic homemade granola with no sketchy ingredients that breaks off into awesome chunks. Perfect for marathon training and carb-loading with clean, natural ingredients.",
         category: ["breakfast", "snack"],
-        dietType: ["organic", "vegetarian"],
+        dietType: ["vegetarian"],
         prepTime: 50,
         servings: 16,
         servingSize: "1/2 cup",
