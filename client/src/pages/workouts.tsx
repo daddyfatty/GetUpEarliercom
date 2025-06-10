@@ -118,22 +118,23 @@ export default function Workouts() {
               const youtubeId = workout.videoUrl ? extractYouTubeId(workout.videoUrl) : null;
               
               return (
-                <Card key={workout.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80">
-                  {/* YouTube Video Thumbnail */}
-                  {youtubeId && (
-                    <div className="relative group">
-                      <img 
-                        src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
-                        alt={workout.title}
-                        className="w-full h-48 object-cover"
-                      />
-                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
-                        <div className="bg-white/90 dark:bg-gray-800/90 rounded-full p-3 group-hover:scale-110 transition-transform duration-300">
-                          <Play className="w-8 h-8 text-primary" />
+                <Link key={workout.id} href={`/workouts/${workout.id}`} className="block">
+                  <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 cursor-pointer">
+                    {/* YouTube Video Thumbnail */}
+                    {youtubeId && (
+                      <div className="relative group">
+                        <img 
+                          src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+                          alt={workout.title}
+                          className="w-full h-48 object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+                          <div className="bg-white/90 dark:bg-gray-800/90 rounded-full p-3 group-hover:scale-110 transition-transform duration-300">
+                            <Play className="w-8 h-8 text-primary" />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                   
                   <CardHeader>
                     <div className="flex items-center justify-between mb-2">
@@ -231,31 +232,36 @@ export default function Workouts() {
 
                     {/* Action Buttons */}
                     <div className="flex gap-2">
-                      <Link href={`/workouts/${workout.id}`}>
+                      <Button 
+                        variant="default" 
+                        size="sm"
+                        className="flex-1"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.location.href = `/workouts/${workout.id}`;
+                        }}
+                      >
+                        <Eye className="w-4 h-4 mr-2" />
+                        View Details
+                      </Button>
+                      {youtubeId && (
                         <Button 
-                          variant="default" 
+                          variant="outline" 
                           size="sm"
                           className="flex-1"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.location.href = `/workouts/${workout.id}/video`;
+                          }}
                         >
-                          <Eye className="w-4 h-4 mr-2" />
-                          View Details
+                          <Play className="w-4 h-4 mr-2" />
+                          Watch Video
                         </Button>
-                      </Link>
-                      {youtubeId && (
-                        <Link href={`/workouts/${workout.id}/video`}>
-                          <Button 
-                            variant="outline" 
-                            size="sm"
-                            className="flex-1"
-                          >
-                            <Play className="w-4 h-4 mr-2" />
-                            Watch Video
-                          </Button>
-                        </Link>
                       )}
                     </div>
                   </CardContent>
-                </Card>
+                  </Card>
+                </Link>
               );
             })}
           </div>
