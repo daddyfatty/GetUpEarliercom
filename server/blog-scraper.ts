@@ -261,7 +261,6 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
     readTime: Math.ceil((post.content?.length || 500) / 200)
   }));
 }
-}
 
 export async function fetchFullPostContent(url: string): Promise<string> {
   try {
