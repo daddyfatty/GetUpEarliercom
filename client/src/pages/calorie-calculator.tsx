@@ -31,8 +31,7 @@ export default function CalorieCalculator() {
   const [desiredWeight, setDesiredWeight] = useState<string>('');
   const [activityLevel, setActivityLevel] = useState<number[]>([1.2]);
   const [goal, setGoal] = useState<'maintenance' | 'loss' | 'gain'>('maintenance');
-  const [macroProfile, setMacroProfile] = useState<'balanced' | 'high-protein' | 'moderate-protein' | 'high-carb' | 'custom'>('balanced');
-  const [proteinMultiplier, setProteinMultiplier] = useState<number[]>([1.0]);
+  const [macroProfile, setMacroProfile] = useState<'balanced' | 'high-protein' | 'moderate-protein' | 'high-carb'>('balanced');
   const [results, setResults] = useState<CalculationResults | null>(null);
 
   // Activity level descriptions
@@ -49,8 +48,7 @@ export default function CalorieCalculator() {
     balanced: { carbs: 50, protein: 20, fat: 30 },
     'moderate-protein': { carbs: 35, protein: 40, fat: 25 },
     'high-protein': { carbs: 15, protein: 70, fat: 15 },
-    'high-carb': { carbs: 70, protein: 15, fat: 15 },
-    custom: { carbs: 0, protein: 0, fat: 0 } // Will be calculated dynamically
+    'high-carb': { carbs: 70, protein: 15, fat: 15 }
   };
 
   const convertToMetric = (value: number, type: 'weight' | 'height'): number => {
@@ -101,42 +99,18 @@ export default function CalorieCalculator() {
       targetCalories = tdee + 500; // 500 calorie surplus for ~1 lb/week gain
     }
 
-    let macros;
-    
-    if (macroProfile === 'custom') {
-      // Calculate protein based on weight and multiplier (1g per lb baseline)
-      const targetWeightLbs = unitSystem === 'imperial' ? desiredWeightNum : desiredWeightKg * 2.20462;
-      const proteinGrams = Math.round(targetWeightLbs * proteinMultiplier[0]);
-      const proteinCalories = proteinGrams * 4;
-      
-      // Ensure protein doesn't exceed total calories
-      const maxProteinCalories = targetCalories * 0.4; // Cap at 40% of calories
-      const finalProteinCalories = Math.min(proteinCalories, maxProteinCalories);
-      const finalProteinGrams = Math.round(finalProteinCalories / 4);
-      
-      // Distribute remaining calories between carbs and fat (60% carbs, 40% fat of remaining)
-      const remainingCalories = targetCalories - finalProteinCalories;
-      const carbCalories = remainingCalories * 0.6;
-      const fatCalories = remainingCalories * 0.4;
-      
-      macros = {
-        carbs: Math.round(carbCalories / 4),
-        protein: finalProteinGrams,
-        fat: Math.round(fatCalories / 9)
-      };
-    } else {
-      // Use predefined macro profiles
-      const profile = macroProfiles[macroProfile];
-      const carbCalories = targetCalories * (profile.carbs / 100);
-      const proteinCalories = targetCalories * (profile.protein / 100);
-      const fatCalories = targetCalories * (profile.fat / 100);
+    // Calculate macros based on selected profile
+    const profile = macroProfiles[macroProfile];
+    const carbCalories = targetCalories * (profile.carbs / 100);
+    const proteinCalories = targetCalories * (profile.protein / 100);
+    const fatCalories = targetCalories * (profile.fat / 100);
 
-      macros = {
-        carbs: Math.round(carbCalories / 4),
-        protein: Math.round(proteinCalories / 4),
-        fat: Math.round(fatCalories / 9)
-      };
-    }
+    // Convert calories to grams (4 cal/g for carbs & protein, 9 cal/g for fat)
+    const macros = {
+      carbs: Math.round(carbCalories / 4),
+      protein: Math.round(proteinCalories / 4),
+      fat: Math.round(fatCalories / 9)
+    };
 
     return {
       bmr: Math.round(bmr),
@@ -172,20 +146,9 @@ export default function CalorieCalculator() {
         return 'Moderate Protein (40% protein) - Balanced approach';
       case 'high-carb':
         return 'Carb Loading (70% carbs) - For endurance training';
-      case 'custom':
-        return 'Weight-Based Protein - Protein based on body weight multiplier';
       default:
         return 'Balanced (50% carbs, 20% protein, 30% fat)';
     }
-  };
-
-  const getProteinMultiplierDescription = (multiplier: number) => {
-    if (multiplier <= 0.8) return 'Low protein (sedentary lifestyle)';
-    if (multiplier <= 1.0) return 'Baseline (1g per lb - maintenance)';
-    if (multiplier <= 1.2) return 'Moderate (light training)';
-    if (multiplier <= 1.5) return 'High (regular training)';
-    if (multiplier <= 1.8) return 'Very High (intense training)';
-    return 'Maximum (competitive athletes)';
   };
 
   const getActivityLevelValue = (value: number) => {
@@ -199,7 +162,7 @@ export default function CalorieCalculator() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
+      <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 font-heading">
             Daily Caloric Intake & Macro Calculator
@@ -210,9 +173,9 @@ export default function CalorieCalculator() {
           </p>
         </div>
 
-        <div className="space-y-8">
+        <div className="grid lg:grid-cols-2 gap-8">
           {/* Input Form */}
-          <Card className="bg-white/95 backdrop-blur-sm shadow-2xl w-full">
+          <Card className="bg-white/95 backdrop-blur-sm shadow-2xl">
             <CardHeader className="bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-t-lg">
               <CardTitle className="flex items-center gap-2 text-2xl">
                 <Calculator className="h-6 w-6" />
@@ -364,7 +327,7 @@ export default function CalorieCalculator() {
                   <Utensils className="h-5 w-5" />
                   Macro Profile
                 </Label>
-                <Select value={macroProfile} onValueChange={(value: 'balanced' | 'high-protein' | 'moderate-protein' | 'high-carb' | 'custom') => setMacroProfile(value)}>
+                <Select value={macroProfile} onValueChange={(value: 'balanced' | 'high-protein' | 'moderate-protein' | 'high-carb') => setMacroProfile(value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select macro profile" />
                   </SelectTrigger>
@@ -373,7 +336,6 @@ export default function CalorieCalculator() {
                     <SelectItem value="moderate-protein">Moderate Protein</SelectItem>
                     <SelectItem value="high-protein">High Protein</SelectItem>
                     <SelectItem value="high-carb">Carb Loading</SelectItem>
-                    <SelectItem value="custom">Weight-Based Protein</SelectItem>
                   </SelectContent>
                 </Select>
                 <div className="text-sm text-gray-600 bg-blue-50 p-3 rounded-md">
@@ -381,39 +343,6 @@ export default function CalorieCalculator() {
                   {getMacroProfileDescription(macroProfile)}
                 </div>
               </div>
-
-              {/* Protein Multiplier Slider - Only show when custom profile is selected */}
-              {macroProfile === 'custom' && (
-                <div className="space-y-4">
-                  <Label className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                    <Utensils className="h-5 w-5" />
-                    Protein per Body Weight
-                  </Label>
-                  <div className="px-3">
-                    <Slider
-                      value={proteinMultiplier}
-                      onValueChange={setProteinMultiplier}
-                      max={2.0}
-                      min={0.5}
-                      step={0.1}
-                      className="w-full"
-                    />
-                    <div className="mt-2 text-center">
-                      <span className="text-sm font-medium text-gray-600">
-                        {getProteinMultiplierDescription(proteinMultiplier[0])}
-                      </span>
-                      <div className="text-xs text-gray-500 mt-1">
-                        {proteinMultiplier[0].toFixed(1)}g protein per lb of desired weight
-                      </div>
-                      {desiredWeight && (
-                        <div className="text-xs text-blue-600 mt-1">
-                          Target: {Math.round(parseFloat(desiredWeight) * (unitSystem === 'imperial' ? 1 : 2.20462) * proteinMultiplier[0])}g protein daily
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              )}
 
               <Button 
                 onClick={handleCalculate} 
@@ -476,10 +405,7 @@ export default function CalorieCalculator() {
                           <div>
                             <div className="font-semibold text-gray-800">Carbohydrates</div>
                             <div className="text-sm text-gray-600">
-                              {results.macroProfile === 'custom' 
-                                ? `${Math.round((results.macros.carbs * 4 / results.calories) * 100)}% of calories`
-                                : `${macroProfiles[results.macroProfile as keyof typeof macroProfiles].carbs}% of calories`
-                              }
+                              {macroProfiles[results.macroProfile as keyof typeof macroProfiles].carbs}% of calories
                             </div>
                           </div>
                           <div className="text-right">
@@ -495,10 +421,7 @@ export default function CalorieCalculator() {
                           <div>
                             <div className="font-semibold text-gray-800">Protein</div>
                             <div className="text-sm text-gray-600">
-                              {results.macroProfile === 'custom' 
-                                ? `${Math.round((results.macros.protein * 4 / results.calories) * 100)}% of calories`
-                                : `${macroProfiles[results.macroProfile as keyof typeof macroProfiles].protein}% of calories`
-                              }
+                              {macroProfiles[results.macroProfile as keyof typeof macroProfiles].protein}% of calories
                             </div>
                           </div>
                           <div className="text-right">
@@ -514,10 +437,7 @@ export default function CalorieCalculator() {
                           <div>
                             <div className="font-semibold text-gray-800">Fat</div>
                             <div className="text-sm text-gray-600">
-                              {results.macroProfile === 'custom' 
-                                ? `${Math.round((results.macros.fat * 9 / results.calories) * 100)}% of calories`
-                                : `${macroProfiles[results.macroProfile as keyof typeof macroProfiles].fat}% of calories`
-                              }
+                              {macroProfiles[results.macroProfile as keyof typeof macroProfiles].fat}% of calories
                             </div>
                           </div>
                           <div className="text-right">
