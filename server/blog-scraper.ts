@@ -322,10 +322,10 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       title: 'Mindset Training | Mental Toughness #Athlete #Mindset #Coach',
       category: 'Mental Training',
       author: 'Michael Baker',
-      excerpt: 'Developing mental toughness and the right mindset for athletic success and life challenges.',
-      content: 'Mental toughness is as important as physical strength. Learn strategies to develop resilience, focus, and the champion mindset needed to overcome obstacles in sports and life.',
+      excerpt: 'Building the mental fortitude that separates champions from the rest.',
+      content: 'Mental toughness isn\'t just about pushing through pain - it\'s about developing the psychological skills that allow you to perform under pressure, recover from setbacks, and maintain consistency in your training. This covers visualization techniques, self-talk strategies, and the mindset shifts that turn obstacles into opportunities.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      videoUrl: 'https://www.youtube.com/embed/9BWrmFT3i8M',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_mindset-training.jpeg',
       tags: ['mental-toughness', 'mindset', 'psychology', 'resilience', 'focus']
     }
