@@ -199,7 +199,7 @@ export default function CalorieCalculator() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 py-12">
-      <div className="container mx-auto px-4 max-w-6xl">
+      <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 font-heading">
             Daily Caloric Intake & Macro Calculator
@@ -210,9 +210,9 @@ export default function CalorieCalculator() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="space-y-8">
           {/* Input Form */}
-          <Card className="bg-white/95 backdrop-blur-sm shadow-2xl">
+          <Card className="bg-white/95 backdrop-blur-sm shadow-2xl w-full">
             <CardHeader className="bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-t-lg">
               <CardTitle className="flex items-center gap-2 text-2xl">
                 <Calculator className="h-6 w-6" />
