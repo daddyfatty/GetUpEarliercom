@@ -154,35 +154,130 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
     if (posts.length === 0) {
       console.log('No blog links found, attempting to extract from content areas...');
       
-      // Look for any structured content that might be blog posts
-      const contentAreas = root.querySelectorAll('.w-richtext, .rich-text, main, article, section');
+      // Look for Webflow dynamic content and video embeds
+      const videoElements = root.querySelectorAll('[class*="video"], .w-embed, iframe[src*="youtube"], iframe[src*="vimeo"]');
+      const textElements = root.querySelectorAll('h1, h2, h3, h4, .heading, [class*="title"], [class*="heading"]');
+      const imageElements = root.querySelectorAll('img[src*="cdn.prod.website-files"]');
       
-      for (let i = 0; i < Math.min(contentAreas.length, 10); i++) {
-        const area = contentAreas[i];
-        const headings = area.querySelectorAll('h1, h2, h3');
+      // Extract video content
+      videoElements.forEach((element, idx) => {
+        if (posts.length >= 25) return;
         
-        headings.forEach((heading, idx) => {
-          if (posts.length >= 25) return;
-          
-          const title = heading.text?.trim();
-          if (title && title.length > 10) {
-            const post: BlogPost = {
-              id: `content-${i}-${idx}`,
-              title,
-              excerpt: `Discover insights about ${title.toLowerCase()}`,
-              content: title,
-              author: 'Michael Baker',
-              publishedDate: new Date(Date.now() - (posts.length * 24 * 60 * 60 * 1000)).toISOString(),
-              category: 'wellness',
-              tags: ['wellness'],
-              readTime: 3,
-              isVideo: false,
-              originalUrl: 'https://www.getupearlier.com/blog'
-            };
-            posts.push(post);
+        const parent = element.parentNode;
+        const grandParent = parent?.parentNode;
+        
+        // Look for title near the video
+        let title = '';
+        const titleElement = parent?.querySelector('h1, h2, h3, h4') || 
+                           grandParent?.querySelector('h1, h2, h3, h4') ||
+                           element.getAttribute('title');
+        
+        if (titleElement) {
+          title = typeof titleElement === 'string' ? titleElement : titleElement.text?.trim() || '';
+        }
+        
+        if (!title) {
+          title = `Video Content ${idx + 1}`;
+        }
+        
+        // Look for associated image
+        let imageUrl = '';
+        const img = parent?.querySelector('img') || grandParent?.querySelector('img');
+        if (img) {
+          imageUrl = img.getAttribute('src') || '';
+          if (imageUrl && !imageUrl.startsWith('http')) {
+            imageUrl = imageUrl.startsWith('/') ? 
+              `https://cdn.prod.website-files.com${imageUrl}` : 
+              `https://cdn.prod.website-files.com/${imageUrl}`;
           }
-        });
-      }
+        }
+        
+        // Extract video URL
+        let videoUrl = '';
+        if (element.tagName === 'IFRAME') {
+          videoUrl = element.getAttribute('src') || '';
+        }
+        
+        const post: BlogPost = {
+          id: `video-${idx}`,
+          title,
+          excerpt: `Watch this informative video about health and fitness training.`,
+          content: `Video content featuring expert guidance from our certified trainers.`,
+          author: title.toLowerCase().includes('yoga') || title.toLowerCase().includes('erica') ? 'Erica Baker' : 'Michael Baker',
+          publishedDate: new Date(Date.now() - (idx * 24 * 60 * 60 * 1000)).toISOString(),
+          category: 'videos',
+          tags: ['video', 'training'],
+          imageUrl: imageUrl || undefined,
+          videoUrl: videoUrl || 'https://www.getupearlier.com/blog',
+          readTime: 5,
+          isVideo: true,
+          originalUrl: 'https://www.getupearlier.com/blog'
+        };
+        posts.push(post);
+      });
+      
+      // Extract text-based content
+      const processedTitles = new Set();
+      textElements.forEach((element, idx) => {
+        if (posts.length >= 25) return;
+        
+        const title = element.text?.trim() || '';
+        if (title && title.length > 10 && !processedTitles.has(title)) {
+          processedTitles.add(title);
+          
+          const parent = element.parentNode;
+          const grandParent = parent?.parentNode;
+          
+          // Look for excerpt text nearby
+          let excerpt = '';
+          const excerptElement = parent?.querySelector('p') || 
+                               grandParent?.querySelector('p') ||
+                               element.nextElementSibling;
+          
+          if (excerptElement && excerptElement.text) {
+            excerpt = excerptElement.text.trim().substring(0, 200);
+          }
+          
+          // Look for associated image
+          let imageUrl = '';
+          const img = parent?.querySelector('img') || grandParent?.querySelector('img');
+          if (img) {
+            imageUrl = img.getAttribute('src') || '';
+            if (imageUrl && !imageUrl.startsWith('http')) {
+              imageUrl = imageUrl.startsWith('/') ? 
+                `https://cdn.prod.website-files.com${imageUrl}` : 
+                `https://cdn.prod.website-files.com/${imageUrl}`;
+            }
+          }
+          
+          // Determine category based on content
+          let category = 'wellness';
+          const contentText = (title + excerpt).toLowerCase();
+          if (contentText.includes('train') || contentText.includes('workout') || contentText.includes('exercise') || contentText.includes('strength')) {
+            category = 'training';
+          } else if (contentText.includes('nutrition') || contentText.includes('diet') || contentText.includes('meal') || contentText.includes('food')) {
+            category = 'nutrition';
+          } else if (contentText.includes('motivation') || contentText.includes('goal') || contentText.includes('mindset')) {
+            category = 'motivation';
+          }
+          
+          const post: BlogPost = {
+            id: `article-${idx}`,
+            title,
+            excerpt: excerpt || `Learn about ${title.toLowerCase()} with expert guidance from our certified trainers.`,
+            content: excerpt || `Discover comprehensive insights about ${title.toLowerCase()} and how it can improve your health and fitness journey.`,
+            author: contentText.includes('yoga') || contentText.includes('erica') ? 'Erica Baker' : 'Michael Baker',
+            publishedDate: new Date(Date.now() - ((posts.length + idx) * 24 * 60 * 60 * 1000)).toISOString(),
+            category,
+            tags: [category, 'health', 'fitness'],
+            imageUrl: imageUrl || undefined,
+            readTime: Math.max(3, Math.ceil((title + excerpt).split(' ').length / 200)),
+            isVideo: false,
+            originalUrl: 'https://www.getupearlier.com/blog'
+          };
+          posts.push(post);
+        }
+      });
     }
     
     console.log(`Successfully scraped ${posts.length} blog posts from Webflow site`);
