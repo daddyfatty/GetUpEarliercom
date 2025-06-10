@@ -25,6 +25,16 @@ export const users = pgTable("users", {
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),
   paypalCustomerId: text("paypal_customer_id"),
+  // Calorie calculator profile data
+  age: integer("age"),
+  sex: text("sex"), // male, female
+  height: integer("height"), // in cm
+  currentWeight: integer("current_weight"), // in grams (for precision)
+  desiredWeight: integer("desired_weight"), // in grams
+  activityLevel: text("activity_level"), // 1.2, 1.375, 1.55, 1.725, 1.9
+  goal: text("goal"), // maintenance, loss, gain
+  unitSystem: text("unit_system"), // metric, imperial
+  macroProfile: text("macro_profile"), // balanced, moderate-protein, high-protein, high-carb
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });

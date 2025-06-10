@@ -6,6 +6,17 @@ export interface IStorage {
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUser(id: string, updates: Partial<User>): Promise<User | undefined>;
+  updateUserProfile(id: string, profileData: {
+    age?: number;
+    sex?: string;
+    height?: number;
+    currentWeight?: number;
+    desiredWeight?: number;
+    activityLevel?: string;
+    goal?: string;
+    unitSystem?: string;
+    macroProfile?: string;
+  }): Promise<User | undefined>;
 
   // Recipe methods
   getRecipes(): Promise<Recipe[]>;
@@ -100,6 +111,15 @@ export class MemStorage implements IStorage {
       stripeCustomerId: null,
       stripeSubscriptionId: null,
       paypalCustomerId: null,
+      age: null,
+      sex: null,
+      height: null,
+      currentWeight: null,
+      desiredWeight: null,
+      activityLevel: null,
+      goal: null,
+      unitSystem: null,
+      macroProfile: null,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -115,6 +135,15 @@ export class MemStorage implements IStorage {
       stripeCustomerId: null,
       stripeSubscriptionId: null,
       paypalCustomerId: null,
+      age: null,
+      sex: null,
+      height: null,
+      currentWeight: null,
+      desiredWeight: null,
+      activityLevel: null,
+      goal: null,
+      unitSystem: null,
+      macroProfile: null,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -361,7 +390,7 @@ export class MemStorage implements IStorage {
     });
   }
 
-  async getUser(id: number): Promise<User | undefined> {
+  async getUser(id: string): Promise<User | undefined> {
     return this.users.get(id);
   }
 
@@ -384,13 +413,27 @@ export class MemStorage implements IStorage {
     return user;
   }
 
-  async updateUser(id: number, updates: Partial<User>): Promise<User | undefined> {
+  async updateUser(id: string, updates: Partial<User>): Promise<User | undefined> {
     const user = this.users.get(id);
     if (!user) return undefined;
     
-    const updatedUser = { ...user, ...updates };
+    const updatedUser = { ...user, ...updates, updatedAt: new Date() };
     this.users.set(id, updatedUser);
     return updatedUser;
+  }
+
+  async updateUserProfile(id: string, profileData: {
+    age?: number;
+    sex?: string;
+    height?: number;
+    currentWeight?: number;
+    desiredWeight?: number;
+    activityLevel?: string;
+    goal?: string;
+    unitSystem?: string;
+    macroProfile?: string;
+  }): Promise<User | undefined> {
+    return this.updateUser(id, profileData);
   }
 
   async getRecipes(): Promise<Recipe[]> {
