@@ -638,6 +638,77 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Save user profile data from calorie calculator
+  app.post("/api/user/profile", async (req, res) => {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const { age, sex, height, currentWeight, desiredWeight, activityLevel, goal, unitSystem, macroProfile } = req.body;
+      
+      // Convert weights to grams for storage precision
+      const currentWeightGrams = currentWeight ? Math.round(currentWeight * (unitSystem === 'metric' ? 1000 : 453.592)) : null;
+      const desiredWeightGrams = desiredWeight ? Math.round(desiredWeight * (unitSystem === 'metric' ? 1000 : 453.592)) : null;
+      
+      const profileData = {
+        age: age ? parseInt(age) : null,
+        sex,
+        height: height ? parseInt(height) : null,
+        currentWeight: currentWeightGrams,
+        desiredWeight: desiredWeightGrams,
+        activityLevel,
+        goal,
+        unitSystem,
+        macroProfile
+      };
+
+      const updatedUser = await storage.updateUserProfile(req.user.id, profileData);
+      
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      res.json({ message: "Profile saved successfully", user: updatedUser });
+    } catch (error) {
+      console.error("Error saving user profile:", error);
+      res.status(500).json({ message: "Failed to save profile" });
+    }
+  });
+
+  // Get user profile data
+  app.get("/api/user/profile", async (req, res) => {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const user = await storage.getUser(req.user.id);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Convert stored gram weights back to display units
+      const profileData = {
+        age: user.age,
+        sex: user.sex,
+        height: user.height,
+        currentWeight: user.currentWeight ? (user.unitSystem === 'metric' ? user.currentWeight / 1000 : user.currentWeight / 453.592) : null,
+        desiredWeight: user.desiredWeight ? (user.unitSystem === 'metric' ? user.desiredWeight / 1000 : user.desiredWeight / 453.592) : null,
+        activityLevel: user.activityLevel,
+        goal: user.goal,
+        unitSystem: user.unitSystem || 'metric',
+        macroProfile: user.macroProfile || 'balanced'
+      };
+
+      res.json(profileData);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+      res.status(500).json({ message: "Failed to fetch profile" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

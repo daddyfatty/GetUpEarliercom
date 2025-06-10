@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,7 +7,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
-import { Calculator, Activity, Target, Utensils, Info } from "lucide-react";
+import { Calculator, Activity, Target, Utensils, Info, Save, Download } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 
 interface CalculationResults {
   bmr: number;
@@ -23,6 +25,7 @@ interface CalculationResults {
 }
 
 export default function CalorieCalculator() {
+  const { toast } = useToast();
   const [unitSystem, setUnitSystem] = useState<'metric' | 'imperial'>('imperial');
   const [sex, setSex] = useState<'male' | 'female'>('male');
   const [age, setAge] = useState<string>('');
@@ -33,6 +36,8 @@ export default function CalorieCalculator() {
   const [goal, setGoal] = useState<'maintenance' | 'loss' | 'gain'>('maintenance');
   const [macroProfile, setMacroProfile] = useState<'balanced' | 'high-protein' | 'moderate-protein' | 'high-carb'>('balanced');
   const [results, setResults] = useState<CalculationResults | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Activity level descriptions
   const activityDescriptions = {
