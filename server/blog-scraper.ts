@@ -197,7 +197,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'The exciting start of Wave 3 at the 2024 NYC Marathon on the Verrazzano Bridge.',
       content: 'The exciting start of Wave 3 at the 2024 NYC Marathon on the Verrazzano Bridge with race atmosphere.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/j7pcIoJIqgM',
+      videoUrl: 'https://www.youtube.com/embed/Ibdyi4EOETI',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e24f2c21e13fddde7a6_maxresdefault-19.jpeg',
       tags: ['nyc-marathon', 'verrazzano', 'wave-3']
     },
@@ -210,7 +210,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Complete 2024 NYC Marathon experience condensed into 8 minutes from start to finish.',
       content: 'Complete 2024 NYC Marathon experience condensed into 8 minutes from ferry ride to Central Park finish.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/cMbqceOOqmk',
+      videoUrl: 'https://www.youtube.com/embed/A6o0u4qvu8Y',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e2478006a248eaef0ca_YT2.jpeg',
       tags: ['nyc-marathon', 'central-park', '2024']
     },
@@ -223,7 +223,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Plank hold challenge between husband and wife showing core strength and determination.',
       content: 'Plank hold challenge between husband and wife showing core strength, determination, and healthy competition.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/Fn48QoLJ_r4',
+      videoUrl: 'https://www.youtube.com/embed/WA4gli04zUg',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4b6e1a6f455937785_maxresdefault-16.jpeg',
       tags: ['plank-hold', 'erica-baker', 'yoga']
     },
@@ -236,7 +236,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Live 30-minute workout featuring back deadlifts and core challenges for women over 40.',
       content: 'Live 30-minute workout featuring back deadlifts and core challenges specifically designed for women over 40.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/Pm6_eriijVI',
+      videoUrl: 'https://www.youtube.com/embed/NMNq3z7Zb8w',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4b208ba3ba86d732f_maxresdefault_live-3.jpeg',
       tags: ['deadlifts', 'women-over-40', 'live-workout']
     },
@@ -249,7 +249,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'The importance of strength training for real-life activities and functional movement.',
       content: 'The importance of strength training for real-life activities, functional movement, and maintaining vitality as we age.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/wpEhpnAMleI',
+      videoUrl: 'https://www.youtube.com/embed/77-7pYbK30Q',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_maxresdefault-11.jpeg',
       tags: ['functional-strength', 'real-life', 'dr-gabrielle-lyon']
     }
