@@ -106,7 +106,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Real-time demonstration of using AI to create personalized running training plans.',
       content: 'Real-time demonstration of using AI to create personalized running training plans for various distances.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/0-XfSzN_Vvo',
+      videoUrl: 'https://www.youtube.com/embed/hhbi9DZ7QJs',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678ed226a9f5a3de57fc41bf_chatgpt%20running%20coach.png',
       tags: ['running', 'ai', 'chatgpt']
     },
@@ -119,7 +119,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: '30-minute focused strength training session targeting chest and arms.',
       content: '30-minute focused strength training session targeting chest and arms with proper form and technique.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/h2qXMUGb_tM',
+      videoUrl: 'https://www.youtube.com/embed/2UERZbKHZ-Q',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e25bb33ad8405f17227_maxresdefault-1.jpeg',
       tags: ['30-minute', 'chest', 'arms']
     },
@@ -132,7 +132,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Two effective exercises to quickly relieve lower back pain and improve mobility.',
       content: 'Two effective exercises to quickly relieve lower back pain and improve mobility for everyday activities.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/DWuGUP_WzQw',
+      videoUrl: 'https://www.youtube.com/embed/oQu5RBpaM_Y',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e252a5b8115d0a19ac4_maxresdefault-3.jpeg',
       tags: ['back-pain', 'corrective-exercise']
     },
@@ -158,7 +158,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'The mental strength lessons that running teaches for overcoming life\'s challenges.',
       content: 'The mental strength lessons that running teaches for overcoming life\'s challenges and building resilience.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/KmDYXaaT9sA',
+      videoUrl: 'https://www.youtube.com/embed/JmDT60BUbz8',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e24969db27e1e3cc857_maxresdefault-17.jpeg',
       tags: ['running', 'motivation', 'marathon']
     },
@@ -171,7 +171,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Early morning journey on the Staten Island Ferry for the 2024 NYC Marathon.',
       content: 'Early morning journey on the Staten Island Ferry for the 2024 NYC Marathon with crowd views.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/Ls2TejhdZkw',
+      videoUrl: 'https://www.youtube.com/embed/H2XJwVrvPbo',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e24c9939cfa0f502e5f_maxresdefault-9.jpeg',
       tags: ['nyc-marathon', 'staten-island', '2024']
     },
@@ -184,7 +184,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Live 30-minute strength training session focusing on air squats and arm exercises.',
       content: 'Live 30-minute strength training session focusing on air squats and arm exercises with proper form.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/aKuivabiONs',
+      videoUrl: 'https://www.youtube.com/embed/fReqRE_hwjE',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e247b4c7d04d05063b7_live-strength-training-my-wife-a.jpeg',
       tags: ['live-workout', 'air-squats', 'arms']
     },
