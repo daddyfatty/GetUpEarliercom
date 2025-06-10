@@ -64,13 +64,7 @@ export function Footer() {
                   </span>
                 </Link>
               </li>
-              <li>
-                <Link href="/goals">
-                  <span className="hover:text-primary transition-colors cursor-pointer">
-                    Goal Setting
-                  </span>
-                </Link>
-              </li>
+
               <li>
                 <span className="hover:text-primary transition-colors cursor-pointer">
                   Recipe Book
