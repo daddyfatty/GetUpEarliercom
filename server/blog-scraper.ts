@@ -326,14 +326,21 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
           }
           
           // Determine category based on content
-          let category = 'wellness';
+          let category = 'Inspiration';
           const contentText = (title + excerpt).toLowerCase();
-          if (contentText.includes('train') || contentText.includes('workout') || contentText.includes('exercise') || contentText.includes('strength')) {
-            category = 'training';
-          } else if (contentText.includes('nutrition') || contentText.includes('diet') || contentText.includes('meal') || contentText.includes('food')) {
-            category = 'nutrition';
-          } else if (contentText.includes('motivation') || contentText.includes('goal') || contentText.includes('mindset')) {
-            category = 'motivation';
+          
+          if (contentText.includes('nutrition') || contentText.includes('diet') || contentText.includes('meal') || contentText.includes('food') || contentText.includes('ice cream') || contentText.includes('granola')) {
+            category = 'Nutrition';
+          } else if (contentText.includes('run') || contentText.includes('marathon') || contentText.includes('5k') || contentText.includes('coach')) {
+            category = 'Running';
+          } else if (contentText.includes('train') || contentText.includes('workout') || contentText.includes('exercise') || contentText.includes('strength') || contentText.includes('chest') || contentText.includes('arms') || contentText.includes('dumbbell')) {
+            category = 'Workouts';
+          } else if (contentText.includes('yoga') || contentText.includes('stretch') || contentText.includes('hamstring') || contentText.includes('back pain')) {
+            category = 'Yoga / Stretching';
+          } else if (contentText.includes('iron master') || contentText.includes('dumbbells') || contentText.includes('100lbs')) {
+            category = 'Iron Master Dumbbells';
+          } else if (contentText.includes('motivation') || contentText.includes('goal') || contentText.includes('mindset') || contentText.includes('inspiration')) {
+            category = 'Inspiration';
           }
           
           const post: BlogPost = {

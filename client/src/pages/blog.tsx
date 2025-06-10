@@ -43,8 +43,16 @@ export default function Blog() {
     return matchesSearch && matchesCategory;
   }) || [];
 
-  // Get unique categories for filter
-  const categories = ["all", ...Array.from(new Set(posts?.map(post => post.category) || []))];
+  // Predefined blog categories
+  const categories = [
+    "all",
+    "Nutrition", 
+    "Running",
+    "Inspiration",
+    "Workouts",
+    "Yoga / Stretching",
+    "Iron Master Dumbbells"
+  ];
 
   const formatDate = (dateString: string) => {
     try {
