@@ -98,12 +98,13 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
     
     // Create blog posts from the structured data
     const authenticImages = [
-      "/attached_assets/678ab3d4caec71062e65470f_erddd_1749497849578.jpg",
-      "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg", 
-      "/attached_assets/678aad8cfd0dcde677a14418_hike2-p-500.jpg",
-      "/attached_assets/20250517_073713.00_00_08_03.Still003.jpg",
-      "/attached_assets/493414479_10213588193416986_7983427679426833080_n.jpg",
-      "/attached_assets/ss3_1749484345644.jpg"
+      "/attached_assets/678ab3d4caec71062e65470f_erddd_1749497849578.jpg", // Iron Master dumbbells
+      "/attached_assets/20250517_073713.00_00_08_03.Still003.jpg", // Running/marathon
+      "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg", // Granola recipe
+      "/attached_assets/678aad8cfd0dcde677a14418_hike2-p-500.jpg", // Goulash recipe
+      "/attached_assets/493414479_10213588193416986_7983427679426833080_n.jpg", // Chest workout
+      "/attached_assets/ss3_1749484345644.jpg", // Yoga hamstring stretches
+      "/attached_assets/RYTMIKE_1749505314924.png" // Back pain relief
     ];
 
     blogPostData.forEach((postData, i) => {

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Clock, User, ExternalLink, Play } from "lucide-react";
+import { Search, Clock, User, ArrowRight, Play } from "lucide-react";
 
 interface BlogPost {
   id: string;
@@ -200,17 +200,12 @@ export default function Blog() {
                       <span className="text-xs text-gray-500 dark:text-gray-400">
                         {formatDate(post.publishedDate)}
                       </span>
-                      <a
-                        href={post.originalUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block"
-                      >
+                      <Link href={`/blog/${post.id}`}>
                         <Button size="sm" className="gap-1">
                           Read More
-                          <ExternalLink className="h-3 w-3" />
+                          <ArrowRight className="h-3 w-3" />
                         </Button>
-                      </a>
+                      </Link>
                     </div>
                     
                     {post.tags.length > 0 && (
