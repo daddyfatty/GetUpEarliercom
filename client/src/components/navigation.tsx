@@ -32,11 +32,15 @@ export function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const nutritionItems = [
+    { href: "/nutrition", label: "Food Tracker" },
+    { href: "/calorie-calculator", label: "Calorie Calculator" },
+  ];
+
   const navItems = [
     { href: "/coaching", label: "Coaching" },
     { href: "/recipes", label: "Recipes" },
     { href: "/workouts", label: "Workouts" },
-    { href: "/nutrition", label: "Nutrition Calculators" },
     { href: "/blog", label: "Blog" },
     ...(isAuthenticated ? [{ href: "/profile", label: "Profile" }] : []),
     ...(isAdmin ? [{ href: "/admin", label: "Admin" }] : []),
@@ -137,6 +141,33 @@ export function Navigation() {
                     </span>
                   </Link>
                 ))}
+                
+                {/* Nutrition Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <span
+                      className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                        nutritionItems.some(item => location === item.href)
+                          ? "text-[hsl(var(--orange))] bg-white/10"
+                          : "text-white hover:text-[hsl(var(--orange))]"
+                      }`}
+                    >
+                      Nutrition
+                      <ChevronDown className="ml-1 h-4 w-4" />
+                    </span>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="center" className="bg-white border border-gray-200 shadow-lg">
+                    {nutritionItems.map((item) => (
+                      <DropdownMenuItem key={item.href} asChild>
+                        <Link href={item.href}>
+                          <span className="font-medium text-gray-900 hover:text-[hsl(var(--orange))] cursor-pointer w-full">
+                            {item.label}
+                          </span>
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 
                 {/* About Dropdown */}
                 <DropdownMenu>
@@ -273,6 +304,24 @@ export function Navigation() {
                         </span>
                       </Link>
                     ))}
+
+                    {/* Nutrition Section for Mobile */}
+                    <div className="border-t pt-4">
+                      <div className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">Nutrition</div>
+                      {nutritionItems.map((item) => (
+                        <Link key={item.href} href={item.href}>
+                          <span
+                            className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading ${
+                              location === item.href
+                                ? "text-[hsl(var(--orange))] bg-orange-50"
+                                : "text-gray-900 hover:text-[hsl(var(--orange))]"
+                            }`}
+                          >
+                            {item.label}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
 
                     {/* About Section for Mobile */}
                     <div className="border-t pt-4">

@@ -28,6 +28,7 @@ import UserProfile from "@/pages/user-profile";
 import Admin from "@/pages/admin";
 import Checkout from "@/pages/checkout";
 import Subscribe from "@/pages/subscribe";
+import CalorieCalculator from "@/pages/calorie-calculator";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -51,6 +52,7 @@ function Router() {
           <Route path="/workouts/:id" component={WorkoutDetail} />
           <Route path="/workouts/:id/video" component={WorkoutVideo} />
           <Route path="/nutrition" component={Nutrition} />
+          <Route path="/calorie-calculator" component={CalorieCalculator} />
           <Route path="/tracker" component={Tracker} />
           <Route path="/blog" component={Blog} />
           <Route path="/blog/:id" component={BlogPost} />
