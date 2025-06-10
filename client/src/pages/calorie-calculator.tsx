@@ -355,15 +355,40 @@ export default function CalorieCalculator() {
           </Card>
 
           {/* Results */}
-          {results && (
-            <Card className="bg-white/95 backdrop-blur-sm shadow-2xl">
-              <CardHeader className="bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-t-lg">
-                <CardTitle className="text-2xl">Your Caloric & Macro Needs</CardTitle>
-                <CardDescription className="text-green-100">
-                  Based on your personal details and {getGoalDescription(results.goal).toLowerCase()}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-6">
+          <Card className="bg-white/95 backdrop-blur-sm shadow-2xl">
+            <CardHeader className="bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-t-lg">
+              <CardTitle className="text-2xl">Your Caloric & Macro Needs</CardTitle>
+              <CardDescription className="text-green-100">
+                {results ? `Based on your personal details and ${getGoalDescription(results.goal).toLowerCase()}` : "Complete the form to see your personalized results"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6">
+              {!results ? (
+                <div className="space-y-6 text-center">
+                  <div className="bg-gradient-to-r from-gray-100 to-gray-200 p-8 rounded-lg">
+                    <Calculator className="h-16 w-16 mx-auto text-gray-400 mb-4" />
+                    <h3 className="text-xl font-semibold text-gray-600 mb-2">Ready to Calculate Your Needs?</h3>
+                    <p className="text-gray-500 mb-4">Fill out the form on the left to get your personalized daily caloric intake and macronutrient breakdown.</p>
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                      <div className="bg-white p-3 rounded border">
+                        <div className="text-lg font-bold text-gray-300">---</div>
+                        <div className="text-xs text-gray-400">BMR (calories/day)</div>
+                      </div>
+                      <div className="bg-white p-3 rounded border">
+                        <div className="text-lg font-bold text-gray-300">---</div>
+                        <div className="text-xs text-gray-400">TDEE (calories/day)</div>
+                      </div>
+                    </div>
+                    <div className="bg-white p-4 rounded border mb-4">
+                      <div className="text-2xl font-bold text-gray-300 mb-1">----</div>
+                      <div className="text-sm text-gray-400">Daily Target Calories</div>
+                    </div>
+                    <div className="text-sm text-gray-500 bg-gray-50 p-3 rounded">
+                      Your personalized macronutrient breakdown will appear here
+                    </div>
+                  </div>
+                </div>
+              ) : (
                 <div className="space-y-6">
                   {/* Summary Stats */}
                   <div className="grid grid-cols-2 gap-4">
@@ -477,9 +502,9 @@ export default function CalorieCalculator() {
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          )}
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
