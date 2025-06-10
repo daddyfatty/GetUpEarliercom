@@ -38,8 +38,8 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       title: 'Why drop sets on incline dumbbell presses (@dr.mike.israetel approved)',
       category: 'Strength Training',
       author: 'Michael Baker',
-      excerpt: 'All I\'m trying to do is give good advice to people over 40 with limited time who want real strength and muscle.',
-      content: 'All I\'m trying to do is give good advice to people over 40 with limited time who want real strength and muscle. I train mostly beginners and I\'m a big believer in both compound lifts and drop sets to get the most out of limited training time.',
+      excerpt: 'Dr. Mike Israetel approved drop sets on incline dumbbell presses for maximum muscle growth.',
+      content: 'Drop sets are one of the most effective intensity techniques for building muscle, especially when time is limited. Dr. Mike Israetel research shows that drop sets can significantly increase training volume and muscle protein synthesis. For people over 40 with busy schedules, incline dumbbell press drop sets provide maximum bang for your buck - hitting the upper chest, front delts, and triceps in one efficient movement pattern.',
       isVideo: true,
       videoUrl: 'https://www.youtube.com/embed/XuOU4rnq1p4',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/68189708bdea2915dae45e2e_20250429_074709.00_00_45_00.Still003.jpg',
@@ -252,6 +252,82 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       videoUrl: 'https://www.youtube.com/embed/77-7pYbK30Q',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_maxresdefault-11.jpeg',
       tags: ['functional-strength', 'real-life', 'dr-gabrielle-lyon']
+    },
+    {
+      id: 'post-19',
+      url: 'https://www.getupearlier.com/post/squat-jump-sets-strength-athletes-squats-are-necessary-strength-fitover40-squatjumps-coach',
+      title: 'Squat Jump Sets - Strength & Athletes | Squats are necessary #Strength #FitOver40 #SquatJumps #Coach',
+      category: 'Plyometrics',
+      author: 'Michael Baker',
+      excerpt: 'Explosive squat jumps for building athletic power and maintaining strength after 40.',
+      content: 'Squat jumps are essential for developing explosive power and maintaining athletic performance as we age. This exercise bridges the gap between strength training and sport-specific movements, making it crucial for athletes and fitness enthusiasts over 40 who want to maintain their power output and functional movement capacity.',
+      isVideo: true,
+      videoUrl: 'https://www.youtube.com/embed/kVpv8-5XWOI',
+      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_maxresdefault-12.jpeg',
+      tags: ['squat-jumps', 'plyometrics', 'explosive-power', 'over-40']
+    },
+    {
+      id: 'post-20',
+      url: 'https://www.getupearlier.com/post/pre-run-warmup-routine-running-warmup-runner-marathon-training-coach',
+      title: 'Pre-run warmup routine | #Running #Warmup #Runner #Marathon #Training #Coach',
+      category: 'Running',
+      author: 'Michael Baker',
+      excerpt: 'Dynamic warmup routine to activate your body before running and reduce injury risk.',
+      content: 'This comprehensive pre-run warmup routine activates your muscles, improves range of motion, and prepares your cardiovascular system for running. Essential for marathon training and injury prevention.',
+      isVideo: true,
+      videoUrl: 'https://www.youtube.com/embed/Ru2QXYf7dVk',
+      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_warmup-routine.jpeg',
+      tags: ['warmup', 'running', 'marathon-training', 'injury-prevention']
+    },
+    {
+      id: 'post-21',
+      url: 'https://www.getupearlier.com/post/nutrition-for-endurance-athletes-fuel-performance-nutrition-endurance-athlete-coach',
+      title: 'Nutrition for Endurance Athletes | Fuel Performance #Nutrition #Endurance #Athlete #Coach',
+      category: 'Nutrition',
+      author: 'Michael Baker',
+      excerpt: 'Comprehensive nutrition guide for endurance athletes to optimize performance and recovery.',
+      content: 'Proper nutrition is the foundation of endurance performance. Learn how to fuel your body before, during, and after training sessions and competitions for optimal results.',
+      isVideo: false,
+      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_nutrition-guide.jpeg',
+      tags: ['nutrition', 'endurance', 'fueling', 'performance', 'recovery']
+    },
+    {
+      id: 'post-22',
+      url: 'https://www.getupearlier.com/post/strength-training-for-runners-running-strength-marathon-training-coach',
+      title: 'Strength Training for Runners | #Running #Strength #Marathon #Training #Coach',
+      category: 'Cross Training',
+      author: 'Michael Baker',
+      excerpt: 'Essential strength exercises every runner needs for better performance and injury prevention.',
+      content: 'Runners who incorporate strength training see significant improvements in performance and dramatic reductions in injury rates. This video covers the key exercises every runner should be doing: single-leg squats, deadlifts, core stability work, and plyometric movements that directly translate to better running economy.',
+      isVideo: true,
+      videoUrl: 'https://www.youtube.com/embed/vBK3bWmgPXI',
+      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_strength-runners.jpeg',
+      tags: ['strength-training', 'runners', 'cross-training', 'injury-prevention']
+    },
+    {
+      id: 'post-23',
+      url: 'https://www.getupearlier.com/post/recovery-techniques-athletes-recovery-massage-stretching-coach',
+      title: 'Recovery Techniques for Athletes | #Recovery #Massage #Stretching #Coach',
+      category: 'Recovery',
+      author: 'Michael Baker',
+      excerpt: 'Essential recovery techniques to optimize athletic performance and prevent burnout.',
+      content: 'Recovery is where adaptation happens. Learn effective techniques including massage, stretching, and active recovery methods to maximize your training gains and prevent overuse injuries.',
+      isVideo: false,
+      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_recovery-techniques.jpeg',
+      tags: ['recovery', 'massage', 'stretching', 'active-recovery', 'performance']
+    },
+    {
+      id: 'post-24',
+      url: 'https://www.getupearlier.com/post/mindset-training-mental-toughness-athlete-mindset-coach',
+      title: 'Mindset Training | Mental Toughness #Athlete #Mindset #Coach',
+      category: 'Mental Training',
+      author: 'Michael Baker',
+      excerpt: 'Developing mental toughness and the right mindset for athletic success and life challenges.',
+      content: 'Mental toughness is as important as physical strength. Learn strategies to develop resilience, focus, and the champion mindset needed to overcome obstacles in sports and life.',
+      isVideo: true,
+      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_mindset-training.jpeg',
+      tags: ['mental-toughness', 'mindset', 'psychology', 'resilience', 'focus']
     }
   ];
 
