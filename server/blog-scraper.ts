@@ -159,6 +159,37 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       const textElements = root.querySelectorAll('h1, h2, h3, h4, .heading, [class*="title"], [class*="heading"]');
       const imageElements = root.querySelectorAll('img[src*="cdn.prod.website-files"]');
       
+      // Create a map of images to their nearby titles for better matching
+      const imageToTitleMap = new Map();
+      imageElements.forEach(img => {
+        const imgSrc = img.getAttribute('src') || img.getAttribute('data-src') || '';
+        
+        // Filter out UI elements like buttons, arrows, icons
+        if (imgSrc && !imgSrc.includes('button') && !imgSrc.includes('arrow') && 
+            !imgSrc.includes('icon') && !imgSrc.includes('.svg') &&
+            (imgSrc.includes('.jpg') || imgSrc.includes('.jpeg') || imgSrc.includes('.png') || imgSrc.includes('.webp'))) {
+          
+          const parent = img.parentNode;
+          const grandParent = parent?.parentNode;
+          const greatGrandParent = grandParent?.parentNode;
+          
+          // Look for nearby title elements
+          const nearbyTitle = parent?.querySelector('h1, h2, h3, h4, h5, h6') ||
+                             grandParent?.querySelector('h1, h2, h3, h4, h5, h6') ||
+                             greatGrandParent?.querySelector('h1, h2, h3, h4, h5, h6');
+          
+          if (nearbyTitle && nearbyTitle.text?.trim()) {
+            let fullImageUrl = imgSrc;
+            if (!imgSrc.startsWith('http')) {
+              fullImageUrl = imgSrc.startsWith('/') ? 
+                `https://cdn.prod.website-files.com${imgSrc}` : 
+                `https://cdn.prod.website-files.com/${imgSrc}`;
+            }
+            imageToTitleMap.set(nearbyTitle.text.trim(), fullImageUrl);
+          }
+        }
+      });
+      
       // Extract video content
       videoElements.forEach((element, idx) => {
         if (posts.length >= 25) return;
@@ -180,16 +211,35 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
           title = `Video Content ${idx + 1}`;
         }
         
-        // Look for associated image
-        let imageUrl = '';
-        const img = parent?.querySelector('img') || grandParent?.querySelector('img');
-        if (img) {
-          imageUrl = img.getAttribute('src') || '';
-          if (imageUrl && !imageUrl.startsWith('http')) {
-            imageUrl = imageUrl.startsWith('/') ? 
-              `https://cdn.prod.website-files.com${imageUrl}` : 
-              `https://cdn.prod.website-files.com/${imageUrl}`;
+        // Look for associated image - first check the map, then search nearby
+        let imageUrl = imageToTitleMap.get(title) || '';
+        
+        if (!imageUrl) {
+          const img = parent?.querySelector('img') || grandParent?.querySelector('img');
+          if (img) {
+            const imgSrc = img.getAttribute('src') || '';
+            // Filter out UI elements and only use actual content images
+            if (imgSrc && !imgSrc.includes('button') && !imgSrc.includes('arrow') && 
+                !imgSrc.includes('icon') && !imgSrc.includes('.svg') &&
+                (imgSrc.includes('.jpg') || imgSrc.includes('.jpeg') || imgSrc.includes('.png') || imgSrc.includes('.webp'))) {
+              imageUrl = imgSrc;
+              if (imageUrl && !imageUrl.startsWith('http')) {
+                imageUrl = imageUrl.startsWith('/') ? 
+                  `https://cdn.prod.website-files.com${imageUrl}` : 
+                  `https://cdn.prod.website-files.com/${imageUrl}`;
+              }
+            }
           }
+        }
+        
+        // Fallback to curated images if no specific image found
+        if (!imageUrl) {
+          const fallbackImages = [
+            "https://cdn.prod.website-files.com/678a4458aad73fea7208fc9f/678ab3d4caec71062e65470f_erddd_1749497849578.jpg",
+            "https://cdn.prod.website-files.com/678a4458aad73fea7208fc9f/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
+            "https://cdn.prod.website-files.com/678a4458aad73fea7208fc9f/678aad8cfd0dcde677a14418_hike2-p-500.jpg"
+          ];
+          imageUrl = fallbackImages[idx % fallbackImages.length];
         }
         
         // Extract video URL
@@ -238,16 +288,38 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
             excerpt = excerptElement.text.trim().substring(0, 200);
           }
           
-          // Look for associated image
-          let imageUrl = '';
-          const img = parent?.querySelector('img') || grandParent?.querySelector('img');
-          if (img) {
-            imageUrl = img.getAttribute('src') || '';
-            if (imageUrl && !imageUrl.startsWith('http')) {
-              imageUrl = imageUrl.startsWith('/') ? 
-                `https://cdn.prod.website-files.com${imageUrl}` : 
-                `https://cdn.prod.website-files.com/${imageUrl}`;
+          // Look for associated image - first check the map, then search nearby
+          let imageUrl = imageToTitleMap.get(title) || '';
+          
+          if (!imageUrl) {
+            const img = parent?.querySelector('img') || grandParent?.querySelector('img');
+            if (img) {
+              const imgSrc = img.getAttribute('src') || '';
+              // Filter out UI elements and only use actual content images
+              if (imgSrc && !imgSrc.includes('button') && !imgSrc.includes('arrow') && 
+                  !imgSrc.includes('icon') && !imgSrc.includes('.svg') &&
+                  (imgSrc.includes('.jpg') || imgSrc.includes('.jpeg') || imgSrc.includes('.png') || imgSrc.includes('.webp'))) {
+                imageUrl = imgSrc;
+                if (imageUrl && !imageUrl.startsWith('http')) {
+                  imageUrl = imageUrl.startsWith('/') ? 
+                    `https://cdn.prod.website-files.com${imageUrl}` : 
+                    `https://cdn.prod.website-files.com/${imageUrl}`;
+                }
+              }
             }
+          }
+          
+          // Use authentic photos from your collection as featured images
+          if (!imageUrl) {
+            const authenticImages = [
+              "/attached_assets/678ab3d4caec71062e65470f_erddd_1749497849578.jpg",
+              "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg", 
+              "/attached_assets/678aad8cfd0dcde677a14418_hike2-p-500.jpg",
+              "/attached_assets/20250517_073713.00_00_08_03.Still003.jpg",
+              "/attached_assets/493414479_10213588193416986_7983427679426833080_n.jpg",
+              "/attached_assets/ss3_1749484345644.jpg"
+            ];
+            imageUrl = authenticImages[idx % authenticImages.length];
           }
           
           // Determine category based on content
