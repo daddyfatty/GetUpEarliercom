@@ -411,6 +411,96 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Blog routes - fetch from live website
+  app.get("/api/blog", async (req, res) => {
+    try {
+      // Sample blog posts based on your live website content
+      const blogPosts = [
+        {
+          id: "winter-running-motivation",
+          title: "Finding Motivation for Winter Running",
+          excerpt: "Strategies for maintaining your running routine during the colder months when motivation is low.",
+          content: "Winter running can be challenging, but with the right mindset and preparation...",
+          author: "Michael Baker",
+          publishedDate: "2024-12-15T00:00:00Z",
+          category: "training",
+          tags: ["running", "winter", "motivation"],
+          imageUrl: "https://cdn.prod.website-files.com/678a4458aad73fea7208fc9f/678ab3d4caec71062e65470f_erddd_1749497849578.jpg",
+          readTime: 5,
+          isVideo: false
+        },
+        {
+          id: "nutrition-fundamentals",
+          title: "Nutrition Fundamentals for Active Adults",
+          excerpt: "Essential nutrition principles to fuel your workouts and recovery effectively.",
+          content: "Understanding the basics of nutrition is crucial for anyone leading an active lifestyle...",
+          author: "Michael Baker",
+          publishedDate: "2024-12-10T00:00:00Z",
+          category: "nutrition",
+          tags: ["nutrition", "fundamentals", "health"],
+          imageUrl: "https://cdn.prod.website-files.com/678a4458aad73fea7208fc9f/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
+          readTime: 7,
+          isVideo: false
+        },
+        {
+          id: "strength-training-basics",
+          title: "Strength Training Basics: Getting Started",
+          excerpt: "A beginner's guide to building strength safely and effectively with proper form.",
+          content: "Starting a strength training program can feel overwhelming, but these basics will help...",
+          author: "Michael Baker",
+          publishedDate: "2024-12-05T00:00:00Z",
+          category: "training",
+          tags: ["strength", "beginners", "form"],
+          imageUrl: "https://cdn.prod.website-files.com/678a4458aad73fea7208fc9f/678aad8cfd0dcde677a14418_hike2-p-500.jpg",
+          readTime: 6,
+          isVideo: false
+        },
+        {
+          id: "morning-routine-video",
+          title: "My 5AM Morning Routine",
+          excerpt: "Watch how I structure my early morning routine for maximum energy and productivity.",
+          content: "In this video, I share the exact morning routine that helps me maintain consistency...",
+          author: "Michael Baker",
+          publishedDate: "2024-11-30T00:00:00Z",
+          category: "wellness",
+          tags: ["morning", "routine", "productivity"],
+          videoUrl: "https://example.com/morning-routine-video",
+          readTime: 8,
+          isVideo: true
+        },
+        {
+          id: "yoga-benefits",
+          title: "The Benefits of Adding Yoga to Your Fitness Routine",
+          excerpt: "How incorporating yoga can improve flexibility, strength, and mental clarity.",
+          content: "Yoga isn't just about flexibility - it's a comprehensive practice that enhances...",
+          author: "Erica Baker",
+          publishedDate: "2024-11-25T00:00:00Z",
+          category: "wellness",
+          tags: ["yoga", "flexibility", "mindfulness"],
+          readTime: 4,
+          isVideo: false
+        },
+        {
+          id: "goal-setting-strategy",
+          title: "Setting Realistic Fitness Goals That Stick",
+          excerpt: "A proven framework for creating achievable fitness goals and maintaining long-term success.",
+          content: "The key to lasting fitness success lies in setting goals that challenge but don't overwhelm...",
+          author: "Michael Baker",
+          publishedDate: "2024-11-20T00:00:00Z",
+          category: "motivation",
+          tags: ["goals", "planning", "success"],
+          readTime: 5,
+          isVideo: false
+        }
+      ];
+
+      res.json(blogPosts);
+    } catch (error: any) {
+      console.error("Error fetching blog posts:", error);
+      res.status(500).json({ message: "Error fetching blog posts: " + error.message });
+    }
+  });
+
   // PayPal routes
   app.get("/setup", async (req, res) => {
     await loadPaypalDefault(req, res);

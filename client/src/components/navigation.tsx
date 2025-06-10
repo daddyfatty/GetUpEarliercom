@@ -37,6 +37,7 @@ export function Navigation() {
     { href: "/recipes", label: "Recipes" },
     { href: "/workouts", label: "Workouts" },
     { href: "/nutrition", label: "Nutrition Calculators" },
+    { href: "/blog", label: "Blog" },
     ...(isAuthenticated ? [{ href: "/profile", label: "Profile" }] : []),
     ...(isAdmin ? [{ href: "/admin", label: "Admin" }] : []),
   ];
