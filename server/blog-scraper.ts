@@ -30,7 +30,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
         excerpt: 'At 50 years old, 5\'7" and 165lbs, I hit a new personal record with 100lb dumbbells for 8 reps. This video shows the power of consistent training with IronMaster Pro dumbbells and proper form.',
         content: 'After years of consistent training, I\'m excited to share this milestone - hitting 100lb dumbbells for 8 clean reps at 50 years old. This achievement represents not just physical strength, but the dedication to proper form, progressive overload, and smart training principles. The IronMaster Pro dumbbells have been instrumental in this journey, providing the reliability and range needed for serious strength training. In this video, you\'ll see the technique, mindset, and years of preparation that led to this personal record.',
         isVideo: true,
-        videoUrl: 'https://www.youtube.com/embed/example-video-id',
+        videoUrl: 'https://www.youtube.com/embed/Z5R3DZGBIzo',
         tags: ['iron-master-dumbbells', 'strength-training', 'personal-record', 'video']
       },
       {
