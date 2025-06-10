@@ -188,7 +188,16 @@ export default function RecipeDetail() {
             <div class="meta-item"><div class="meta-value">${recipe.protein || 0}g</div><div class="meta-label">Protein</div></div>
         </div>
     </div>
-    ${recipe.content ? `<div class="story-section"><h3 class="story-title">Recipe Story</h3><div>${recipe.content.replace(/\n/g, '<br>')}</div></div>` : ''}
+    ${recipe.content ? `<div class="story-section">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 class="story-title">Recipe Story</h3>
+        ${(recipe as any).authorName ? `<div style="text-align: right;">
+          <p style="margin: 0; font-weight: bold; font-size: 14px;">by ${(recipe as any).authorName}</p>
+          <p style="margin: 0; font-size: 12px; color: #666;">Recipe Creator</p>
+        </div>` : ''}
+      </div>
+      <div>${recipe.content.replace(/\n/g, '<br>')}</div>
+    </div>` : ''}
     <div class="section"><h2 class="section-title">Ingredients</h2><ul class="ingredients-list">${ingredientsList}</ul></div>
     <div class="section"><h2 class="section-title">Instructions</h2><ol class="instructions-list">${instructionsList}</ol></div>
     <div class="section"><h2 class="section-title">Nutrition Information</h2><div class="nutrition-grid">
@@ -454,10 +463,33 @@ export default function RecipeDetail() {
             {/* Recipe Story/Content */}
             {(recipe as any).content && (
               <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl p-6 border border-amber-100 dark:border-amber-800">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
-                  <ChefHat className="w-5 h-5 text-amber-600 dark:text-amber-400 mr-2" />
-                  Recipe Story
-                </h3>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
+                    <ChefHat className="w-5 h-5 text-amber-600 dark:text-amber-400 mr-2" />
+                    Recipe Story
+                  </h3>
+                  
+                  {/* Author Attribution */}
+                  {(recipe as any).authorId && (recipe as any).authorName && (recipe as any).authorPhoto && (
+                    <Link href={`/team/${(recipe as any).authorId}`} className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+                      <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-amber-200 dark:border-amber-600">
+                        <img 
+                          src={(recipe as any).authorPhoto} 
+                          alt={`${(recipe as any).authorName} - Recipe Author`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                          {(recipe as any).authorName}
+                        </p>
+                        <p className="text-xs text-gray-600 dark:text-gray-400">
+                          Recipe Creator
+                        </p>
+                      </div>
+                    </Link>
+                  )}
+                </div>
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
                   {(recipe as any).content}
                 </p>

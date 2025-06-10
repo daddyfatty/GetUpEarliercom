@@ -62,6 +62,24 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
             {recipe.description}
           </p>
           
+          {/* Author Attribution */}
+          {(recipe as any).authorId && (recipe as any).authorName && (recipe as any).authorPhoto && (
+            <div className="flex items-center mb-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-200 dark:border-gray-600">
+                  <img 
+                    src={(recipe as any).authorPhoto} 
+                    alt={`${(recipe as any).authorName} - Recipe Author`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  by {(recipe as any).authorName}
+                </span>
+              </div>
+            </div>
+          )}
+          
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
               <span className="flex items-center">

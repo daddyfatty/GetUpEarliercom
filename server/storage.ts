@@ -2,10 +2,10 @@ import type { User, Recipe, Workout, Goal, FoodEntry, Achievement, WaterIntake, 
 
 export interface IStorage {
   // User methods
-  getUser(id: number): Promise<User | undefined>;
+  getUser(id: string): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  updateUser(id: number, updates: Partial<User>): Promise<User | undefined>;
+  updateUser(id: string, updates: Partial<User>): Promise<User | undefined>;
 
   // Recipe methods
   getRecipes(): Promise<Recipe[]>;
@@ -60,7 +60,7 @@ export interface IStorage {
 }
 
 export class MemStorage implements IStorage {
-  private users: Map<number, User>;
+  private users: Map<string, User>;
   private recipes: Map<number, Recipe>;
   private workouts: Map<number, Workout>;
   private goals: Map<number, Goal>;
@@ -90,29 +90,33 @@ export class MemStorage implements IStorage {
   private seedData() {
     // Seed users
     const adminUser: User = {
-      id: this.currentId++,
-      username: "admin",
+      id: "admin-user-1",
       email: "admin@getupeariler.com",
-      password: "password123",
+      firstName: "Admin",
+      lastName: "User",
+      profileImageUrl: null,
       isAdmin: true,
       subscriptionTier: "premium",
       stripeCustomerId: null,
       stripeSubscriptionId: null,
       paypalCustomerId: null,
       createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
     const regularUser: User = {
-      id: this.currentId++,
-      username: "user",
+      id: "regular-user-1", 
       email: "user@example.com",
-      password: "password123",
+      firstName: "Regular",
+      lastName: "User",
+      profileImageUrl: null,
       isAdmin: false,
       subscriptionTier: "free",
       stripeCustomerId: null,
       stripeSubscriptionId: null,
       paypalCustomerId: null,
       createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
     this.users.set(adminUser.id, adminUser);
