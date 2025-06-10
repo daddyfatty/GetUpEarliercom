@@ -86,11 +86,11 @@ export default function Recipes() {
             Fresh Recipe Collection
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-            Clean & Lean Recipe<br className="hidden sm:block" />
-            <span className="text-[#61c493]">Templates</span>
+            The Clean & Lean<br className="hidden sm:block" />
+            <span className="text-[#61c493]">Eating Guide</span>
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-            Simple, nutritious recipes designed to fuel your early morning routine and support your wellness journey.
+            Interactive recipes and tips to focus on protein, eat real food and hit your target macros.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
