@@ -47,7 +47,7 @@ export default function CalorieCalculator() {
   const macroProfiles = {
     balanced: { carbs: 50, protein: 20, fat: 30 },
     'moderate-protein': { carbs: 35, protein: 40, fat: 25 },
-    'high-protein': { carbs: 15, protein: 70, fat: 15 },
+    'high-protein': { carbs: 15, protein: 70, fat: 15 }, // Will be overridden by 1g per lb calculation
     'high-carb': { carbs: 70, protein: 15, fat: 15 }
   };
 
@@ -101,9 +101,21 @@ export default function CalorieCalculator() {
 
     // Calculate macros based on selected profile
     const profile = macroProfiles[macroProfile];
-    const carbCalories = targetCalories * (profile.carbs / 100);
-    const proteinCalories = targetCalories * (profile.protein / 100);
-    const fatCalories = targetCalories * (profile.fat / 100);
+    let carbCalories = targetCalories * (profile.carbs / 100);
+    let proteinCalories = targetCalories * (profile.protein / 100);
+    let fatCalories = targetCalories * (profile.fat / 100);
+    
+    // Special calculation for high-protein: 1g per lb of bodyweight
+    if (macroProfile === 'high-protein') {
+      const bodyWeightLbs = unitSystem === 'imperial' ? currentWeightNum : currentWeightNum * 2.20462;
+      const proteinGrams = Math.round(bodyWeightLbs); // 1g per lb
+      proteinCalories = proteinGrams * 4; // 4 calories per gram
+      
+      // Recalculate remaining calories for carbs and fat
+      const remainingCalories = targetCalories - proteinCalories;
+      carbCalories = remainingCalories * 0.2; // 20% of remaining
+      fatCalories = remainingCalories * 0.8; // 80% of remaining
+    }
 
     // Convert calories to grams (4 cal/g for carbs & protein, 9 cal/g for fat)
     const macros = {
@@ -141,7 +153,7 @@ export default function CalorieCalculator() {
   const getMacroProfileDescription = (profile: string) => {
     switch (profile) {
       case 'high-protein':
-        return 'High Protein (70% protein) - Ideal for muscle building';
+        return 'High Protein (1g per lb bodyweight) - Ideal for muscle building';
       case 'moderate-protein':
         return 'Moderate Protein (40% protein) - Balanced approach';
       case 'high-carb':
@@ -341,6 +353,16 @@ export default function CalorieCalculator() {
                 <div className="text-sm text-gray-600 bg-blue-50 p-3 rounded-md">
                   <Info className="h-4 w-4 inline mr-2" />
                   {getMacroProfileDescription(macroProfile)}
+                  {macroProfile === 'high-protein' && currentWeight && (
+                    <div className="mt-2 text-xs text-blue-700 bg-blue-100 p-2 rounded">
+                      <strong>Calculation:</strong> {currentWeight} {unitSystem === 'metric' ? 'kg' : 'lbs'} 
+                      {unitSystem === 'metric' && ` (${Math.round(parseFloat(currentWeight) * 2.20462)} lbs)`} = 
+                      {unitSystem === 'metric' 
+                        ? ` ${Math.round(parseFloat(currentWeight) * 2.20462)}g protein`
+                        : ` ${currentWeight}g protein`
+                      }
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -446,7 +468,10 @@ export default function CalorieCalculator() {
                           <div>
                             <div className="font-semibold text-gray-800">Protein</div>
                             <div className="text-sm text-gray-600">
-                              {macroProfiles[results.macroProfile as keyof typeof macroProfiles].protein}% of calories
+                              {results.macroProfile === 'high-protein' 
+                                ? '1g per lb bodyweight'
+                                : `${macroProfiles[results.macroProfile as keyof typeof macroProfiles].protein}% of calories`
+                              }
                             </div>
                           </div>
                           <div className="text-right">
