@@ -457,12 +457,42 @@ export class MemStorage implements IStorage {
         caloriesBurned: 180,
         equipment: ["bodyweight"],
         exercises: [
-          "Hollow Body Hold x 30 seconds",
-          "V-ups x 15",
-          "Russian Twists x 20",
-          "Leg Raises x 12",
-          "Plank to Pike x 10",
-          "Dead Bug x 8 each side"
+          {
+            name: "Hollow Body Hold",
+            sets: 3,
+            duration: 30,
+            description: "Static core hold with lower back pressed to floor"
+          },
+          {
+            name: "V-ups",
+            sets: 3,
+            reps: "15",
+            description: "Simultaneous leg and torso lift targeting upper and lower abs"
+          },
+          {
+            name: "Russian Twists",
+            sets: 3,
+            reps: "20",
+            description: "Seated torso rotation for oblique strengthening"
+          },
+          {
+            name: "Leg Raises",
+            sets: 3,
+            reps: "12",
+            description: "Lying leg lifts focusing on lower abdominal muscles"
+          },
+          {
+            name: "Plank to Pike",
+            sets: 3,
+            reps: "10",
+            description: "Dynamic movement from plank to downward dog position"
+          },
+          {
+            name: "Dead Bug",
+            sets: 3,
+            reps: "8 each side",
+            description: "Alternating limb movements for core stability and coordination"
+          }
         ],
         imageUrl: null,
         videoUrl: null,
@@ -481,11 +511,31 @@ export class MemStorage implements IStorage {
         caloriesBurned: 30,
         equipment: ["dumbbells"],
         exercises: [
-          "Weight selection guide",
-          "Basic grip techniques",
-          "Posture and stance setup",
-          "Range of motion principles",
-          "Safety considerations"
+          {
+            name: "Weight selection guide",
+            sets: 1,
+            description: "How to choose appropriate dumbbell weights for your fitness level"
+          },
+          {
+            name: "Basic grip techniques",
+            sets: 1,
+            description: "Proper hand positioning and grip strength for safe lifting"
+          },
+          {
+            name: "Posture and stance setup",
+            sets: 1,
+            description: "Correct body alignment and foot positioning for stability"
+          },
+          {
+            name: "Range of motion principles",
+            sets: 1,
+            description: "Understanding full movement patterns for maximum effectiveness"
+          },
+          {
+            name: "Safety considerations",
+            sets: 1,
+            description: "Key safety tips and injury prevention strategies"
+          }
         ],
         imageUrl: null,
         videoUrl: null,
