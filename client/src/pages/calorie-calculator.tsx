@@ -476,7 +476,10 @@ export default function CalorieCalculator() {
                           <div>
                             <div className="font-semibold text-gray-800">Carbohydrates</div>
                             <div className="text-sm text-gray-600">
-                              {macroProfiles[results.macroProfile as keyof typeof macroProfiles].carbs}% of calories
+                              {results.macroProfile === 'custom' 
+                                ? `${Math.round((results.macros.carbs * 4 / results.calories) * 100)}% of calories`
+                                : `${macroProfiles[results.macroProfile as keyof typeof macroProfiles].carbs}% of calories`
+                              }
                             </div>
                           </div>
                           <div className="text-right">
@@ -492,7 +495,10 @@ export default function CalorieCalculator() {
                           <div>
                             <div className="font-semibold text-gray-800">Protein</div>
                             <div className="text-sm text-gray-600">
-                              {macroProfiles[results.macroProfile as keyof typeof macroProfiles].protein}% of calories
+                              {results.macroProfile === 'custom' 
+                                ? `${Math.round((results.macros.protein * 4 / results.calories) * 100)}% of calories`
+                                : `${macroProfiles[results.macroProfile as keyof typeof macroProfiles].protein}% of calories`
+                              }
                             </div>
                           </div>
                           <div className="text-right">
@@ -508,7 +514,10 @@ export default function CalorieCalculator() {
                           <div>
                             <div className="font-semibold text-gray-800">Fat</div>
                             <div className="text-sm text-gray-600">
-                              {macroProfiles[results.macroProfile as keyof typeof macroProfiles].fat}% of calories
+                              {results.macroProfile === 'custom' 
+                                ? `${Math.round((results.macros.fat * 9 / results.calories) * 100)}% of calories`
+                                : `${macroProfiles[results.macroProfile as keyof typeof macroProfiles].fat}% of calories`
+                              }
                             </div>
                           </div>
                           <div className="text-right">
