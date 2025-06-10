@@ -263,7 +263,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       content: 'Squat jumps are essential for developing explosive power and maintaining athletic performance as we age. This exercise bridges the gap between strength training and sport-specific movements, making it crucial for athletes and fitness enthusiasts over 40 who want to maintain their power output and functional movement capacity.',
       isVideo: true,
       videoUrl: 'https://www.youtube.com/embed/kVpv8-5XWOI',
-      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_maxresdefault-12.jpeg',
+      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/6794b76b83b2663913c2e57e_squat-jumps-featured.jpg',
       tags: ['squat-jumps', 'plyometrics', 'explosive-power', 'over-40']
     },
     {
@@ -276,7 +276,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       content: 'This comprehensive pre-run warmup routine activates your muscles, improves range of motion, and prepares your cardiovascular system for running. Essential for marathon training and injury prevention.',
       isVideo: true,
       videoUrl: 'https://www.youtube.com/embed/Ru2QXYf7dVk',
-      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_warmup-routine.jpeg',
+      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e24f2c21e13fddde7a6_maxresdefault-19.jpeg',
       tags: ['warmup', 'running', 'marathon-training', 'injury-prevention']
     },
     {
@@ -288,7 +288,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Comprehensive nutrition guide for endurance athletes to optimize performance and recovery.',
       content: 'Proper nutrition is the foundation of endurance performance. Learn how to fuel your body before, during, and after training sessions and competitions for optimal results.',
       isVideo: false,
-      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_nutrition-guide.jpeg',
+      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e24c9939cfa0f502e5f_maxresdefault-9.jpeg',
       tags: ['nutrition', 'endurance', 'fueling', 'performance', 'recovery']
     },
     {
@@ -301,7 +301,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       content: 'Runners who incorporate strength training see significant improvements in performance and dramatic reductions in injury rates. This video covers the key exercises every runner should be doing: single-leg squats, deadlifts, core stability work, and plyometric movements that directly translate to better running economy.',
       isVideo: true,
       videoUrl: 'https://www.youtube.com/embed/vBK3bWmgPXI',
-      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_strength-runners.jpeg',
+      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e24f2c21e13fddde7a5_maxresdefault-18.jpeg',
       tags: ['strength-training', 'runners', 'cross-training', 'injury-prevention']
     },
     {
@@ -313,7 +313,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Essential recovery techniques to optimize athletic performance and prevent burnout.',
       content: 'Recovery is where adaptation happens. Learn effective techniques including massage, stretching, and active recovery methods to maximize your training gains and prevent overuse injuries.',
       isVideo: false,
-      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_recovery-techniques.jpeg',
+      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e24969db27e1e3b080b_maxresdefault-14.jpeg',
       tags: ['recovery', 'massage', 'stretching', 'active-recovery', 'performance']
     },
     {
@@ -326,7 +326,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       content: 'Mental toughness isn\'t just about pushing through pain - it\'s about developing the psychological skills that allow you to perform under pressure, recover from setbacks, and maintain consistency in your training. This covers visualization techniques, self-talk strategies, and the mindset shifts that turn obstacles into opportunities.',
       isVideo: true,
       videoUrl: 'https://www.youtube.com/embed/9BWrmFT3i8M',
-      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_mindset-training.jpeg',
+      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e24969db27e1e3b0809_maxresdefault-12.jpeg',
       tags: ['mental-toughness', 'mindset', 'psychology', 'resilience', 'focus']
     }
   ];
