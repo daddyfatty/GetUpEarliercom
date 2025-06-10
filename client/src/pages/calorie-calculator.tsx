@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Separator } from '@/components/ui/separator';
-import { Calculator, Target, Activity, Info } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Slider } from "@/components/ui/slider";
+import { Separator } from "@/components/ui/separator";
+import { Calculator, Activity, Target, Utensils, Info } from "lucide-react";
 
 interface CalculationResults {
   bmr: number;
@@ -19,155 +19,198 @@ interface CalculationResults {
     fat: number;
   };
   goal: 'maintenance' | 'loss' | 'gain';
+  macroProfile: string;
 }
 
 export default function CalorieCalculator() {
   const [unitSystem, setUnitSystem] = useState<'metric' | 'imperial'>('imperial');
   const [sex, setSex] = useState<'male' | 'female'>('male');
-  const [age, setAge] = useState('');
-  const [height, setHeight] = useState('');
-  const [currentWeight, setCurrentWeight] = useState('');
-  const [desiredWeight, setDesiredWeight] = useState('');
-  const [activityLevel, setActivityLevel] = useState('');
-  const [macroRatio, setMacroRatio] = useState('balanced');
+  const [age, setAge] = useState<string>('');
+  const [height, setHeight] = useState<string>('');
+  const [currentWeight, setCurrentWeight] = useState<string>('');
+  const [desiredWeight, setDesiredWeight] = useState<string>('');
+  const [activityLevel, setActivityLevel] = useState<number[]>([1.2]);
+  const [goal, setGoal] = useState<'maintenance' | 'loss' | 'gain'>('maintenance');
+  const [macroProfile, setMacroProfile] = useState<'balanced' | 'high-protein' | 'moderate-protein' | 'high-carb'>('balanced');
   const [results, setResults] = useState<CalculationResults | null>(null);
 
-  const activityLevels = [
-    { value: 'sedentary', label: 'Desk Job + No Working Out (Sedentary)', multiplier: 1.2 },
-    { value: 'lightly_active', label: 'Desk Job + A Few Workouts a Week (Lightly Active)', multiplier: 1.375 },
-    { value: 'moderately_active', label: 'Desk Job + Strength Training (Moderately Active)', multiplier: 1.55 },
-    { value: 'very_active', label: 'Active Job (Very Active)', multiplier: 1.725 },
-  ];
-
-  const macroRatios = {
-    balanced: { carbs: 50, protein: 20, fat: 30, name: 'Balanced (50% carbs, 20% protein, 30% fat)' },
-    high_protein: { carbs: 40, protein: 30, fat: 30, name: 'High Protein (40% carbs, 30% protein, 30% fat)' },
-    low_carb: { carbs: 25, protein: 35, fat: 40, name: 'Low Carb (25% carbs, 35% protein, 40% fat)' },
-    athletic: { carbs: 55, protein: 25, fat: 20, name: 'Athletic (55% carbs, 25% protein, 20% fat)' }
+  // Activity level descriptions
+  const activityDescriptions = {
+    1.2: "Sedentary (little or no exercise)",
+    1.375: "Lightly active (light exercise 1-3 days/week)",
+    1.55: "Moderately active (moderate exercise 3-5 days/week)",
+    1.725: "Very active (hard exercise 6-7 days/week)",
+    1.9: "Extremely active (very hard exercise, physical job)"
   };
 
-  const calculateCalories = () => {
-    if (!age || !height || !currentWeight || !desiredWeight || !activityLevel) {
-      return;
+  // Macro ratio profiles
+  const macroProfiles = {
+    balanced: { carbs: 50, protein: 20, fat: 30 },
+    'moderate-protein': { carbs: 35, protein: 40, fat: 25 },
+    'high-protein': { carbs: 15, protein: 70, fat: 15 },
+    'high-carb': { carbs: 70, protein: 15, fat: 15 }
+  };
+
+  const convertToMetric = (value: number, type: 'weight' | 'height'): number => {
+    if (unitSystem === 'metric') return value;
+    
+    if (type === 'weight') {
+      return value * 0.453592; // lbs to kg
+    } else {
+      return value * 2.54; // inches to cm
     }
+  };
 
-    const ageNum = parseInt(age);
-    let heightCm = parseFloat(height);
-    let currentWeightKg = parseFloat(currentWeight);
-    let desiredWeightKg = parseFloat(desiredWeight);
-
-    // Convert imperial to metric if needed
-    if (unitSystem === 'imperial') {
-      heightCm = heightCm * 2.54; // inches to cm
-      currentWeightKg = currentWeightKg * 0.453592; // lbs to kg
-      desiredWeightKg = desiredWeightKg * 0.453592; // lbs to kg
-    }
-
-    // Calculate BMR using Mifflin-St Jeor Equation
-    let bmr: number;
+  const calculateBMR = (weightKg: number, heightCm: number, ageYears: number, sex: 'male' | 'female'): number => {
+    // Mifflin-St Jeor Equation
     if (sex === 'male') {
-      bmr = 10 * currentWeightKg + 6.25 * heightCm - 5 * ageNum + 5;
+      return (10 * weightKg) + (6.25 * heightCm) - (5 * ageYears) + 5;
     } else {
-      bmr = 10 * currentWeightKg + 6.25 * heightCm - 5 * ageNum - 161;
+      return (10 * weightKg) + (6.25 * heightCm) - (5 * ageYears) - 161;
+    }
+  };
+
+  const calculateCalories = (): CalculationResults | null => {
+    const ageNum = parseInt(age);
+    const heightNum = parseFloat(height);
+    const currentWeightNum = parseFloat(currentWeight);
+    const desiredWeightNum = parseFloat(desiredWeight);
+
+    if (!ageNum || !heightNum || !currentWeightNum || !desiredWeightNum) {
+      return null;
     }
 
+    // Convert to metric for calculations
+    const weightKg = convertToMetric(currentWeightNum, 'weight');
+    const heightCm = convertToMetric(heightNum, 'height');
+    const desiredWeightKg = convertToMetric(desiredWeightNum, 'weight');
+
+    // Calculate BMR
+    const bmr = calculateBMR(weightKg, heightCm, ageNum, sex);
+    
     // Calculate TDEE
-    const activityMultiplier = activityLevels.find(level => level.value === activityLevel)?.multiplier || 1.2;
-    const tdee = bmr * activityMultiplier;
+    const tdee = bmr * activityLevel[0];
 
-    // Determine goal and adjust calories
-    let goal: 'maintenance' | 'loss' | 'gain';
-    let calories: number;
-
-    if (desiredWeightKg < currentWeightKg) {
-      goal = 'loss';
-      calories = tdee - 500; // 500 calorie deficit for 1 lb/week loss
-    } else if (desiredWeightKg > currentWeightKg) {
-      goal = 'gain';
-      calories = tdee + 300; // 300 calorie surplus for lean gain
-    } else {
-      goal = 'maintenance';
-      calories = tdee;
+    // Adjust calories based on goal
+    let targetCalories = tdee;
+    if (goal === 'loss') {
+      targetCalories = tdee - 500; // 500 calorie deficit for ~1 lb/week loss
+    } else if (goal === 'gain') {
+      targetCalories = tdee + 500; // 500 calorie surplus for ~1 lb/week gain
     }
 
-    // Calculate macros
-    const selectedRatio = macroRatios[macroRatio as keyof typeof macroRatios];
-    const carbCalories = calories * (selectedRatio.carbs / 100);
-    const proteinCalories = calories * (selectedRatio.protein / 100);
-    const fatCalories = calories * (selectedRatio.fat / 100);
+    // Calculate macros based on selected profile
+    const profile = macroProfiles[macroProfile];
+    const carbCalories = targetCalories * (profile.carbs / 100);
+    const proteinCalories = targetCalories * (profile.protein / 100);
+    const fatCalories = targetCalories * (profile.fat / 100);
 
+    // Convert calories to grams (4 cal/g for carbs & protein, 9 cal/g for fat)
     const macros = {
-      carbs: Math.round(carbCalories / 4), // 4 calories per gram
-      protein: Math.round(proteinCalories / 4), // 4 calories per gram
-      fat: Math.round(fatCalories / 9), // 9 calories per gram
+      carbs: Math.round(carbCalories / 4),
+      protein: Math.round(proteinCalories / 4),
+      fat: Math.round(fatCalories / 9)
     };
 
-    setResults({
+    return {
       bmr: Math.round(bmr),
       tdee: Math.round(tdee),
-      calories: Math.round(calories),
+      calories: Math.round(targetCalories),
       macros,
-      goal
-    });
+      goal,
+      macroProfile
+    };
+  };
+
+  const handleCalculate = () => {
+    const result = calculateCalories();
+    setResults(result);
   };
 
   const getGoalDescription = (goal: string) => {
     switch (goal) {
       case 'loss':
-        return 'Weight Loss - 500 calorie deficit for ~1 lb/week loss';
+        return 'Weight Loss (500 calorie deficit)';
       case 'gain':
-        return 'Weight Gain - 300 calorie surplus for lean muscle gain';
+        return 'Weight Gain (500 calorie surplus)';
       default:
-        return 'Weight Maintenance - Calories to maintain current weight';
+        return 'Weight Maintenance';
     }
   };
 
+  const getMacroProfileDescription = (profile: string) => {
+    switch (profile) {
+      case 'high-protein':
+        return 'High Protein (70% protein) - Ideal for muscle building';
+      case 'moderate-protein':
+        return 'Moderate Protein (40% protein) - Balanced approach';
+      case 'high-carb':
+        return 'Carb Loading (70% carbs) - For endurance training';
+      default:
+        return 'Balanced (50% carbs, 20% protein, 30% fat)';
+    }
+  };
+
+  const getActivityLevelValue = (value: number) => {
+    const closest = Object.keys(activityDescriptions)
+      .map(Number)
+      .reduce((prev, curr) => 
+        Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
+      );
+    return closest;
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-950 via-purple-900 to-orange-800 p-4">
-      <div className="max-w-4xl mx-auto space-y-6">
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold text-white flex items-center justify-center gap-3">
-            <Calculator className="h-10 w-10 text-orange-400" />
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 py-12">
+      <div className="container mx-auto px-4 max-w-6xl">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 font-heading">
             Daily Caloric Intake & Macro Calculator
           </h1>
-          <p className="text-gray-200 text-lg">
-            Calculate your daily caloric needs and optimal macronutrient distribution
+          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+            Calculate your daily caloric needs and macronutrient requirements based on your personal details, 
+            activity level, and fitness goals with support for both Metric and Imperial units.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-5 w-5 text-orange-400" />
-                Personal Information
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Input Form */}
+          <Card className="bg-white/95 backdrop-blur-sm shadow-2xl">
+            <CardHeader className="bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-t-lg">
+              <CardTitle className="flex items-center gap-2 text-2xl">
+                <Calculator className="h-6 w-6" />
+                Personal Details
               </CardTitle>
-              <CardDescription className="text-gray-300">
-                Enter your details to calculate your caloric needs
+              <CardDescription className="text-orange-100">
+                Enter your information to calculate your daily caloric needs
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Unit System */}
+            <CardContent className="p-6 space-y-6">
+              {/* Unit System Selection */}
               <div className="space-y-3">
-                <Label className="text-white">Unit System</Label>
-                <RadioGroup value={unitSystem} onValueChange={(value: 'metric' | 'imperial') => setUnitSystem(value)}>
+                <Label className="text-lg font-semibold text-gray-800">Unit System</Label>
+                <RadioGroup 
+                  value={unitSystem} 
+                  onValueChange={(value: 'metric' | 'imperial') => setUnitSystem(value)}
+                  className="flex gap-6"
+                >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="imperial" id="imperial" />
-                    <Label htmlFor="imperial" className="text-gray-200">Imperial (lbs, inches)</Label>
+                    <Label htmlFor="imperial">Imperial (lb, inches)</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="metric" id="metric" />
-                    <Label htmlFor="metric" className="text-gray-200">Metric (kg, cm)</Label>
+                    <Label htmlFor="metric">Metric (kg, cm)</Label>
                   </div>
                 </RadioGroup>
               </div>
 
-              {/* Sex */}
+              {/* Sex Selection */}
               <div className="space-y-3">
-                <Label className="text-white">Sex</Label>
+                <Label className="text-lg font-semibold text-gray-800">Sex</Label>
                 <Select value={sex} onValueChange={(value: 'male' | 'female') => setSex(value)}>
-                  <SelectTrigger className="bg-white/10 border-white/20 text-white">
-                    <SelectValue />
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select sex" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="male">Male</SelectItem>
@@ -178,189 +221,265 @@ export default function CalorieCalculator() {
 
               {/* Age */}
               <div className="space-y-3">
-                <Label htmlFor="age" className="text-white">Age (years)</Label>
+                <Label htmlFor="age" className="text-lg font-semibold text-gray-800">Age (years)</Label>
                 <Input
                   id="age"
                   type="number"
+                  placeholder="Enter your age"
                   value={age}
                   onChange={(e) => setAge(e.target.value)}
-                  placeholder="Enter your age"
-                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+                  className="text-lg"
                 />
               </div>
 
               {/* Height */}
               <div className="space-y-3">
-                <Label htmlFor="height" className="text-white">
+                <Label htmlFor="height" className="text-lg font-semibold text-gray-800">
                   Height ({unitSystem === 'metric' ? 'cm' : 'inches'})
                 </Label>
                 <Input
                   id="height"
                   type="number"
+                  placeholder={`Enter your height in ${unitSystem === 'metric' ? 'centimeters' : 'inches'}`}
                   value={height}
                   onChange={(e) => setHeight(e.target.value)}
-                  placeholder={`Enter height in ${unitSystem === 'metric' ? 'centimeters' : 'inches'}`}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+                  className="text-lg"
                 />
               </div>
 
               {/* Current Weight */}
               <div className="space-y-3">
-                <Label htmlFor="current-weight" className="text-white">
+                <Label htmlFor="currentWeight" className="text-lg font-semibold text-gray-800">
                   Current Weight ({unitSystem === 'metric' ? 'kg' : 'lbs'})
                 </Label>
                 <Input
-                  id="current-weight"
+                  id="currentWeight"
                   type="number"
+                  placeholder={`Enter your current weight in ${unitSystem === 'metric' ? 'kilograms' : 'pounds'}`}
                   value={currentWeight}
                   onChange={(e) => setCurrentWeight(e.target.value)}
-                  placeholder={`Enter current weight in ${unitSystem === 'metric' ? 'kilograms' : 'pounds'}`}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+                  className="text-lg"
                 />
               </div>
 
               {/* Desired Weight */}
               <div className="space-y-3">
-                <Label htmlFor="desired-weight" className="text-white">
+                <Label htmlFor="desiredWeight" className="text-lg font-semibold text-gray-800">
                   Desired Weight ({unitSystem === 'metric' ? 'kg' : 'lbs'})
                 </Label>
                 <Input
-                  id="desired-weight"
+                  id="desiredWeight"
                   type="number"
+                  placeholder={`Enter your desired weight in ${unitSystem === 'metric' ? 'kilograms' : 'pounds'}`}
                   value={desiredWeight}
                   onChange={(e) => setDesiredWeight(e.target.value)}
-                  placeholder={`Enter desired weight in ${unitSystem === 'metric' ? 'kilograms' : 'pounds'}`}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+                  className="text-lg"
                 />
               </div>
 
-              {/* Activity Level */}
-              <div className="space-y-3">
-                <Label className="text-white flex items-center gap-2">
-                  <Activity className="h-4 w-4" />
+              {/* Activity Level Slider */}
+              <div className="space-y-4">
+                <Label className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                  <Activity className="h-5 w-5" />
                   Activity Level
                 </Label>
-                <Select value={activityLevel} onValueChange={setActivityLevel}>
-                  <SelectTrigger className="bg-white/10 border-white/20 text-white">
-                    <SelectValue placeholder="Select your activity level" />
+                <div className="px-3">
+                  <Slider
+                    value={activityLevel}
+                    onValueChange={setActivityLevel}
+                    max={1.9}
+                    min={1.2}
+                    step={0.001}
+                    className="w-full"
+                  />
+                  <div className="mt-2 text-center">
+                    <span className="text-sm font-medium text-gray-600">
+                      {activityDescriptions[getActivityLevelValue(activityLevel[0]) as keyof typeof activityDescriptions]}
+                    </span>
+                    <div className="text-xs text-gray-500 mt-1">
+                      Multiplier: {activityLevel[0].toFixed(2)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Goal Selection */}
+              <div className="space-y-3">
+                <Label className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                  <Target className="h-5 w-5" />
+                  Goal
+                </Label>
+                <Select value={goal} onValueChange={(value: 'maintenance' | 'loss' | 'gain') => setGoal(value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your goal" />
                   </SelectTrigger>
                   <SelectContent>
-                    {activityLevels.map((level) => (
-                      <SelectItem key={level.value} value={level.value}>
-                        {level.label}
-                      </SelectItem>
-                    ))}
+                    <SelectItem value="maintenance">Weight Maintenance</SelectItem>
+                    <SelectItem value="loss">Weight Loss</SelectItem>
+                    <SelectItem value="gain">Weight Gain</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
-              {/* Macro Ratio */}
+              {/* Macro Profile Selection */}
               <div className="space-y-3">
-                <Label className="text-white">Macronutrient Ratio</Label>
-                <Select value={macroRatio} onValueChange={setMacroRatio}>
-                  <SelectTrigger className="bg-white/10 border-white/20 text-white">
-                    <SelectValue />
+                <Label className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                  <Utensils className="h-5 w-5" />
+                  Macro Profile
+                </Label>
+                <Select value={macroProfile} onValueChange={(value: 'balanced' | 'high-protein' | 'moderate-protein' | 'high-carb') => setMacroProfile(value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select macro profile" />
                   </SelectTrigger>
                   <SelectContent>
-                    {Object.entries(macroRatios).map(([key, ratio]) => (
-                      <SelectItem key={key} value={key}>
-                        {ratio.name}
-                      </SelectItem>
-                    ))}
+                    <SelectItem value="balanced">Balanced</SelectItem>
+                    <SelectItem value="moderate-protein">Moderate Protein</SelectItem>
+                    <SelectItem value="high-protein">High Protein</SelectItem>
+                    <SelectItem value="high-carb">Carb Loading</SelectItem>
                   </SelectContent>
                 </Select>
+                <div className="text-sm text-gray-600 bg-blue-50 p-3 rounded-md">
+                  <Info className="h-4 w-4 inline mr-2" />
+                  {getMacroProfileDescription(macroProfile)}
+                </div>
               </div>
 
               <Button 
-                onClick={calculateCalories} 
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white"
-                disabled={!age || !height || !currentWeight || !desiredWeight || !activityLevel}
+                onClick={handleCalculate} 
+                className="w-full text-lg py-3 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600"
+                disabled={!age || !height || !currentWeight || !desiredWeight}
               >
-                Calculate Daily Intake
+                Calculate My Daily Needs
               </Button>
             </CardContent>
           </Card>
 
-          <div className="space-y-6">
-            {results && (
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-                <CardHeader>
-                  <CardTitle className="text-white">Your Results</CardTitle>
-                  <CardDescription className="text-gray-300">
-                    {getGoalDescription(results.goal)}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-blue-500/20 p-4 rounded-lg">
-                      <p className="text-blue-200 text-sm">BMR</p>
-                      <p className="text-white text-2xl font-bold">{results.bmr}</p>
-                      <p className="text-blue-200 text-xs">calories/day</p>
-                    </div>
-                    <div className="bg-green-500/20 p-4 rounded-lg">
-                      <p className="text-green-200 text-sm">TDEE</p>
-                      <p className="text-white text-2xl font-bold">{results.tdee}</p>
-                      <p className="text-green-200 text-xs">calories/day</p>
-                    </div>
-                  </div>
-
-                  <div className="bg-orange-500/20 p-4 rounded-lg">
-                    <p className="text-orange-200 text-sm">Daily Caloric Intake</p>
-                    <p className="text-white text-3xl font-bold">{results.calories}</p>
-                    <p className="text-orange-200 text-xs">calories/day</p>
-                  </div>
-
-                  <Separator className="bg-white/20" />
-
-                  <div>
-                    <h4 className="text-white font-semibold mb-3">Daily Macronutrients</h4>
-                    <div className="grid grid-cols-3 gap-3">
-                      <div className="bg-red-500/20 p-3 rounded-lg text-center">
-                        <p className="text-red-200 text-sm">Carbs</p>
-                        <p className="text-white text-xl font-bold">{results.macros.carbs}g</p>
-                      </div>
-                      <div className="bg-yellow-500/20 p-3 rounded-lg text-center">
-                        <p className="text-yellow-200 text-sm">Protein</p>
-                        <p className="text-white text-xl font-bold">{results.macros.protein}g</p>
-                      </div>
-                      <div className="bg-purple-500/20 p-3 rounded-lg text-center">
-                        <p className="text-purple-200 text-sm">Fat</p>
-                        <p className="text-white text-xl font-bold">{results.macros.fat}g</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <Alert className="bg-blue-500/20 border-blue-500/50">
-                    <Info className="h-4 w-4 text-blue-300" />
-                    <AlertDescription className="text-blue-200">
-                      <strong>Your inputs:</strong> {sex === 'male' ? 'Male' : 'Female'}, {age} years old, 
-                      {height}{unitSystem === 'metric' ? 'cm' : '"'} tall, 
-                      {currentWeight}{unitSystem === 'metric' ? 'kg' : 'lbs'} → {desiredWeight}{unitSystem === 'metric' ? 'kg' : 'lbs'}
-                    </AlertDescription>
-                  </Alert>
-                </CardContent>
-              </Card>
-            )}
-
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <Info className="h-5 w-5 text-blue-400" />
-                  Important Notes
-                </CardTitle>
+          {/* Results */}
+          {results && (
+            <Card className="bg-white/95 backdrop-blur-sm shadow-2xl">
+              <CardHeader className="bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-t-lg">
+                <CardTitle className="text-2xl">Your Caloric & Macro Needs</CardTitle>
+                <CardDescription className="text-green-100">
+                  Based on your personal details and {getGoalDescription(results.goal).toLowerCase()}
+                </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="text-gray-300 space-y-2 text-sm">
-                  <p>• These calculations are estimates based on the Mifflin-St Jeor equation</p>
-                  <p>• Individual metabolic rates can vary by ±10-15%</p>
-                  <p>• For weight loss: 500 calorie deficit = ~1 lb/week</p>
-                  <p>• For weight gain: 300 calorie surplus for lean muscle gain</p>
-                  <p>• Monitor your progress and adjust as needed</p>
-                  <p>• Consult a healthcare professional for personalized advice</p>
+              <CardContent className="p-6">
+                <div className="space-y-6">
+                  {/* Summary Stats */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-blue-50 p-4 rounded-lg text-center">
+                      <div className="text-2xl font-bold text-blue-600">{results.bmr}</div>
+                      <div className="text-sm text-blue-500">BMR (calories/day)</div>
+                    </div>
+                    <div className="bg-green-50 p-4 rounded-lg text-center">
+                      <div className="text-2xl font-bold text-green-600">{results.tdee}</div>
+                      <div className="text-sm text-green-500">TDEE (calories/day)</div>
+                    </div>
+                  </div>
+
+                  {/* Target Calories */}
+                  <div className="bg-gradient-to-r from-orange-50 to-pink-50 p-6 rounded-lg border border-orange-200">
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-orange-600 mb-2">{results.calories}</div>
+                      <div className="text-lg text-gray-700">Daily Calories for {getGoalDescription(results.goal)}</div>
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Macronutrient Breakdown */}
+                  <div className="space-y-4">
+                    <h3 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
+                      <Utensils className="h-5 w-5" />
+                      Daily Macronutrient Targets
+                    </h3>
+                    
+                    <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded-md">
+                      Profile: {getMacroProfileDescription(results.macroProfile)}
+                    </div>
+
+                    <div className="grid gap-4">
+                      {/* Carbohydrates */}
+                      <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <div className="font-semibold text-gray-800">Carbohydrates</div>
+                            <div className="text-sm text-gray-600">
+                              {macroProfiles[results.macroProfile as keyof typeof macroProfiles].carbs}% of calories
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-2xl font-bold text-yellow-600">{results.macros.carbs}g</div>
+                            <div className="text-sm text-yellow-500">per day</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Protein */}
+                      <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <div className="font-semibold text-gray-800">Protein</div>
+                            <div className="text-sm text-gray-600">
+                              {macroProfiles[results.macroProfile as keyof typeof macroProfiles].protein}% of calories
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-2xl font-bold text-red-600">{results.macros.protein}g</div>
+                            <div className="text-sm text-red-500">per day</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Fat */}
+                      <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <div className="font-semibold text-gray-800">Fat</div>
+                            <div className="text-sm text-gray-600">
+                              {macroProfiles[results.macroProfile as keyof typeof macroProfiles].fat}% of calories
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-2xl font-bold text-purple-600">{results.macros.fat}g</div>
+                            <div className="text-sm text-purple-500">per day</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Tips */}
+                  <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                    <h4 className="font-semibold text-blue-800 mb-2">Tips for {getGoalDescription(results.goal)}</h4>
+                    <div className="text-sm text-blue-700 space-y-1">
+                      {results.goal === 'loss' && (
+                        <>
+                          <p>• Aim for gradual weight loss of 1-2 lbs per week</p>
+                          <p>• Focus on whole foods and adequate protein to preserve muscle</p>
+                          <p>• Stay hydrated and maintain consistent exercise</p>
+                        </>
+                      )}
+                      {results.goal === 'gain' && (
+                        <>
+                          <p>• Combine calorie surplus with resistance training</p>
+                          <p>• Eat frequent, nutrient-dense meals</p>
+                          <p>• Monitor weight gain to ensure it's primarily muscle</p>
+                        </>
+                      )}
+                      {results.goal === 'maintenance' && (
+                        <>
+                          <p>• Focus on balanced nutrition and consistent habits</p>
+                          <p>• Adjust calories based on activity level changes</p>
+                          <p>• Monitor weight trends over time, not daily fluctuations</p>
+                        </>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
-          </div>
+          )}
         </div>
       </div>
     </div>
