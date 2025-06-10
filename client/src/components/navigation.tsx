@@ -32,7 +32,7 @@ export function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const nutritionItems = [
+  const calculatorItems = [
     { href: "/nutrition", label: "Food Tracker" },
     { href: "/calorie-calculator", label: "Calorie Calculator" },
   ];
@@ -142,22 +142,22 @@ export function Navigation() {
                   </Link>
                 ))}
                 
-                {/* Nutrition Dropdown */}
+                {/* Calculators Dropdown */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <span
                       className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
-                        nutritionItems.some(item => location === item.href)
+                        calculatorItems.some(item => location === item.href)
                           ? "text-[hsl(var(--orange))] bg-white/10"
                           : "text-white hover:text-[hsl(var(--orange))]"
                       }`}
                     >
-                      Nutrition
+                      Calculators
                       <ChevronDown className="ml-1 h-4 w-4" />
                     </span>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="center" className="bg-white border border-gray-200 shadow-lg">
-                    {nutritionItems.map((item) => (
+                    {calculatorItems.map((item) => (
                       <DropdownMenuItem key={item.href} asChild>
                         <Link href={item.href}>
                           <span className="font-medium text-gray-900 hover:text-[hsl(var(--orange))] cursor-pointer w-full">
@@ -305,10 +305,10 @@ export function Navigation() {
                       </Link>
                     ))}
 
-                    {/* Nutrition Section for Mobile */}
+                    {/* Calculators Section for Mobile */}
                     <div className="border-t pt-4">
-                      <div className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">Nutrition</div>
-                      {nutritionItems.map((item) => (
+                      <div className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">Calculators</div>
+                      {calculatorItems.map((item) => (
                         <Link key={item.href} href={item.href}>
                           <span
                             className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading ${
