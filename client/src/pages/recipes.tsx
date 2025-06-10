@@ -65,8 +65,6 @@ export default function Recipes() {
     },
   });
 
-
-
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -101,7 +99,7 @@ export default function Recipes() {
             </div>
             <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#61c493] rounded-full"></div>
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">15-30 Min Prep</span>
               </div>
             </div>
@@ -192,48 +190,127 @@ export default function Recipes() {
           </div>
         </div>
 
-        {/* Recipe Grid */}
-        {recipes.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="w-32 h-32 bg-gradient-to-br from-[#61c493]/20 to-[#61c493]/5 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Search className="w-16 h-16 text-[#61c493]" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">No recipes found</h3>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-md mx-auto">
-              Try adjusting your search terms or filters to discover delicious, healthy recipes.
-            </p>
-            <Button 
-              onClick={() => {
-                setSearchQuery("");
-                setCategoryFilter("all");
-                setDietFilter("all");
-              }}
-              className="bg-[#61c493] hover:bg-[#61c493]/90 text-white px-8 py-3 text-lg font-semibold"
-            >
-              Show All Recipes
-            </Button>
-          </div>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-              {recipes.map((recipe) => (
-                <RecipeCard key={recipe.id} recipe={recipe} />
-              ))}
-            </div>
-            
-            {/* Results Summary */}
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 bg-white dark:bg-gray-800 px-6 py-3 rounded-full shadow-sm border border-gray-200 dark:border-gray-700">
-                <div className="w-2 h-2 bg-[#61c493] rounded-full"></div>
-                <span className="text-gray-700 dark:text-gray-300 font-medium">
-                  {recipes.length} recipe{recipes.length !== 1 ? 's' : ''} found
-                </span>
+        {/* Main Content with Sidebar */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Sidebar */}
+          <div className="lg:col-span-1 space-y-6">
+            {/* Categories */}
+            <Card className="bg-white/80 backdrop-blur-sm dark:bg-gray-800/80">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Utensils className="w-5 h-5" />
+                  Categories
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {[
+                  { value: "all", label: "All Categories" },
+                  { value: "breakfast", label: "breakfast" },
+                  { value: "lunch", label: "lunch" },
+                  { value: "dinner", label: "dinner" },
+                  { value: "snack", label: "snack" }
+                ].map((category) => (
+                  <button
+                    key={category.value}
+                    onClick={() => setCategoryFilter(category.value)}
+                    className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
+                      categoryFilter === category.value
+                        ? "bg-[#61c493]/10 text-[#61c493] border border-[#61c493]/30"
+                        : "hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+                    }`}
+                  >
+                    {category.label}
+                  </button>
+                ))}
+              </CardContent>
+            </Card>
+
+            {/* Tags */}
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Tags</h3>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  "dinner", "high-protein", "one-pot", "chicken",
+                  "breakfast", "snack", "vegetarian", "granola", "endurance"
+                ].map((tag) => (
+                  <button
+                    key={tag}
+                    onClick={() => {
+                      setSearchQuery(searchQuery === tag ? "" : tag);
+                    }}
+                    className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+                      searchQuery === tag
+                        ? "bg-[#61c493] text-white"
+                        : "bg-[#61c493]/10 text-[#61c493] hover:bg-[#61c493]/20"
+                    }`}
+                  >
+                    {tag}
+                  </button>
+                ))}
               </div>
             </div>
-          </>
-        )}
 
+            {/* Diet Types */}
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Diet Types</h3>
+              <div className="space-y-2">
+                <button
+                  onClick={() => setDietFilter("high-protein")}
+                  className={`w-full text-left px-4 py-3 rounded-md text-sm font-medium transition-colors ${
+                    dietFilter === "high-protein"
+                      ? "bg-red-500 text-white"
+                      : "bg-red-50 text-red-700 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-300 dark:hover:bg-red-900/30"
+                  }`}
+                >
+                  high-protein
+                </button>
+              </div>
+            </div>
+          </div>
 
+          {/* Recipe Grid */}
+          <div className="lg:col-span-3">
+            {recipes.length === 0 ? (
+              <div className="text-center py-16">
+                <div className="w-32 h-32 bg-gradient-to-br from-[#61c493]/20 to-[#61c493]/5 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Search className="w-16 h-16 text-[#61c493]" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">No recipes found</h3>
+                <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-md mx-auto">
+                  Try adjusting your search terms or filters to discover delicious, healthy recipes.
+                </p>
+                <Button 
+                  onClick={() => {
+                    setSearchQuery("");
+                    setCategoryFilter("all");
+                    setDietFilter("all");
+                  }}
+                  className="bg-[#61c493] hover:bg-[#61c493]/90 text-white px-8 py-3 text-lg font-semibold"
+                >
+                  Show All Recipes
+                </Button>
+              </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                  {recipes.map((recipe) => (
+                    <RecipeCard key={recipe.id} recipe={recipe} />
+                  ))}
+                </div>
+                
+                {/* Results Summary */}
+                <div className="text-center mb-16">
+                  <div className="inline-flex items-center gap-2 bg-white dark:bg-gray-800 px-6 py-3 rounded-full shadow-sm border border-gray-200 dark:border-gray-700">
+                    <div className="w-2 h-2 bg-[#61c493] rounded-full"></div>
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      {recipes.length} recipe{recipes.length !== 1 ? 's' : ''} found
+                    </span>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

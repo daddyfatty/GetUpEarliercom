@@ -15,7 +15,7 @@ import WorkoutDetail from "@/pages/workout-detail";
 import WorkoutVideo from "@/pages/workout-video";
 import Nutrition from "@/pages/nutrition";
 import Tracker from "@/pages/tracker";
-import Goals from "@/pages/goals";
+
 import About from "@/pages/about";
 import Coaching from "@/pages/coaching";
 import Contact from "@/pages/contact";
@@ -50,7 +50,7 @@ function Router() {
           <Route path="/workouts/:id/video" component={WorkoutVideo} />
           <Route path="/nutrition" component={Nutrition} />
           <Route path="/tracker" component={Tracker} />
-          <Route path="/goals" component={Goals} />
+
           <Route path="/about" component={About} />
           <Route path="/coaching" component={Coaching} />
           <Route path="/contact" component={Contact} />
