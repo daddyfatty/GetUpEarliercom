@@ -177,6 +177,70 @@ export default function CalorieCalculator() {
     return closest;
   };
 
+  // Save profile data to user account
+  const saveProfile = async () => {
+    setIsSaving(true);
+    try {
+      const profileData = {
+        age,
+        sex,
+        height,
+        currentWeight,
+        desiredWeight,
+        activityLevel: activityLevel[0].toString(),
+        goal,
+        unitSystem,
+        macroProfile
+      };
+
+      await apiRequest("POST", "/api/user/profile", profileData);
+      
+      toast({
+        title: "Profile Saved",
+        description: "Your calculator settings have been saved to your profile.",
+      });
+    } catch (error) {
+      toast({
+        title: "Save Failed",
+        description: "Could not save profile. Please make sure you're logged in.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // Load profile data from user account
+  const loadProfile = async () => {
+    setIsLoading(true);
+    try {
+      const profileData = await apiRequest("GET", "/api/user/profile");
+      
+      if (profileData.age) setAge(profileData.age.toString());
+      if (profileData.sex) setSex(profileData.sex);
+      if (profileData.height) setHeight(profileData.height.toString());
+      if (profileData.currentWeight) setCurrentWeight(profileData.currentWeight.toString());
+      if (profileData.desiredWeight) setDesiredWeight(profileData.desiredWeight.toString());
+      if (profileData.activityLevel) setActivityLevel([parseFloat(profileData.activityLevel)]);
+      if (profileData.goal) setGoal(profileData.goal);
+      if (profileData.unitSystem) setUnitSystem(profileData.unitSystem);
+      if (profileData.macroProfile) setMacroProfile(profileData.macroProfile);
+
+      toast({
+        title: "Profile Loaded",
+        description: "Your saved calculator settings have been loaded.",
+      });
+    } catch (error) {
+      toast({
+        title: "Load Failed", 
+        description: "Could not load profile. Please make sure you're logged in.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 py-12">
       <div className="container mx-auto px-4 max-w-6xl">
@@ -371,13 +435,41 @@ export default function CalorieCalculator() {
                 </div>
               </div>
 
-              <Button 
-                onClick={handleCalculate} 
-                className="w-full text-lg py-3 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600"
-                disabled={!age || !height || !currentWeight || !desiredWeight}
-              >
-                Calculate My Daily Needs
-              </Button>
+              <div className="space-y-3">
+                <Button 
+                  onClick={handleCalculate} 
+                  className="w-full text-lg py-3 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600"
+                  disabled={!age || !height || !currentWeight || !desiredWeight}
+                >
+                  Calculate My Daily Needs
+                </Button>
+                
+                <div className="flex gap-3">
+                  <Button 
+                    onClick={saveProfile}
+                    variant="outline"
+                    className="flex-1 border-orange-300 text-orange-600 hover:bg-orange-50"
+                    disabled={isSaving || !age || !height || !currentWeight}
+                  >
+                    <Save className="h-4 w-4 mr-2" />
+                    {isSaving ? "Saving..." : "Save Profile"}
+                  </Button>
+                  
+                  <Button 
+                    onClick={loadProfile}
+                    variant="outline"
+                    className="flex-1 border-green-300 text-green-600 hover:bg-green-50"
+                    disabled={isLoading}
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    {isLoading ? "Loading..." : "Load Profile"}
+                  </Button>
+                </div>
+                
+                <p className="text-xs text-gray-500 text-center">
+                  Save your calculator settings to your profile for quick access later
+                </p>
+              </div>
             </CardContent>
           </Card>
 
