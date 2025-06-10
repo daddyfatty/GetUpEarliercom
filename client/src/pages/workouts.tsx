@@ -164,6 +164,24 @@ export default function Workouts() {
                       {workout.description}
                     </p>
                     
+                    {/* Author Attribution */}
+                    {(workout as any).authorId && (workout as any).authorName && (workout as any).authorPhoto && (
+                      <div className="flex items-center mb-4">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-blue-200 dark:border-blue-600">
+                            <img 
+                              src={(workout as any).authorPhoto} 
+                              alt={`${(workout as any).authorName} - Workout Creator`}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                            by {(workout as any).authorName}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                    
                     {/* Workout Stats */}
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">

@@ -345,6 +345,9 @@ export class MemStorage implements IStorage {
         ],
         imageUrl: null,
         videoUrl: "https://youtu.be/2NOc_trrSP8",
+        authorId: "michael",
+        authorName: "Michael Baker",
+        authorPhoto: "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
         createdAt: new Date(),
       }
     ];

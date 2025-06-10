@@ -81,6 +81,9 @@ export const workouts = pgTable("workouts", {
   }[]>().notNull(),
   imageUrl: text("image_url"),
   videoUrl: text("video_url"), // YouTube video URL
+  authorId: text("author_id"), // Team member ID (michael or erica)
+  authorName: text("author_name"), // Display name
+  authorPhoto: text("author_photo"), // Author's photo URL
   createdAt: timestamp("created_at").defaultNow(),
 });
 
