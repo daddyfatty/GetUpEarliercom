@@ -33,6 +33,7 @@ export function Navigation() {
   }, []);
 
   const navItems = [
+    { href: "/coaching", label: "Coaching" },
     { href: "/recipes", label: "Recipes" },
     { href: "/workouts", label: "Workouts" },
     { href: "/nutrition", label: "Nutrition Calculators" },
@@ -43,7 +44,6 @@ export function Navigation() {
   const aboutItems = [
     { href: "/about", label: "About" },
     { href: "/team", label: "Team" },
-    { href: "/coaching", label: "Coaching" },
     { href: "/contact", label: "Contact" },
   ];
 
