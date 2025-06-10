@@ -1,14 +1,16 @@
 import { useParams } from "wouter";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Clock, Flame, Star, Dumbbell, Play, ArrowLeft, CheckCircle } from "lucide-react";
+import { Clock, Flame, Star, Dumbbell, Play, ArrowLeft, CheckCircle, X } from "lucide-react";
 import { Link } from "wouter";
 import type { Workout } from "@shared/schema";
 
 export default function WorkoutDetail() {
   const { id } = useParams();
+  const [showVideo, setShowVideo] = useState(false);
   
   const { data: workout, isLoading } = useQuery({
     queryKey: ["/api/workouts", id],
@@ -109,23 +111,47 @@ export default function WorkoutDetail() {
             </Button>
           </Link>
 
-          {/* Video Preview Section */}
+          {/* Video Section */}
           {youtubeId && (
             <Card className="mb-8 overflow-hidden bg-white/80 backdrop-blur-sm dark:bg-gray-800/80">
               <div className="aspect-video relative">
-                <img 
-                  src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
-                  alt={workout.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <Link href={`/workouts/${workout.id}/video`}>
-                    <Button size="lg" className="bg-white/90 text-gray-900 hover:bg-white">
-                      <Play className="w-6 h-6 mr-3" />
-                      Watch Video
+                {!showVideo ? (
+                  <>
+                    <img 
+                      src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+                      alt={workout.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                      <Button 
+                        size="lg" 
+                        className="bg-white/90 text-gray-900 hover:bg-white"
+                        onClick={() => setShowVideo(true)}
+                      >
+                        <Play className="w-6 h-6 mr-3" />
+                        Watch Video
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <div className="relative w-full h-full">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`}
+                      title={workout.title}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="absolute top-4 right-4 bg-white/90 hover:bg-white"
+                      onClick={() => setShowVideo(false)}
+                    >
+                      <X className="w-4 h-4" />
                     </Button>
-                  </Link>
-                </div>
+                  </div>
+                )}
               </div>
             </Card>
           )}
