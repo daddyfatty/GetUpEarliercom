@@ -349,6 +349,150 @@ export class MemStorage implements IStorage {
         authorName: "Michael Baker",
         authorPhoto: "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
         createdAt: new Date(),
+      },
+      {
+        id: this.currentId++,
+        title: "Bodyweight Calisthenics Flow - Upper Body Power",
+        description: "A dynamic calisthenics routine focusing on push-ups, dips, and pull-up progressions to build functional upper body strength using only your bodyweight.",
+        category: "calisthenics",
+        duration: 25,
+        difficulty: "intermediate",
+        caloriesBurned: 200,
+        equipment: ["bodyweight"],
+        exercises: [
+          {
+            name: "Standard Push-ups",
+            sets: 3,
+            reps: "15",
+            description: "Classic push-up with proper form focusing on chest and triceps"
+          },
+          {
+            name: "Pike Push-ups",
+            sets: 3,
+            reps: "10",
+            description: "Inverted push-up position targeting shoulders and upper chest"
+          },
+          {
+            name: "Tricep Dips",
+            sets: 3,
+            reps: "12",
+            description: "Using chair or bench, focus on tricep engagement"
+          },
+          {
+            name: "Mountain Climbers",
+            sets: 3,
+            reps: "20",
+            description: "Dynamic cardio movement in plank position"
+          },
+          {
+            name: "Plank Hold",
+            duration: 45,
+            sets: 3,
+            description: "Static core hold maintaining straight body line"
+          },
+          {
+            name: "Burpees",
+            sets: 3,
+            reps: "8",
+            description: "Full body explosive movement combining squat, jump, and push-up"
+          }
+        ],
+        imageUrl: null,
+        videoUrl: null,
+        authorId: "michael",
+        authorName: "Michael Baker",
+        authorPhoto: "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
+        createdAt: new Date(),
+      },
+      {
+        id: this.currentId++,
+        title: "Proper Push-up Form Tutorial",
+        description: "Learn the fundamentals of perfect push-up technique, including hand placement, body alignment, and common mistakes to avoid for maximum effectiveness and injury prevention.",
+        category: "tutorial",
+        duration: 15,
+        difficulty: "beginner",
+        caloriesBurned: 50,
+        equipment: ["bodyweight"],
+        exercises: [
+          {
+            name: "Hand placement demonstration",
+            sets: 1,
+            description: "Proper hand positioning for optimal push-up mechanics"
+          },
+          {
+            name: "Body alignment check",
+            sets: 1,
+            description: "Maintaining straight line from head to heels"
+          },
+          {
+            name: "Full range of motion practice",
+            sets: 1,
+            description: "Complete movement pattern with proper depth"
+          },
+          {
+            name: "Modified variations",
+            sets: 1,
+            description: "Knee push-ups and incline modifications for beginners"
+          },
+          {
+            name: "Common mistakes review",
+            sets: 1,
+            description: "Identifying and correcting typical form errors"
+          }
+        ],
+        imageUrl: null,
+        videoUrl: null,
+        authorId: "michael",
+        authorName: "Michael Baker",
+        authorPhoto: "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
+        createdAt: new Date(),
+      },
+      {
+        id: this.currentId++,
+        title: "Calisthenics Core Blast - No Equipment Needed",
+        description: "An intense core-focused calisthenics workout using advanced bodyweight movements to strengthen your entire midsection and improve stability.",
+        category: "calisthenics",
+        duration: 20,
+        difficulty: "advanced",
+        caloriesBurned: 180,
+        equipment: ["bodyweight"],
+        exercises: [
+          "Hollow Body Hold x 30 seconds",
+          "V-ups x 15",
+          "Russian Twists x 20",
+          "Leg Raises x 12",
+          "Plank to Pike x 10",
+          "Dead Bug x 8 each side"
+        ],
+        imageUrl: null,
+        videoUrl: null,
+        authorId: "michael",
+        authorName: "Michael Baker",
+        authorPhoto: "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
+        createdAt: new Date(),
+      },
+      {
+        id: this.currentId++,
+        title: "Dumbbell Workout Setup Tutorial",
+        description: "Complete guide to setting up your home dumbbell workout space, selecting proper weights, and understanding basic movement patterns for safe and effective training.",
+        category: "tutorial",
+        duration: 12,
+        difficulty: "beginner",
+        caloriesBurned: 30,
+        equipment: ["dumbbells"],
+        exercises: [
+          "Weight selection guide",
+          "Basic grip techniques",
+          "Posture and stance setup",
+          "Range of motion principles",
+          "Safety considerations"
+        ],
+        imageUrl: null,
+        videoUrl: null,
+        authorId: "michael",
+        authorName: "Michael Baker",
+        authorPhoto: "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
+        createdAt: new Date(),
       }
     ];
 
