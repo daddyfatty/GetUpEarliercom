@@ -5,7 +5,7 @@ import { ArrowRight, Target, Heart, Activity, Users, Star, Calendar, CreditCard 
 import { SiPaypal } from "react-icons/si";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import PayPalButton from "@/components/PayPalButton";
+
 import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
 
 export default function Coaching() {
@@ -266,11 +266,13 @@ export default function Coaching() {
                     </Button>
                     
                     <div className="w-full">
-                      <PayPalButton 
-                        amount={pkg.amount.toString()}
-                        currency="USD"
-                        intent="capture"
-                      />
+                      <div className="text-center py-4 border border-gray-200 rounded-md">
+                        <div className="flex items-center justify-center mb-2">
+                          <SiPaypal className="h-6 w-6 text-blue-600 mr-2" />
+                          <span className="text-sm text-gray-600">PayPal Payment</span>
+                        </div>
+                        <p className="text-xs text-gray-500">PayPal integration coming soon</p>
+                      </div>
                     </div>
                     
                     <Button 
