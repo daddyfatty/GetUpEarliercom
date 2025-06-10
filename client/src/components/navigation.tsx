@@ -35,7 +35,7 @@ export function Navigation() {
   const navItems = [
     { href: "/recipes", label: "Recipes" },
     { href: "/workouts", label: "Workouts" },
-    { href: "/nutrition", label: "Nutrition" },
+    { href: "/nutrition", label: "Nutrition Calculators" },
     { href: "/goals", label: "Goals" },
     ...(isAuthenticated ? [{ href: "/profile", label: "Profile" }] : []),
     ...(isAdmin ? [{ href: "/admin", label: "Admin" }] : []),
