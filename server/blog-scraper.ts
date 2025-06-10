@@ -54,7 +54,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Stretching Hamstrings from the perspective of a personal trainer and a yoga teacher.',
       content: 'Stretching Hamstrings from the perspective of a personal trainer and a yoga teacher: Full demos and breakdowns for runners, sitters, and anyone over 40 with tight hamstrings. At the end of the day, we\'re both on the same page about these stretches/poses.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/stretching-video',
+      videoUrl: 'https://www.youtube.com/embed/lAIGb1lfpBw',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/6794b76b83b2663913c2e57e_2025-01-21%2008-28-19.00_15_49_08.Still007.jpg',
       tags: ['yoga', 'stretching', 'hamstrings']
     },
@@ -67,7 +67,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Training session with Erica focusing on back, triceps, and deep air squats for full-body strength.',
       content: 'Training session with Erica focusing on back, triceps, and deep air squats for full-body strength development.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/training-erica',
+      videoUrl: 'https://www.youtube.com/embed/2qUivyWajfM',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e27ed8efc26069bc262_training-ericaleebakerback-trice.jpeg',
       tags: ['strength-training', 'erica-baker', 'squats']
     },
@@ -80,7 +80,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'A meaningful 30-minute arms and chest workout session.',
       content: 'A meaningful 30-minute arms and chest workout session captured during training.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/last-time-training',
+      videoUrl: 'https://www.youtube.com/embed/jAgrUX_TPP4',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e2598e09b7dc1929393_maxresdefault-1.jpeg',
       tags: ['arms', 'chest', 'workout']
     },
@@ -92,7 +92,8 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       author: 'Michael Baker',
       excerpt: 'Healthy homemade chocolate ice cream recipe using only natural sweeteners.',
       content: 'Healthy homemade chocolate ice cream recipe using only natural sweeteners like honey and maple syrup.',
-      isVideo: false,
+      isVideo: true,
+      videoUrl: 'https://www.youtube.com/embed/vVIqj2VaRTk',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e25cc812211627c4bbd_maxresdefault-11.jpeg',
       tags: ['nutrition', 'recipe', 'no-junk']
     },
@@ -105,7 +106,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Real-time demonstration of using AI to create personalized running training plans.',
       content: 'Real-time demonstration of using AI to create personalized running training plans for various distances.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/chatgpt-running',
+      videoUrl: 'https://www.youtube.com/embed/0-XfSzN_Vvo',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678ed226a9f5a3de57fc41bf_chatgpt%20running%20coach.png',
       tags: ['running', 'ai', 'chatgpt']
     },
@@ -118,7 +119,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: '30-minute focused strength training session targeting chest and arms.',
       content: '30-minute focused strength training session targeting chest and arms with proper form and technique.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/30min-chest-arms',
+      videoUrl: 'https://www.youtube.com/embed/h2qXMUGb_tM',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e25bb33ad8405f17227_maxresdefault-1.jpeg',
       tags: ['30-minute', 'chest', 'arms']
     },
@@ -131,7 +132,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Two effective exercises to quickly relieve lower back pain and improve mobility.',
       content: 'Two effective exercises to quickly relieve lower back pain and improve mobility for everyday activities.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/back-pain-relief',
+      videoUrl: 'https://www.youtube.com/embed/DWuGUP_WzQw',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e252a5b8115d0a19ac4_maxresdefault-3.jpeg',
       tags: ['back-pain', 'corrective-exercise']
     },
@@ -144,7 +145,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'High-intensity 20-minute session combining barbell squats with pushup variations.',
       content: 'High-intensity 20-minute session combining barbell squats with pushup variations for full-body power.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/20min-power',
+      videoUrl: 'https://www.youtube.com/embed/eSU4lRMrqGQ',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e257b4c7d04d05063eb_maxresdefault_live-4.jpeg',
       tags: ['barbell-squats', 'pushups', '20-minute']
     },
