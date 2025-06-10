@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Calendar, Search, ExternalLink, Play, User, Clock } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Search, Clock, User, ExternalLink, Play } from "lucide-react";
 
 interface BlogPost {
   id: string;
@@ -19,42 +21,50 @@ interface BlogPost {
   videoUrl?: string;
   readTime: number;
   isVideo: boolean;
+  originalUrl: string;
 }
 
 export default function Blog() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
-  // Fetch blog posts from your live website
-  const { data: posts = [], isLoading, error } = useQuery({
-    queryKey: ["/api/blog"],
-    queryFn: async () => {
-      const response = await fetch("/api/blog");
-      if (!response.ok) {
-        throw new Error("Failed to fetch blog posts");
-      }
-      return response.json();
-    },
+  const { data: posts, isLoading, error } = useQuery<BlogPost[]>({
+    queryKey: ["/api/blog"]
   });
 
-  const categories = ["all", "training", "nutrition", "wellness", "motivation", "videos"];
-
-  const filteredPosts = posts.filter((post: BlogPost) => {
-    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === "all" || 
-                           post.category.toLowerCase() === selectedCategory ||
-                           (selectedCategory === "videos" && post.isVideo);
+  // Filter posts based on search term and category
+  const filteredPosts = posts?.filter(post => {
+    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+    
+    const matchesCategory = selectedCategory === "all" || post.category === selectedCategory;
+    
     return matchesSearch && matchesCategory;
-  });
+  }) || [];
+
+  // Get unique categories for filter
+  const categories = ["all", ...Array.from(new Set(posts?.map(post => post.category) || []))];
+
+  const formatDate = (dateString: string) => {
+    try {
+      return new Date(dateString).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    } catch {
+      return dateString;
+    }
+  };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <div className="container mx-auto px-4 py-12">
           <div className="text-center">
             <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto" />
-            <p className="mt-4 text-gray-600">Loading blog posts...</p>
+            <p className="mt-4 text-gray-600 dark:text-gray-400">Loading blog posts...</p>
           </div>
         </div>
       </div>
@@ -63,29 +73,10 @@ export default function Blog() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <div className="container mx-auto px-4 py-12">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Blog & Videos</h1>
-            <p className="text-gray-600 mb-8">
-              Unable to load blog posts at the moment. Please visit our{" "}
-              <a 
-                href="https://www.getupearlier.com/blog" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-[hsl(var(--orange))] hover:underline"
-              >
-                live blog
-              </a>{" "}
-              for the latest content.
-            </p>
-            <Button 
-              onClick={() => window.open("https://www.getupearlier.com/blog", "_blank")}
-              className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90"
-            >
-              <ExternalLink className="h-4 w-4 mr-2" />
-              Visit Live Blog
-            </Button>
+            <p className="text-red-600 dark:text-red-400">Failed to load blog posts. Please try again later.</p>
           </div>
         </div>
       </div>
@@ -93,187 +84,163 @@ export default function Blog() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="bg-[hsl(var(--navy))] text-white py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-6">Blog & Videos</h1>
-            <p className="text-xl text-blue-200 mb-8 max-w-3xl mx-auto">
-              Insights, tips, and inspiration for your health and fitness journey from 30 years of experience
-            </p>
-            
-            <div className="flex justify-center">
-              <Button 
-                onClick={() => window.open("https://www.getupearlier.com/blog", "_blank")}
-                variant="outline"
-                className="border-white text-white hover:bg-white hover:text-[hsl(var(--navy))]"
-              >
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Visit Full Blog
-              </Button>
-            </div>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="container mx-auto px-4 py-12">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-orange-500 bg-clip-text text-transparent mb-4">
+            Get Up Earlier Blog
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+            Insights on fitness, nutrition, and wellness from certified trainers Michael and Erica Baker
+          </p>
         </div>
-      </section>
 
-      {/* Search and Filter Section */}
-      <section className="py-8 bg-white border-b">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search articles and videos..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            
-            <div className="flex flex-wrap gap-2">
+        {/* Search and Filters */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-8">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <Input
+              placeholder="Search articles..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+            <SelectTrigger className="w-full sm:w-48">
+              <SelectValue placeholder="All Categories" />
+            </SelectTrigger>
+            <SelectContent>
               {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant={selectedCategory === category ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedCategory(category)}
-                  className={selectedCategory === category ? 
-                    "bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90" : 
-                    ""}
-                >
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
-                </Button>
+                <SelectItem key={category} value={category}>
+                  {category === "all" ? "All Categories" : category.charAt(0).toUpperCase() + category.slice(1)}
+                </SelectItem>
               ))}
-            </div>
-          </div>
+            </SelectContent>
+          </Select>
         </div>
-      </section>
 
-      {/* Blog Posts Grid */}
-      <section className="py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          {filteredPosts.length === 0 ? (
-            <div className="text-center py-12">
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">No posts found</h3>
-              <p className="text-gray-600 mb-8">
-                Try adjusting your search terms or browse different categories.
-              </p>
-              <Button 
-                onClick={() => {
-                  setSearchQuery("");
-                  setSelectedCategory("all");
-                }}
-                variant="outline"
-              >
-                Clear Filters
-              </Button>
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredPosts.map((post: BlogPost) => (
-                <Card key={post.id} className="h-full flex flex-col overflow-hidden hover:shadow-lg transition-shadow">
+        {/* Blog Posts Grid */}
+        {filteredPosts.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-600 dark:text-gray-400">
+              {searchTerm || selectedCategory !== "all" 
+                ? "No posts found matching your criteria." 
+                : "No blog posts available."}
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredPosts.map((post) => (
+              <Card key={post.id} className="group hover:shadow-lg transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700">
+                <div className="relative overflow-hidden">
                   {post.imageUrl && (
-                    <div className="relative">
-                      <img 
-                        src={post.imageUrl} 
+                    <div className="aspect-video relative overflow-hidden">
+                      <img
+                        src={post.imageUrl}
                         alt={post.title}
-                        className="w-full h-48 object-cover"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                        }}
                       />
                       {post.isVideo && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                        <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
                           <div className="bg-white/90 rounded-full p-3">
-                            <Play className="h-6 w-6 text-[hsl(var(--navy))]" />
+                            <Play className="h-6 w-6 text-primary" />
                           </div>
                         </div>
                       )}
                     </div>
                   )}
                   
-                  <CardHeader className="flex-1">
+                  <CardHeader className="pb-3">
                     <div className="flex items-center gap-2 mb-2">
                       <Badge variant="secondary" className="text-xs">
                         {post.category}
                       </Badge>
                       {post.isVideo && (
                         <Badge variant="outline" className="text-xs">
-                          <Play className="h-3 w-3 mr-1" />
                           Video
                         </Badge>
                       )}
                     </div>
-                    
-                    <CardTitle className="text-xl mb-3 line-clamp-2">
+                    <CardTitle className="line-clamp-2 group-hover:text-primary transition-colors">
                       {post.title}
                     </CardTitle>
-                    
-                    <p className="text-gray-600 text-sm line-clamp-3 flex-1">
-                      {post.excerpt}
-                    </p>
                   </CardHeader>
                   
                   <CardContent className="pt-0">
-                    <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
-                      <div className="flex items-center gap-4">
-                        <div className="flex items-center">
-                          <User className="h-3 w-3 mr-1" />
-                          {post.author}
-                        </div>
-                        <div className="flex items-center">
-                          <Clock className="h-3 w-3 mr-1" />
-                          {post.readTime} min read
-                        </div>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3 mb-4">
+                      {post.excerpt}
+                    </p>
+                    
+                    <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4">
+                      <div className="flex items-center gap-1">
+                        <User className="h-3 w-3" />
+                        <span>{post.author}</span>
                       </div>
-                      <div className="flex items-center">
-                        <Calendar className="h-3 w-3 mr-1" />
-                        {new Date(post.publishedDate).toLocaleDateString()}
+                      <div className="flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        <span>{post.readTime} min read</span>
                       </div>
                     </div>
                     
-                    <div className="flex gap-2">
-                      <Button 
-                        className="flex-1 bg-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))]/90"
-                        onClick={() => window.open(`https://www.getupearlier.com/blog/${post.id}`, "_blank")}
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        {formatDate(post.publishedDate)}
+                      </span>
+                      <a
+                        href={post.originalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block"
                       >
-                        {post.isVideo ? "Watch Video" : "Read More"}
-                        <ExternalLink className="h-4 w-4 ml-2" />
-                      </Button>
+                        <Button size="sm" className="gap-1">
+                          Read More
+                          <ExternalLink className="h-3 w-3" />
+                        </Button>
+                      </a>
                     </div>
+                    
+                    {post.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-3">
+                        {post.tags.slice(0, 3).map((tag) => (
+                          <Badge key={tag} variant="outline" className="text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
                   </CardContent>
-                </Card>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-[hsl(var(--navy))] text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Start Your Journey?</h2>
-          <p className="text-xl text-blue-200 mb-8">
-            Get personalized coaching and take your health to the next level
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg"
-              className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90 text-white px-8 py-3"
-              onClick={() => window.location.href = "/coaching"}
-            >
-              Book Consultation
-            </Button>
-            <Button 
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-[hsl(var(--navy))] px-8 py-3"
-              onClick={() => window.open("https://www.facebook.com/groups/getupearlier", "_blank")}
-            >
-              Join Community
-            </Button>
+                </div>
+              </Card>
+            ))}
           </div>
+        )}
+
+        {/* Visit Full Blog CTA */}
+        <div className="text-center mt-12 py-8 border-t border-gray-200 dark:border-gray-700">
+          <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+            Want to read the full articles?
+          </h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-6">
+            Visit our complete blog for in-depth content, comments, and more resources.
+          </p>
+          <a
+            href="https://www.getupearlier.com/blog"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button size="lg" className="gap-2">
+              Visit Full Blog
+              <ExternalLink className="h-4 w-4" />
+            </Button>
+          </a>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
