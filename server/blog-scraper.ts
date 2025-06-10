@@ -54,7 +54,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Stretching Hamstrings from the perspective of a personal trainer and a yoga teacher.',
       content: 'Stretching Hamstrings from the perspective of a personal trainer and a yoga teacher: Full demos and breakdowns for runners, sitters, and anyone over 40 with tight hamstrings. At the end of the day, we\'re both on the same page about these stretches/poses.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/lAIGb1lfpBw',
+      videoUrl: 'https://www.youtube.com/embed/mmbgCfrvWrc',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/6794b76b83b2663913c2e57e_2025-01-21%2008-28-19.00_15_49_08.Still007.jpg',
       tags: ['yoga', 'stretching', 'hamstrings']
     },
@@ -67,7 +67,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Training session with Erica focusing on back, triceps, and deep air squats for full-body strength.',
       content: 'Training session with Erica focusing on back, triceps, and deep air squats for full-body strength development.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/2qUivyWajfM',
+      videoUrl: 'https://www.youtube.com/embed/ZC4CYta3PLk',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e27ed8efc26069bc262_training-ericaleebakerback-trice.jpeg',
       tags: ['strength-training', 'erica-baker', 'squats']
     },
@@ -80,7 +80,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'A meaningful 30-minute arms and chest workout session.',
       content: 'A meaningful 30-minute arms and chest workout session captured during training.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/jAgrUX_TPP4',
+      videoUrl: 'https://www.youtube.com/embed/kVFHWt_XK5w',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e2598e09b7dc1929393_maxresdefault-1.jpeg',
       tags: ['arms', 'chest', 'workout']
     },
@@ -93,7 +93,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       excerpt: 'Healthy homemade chocolate ice cream recipe using only natural sweeteners.',
       content: 'Healthy homemade chocolate ice cream recipe using only natural sweeteners like honey and maple syrup.',
       isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/vVIqj2VaRTk',
+      videoUrl: 'https://www.youtube.com/embed/z5rDQV_p6S8',
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e25cc812211627c4bbd_maxresdefault-11.jpeg',
       tags: ['nutrition', 'recipe', 'no-junk']
     },
