@@ -191,7 +191,7 @@ export default function Recipes() {
         </div>
 
         {/* Recipe Grid */}
-        <div className="max-w-6xl mx-auto">
+        <div>
           {recipes.length === 0 ? (
             <div className="text-center py-16">
               <div className="w-32 h-32 bg-gradient-to-br from-[#61c493]/20 to-[#61c493]/5 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -214,7 +214,7 @@ export default function Recipes() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
                 {recipes.map((recipe) => (
                   <RecipeCard key={recipe.id} recipe={recipe} />
                 ))}
