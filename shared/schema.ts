@@ -57,6 +57,9 @@ export const recipes = pgTable("recipes", {
   imageUrl: text("image_url"),
   videoUrl: text("video_url"), // YouTube video URL
   gallery: jsonb("gallery").$type<string[]>(),
+  authorId: text("author_id"), // Team member ID (michael or erica)
+  authorName: text("author_name"), // Display name
+  authorPhoto: text("author_photo"), // Author's photo URL
   createdAt: timestamp("created_at").defaultNow(),
 });
 

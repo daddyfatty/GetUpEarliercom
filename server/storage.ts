@@ -173,6 +173,9 @@ export class MemStorage implements IStorage {
           "/assets/download - 2025-06-08T053914.181_1749376059784.png",
           "/assets/download - 2025-06-08T053921.230_1749376059785.png"
         ],
+        authorId: "erica",
+        authorName: "Erica Baker",
+        authorPhoto: "/attached_assets/678ab3d4caec71062e65470f_erddd_1749497849578.jpg",
         createdAt: new Date(),
       },
       {
@@ -232,6 +235,9 @@ export class MemStorage implements IStorage {
           "/attached_assets/download - 2025-06-09T132001.684_1749489653696.png",
           "/attached_assets/download - 2025-06-09T132007.147_1749489653697.png"
         ],
+        authorId: "michael",
+        authorName: "Michael Baker",
+        authorPhoto: "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
         createdAt: new Date(),
       },
       {
@@ -285,6 +291,9 @@ export class MemStorage implements IStorage {
           "/attached_assets/download - 2025-06-09T133947.197_1749490827986.png"
         ],
         videoUrl: null,
+        authorId: "michael",
+        authorName: "Michael Baker",
+        authorPhoto: "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
         createdAt: new Date(),
       }
     ];
