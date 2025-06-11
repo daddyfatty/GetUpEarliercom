@@ -46,15 +46,10 @@ export default function CalorieCalculator() {
   const [height, setHeight] = useState<string>('');
   const [currentWeight, setCurrentWeight] = useState<string>('');
   const [desiredWeight, setDesiredWeight] = useState<string>('');
-  const [bodyFat, setBodyFat] = useState<string>('');
   const [activityLevel, setActivityLevel] = useState<number[]>([1.2]);
   const [goal, setGoal] = useState<'maintenance' | 'loss' | 'gain'>('maintenance');
   const [macroProfile, setMacroProfile] = useState<'balanced' | 'high-protein' | 'moderate-protein' | 'high-carb' | 'keto' | 'paleo'>('balanced');
-  const [workoutDays, setWorkoutDays] = useState<string>('3');
-  const [sleepHours, setSleepHours] = useState<string>('8');
-  const [stressLevel, setStressLevel] = useState<string>('moderate');
   const [dietaryRestrictions, setDietaryRestrictions] = useState<string[]>([]);
-  const [mealPreference, setMealPreference] = useState<string>('3');
   const [supplementGoals, setSupplementGoals] = useState<string[]>([]);
   const [results, setResults] = useState<CalculationResults | null>(null);
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -100,9 +95,6 @@ export default function CalorieCalculator() {
   };
 
   const calculateBodyFatPercentage = (weightKg: number, heightCm: number, age: number, sex: 'male' | 'female'): number => {
-    // US Navy method estimation
-    if (bodyFat) return parseFloat(bodyFat);
-    
     // Rough estimation based on BMI and demographics
     const bmi = weightKg / ((heightCm / 100) ** 2);
     let estimatedBF;
@@ -123,32 +115,13 @@ export default function CalorieCalculator() {
     // Daily water intake (ml) - basic formula
     const dailyWaterIntake = Math.round(weightKg * 35 + (targetCalories * 0.5));
     
-    // Meal timing based on preference
-    const mealCount = parseInt(mealPreference);
-    let mealTiming;
-    
-    if (mealCount === 3) {
-      mealTiming = {
-        breakfast: Math.round(targetCalories * 0.25),
-        lunch: Math.round(targetCalories * 0.35),
-        dinner: Math.round(targetCalories * 0.30),
-        snacks: Math.round(targetCalories * 0.10)
-      };
-    } else if (mealCount === 4) {
-      mealTiming = {
-        breakfast: Math.round(targetCalories * 0.25),
-        lunch: Math.round(targetCalories * 0.25),
-        dinner: Math.round(targetCalories * 0.25),
-        snacks: Math.round(targetCalories * 0.25)
-      };
-    } else {
-      mealTiming = {
-        breakfast: Math.round(targetCalories * 0.20),
-        lunch: Math.round(targetCalories * 0.20),
-        dinner: Math.round(targetCalories * 0.20),
-        snacks: Math.round(targetCalories * 0.40)
-      };
-    }
+    // Standard meal timing distribution (3 meals + snacks)
+    const mealTiming = {
+      breakfast: Math.round(targetCalories * 0.25),
+      lunch: Math.round(targetCalories * 0.35),
+      dinner: Math.round(targetCalories * 0.30),
+      snacks: Math.round(targetCalories * 0.10)
+    };
 
     // Supplement suggestions based on goals
     const supplementSuggestions = [];
@@ -593,20 +566,7 @@ export default function CalorieCalculator() {
                     />
                   </div>
 
-                  {/* Body Fat Percentage (Optional) */}
-                  <div className="space-y-2">
-                    <Label htmlFor="bodyFat" className="text-base font-semibold">
-                      Body Fat % <span className="text-sm text-gray-500">(optional)</span>
-                    </Label>
-                    <Input
-                      id="bodyFat"
-                      type="number"
-                      value={bodyFat}
-                      onChange={(e) => setBodyFat(e.target.value)}
-                      placeholder="e.g., 15"
-                      className="text-base"
-                    />
-                  </div>
+
                 </div>
               </CardContent>
             </Card>
