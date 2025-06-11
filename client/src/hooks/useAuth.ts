@@ -15,12 +15,12 @@ export function useAuth() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Auto-login for development - create a persistent demo user
+    // Auto-login for development - create Michael Baker as the logged-in user
     const developmentUser: User = {
       id: "dev_user_1",
-      email: "developer@getupear.lier.com",
-      firstName: "Developer",
-      lastName: "User",
+      email: "michael@getupeariler.com",
+      firstName: "Michael",
+      lastName: "Baker",
       isAdmin: true
     };
     
@@ -42,12 +42,12 @@ export function useAuth() {
   };
 
   const logout = () => {
-    // In development, immediately re-login to stay authenticated
+    // In development, immediately re-login Michael Baker to stay authenticated
     const developmentUser: User = {
       id: "dev_user_1",
-      email: "developer@getupear.lier.com",
-      firstName: "Developer",
-      lastName: "User",
+      email: "michael@getupeariler.com",
+      firstName: "Michael",
+      lastName: "Baker",
       isAdmin: true
     };
     setUser(developmentUser);

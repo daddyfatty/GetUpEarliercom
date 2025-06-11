@@ -56,7 +56,7 @@ export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   
   // Fetch user profile data
-  const { data: profileData = {} as ProfileData, isLoading: profileLoading } = useQuery({
+  const { data: profileData, isLoading: profileLoading } = useQuery<ProfileData>({
     queryKey: ['/api/user/profile'],
     enabled: isAuthenticated
   });
@@ -93,7 +93,7 @@ export default function Profile() {
   });
 
   useEffect(() => {
-    if (profileData) {
+    if (profileData && !profileLoading) {
       setFormData({
         age: profileData.age?.toString() || '',
         sex: profileData.sex || '',
@@ -106,7 +106,7 @@ export default function Profile() {
         macroProfile: profileData.macroProfile || 'balanced'
       });
     }
-  }, [profileData]);
+  }, [profileData, profileLoading]);
 
   // Save profile mutation
   const saveProfileMutation = useMutation({
