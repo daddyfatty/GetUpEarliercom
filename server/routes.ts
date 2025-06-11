@@ -776,7 +776,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const favorite = await storage.addFavoriteRecipe(1, parseInt(recipeId));
-      res.json({ message: "Recipe added to favorites", favorite });
+      res.json(favorite);
     } catch (error) {
       console.error("Error adding favorite:", error);
       res.status(500).json({ message: "Failed to add favorite" });

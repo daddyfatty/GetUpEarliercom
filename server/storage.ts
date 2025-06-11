@@ -622,8 +622,8 @@ export class MemStorage implements IStorage {
   async addFavoriteRecipe(userId: number, recipeId: number): Promise<FavoriteRecipe> {
     const favorite: FavoriteRecipe = {
       id: this.currentId++,
-      userId,
-      recipeId,
+      userId: 1, // Force userId to 1 for development
+      recipeId: parseInt(String(recipeId)),
       createdAt: new Date(),
     };
     this.favoriteRecipes.set(favorite.id, favorite);
