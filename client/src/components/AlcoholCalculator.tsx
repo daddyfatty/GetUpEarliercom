@@ -1,21 +1,29 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Beer, Wine, Scale, TrendingUp, Save } from "lucide-react";
+import { Beer, Wine, Scale, TrendingUp, Save, AlertTriangle, Activity, Target, Calendar, Heart, BarChart3, Flame, Calculator } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function AlcoholCalculator() {
   const [beerCount, setBeerCount] = useState(0);
   const [wineCount, setWineCount] = useState(0);
   const [wineServing, setWineServing] = useState("quarter"); // quarter, half, full
+  const [spiritsCount, setSpiritsCount] = useState(0);
+  const [cocktailCount, setCocktailCount] = useState(0);
+  const [currentWeight, setCurrentWeight] = useState("");
+  const [unitSystem, setUnitSystem] = useState<'metric' | 'imperial'>('imperial');
+  const [activityLevel, setActivityLevel] = useState("moderate");
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const { toast } = useToast();
+  const { isAuthenticated } = useAuth();
 
-  // Nutrition data
+  // Enhanced nutrition data
   const BEER_CALORIES = 153;
   const BEER_CARBS = 12.6;
   const BEER_PROTEIN = 1.6;
@@ -23,11 +31,14 @@ export default function AlcoholCalculator() {
   const WINE_CALORIES_PER_BOTTLE = 615;
   const WINE_CARBS_PER_BOTTLE = 20;
 
+  const SPIRITS_CALORIES = 97; // per 1.5 oz shot
+  const COCKTAIL_CALORIES = 250; // average mixed drink
+
   const getWineCalories = () => {
     switch (wineServing) {
-      case "quarter": return 154; // 1/4 bottle
-      case "half": return 308;    // 1/2 bottle
-      case "full": return 615;    // full bottle
+      case "quarter": return 154; // 1/4 bottle (5 oz glass)
+      case "half": return 308;    // 1/2 bottle (10 oz)
+      case "full": return 615;    // full bottle (25 oz)
       default: return 154;
     }
   };
@@ -41,30 +52,55 @@ export default function AlcoholCalculator() {
     }
   };
 
-  const getWineServingLabel = () => {
-    switch (wineServing) {
-      case "quarter": return "1/4 bottle (6.3 oz)";
-      case "half": return "1/2 bottle (12.7 oz)";
-      case "full": return "Full bottle (25.4 oz)";
-      default: return "1/4 bottle";
-    }
+  // Calculate totals
+  const totalCalories = (beerCount * BEER_CALORIES) + (wineCount * getWineCalories()) + 
+                       (spiritsCount * SPIRITS_CALORIES) + (cocktailCount * COCKTAIL_CALORIES);
+  const totalCarbs = (beerCount * BEER_CARBS) + (wineCount * getWineCarbs());
+  const totalProtein = beerCount * BEER_PROTEIN;
+
+  // Weight gain calculations (3500 calories = 1 lb)
+  const weeklyWeightGain = totalCalories / 3500;
+  const monthlyWeightGain = weeklyWeightGain * 4.33;
+  const yearlyWeightGain = weeklyWeightGain * 52;
+
+  // Calculate metabolic impact
+  const getMetabolicImpact = () => {
+    if (totalCalories < 500) return { level: "low", color: "green", description: "Minimal impact on weight goals" };
+    if (totalCalories < 1000) return { level: "moderate", color: "yellow", description: "Moderate impact - monitor intake" };
+    if (totalCalories < 2000) return { level: "high", color: "orange", description: "High impact - consider reducing" };
+    return { level: "very-high", color: "red", description: "Very high impact - significant weight gain risk" };
   };
 
-  // Calculate totals
-  const totalBeerCalories = beerCount * BEER_CALORIES;
-  const totalBeerCarbs = beerCount * BEER_CARBS;
-  const totalBeerProtein = beerCount * BEER_PROTEIN;
+  const metabolicImpact = getMetabolicImpact();
 
-  const totalWineCalories = wineCount * getWineCalories();
-  const totalWineCarbs = wineCount * getWineCarbs();
-
-  const totalCalories = totalBeerCalories + totalWineCalories;
-  const totalCarbs = totalBeerCarbs + totalWineCarbs;
-  const totalProtein = totalBeerProtein; // Wine has 0 protein
-
-  const weeklyWeightGain = totalCalories / 3500; // 3500 calories = 1 lb
-  const monthlyWeightGain = weeklyWeightGain * 4.33; // Average weeks per month
-  const yearlyWeightGain = weeklyWeightGain * 52; // 52 weeks per year
+  // Auto-save profile data when user is authenticated
+  useEffect(() => {
+    if (isAuthenticated && (beerCount > 0 || wineCount > 0 || spiritsCount > 0 || cocktailCount > 0)) {
+      const autoSaveProfile = async () => {
+        try {
+          const profileData = {
+            weeklyAlcoholConsumption: {
+              beer: beerCount,
+              wine: wineCount,
+              wineServing,
+              spirits: spiritsCount,
+              cocktails: cocktailCount,
+              totalCalories,
+              calculatedAt: new Date()
+            }
+          };
+          
+          await apiRequest("POST", "/api/user/profile", profileData);
+        } catch (error) {
+          console.log("Auto-save failed:", error);
+        }
+      };
+      
+      // Debounce the auto-save
+      const timeoutId = setTimeout(autoSaveProfile, 1000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [isAuthenticated, beerCount, wineCount, wineServing, spiritsCount, cocktailCount, totalCalories]);
 
   const saveResultMutation = useMutation({
     mutationFn: async () => {
@@ -76,12 +112,24 @@ export default function AlcoholCalculator() {
           totalProtein,
           weeklyWeightGain,
           monthlyWeightGain,
-          yearlyWeightGain
+          yearlyWeightGain,
+          metabolicImpact: metabolicImpact.level,
+          breakdown: {
+            beer: { count: beerCount, calories: beerCount * BEER_CALORIES },
+            wine: { count: wineCount, serving: wineServing, calories: wineCount * getWineCalories() },
+            spirits: { count: spiritsCount, calories: spiritsCount * SPIRITS_CALORIES },
+            cocktails: { count: cocktailCount, calories: cocktailCount * COCKTAIL_CALORIES }
+          }
         },
         userInputs: {
           beerCount,
           wineCount,
-          wineServing
+          wineServing,
+          spiritsCount,
+          cocktailCount,
+          currentWeight,
+          unitSystem,
+          activityLevel
         }
       });
     },
@@ -104,9 +152,28 @@ export default function AlcoholCalculator() {
     setBeerCount(0);
     setWineCount(0);
     setWineServing("quarter");
+    setSpiritsCount(0);
+    setCocktailCount(0);
   };
 
   const saveResults = () => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Sign Up Required",
+        description: "Create an account to save your calculation results and track your progress.",
+        action: (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => window.location.href = "/api/login"}
+          >
+            Sign Up
+          </Button>
+        ),
+      });
+      return;
+    }
+
     if (totalCalories > 0) {
       saveResultMutation.mutate();
     } else {
@@ -118,208 +185,434 @@ export default function AlcoholCalculator() {
     }
   };
 
+  const getRecommendations = () => {
+    const recommendations = [];
+    
+    if (totalCalories > 1500) {
+      recommendations.push("Consider reducing overall alcohol intake for better weight management");
+    }
+    if (beerCount > 7) {
+      recommendations.push("Try switching some beers to light beer varieties (103 calories vs 153)");
+    }
+    if (cocktailCount > 3) {
+      recommendations.push("Opt for simple mixed drinks with club soda instead of sugary mixers");
+    }
+    if (totalCalories > 500) {
+      recommendations.push("Add 30 minutes of cardio to offset alcohol calories");
+    }
+    
+    return recommendations;
+  };
+
   return (
-    <Card className="w-full max-w-4xl mx-auto">
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white flex items-center justify-center gap-2">
-          <Beer className="h-6 w-6 text-amber-600" />
-          Alcohol Weight Gain Calculator
-          <Wine className="h-6 w-6 text-purple-600" />
-        </CardTitle>
-        <p className="text-gray-600 dark:text-gray-400">
-          Calculate potential weight gain from weekly alcohol consumption
-        </p>
-      </CardHeader>
-      
-      <CardContent className="space-y-6">
-        {/* Input Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Beer Input */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <Beer className="h-5 w-5 text-amber-600" />
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Beer</h3>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="beer-count">12 oz cans/bottles per week</Label>
-              <Input
-                id="beer-count"
-                type="number"
-                min="0"
-                value={beerCount}
-                onChange={(e) => setBeerCount(Math.max(0, parseInt(e.target.value) || 0))}
-                placeholder="0"
-              />
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Per beer: 153 calories, 12.6g carbs, 1.6g protein
-              </p>
-            </div>
-          </div>
-
-          {/* Wine Input */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <Wine className="h-5 w-5 text-purple-600" />
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Wine</h3>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="wine-serving">Serving size</Label>
-              <Select value={wineServing} onValueChange={setWineServing}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="quarter">1/4 bottle (6.3 oz) - 154 cal</SelectItem>
-                  <SelectItem value="half">1/2 bottle (12.7 oz) - 308 cal</SelectItem>
-                  <SelectItem value="full">Full bottle (25.4 oz) - 615 cal</SelectItem>
-                </SelectContent>
-              </Select>
-              
-              <Label htmlFor="wine-count">Servings per week</Label>
-              <Input
-                id="wine-count"
-                type="number"
-                min="0"
-                value={wineCount}
-                onChange={(e) => setWineCount(Math.max(0, parseInt(e.target.value) || 0))}
-                placeholder="0"
-              />
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Per serving: {getWineCalories()} calories, {getWineCarbs()}g carbs
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Results Section */}
-        {totalCalories > 0 && (
-          <div className="space-y-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-              <Scale className="h-5 w-5" />
-              Weekly Summary
-            </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="text-center p-3 bg-white dark:bg-gray-700 rounded-lg">
-                <div className="text-2xl font-bold text-red-600">{totalCalories}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Total Calories</div>
-              </div>
-              
-              <div className="text-center p-3 bg-white dark:bg-gray-700 rounded-lg">
-                <div className="text-2xl font-bold text-orange-600">{totalCarbs.toFixed(1)}g</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Carbohydrates</div>
-              </div>
-              
-              <div className="text-center p-3 bg-white dark:bg-gray-700 rounded-lg">
-                <div className="text-2xl font-bold text-blue-600">{totalProtein.toFixed(1)}g</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Protein</div>
-              </div>
-              
-              <div className="text-center p-3 bg-white dark:bg-gray-700 rounded-lg border-2 border-red-200 dark:border-red-800">
-                <div className="text-2xl font-bold text-red-700 dark:text-red-400 flex items-center justify-center gap-1">
-                  <TrendingUp className="h-5 w-5" />
-                  {weeklyWeightGain.toFixed(2)} lbs
-                </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Est. Weight Gain/Week</div>
-              </div>
-            </div>
-
-            {/* Weight Gain Projections */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-              <div className="text-center p-4 bg-yellow-50 dark:bg-yellow-950/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
-                <div className="text-xl font-bold text-yellow-700 dark:text-yellow-300">
-                  {weeklyWeightGain.toFixed(2)} lbs
-                </div>
-                <div className="text-sm text-yellow-600 dark:text-yellow-400">Per Week</div>
-              </div>
-              
-              <div className="text-center p-4 bg-orange-50 dark:bg-orange-950/20 rounded-lg border border-orange-200 dark:border-orange-800">
-                <div className="text-xl font-bold text-orange-700 dark:text-orange-300">
-                  {monthlyWeightGain.toFixed(1)} lbs
-                </div>
-                <div className="text-sm text-orange-600 dark:text-orange-400">Per Month</div>
-              </div>
-              
-              <div className="text-center p-4 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-800">
-                <div className="text-xl font-bold text-red-700 dark:text-red-300">
-                  {yearlyWeightGain.toFixed(0)} lbs
-                </div>
-                <div className="text-sm text-red-600 dark:text-red-400">Per Year</div>
-              </div>
-            </div>
-
-            {/* Breakdown */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              {beerCount > 0 && (
-                <div className="p-3 bg-amber-50 dark:bg-amber-950/20 rounded-lg">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Beer className="h-4 w-4 text-amber-600" />
-                    <span className="font-medium text-amber-800 dark:text-amber-200">
-                      {beerCount} beers/week
-                    </span>
+    <div className="w-full max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+        {/* Input Form - Spans 2 columns */}
+        <div className="xl:col-span-2 space-y-6">
+          {/* Alcohol Consumption Card */}
+          <Card className="shadow-lg border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+            <CardHeader className="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-t-lg">
+              <CardTitle className="flex items-center gap-2">
+                <Beer className="h-5 w-5" />
+                Weekly Alcohol Consumption
+              </CardTitle>
+              <CardDescription className="text-amber-100">
+                Enter your typical weekly alcohol intake for accurate calculations
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Beer Input */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Beer className="h-5 w-5 text-amber-600" />
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Beer</h3>
                   </div>
-                  <div className="text-sm text-amber-700 dark:text-amber-300">
-                    {totalBeerCalories} calories • {totalBeerCarbs.toFixed(1)}g carbs • {totalBeerProtein.toFixed(1)}g protein
+                  <div className="space-y-2">
+                    <Label htmlFor="beer-count" className="text-base font-medium">12 oz cans/bottles per week</Label>
+                    <Input
+                      id="beer-count"
+                      type="number"
+                      min="0"
+                      value={beerCount}
+                      onChange={(e) => setBeerCount(Math.max(0, parseInt(e.target.value) || 0))}
+                      placeholder="0"
+                      className="text-base"
+                    />
+                    <div className="bg-amber-50 dark:bg-amber-900/20 p-3 rounded-lg">
+                      <p className="text-sm text-amber-800 dark:text-amber-200">
+                        Per beer: {BEER_CALORIES} calories, {BEER_CARBS}g carbs, {BEER_PROTEIN}g protein
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Wine Input */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Wine className="h-5 w-5 text-purple-600" />
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Wine</h3>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="space-y-2">
+                      <Label htmlFor="wine-count" className="text-base font-medium">Number of servings per week</Label>
+                      <Input
+                        id="wine-count"
+                        type="number"
+                        min="0"
+                        value={wineCount}
+                        onChange={(e) => setWineCount(Math.max(0, parseInt(e.target.value) || 0))}
+                        placeholder="0"
+                        className="text-base"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-base font-medium">Serving size</Label>
+                      <Select value={wineServing} onValueChange={setWineServing}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="quarter">Glass (5 oz) - 154 cal</SelectItem>
+                          <SelectItem value="half">Large pour (10 oz) - 308 cal</SelectItem>
+                          <SelectItem value="full">Bottle (25 oz) - 615 cal</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded-lg">
+                      <p className="text-sm text-purple-800 dark:text-purple-200">
+                        Per serving: {getWineCalories()} calories, {getWineCarbs()}g carbs
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Spirits Input */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Scale className="h-5 w-5 text-blue-600" />
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Spirits</h3>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="spirits-count" className="text-base font-medium">1.5 oz shots per week</Label>
+                    <Input
+                      id="spirits-count"
+                      type="number"
+                      min="0"
+                      value={spiritsCount}
+                      onChange={(e) => setSpiritsCount(Math.max(0, parseInt(e.target.value) || 0))}
+                      placeholder="0"
+                      className="text-base"
+                    />
+                    <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg">
+                      <p className="text-sm text-blue-800 dark:text-blue-200">
+                        Per shot: {SPIRITS_CALORIES} calories (vodka, whiskey, rum, etc.)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Cocktails Input */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Activity className="h-5 w-5 text-pink-600" />
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Mixed Drinks</h3>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="cocktail-count" className="text-base font-medium">Cocktails/mixed drinks per week</Label>
+                    <Input
+                      id="cocktail-count"
+                      type="number"
+                      min="0"
+                      value={cocktailCount}
+                      onChange={(e) => setCocktailCount(Math.max(0, parseInt(e.target.value) || 0))}
+                      placeholder="0"
+                      className="text-base"
+                    />
+                    <div className="bg-pink-50 dark:bg-pink-900/20 p-3 rounded-lg">
+                      <p className="text-sm text-pink-800 dark:text-pink-200">
+                        Per cocktail: ~{COCKTAIL_CALORIES} calories (margarita, cosmopolitan, etc.)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Advanced Options Toggle */}
+              <div className="pt-4 border-t">
+                <Button
+                  variant="outline"
+                  onClick={() => setShowAdvanced(!showAdvanced)}
+                  className="w-full"
+                >
+                  {showAdvanced ? 'Hide' : 'Show'} Personal Factors
+                </Button>
+              </div>
+
+              {/* Advanced Options */}
+              {showAdvanced && (
+                <div className="space-y-4 pt-4 border-t">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-base font-medium">Current Weight</Label>
+                      <Input
+                        type="number"
+                        value={currentWeight}
+                        onChange={(e) => setCurrentWeight(e.target.value)}
+                        placeholder={unitSystem === 'metric' ? 'kg' : 'lbs'}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-base font-medium">Unit System</Label>
+                      <Select value={unitSystem} onValueChange={(value) => setUnitSystem(value as 'metric' | 'imperial')}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="imperial">Imperial (lbs)</SelectItem>
+                          <SelectItem value="metric">Metric (kg)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-base font-medium">Activity Level</Label>
+                      <Select value={activityLevel} onValueChange={setActivityLevel}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="low">Low</SelectItem>
+                          <SelectItem value="moderate">Moderate</SelectItem>
+                          <SelectItem value="high">High</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                 </div>
               )}
-              
-              {wineCount > 0 && (
-                <div className="p-3 bg-purple-50 dark:bg-purple-950/20 rounded-lg">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Wine className="h-4 w-4 text-purple-600" />
-                    <span className="font-medium text-purple-800 dark:text-purple-200">
-                      {wineCount} × {getWineServingLabel()}/week
-                    </span>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3 pt-6">
+                <Button 
+                  onClick={resetCalculator} 
+                  variant="outline" 
+                  className="flex-1"
+                  size="lg"
+                >
+                  Reset
+                </Button>
+                <Button 
+                  onClick={saveResults}
+                  className="flex-1 bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600"
+                  disabled={saveResultMutation.isPending}
+                  size="lg"
+                >
+                  <Save className="h-4 w-4 mr-2" />
+                  {isAuthenticated ? "Save Results" : "Sign Up to Save"}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Results Panel */}
+        <div className="xl:col-span-1">
+          <Card className="shadow-lg border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm sticky top-8">
+            <CardHeader className="bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-t-lg">
+              <CardTitle className="flex items-center gap-2">
+                <Target className="h-5 w-5" />
+                Impact Analysis
+              </CardTitle>
+              <CardDescription className="text-red-100">
+                Weekly alcohol consumption impact on weight goals
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6">
+              {totalCalories > 0 ? (
+                <div className="space-y-6">
+                  {/* Total Calories */}
+                  <div className={`bg-gradient-to-r p-6 rounded-lg text-center ${
+                    metabolicImpact.color === 'green' ? 'from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20' :
+                    metabolicImpact.color === 'yellow' ? 'from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20' :
+                    metabolicImpact.color === 'orange' ? 'from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20' :
+                    'from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20'
+                  }`}>
+                    <div className="flex items-center justify-center mb-3">
+                      <Flame className={`h-6 w-6 ${
+                        metabolicImpact.color === 'green' ? 'text-green-600' :
+                        metabolicImpact.color === 'yellow' ? 'text-yellow-600' :
+                        metabolicImpact.color === 'orange' ? 'text-orange-600' :
+                        'text-red-600'
+                      }`} />
+                    </div>
+                    <h3 className={`font-semibold mb-2 ${
+                      metabolicImpact.color === 'green' ? 'text-green-900 dark:text-green-100' :
+                      metabolicImpact.color === 'yellow' ? 'text-yellow-900 dark:text-yellow-100' :
+                      metabolicImpact.color === 'orange' ? 'text-orange-900 dark:text-orange-100' :
+                      'text-red-900 dark:text-red-100'
+                    }`}>
+                      Weekly Total
+                    </h3>
+                    <p className={`text-4xl font-bold mb-2 ${
+                      metabolicImpact.color === 'green' ? 'text-green-800 dark:text-green-200' :
+                      metabolicImpact.color === 'yellow' ? 'text-yellow-800 dark:text-yellow-200' :
+                      metabolicImpact.color === 'orange' ? 'text-orange-800 dark:text-orange-200' :
+                      'text-red-800 dark:text-red-200'
+                    }`}>
+                      {totalCalories.toLocaleString()}
+                    </p>
+                    <p className={`text-sm ${
+                      metabolicImpact.color === 'green' ? 'text-green-600 dark:text-green-300' :
+                      metabolicImpact.color === 'yellow' ? 'text-yellow-600 dark:text-yellow-300' :
+                      metabolicImpact.color === 'orange' ? 'text-orange-600 dark:text-orange-300' :
+                      'text-red-600 dark:text-red-300'
+                    }`}>
+                      calories from alcohol
+                    </p>
                   </div>
-                  <div className="text-sm text-purple-700 dark:text-purple-300">
-                    {totalWineCalories} calories • {totalWineCarbs.toFixed(1)}g carbs • 0g protein
+
+                  {/* Impact Level */}
+                  <div className={`p-4 rounded-lg border-l-4 ${
+                    metabolicImpact.color === 'green' ? 'bg-green-50 dark:bg-green-900/20 border-green-500' :
+                    metabolicImpact.color === 'yellow' ? 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-500' :
+                    metabolicImpact.color === 'orange' ? 'bg-orange-50 dark:bg-orange-900/20 border-orange-500' :
+                    'bg-red-50 dark:bg-red-900/20 border-red-500'
+                  }`}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <AlertTriangle className={`h-4 w-4 ${
+                        metabolicImpact.color === 'green' ? 'text-green-600' :
+                        metabolicImpact.color === 'yellow' ? 'text-yellow-600' :
+                        metabolicImpact.color === 'orange' ? 'text-orange-600' :
+                        'text-red-600'
+                      }`} />
+                      <span className={`font-semibold ${
+                        metabolicImpact.color === 'green' ? 'text-green-900 dark:text-green-100' :
+                        metabolicImpact.color === 'yellow' ? 'text-yellow-900 dark:text-yellow-100' :
+                        metabolicImpact.color === 'orange' ? 'text-orange-900 dark:text-orange-100' :
+                        'text-red-900 dark:text-red-100'
+                      }`}>
+                        {metabolicImpact.level.toUpperCase().replace('-', ' ')} IMPACT
+                      </span>
+                    </div>
+                    <p className={`text-sm ${
+                      metabolicImpact.color === 'green' ? 'text-green-800 dark:text-green-200' :
+                      metabolicImpact.color === 'yellow' ? 'text-yellow-800 dark:text-yellow-200' :
+                      metabolicImpact.color === 'orange' ? 'text-orange-800 dark:text-orange-200' :
+                      'text-red-800 dark:text-red-200'
+                    }`}>
+                      {metabolicImpact.description}
+                    </p>
+                  </div>
+
+                  {/* Weight Gain Projections */}
+                  <div className="space-y-4">
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                      <TrendingUp className="h-4 w-4" />
+                      Weight Gain Projections
+                    </h3>
+                    
+                    <div className="space-y-3">
+                      <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                        <div className="flex justify-between items-center">
+                          <span className="font-medium text-blue-900 dark:text-blue-100">Weekly</span>
+                          <span className="font-bold text-blue-800 dark:text-blue-200">
+                            +{weeklyWeightGain.toFixed(2)} lbs
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg">
+                        <div className="flex justify-between items-center">
+                          <span className="font-medium text-orange-900 dark:text-orange-100">Monthly</span>
+                          <span className="font-bold text-orange-800 dark:text-orange-200">
+                            +{monthlyWeightGain.toFixed(1)} lbs
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg">
+                        <div className="flex justify-between items-center">
+                          <span className="font-medium text-red-900 dark:text-red-100">Yearly</span>
+                          <span className="font-bold text-red-800 dark:text-red-200">
+                            +{yearlyWeightGain.toFixed(1)} lbs
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Macronutrient Breakdown */}
+                  {(totalCarbs > 0 || totalProtein > 0) && (
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100">Weekly Macros from Alcohol</h4>
+                      <div className="space-y-2">
+                        {totalCarbs > 0 && (
+                          <div className="flex justify-between text-sm">
+                            <span>Carbs</span>
+                            <span className="font-medium">{totalCarbs.toFixed(1)}g</span>
+                          </div>
+                        )}
+                        {totalProtein > 0 && (
+                          <div className="flex justify-between text-sm">
+                            <span>Protein</span>
+                            <span className="font-medium">{totalProtein.toFixed(1)}g</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Recommendations */}
+                  {getRecommendations().length > 0 && (
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                        <Heart className="h-4 w-4" />
+                        Recommendations
+                      </h4>
+                      <ul className="space-y-2">
+                        {getRecommendations().map((recommendation, index) => (
+                          <li key={index} className="text-sm text-gray-600 dark:text-gray-400 flex items-start gap-2">
+                            <span className="text-blue-500 mt-1">•</span>
+                            <span>{recommendation}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Health Tips */}
+                  <div className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 p-4 rounded-lg">
+                    <h4 className="font-semibold text-indigo-900 dark:text-indigo-100 mb-2 flex items-center gap-2">
+                      <Calendar className="h-4 w-4" />
+                      Healthy Guidelines
+                    </h4>
+                    <ul className="text-sm text-indigo-800 dark:text-indigo-200 space-y-1">
+                      <li>• Men: ≤14 drinks per week</li>
+                      <li>• Women: ≤7 drinks per week</li>
+                      <li>• Have 2+ alcohol-free days weekly</li>
+                      <li>• Drink water between alcoholic beverages</li>
+                    </ul>
                   </div>
                 </div>
+              ) : (
+                <div className="text-center py-12">
+                  <div className="mb-6">
+                    <div className="w-20 h-20 mx-auto bg-gradient-to-r from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 rounded-full flex items-center justify-center">
+                      <Calculator className="h-10 w-10 text-gray-400" />
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                    Enter Your Consumption
+                  </h3>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">
+                    Add your weekly alcohol intake to see the impact on your weight goals
+                  </p>
+                </div>
               )}
-            </div>
-
-            {/* Warning */}
-            {weeklyWeightGain > 0.5 && (
-              <div className="p-3 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-800">
-                <p className="text-sm text-red-700 dark:text-red-300">
-                  <strong>High Impact:</strong> This alcohol consumption could lead to significant weight gain. 
-                  Consider reducing intake or balancing with increased physical activity.
-                </p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Action Buttons */}
-        <div className="flex gap-4 justify-center">
-          {totalCalories > 0 && (
-            <>
-              <Button 
-                onClick={saveResults}
-                disabled={saveResultMutation.isPending}
-                className="min-w-[120px]"
-              >
-                <Save className="h-4 w-4 mr-2" />
-                {saveResultMutation.isPending ? "Saving..." : "Save Results"}
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={resetCalculator}
-                className="min-w-[120px]"
-              >
-                Reset Calculator
-              </Button>
-            </>
-          )}
+            </CardContent>
+          </Card>
         </div>
-
-        {/* Information */}
-        <div className="text-xs text-gray-500 dark:text-gray-400 text-center">
-          <p>Calculations based on average values for popular beer (~5% ABV) and wine.</p>
-          <p>Formula: 3,500 calories = 1 pound of body weight</p>
-        </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

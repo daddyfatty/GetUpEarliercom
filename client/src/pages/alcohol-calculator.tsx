@@ -1,15 +1,25 @@
 import AlcoholCalculator from "@/components/AlcoholCalculator";
+import { Beer, Wine } from "lucide-react";
 
 export default function AlcoholCalculatorPage() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Alcohol Weight Gain Calculator
-          </h1>
+        {/* Header Section */}
+        <div className="mb-8 text-center">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="p-3 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full">
+              <Beer className="h-8 w-8 text-white" />
+            </div>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
+              Alcohol Weight Impact Calculator
+            </h1>
+            <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full">
+              <Wine className="h-8 w-8 text-white" />
+            </div>
+          </div>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Understand how your weekly alcohol consumption impacts your weight goals with our comprehensive calculator.
+            Analyze how your weekly alcohol consumption affects your weight goals with comprehensive metabolic impact calculations and personalized recommendations
           </p>
         </div>
         
