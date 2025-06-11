@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Trophy, Users, Calendar } from "lucide-react";
+import { Trophy, Users, Dumbbell, ChefHat } from "lucide-react";
 
 import _20250517_073713_00_00_08_03_Still003 from "@assets/20250517_073713.00_00_08_03.Still003.jpg";
 
@@ -15,42 +15,36 @@ export function HeroSection() {
               Bridge the gap from inactivity and poor diet to strength and healthy habits. 
               Strength training, nutrition coaching, and accountability that actually works.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/workouts">
                 <Button 
                   size="lg"
-                  className="font-semibold text-black hover:opacity-90 w-full"
+                  className="font-semibold text-black hover:opacity-90"
                   style={{ backgroundColor: '#B3D7E9' }}
                 >
+                  <Dumbbell className="h-4 w-4 mr-2" />
                   View Workouts
                 </Button>
               </Link>
               <Link href="/recipes">
                 <Button 
                   size="lg"
-                  className="font-semibold text-white hover:opacity-90 border-2 border-transparent w-full"
+                  className="font-semibold text-white hover:opacity-90 border-2 border-transparent"
                   style={{ backgroundColor: '#ef4444' }}
                 >
+                  <ChefHat className="h-4 w-4 mr-2" />
                   View Recipes
                 </Button>
               </Link>
               <Link href="/coaching">
                 <Button 
                   size="lg"
-                  className="bg-gradient-to-r from-[hsl(var(--coaching-primary))] to-[hsl(var(--coaching-accent))] hover:from-[hsl(var(--coaching-primary))]/90 hover:to-[hsl(var(--coaching-accent))]/90 text-white font-semibold w-full"
+                  className="bg-[hsl(var(--coaching-primary))] hover:bg-[hsl(var(--coaching-primary))]/90 text-white font-semibold"
                 >
                   <Users className="h-4 w-4 mr-2" />
                   Personal Coaching
                 </Button>
               </Link>
-              <Button 
-                size="lg"
-                className="bg-white text-[hsl(var(--coaching-text))] hover:bg-[hsl(var(--coaching-light))] border-2 border-[hsl(var(--coaching-primary))] font-semibold w-full"
-                onClick={() => window.open('https://calendly.com/michaelbakerdigital/30minute', '_blank')}
-              >
-                <Calendar className="h-4 w-4 mr-2" />
-                Free Consultation
-              </Button>
             </div>
           </div>
           
