@@ -5,7 +5,7 @@ import { ArrowRight, Target, Heart, Activity, Users, Star, Calendar, CreditCard 
 import { SiPaypal } from "react-icons/si";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import PayPalButton from "@/components/PayPalButton";
+// import PayPalButton from "@/components/PayPalButton";
 import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
 
 export default function Coaching() {
@@ -265,13 +265,14 @@ export default function Coaching() {
                       {isProcessingPayment ? 'Processing...' : 'Pay with Card'}
                     </Button>
                     
-                    <div className="w-full">
-                      <PayPalButton 
-                        amount={pkg.amount.toString()}
-                        currency="USD"
-                        intent="capture"
-                      />
-                    </div>
+                    <Button 
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => window.location.href = `mailto:michaelbakerdigital@gmail.com?subject=Payment%20for%20${encodeURIComponent(pkg.name)}&body=I%20would%20like%20to%20purchase%20the%20${encodeURIComponent(pkg.name)}%20package%20for%20${pkg.price}.`}
+                    >
+                      <SiPaypal className="h-4 w-4 mr-2" />
+                      Pay with PayPal
+                    </Button>
                     
                     <Button 
                       variant="outline"
