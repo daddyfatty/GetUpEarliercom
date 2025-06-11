@@ -1,319 +1,564 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { apiRequest } from "@/lib/queryClient";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
-import { User, Settings, Save, Calculator, Clock, TrendingUp } from "lucide-react";
-import { format } from "date-fns";
+import { User, Edit, Save, Calculator, Heart, Dumbbell, ChefHat, TrendingUp, Clock } from "lucide-react";
+import { Link } from "wouter";
+
+interface ProfileData {
+  age?: number;
+  sex?: string;
+  height?: number;
+  currentWeight?: number;
+  desiredWeight?: number;
+  activityLevel?: string;
+  goal?: string;
+  unitSystem?: string;
+  macroProfile?: string;
+}
+
+interface CalculatorResult {
+  id: number;
+  calculatorType: string;
+  results: string;
+  userInputs: string;
+  createdAt: string;
+}
+
+interface Recipe {
+  id: number;
+  title: string;
+  cookTime: string;
+  category: string;
+  imageUrl?: string;
+}
+
+interface Workout {
+  id: number;
+  title: string;
+  duration: string;
+  category: string;
+  difficulty: string;
+}
 
 export default function Profile() {
+  const { user, isAuthenticated } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [isEditing, setIsEditing] = useState(false);
   
-  const { data: profileData, isLoading } = useQuery({
-    queryKey: ["/api/user/profile"],
-    retry: false,
+  // Fetch user profile data
+  const { data: profileData = {} as ProfileData, isLoading: profileLoading } = useQuery({
+    queryKey: ['/api/user/profile'],
+    enabled: isAuthenticated
   });
 
-  const { data: calculatorResults, isLoading: isLoadingResults } = useQuery({
-    queryKey: ["/api/calculator-results"],
-    retry: false,
-  });
-
+  // Form state for profile data
   const [formData, setFormData] = useState({
-    age: profileData?.age || "",
-    sex: profileData?.sex || "",
-    height: profileData?.height || "",
-    currentWeight: profileData?.currentWeight || "",
-    desiredWeight: profileData?.desiredWeight || "",
-    activityLevel: profileData?.activityLevel || "",
-    goal: profileData?.goal || "",
-    unitSystem: profileData?.unitSystem || "metric",
-    macroProfile: profileData?.macroProfile || "balanced"
+    age: '',
+    sex: '',
+    height: '',
+    currentWeight: '',
+    desiredWeight: '',
+    activityLevel: '',
+    goal: '',
+    unitSystem: 'metric',
+    macroProfile: 'balanced'
   });
 
-  const updateProfileMutation = useMutation({
-    mutationFn: async (data: any) => {
-      await apiRequest("POST", "/api/user/profile", data);
+  // Fetch calculator results
+  const { data: calculatorResults = [] as CalculatorResult[] } = useQuery({
+    queryKey: ['/api/user/saved-results'],
+    enabled: isAuthenticated
+  });
+
+  // Fetch favorite recipes
+  const { data: favoriteRecipes = [] as Recipe[] } = useQuery({
+    queryKey: ['/api/users/dev_user_1/favorites'],
+    enabled: isAuthenticated
+  });
+
+  // Fetch all workouts for favorites (simplified for now)
+  const { data: allWorkouts = [] as Workout[] } = useQuery({
+    queryKey: ['/api/workouts'],
+    enabled: isAuthenticated
+  });
+
+  useEffect(() => {
+    if (profileData) {
+      setFormData({
+        age: profileData.age?.toString() || '',
+        sex: profileData.sex || '',
+        height: profileData.height?.toString() || '',
+        currentWeight: profileData.currentWeight?.toString() || '',
+        desiredWeight: profileData.desiredWeight?.toString() || '',
+        activityLevel: profileData.activityLevel || '',
+        goal: profileData.goal || '',
+        unitSystem: profileData.unitSystem || 'metric',
+        macroProfile: profileData.macroProfile || 'balanced'
+      });
+    }
+  }, [profileData]);
+
+  // Save profile mutation
+  const saveProfileMutation = useMutation({
+    mutationFn: async (data: typeof formData) => {
+      const response = await apiRequest("POST", "/api/user/profile", data);
+      return response.json();
     },
     onSuccess: () => {
       toast({
         title: "Profile Updated",
-        description: "Your profile has been saved successfully.",
+        description: "Your profile has been successfully updated.",
       });
-      queryClient.invalidateQueries({ queryKey: ["/api/user/profile"] });
+      setIsEditing(false);
+      queryClient.invalidateQueries({ queryKey: ['/api/user/profile'] });
     },
-    onError: () => {
+    onError: (error) => {
       toast({
-        title: "Error",
-        description: "Failed to update profile. Please try again.",
+        title: "Update Failed",
+        description: error.message,
         variant: "destructive",
       });
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    updateProfileMutation.mutate(formData);
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  if (isLoading) {
+  const handleSave = () => {
+    saveProfileMutation.mutate(formData);
+  };
+
+  const hasProfileData = profileData && (profileData.age || profileData.sex || profileData.height || profileData.currentWeight);
+
+  if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 pt-20">
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-2xl mx-auto">
-            <div className="text-center text-white">Loading...</div>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+        <div className="max-w-2xl mx-auto px-4 text-center">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Please sign in to view your profile
+          </h1>
+        </div>
+      </div>
+    );
+  }
+
+  if (profileLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex items-center justify-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
           </div>
         </div>
       </div>
     );
   }
 
-  const getCalculatorLabel = (type: string) => {
-    switch (type) {
-      case "alcohol": return "Alcohol Weight Calculator";
-      case "calorie": return "Calorie Tracker";
-      case "bmi": return "BMI Calculator";
-      default: return "Calculator";
-    }
-  };
-
-  const formatCalculatorResult = (result: any, type: string) => {
-    if (type === "alcohol") {
-      return {
-        summary: `${result.totalCalories} calories/week`,
-        details: [
-          `Weekly weight gain: ${result.weeklyWeightGain?.toFixed(2)} lbs`,
-          `Monthly projection: ${result.monthlyWeightGain?.toFixed(2)} lbs`,
-          `Yearly projection: ${result.yearlyWeightGain?.toFixed(1)} lbs`
-        ],
-        severity: result.weeklyWeightGain > 0.5 ? "high" : result.weeklyWeightGain > 0.2 ? "medium" : "low"
-      };
-    }
-    return { summary: "Calculation completed", details: [], severity: "low" };
-  };
+  // Get recent results for display
+  const recentResults = calculatorResults?.slice(0, 5) || [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 pt-20">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto space-y-8">
-          {/* Calculator History Section */}
-          <Card className="bg-white/95 backdrop-blur-sm shadow-xl">
-            <CardHeader className="text-center">
-              <div className="mx-auto mb-4 w-16 h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
-                <Calculator className="h-8 w-8 text-white" />
-              </div>
-              <CardTitle className="text-2xl font-bold text-gray-900">Calculator History</CardTitle>
-              <p className="text-gray-600">Your recent calculator results and insights</p>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            Profile Dashboard
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300">
+            Manage your personal information and view your activity history
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+          {/* Profile Information */}
+          <div className="xl:col-span-2">
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="flex items-center gap-2">
+                      <User className="h-5 w-5" />
+                      Personal Information
+                    </CardTitle>
+                    <CardDescription>
+                      {hasProfileData ? "Your health and fitness profile" : "Complete your profile to get personalized recommendations"}
+                    </CardDescription>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => isEditing ? handleSave() : setIsEditing(true)}
+                    disabled={saveProfileMutation.isPending}
+                  >
+                    {isEditing ? <Save className="h-4 w-4" /> : <Edit className="h-4 w-4" />}
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Basic Info */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="age">Age</Label>
+                    {isEditing ? (
+                      <Input
+                        id="age"
+                        type="number"
+                        value={formData.age}
+                        onChange={(e) => handleInputChange('age', e.target.value)}
+                        placeholder="25"
+                      />
+                    ) : (
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                        {profileData.age || "Not specified"}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <Label htmlFor="sex">Sex</Label>
+                    {isEditing ? (
+                      <Select value={formData.sex} onValueChange={(value) => handleInputChange('sex', value)}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select sex" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="male">Male</SelectItem>
+                          <SelectItem value="female">Female</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                        {profileData.sex ? profileData.sex.charAt(0).toUpperCase() + profileData.sex.slice(1) : "Not specified"}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Physical Measurements */}
+                <div className="grid grid-cols-1 gap-4">
+                  <div>
+                    <Label htmlFor="height">Height ({formData.unitSystem === 'metric' ? 'cm' : 'inches'})</Label>
+                    {isEditing ? (
+                      <Input
+                        id="height"
+                        type="number"
+                        value={formData.height}
+                        onChange={(e) => handleInputChange('height', e.target.value)}
+                        placeholder={formData.unitSystem === 'metric' ? "175" : "69"}
+                      />
+                    ) : (
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                        {profileData.height ? `${profileData.height} ${formData.unitSystem === 'metric' ? 'cm' : 'inches'}` : "Not specified"}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="currentWeight">Current Weight ({formData.unitSystem === 'metric' ? 'kg' : 'lbs'})</Label>
+                    {isEditing ? (
+                      <Input
+                        id="currentWeight"
+                        type="number"
+                        step="0.1"
+                        value={formData.currentWeight}
+                        onChange={(e) => handleInputChange('currentWeight', e.target.value)}
+                        placeholder={formData.unitSystem === 'metric' ? "70.0" : "154.3"}
+                      />
+                    ) : (
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                        {profileData.currentWeight ? `${profileData.currentWeight} ${formData.unitSystem === 'metric' ? 'kg' : 'lbs'}` : "Not specified"}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <Label htmlFor="desiredWeight">Desired Weight ({formData.unitSystem === 'metric' ? 'kg' : 'lbs'})</Label>
+                    {isEditing ? (
+                      <Input
+                        id="desiredWeight"
+                        type="number"
+                        step="0.1"
+                        value={formData.desiredWeight}
+                        onChange={(e) => handleInputChange('desiredWeight', e.target.value)}
+                        placeholder={formData.unitSystem === 'metric' ? "65.0" : "143.3"}
+                      />
+                    ) : (
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                        {profileData.desiredWeight ? `${profileData.desiredWeight} ${formData.unitSystem === 'metric' ? 'kg' : 'lbs'}` : "Not specified"}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Preferences */}
+                <Separator />
+                
+                <div className="grid grid-cols-1 gap-4">
+                  <div>
+                    <Label htmlFor="activityLevel">Activity Level</Label>
+                    {isEditing ? (
+                      <Select value={formData.activityLevel} onValueChange={(value) => handleInputChange('activityLevel', value)}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select activity level" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="sedentary">Sedentary (little/no exercise)</SelectItem>
+                          <SelectItem value="lightly_active">Lightly Active (light exercise 1-3 days/week)</SelectItem>
+                          <SelectItem value="moderately_active">Moderately Active (moderate exercise 3-5 days/week)</SelectItem>
+                          <SelectItem value="very_active">Very Active (hard exercise 6-7 days/week)</SelectItem>
+                          <SelectItem value="extremely_active">Extremely Active (very hard exercise, physical job)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                        {profileData.activityLevel ? profileData.activityLevel.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : "Not specified"}
+                      </p>
+                    )}
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="goal">Primary Goal</Label>
+                    {isEditing ? (
+                      <Select value={formData.goal} onValueChange={(value) => handleInputChange('goal', value)}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your goal" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="lose_weight">Lose Weight</SelectItem>
+                          <SelectItem value="gain_weight">Gain Weight</SelectItem>
+                          <SelectItem value="maintain_weight">Maintain Weight</SelectItem>
+                          <SelectItem value="build_muscle">Build Muscle</SelectItem>
+                          <SelectItem value="improve_endurance">Improve Endurance</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                        {profileData.goal ? profileData.goal.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : "Not specified"}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Calculator History */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Calculator className="h-5 w-5" />
+                Calculator History
+              </CardTitle>
+              <CardDescription>
+                Your recent calculation results
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              {isLoadingResults ? (
-                <div className="text-center py-8 text-gray-500">Loading calculator history...</div>
-              ) : calculatorResults && calculatorResults.length > 0 ? (
-                <div className="space-y-4">
-                  {calculatorResults.slice(0, 5).map((result: any) => {
-                    const formatted = formatCalculatorResult(result.results, result.calculatorType);
+              {recentResults.length > 0 ? (
+                <div className="space-y-3">
+                  {recentResults.map((result) => {
+                    let data = {};
+                    try {
+                      data = JSON.parse(result.results || '{}');
+                    } catch (e) {
+                      data = {};
+                    }
+                    
+                    const isAlcohol = result.calculatorType === 'alcohol';
+                    const isCalorie = result.calculatorType === 'calorie';
+                    const weeklyGain = (data as any).weeklyGain;
+                    const impactLevel = isAlcohol && weeklyGain > 1 ? 'high' : 
+                                      isAlcohol && weeklyGain > 0.5 ? 'medium' : 'low';
+                    
                     return (
-                      <div key={result.id} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Calculator className="h-4 w-4 text-blue-600" />
-                              <h3 className="font-semibold text-gray-900">
-                                {getCalculatorLabel(result.calculatorType)}
-                              </h3>
-                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                formatted.severity === "high" ? "bg-red-100 text-red-800" :
-                                formatted.severity === "medium" ? "bg-yellow-100 text-yellow-800" :
-                                "bg-green-100 text-green-800"
+                      <div key={result.id} className="p-3 border rounded-lg bg-gray-50 dark:bg-gray-800">
+                        <div className="flex items-center justify-between mb-2">
+                          <Badge variant="outline" className="capitalize">
+                            {result.calculatorType} Calculator
+                          </Badge>
+                          <span className="text-xs text-gray-500 flex items-center gap-1">
+                            <Clock className="h-3 w-3" />
+                            {new Date(result.createdAt).toLocaleDateString()}
+                          </span>
+                        </div>
+                        
+                        {isAlcohol && (
+                          <div className="text-sm space-y-1">
+                            <div className="flex justify-between">
+                              <span>Weekly Gain:</span>
+                              <span className={`font-medium ${
+                                impactLevel === 'high' ? 'text-red-600' : 
+                                impactLevel === 'medium' ? 'text-yellow-600' : 'text-green-600'
                               }`}>
-                                {formatted.severity === "high" ? "High Impact" :
-                                 formatted.severity === "medium" ? "Medium Impact" :
-                                 "Low Impact"}
+                                {((data as any).weeklyGain)?.toFixed(2)} lbs
                               </span>
                             </div>
-                            <p className="text-gray-700 font-medium mb-2">{formatted.summary}</p>
-                            {formatted.details.length > 0 && (
-                              <div className="text-sm text-gray-600 space-y-1">
-                                {formatted.details.map((detail: string, idx: number) => (
-                                  <div key={idx} className="flex items-center gap-2">
-                                    <TrendingUp className="h-3 w-3 text-gray-400" />
-                                    {detail}
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                          <div className="text-right text-sm text-gray-500 ml-4">
-                            <div className="flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
-                              {format(new Date(result.createdAt), "MMM d, yyyy")}
+                            <div className="flex justify-between">
+                              <span>Monthly Gain:</span>
+                              <span className="text-orange-600 font-medium">
+                                {((data as any).monthlyGain)?.toFixed(2)} lbs
+                              </span>
                             </div>
-                            <div className="text-xs mt-1">
-                              {format(new Date(result.createdAt), "h:mm a")}
+                            <div className="flex justify-between">
+                              <span>Yearly Gain:</span>
+                              <span className="text-red-600 font-medium">
+                                {((data as any).yearlyGain)?.toFixed(2)} lbs
+                              </span>
                             </div>
                           </div>
-                        </div>
+                        )}
+                        
+                        {isCalorie && (data as any).bmr && (
+                          <div className="text-sm space-y-1">
+                            <div className="flex justify-between">
+                              <span>BMR:</span>
+                              <span className="font-medium">{Math.round((data as any).bmr)} calories/day</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span>Daily Needs:</span>
+                              <span className="font-medium">{Math.round((data as any).dailyCalories)} calories/day</span>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     );
                   })}
                 </div>
               ) : (
-                <div className="text-center py-8 text-gray-500">
-                  <Calculator className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                  <p>No calculator history yet</p>
-                  <p className="text-sm">Your saved calculations will appear here</p>
+                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                  <Calculator className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                  <p>No calculator results yet</p>
+                  <p className="text-sm">Use our calculators to see your results here</p>
                 </div>
               )}
             </CardContent>
           </Card>
 
-          {/* Profile Settings */}
-          <Card className="bg-white/95 backdrop-blur-sm shadow-xl">
-            <CardHeader className="text-center">
-              <div className="mx-auto mb-4 w-16 h-16 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full flex items-center justify-center">
-                <User className="h-8 w-8 text-white" />
-              </div>
-              <CardTitle className="text-2xl font-bold text-gray-900">My Profile</CardTitle>
+          {/* Favorite Recipes */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Heart className="h-5 w-5" />
+                Favorite Recipes
+              </CardTitle>
+              <CardDescription>
+                Your saved recipe collection
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="age">Age</Label>
-                    <Input
-                      id="age"
-                      type="number"
-                      value={formData.age}
-                      onChange={(e) => setFormData(prev => ({ ...prev, age: e.target.value }))}
-                      placeholder="Enter your age"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="sex">Sex</Label>
-                    <Select value={formData.sex} onValueChange={(value) => setFormData(prev => ({ ...prev, sex: value }))}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select sex" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="male">Male</SelectItem>
-                        <SelectItem value="female">Female</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+              {favoriteRecipes.length > 0 ? (
+                <div className="space-y-3">
+                  {favoriteRecipes.slice(0, 3).map((recipe) => (
+                    <Link key={recipe.id} href={`/recipes/${recipe.id}`}>
+                      <div className="p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer">
+                        <div className="flex items-center gap-3">
+                          {recipe.imageUrl && (
+                            <img 
+                              src={recipe.imageUrl} 
+                              alt={recipe.title}
+                              className="w-10 h-10 rounded object-cover"
+                            />
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium text-sm truncate">{recipe.title}</h4>
+                            <div className="flex items-center gap-2 text-xs text-gray-500">
+                              <ChefHat className="h-3 w-3" />
+                              {recipe.cookTime}
+                              <Badge variant="secondary" className="text-xs">
+                                {recipe.category}
+                              </Badge>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                  {favoriteRecipes.length > 3 && (
+                    <Link href="/favorites">
+                      <Button variant="outline" size="sm" className="w-full">
+                        View All ({favoriteRecipes.length})
+                      </Button>
+                    </Link>
+                  )}
                 </div>
+              ) : (
+                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                  <Heart className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                  <p>No favorite recipes yet</p>
+                  <p className="text-sm">
+                    <Link href="/recipes" className="text-primary hover:underline">
+                      Browse recipes
+                    </Link> to add favorites
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="height">Height ({formData.unitSystem === 'metric' ? 'cm' : 'inches'})</Label>
-                    <Input
-                      id="height"
-                      type="number"
-                      value={formData.height}
-                      onChange={(e) => setFormData(prev => ({ ...prev, height: e.target.value }))}
-                      placeholder={`Enter height in ${formData.unitSystem === 'metric' ? 'cm' : 'inches'}`}
-                    />
+          {/* Recent Activity */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TrendingUp className="h-5 w-5" />
+                Recent Activity
+              </CardTitle>
+              <CardDescription>
+                Your latest actions on the platform
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {calculatorResults.slice(0, 3).map((result) => (
+                  <div key={result.id} className="flex items-center gap-3 text-sm">
+                    <Calculator className="h-4 w-4 text-blue-500" />
+                    <div className="flex-1">
+                      <span>Used {result.calculatorType} calculator</span>
+                      <div className="text-xs text-gray-500">
+                        {new Date(result.createdAt).toLocaleDateString()}
+                      </div>
+                    </div>
                   </div>
-                  
-                  <div>
-                    <Label htmlFor="unitSystem">Unit System</Label>
-                    <Select value={formData.unitSystem} onValueChange={(value) => setFormData(prev => ({ ...prev, unitSystem: value }))}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="metric">Metric (kg, cm)</SelectItem>
-                        <SelectItem value="imperial">Imperial (lbs, inches)</SelectItem>
-                      </SelectContent>
-                    </Select>
+                ))}
+                
+                {favoriteRecipes.slice(0, 2).map((recipe) => (
+                  <div key={`fav-${recipe.id}`} className="flex items-center gap-3 text-sm">
+                    <Heart className="h-4 w-4 text-red-500" />
+                    <div className="flex-1">
+                      <span>Favorited "{recipe.title}"</span>
+                      <div className="text-xs text-gray-500">Recently</div>
+                    </div>
                   </div>
-                </div>
+                ))}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="currentWeight">Current Weight ({formData.unitSystem === 'metric' ? 'kg' : 'lbs'})</Label>
-                    <Input
-                      id="currentWeight"
-                      type="number"
-                      step="0.1"
-                      value={formData.currentWeight}
-                      onChange={(e) => setFormData(prev => ({ ...prev, currentWeight: e.target.value }))}
-                      placeholder={`Enter weight in ${formData.unitSystem === 'metric' ? 'kg' : 'lbs'}`}
-                    />
+                {hasProfileData && (
+                  <div className="flex items-center gap-3 text-sm">
+                    <User className="h-4 w-4 text-green-500" />
+                    <div className="flex-1">
+                      <span>Updated profile information</span>
+                      <div className="text-xs text-gray-500">Recently</div>
+                    </div>
                   </div>
-                  
-                  <div>
-                    <Label htmlFor="desiredWeight">Desired Weight ({formData.unitSystem === 'metric' ? 'kg' : 'lbs'})</Label>
-                    <Input
-                      id="desiredWeight"
-                      type="number"
-                      step="0.1"
-                      value={formData.desiredWeight}
-                      onChange={(e) => setFormData(prev => ({ ...prev, desiredWeight: e.target.value }))}
-                      placeholder={`Enter desired weight in ${formData.unitSystem === 'metric' ? 'kg' : 'lbs'}`}
-                    />
+                )}
+
+                {!calculatorResults.length && !favoriteRecipes.length && !hasProfileData && (
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                    <TrendingUp className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                    <p>No recent activity</p>
+                    <p className="text-sm">Start using the platform to see your activity here</p>
                   </div>
-                </div>
-
-                <div>
-                  <Label htmlFor="activityLevel">Activity Level</Label>
-                  <Select value={formData.activityLevel} onValueChange={(value) => setFormData(prev => ({ ...prev, activityLevel: value }))}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select activity level" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="sedentary">Sedentary (little/no exercise)</SelectItem>
-                      <SelectItem value="lightly_active">Lightly Active (light exercise 1-3 days/week)</SelectItem>
-                      <SelectItem value="moderately_active">Moderately Active (moderate exercise 3-5 days/week)</SelectItem>
-                      <SelectItem value="very_active">Very Active (hard exercise 6-7 days/week)</SelectItem>
-                      <SelectItem value="extremely_active">Extremely Active (very hard exercise & physical job)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label htmlFor="goal">Goal</Label>
-                  <Select value={formData.goal} onValueChange={(value) => setFormData(prev => ({ ...prev, goal: value }))}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your goal" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="loss">Weight Loss</SelectItem>
-                      <SelectItem value="maintenance">Maintain Weight</SelectItem>
-                      <SelectItem value="gain">Weight Gain</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label htmlFor="macroProfile">Macro Profile</Label>
-                  <Select value={formData.macroProfile} onValueChange={(value) => setFormData(prev => ({ ...prev, macroProfile: value }))}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select macro profile" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="balanced">Balanced (40% carbs, 30% protein, 30% fat)</SelectItem>
-                      <SelectItem value="high_protein">High Protein (30% carbs, 40% protein, 30% fat)</SelectItem>
-                      <SelectItem value="high_carb">High Carb (70% carbs, 15% protein, 15% fat)</SelectItem>
-                      <SelectItem value="low_carb">Low Carb (20% carbs, 30% protein, 50% fat)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <Button 
-                  type="submit" 
-                  className="w-full bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600"
-                  disabled={updateProfileMutation.isPending}
-                >
-                  <Save className="w-4 h-4 mr-2" />
-                  {updateProfileMutation.isPending ? "Saving..." : "Save Profile"}
-                </Button>
-              </form>
+                )}
+              </div>
             </CardContent>
           </Card>
         </div>

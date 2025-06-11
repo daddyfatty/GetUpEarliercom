@@ -727,8 +727,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const result = await storage.createCalculatorResult({
         userId: developmentUserId,
-        type,
-        data: JSON.stringify(data)
+        calculatorType: type,
+        results: JSON.stringify(data),
+        userInputs: JSON.stringify(data)
       });
 
       res.json({ message: "Results saved successfully", result });
@@ -741,12 +742,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get user's saved results
   app.get("/api/user/saved-results", async (req, res) => {
     try {
-      if (!req.user) {
-        return res.status(401).json({ message: "Authentication required" });
-      }
+      // Development mode - use default user ID
+      const developmentUserId = "dev_user_1";
 
-      // Return empty array for now - in real app would fetch from database
-      res.json([]);
+      const results = await storage.getUserCalculatorResults(developmentUserId);
+      res.json(results);
     } catch (error) {
       console.error("Error fetching saved results:", error);
       res.status(500).json({ message: "Failed to fetch saved results" });
@@ -756,11 +756,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get user's favorite recipes
   app.get("/api/users/:userId/favorites", async (req, res) => {
     try {
-      if (!req.user) {
-        return res.status(401).json({ message: "Authentication required" });
-      }
-
-      const favoriteRecipes = await storage.getUserFavoriteRecipes(parseInt(req.params.userId));
+      // Development mode - use numeric user ID 1
+      const favoriteRecipes = await storage.getUserFavoriteRecipes(1);
       res.json(favoriteRecipes);
     } catch (error) {
       console.error("Error fetching favorites:", error);
