@@ -29,6 +29,7 @@ import Admin from "@/pages/admin";
 import Checkout from "@/pages/checkout";
 import Subscribe from "@/pages/subscribe";
 import CalorieCalculator from "@/pages/calorie-calculator";
+import AlcoholCalculatorPage from "@/pages/alcohol-calculator";
 import Profile from "@/pages/profile";
 import Favorites from "@/pages/favorites";
 import SavedResults from "@/pages/saved-results";
@@ -56,6 +57,7 @@ function Router() {
           <Route path="/workouts/:id/video" component={WorkoutVideo} />
           <Route path="/nutrition" component={Nutrition} />
           <Route path="/calorie-calculator" component={CalorieCalculator} />
+          <Route path="/alcohol-calculator" component={AlcoholCalculatorPage} />
           <Route path="/tracker" component={Tracker} />
           <Route path="/blog" component={Blog} />
           <Route path="/blog/:id" component={BlogPost} />

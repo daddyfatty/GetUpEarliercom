@@ -35,6 +35,7 @@ export function Navigation() {
   const calculatorItems = [
     { href: "/nutrition", label: "Food Tracker" },
     { href: "/calorie-calculator", label: "Calorie Calculator" },
+    { href: "/alcohol-calculator", label: "Alcohol Calculator" },
   ];
 
   const navItems = [
