@@ -18,30 +18,24 @@ export function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/workouts">
                 <Button 
-                  size="lg"
-                  className="font-semibold text-black hover:opacity-90"
+                  className="font-semibold text-black hover:opacity-90 px-6 py-3"
                   style={{ backgroundColor: '#B3D7E9' }}
                 >
-                  <Dumbbell className="h-4 w-4 mr-2" />
                   View Workouts
                 </Button>
               </Link>
               <Link href="/recipes">
                 <Button 
-                  size="lg"
-                  className="font-semibold text-white hover:opacity-90 border-2 border-transparent"
+                  className="font-semibold text-white hover:opacity-90 border-2 border-transparent px-6 py-3"
                   style={{ backgroundColor: '#ef4444' }}
                 >
-                  <ChefHat className="h-4 w-4 mr-2" />
                   View Recipes
                 </Button>
               </Link>
               <Link href="/coaching">
                 <Button 
-                  size="lg"
-                  className="bg-[hsl(var(--coaching-primary))] hover:bg-[hsl(var(--coaching-primary))]/90 text-white font-semibold"
+                  className="bg-[hsl(var(--coaching-primary))] hover:bg-[hsl(var(--coaching-primary))]/90 text-white font-semibold px-6 py-3"
                 >
-                  <Users className="h-4 w-4 mr-2" />
                   Personal Coaching
                 </Button>
               </Link>
