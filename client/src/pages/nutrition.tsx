@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Search, Camera, Scan, Book, Plus, X, Wine, Coffee, Apple, Utensils } from "lucide-react";
+import AlcoholCalculator from "@/components/AlcoholCalculator";
 import type { FoodEntry } from "@shared/schema";
 
 // Mock current user - in a real app, this would come from auth context
@@ -288,6 +289,11 @@ export default function Nutrition() {
               </CardContent>
             </Card>
           )}
+
+          {/* Alcohol Weight Gain Calculator */}
+          <div className="mt-12">
+            <AlcoholCalculator />
+          </div>
         </div>
       </div>
 
