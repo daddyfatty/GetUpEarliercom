@@ -26,12 +26,11 @@ export default function Home() {
   return (
     <div className="w-full">
       <HeroSection />
-      
       {/* Coaching Call-to-Action Section */}
       <section className="py-20 bg-gradient-to-br from-[hsl(var(--coaching-primary))] via-purple-700 to-[hsl(var(--coaching-accent))] text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Transform Your Life?</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Transform?</h2>
             <p className="text-xl md:text-2xl text-purple-100 max-w-4xl mx-auto leading-relaxed">
               Get personalized coaching from a certified trainer with 30 years of experience. 
               Bridge the gap from inactivity to strength and healthy habits.
@@ -68,7 +67,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-      
       {/* Featured Recipes Section */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
