@@ -13,6 +13,74 @@ interface RecipeCardProps {
 }
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
+  const { toast } = useToast();
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Check authentication and favorite status
+    const checkAuthAndFavorite = async () => {
+      try {
+        const userData = await apiRequest("GET", "/api/auth/user");
+        setIsAuthenticated(true);
+        
+        // Check if this recipe is favorited
+        const favoriteStatus = await apiRequest("GET", `/api/users/${userData.id}/favorites/${recipe.id}/check`);
+        setIsFavorited(favoriteStatus.isFavorited);
+      } catch (error) {
+        setIsAuthenticated(false);
+        setIsFavorited(false);
+      }
+    };
+    checkAuthAndFavorite();
+  }, [recipe.id]);
+
+  const handleFavoriteClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!isAuthenticated) {
+      toast({
+        title: "Sign Up Required",
+        description: "Create an account to save your favorite recipes.",
+        action: (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => window.location.href = "/api/login"}
+          >
+            Sign Up
+          </Button>
+        ),
+      });
+      return;
+    }
+
+    try {
+      if (isFavorited) {
+        await apiRequest("DELETE", `/api/users/1/favorites/${recipe.id}`);
+        setIsFavorited(false);
+        toast({
+          title: "Removed from Favorites",
+          description: `${recipe.title} removed from your favorites.`,
+        });
+      } else {
+        await apiRequest("POST", `/api/users/1/favorites`, { recipeId: recipe.id });
+        setIsFavorited(true);
+        toast({
+          title: "Added to Favorites",
+          description: `${recipe.title} added to your favorites.`,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Could not update favorites. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const getCategoryColor = (category: string) => {
     switch (category) {
       case "breakfast":
@@ -51,10 +119,22 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
                 </Badge>
               )}
             </div>
-            <span className="text-gray-500 dark:text-gray-400 text-sm flex items-center">
-              <Clock className="w-4 h-4 mr-1" />
-              {recipe.prepTime} min
-            </span>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleFavoriteClick}
+                className="p-1 h-8 w-8 hover:bg-red-50"
+              >
+                <Heart 
+                  className={`h-4 w-4 ${isFavorited ? 'fill-red-500 text-red-500' : 'text-gray-400 hover:text-red-500'}`}
+                />
+              </Button>
+              <span className="text-gray-500 dark:text-gray-400 text-sm flex items-center">
+                <Clock className="w-4 h-4 mr-1" />
+                {recipe.prepTime} min
+              </span>
+            </div>
           </div>
           
           <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">

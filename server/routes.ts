@@ -738,6 +738,92 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get user's saved results
+  app.get("/api/user/saved-results", async (req, res) => {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      // Return empty array for now - in real app would fetch from database
+      res.json([]);
+    } catch (error) {
+      console.error("Error fetching saved results:", error);
+      res.status(500).json({ message: "Failed to fetch saved results" });
+    }
+  });
+
+  // Get user's favorite recipes
+  app.get("/api/users/:userId/favorites", async (req, res) => {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const favoriteRecipes = await storage.getUserFavoriteRecipes(parseInt(req.params.userId));
+      res.json(favoriteRecipes);
+    } catch (error) {
+      console.error("Error fetching favorites:", error);
+      res.status(500).json({ message: "Failed to fetch favorites" });
+    }
+  });
+
+  // Add recipe to favorites
+  app.post("/api/users/:userId/favorites", async (req, res) => {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const { recipeId } = req.body;
+      
+      if (!recipeId) {
+        return res.status(400).json({ message: "Recipe ID is required" });
+      }
+
+      const favorite = await storage.addFavoriteRecipe(parseInt(req.params.userId), recipeId);
+      res.json({ message: "Recipe added to favorites", favorite });
+    } catch (error) {
+      console.error("Error adding favorite:", error);
+      res.status(500).json({ message: "Failed to add favorite" });
+    }
+  });
+
+  // Remove recipe from favorites
+  app.delete("/api/users/:userId/favorites/:recipeId", async (req, res) => {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const success = await storage.removeFavoriteRecipe(parseInt(req.params.userId), parseInt(req.params.recipeId));
+      
+      if (success) {
+        res.json({ message: "Recipe removed from favorites" });
+      } else {
+        res.status(404).json({ message: "Favorite not found" });
+      }
+    } catch (error) {
+      console.error("Error removing favorite:", error);
+      res.status(500).json({ message: "Failed to remove favorite" });
+    }
+  });
+
+  // Check if recipe is favorited
+  app.get("/api/users/:userId/favorites/:recipeId/check", async (req, res) => {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const isFavorited = await storage.isRecipeFavorited(parseInt(req.params.userId), parseInt(req.params.recipeId));
+      res.json({ isFavorited });
+    } catch (error) {
+      console.error("Error checking favorite status:", error);
+      res.status(500).json({ message: "Failed to check favorite status" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

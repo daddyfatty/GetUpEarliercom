@@ -29,6 +29,9 @@ import Admin from "@/pages/admin";
 import Checkout from "@/pages/checkout";
 import Subscribe from "@/pages/subscribe";
 import CalorieCalculator from "@/pages/calorie-calculator";
+import Profile from "@/pages/profile";
+import Favorites from "@/pages/favorites";
+import SavedResults from "@/pages/saved-results";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -63,7 +66,10 @@ function Router() {
           <Route path="/team" component={Team} />
           <Route path="/team/michael" component={TeamMichael} />
           <Route path="/team/erica" component={TeamErica} />
-          <Route path="/profile" component={UserProfile} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/favorites" component={Favorites} />
+          <Route path="/saved-results" component={SavedResults} />
+          <Route path="/user-profile" component={UserProfile} />
           <Route path="/admin" component={Admin} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/subscribe" component={Subscribe} />
