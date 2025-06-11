@@ -59,6 +59,8 @@ export default function AlcoholCalculator() {
   const totalProtein = totalBeerProtein; // Wine has 0 protein
 
   const weeklyWeightGain = totalCalories / 3500; // 3500 calories = 1 lb
+  const monthlyWeightGain = weeklyWeightGain * 4.33; // Average weeks per month
+  const yearlyWeightGain = weeklyWeightGain * 52; // 52 weeks per year
 
   const resetCalculator = () => {
     setBeerCount(0);
@@ -169,6 +171,30 @@ export default function AlcoholCalculator() {
                   {weeklyWeightGain.toFixed(2)} lbs
                 </div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Est. Weight Gain/Week</div>
+              </div>
+            </div>
+
+            {/* Weight Gain Projections */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+              <div className="text-center p-4 bg-yellow-50 dark:bg-yellow-950/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                <div className="text-xl font-bold text-yellow-700 dark:text-yellow-300">
+                  {weeklyWeightGain.toFixed(2)} lbs
+                </div>
+                <div className="text-sm text-yellow-600 dark:text-yellow-400">Per Week</div>
+              </div>
+              
+              <div className="text-center p-4 bg-orange-50 dark:bg-orange-950/20 rounded-lg border border-orange-200 dark:border-orange-800">
+                <div className="text-xl font-bold text-orange-700 dark:text-orange-300">
+                  {monthlyWeightGain.toFixed(1)} lbs
+                </div>
+                <div className="text-sm text-orange-600 dark:text-orange-400">Per Month</div>
+              </div>
+              
+              <div className="text-center p-4 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-800">
+                <div className="text-xl font-bold text-red-700 dark:text-red-300">
+                  {yearlyWeightGain.toFixed(0)} lbs
+                </div>
+                <div className="text-sm text-red-600 dark:text-red-400">Per Year</div>
               </div>
             </div>
 
