@@ -824,6 +824,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // PayPal routes
+  app.post("/api/paypal/order", createPaypalOrder);
+  app.post("/api/paypal/order/:orderID/capture", capturePaypalOrder);
+
   const httpServer = createServer(app);
   return httpServer;
 }
