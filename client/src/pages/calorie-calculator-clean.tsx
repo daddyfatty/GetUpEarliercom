@@ -8,7 +8,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { Calculator, User, Target, Activity, Save, LoaderCircle } from "lucide-react";
+import { Calculator, User, Save, LoaderCircle } from "lucide-react";
 
 interface CalculationResults {
   bmr: number;
@@ -355,308 +355,225 @@ export default function CalorieCalculator() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
-      <div className="max-w-7xl mx-auto px-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-800">
+      <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Header Section */}
         <div className="mb-8 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full">
-              <Calculator className="h-8 w-8 text-white" />
-            </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Advanced Calorie & Macro Calculator
-            </h1>
-          </div>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Get personalized nutrition targets with advanced metabolic calculations and supplement recommendations
+          <h1 className="text-5xl font-bold text-white mb-4">
+            Daily Caloric Intake & Macro Calculator
+          </h1>
+          <p className="text-xl text-purple-100 max-w-4xl mx-auto">
+            Calculate your daily caloric needs and macronutrient requirements based on your personal details, activity level, and fitness goals with support for both Metric and Imperial units.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-          {/* Input Form - Spans 2 columns */}
-          <div className="xl:col-span-2 space-y-6">
-            {/* Basic Information Card */}
-            <Card className="shadow-lg border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
-              <CardHeader className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-t-lg">
-                <CardTitle className="flex items-center gap-2">
-                  <User className="h-5 w-5" />
-                  Personal Information
-                </CardTitle>
-                <CardDescription className="text-blue-100">
-                  Enter your basic details for accurate calculations
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-6 space-y-6">
-                {/* Unit System Toggle */}
-                <div className="space-y-3">
-                  <Label className="text-base font-semibold">Unit System</Label>
-                  <RadioGroup
-                    value={unitSystem}
-                    onValueChange={(value) => setUnitSystem(value as 'metric' | 'imperial')}
-                    className="flex gap-8"
-                  >
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="imperial" id="imperial" />
-                      <Label htmlFor="imperial" className="cursor-pointer">Imperial (lbs, in)</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="metric" id="metric" />
-                      <Label htmlFor="metric" className="cursor-pointer">Metric (kg, cm)</Label>
-                    </div>
-                  </RadioGroup>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Personal Details Card */}
+          <Card className="shadow-xl border-0 bg-white backdrop-blur-sm">
+            <CardHeader className="bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-t-lg">
+              <CardTitle className="flex items-center gap-2">
+                <User className="h-5 w-5" />
+                Personal Details
+              </CardTitle>
+              <CardDescription className="text-orange-100">
+                Enter your information to calculate your daily caloric needs
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6 space-y-6">
+              {/* Unit System Toggle */}
+              <div className="space-y-3">
+                <Label className="text-base font-semibold">Unit System</Label>
+                <RadioGroup
+                  value={unitSystem}
+                  onValueChange={(value) => setUnitSystem(value as 'metric' | 'imperial')}
+                  className="flex gap-8"
+                >
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="imperial" id="imperial" />
+                    <Label htmlFor="imperial" className="cursor-pointer">Imperial (lb, inches)</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="metric" id="metric" />
+                    <Label htmlFor="metric" className="cursor-pointer">Metric (kg, cm)</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+
+              {/* Sex Selection */}
+              <div className="space-y-2">
+                <Label className="text-base font-semibold">Sex</Label>
+                <Select value={sex} onValueChange={(value) => setSex(value as 'male' | 'female')}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="male">Male</SelectItem>
+                    <SelectItem value="female">Female</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Age */}
+              <div className="space-y-2">
+                <Label htmlFor="age" className="text-base font-semibold">Age (years)</Label>
+                <Input
+                  id="age"
+                  type="number"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                  placeholder="Enter your age"
+                  className="text-base"
+                />
+              </div>
+
+              {/* Height */}
+              <div className="space-y-2">
+                <Label htmlFor="height" className="text-base font-semibold">
+                  Height ({unitSystem === 'metric' ? 'cm' : 'inches'})
+                </Label>
+                <Input
+                  id="height"
+                  type="number"
+                  value={height}
+                  onChange={(e) => setHeight(e.target.value)}
+                  placeholder={unitSystem === 'metric' ? 'Enter your height in cm' : 'Enter your height in inches'}
+                  className="text-base"
+                />
+              </div>
+
+              {/* Current Weight */}
+              <div className="space-y-2">
+                <Label htmlFor="currentWeight" className="text-base font-semibold">
+                  Current Weight ({unitSystem === 'metric' ? 'kg' : 'lbs'})
+                </Label>
+                <Input
+                  id="currentWeight"
+                  type="number"
+                  value={currentWeight}
+                  onChange={(e) => setCurrentWeight(e.target.value)}
+                  placeholder={unitSystem === 'metric' ? 'Enter your current weight in kg' : 'Enter your current weight in pounds'}
+                  className="text-base"
+                />
+              </div>
+
+              {/* Desired Weight */}
+              <div className="space-y-2">
+                <Label htmlFor="desiredWeight" className="text-base font-semibold">
+                  Desired Weight ({unitSystem === 'metric' ? 'kg' : 'lbs'})
+                </Label>
+                <Input
+                  id="desiredWeight"
+                  type="number"
+                  value={desiredWeight}
+                  onChange={(e) => setDesiredWeight(e.target.value)}
+                  placeholder={unitSystem === 'metric' ? 'Enter your desired weight in kg' : 'Enter your desired weight in pounds'}
+                  className="text-base"
+                />
+              </div>
+
+              {/* Activity Level */}
+              <div className="space-y-4">
+                <Label className="text-base font-semibold">
+                  Activity Level: {activityDescriptions[getActivityLevelValue(activityLevel[0]) as keyof typeof activityDescriptions]}
+                </Label>
+                <Slider
+                  value={activityLevel}
+                  onValueChange={setActivityLevel}
+                  min={1.2}
+                  max={1.9}
+                  step={0.175}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-sm text-gray-500">
+                  <span>Sedentary</span>
+                  <span>Very Active</span>
                 </div>
+              </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Sex Selection */}
-                  <div className="space-y-2">
-                    <Label className="text-base font-semibold">Biological Sex</Label>
-                    <Select value={sex} onValueChange={(value) => setSex(value as 'male' | 'female')}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="male">Male</SelectItem>
-                        <SelectItem value="female">Female</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+              {/* Goal */}
+              <div className="space-y-2">
+                <Label className="text-base font-semibold">Primary Goal</Label>
+                <Select value={goal} onValueChange={(value) => setGoal(value as 'maintenance' | 'loss' | 'gain')}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="maintenance">Maintain Weight</SelectItem>
+                    <SelectItem value="loss">Lose Weight</SelectItem>
+                    <SelectItem value="gain">Gain Weight</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
-                  {/* Age */}
-                  <div className="space-y-2">
-                    <Label htmlFor="age" className="text-base font-semibold">Age (years)</Label>
-                    <Input
-                      id="age"
-                      type="number"
-                      value={age}
-                      onChange={(e) => setAge(e.target.value)}
-                      placeholder="e.g., 30"
-                      className="text-base"
-                    />
-                  </div>
+              {/* Macro Profile */}
+              <div className="space-y-2">
+                <Label className="text-base font-semibold">Macro Profile</Label>
+                <Select value={macroProfile} onValueChange={(value) => setMacroProfile(value as any)}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="balanced">Balanced</SelectItem>
+                    <SelectItem value="moderate-protein">Moderate Protein</SelectItem>
+                    <SelectItem value="high-protein">High Protein</SelectItem>
+                    <SelectItem value="high-carb">High Carb</SelectItem>
+                    <SelectItem value="keto">Ketogenic</SelectItem>
+                    <SelectItem value="paleo">Paleo</SelectItem>
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {macroProfiles[macroProfile]?.description}
+                </p>
+              </div>
 
-                  {/* Height */}
-                  <div className="space-y-2">
-                    <Label htmlFor="height" className="text-base font-semibold">
-                      Height ({unitSystem === 'metric' ? 'cm' : 'inches'})
-                    </Label>
-                    <Input
-                      id="height"
-                      type="number"
-                      value={height}
-                      onChange={(e) => setHeight(e.target.value)}
-                      placeholder={unitSystem === 'metric' ? 'e.g., 175' : 'e.g., 69'}
-                      className="text-base"
-                    />
-                  </div>
-
-                  {/* Current Weight */}
-                  <div className="space-y-2">
-                    <Label htmlFor="currentWeight" className="text-base font-semibold">
-                      Current Weight ({unitSystem === 'metric' ? 'kg' : 'lbs'})
-                    </Label>
-                    <Input
-                      id="currentWeight"
-                      type="number"
-                      value={currentWeight}
-                      onChange={(e) => setCurrentWeight(e.target.value)}
-                      placeholder={unitSystem === 'metric' ? 'e.g., 70' : 'e.g., 155'}
-                      className="text-base"
-                    />
-                  </div>
-
-                  {/* Target Weight */}
-                  <div className="space-y-2">
-                    <Label htmlFor="desiredWeight" className="text-base font-semibold">
-                      Target Weight ({unitSystem === 'metric' ? 'kg' : 'lbs'})
-                    </Label>
-                    <Input
-                      id="desiredWeight"
-                      type="number"
-                      value={desiredWeight}
-                      onChange={(e) => setDesiredWeight(e.target.value)}
-                      placeholder={unitSystem === 'metric' ? 'e.g., 65' : 'e.g., 145'}
-                      className="text-base"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Activity Level Card */}
-            <Card className="shadow-lg border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
-              <CardHeader className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-t-lg">
-                <CardTitle className="flex items-center gap-2">
-                  <Activity className="h-5 w-5" />
-                  Activity Level
-                </CardTitle>
-                <CardDescription className="text-indigo-100">
-                  Select your typical weekly activity level
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-6 space-y-4">
-                <div className="space-y-4">
-                  <Label className="text-base font-semibold">
-                    Activity Level: {activityDescriptions[getActivityLevelValue(activityLevel[0]) as keyof typeof activityDescriptions]}
-                  </Label>
-                  <Slider
-                    value={activityLevel}
-                    onValueChange={setActivityLevel}
-                    min={1.2}
-                    max={1.9}
-                    step={0.175}
-                    className="w-full"
-                  />
-                  <div className="flex justify-between text-sm text-gray-500">
-                    <span>Sedentary</span>
-                    <span>Very Active</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Goals & Preferences Card */}
-            <Card className="shadow-lg border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
-              <CardHeader className="bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-t-lg">
-                <CardTitle className="flex items-center gap-2">
-                  <Target className="h-5 w-5" />
-                  Goals & Nutrition Preferences
-                </CardTitle>
-                <CardDescription className="text-purple-100">
-                  Customize your nutrition plan based on your goals
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-6 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Goal */}
-                  <div className="space-y-2">
-                    <Label className="text-base font-semibold">Primary Goal</Label>
-                    <Select value={goal} onValueChange={(value) => setGoal(value as 'maintenance' | 'loss' | 'gain')}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="maintenance">Maintain Weight</SelectItem>
-                        <SelectItem value="loss">Lose Weight</SelectItem>
-                        <SelectItem value="gain">Gain Weight</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  {/* Macro Profile */}
-                  <div className="space-y-2">
-                    <Label className="text-base font-semibold">Macro Profile</Label>
-                    <Select value={macroProfile} onValueChange={(value) => setMacroProfile(value as any)}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="balanced">Balanced</SelectItem>
-                        <SelectItem value="moderate-protein">Moderate Protein</SelectItem>
-                        <SelectItem value="high-protein">High Protein</SelectItem>
-                        <SelectItem value="high-carb">High Carb</SelectItem>
-                        <SelectItem value="keto">Ketogenic</SelectItem>
-                        <SelectItem value="paleo">Paleo</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      {macroProfiles[macroProfile]?.description}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Advanced Options Toggle */}
-                <div className="pt-4 border-t">
-                  <Button
-                    variant="outline"
-                    onClick={() => setShowAdvanced(!showAdvanced)}
-                    className="w-full"
-                  >
-                    {showAdvanced ? 'Hide' : 'Show'} Advanced Options
-                  </Button>
-                </div>
-
-                {/* Advanced Options */}
-                {showAdvanced && (
-                  <div className="space-y-6 pt-4 border-t">
-                    {/* Dietary Restrictions */}
-                    <div className="space-y-3">
-                      <Label className="text-base font-semibold">Dietary Restrictions</Label>
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                        {['vegetarian', 'vegan', 'gluten-free', 'dairy-free', 'nut-free', 'keto'].map(restriction => (
-                          <Button
-                            key={restriction}
-                            variant={dietaryRestrictions.includes(restriction) ? "default" : "outline"}
-                            size="sm"
-                            onClick={() => toggleDietaryRestriction(restriction)}
-                            className="justify-start"
-                          >
-                            {restriction.charAt(0).toUpperCase() + restriction.slice(1)}
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Supplement Goals */}
-                    <div className="space-y-3">
-                      <Label className="text-base font-semibold">Supplement Goals</Label>
-                      <div className="grid grid-cols-2 gap-2">
-                        {['muscle-building', 'fat-loss', 'energy', 'recovery'].map(goal => (
-                          <Button
-                            key={goal}
-                            variant={supplementGoals.includes(goal) ? "default" : "outline"}
-                            size="sm"
-                            onClick={() => toggleSupplementGoal(goal)}
-                            className="justify-start"
-                          >
-                            {goal.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-3 pt-6">
-                  <Button 
-                    onClick={calculateCalories} 
-                    className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                    size="lg"
-                  >
-                    <Calculator className="h-5 w-5 mr-2" />
-                    Calculate Nutrition Plan
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    onClick={loadProfile}
-                    disabled={isLoading}
-                    className="sm:w-auto"
-                  >
-                    {isLoading ? (
-                      <LoaderCircle className="h-4 w-4 mr-2 animate-spin" />
-                    ) : (
-                      <User className="h-4 w-4 mr-2" />
-                    )}
-                    Load Profile
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+              {/* Action Buttons */}
+              <div className="flex flex-col gap-3 pt-6">
+                <Button 
+                  onClick={calculateCalories} 
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                  size="lg"
+                >
+                  <Calculator className="h-5 w-5 mr-2" />
+                  Calculate Nutrition Plan
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={loadProfile}
+                  disabled={isLoading}
+                  className="w-full"
+                >
+                  {isLoading ? (
+                    <LoaderCircle className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <User className="h-4 w-4 mr-2" />
+                  )}
+                  Load Profile
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Results Panel */}
-          <div className="xl:col-span-1">
-            {results ? (
-              <Card className="shadow-xl border-0 bg-white dark:bg-gray-800 sticky top-8">
-                <CardHeader className="bg-gradient-to-r from-green-500 to-blue-600 text-white rounded-t-lg">
-                  <CardTitle className="flex items-center justify-between">
-                    <span>Your Nutrition Plan</span>
+          <Card className="shadow-xl border-0 bg-white backdrop-blur-sm">
+            <CardHeader className="bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-t-lg">
+              <CardTitle className="flex items-center gap-2">
+                <Calculator className="h-5 w-5" />
+                Your Caloric & Macro Needs
+              </CardTitle>
+              <CardDescription className="text-green-100">
+                Complete the form to see your personalized results
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6">
+              {results ? (
+                <div className="space-y-6">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-semibold">Your Results</h3>
                     <Button 
-                      variant="secondary" 
+                      variant="outline" 
                       size="sm"
                       onClick={saveResults}
                       disabled={isSaving}
-                      className="bg-white/20 hover:bg-white/30"
                     >
                       {isSaving ? (
                         <LoaderCircle className="h-4 w-4 animate-spin" />
@@ -664,48 +581,40 @@ export default function CalorieCalculator() {
                         <Save className="h-4 w-4" />
                       )}
                     </Button>
-                  </CardTitle>
-                  <CardDescription className="text-green-100">
-                    Goal: {getGoalDescription(results.goal)}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="p-6 space-y-6">
-                  {/* Calorie Breakdown */}
-                  <div className="space-y-4">
-                    <h3 className="font-semibold text-lg">Daily Calories</h3>
-                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-4 rounded-lg">
-                      <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-                        {results.calories}
-                      </div>
-                      <div className="text-sm text-gray-600 dark:text-gray-400">calories per day</div>
+                  </div>
+
+                  {/* BMR and TDEE */}
+                  <div className="grid grid-cols-2 gap-4 text-center">
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <div className="text-2xl font-bold text-gray-700">{results.bmr}</div>
+                      <div className="text-sm text-gray-500">BMR (calories/day)</div>
                     </div>
-                    
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
-                        <div className="font-medium">BMR</div>
-                        <div className="text-gray-600 dark:text-gray-400">{results.bmr} cal</div>
-                      </div>
-                      <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
-                        <div className="font-medium">TDEE</div>
-                        <div className="text-gray-600 dark:text-gray-400">{results.tdee} cal</div>
-                      </div>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <div className="text-2xl font-bold text-gray-700">{results.tdee}</div>
+                      <div className="text-sm text-gray-500">TDEE (calories/day)</div>
                     </div>
                   </div>
 
-                  {/* Macronutrients */}
+                  {/* Daily Target Calories */}
+                  <div className="text-center bg-gradient-to-r from-blue-50 to-green-50 p-6 rounded-lg">
+                    <div className="text-4xl font-bold text-blue-600 mb-2">{results.calories}</div>
+                    <div className="text-lg text-gray-600">Daily Target Calories</div>
+                  </div>
+
+                  {/* Macronutrient Breakdown */}
                   <div className="space-y-4">
-                    <h3 className="font-semibold text-lg">Daily Macros</h3>
+                    <h4 className="font-semibold text-lg">Your personalized macronutrient breakdown will appear here</h4>
                     <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-red-600 font-medium">Protein</span>
+                      <div className="flex justify-between items-center p-3 bg-red-50 rounded">
+                        <span className="font-medium text-red-700">Protein</span>
                         <span className="font-bold">{results.macros.protein}g</span>
                       </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-blue-600 font-medium">Carbs</span>
+                      <div className="flex justify-between items-center p-3 bg-blue-50 rounded">
+                        <span className="font-medium text-blue-700">Carbohydrates</span>
                         <span className="font-bold">{results.macros.carbs}g</span>
                       </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-yellow-600 font-medium">Fat</span>
+                      <div className="flex justify-between items-center p-3 bg-yellow-50 rounded">
+                        <span className="font-medium text-yellow-700">Fat</span>
                         <span className="font-bold">{results.macros.fat}g</span>
                       </div>
                     </div>
@@ -713,109 +622,60 @@ export default function CalorieCalculator() {
 
                   {/* Progress Timeline */}
                   {results.weeklyChangeRate && results.timeToGoal && (
-                    <div className="space-y-4">
-                      <h3 className="font-semibold text-lg">Progress Timeline</h3>
-                      <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-4 rounded-lg">
-                        <div className="text-sm space-y-2">
-                          <div className="flex justify-between">
-                            <span>Weekly Rate:</span>
-                            <span className="font-medium">
-                              {Math.abs(results.weeklyChangeRate)} lbs/week
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>Time to Goal:</span>
-                            <span className="font-medium">{results.timeToGoal} weeks</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Advanced Metrics */}
-                  {results.bodyFatPercentage && (
-                    <div className="space-y-4">
-                      <h3 className="font-semibold text-lg">Body Composition</h3>
-                      <div className="grid grid-cols-2 gap-3 text-sm">
-                        <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
-                          <div className="font-medium">Body Fat</div>
-                          <div className="text-gray-600 dark:text-gray-400">{results.bodyFatPercentage}%</div>
-                        </div>
-                        <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded">
-                          <div className="font-medium">Lean Mass</div>
-                          <div className="text-gray-600 dark:text-gray-400">{results.leanBodyMass}kg</div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Meal Timing */}
-                  {results.mealTiming && (
-                    <div className="space-y-4">
-                      <h3 className="font-semibold text-lg">Meal Distribution</h3>
+                    <div className="space-y-3 bg-purple-50 p-4 rounded-lg">
+                      <h4 className="font-semibold">Progress Timeline</h4>
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between">
-                          <span>Breakfast:</span>
-                          <span className="font-medium">{results.mealTiming.breakfast} cal</span>
+                          <span>Weekly Rate:</span>
+                          <span className="font-medium">
+                            {Math.abs(results.weeklyChangeRate)} lbs/week
+                          </span>
                         </div>
                         <div className="flex justify-between">
-                          <span>Lunch:</span>
-                          <span className="font-medium">{results.mealTiming.lunch} cal</span>
+                          <span>Time to Goal:</span>
+                          <span className="font-medium">{results.timeToGoal} weeks</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span>Dinner:</span>
-                          <span className="font-medium">{results.mealTiming.dinner} cal</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Snacks:</span>
-                          <span className="font-medium">{results.mealTiming.snacks} cal</span>
-                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Additional Metrics */}
+                  {results.bodyFatPercentage && (
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div className="bg-gray-50 p-3 rounded text-center">
+                        <div className="font-bold text-lg">{results.bodyFatPercentage}%</div>
+                        <div className="text-gray-600">Body Fat</div>
+                      </div>
+                      <div className="bg-gray-50 p-3 rounded text-center">
+                        <div className="font-bold text-lg">{results.leanBodyMass}kg</div>
+                        <div className="text-gray-600">Lean Mass</div>
                       </div>
                     </div>
                   )}
 
                   {/* Water Intake */}
                   {results.dailyWaterIntake && (
-                    <div className="space-y-4">
-                      <h3 className="font-semibold text-lg">Hydration</h3>
-                      <div className="bg-gradient-to-r from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 p-4 rounded-lg">
-                        <div className="text-2xl font-bold text-cyan-600 dark:text-cyan-400">
-                          {Math.round(results.dailyWaterIntake / 250)} glasses
-                        </div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400">
-                          ({results.dailyWaterIntake}ml daily)
-                        </div>
+                    <div className="bg-cyan-50 p-4 rounded-lg text-center">
+                      <div className="text-2xl font-bold text-cyan-600">
+                        {Math.round(results.dailyWaterIntake / 250)} glasses
+                      </div>
+                      <div className="text-sm text-cyan-700">
+                        Daily Water Intake ({results.dailyWaterIntake}ml)
                       </div>
                     </div>
                   )}
-
-                  {/* Supplement Suggestions */}
-                  {results.supplementSuggestions && results.supplementSuggestions.length > 0 && (
-                    <div className="space-y-4">
-                      <h3 className="font-semibold text-lg">Recommended Supplements</h3>
-                      <div className="space-y-2">
-                        {results.supplementSuggestions.map((supplement, index) => (
-                          <div key={index} className="bg-gray-50 dark:bg-gray-700 p-3 rounded text-sm">
-                            {supplement}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            ) : (
-              <Card className="shadow-lg border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm sticky top-8">
-                <CardContent className="p-8 text-center">
-                  <Calculator className="h-16 w-16 mx-auto mb-4 text-gray-400" />
-                  <h3 className="text-lg font-semibold mb-2">Ready to Calculate</h3>
-                  <p className="text-gray-600 dark:text-gray-400">
-                    Fill in your information and click "Calculate Nutrition Plan" to see your personalized results.
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <Calculator className="h-16 w-16 mx-auto mb-4 text-gray-300" />
+                  <h3 className="text-xl font-semibold mb-2 text-gray-600">Ready to Calculate Your Needs?</h3>
+                  <p className="text-gray-500 mb-4">
+                    Fill out the form on the left to get your personalized daily caloric intake and macronutrient breakdown.
                   </p>
-                </CardContent>
-              </Card>
-            )}
-          </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
