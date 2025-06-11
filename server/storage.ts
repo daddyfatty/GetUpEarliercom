@@ -209,7 +209,7 @@ export class MemStorage implements IStorage {
         authorId: "erica",
         authorName: "Erica Baker",
         authorPhoto: "/attached_assets/678ab3d4caec71062e65470f_erddd_1749497849578.jpg",
-        createdAt: new Date(),
+        createdAt: new Date('2024-01-01'),
       },
       {
         id: this.currentId++,
@@ -488,7 +488,9 @@ export class MemStorage implements IStorage {
   }
 
   async getRecipes(): Promise<Recipe[]> {
-    return Array.from(this.recipes.values());
+    return Array.from(this.recipes.values()).sort((a, b) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
   }
 
   async getRecipe(id: number): Promise<Recipe | undefined> {
