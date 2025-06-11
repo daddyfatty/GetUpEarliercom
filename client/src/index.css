@@ -28,6 +28,13 @@
   /* GetUpEarlier Header Colors */
   --navy: 229 64% 5%; /* #060918 - Very dark navy blue for header */
   --orange: 0 84% 60%; /* #ef4444 - Red for hover effects */
+  
+  /* Coaching Color Scheme - Purple to Pink Gradient */
+  --coaching-primary: 262 83% 58%; /* #9333ea - Purple 600 */
+  --coaching-secondary: 322 81% 58%; /* #e879f9 - Pink 400 */
+  --coaching-accent: 330 81% 60%; /* #ec4899 - Pink 500 */
+  --coaching-light: 262 83% 95%; /* Light purple for backgrounds */
+  --coaching-text: 262 83% 20%; /* Dark purple for text */
 }
 
 .dark {
