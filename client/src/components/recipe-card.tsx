@@ -164,15 +164,21 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
           )}
           
           <div className="space-y-3">
+            {/* Macros on one line */}
+            <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+              <span className="flex items-center">
+                <Dumbbell className="w-4 h-4 text-[#ef4444] mr-1" />
+                {recipe.protein}g protein
+              </span>
+              <span className="text-gray-400">•</span>
+              <span>{recipe.carbs}g carbs</span>
+              <span className="text-gray-400">•</span>
+              <span>{recipe.fat}g fat</span>
+            </div>
+            
+            {/* Servings and View Recipe button */}
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
-                <span className="flex items-center">
-                  <Dumbbell className="w-4 h-4 text-[#ef4444] mr-1" />
-                  {recipe.protein}g protein
-                </span>
-                <span className="text-gray-400">•</span>
-                <span>{recipe.servings} servings</span>
-              </div>
+              <span className="text-sm text-gray-500 dark:text-gray-400">{recipe.servings} servings</span>
               <Button 
                 variant="ghost" 
                 size="sm"
@@ -181,13 +187,6 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
                 View Recipe
                 <ArrowRight className="w-4 h-4 ml-1" />
               </Button>
-            </div>
-            
-            {/* Carbs and Fat Information */}
-            <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400 pt-2 border-t border-gray-100 dark:border-gray-700">
-              <span>{recipe.carbs}g carbs</span>
-              <span className="text-gray-400">•</span>
-              <span>{recipe.fat}g fat</span>
             </div>
           </div>
         </CardContent>
