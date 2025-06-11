@@ -379,57 +379,6 @@ export class MemStorage implements IStorage {
         authorName: "Michael Baker",
         authorPhoto: "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
         createdAt: new Date('2024-01-02'),
-      },
-      {
-        id: this.currentId++,
-        title: "Banana Ice Cream Sundae Smoothie \"Cup\" (Vitamix)",
-        description: "Satisfy an ice cream sundae craving with a Banana Ice Cream Smoothie \"Cup\". It's unbelievably good if you are into these flavors. Balanced snack with a moderate carb focus, some healthy fats, and a bit of protein ideal for a clean treat. Perfect the night before a morning run for good fuel.",
-        category: ["smoothie bowls", "snack"],
-        dietType: ["vegetarian"],
-        tags: ["smoothie", "bowl", "banana", "snack", "healthy", "endurance", "pre-workout"],
-        prepTime: 5,
-        servings: 1,
-        servingSize: "1 cup",
-        calories: 247,
-        protein: 5,
-        carbs: 39,
-        fat: 9,
-        fiber: 4,
-        sugar: 32,
-        sodium: 65,
-        vitaminC: 9,
-        vitaminD: 0,
-        calcium: 80,
-        iron: 1,
-        potassium: 422,
-        ingredients: [
-          "1 medium frozen banana",
-          "0.25 cup whole milk",
-          "1 teaspoon Enjoy Life chocolate chips",
-          "1 teaspoon chunky peanut butter",
-          "1 tablespoon Grandy Organics original granola"
-        ],
-        instructions: [
-          "Add frozen banana and whole milk to Vitamix or high-powered blender.",
-          "Blend until smooth and creamy, resembling soft-serve ice cream consistency.",
-          "Pour the banana ice cream base into a glass or bowl.",
-          "Top with chocolate chips, chunky peanut butter, and granola.",
-          "Serve immediately for best texture and enjoy as a healthy ice cream alternative."
-        ],
-        content: "The ratio is 1 medium frozen banana to .25 cups whole milk. Blend in Vitamix or any high powered blender. Vitamix is in use almost every day around here. *Finicky kid just wanted the chocolate chips. Balanced snack with a moderate carb focus, some healthy fats, and a bit of protein ideal for a clean treat. I like to have one of these the night before a morning run for good fuel.",
-        imageUrl: "/attached_assets/20250610_182417_1749639036217.jpg",
-        videoUrl: "https://youtube.com/shorts/7tWN7nfpuVU",
-        gallery: [
-          "/attached_assets/20250610_181919_1749639036216.jpg",
-          "/attached_assets/20250610_182410_1749639036217.jpg",
-          "/attached_assets/20250610_182417_1749639036217.jpg",
-          "/attached_assets/20250610_183427 (1)_1749639036217.jpg",
-          "/attached_assets/1000006873_1749639036218.jpg"
-        ],
-        authorId: "michael",
-        authorName: "Michael Baker",
-        authorPhoto: "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
-        createdAt: new Date(), // Most recent recipe
       }
     ];
 
