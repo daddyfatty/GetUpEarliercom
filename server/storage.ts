@@ -99,6 +99,7 @@ export class MemStorage implements IStorage {
     this.favoriteRecipes = new Map();
     this.mealPlans = new Map();
     this.mealPlanRecipes = new Map();
+    this.calculatorResults = new Map();
     this.currentId = 1;
     this.seedData();
   }
@@ -708,6 +709,23 @@ export class MemStorage implements IStorage {
       return true;
     }
     return false;
+  }
+
+  // Calculator results methods
+  async getUserCalculatorResults(userId: string): Promise<CalculatorResult[]> {
+    return Array.from(this.calculatorResults.values())
+      .filter(result => result.userId === userId)
+      .sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
+  }
+
+  async createCalculatorResult(insertResult: InsertCalculatorResult): Promise<CalculatorResult> {
+    const result: CalculatorResult = {
+      id: this.currentId++,
+      ...insertResult,
+      createdAt: new Date(),
+    };
+    this.calculatorResults.set(result.id, result);
+    return result;
   }
 }
 

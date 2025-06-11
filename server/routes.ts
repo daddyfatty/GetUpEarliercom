@@ -824,6 +824,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Calculator results routes
+  app.get("/api/calculator-results", async (req, res) => {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const results = await storage.getUserCalculatorResults(req.user.claims.sub);
+      res.json(results);
+    } catch (error) {
+      console.error("Error fetching calculator results:", error);
+      res.status(500).json({ message: "Failed to fetch calculator results" });
+    }
+  });
+
+  app.post("/api/calculator-results", async (req, res) => {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const { calculatorType, results, userInputs } = req.body;
+      
+      const calculatorResult = await storage.createCalculatorResult({
+        userId: req.user.claims.sub,
+        calculatorType,
+        results,
+        userInputs
+      });
+
+      res.json(calculatorResult);
+    } catch (error) {
+      console.error("Error saving calculator result:", error);
+      res.status(500).json({ message: "Failed to save calculator result" });
+    }
+  });
+
   // PayPal routes
   app.post("/api/paypal/order", createPaypalOrder);
   app.post("/api/paypal/order/:orderID/capture", capturePaypalOrder);

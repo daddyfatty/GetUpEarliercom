@@ -4,12 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Beer, Wine, Scale, TrendingUp } from "lucide-react";
+import { Beer, Wine, Scale, TrendingUp, Save } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 export default function AlcoholCalculator() {
   const [beerCount, setBeerCount] = useState(0);
   const [wineCount, setWineCount] = useState(0);
   const [wineServing, setWineServing] = useState("quarter"); // quarter, half, full
+  const { toast } = useToast();
 
   // Nutrition data
   const BEER_CALORIES = 153;
@@ -62,10 +66,56 @@ export default function AlcoholCalculator() {
   const monthlyWeightGain = weeklyWeightGain * 4.33; // Average weeks per month
   const yearlyWeightGain = weeklyWeightGain * 52; // 52 weeks per year
 
+  const saveResultMutation = useMutation({
+    mutationFn: async () => {
+      return apiRequest("POST", "/api/calculator-results", {
+        calculatorType: "alcohol",
+        results: {
+          totalCalories,
+          totalCarbs,
+          totalProtein,
+          weeklyWeightGain,
+          monthlyWeightGain,
+          yearlyWeightGain
+        },
+        userInputs: {
+          beerCount,
+          wineCount,
+          wineServing
+        }
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Results Saved",
+        description: "Your alcohol calculator results have been saved to your profile.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Save Failed",
+        description: "Unable to save results. Please try again.",
+        variant: "destructive",
+      });
+    }
+  });
+
   const resetCalculator = () => {
     setBeerCount(0);
     setWineCount(0);
     setWineServing("quarter");
+  };
+
+  const saveResults = () => {
+    if (totalCalories > 0) {
+      saveResultMutation.mutate();
+    } else {
+      toast({
+        title: "No Data to Save",
+        description: "Please enter some alcohol consumption data first.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -244,13 +294,23 @@ export default function AlcoholCalculator() {
         {/* Action Buttons */}
         <div className="flex gap-4 justify-center">
           {totalCalories > 0 && (
-            <Button 
-              variant="outline" 
-              onClick={resetCalculator}
-              className="min-w-[120px]"
-            >
-              Reset Calculator
-            </Button>
+            <>
+              <Button 
+                onClick={saveResults}
+                disabled={saveResultMutation.isPending}
+                className="min-w-[120px]"
+              >
+                <Save className="h-4 w-4 mr-2" />
+                {saveResultMutation.isPending ? "Saving..." : "Save Results"}
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={resetCalculator}
+                className="min-w-[120px]"
+              >
+                Reset Calculator
+              </Button>
+            </>
           )}
         </div>
 
