@@ -168,28 +168,7 @@ export default function CalorieCalculator() {
     // Calculate TDEE with adjustments
     let activityMultiplier = activityLevel[0];
     
-    // Adjust for workout frequency
-    const workoutDaysNum = parseInt(workoutDays);
-    if (workoutDaysNum > 5) {
-      activityMultiplier += 0.1;
-    } else if (workoutDaysNum < 2) {
-      activityMultiplier -= 0.05;
-    }
-    
-    // Adjust for sleep (poor sleep reduces metabolism)
-    const sleepHoursNum = parseInt(sleepHours);
-    if (sleepHoursNum < 7) {
-      activityMultiplier -= 0.05;
-    } else if (sleepHoursNum > 8) {
-      activityMultiplier += 0.02;
-    }
-    
-    // Adjust for stress
-    if (stressLevel === 'high') {
-      activityMultiplier -= 0.05;
-    } else if (stressLevel === 'low') {
-      activityMultiplier += 0.02;
-    }
+    // Use base activity multiplier without lifestyle adjustments
     
     const tdee = bmr * activityMultiplier;
 
