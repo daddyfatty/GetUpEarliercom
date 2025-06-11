@@ -1,4 +1,4 @@
-import type { User, Recipe, Workout, Goal, FoodEntry, Achievement, WaterIntake, FavoriteRecipe, MealPlan, MealPlanRecipe, InsertUser, InsertRecipe, InsertWorkout, InsertGoal, InsertFoodEntry, InsertAchievement, InsertWaterIntake, InsertFavoriteRecipe, InsertMealPlan, InsertMealPlanRecipe } from "../shared/schema";
+import type { User, Recipe, Workout, Goal, FoodEntry, Achievement, WaterIntake, FavoriteRecipe, MealPlan, MealPlanRecipe, CalculatorResult, InsertUser, InsertRecipe, InsertWorkout, InsertGoal, InsertFoodEntry, InsertAchievement, InsertWaterIntake, InsertFavoriteRecipe, InsertMealPlan, InsertMealPlanRecipe, InsertCalculatorResult } from "../shared/schema";
 
 export interface IStorage {
   // User methods
@@ -68,6 +68,10 @@ export interface IStorage {
   getMealPlanRecipes(mealPlanId: number): Promise<(MealPlanRecipe & { recipe: Recipe })[]>;
   addRecipeToMealPlan(mealPlanId: number, recipeId: number, mealType: string): Promise<MealPlanRecipe>;
   removeRecipeFromMealPlan(mealPlanId: number, recipeId: number): Promise<boolean>;
+
+  // Calculator results methods
+  getUserCalculatorResults(userId: string): Promise<CalculatorResult[]>;
+  createCalculatorResult(result: InsertCalculatorResult): Promise<CalculatorResult>;
 }
 
 export class MemStorage implements IStorage {
@@ -81,6 +85,7 @@ export class MemStorage implements IStorage {
   private favoriteRecipes: Map<number, FavoriteRecipe>;
   private mealPlans: Map<number, MealPlan>;
   private mealPlanRecipes: Map<number, MealPlanRecipe>;
+  private calculatorResults: Map<number, CalculatorResult>;
   private currentId: number;
 
   constructor() {

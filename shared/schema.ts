@@ -166,6 +166,15 @@ export const mealPlanRecipes = pgTable("meal_plan_recipes", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+export const calculatorResults = pgTable("calculator_results", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  calculatorType: text("calculator_type").notNull(), // calorie, alcohol, nutrition
+  results: jsonb("results").notNull(), // Store all calculation results
+  userInputs: jsonb("user_inputs").notNull(), // Store user input data
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   createdAt: true,
@@ -219,6 +228,11 @@ export const insertMealPlanRecipeSchema = createInsertSchema(mealPlanRecipes).om
   createdAt: true,
 });
 
+export const insertCalculatorResultSchema = createInsertSchema(calculatorResults).omit({
+  id: true,
+  createdAt: true,
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type Recipe = typeof recipes.$inferSelect;
@@ -239,3 +253,5 @@ export type MealPlan = typeof mealPlans.$inferSelect;
 export type InsertMealPlan = z.infer<typeof insertMealPlanSchema>;
 export type MealPlanRecipe = typeof mealPlanRecipes.$inferSelect;
 export type InsertMealPlanRecipe = z.infer<typeof insertMealPlanRecipeSchema>;
+export type CalculatorResult = typeof calculatorResults.$inferSelect;
+export type InsertCalculatorResult = z.infer<typeof insertCalculatorResultSchema>;
