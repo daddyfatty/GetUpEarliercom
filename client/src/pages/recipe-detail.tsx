@@ -25,6 +25,7 @@ export default function RecipeDetail() {
   const [volumeMultiplier, setVolumeMultiplier] = useState(1);
   const [customServing, setCustomServing] = useState("");
   const [targetProtein, setTargetProtein] = useState<number | null>(null);
+  const [targetCarbs, setTargetCarbs] = useState<number | null>(null);
   const [mealPlanData, setMealPlanData] = useState({
     name: "",
     date: new Date().toISOString().split('T')[0],
@@ -65,9 +66,17 @@ export default function RecipeDetail() {
     return targetProtein / recipe.protein;
   };
 
-  // Function to get effective multiplier (protein takes precedence over volume)
+  // Function to calculate multiplier based on target carbs
+  const getCarbsBasedMultiplier = () => {
+    if (!targetCarbs || !recipe?.carbs) return 1;
+    return targetCarbs / recipe.carbs;
+  };
+
+  // Function to get effective multiplier (macro targets take precedence over volume)
   const getEffectiveMultiplier = () => {
-    return targetProtein ? getProteinBasedMultiplier() : volumeMultiplier;
+    if (targetProtein) return getProteinBasedMultiplier();
+    if (targetCarbs) return getCarbsBasedMultiplier();
+    return volumeMultiplier;
   };
 
   // Function to get adjusted nutrition with effective multiplier
@@ -107,7 +116,22 @@ export default function RecipeDetail() {
   const handleProteinChange = (value: number[]) => {
     const newProtein = value[0];
     setTargetProtein(newProtein);
+    setTargetCarbs(null); // Clear carbs target when adjusting protein
     setCustomServing(''); // Clear custom serving when using protein adjustment
+    
+    // Update the serving size display
+    const newServingSize = getAdjustedServingSize();
+    if (newServingSize !== (recipe as any)?.servingSize) {
+      setCustomServing(newServingSize);
+    }
+  };
+
+  // Handle carbs slider change
+  const handleCarbsChange = (value: number[]) => {
+    const newCarbs = value[0];
+    setTargetCarbs(newCarbs);
+    setTargetProtein(null); // Clear protein target when adjusting carbs
+    setCustomServing(''); // Clear custom serving when using carbs adjustment
     
     // Update the serving size display
     const newServingSize = getAdjustedServingSize();
@@ -672,19 +696,19 @@ export default function RecipeDetail() {
                     <div className="space-y-2">
                       <div className="space-y-3 py-2 border-b border-gray-200 dark:border-gray-700">
                         <div className="flex justify-between items-center">
-                          <span className="text-gray-600 dark:text-gray-400">Protein Target</span>
+                          <span className="text-gray-600 dark:text-gray-400">Protein</span>
                           <span className="font-semibold text-gray-900 dark:text-white">{targetProtein || getAdjustedNutritionValue(recipe.protein || 0)}g</span>
                         </div>
                         <div className="space-y-2">
                           <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
-                            <span>15g</span>
+                            <span>5g</span>
                             <span>50g+</span>
                           </div>
                           <Slider
-                            value={[targetProtein || recipe.protein || 15]}
+                            value={[targetProtein || recipe.protein || 5]}
                             onValueChange={handleProteinChange}
                             max={50}
-                            min={15}
+                            min={5}
                             step={1}
                             className="w-full"
                           />
@@ -695,9 +719,30 @@ export default function RecipeDetail() {
                           )}
                         </div>
                       </div>
-                      <div className="flex justify-between items-center py-1">
-                        <span className="text-gray-600 dark:text-gray-400">Carbohydrates</span>
-                        <span className="font-semibold text-gray-900 dark:text-white">{getAdjustedNutritionValue(recipe.carbs || 0)}g</span>
+                      <div className="space-y-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600 dark:text-gray-400">Carbohydrates</span>
+                          <span className="font-semibold text-gray-900 dark:text-white">{targetCarbs || getAdjustedNutritionValue(recipe.carbs || 0)}g</span>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                            <span>10g</span>
+                            <span>100g+</span>
+                          </div>
+                          <Slider
+                            value={[targetCarbs || recipe.carbs || 10]}
+                            onValueChange={handleCarbsChange}
+                            max={100}
+                            min={10}
+                            step={1}
+                            className="w-full"
+                          />
+                          {targetCarbs && (
+                            <div className="text-xs text-[#ef4444] dark:text-red-400">
+                              Adjusted serving: {getAdjustedServingSize()}
+                            </div>
+                          )}
+                        </div>
                       </div>
                       <div className="flex justify-between items-center py-1">
                         <span className="text-gray-600 dark:text-gray-400">Fat</span>
