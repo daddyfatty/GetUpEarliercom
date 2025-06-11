@@ -163,23 +163,32 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
             </div>
           )}
           
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
-              <span className="flex items-center">
-                <Dumbbell className="w-4 h-4 text-[#ef4444] mr-1" />
-                {recipe.protein}g protein
-              </span>
-              <span className="text-gray-400">•</span>
-              <span>{recipe.servings} servings</span>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                <span className="flex items-center">
+                  <Dumbbell className="w-4 h-4 text-[#ef4444] mr-1" />
+                  {recipe.protein}g protein
+                </span>
+                <span className="text-gray-400">•</span>
+                <span>{recipe.servings} servings</span>
+              </div>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                className="text-[#ef4444] hover:text-[#ef4444]/80 font-medium"
+              >
+                View Recipe
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </Button>
             </div>
-            <Button 
-              variant="ghost" 
-              size="sm"
-              className="text-[#ef4444] hover:text-[#ef4444]/80 font-medium"
-            >
-              View Recipe
-              <ArrowRight className="w-4 h-4 ml-1" />
-            </Button>
+            
+            {/* Carbs and Fat Information */}
+            <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400 pt-2 border-t border-gray-100 dark:border-gray-700">
+              <span>{recipe.carbs}g carbs</span>
+              <span className="text-gray-400">•</span>
+              <span>{recipe.fat}g fat</span>
+            </div>
           </div>
         </CardContent>
       </Card>
