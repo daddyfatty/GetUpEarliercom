@@ -641,9 +641,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Save user profile data from calorie calculator
   app.post("/api/user/profile", async (req, res) => {
     try {
-      if (!req.user) {
-        return res.status(401).json({ message: "Authentication required" });
-      }
+      // Development mode - use default user ID
+      const developmentUserId = "dev_user_1";
 
       const { age, sex, height, currentWeight, desiredWeight, activityLevel, goal, unitSystem, macroProfile } = req.body;
       
@@ -652,9 +651,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const desiredWeightGrams = desiredWeight ? Math.round(desiredWeight * (unitSystem === 'metric' ? 1000 : 453.592)) : null;
       
       const profileData = {
-        age: age ? parseInt(age) : null,
+        age: age ? parseInt(age) : undefined,
         sex,
-        height: height ? parseInt(height) : null,
+        height: height ? parseInt(height) : undefined,
         currentWeight: currentWeightGrams,
         desiredWeight: desiredWeightGrams,
         activityLevel,
@@ -663,7 +662,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         macroProfile
       };
 
-      const updatedUser = await storage.updateUserProfile(req.user.id, profileData);
+      const updatedUser = await storage.updateUserProfile(developmentUserId, profileData);
       
       if (!updatedUser) {
         return res.status(404).json({ message: "User not found" });
@@ -679,14 +678,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get user profile data
   app.get("/api/user/profile", async (req, res) => {
     try {
-      if (!req.user) {
-        return res.status(401).json({ message: "Authentication required" });
-      }
+      // Development mode - use default user ID
+      const developmentUserId = "dev_user_1";
 
-      const user = await storage.getUser(req.user.id);
+      let user = await storage.getUser(developmentUserId);
       
       if (!user) {
-        return res.status(404).json({ message: "User not found" });
+        // Create development user if doesn't exist
+        user = await storage.createUser({
+          id: developmentUserId,
+          email: "developer@getupear.lier.com",
+          firstName: "Developer",
+          lastName: "User"
+        });
       }
 
       // Convert stored gram weights back to display units
@@ -712,9 +716,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Save calculation results to user profile
   app.post("/api/user/save-result", async (req, res) => {
     try {
-      if (!req.user) {
-        return res.status(401).json({ message: "Authentication required" });
-      }
+      // Development mode - use default user ID
+      const developmentUserId = "dev_user_1";
 
       const { type, data } = req.body;
       
@@ -722,16 +725,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Type and data are required" });
       }
 
-      // For now, we'll store results in a simple format
-      // In a real app, you'd want a dedicated results table
-      const resultData = {
-        userId: req.user.id,
+      const result = await storage.createCalculatorResult({
+        userId: developmentUserId,
         type,
-        data: JSON.stringify(data),
-        createdAt: new Date().toISOString()
-      };
+        data: JSON.stringify(data)
+      });
 
-      res.json({ message: "Results saved successfully", result: resultData });
+      res.json({ message: "Results saved successfully", result });
     } catch (error) {
       console.error("Error saving result:", error);
       res.status(500).json({ message: "Failed to save result" });

@@ -6,19 +6,26 @@ export interface User {
   firstName?: string;
   lastName?: string;
   profileImageUrl?: string;
+  isAdmin?: boolean;
 }
 
-// Simple auth simulation for testing
+// Development auth - keeps user permanently logged in during development
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate checking for existing session
-    const savedUser = localStorage.getItem('demo_user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
+    // Auto-login for development - create a persistent demo user
+    const developmentUser: User = {
+      id: "dev_user_1",
+      email: "developer@getupear.lier.com",
+      firstName: "Developer",
+      lastName: "User",
+      isAdmin: true
+    };
+    
+    setUser(developmentUser);
+    localStorage.setItem('demo_user', JSON.stringify(developmentUser));
     setIsLoading(false);
   }, []);
 
@@ -27,21 +34,31 @@ export function useAuth() {
       id: `user_${Date.now()}`,
       email,
       firstName: email.split('@')[0],
-      lastName: 'Demo'
+      lastName: 'Demo',
+      isAdmin: email.includes('admin')
     };
     setUser(demoUser);
     localStorage.setItem('demo_user', JSON.stringify(demoUser));
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('demo_user');
+    // In development, immediately re-login to stay authenticated
+    const developmentUser: User = {
+      id: "dev_user_1",
+      email: "developer@getupear.lier.com",
+      firstName: "Developer",
+      lastName: "User",
+      isAdmin: true
+    };
+    setUser(developmentUser);
+    localStorage.setItem('demo_user', JSON.stringify(developmentUser));
   };
 
   return {
     user,
     isLoading,
     isAuthenticated: !!user,
+    isAdmin: user?.isAdmin || false,
     login,
     logout
   };
