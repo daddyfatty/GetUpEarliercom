@@ -530,7 +530,25 @@ export default function RecipeDetail() {
                   <div className="mb-6">
                     <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                       <iframe
-                        src={(recipe as any).videoUrl.replace('watch?v=', 'embed/')}
+                        src={(() => {
+                          const url = (recipe as any).videoUrl;
+                          // Handle YouTube Shorts
+                          if (url.includes('/shorts/')) {
+                            const videoId = url.split('/shorts/')[1];
+                            return `https://www.youtube.com/embed/${videoId}`;
+                          }
+                          // Handle regular YouTube URLs
+                          if (url.includes('watch?v=')) {
+                            return url.replace('watch?v=', 'embed/');
+                          }
+                          // Handle youtu.be URLs
+                          if (url.includes('youtu.be/')) {
+                            const videoId = url.split('youtu.be/')[1];
+                            return `https://www.youtube.com/embed/${videoId}`;
+                          }
+                          // Return as-is if already an embed URL
+                          return url;
+                        })()}
                         title={`${recipe.title} - Video Tutorial`}
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
