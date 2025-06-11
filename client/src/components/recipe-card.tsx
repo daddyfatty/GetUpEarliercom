@@ -1,8 +1,11 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Clock, Dumbbell, ArrowRight } from "lucide-react";
+import { Clock, Dumbbell, ArrowRight, Heart } from "lucide-react";
 import { Link } from "wouter";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 import type { Recipe } from "@shared/schema";
 
 interface RecipeCardProps {

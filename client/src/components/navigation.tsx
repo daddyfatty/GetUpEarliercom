@@ -219,19 +219,42 @@ export function Navigation() {
                 )}
 
                 {isAuthenticated ? (
-                  <div className="flex items-center space-x-2">
-                    <span className="text-white text-sm">
-                      Welcome, {user?.firstName || user?.email}
-                    </span>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      onClick={logout}
-                      className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10"
-                    >
-                      <LogOut className="h-4 w-4" />
-                    </Button>
-                  </div>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm" className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10 flex items-center space-x-2">
+                        <User className="h-4 w-4" />
+                        <span className="hidden lg:inline">{user?.firstName || user?.email}</span>
+                        <ChevronDown className="h-3 w-3" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="bg-white border border-gray-200 shadow-lg">
+                      <DropdownMenuItem asChild>
+                        <Link href="/profile">
+                          <User className="h-4 w-4 mr-2" />
+                          My Profile
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link href="/favorites">
+                          <span className="h-4 w-4 mr-2">♥</span>
+                          Favorites
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link href="/saved-results">
+                          <span className="h-4 w-4 mr-2">📊</span>
+                          Saved Results
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={logout}
+                        className="text-red-600 hover:text-red-700"
+                      >
+                        <LogOut className="h-4 w-4 mr-2" />
+                        Sign Out
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 ) : (
                   <div className="flex space-x-2">
                     <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>

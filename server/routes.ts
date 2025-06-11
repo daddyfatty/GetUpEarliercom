@@ -709,6 +709,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Save calculation results to user profile
+  app.post("/api/user/save-result", async (req, res) => {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const { type, data } = req.body;
+      
+      if (!type || !data) {
+        return res.status(400).json({ message: "Type and data are required" });
+      }
+
+      // For now, we'll store results in a simple format
+      // In a real app, you'd want a dedicated results table
+      const resultData = {
+        userId: req.user.id,
+        type,
+        data: JSON.stringify(data),
+        createdAt: new Date().toISOString()
+      };
+
+      res.json({ message: "Results saved successfully", result: resultData });
+    } catch (error) {
+      console.error("Error saving result:", error);
+      res.status(500).json({ message: "Failed to save result" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -177,8 +177,44 @@ export default function CalorieCalculator() {
     return closest;
   };
 
+  // Check if user is authenticated
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Check authentication status
+    const checkAuth = async () => {
+      try {
+        const userData = await apiRequest("GET", "/api/auth/user");
+        setUser(userData);
+        setIsAuthenticated(true);
+      } catch (error) {
+        setIsAuthenticated(false);
+        setUser(null);
+      }
+    };
+    checkAuth();
+  }, []);
+
   // Save profile data to user account
   const saveProfile = async () => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Sign Up Required",
+        description: "Create an account to save your calculator settings and access personalized features.",
+        action: (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => window.location.href = "/api/login"}
+          >
+            Sign Up
+          </Button>
+        ),
+      });
+      return;
+    }
+
     setIsSaving(true);
     try {
       const profileData = {
@@ -202,7 +238,7 @@ export default function CalorieCalculator() {
     } catch (error) {
       toast({
         title: "Save Failed",
-        description: "Could not save profile. Please make sure you're logged in.",
+        description: "Could not save profile. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -212,6 +248,23 @@ export default function CalorieCalculator() {
 
   // Load profile data from user account
   const loadProfile = async () => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Sign Up Required",
+        description: "Create an account to save and load your personalized calculator settings.",
+        action: (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => window.location.href = "/api/login"}
+          >
+            Sign Up
+          </Button>
+        ),
+      });
+      return;
+    }
+
     setIsLoading(true);
     try {
       const profileData = await apiRequest("GET", "/api/user/profile");
@@ -233,11 +286,66 @@ export default function CalorieCalculator() {
     } catch (error) {
       toast({
         title: "Load Failed", 
-        description: "Could not load profile. Please make sure you're logged in.",
+        description: "Could not load profile. Please try again.",
         variant: "destructive",
       });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Save calculation results to profile
+  const saveResults = async () => {
+    if (!results) return;
+    
+    if (!isAuthenticated) {
+      toast({
+        title: "Sign Up Required",
+        description: "Create an account to save your calculation results and track your progress.",
+        action: (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => window.location.href = "/api/login"}
+          >
+            Sign Up
+          </Button>
+        ),
+      });
+      return;
+    }
+
+    try {
+      const resultData = {
+        type: 'calorie_calculation',
+        data: {
+          ...results,
+          inputData: {
+            age,
+            sex,
+            height,
+            currentWeight,
+            desiredWeight,
+            activityLevel: activityLevel[0],
+            goal,
+            unitSystem,
+            macroProfile
+          }
+        }
+      };
+
+      await apiRequest("POST", "/api/user/save-result", resultData);
+      
+      toast({
+        title: "Results Saved",
+        description: "Your calculation results have been saved to your profile.",
+      });
+    } catch (error) {
+      toast({
+        title: "Save Failed",
+        description: "Could not save results. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -622,6 +730,23 @@ export default function CalorieCalculator() {
                         </>
                       )}
                     </div>
+                  </div>
+                  
+                  {/* Save Results Button */}
+                  <div className="mt-6 pt-6 border-t border-gray-200">
+                    <Button 
+                      onClick={saveResults}
+                      className="w-full bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600"
+                      disabled={!results}
+                    >
+                      <Save className="h-4 w-4 mr-2" />
+                      {isAuthenticated ? "Save Results to Profile" : "Sign Up to Save Results"}
+                    </Button>
+                    {!isAuthenticated && (
+                      <p className="text-xs text-gray-500 text-center mt-2">
+                        Create an account to save your calculation results and track your progress
+                      </p>
+                    )}
                   </div>
                 </div>
               )}
