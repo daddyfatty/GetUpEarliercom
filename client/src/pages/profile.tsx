@@ -7,7 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { User, Settings, Save } from "lucide-react";
+import { User, Settings, Save, Calculator, Clock, TrendingUp } from "lucide-react";
+import { format } from "date-fns";
 
 export default function Profile() {
   const { toast } = useToast();
@@ -15,6 +16,11 @@ export default function Profile() {
   
   const { data: profileData, isLoading } = useQuery({
     queryKey: ["/api/user/profile"],
+    retry: false,
+  });
+
+  const { data: calculatorResults, isLoading: isLoadingResults } = useQuery({
+    queryKey: ["/api/calculator-results"],
     retry: false,
   });
 
@@ -67,10 +73,106 @@ export default function Profile() {
     );
   }
 
+  const getCalculatorLabel = (type: string) => {
+    switch (type) {
+      case "alcohol": return "Alcohol Weight Calculator";
+      case "calorie": return "Calorie Tracker";
+      case "bmi": return "BMI Calculator";
+      default: return "Calculator";
+    }
+  };
+
+  const formatCalculatorResult = (result: any, type: string) => {
+    if (type === "alcohol") {
+      return {
+        summary: `${result.totalCalories} calories/week`,
+        details: [
+          `Weekly weight gain: ${result.weeklyWeightGain?.toFixed(2)} lbs`,
+          `Monthly projection: ${result.monthlyWeightGain?.toFixed(2)} lbs`,
+          `Yearly projection: ${result.yearlyWeightGain?.toFixed(1)} lbs`
+        ],
+        severity: result.weeklyWeightGain > 0.5 ? "high" : result.weeklyWeightGain > 0.2 ? "medium" : "low"
+      };
+    }
+    return { summary: "Calculation completed", details: [], severity: "low" };
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 pt-20">
       <div className="container mx-auto px-4 py-8">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Calculator History Section */}
+          <Card className="bg-white/95 backdrop-blur-sm shadow-xl">
+            <CardHeader className="text-center">
+              <div className="mx-auto mb-4 w-16 h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
+                <Calculator className="h-8 w-8 text-white" />
+              </div>
+              <CardTitle className="text-2xl font-bold text-gray-900">Calculator History</CardTitle>
+              <p className="text-gray-600">Your recent calculator results and insights</p>
+            </CardHeader>
+            <CardContent>
+              {isLoadingResults ? (
+                <div className="text-center py-8 text-gray-500">Loading calculator history...</div>
+              ) : calculatorResults && calculatorResults.length > 0 ? (
+                <div className="space-y-4">
+                  {calculatorResults.slice(0, 5).map((result: any) => {
+                    const formatted = formatCalculatorResult(result.results, result.calculatorType);
+                    return (
+                      <div key={result.id} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Calculator className="h-4 w-4 text-blue-600" />
+                              <h3 className="font-semibold text-gray-900">
+                                {getCalculatorLabel(result.calculatorType)}
+                              </h3>
+                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                formatted.severity === "high" ? "bg-red-100 text-red-800" :
+                                formatted.severity === "medium" ? "bg-yellow-100 text-yellow-800" :
+                                "bg-green-100 text-green-800"
+                              }`}>
+                                {formatted.severity === "high" ? "High Impact" :
+                                 formatted.severity === "medium" ? "Medium Impact" :
+                                 "Low Impact"}
+                              </span>
+                            </div>
+                            <p className="text-gray-700 font-medium mb-2">{formatted.summary}</p>
+                            {formatted.details.length > 0 && (
+                              <div className="text-sm text-gray-600 space-y-1">
+                                {formatted.details.map((detail: string, idx: number) => (
+                                  <div key={idx} className="flex items-center gap-2">
+                                    <TrendingUp className="h-3 w-3 text-gray-400" />
+                                    {detail}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                          <div className="text-right text-sm text-gray-500 ml-4">
+                            <div className="flex items-center gap-1">
+                              <Clock className="h-3 w-3" />
+                              {format(new Date(result.createdAt), "MMM d, yyyy")}
+                            </div>
+                            <div className="text-xs mt-1">
+                              {format(new Date(result.createdAt), "h:mm a")}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="text-center py-8 text-gray-500">
+                  <Calculator className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+                  <p>No calculator history yet</p>
+                  <p className="text-sm">Your saved calculations will appear here</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Profile Settings */}
           <Card className="bg-white/95 backdrop-blur-sm shadow-xl">
             <CardHeader className="text-center">
               <div className="mx-auto mb-4 w-16 h-16 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full flex items-center justify-center">
