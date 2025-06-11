@@ -32,8 +32,8 @@ export default function Home() {
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Transform?</h2>
             <p className="text-xl md:text-2xl text-purple-100 max-w-4xl mx-auto leading-relaxed">
-              Get personalized coaching from a certified trainer with 30 years of experience. 
-              Bridge the gap from inactivity to strength and healthy habits.
+              Get personalized training and coaching from a certified trainer, yoga teacher, running coach, and integrative nutrition coach. 
+              Bridge the gap from inactivity to strength and sustainable healthy habits.
             </p>
           </div>
           
