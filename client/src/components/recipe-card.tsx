@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Clock, Dumbbell, ArrowRight, Heart } from "lucide-react";
 import { Link } from "wouter";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useMutation } from "@tanstack/react-query";
 import type { Recipe } from "@shared/schema";
 
 interface RecipeCardProps {
@@ -21,19 +22,67 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
     // Check authentication and favorite status
     const checkAuthAndFavorite = async () => {
       try {
-        const userData = await apiRequest("GET", "/api/auth/user");
+        // In development, always authenticated
         setIsAuthenticated(true);
         
-        // Check if this recipe is favorited
-        const favoriteStatus = await apiRequest("GET", `/api/users/${userData.id}/favorites/${recipe.id}/check`);
-        setIsFavorited(favoriteStatus.isFavorited);
+        // Check if this recipe is favorited by fetching user favorites
+        const favorites = await apiRequest("GET", "/api/users/dev_user_1/favorites");
+        const isFav = favorites.some((fav: any) => fav.id === recipe.id);
+        setIsFavorited(isFav);
       } catch (error) {
-        setIsAuthenticated(false);
+        console.error("Error checking favorite status:", error);
+        setIsAuthenticated(true); // Still authenticated in dev mode
         setIsFavorited(false);
       }
     };
     checkAuthAndFavorite();
   }, [recipe.id]);
+
+  // Mutation for adding favorite
+  const addFavoriteMutation = useMutation({
+    mutationFn: async () => {
+      return await apiRequest("POST", "/api/users/dev_user_1/favorites", { recipeId: recipe.id });
+    },
+    onSuccess: () => {
+      setIsFavorited(true);
+      queryClient.invalidateQueries({ queryKey: ["/api/users/dev_user_1/favorites"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/user/profile"] });
+      toast({
+        title: "Added to Favorites",
+        description: `${recipe.title} added to your favorites.`,
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Could not add to favorites. Please try again.",
+        variant: "destructive",
+      });
+    }
+  });
+
+  // Mutation for removing favorite
+  const removeFavoriteMutation = useMutation({
+    mutationFn: async () => {
+      return await apiRequest("DELETE", `/api/users/dev_user_1/favorites/${recipe.id}`);
+    },
+    onSuccess: () => {
+      setIsFavorited(false);
+      queryClient.invalidateQueries({ queryKey: ["/api/users/dev_user_1/favorites"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/user/profile"] });
+      toast({
+        title: "Removed from Favorites",
+        description: `${recipe.title} removed from your favorites.`,
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Could not remove from favorites. Please try again.",
+        variant: "destructive",
+      });
+    }
+  });
 
   const handleFavoriteClick = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -56,28 +105,10 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
       return;
     }
 
-    try {
-      if (isFavorited) {
-        await apiRequest("DELETE", `/api/users/1/favorites/${recipe.id}`);
-        setIsFavorited(false);
-        toast({
-          title: "Removed from Favorites",
-          description: `${recipe.title} removed from your favorites.`,
-        });
-      } else {
-        await apiRequest("POST", `/api/users/1/favorites`, { recipeId: recipe.id });
-        setIsFavorited(true);
-        toast({
-          title: "Added to Favorites",
-          description: `${recipe.title} added to your favorites.`,
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Could not update favorites. Please try again.",
-        variant: "destructive",
-      });
+    if (isFavorited) {
+      removeFavoriteMutation.mutate();
+    } else {
+      addFavoriteMutation.mutate();
     }
   };
 
