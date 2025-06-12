@@ -598,28 +598,15 @@ export default function CalorieCalculator() {
                 </p>
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex flex-col gap-3 pt-6">
+              {/* Action Button */}
+              <div className="pt-6">
                 <Button 
                   onClick={calculateCalories} 
                   className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
                   size="lg"
                 >
                   <Calculator className="h-5 w-5 mr-2" />
-                  Calculate Nutrition Plan
-                </Button>
-                <Button 
-                  variant="outline" 
-                  onClick={loadProfile}
-                  disabled={isLoading}
-                  className="w-full"
-                >
-                  {isLoading ? (
-                    <LoaderCircle className="h-4 w-4 mr-2 animate-spin" />
-                  ) : (
-                    <User className="h-4 w-4 mr-2" />
-                  )}
-                  Load Profile
+                  Calculate
                 </Button>
               </div>
             </CardContent>
