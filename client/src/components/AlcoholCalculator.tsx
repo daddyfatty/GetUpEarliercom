@@ -106,13 +106,21 @@ export default function AlcoholCalculator() {
     mutationFn: async () => {
       return apiRequest("POST", "/api/calculator-results", {
         calculatorType: "alcohol",
-        results: {
+        userInputs: JSON.stringify({
+          beer: beerCount,
+          wine: wineCount,
+          wineServing,
+          spirits: spiritsCount,
+          cocktails: cocktailCount
+        }),
+        results: JSON.stringify({
           totalCalories,
           totalCarbs,
           totalProtein,
-          weeklyWeightGain,
-          monthlyWeightGain,
-          yearlyWeightGain,
+          weeklyGain: weeklyWeightGain,
+          monthlyGain: monthlyWeightGain,
+          yearlyGain: yearlyWeightGain,
+          weeklyCalories: totalCalories,
           metabolicImpact: metabolicImpact.level,
           breakdown: {
             beer: { count: beerCount, calories: beerCount * BEER_CALORIES },
@@ -120,17 +128,7 @@ export default function AlcoholCalculator() {
             spirits: { count: spiritsCount, calories: spiritsCount * SPIRITS_CALORIES },
             cocktails: { count: cocktailCount, calories: cocktailCount * COCKTAIL_CALORIES }
           }
-        },
-        userInputs: {
-          beerCount,
-          wineCount,
-          wineServing,
-          spiritsCount,
-          cocktailCount,
-          currentWeight,
-          unitSystem,
-          activityLevel
-        }
+        })
       });
     },
     onSuccess: () => {
