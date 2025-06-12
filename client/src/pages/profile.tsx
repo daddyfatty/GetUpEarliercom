@@ -388,9 +388,10 @@ export default function Profile() {
                   {recentResults.map((result) => {
                     let data = {};
                     try {
-                      data = JSON.parse(result.results || '{}');
+                      // Handle both string and object formats
+                      data = typeof result.results === 'string' ? JSON.parse(result.results) : result.results;
                     } catch (e) {
-                      data = {};
+                      data = result.results || {};
                     }
                     
                     const isAlcohol = result.calculatorType === 'alcohol';
@@ -419,29 +420,29 @@ export default function Profile() {
                                 impactLevel === 'high' ? 'text-red-600' : 
                                 impactLevel === 'medium' ? 'text-yellow-600' : 'text-green-600'
                               }`}>
-                                {((data as any).weeklyGain)?.toFixed(2)} lbs
+                                {(data as any).weeklyGain ? (data as any).weeklyGain.toFixed(2) : '0.00'} lbs
                               </span>
                             </div>
                             <div className="flex justify-between">
                               <span>Weekly Calories:</span>
-                              <span className="font-medium">{((data as any).weeklyCalories)?.toLocaleString()}</span>
+                              <span className="font-medium">{(data as any).weeklyCalories || (data as any).totalCalories || 0}</span>
                             </div>
                             <div className="flex justify-between">
                               <span>Monthly Gain:</span>
                               <span className="text-orange-600 font-medium">
-                                {((data as any).monthlyGain)?.toFixed(2)} lbs
+                                {(data as any).monthlyGain ? (data as any).monthlyGain.toFixed(2) : '0.00'} lbs
                               </span>
                             </div>
                             <div className="flex justify-between">
                               <span>Yearly Gain:</span>
                               <span className="text-red-600 font-medium">
-                                {((data as any).yearlyGain)?.toFixed(2)} lbs
+                                {(data as any).yearlyGain ? (data as any).yearlyGain.toFixed(2) : '0.00'} lbs
                               </span>
                             </div>
                           </div>
                         )}
                         
-                        {isCalorie && (data as any).calories && (
+                        {isCalorie && (
                           <div className="text-sm space-y-1">
                             <div className="flex justify-between">
                               <span>BMR:</span>
@@ -455,6 +456,15 @@ export default function Profile() {
                               <span>Target Calories:</span>
                               <span className="font-semibold text-blue-600">{Math.round((data as any).calories || 0)} calories/day</span>
                             </div>
+                            {(data as any).macros && (
+                              <div className="pt-2 border-t border-gray-200 dark:border-gray-600">
+                                <div className="flex justify-between text-xs">
+                                  <span>Carbs: {(data as any).macros.carbs}g</span>
+                                  <span>Protein: {(data as any).macros.protein}g</span>
+                                  <span>Fat: {(data as any).macros.fat}g</span>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         )}
                         
