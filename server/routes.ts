@@ -158,16 +158,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Workout routes
   app.get("/api/workouts", async (req, res) => {
     try {
+      console.log('API: Fetching workouts...');
       const { category } = req.query;
       
       if (category) {
         const workouts = await storage.getWorkoutsByCategory(category as string);
+        console.log('API: Workouts by category fetched:', workouts.length);
         res.json(workouts);
       } else {
         const workouts = await storage.getWorkouts();
+        console.log('API: All workouts fetched:', workouts.length);
         res.json(workouts);
       }
     } catch (error) {
+      console.error('API: Error fetching workouts:', error);
       res.status(500).json({ message: "Failed to fetch workouts" });
     }
   });

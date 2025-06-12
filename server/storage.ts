@@ -561,8 +561,15 @@ export class MemStorage implements IStorage {
 
   // Workout methods - database implementation
   async getWorkouts(): Promise<Workout[]> { 
-    const workoutsList = await db.select().from(workouts);
-    return workoutsList;
+    try {
+      console.log('Attempting to fetch workouts from database...');
+      const workoutsList = await db.select().from(workouts);
+      console.log('Workouts fetched:', workoutsList.length, 'items');
+      return workoutsList;
+    } catch (error) {
+      console.error('Error fetching workouts:', error);
+      return [];
+    }
   }
   
   async getWorkout(id: number): Promise<Workout | undefined> { 
