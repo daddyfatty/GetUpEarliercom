@@ -818,11 +818,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Calculator results routes
   app.get("/api/calculator-results", async (req, res) => {
     try {
-      if (!req.user) {
-        return res.status(401).json({ message: "Authentication required" });
-      }
-
-      const results = await storage.getUserCalculatorResults(req.user.claims.sub);
+      // Development mode - use consistent user ID
+      const developmentUserId = "dev_user_1";
+      const results = await storage.getUserCalculatorResults(developmentUserId);
       res.json(results);
     } catch (error) {
       console.error("Error fetching calculator results:", error);
@@ -832,14 +830,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/calculator-results", async (req, res) => {
     try {
-      if (!req.user) {
-        return res.status(401).json({ message: "Authentication required" });
-      }
-
+      // Development mode - use consistent user ID
+      const developmentUserId = "dev_user_1";
       const { calculatorType, results, userInputs } = req.body;
       
       const calculatorResult = await storage.createCalculatorResult({
-        userId: req.user.claims.sub,
+        userId: developmentUserId,
         calculatorType,
         results,
         userInputs

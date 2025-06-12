@@ -293,8 +293,8 @@ export default function CalorieCalculator() {
     try {
       // Save calculation results
       await apiRequest("POST", "/api/calculator-results", {
-        type: 'calorie',
-        inputs: {
+        calculatorType: 'calorie',
+        userInputs: JSON.stringify({
           sex,
           age: parseInt(age),
           height: parseInt(height),
@@ -306,8 +306,8 @@ export default function CalorieCalculator() {
           macroProfile,
           dietaryRestrictions,
           supplementGoals
-        },
-        results
+        }),
+        results: JSON.stringify(results)
       });
 
       // Also save data to profile for persistence

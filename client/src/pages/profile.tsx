@@ -419,6 +419,10 @@ export default function Profile() {
                               </span>
                             </div>
                             <div className="flex justify-between">
+                              <span>Weekly Calories:</span>
+                              <span className="font-medium">{((data as any).weeklyCalories)?.toLocaleString()}</span>
+                            </div>
+                            <div className="flex justify-between">
                               <span>Monthly Gain:</span>
                               <span className="text-orange-600 font-medium">
                                 {((data as any).monthlyGain)?.toFixed(2)} lbs
@@ -433,18 +437,33 @@ export default function Profile() {
                           </div>
                         )}
                         
-                        {isCalorie && (data as any).bmr && (
+                        {isCalorie && (data as any).calories && (
                           <div className="text-sm space-y-1">
                             <div className="flex justify-between">
                               <span>BMR:</span>
-                              <span className="font-medium">{Math.round((data as any).bmr)} calories/day</span>
+                              <span className="font-medium">{Math.round((data as any).bmr || 0)} calories/day</span>
                             </div>
                             <div className="flex justify-between">
-                              <span>Daily Needs:</span>
-                              <span className="font-medium">{Math.round((data as any).dailyCalories)} calories/day</span>
+                              <span>TDEE:</span>
+                              <span className="font-medium">{Math.round((data as any).tdee || 0)} calories/day</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span>Target Calories:</span>
+                              <span className="font-semibold text-blue-600">{Math.round((data as any).calories || 0)} calories/day</span>
                             </div>
                           </div>
                         )}
+                        
+                        {/* Navigation Link */}
+                        <div className="mt-3 pt-2 border-t">
+                          <Link 
+                            to={isAlcohol ? "/alcohol-calculator" : "/calorie-calculator"} 
+                            className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                          >
+                            <Calculator className="h-3 w-3" />
+                            View in {isAlcohol ? "Alcohol" : "Calorie"} Calculator
+                          </Link>
+                        </div>
                       </div>
                     );
                   })}
