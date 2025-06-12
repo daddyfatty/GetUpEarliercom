@@ -180,7 +180,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/workouts/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      const workout = await storage.getWorkout(id);
+      const { workoutService } = await import("./workoutService");
+      const workout = await workoutService.getWorkoutById(id);
       
       if (!workout) {
         return res.status(404).json({ message: "Workout not found" });

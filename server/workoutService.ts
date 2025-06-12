@@ -60,11 +60,16 @@ export class WorkoutService {
       console.log('WorkoutService: Fetching workout by ID:', id);
       const result = await pool.query('SELECT * FROM workouts WHERE id = $1', [id]);
       
+      console.log('WorkoutService: Query result for ID', id, ':', result.rows.length, 'rows');
+      
       if (result.rows.length === 0) {
+        console.log('WorkoutService: No workout found with ID:', id);
         return undefined;
       }
 
       const row = result.rows[0];
+      console.log('WorkoutService: Found workout:', row.title);
+      
       return {
         id: row.id,
         title: row.title,
