@@ -559,45 +559,38 @@ export class MemStorage implements IStorage {
     });
   }
 
-  // Placeholder implementations for other methods
+  // Workout methods - database implementation
   async getWorkouts(): Promise<Workout[]> { 
-    return Array.from(this.workouts.values()); 
+    const workoutsList = await db.select().from(workouts);
+    return workoutsList;
   }
   
   async getWorkout(id: number): Promise<Workout | undefined> { 
-    return this.workouts.get(id); 
+    const [workout] = await db.select().from(workouts).where(eq(workouts.id, id));
+    return workout;
   }
   
   async createWorkout(insertWorkout: InsertWorkout): Promise<Workout> { 
-    const workout: Workout = { 
-      id: this.currentId++, 
-      ...insertWorkout,
-      imageUrl: insertWorkout.imageUrl ?? null,
-      videoUrl: insertWorkout.videoUrl ?? null,
-      equipment: insertWorkout.equipment ?? null,
-      createdAt: new Date() 
-    };
-    this.workouts.set(workout.id, workout);
+    const [workout] = await db.insert(workouts).values(insertWorkout).returning();
     return workout;
   }
   
   async updateWorkout(id: number, updates: Partial<Workout>): Promise<Workout | undefined> { 
-    const workout = this.workouts.get(id);
-    if (!workout) return undefined;
-    
-    const updatedWorkout = { ...workout, ...updates };
-    this.workouts.set(id, updatedWorkout);
-    return updatedWorkout;
+    const [workout] = await db.update(workouts)
+      .set(updates)
+      .where(eq(workouts.id, id))
+      .returning();
+    return workout;
   }
   
   async deleteWorkout(id: number): Promise<boolean> { 
-    return this.workouts.delete(id);
+    const result = await db.delete(workouts).where(eq(workouts.id, id));
+    return result.rowCount > 0;
   }
   
   async getWorkoutsByCategory(category: string): Promise<Workout[]> { 
-    return Array.from(this.workouts.values()).filter(workout => 
-      workout.category === category
-    );
+    const workoutsList = await db.select().from(workouts).where(eq(workouts.category, category));
+    return workoutsList;
   }
   async getUserGoals(userId: number): Promise<Goal[]> { return []; }
   async getGoal(id: number): Promise<Goal | undefined> { return undefined; }
