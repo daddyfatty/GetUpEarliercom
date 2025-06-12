@@ -651,15 +651,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const desiredWeightGrams = desiredWeight ? Math.round(desiredWeight * (unitSystem === 'metric' ? 1000 : 453.592)) : null;
       
       const profileData = {
-        age: age ? parseInt(age) : undefined,
-        sex,
-        height: height ? parseInt(height) : undefined,
+        age: age ? parseInt(age) : null,
+        sex: sex || null,
+        height: height ? parseInt(height) : null,
         currentWeight: currentWeightGrams,
         desiredWeight: desiredWeightGrams,
-        activityLevel,
-        goal,
-        unitSystem,
-        macroProfile
+        activityLevel: activityLevel || null,
+        goal: goal || null,
+        unitSystem: unitSystem || 'metric',
+        macroProfile: macroProfile || 'balanced'
       };
 
       const updatedUser = await storage.updateUserProfile(developmentUserId, profileData);

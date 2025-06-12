@@ -255,6 +255,7 @@ export default function CalorieCalculator() {
 
     setIsSaving(true);
     try {
+      // Save calculation results
       await apiRequest("POST", "/api/calculator-results", {
         type: 'calorie',
         inputs: {
@@ -273,9 +274,22 @@ export default function CalorieCalculator() {
         results
       });
 
+      // Also save data to profile for persistence
+      await apiRequest("POST", "/api/user/profile", {
+        age: parseInt(age),
+        sex,
+        height: parseInt(height),
+        currentWeight: parseFloat(currentWeight),
+        desiredWeight: parseFloat(desiredWeight),
+        activityLevel: activityLevel[0].toString(),
+        goal,
+        unitSystem,
+        macroProfile
+      });
+
       toast({
         title: "Results Saved",
-        description: "Your calculation results have been saved to your profile.",
+        description: "Your calculation results and profile have been saved.",
       });
     } catch (error) {
       toast({

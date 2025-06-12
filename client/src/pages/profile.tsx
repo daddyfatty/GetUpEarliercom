@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/hooks/useAuth";
@@ -131,8 +131,22 @@ export default function Profile() {
     },
   });
 
+  // Debounced auto-save functionality
+  const saveTimeoutRef = useRef<NodeJS.Timeout>();
+
+  const debouncedSave = useCallback((data: typeof formData) => {
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
+    saveTimeoutRef.current = setTimeout(() => {
+      saveProfileMutation.mutate(data);
+    }, 1500);
+  }, [saveProfileMutation]);
+
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    const updatedData = { ...formData, [field]: value };
+    setFormData(updatedData);
+    debouncedSave(updatedData);
   };
 
   const handleSave = () => {
