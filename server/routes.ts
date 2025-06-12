@@ -756,8 +756,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get user's favorite recipes
   app.get("/api/users/:userId/favorites", async (req, res) => {
     try {
-      // Development mode - use numeric user ID 1
-      const favoriteRecipes = await storage.getUserFavoriteRecipes(1);
+      // Development mode - always use consistent user ID
+      const developmentUserId = 1;
+      console.log('Getting favorites for userId:', developmentUserId);
+      const favoriteRecipes = await storage.getUserFavoriteRecipes(developmentUserId);
       res.json(favoriteRecipes);
     } catch (error) {
       console.error("Error fetching favorites:", error);
@@ -768,14 +770,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Add recipe to favorites
   app.post("/api/users/:userId/favorites", async (req, res) => {
     try {
-      // Development mode - use numeric user ID 1
+      // Development mode - always use consistent user ID
+      const developmentUserId = 1;
       const { recipeId } = req.body;
       
       if (!recipeId) {
         return res.status(400).json({ message: "Recipe ID is required" });
       }
 
-      const favorite = await storage.addFavoriteRecipe(1, parseInt(recipeId));
+      const favorite = await storage.addFavoriteRecipe(developmentUserId, parseInt(recipeId));
       res.json(favorite);
     } catch (error) {
       console.error("Error adding favorite:", error);
@@ -803,11 +806,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Check if recipe is favorited
   app.get("/api/users/:userId/favorites/:recipeId/check", async (req, res) => {
     try {
-      if (!req.user) {
-        return res.status(401).json({ message: "Authentication required" });
-      }
-
-      const isFavorited = await storage.isRecipeFavorited(parseInt(req.params.userId), parseInt(req.params.recipeId));
+      // Development mode - always use consistent user ID
+      const developmentUserId = 1;
+      const recipeId = parseInt(req.params.recipeId);
+      
+      const isFavorited = await storage.isRecipeFavorited(developmentUserId, recipeId);
       res.json({ isFavorited });
     } catch (error) {
       console.error("Error checking favorite status:", error);

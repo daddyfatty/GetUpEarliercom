@@ -167,6 +167,22 @@ export default function CalorieCalculator() {
       return;
     }
 
+    // Auto-save profile data when calculation is made
+    const profileData = {
+      age: parseInt(age),
+      sex,
+      height: parseInt(height),
+      currentWeight: parseFloat(currentWeight),
+      desiredWeight: parseFloat(desiredWeight),
+      activityLevel: activityLevel[0].toString(),
+      goal,
+      unitSystem,
+      macroProfile
+    };
+
+    // Save to profile silently in background
+    apiRequest("POST", "/api/user/profile", profileData).catch(console.error);
+
     const ageNum = parseInt(age);
     const heightNum = parseFloat(height);
     const currentWeightNum = parseFloat(currentWeight);
@@ -302,7 +318,7 @@ export default function CalorieCalculator() {
     }
   };
 
-  const loadProfile = async () => {
+  const loadProfile = async (showToast = true) => {
     setIsLoading(true);
     try {
       const profileData = await apiRequest("GET", "/api/user/profile");
@@ -317,20 +333,29 @@ export default function CalorieCalculator() {
       if (profileData.unitSystem) setUnitSystem(profileData.unitSystem);
       if (profileData.macroProfile) setMacroProfile(profileData.macroProfile);
 
-      toast({
-        title: "Profile Loaded",
-        description: "Your saved calculator settings have been loaded.",
-      });
+      if (showToast) {
+        toast({
+          title: "Profile Loaded",
+          description: "Your saved calculator settings have been loaded.",
+        });
+      }
     } catch (error) {
-      toast({
-        title: "Load Failed", 
-        description: "Could not load profile. Please try again.",
-        variant: "destructive",
-      });
+      if (showToast) {
+        toast({
+          title: "Load Failed", 
+          description: "Could not load profile. Please try again.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
   };
+
+  // Auto-load profile data when component mounts
+  useEffect(() => {
+    loadProfile(false); // Don't show toast on initial load
+  }, []);
 
   const getGoalDescription = (goal: string) => {
     switch (goal) {
