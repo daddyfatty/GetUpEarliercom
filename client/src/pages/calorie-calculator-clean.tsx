@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Calculator, User, Save, LoaderCircle } from "lucide-react";
 
 interface CalculationResults {
@@ -323,6 +323,9 @@ export default function CalorieCalculator() {
         macroProfile
       });
 
+      // Invalidate calculator results cache to refresh profile display
+      queryClient.invalidateQueries({ queryKey: ['/api/calculator-results'] });
+      
       toast({
         title: "Results Saved",
         description: "Your calculation results and profile have been saved.",

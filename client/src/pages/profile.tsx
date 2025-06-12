@@ -76,7 +76,7 @@ export default function Profile() {
 
   // Fetch calculator results
   const { data: calculatorResults = [] as CalculatorResult[] } = useQuery({
-    queryKey: ['/api/user/saved-results'],
+    queryKey: ['/api/calculator-results'],
     enabled: isAuthenticated
   });
 

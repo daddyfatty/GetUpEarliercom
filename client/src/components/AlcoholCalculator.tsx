@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Beer, Wine, Scale, TrendingUp, Save, AlertTriangle, Activity, Target, Calendar, Heart, BarChart3, Flame, Calculator } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -132,6 +132,9 @@ export default function AlcoholCalculator() {
       });
     },
     onSuccess: () => {
+      // Invalidate calculator results cache to refresh profile display
+      queryClient.invalidateQueries({ queryKey: ['/api/calculator-results'] });
+      
       toast({
         title: "Results Saved",
         description: "Your alcohol calculator results have been saved to your profile.",
