@@ -4,6 +4,8 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertUserSchema, insertRecipeSchema, insertWorkoutSchema, insertGoalSchema, insertFoodEntrySchema } from "@shared/schema";
 import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal";
+import { workoutService } from "./workoutService";
+import { recipeService } from "./recipeService";
 
 // Check if Stripe is configured
 const STRIPE_CONFIGURED = !!process.env.STRIPE_SECRET_KEY;
@@ -74,18 +76,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { search, category, dietType } = req.query;
       
+      console.log('API: Fetching recipes using recipe service...');
       if (search || category || dietType) {
-        const recipes = await storage.searchRecipes(
+        const recipes = await recipeService.searchRecipes(
           (search as string) || "",
           category as string,
           dietType as string
         );
         res.json(recipes);
       } else {
-        const recipes = await storage.getRecipes();
+        const recipes = await recipeService.getAllRecipes();
+        console.log('API: All recipes fetched:', recipes.length);
         res.json(recipes);
       }
     } catch (error) {
+      console.error("Error fetching recipes:", error);
       res.status(500).json({ message: "Failed to fetch recipes" });
     }
   });
@@ -93,7 +98,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/recipes/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      const recipe = await storage.getRecipe(id);
+      const recipe = await recipeService.getRecipeById(id);
       
       if (!recipe) {
         return res.status(404).json({ message: "Recipe not found" });
@@ -101,6 +106,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(recipe);
     } catch (error) {
+      console.error("Error fetching recipe:", error);
       res.status(500).json({ message: "Failed to fetch recipe" });
     }
   });
