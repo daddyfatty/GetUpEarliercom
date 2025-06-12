@@ -174,7 +174,7 @@ export default function CalorieCalculator() {
       height: parseInt(height),
       currentWeight: parseFloat(currentWeight),
       desiredWeight: parseFloat(desiredWeight),
-      activityLevel: activityLevel[0].toString(),
+      activityLevel: (activityLevel[0] || 1.2).toString(),
       goal,
       unitSystem,
       macroProfile
@@ -230,7 +230,7 @@ export default function CalorieCalculator() {
     }
 
     const bmr = calculateBMR(weightKg, heightCm, ageNum, sex);
-    let activityMultiplier = activityLevel[0];
+    const activityMultiplier = activityLevel[0] || 1.2;
     const tdee = bmr * activityMultiplier;
 
     let targetCalories = tdee;
@@ -300,7 +300,7 @@ export default function CalorieCalculator() {
           height: parseInt(height),
           currentWeight: parseFloat(currentWeight),
           desiredWeight: parseFloat(desiredWeight),
-          activityLevel: activityLevel[0].toString(),
+          activityLevel: (activityLevel[0] || 1.2).toString(),
           goal,
           unitSystem,
           macroProfile,
@@ -317,7 +317,7 @@ export default function CalorieCalculator() {
         height: parseInt(height),
         currentWeight: parseFloat(currentWeight),
         desiredWeight: parseFloat(desiredWeight),
-        activityLevel: activityLevel[0].toString(),
+        activityLevel: (activityLevel[0] || 1.2).toString(),
         goal,
         unitSystem,
         macroProfile
