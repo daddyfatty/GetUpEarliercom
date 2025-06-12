@@ -563,8 +563,49 @@ export class MemStorage implements IStorage {
   async getWorkouts(): Promise<Workout[]> { 
     try {
       console.log('Attempting to fetch workouts from database...');
-      const workoutsList = await db.select().from(workouts);
+      
+      // Use raw SQL query to bypass ORM schema issues
+      const result = await db.execute(sql`
+        SELECT 
+          id,
+          title,
+          description,
+          category,
+          difficulty,
+          duration,
+          calories_burned as "caloriesBurned",
+          equipment,
+          exercises,
+          image_url as "imageUrl",
+          video_url as "videoUrl",
+          author_id as "authorId",
+          author_name as "authorName", 
+          author_photo as "authorPhoto",
+          created_at as "createdAt"
+        FROM workouts
+        ORDER BY id ASC
+      `);
+      
+      const workoutsList = result.rows.map(row => ({
+        id: row.id as number,
+        title: row.title as string,
+        description: row.description as string,
+        category: row.category as string,
+        difficulty: row.difficulty as string,
+        duration: row.duration as number,
+        caloriesBurned: row.caloriesBurned as number,
+        equipment: row.equipment as string[] | null,
+        exercises: row.exercises as any[],
+        imageUrl: row.imageUrl as string | null,
+        videoUrl: row.videoUrl as string | null,
+        authorId: row.authorId as string | null,
+        authorName: row.authorName as string | null,
+        authorPhoto: row.authorPhoto as string | null,
+        createdAt: row.createdAt as Date | null
+      }));
+      
       console.log('Workouts fetched:', workoutsList.length, 'items');
+      console.log('Sample workout:', workoutsList[0]);
       return workoutsList;
     } catch (error) {
       console.error('Error fetching workouts:', error);
@@ -736,7 +777,7 @@ export class MemStorage implements IStorage {
 }
 
 import { db } from "./db";
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, sql } from "drizzle-orm";
 import { users, recipes, workouts, calculatorResults, favoriteRecipes } from "../shared/schema";
 
 // Database storage implementation
