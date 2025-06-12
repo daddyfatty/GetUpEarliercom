@@ -134,6 +134,7 @@ export default function AlcoholCalculator() {
     onSuccess: () => {
       // Invalidate calculator results cache to refresh profile display
       queryClient.invalidateQueries({ queryKey: ['/api/calculator-results'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/user/profile'] });
       
       toast({
         title: "Results Saved",
