@@ -646,19 +646,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const { age, sex, height, currentWeight, desiredWeight, activityLevel, goal, unitSystem, macroProfile } = req.body;
       
-      // Convert weights to grams for storage precision
-      const currentWeightGrams = currentWeight ? Math.round(currentWeight * (unitSystem === 'metric' ? 1000 : 453.592)) : null;
-      const desiredWeightGrams = desiredWeight ? Math.round(desiredWeight * (unitSystem === 'metric' ? 1000 : 453.592)) : null;
-      
+      // Store weights in their original units for simplicity
       const profileData = {
         age: age ? parseInt(age) : null,
         sex: sex || null,
         height: height ? parseInt(height) : null,
-        currentWeight: currentWeightGrams,
-        desiredWeight: desiredWeightGrams,
+        currentWeight: currentWeight ? parseFloat(currentWeight) : null,
+        desiredWeight: desiredWeight ? parseFloat(desiredWeight) : null,
         activityLevel: activityLevel || null,
         goal: goal || null,
-        unitSystem: unitSystem || 'metric',
+        unitSystem: unitSystem || 'imperial',
         macroProfile: macroProfile || 'balanced'
       };
 
@@ -693,16 +690,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Convert stored gram weights back to display units
+      // Return stored data directly (no conversion needed)
       const profileData = {
         age: user.age,
         sex: user.sex,
         height: user.height,
-        currentWeight: user.currentWeight ? (user.unitSystem === 'metric' ? user.currentWeight / 1000 : user.currentWeight / 453.592) : null,
-        desiredWeight: user.desiredWeight ? (user.unitSystem === 'metric' ? user.desiredWeight / 1000 : user.desiredWeight / 453.592) : null,
+        currentWeight: user.currentWeight,
+        desiredWeight: user.desiredWeight,
         activityLevel: user.activityLevel,
         goal: user.goal,
-        unitSystem: user.unitSystem || 'metric',
+        unitSystem: user.unitSystem || 'imperial',
         macroProfile: user.macroProfile || 'balanced'
       };
 

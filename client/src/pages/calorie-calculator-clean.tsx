@@ -188,6 +188,16 @@ export default function CalorieCalculator() {
     const currentWeightNum = parseFloat(currentWeight);
     const desiredWeightNum = parseFloat(desiredWeight);
 
+    // Validate all inputs are valid numbers
+    if (isNaN(ageNum) || isNaN(heightNum) || isNaN(currentWeightNum) || isNaN(desiredWeightNum)) {
+      toast({
+        title: "Invalid Input",
+        description: "Please ensure all fields contain valid numbers.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (ageNum < 10 || ageNum > 100) {
       toast({
         title: "Invalid Age",
@@ -207,6 +217,16 @@ export default function CalorieCalculator() {
       weightKg = currentWeightNum;
       heightCm = heightNum;
       desiredWeightKg = desiredWeightNum;
+    }
+
+    // Additional validation for converted values
+    if (weightKg <= 0 || heightCm <= 0 || desiredWeightKg <= 0) {
+      toast({
+        title: "Invalid Values",
+        description: "Weight and height must be positive numbers.",
+        variant: "destructive",
+      });
+      return;
     }
 
     const bmr = calculateBMR(weightKg, heightCm, ageNum, sex);
@@ -625,18 +645,18 @@ export default function CalorieCalculator() {
                   {/* BMR and TDEE */}
                   <div className="grid grid-cols-2 gap-4 text-center">
                     <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="text-2xl font-bold text-gray-700">{results.bmr}</div>
+                      <div className="text-2xl font-bold text-gray-700">{Math.round(results.bmr || 0)}</div>
                       <div className="text-sm text-gray-500">BMR (calories/day)</div>
                     </div>
                     <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="text-2xl font-bold text-gray-700">{results.tdee}</div>
+                      <div className="text-2xl font-bold text-gray-700">{Math.round(results.tdee || 0)}</div>
                       <div className="text-sm text-gray-500">TDEE (calories/day)</div>
                     </div>
                   </div>
 
                   {/* Daily Target Calories */}
                   <div className="text-center bg-gradient-to-r from-blue-50 to-green-50 p-6 rounded-lg">
-                    <div className="text-4xl font-bold text-blue-600 mb-2">{results.calories}</div>
+                    <div className="text-4xl font-bold text-blue-600 mb-2">{Math.round(results.calories || 0)}</div>
                     <div className="text-lg text-gray-600">Daily Target Calories</div>
                   </div>
 
