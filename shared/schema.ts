@@ -128,7 +128,7 @@ export const foodEntries = pgTable("food_entries", {
 
 export const achievements = pgTable("achievements", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(),
+  userId: varchar("user_id").notNull().references(() => users.id),
   title: text("title").notNull(),
   description: text("description").notNull(),
   type: text("type").notNull(), // streak, goal_completion, milestone
@@ -137,7 +137,7 @@ export const achievements = pgTable("achievements", {
 
 export const waterIntake = pgTable("water_intake", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(),
+  userId: varchar("user_id").notNull().references(() => users.id),
   date: timestamp("date").notNull(),
   glasses: integer("glasses").default(0),
   createdAt: timestamp("created_at").defaultNow(),
@@ -152,7 +152,7 @@ export const favoriteRecipes = pgTable("favorite_recipes", {
 
 export const mealPlans = pgTable("meal_plans", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull().references(() => users.id),
+  userId: varchar("user_id").notNull().references(() => users.id),
   name: text("name").notNull().default("My Meal Plan"),
   date: timestamp("date").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
