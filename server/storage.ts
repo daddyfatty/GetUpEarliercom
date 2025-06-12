@@ -559,21 +559,40 @@ export class MemStorage implements IStorage {
     });
   }
 
-  // Workout methods - direct database query with proper error handling
+  // Workout methods - use pool directly to bypass ORM issues
   async getWorkouts(): Promise<Workout[]> { 
     try {
-      console.log('Fetching workouts from database...');
-      const result = await db.select().from(workouts);
-      console.log('Raw database result:', result.length, 'workouts found');
+      console.log('Fetching workouts using direct pool connection...');
+      const result = await pool.query('SELECT * FROM workouts ORDER BY id');
       
-      if (result.length > 0) {
-        console.log('Sample workout data:', JSON.stringify(result[0], null, 2));
+      console.log('Pool query result:', result.rows.length, 'workouts found');
+      
+      const workouts = result.rows.map((row: any) => ({
+        id: row.id,
+        title: row.title,
+        description: row.description,
+        category: row.category,
+        difficulty: row.difficulty,
+        duration: row.duration,
+        caloriesBurned: row.calories_burned,
+        equipment: row.equipment || null,
+        exercises: row.exercises || [],
+        imageUrl: row.image_url || null,
+        videoUrl: row.video_url || null,
+        authorId: row.author_id || null,
+        authorName: row.author_name || null,
+        authorPhoto: row.author_photo || null,
+        createdAt: row.created_at ? new Date(row.created_at) : null,
+      }));
+      
+      console.log('Successfully processed workouts:', workouts.length);
+      if (workouts.length > 0) {
+        console.log('Sample workout title:', workouts[0].title);
       }
-      
-      return result;
+      return workouts;
     } catch (error) {
       console.error('Database error fetching workouts:', error);
-      throw error;
+      return [];
     }
   }
   
@@ -739,10 +758,6 @@ export class MemStorage implements IStorage {
     return result;
   }
 }
-
-import { db } from "./db";
-import { eq, desc, and, sql } from "drizzle-orm";
-import { users, recipes, workouts, calculatorResults, favoriteRecipes } from "../shared/schema";
 
 // Database storage implementation
 export class DatabaseStorage implements IStorage {
