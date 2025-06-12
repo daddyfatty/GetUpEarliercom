@@ -614,9 +614,11 @@ export class MemStorage implements IStorage {
 
   // User favorites methods
   async getUserFavoriteRecipes(userId: number): Promise<Recipe[]> {
-    console.log('Getting favorites for userId:', userId);
+    // Force userId to 1 for development mode
+    const developmentUserId = 1;
+    console.log('Getting favorites for userId:', developmentUserId);
     console.log('All favorites:', Array.from(this.favoriteRecipes.values()));
-    const favorites = Array.from(this.favoriteRecipes.values()).filter(fav => fav.userId === 1); // Force filter for userId 1
+    const favorites = Array.from(this.favoriteRecipes.values()).filter(fav => fav.userId === developmentUserId);
     console.log('Filtered favorites:', favorites);
     const recipes = favorites.map(fav => this.recipes.get(fav.recipeId)).filter(recipe => recipe !== undefined) as Recipe[];
     console.log('Found recipes:', recipes.length);
