@@ -145,7 +145,7 @@ export const waterIntake = pgTable("water_intake", {
 
 export const favoriteRecipes = pgTable("favorite_recipes", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull().references(() => users.id),
+  userId: varchar("user_id").notNull().references(() => users.id),
   recipeId: integer("recipe_id").notNull().references(() => recipes.id),
   createdAt: timestamp("created_at").defaultNow(),
 });

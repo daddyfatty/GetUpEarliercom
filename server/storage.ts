@@ -735,4 +735,158 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+import { db } from "./db";
+import { eq, desc, and } from "drizzle-orm";
+import { users, recipes, workouts, calculatorResults, favoriteRecipes } from "../shared/schema";
+
+// Database storage implementation
+export class DatabaseStorage implements IStorage {
+  // User methods
+  async getUser(id: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user;
+  }
+
+  async createUser(user: InsertUser): Promise<User> {
+    const [newUser] = await db.insert(users).values(user).returning();
+    return newUser;
+  }
+
+  async updateUser(id: string, updates: Partial<User>): Promise<User | undefined> {
+    const [user] = await db.update(users).set(updates).where(eq(users.id, id)).returning();
+    return user;
+  }
+
+  async updateUserProfile(id: string, profileData: {
+    age?: number;
+    sex?: string;
+    height?: number;
+    currentWeight?: number;
+    desiredWeight?: number;
+    activityLevel?: string;
+    goal?: string;
+    unitSystem?: string;
+    macroProfile?: string;
+  }): Promise<User | undefined> {
+    const [user] = await db.update(users).set({
+      ...profileData,
+      updatedAt: new Date()
+    }).where(eq(users.id, id)).returning();
+    return user;
+  }
+
+  // Recipe methods
+  async getRecipes(): Promise<Recipe[]> {
+    return await db.select().from(recipes);
+  }
+
+  async getRecipe(id: number): Promise<Recipe | undefined> {
+    const [recipe] = await db.select().from(recipes).where(eq(recipes.id, id));
+    return recipe;
+  }
+
+  async createRecipe(recipe: InsertRecipe): Promise<Recipe> {
+    const [newRecipe] = await db.insert(recipes).values(recipe).returning();
+    return newRecipe;
+  }
+
+  async updateRecipe(id: number, updates: Partial<Recipe>): Promise<Recipe | undefined> {
+    const [recipe] = await db.update(recipes).set(updates).where(eq(recipes.id, id)).returning();
+    return recipe;
+  }
+
+  async deleteRecipe(id: number): Promise<boolean> {
+    const result = await db.delete(recipes).where(eq(recipes.id, id));
+    return result.rowCount > 0;
+  }
+
+  async searchRecipes(query: string, category?: string, dietType?: string): Promise<Recipe[]> {
+    // Simple implementation - can be enhanced with full-text search
+    const allRecipes = await db.select().from(recipes);
+    return allRecipes.filter(recipe => 
+      recipe.title.toLowerCase().includes(query.toLowerCase()) ||
+      recipe.description?.toLowerCase().includes(query.toLowerCase())
+    );
+  }
+
+  // Calculator results methods
+  async getUserCalculatorResults(userId: string): Promise<CalculatorResult[]> {
+    return await db.select().from(calculatorResults)
+      .where(eq(calculatorResults.userId, userId))
+      .orderBy(desc(calculatorResults.createdAt));
+  }
+
+  async createCalculatorResult(insertResult: InsertCalculatorResult): Promise<CalculatorResult> {
+    const [result] = await db.insert(calculatorResults).values({
+      ...insertResult,
+      createdAt: new Date()
+    }).returning();
+    return result;
+  }
+
+  // User favorites methods
+  async getUserFavoriteRecipes(userId: number): Promise<Recipe[]> {
+    const favorites = await db.select({
+      recipe: recipes
+    })
+    .from(favoriteRecipes)
+    .innerJoin(recipes, eq(favoriteRecipes.recipeId, recipes.id))
+    .where(eq(favoriteRecipes.userId, "dev_user_1")); // Use string userId
+    
+    return favorites.map(fav => fav.recipe);
+  }
+
+  async addFavoriteRecipe(userId: number, recipeId: number): Promise<FavoriteRecipe> {
+    const [favorite] = await db.insert(favoriteRecipes).values({
+      userId: "dev_user_1", // Use string userId
+      recipeId,
+      createdAt: new Date()
+    }).returning();
+    return favorite;
+  }
+
+  async removeFavoriteRecipe(userId: number, recipeId: number): Promise<boolean> {
+    const result = await db.delete(favoriteRecipes)
+      .where(and(eq(favoriteRecipes.userId, "dev_user_1"), eq(favoriteRecipes.recipeId, recipeId)));
+    return result.rowCount > 0;
+  }
+
+  async isRecipeFavorited(userId: number, recipeId: number): Promise<boolean> {
+    const [favorite] = await db.select().from(favoriteRecipes)
+      .where(and(eq(favoriteRecipes.userId, "dev_user_1"), eq(favoriteRecipes.recipeId, recipeId)));
+    return !!favorite;
+  }
+
+  // Stub implementations for other methods (not currently used)
+  async getWorkouts(): Promise<Workout[]> { return []; }
+  async getWorkout(id: number): Promise<Workout | undefined> { return undefined; }
+  async createWorkout(workout: InsertWorkout): Promise<Workout> { throw new Error("Not implemented"); }
+  async updateWorkout(id: number, updates: Partial<Workout>): Promise<Workout | undefined> { return undefined; }
+  async deleteWorkout(id: number): Promise<boolean> { return false; }
+  async getWorkoutsByCategory(category: string): Promise<Workout[]> { return []; }
+  async getUserGoals(userId: number): Promise<Goal[]> { return []; }
+  async getGoal(id: number): Promise<Goal | undefined> { return undefined; }
+  async createGoal(goal: InsertGoal): Promise<Goal> { throw new Error("Not implemented"); }
+  async updateGoal(id: number, updates: Partial<Goal>): Promise<Goal | undefined> { return undefined; }
+  async deleteGoal(id: number): Promise<boolean> { return false; }
+  async getUserFoodEntries(userId: number, date?: Date): Promise<FoodEntry[]> { return []; }
+  async createFoodEntry(entry: InsertFoodEntry): Promise<FoodEntry> { throw new Error("Not implemented"); }
+  async deleteFoodEntry(id: number): Promise<boolean> { return false; }
+  async getUserAchievements(userId: number): Promise<Achievement[]> { return []; }
+  async createAchievement(achievement: InsertAchievement): Promise<Achievement> { throw new Error("Not implemented"); }
+  async getUserWaterIntake(userId: number, date: Date): Promise<WaterIntake | undefined> { return undefined; }
+  async updateWaterIntake(userId: number, date: Date, glasses: number): Promise<WaterIntake> { throw new Error("Not implemented"); }
+  async getUserMealPlans(userId: number): Promise<MealPlan[]> { return []; }
+  async createMealPlan(mealPlan: InsertMealPlan): Promise<MealPlan> { throw new Error("Not implemented"); }
+  async deleteMealPlan(id: number): Promise<boolean> { return false; }
+  async getMealPlanRecipes(mealPlanId: number): Promise<MealPlanRecipe[]> { return []; }
+  async addRecipeToMealPlan(mealPlanRecipe: InsertMealPlanRecipe): Promise<MealPlanRecipe> { throw new Error("Not implemented"); }
+  async removeRecipeFromMealPlan(mealPlanId: number, recipeId: number): Promise<boolean> { return false; }
+}
+
+export const storage = new DatabaseStorage();
