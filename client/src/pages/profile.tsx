@@ -58,7 +58,9 @@ export default function Profile() {
   // Fetch user profile data
   const { data: profileData, isLoading: profileLoading } = useQuery<ProfileData>({
     queryKey: ['/api/user/profile'],
-    enabled: isAuthenticated
+    enabled: isAuthenticated,
+    refetchOnWindowFocus: true,
+    staleTime: 0
   });
 
   // Form state for profile data
@@ -77,7 +79,9 @@ export default function Profile() {
   // Fetch calculator results
   const { data: calculatorResults = [] as CalculatorResult[] } = useQuery({
     queryKey: ['/api/calculator-results'],
-    enabled: isAuthenticated
+    enabled: isAuthenticated,
+    refetchOnWindowFocus: true,
+    staleTime: 0
   });
 
   // Fetch favorite recipes

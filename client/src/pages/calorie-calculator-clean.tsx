@@ -376,9 +376,18 @@ export default function CalorieCalculator() {
     }
   };
 
-  // Auto-load profile data when component mounts
+  // Auto-load profile data when component mounts and when navigating back to page
   useEffect(() => {
     loadProfile(false); // Don't show toast on initial load
+  }, []);
+
+  // Also reload profile data when coming back to this page (in case it was updated elsewhere)
+  useEffect(() => {
+    const handleFocus = () => {
+      loadProfile(false);
+    };
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
   }, []);
 
   const getGoalDescription = (goal: string) => {
