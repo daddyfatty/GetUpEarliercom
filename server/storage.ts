@@ -759,6 +759,10 @@ export class MemStorage implements IStorage {
   }
 }
 
+import { db, pool } from "./db";
+import { eq, desc, and, sql } from "drizzle-orm";
+import { users, recipes, workouts, calculatorResults, favoriteRecipes } from "../shared/schema";
+
 // Database storage implementation
 export class DatabaseStorage implements IStorage {
   // User methods

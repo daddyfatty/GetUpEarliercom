@@ -155,18 +155,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Workout routes
+  // Workout routes - using direct service to restore original data
   app.get("/api/workouts", async (req, res) => {
     try {
-      console.log('API: Fetching workouts...');
+      console.log('API: Fetching workouts using workout service...');
+      const { workoutService } = await import("./workoutService");
       const { category } = req.query;
       
       if (category) {
-        const workouts = await storage.getWorkoutsByCategory(category as string);
+        const workouts = await workoutService.getWorkoutsByCategory(category as string);
         console.log('API: Workouts by category fetched:', workouts.length);
         res.json(workouts);
       } else {
-        const workouts = await storage.getWorkouts();
+        const workouts = await workoutService.getAllWorkouts();
         console.log('API: All workouts fetched:', workouts.length);
         res.json(workouts);
       }
