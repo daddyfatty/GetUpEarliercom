@@ -292,7 +292,7 @@ export default function Profile() {
                       />
                     ) : (
                       <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                        {profileData.currentWeight ? `${profileData.currentWeight} ${formData.unitSystem === 'metric' ? 'kg' : 'lbs'}` : "Not specified"}
+                        {profileData.currentWeight ? `${Math.round(profileData.currentWeight * 10) / 10} ${formData.unitSystem === 'metric' ? 'kg' : 'lbs'}` : "Not specified"}
                       </p>
                     )}
                   </div>
@@ -309,7 +309,7 @@ export default function Profile() {
                       />
                     ) : (
                       <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                        {profileData.desiredWeight ? `${profileData.desiredWeight} ${formData.unitSystem === 'metric' ? 'kg' : 'lbs'}` : "Not specified"}
+                        {profileData.desiredWeight ? `${Math.round(profileData.desiredWeight * 10) / 10} ${formData.unitSystem === 'metric' ? 'kg' : 'lbs'}` : "Not specified"}
                       </p>
                     )}
                   </div>
