@@ -86,8 +86,9 @@ export const workouts = pgTable("workouts", {
     name: string;
     sets?: number;
     reps?: string;
-    duration?: number;
-    description: string;
+    duration?: string;
+    rest?: string;
+    description?: string;
   }[]>().notNull(),
   imageUrl: text("image_url"),
   videoUrl: text("video_url"), // YouTube video URL

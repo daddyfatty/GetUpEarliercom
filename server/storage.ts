@@ -559,131 +559,22 @@ export class MemStorage implements IStorage {
     });
   }
 
-  // Workout methods - database implementation with fallback
+  // Workout methods - direct database query with proper error handling
   async getWorkouts(): Promise<Workout[]> { 
     try {
-      console.log('Attempting to fetch workouts from database...');
-      const workoutsList = await db.select().from(workouts);
-      console.log('Database workouts fetched:', workoutsList.length, 'items');
+      console.log('Fetching workouts from database...');
+      const result = await db.select().from(workouts);
+      console.log('Raw database result:', result.length, 'workouts found');
       
-      if (workoutsList.length > 0) {
-        return workoutsList;
+      if (result.length > 0) {
+        console.log('Sample workout data:', JSON.stringify(result[0], null, 2));
       }
       
-      // Fallback to sample data if database is empty
-      console.log('Database empty, using fallback data');
+      return result;
     } catch (error) {
-      console.error('Database error, using fallback data:', error);
+      console.error('Database error fetching workouts:', error);
+      throw error;
     }
-    
-    // Fallback workout data
-    return [
-      {
-        id: 1,
-        title: "Full Body HIIT Circuit",
-        description: "High-intensity interval training targeting all major muscle groups for maximum calorie burn and strength building",
-        category: "HIIT",
-        difficulty: "Intermediate",
-        duration: 30,
-        caloriesBurned: 350,
-        equipment: ["dumbbells", "mat"],
-        exercises: [
-          {
-            name: "Burpees",
-            sets: 3,
-            reps: "10",
-            description: "Full body explosive movement combining squat, plank, and jump"
-          },
-          {
-            name: "Mountain Climbers",
-            sets: 3,
-            duration: 30,
-            description: "Core and cardio exercise in plank position"
-          },
-          {
-            name: "Dumbbell Thrusters",
-            sets: 3,
-            reps: "12",
-            description: "Squat to overhead press compound movement"
-          }
-        ],
-        imageUrl: null,
-        videoUrl: "https://youtu.be/ml6cT4AZdqI",
-        authorId: "michael",
-        authorName: "Michael Baker",
-        authorPhoto: "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
-        createdAt: new Date(),
-      },
-      {
-        id: 2,
-        title: "Morning Yoga Flow",
-        description: "Gentle yoga sequence to energize your body and mind for the day ahead",
-        category: "Yoga",
-        difficulty: "Beginner",
-        duration: 20,
-        caloriesBurned: 120,
-        equipment: ["mat"],
-        exercises: [
-          {
-            name: "Sun Salutation",
-            sets: 3,
-            description: "Traditional yoga flow sequence"
-          },
-          {
-            name: "Warrior Poses",
-            duration: 60,
-            description: "Strength and balance building poses"
-          },
-          {
-            name: "Child's Pose",
-            duration: 30,
-            description: "Resting pose for relaxation"
-          }
-        ],
-        imageUrl: null,
-        videoUrl: "https://youtu.be/VaoV1PrYft4",
-        authorId: "erica",
-        authorName: "Erica Baker",
-        authorPhoto: "/attached_assets/YAER_1749505224126.png",
-        createdAt: new Date(),
-      },
-      {
-        id: 3,
-        title: "Strength Training Basics",
-        description: "Foundation strength training routine focusing on proper form and fundamental movements",
-        category: "Strength",
-        difficulty: "Beginner",
-        duration: 45,
-        caloriesBurned: 250,
-        equipment: ["dumbbells", "bench"],
-        exercises: [
-          {
-            name: "Squats",
-            sets: 3,
-            reps: "12-15",
-            description: "Lower body foundational movement"
-          },
-          {
-            name: "Push-ups",
-            sets: 3,
-            reps: "8-12",
-            description: "Upper body pushing movement"
-          },
-          {
-            name: "Dumbbell Rows",
-            sets: 3,
-            reps: "10-12",
-            description: "Upper body pulling movement"
-          }
-        ],
-        imageUrl: null,
-        videoUrl: "https://youtu.be/2NOc_trrSP8",
-        authorId: "michael",
-        authorName: "Michael Baker",
-        authorPhoto: "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
-        createdAt: new Date(),
-      }
-    ];
   }
   
   async getWorkout(id: number): Promise<Workout | undefined> { 
