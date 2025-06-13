@@ -1,7 +1,7 @@
 import type { User, Recipe, Workout, Goal, FoodEntry, Achievement, WaterIntake, FavoriteRecipe, FavoriteWorkout, MealPlan, MealPlanRecipe, CalculatorResult, InsertUser, InsertRecipe, InsertWorkout, InsertGoal, InsertFoodEntry, InsertAchievement, InsertWaterIntake, InsertFavoriteRecipe, InsertFavoriteWorkout, InsertMealPlan, InsertMealPlanRecipe, InsertCalculatorResult } from "../shared/schema";
 import { db } from "./db";
-import { users, recipes, workouts, favoriteRecipes, favoriteWorkouts, calculatorResults } from "../shared/schema";
-import { eq, and, desc } from "drizzle-orm";
+import { eq, and, desc, sql } from "drizzle-orm";
+import { pool } from "./db";
 
 export interface IStorage {
   // User methods

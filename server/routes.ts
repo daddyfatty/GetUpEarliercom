@@ -540,6 +540,65 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // User favorite workouts routes
+  app.get("/api/users/:userId/favorite-workouts", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const favorites = await storage.getUserFavoriteWorkouts(userId);
+      res.json(favorites);
+    } catch (error: any) {
+      console.error("Error fetching user favorite workouts:", error);
+      res.status(500).json({ message: "Error fetching favorite workouts: " + error.message });
+    }
+  });
+
+  app.post("/api/users/:userId/favorite-workouts", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { workoutId } = req.body;
+      
+      if (!workoutId) {
+        return res.status(400).json({ message: "Workout ID is required" });
+      }
+
+      const favorite = await storage.addFavoriteWorkout(userId, workoutId);
+      res.json(favorite);
+    } catch (error: any) {
+      console.error("Error adding favorite workout:", error);
+      res.status(500).json({ message: "Error adding favorite workout: " + error.message });
+    }
+  });
+
+  app.delete("/api/users/:userId/favorite-workouts/:workoutId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const workoutId = parseInt(req.params.workoutId);
+      
+      const removed = await storage.removeFavoriteWorkout(userId, workoutId);
+      if (removed) {
+        res.json({ message: "Favorite workout removed successfully" });
+      } else {
+        res.status(404).json({ message: "Favorite workout not found" });
+      }
+    } catch (error: any) {
+      console.error("Error removing favorite workout:", error);
+      res.status(500).json({ message: "Error removing favorite workout: " + error.message });
+    }
+  });
+
+  app.get("/api/users/:userId/favorite-workouts/:workoutId/check", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const workoutId = parseInt(req.params.workoutId);
+      
+      const isFavorited = await storage.isWorkoutFavorited(userId, workoutId);
+      res.json({ isFavorited });
+    } catch (error: any) {
+      console.error("Error checking favorite workout status:", error);
+      res.status(500).json({ message: "Error checking favorite workout status: " + error.message });
+    }
+  });
+
   // Meal plan routes
   app.get("/api/users/:userId/meal-plans", async (req, res) => {
     try {

@@ -1,14 +1,18 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Clock, Flame, Play, Star, Dumbbell, Eye } from "lucide-react";
+import { Clock, Flame, Play, Star, Dumbbell, Eye, Heart } from "lucide-react";
 import { Link } from "wouter";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 import type { Workout } from "@shared/schema";
 
 export default function Workouts() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
   
   const { data: workouts = [], isLoading } = useQuery({
     queryKey: ["/api/workouts", selectedCategory],
@@ -17,6 +21,63 @@ export default function Workouts() {
       return fetch(`/api/workouts${params}`).then(res => res.json());
     }
   });
+
+  const { data: favoriteWorkouts = [] } = useQuery<Workout[]>({
+    queryKey: ["/api/users/dev_user_1/favorite-workouts"],
+    retry: false,
+  });
+
+  const addFavoriteMutation = useMutation({
+    mutationFn: async (workoutId: number) => {
+      return apiRequest("POST", "/api/users/dev_user_1/favorite-workouts", { workoutId });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/users/dev_user_1/favorite-workouts"] });
+      toast({
+        title: "Added to favorites",
+        description: "Workout added to your favorites successfully!",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to add workout to favorites. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const removeFavoriteMutation = useMutation({
+    mutationFn: async (workoutId: number) => {
+      return apiRequest("DELETE", `/api/users/dev_user_1/favorite-workouts/${workoutId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/users/dev_user_1/favorite-workouts"] });
+      toast({
+        title: "Removed from favorites",
+        description: "Workout removed from your favorites.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to remove workout from favorites. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const isWorkoutFavorited = (workoutId: number) => {
+    return favoriteWorkouts.some((workout: Workout) => workout.id === workoutId);
+  };
+
+  const handleFavoriteToggle = (workoutId: number) => {
+    if (isWorkoutFavorited(workoutId)) {
+      removeFavoriteMutation.mutate(workoutId);
+    } else {
+      addFavoriteMutation.mutate(workoutId);
+    }
+  };
 
   const categories = ["strength", "cardio", "hiit", "flexibility", "yoga", "calisthenics", "tutorial"];
 
@@ -203,6 +264,25 @@ export default function Workouts() {
                             {workout.caloriesBurned} cal
                           </span>
                         </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleFavoriteToggle(workout.id);
+                          }}
+                          disabled={addFavoriteMutation.isPending || removeFavoriteMutation.isPending}
+                          className="hover:bg-red-50 dark:hover:bg-red-900/20 p-2"
+                        >
+                          <Heart
+                            className={`w-5 h-5 ${
+                              isWorkoutFavorited(workout.id)
+                                ? "text-red-500 fill-red-500"
+                                : "text-gray-400 hover:text-red-500"
+                            } transition-colors`}
+                          />
+                        </Button>
                       </div>
 
                       {/* Equipment Tags */}
