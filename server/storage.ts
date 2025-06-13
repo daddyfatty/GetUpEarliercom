@@ -1,4 +1,7 @@
 import type { User, Recipe, Workout, Goal, FoodEntry, Achievement, WaterIntake, FavoriteRecipe, FavoriteWorkout, MealPlan, MealPlanRecipe, CalculatorResult, InsertUser, InsertRecipe, InsertWorkout, InsertGoal, InsertFoodEntry, InsertAchievement, InsertWaterIntake, InsertFavoriteRecipe, InsertFavoriteWorkout, InsertMealPlan, InsertMealPlanRecipe, InsertCalculatorResult } from "../shared/schema";
+import { db } from "./db";
+import { users, recipes, workouts, favoriteRecipes, favoriteWorkouts, calculatorResults } from "../shared/schema";
+import { eq, and, desc } from "drizzle-orm";
 
 export interface IStorage {
   // User methods
@@ -89,6 +92,7 @@ export class MemStorage implements IStorage {
   private achievements: Map<number, Achievement>;
   private waterIntakes: Map<number, WaterIntake>;
   private favoriteRecipes: Map<number, FavoriteRecipe>;
+  private favoriteWorkouts: Map<number, FavoriteWorkout>;
   private mealPlans: Map<number, MealPlan>;
   private mealPlanRecipes: Map<number, MealPlanRecipe>;
   private calculatorResults: Map<number, CalculatorResult>;
@@ -103,6 +107,7 @@ export class MemStorage implements IStorage {
     this.achievements = new Map();
     this.waterIntakes = new Map();
     this.favoriteRecipes = new Map();
+    this.favoriteWorkouts = new Map();
     this.mealPlans = new Map();
     this.mealPlanRecipes = new Map();
     this.calculatorResults = new Map();
@@ -763,11 +768,48 @@ export class MemStorage implements IStorage {
     this.calculatorResults.set(result.id, result);
     return result;
   }
+
+  // User favorite workouts methods
+  async getUserFavoriteWorkouts(userId: number): Promise<Workout[]> {
+    const favoriteWorkoutIds = Array.from(this.favoriteWorkouts.values())
+      .filter(fav => fav.userId === "dev_user_1")
+      .map(fav => fav.workoutId);
+    
+    return favoriteWorkoutIds
+      .map(id => this.workouts.get(id))
+      .filter((workout): workout is Workout => workout !== undefined);
+  }
+
+  async addFavoriteWorkout(userId: number, workoutId: number): Promise<FavoriteWorkout> {
+    const favorite: FavoriteWorkout = {
+      id: this.currentId++,
+      userId: "dev_user_1",
+      workoutId,
+      createdAt: new Date(),
+    };
+    this.favoriteWorkouts.set(favorite.id, favorite);
+    return favorite;
+  }
+
+  async removeFavoriteWorkout(userId: number, workoutId: number): Promise<boolean> {
+    const favorite = Array.from(this.favoriteWorkouts.values()).find(
+      fav => fav.userId === "dev_user_1" && fav.workoutId === workoutId
+    );
+    if (favorite) {
+      this.favoriteWorkouts.delete(favorite.id);
+      return true;
+    }
+    return false;
+  }
+
+  async isWorkoutFavorited(userId: number, workoutId: number): Promise<boolean> {
+    return Array.from(this.favoriteWorkouts.values()).some(
+      fav => fav.userId === "dev_user_1" && fav.workoutId === workoutId
+    );
+  }
 }
 
-import { db, pool } from "./db";
-import { eq, desc, and, sql } from "drizzle-orm";
-import { users, recipes, workouts, calculatorResults, favoriteRecipes } from "../shared/schema";
+
 
 // Database storage implementation
 export class DatabaseStorage implements IStorage {
@@ -889,6 +931,39 @@ export class DatabaseStorage implements IStorage {
   async isRecipeFavorited(userId: number, recipeId: number): Promise<boolean> {
     const [favorite] = await db.select().from(favoriteRecipes)
       .where(and(eq(favoriteRecipes.userId, "dev_user_1"), eq(favoriteRecipes.recipeId, recipeId)));
+    return !!favorite;
+  }
+
+  // User favorite workouts methods
+  async getUserFavoriteWorkouts(userId: number): Promise<Workout[]> {
+    const favorites = await db.select({
+      workout: workouts
+    })
+    .from(favoriteWorkouts)
+    .innerJoin(workouts, eq(favoriteWorkouts.workoutId, workouts.id))
+    .where(eq(favoriteWorkouts.userId, "dev_user_1")); // Use string userId
+    
+    return favorites.map(fav => fav.workout);
+  }
+
+  async addFavoriteWorkout(userId: number, workoutId: number): Promise<FavoriteWorkout> {
+    const [favorite] = await db.insert(favoriteWorkouts).values({
+      userId: "dev_user_1", // Use string userId
+      workoutId,
+      createdAt: new Date()
+    }).returning();
+    return favorite;
+  }
+
+  async removeFavoriteWorkout(userId: number, workoutId: number): Promise<boolean> {
+    const result = await db.delete(favoriteWorkouts)
+      .where(and(eq(favoriteWorkouts.userId, "dev_user_1"), eq(favoriteWorkouts.workoutId, workoutId)));
+    return result.rowCount! > 0;
+  }
+
+  async isWorkoutFavorited(userId: number, workoutId: number): Promise<boolean> {
+    const [favorite] = await db.select().from(favoriteWorkouts)
+      .where(and(eq(favoriteWorkouts.userId, "dev_user_1"), eq(favoriteWorkouts.workoutId, workoutId)));
     return !!favorite;
   }
 
