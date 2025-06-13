@@ -240,13 +240,12 @@ export default function Workouts() {
                         variant="default" 
                         size="sm"
                         className="flex-1"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          window.location.href = `/workouts/${workout.id}`;
-                        }}
+                        asChild
                       >
-                        <Eye className="w-4 h-4 mr-2" />
-                        View Details
+                        <Link href={`/workouts/${workout.id}`}>
+                          <Eye className="w-4 h-4 mr-2" />
+                          View Details
+                        </Link>
                       </Button>
                       {youtubeId && (
                         <Button 
@@ -255,7 +254,7 @@ export default function Workouts() {
                           className="flex-1"
                           onClick={(e) => {
                             e.stopPropagation();
-                            window.location.href = `/workouts/${workout.id}/video`;
+                            window.open(`https://www.youtube.com/watch?v=${youtubeId}`, '_blank');
                           }}
                         >
                           <Play className="w-4 h-4 mr-2" />
