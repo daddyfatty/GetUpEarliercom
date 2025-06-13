@@ -208,15 +208,26 @@ export default function Workouts() {
                         <Badge className={getCategoryColor(workout.category)}>
                           {workout.category}
                         </Badge>
-                        <div className="flex items-center space-x-1">
-                          {Array.from({ length: 3 }).map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`w-4 h-4 ${
-                                i < difficultyStars ? "text-accent fill-current" : "text-gray-300"
-                              }`}
+                        <div className="flex items-center space-x-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              handleFavoriteToggle(workout.id);
+                            }}
+                            disabled={addFavoriteMutation.isPending || removeFavoriteMutation.isPending}
+                            className="hover:bg-red-50 dark:hover:bg-red-900/20 p-1 h-auto"
+                          >
+                            <Heart
+                              className={`w-5 h-5 ${
+                                isWorkoutFavorited(workout.id)
+                                  ? "text-red-500 fill-red-500"
+                                  : "text-gray-400 hover:text-red-500"
+                              } transition-colors`}
                             />
-                          ))}
+                          </Button>
                           <Badge variant="outline" className={getDifficultyColor(workout.difficulty)}>
                             {workout.difficulty}
                           </Badge>
@@ -264,25 +275,6 @@ export default function Workouts() {
                             {workout.caloriesBurned} cal
                           </span>
                         </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            handleFavoriteToggle(workout.id);
-                          }}
-                          disabled={addFavoriteMutation.isPending || removeFavoriteMutation.isPending}
-                          className="hover:bg-red-50 dark:hover:bg-red-900/20 p-2"
-                        >
-                          <Heart
-                            className={`w-5 h-5 ${
-                              isWorkoutFavorited(workout.id)
-                                ? "text-red-500 fill-red-500"
-                                : "text-gray-400 hover:text-red-500"
-                            } transition-colors`}
-                          />
-                        </Button>
                       </div>
 
                       {/* Equipment Tags */}
