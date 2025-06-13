@@ -12,6 +12,12 @@
         "userId": "dev_user_1",
         "recipeId": 1,
         "createdAt": "2025-06-13T10:49:33.846Z"
+      },
+      {
+        "id": 3,
+        "userId": "dev_user_1",
+        "recipeId": 1,
+        "createdAt": "2025-06-13T10:54:08.197Z"
       }
     ]
   },
@@ -52,7 +58,7 @@
     "foodEntry": 1,
     "achievement": 1,
     "waterIntake": 1,
-    "favoriteRecipe": 3,
+    "favoriteRecipe": 4,
     "favoriteWorkout": 2,
     "mealPlan": 1,
     "mealPlanRecipe": 1,
