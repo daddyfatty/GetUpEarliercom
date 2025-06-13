@@ -34,6 +34,14 @@
         "userInputs": "{\"beer\": 2, \"wine\": 1, \"wineServing\": \"quarter\", \"spirits\": 0, \"cocktails\": 0}",
         "id": 1,
         "createdAt": "2025-06-13T10:50:09.207Z"
+      },
+      {
+        "userId": "dev_user_1",
+        "calculatorType": "calorie",
+        "results": "{\"bmr\": 1845, \"tdee\": 2860, \"calories\": 2360, \"macros\": {\"carbs\": 207, \"protein\": 207, \"fat\": 79}, \"goal\": \"loss\", \"macroProfile\": \"high-protein\", \"weeklyChangeRate\": -1.0, \"timeToGoal\": 10}",
+        "userInputs": "{\"sex\": \"male\", \"age\": 30, \"height\": 72, \"currentWeight\": 180, \"desiredWeight\": 170, \"activityLevel\": \"1.55\", \"goal\": \"loss\", \"unitSystem\": \"imperial\", \"macroProfile\": \"high-protein\", \"dietaryRestrictions\": [], \"supplementGoals\": []}",
+        "id": 2,
+        "createdAt": "2025-06-13T10:51:38.987Z"
       }
     ]
   },
@@ -48,6 +56,6 @@
     "favoriteWorkout": 2,
     "mealPlan": 1,
     "mealPlanRecipe": 1,
-    "calculatorResult": 2
+    "calculatorResult": 3
   }
 }

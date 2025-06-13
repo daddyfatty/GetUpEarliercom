@@ -107,6 +107,43 @@ export default function CalorieCalculator() {
     queryKey: ['/api/calculator-results']
   });
 
+  // Load saved calculator data on mount
+  useEffect(() => {
+    if (calculatorResults && Array.isArray(calculatorResults) && calculatorResults.length > 0 && !dataLoaded) {
+      const calorieResults = calculatorResults.filter((result: any) => result.calculatorType === 'calorie');
+      if (calorieResults.length > 0) {
+        const mostRecent = calorieResults[calorieResults.length - 1];
+        try {
+          const userInputs = typeof mostRecent.userInputs === 'string' 
+            ? JSON.parse(mostRecent.userInputs) 
+            : mostRecent.userInputs;
+          
+          setSex(userInputs.sex || 'male');
+          setAge(userInputs.age?.toString() || '');
+          setHeight(userInputs.height?.toString() || '');
+          setCurrentWeight(userInputs.currentWeight?.toString() || '');
+          setDesiredWeight(userInputs.desiredWeight?.toString() || '');
+          setActivityLevel([parseFloat(userInputs.activityLevel) || 1.2]);
+          setGoal(userInputs.goal || 'maintenance');
+          setUnitSystem(userInputs.unitSystem || 'imperial');
+          setMacroProfile(userInputs.macroProfile || 'balanced');
+          setDietaryRestrictions(userInputs.dietaryRestrictions || []);
+          setSupplementGoals(userInputs.supplementGoals || []);
+          
+          // Also restore the results
+          const savedResults = typeof mostRecent.results === 'string' 
+            ? JSON.parse(mostRecent.results) 
+            : mostRecent.results;
+          setResults(savedResults);
+          
+          setDataLoaded(true);
+        } catch (error) {
+          console.log("Error loading saved data:", error);
+        }
+      }
+    }
+  }, [calculatorResults, dataLoaded]);
+
   const calculateBMR = (weightKg: number, heightCm: number, ageYears: number, sex: 'male' | 'female'): number => {
     if (sex === 'male') {
       return (10 * weightKg) + (6.25 * heightCm) - (5 * ageYears) + 5;
