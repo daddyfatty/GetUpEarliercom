@@ -1,0 +1,35 @@
+{
+  "favoriteRecipes": {
+    "dev_user_1": [
+      {
+        "id": 1,
+        "userId": "dev_user_1",
+        "recipeId": 2,
+        "createdAt": "2025-06-13T10:45:25.163Z"
+      }
+    ]
+  },
+  "favoriteWorkouts": {
+    "dev_user_1": [
+      {
+        "id": 1,
+        "userId": "dev_user_1",
+        "workoutId": 5,
+        "createdAt": "2025-06-13T10:45:20.006Z"
+      }
+    ]
+  },
+  "nextId": {
+    "recipe": 1,
+    "workout": 1,
+    "goal": 1,
+    "foodEntry": 1,
+    "achievement": 1,
+    "waterIntake": 1,
+    "favoriteRecipe": 2,
+    "favoriteWorkout": 2,
+    "mealPlan": 1,
+    "mealPlanRecipe": 1,
+    "calculatorResult": 1
+  }
+}
