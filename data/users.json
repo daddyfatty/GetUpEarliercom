@@ -1,0 +1,24 @@
+{
+  "dev_user_1": {
+    "id": "dev_user_1",
+    "email": "user@example.com",
+    "firstName": "Demo",
+    "lastName": "User",
+    "profileImageUrl": null,
+    "height": null,
+    "age": null,
+    "sex": null,
+    "currentWeight": null,
+    "desiredWeight": null,
+    "activityLevel": null,
+    "goal": null,
+    "unitSystem": "imperial",
+    "macroProfile": null,
+    "timezone": null,
+    "language": "en",
+    "notifications": true,
+    "isActive": true,
+    "createdAt": "2025-06-13T10:59:04.716Z",
+    "updatedAt": "2025-06-13T10:59:04.716Z"
+  }
+}

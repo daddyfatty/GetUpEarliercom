@@ -97,6 +97,7 @@ export class MemStorage implements IStorage {
 
   private dataPath = path.join(process.cwd(), 'data');
   private favoritesFile = path.join(this.dataPath, 'favorites.json');
+  private usersFile = path.join(this.dataPath, 'users.json');
 
   private nextId = {
     recipe: 1,
@@ -111,6 +112,30 @@ export class MemStorage implements IStorage {
     mealPlanRecipe: 1,
     calculatorResult: 1,
   };
+
+  private saveUsersToFile() {
+    try {
+      if (!fs.existsSync(this.dataPath)) {
+        fs.mkdirSync(this.dataPath, { recursive: true });
+      }
+      
+      const usersData = Object.fromEntries(this.users);
+      fs.writeFileSync(this.usersFile, JSON.stringify(usersData, null, 2));
+    } catch (error) {
+      console.error('Error saving users to file:', error);
+    }
+  }
+
+  private loadUsersFromFile() {
+    try {
+      if (fs.existsSync(this.usersFile)) {
+        const data = JSON.parse(fs.readFileSync(this.usersFile, 'utf8'));
+        this.users = new Map(Object.entries(data));
+      }
+    } catch (error) {
+      console.error('Error loading users from file:', error);
+    }
+  }
 
   private saveFavoritesToFile() {
     try {
@@ -158,33 +183,37 @@ export class MemStorage implements IStorage {
   }
 
   constructor() {
-    // Load persisted favorites data
+    // Load persisted data
+    this.loadUsersFromFile();
     this.loadFavoritesFromFile();
     
-    // Initialize with default user
-    const defaultUser: User = {
-      id: "dev_user_1",
-      email: "user@example.com",
-      firstName: "Demo",
-      lastName: "User",
-      profileImageUrl: null,
-      height: null,
-      age: null,
-      sex: null,
-      currentWeight: null,
-      desiredWeight: null,
-      activityLevel: null,
-      goal: null,
-      unitSystem: "imperial",
-      macroProfile: null,
-      timezone: null,
-      language: "en",
-      notifications: true,
-      isActive: true,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    };
-    this.users.set("dev_user_1", defaultUser);
+    // Initialize with default user if no users exist
+    if (!this.users.has("dev_user_1")) {
+      const defaultUser: User = {
+        id: "dev_user_1",
+        email: "user@example.com",
+        firstName: "Demo",
+        lastName: "User",
+        profileImageUrl: null,
+        height: null,
+        age: null,
+        sex: null,
+        currentWeight: null,
+        desiredWeight: null,
+        activityLevel: null,
+        goal: null,
+        unitSystem: "imperial",
+        macroProfile: null,
+        timezone: null,
+        language: "en",
+        notifications: true,
+        isActive: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      this.users.set("dev_user_1", defaultUser);
+      this.saveUsersToFile();
+    }
 
     // Initialize with authentic workout data
     const authenticWorkout: Workout = {
@@ -359,6 +388,7 @@ export class MemStorage implements IStorage {
       updatedAt: new Date()
     };
     this.users.set(id, updatedUser);
+    this.saveUsersToFile();
     return updatedUser;
   }
 
