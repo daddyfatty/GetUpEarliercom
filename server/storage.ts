@@ -1,4 +1,4 @@
-import type { User, Recipe, Workout, Goal, FoodEntry, Achievement, WaterIntake, FavoriteRecipe, MealPlan, MealPlanRecipe, CalculatorResult, InsertUser, InsertRecipe, InsertWorkout, InsertGoal, InsertFoodEntry, InsertAchievement, InsertWaterIntake, InsertFavoriteRecipe, InsertMealPlan, InsertMealPlanRecipe, InsertCalculatorResult } from "../shared/schema";
+import type { User, Recipe, Workout, Goal, FoodEntry, Achievement, WaterIntake, FavoriteRecipe, FavoriteWorkout, MealPlan, MealPlanRecipe, CalculatorResult, InsertUser, InsertRecipe, InsertWorkout, InsertGoal, InsertFoodEntry, InsertAchievement, InsertWaterIntake, InsertFavoriteRecipe, InsertFavoriteWorkout, InsertMealPlan, InsertMealPlanRecipe, InsertCalculatorResult } from "../shared/schema";
 
 export interface IStorage {
   // User methods
@@ -59,6 +59,12 @@ export interface IStorage {
   addFavoriteRecipe(userId: number, recipeId: number): Promise<FavoriteRecipe>;
   removeFavoriteRecipe(userId: number, recipeId: number): Promise<boolean>;
   isRecipeFavorited(userId: number, recipeId: number): Promise<boolean>;
+
+  // User favorite workouts methods
+  getUserFavoriteWorkouts(userId: number): Promise<Workout[]>;
+  addFavoriteWorkout(userId: number, workoutId: number): Promise<FavoriteWorkout>;
+  removeFavoriteWorkout(userId: number, workoutId: number): Promise<boolean>;
+  isWorkoutFavorited(userId: number, workoutId: number): Promise<boolean>;
 
   // Meal plan methods
   getUserMealPlans(userId: number): Promise<MealPlan[]>;

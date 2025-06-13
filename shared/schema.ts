@@ -151,6 +151,13 @@ export const favoriteRecipes = pgTable("favorite_recipes", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+export const favoriteWorkouts = pgTable("favorite_workouts", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  workoutId: integer("workout_id").notNull().references(() => workouts.id),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const mealPlans = pgTable("meal_plans", {
   id: serial("id").primaryKey(),
   userId: varchar("user_id").notNull().references(() => users.id),
@@ -219,6 +226,11 @@ export const insertFavoriteRecipeSchema = createInsertSchema(favoriteRecipes).om
   createdAt: true,
 });
 
+export const insertFavoriteWorkoutSchema = createInsertSchema(favoriteWorkouts).omit({
+  id: true,
+  createdAt: true,
+});
+
 export const insertMealPlanSchema = createInsertSchema(mealPlans).omit({
   id: true,
   createdAt: true,
@@ -250,6 +262,8 @@ export type WaterIntake = typeof waterIntake.$inferSelect;
 export type InsertWaterIntake = z.infer<typeof insertWaterIntakeSchema>;
 export type FavoriteRecipe = typeof favoriteRecipes.$inferSelect;
 export type InsertFavoriteRecipe = z.infer<typeof insertFavoriteRecipeSchema>;
+export type FavoriteWorkout = typeof favoriteWorkouts.$inferSelect;
+export type InsertFavoriteWorkout = z.infer<typeof insertFavoriteWorkoutSchema>;
 export type MealPlan = typeof mealPlans.$inferSelect;
 export type InsertMealPlan = z.infer<typeof insertMealPlanSchema>;
 export type MealPlanRecipe = typeof mealPlanRecipes.$inferSelect;
