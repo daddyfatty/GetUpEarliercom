@@ -508,8 +508,8 @@ export default function Profile() {
             <CardContent>
               {Array.isArray(favoriteRecipes) && favoriteRecipes.length > 0 ? (
                 <div className="space-y-3">
-                  {favoriteRecipes.slice(0, 3).map((recipe: any) => (
-                    <Link key={recipe.id} href={`/recipes/${recipe.id}`}>
+                  {favoriteRecipes.slice(0, 3).map((recipe: any, index: number) => (
+                    <Link key={`recipe-${recipe.id}-${index}`} href={`/recipes/${recipe.id}`}>
                       <div className="p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded bg-orange-100 dark:bg-orange-900 flex items-center justify-center flex-shrink-0">
