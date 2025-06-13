@@ -238,7 +238,7 @@ export default function Profile() {
                       />
                     ) : (
                       <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                        {profileData.age || "Not specified"}
+                        {profileData?.age || "Not specified"}
                       </p>
                     )}
                   </div>
@@ -256,7 +256,7 @@ export default function Profile() {
                       </Select>
                     ) : (
                       <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                        {profileData.sex ? profileData.sex.charAt(0).toUpperCase() + profileData.sex.slice(1) : "Not specified"}
+                        {profileData?.sex ? profileData.sex.charAt(0).toUpperCase() + profileData.sex.slice(1) : "Not specified"}
                       </p>
                     )}
                   </div>
@@ -276,7 +276,7 @@ export default function Profile() {
                       />
                     ) : (
                       <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                        {profileData.height ? `${profileData.height} ${formData.unitSystem === 'metric' ? 'cm' : 'inches'}` : "Not specified"}
+                        {profileData?.height ? `${profileData.height} ${formData.unitSystem === 'metric' ? 'cm' : 'inches'}` : "Not specified"}
                       </p>
                     )}
                   </div>
@@ -296,7 +296,7 @@ export default function Profile() {
                       />
                     ) : (
                       <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                        {profileData.currentWeight ? `${Math.round(profileData.currentWeight * 10) / 10} ${formData.unitSystem === 'metric' ? 'kg' : 'lbs'}` : "Not specified"}
+                        {profileData?.currentWeight ? `${Math.round(profileData.currentWeight * 10) / 10} ${formData.unitSystem === 'metric' ? 'kg' : 'lbs'}` : "Not specified"}
                       </p>
                     )}
                   </div>
@@ -313,7 +313,7 @@ export default function Profile() {
                       />
                     ) : (
                       <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                        {profileData.desiredWeight ? `${Math.round(profileData.desiredWeight * 10) / 10} ${formData.unitSystem === 'metric' ? 'kg' : 'lbs'}` : "Not specified"}
+                        {profileData?.desiredWeight ? `${Math.round(profileData.desiredWeight * 10) / 10} ${formData.unitSystem === 'metric' ? 'kg' : 'lbs'}` : "Not specified"}
                       </p>
                     )}
                   </div>
@@ -340,7 +340,7 @@ export default function Profile() {
                       </Select>
                     ) : (
                       <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                        {profileData.activityLevel ? profileData.activityLevel.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : "Not specified"}
+                        {profileData?.activityLevel ? profileData.activityLevel.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : "Not specified"}
                       </p>
                     )}
                   </div>
@@ -362,7 +362,7 @@ export default function Profile() {
                       </Select>
                     ) : (
                       <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                        {profileData.goal ? profileData.goal.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : "Not specified"}
+                        {profileData?.goal ? profileData.goal.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : "Not specified"}
                       </p>
                     )}
                   </div>
