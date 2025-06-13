@@ -1,4 +1,6 @@
 import type { User, Recipe, Workout, Goal, FoodEntry, Achievement, WaterIntake, FavoriteRecipe, FavoriteWorkout, MealPlan, MealPlanRecipe, CalculatorResult, InsertUser, InsertRecipe, InsertWorkout, InsertGoal, InsertFoodEntry, InsertAchievement, InsertWaterIntake, InsertFavoriteRecipe, InsertFavoriteWorkout, InsertMealPlan, InsertMealPlanRecipe, InsertCalculatorResult } from "../shared/schema";
+import * as fs from 'fs';
+import * as path from 'path';
 
 export interface IStorage {
   // User methods
@@ -93,6 +95,9 @@ export class MemStorage implements IStorage {
   private mealPlanRecipes: Map<number, MealPlanRecipe[]> = new Map();
   private calculatorResults: Map<string, CalculatorResult[]> = new Map();
 
+  private dataPath = path.join(process.cwd(), 'data');
+  private favoritesFile = path.join(this.dataPath, 'favorites.json');
+
   private nextId = {
     recipe: 1,
     workout: 1,
@@ -107,7 +112,50 @@ export class MemStorage implements IStorage {
     calculatorResult: 1,
   };
 
+  private saveFavoritesToFile() {
+    try {
+      if (!fs.existsSync(this.dataPath)) {
+        fs.mkdirSync(this.dataPath, { recursive: true });
+      }
+      
+      const favoritesData = {
+        favoriteRecipes: Object.fromEntries(this.favoriteRecipes),
+        favoriteWorkouts: Object.fromEntries(this.favoriteWorkouts),
+        nextId: this.nextId
+      };
+      
+      fs.writeFileSync(this.favoritesFile, JSON.stringify(favoritesData, null, 2));
+    } catch (error) {
+      console.error('Error saving favorites to file:', error);
+    }
+  }
+
+  private loadFavoritesFromFile() {
+    try {
+      if (fs.existsSync(this.favoritesFile)) {
+        const data = JSON.parse(fs.readFileSync(this.favoritesFile, 'utf8'));
+        
+        if (data.favoriteRecipes) {
+          this.favoriteRecipes = new Map(Object.entries(data.favoriteRecipes));
+        }
+        
+        if (data.favoriteWorkouts) {
+          this.favoriteWorkouts = new Map(Object.entries(data.favoriteWorkouts));
+        }
+        
+        if (data.nextId) {
+          this.nextId = { ...this.nextId, ...data.nextId };
+        }
+      }
+    } catch (error) {
+      console.error('Error loading favorites from file:', error);
+    }
+  }
+
   constructor() {
+    // Load persisted favorites data
+    this.loadFavoritesFromFile();
+    
     // Initialize with default user
     const defaultUser: User = {
       id: "dev_user_1",
@@ -562,6 +610,7 @@ export class MemStorage implements IStorage {
     const userFavorites = this.favoriteRecipes.get(userId) || [];
     userFavorites.push(favorite);
     this.favoriteRecipes.set(userId, userFavorites);
+    this.saveFavoritesToFile();
     
     return favorite;
   }
@@ -570,6 +619,7 @@ export class MemStorage implements IStorage {
     const userFavorites = this.favoriteRecipes.get(userId) || [];
     const filteredFavorites = userFavorites.filter(fav => fav.recipeId !== recipeId);
     this.favoriteRecipes.set(userId, filteredFavorites);
+    this.saveFavoritesToFile();
     return filteredFavorites.length < userFavorites.length;
   }
 
@@ -589,6 +639,7 @@ export class MemStorage implements IStorage {
     const userFavorites = this.favoriteWorkouts.get(userId) || [];
     userFavorites.push(favorite);
     this.favoriteWorkouts.set(userId, userFavorites);
+    this.saveFavoritesToFile();
     
     return favorite;
   }
@@ -597,6 +648,7 @@ export class MemStorage implements IStorage {
     const userFavorites = this.favoriteWorkouts.get(userId) || [];
     const filteredFavorites = userFavorites.filter(fav => fav.workoutId !== workoutId);
     this.favoriteWorkouts.set(userId, filteredFavorites);
+    this.saveFavoritesToFile();
     return filteredFavorites.length < userFavorites.length;
   }
 
