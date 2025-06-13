@@ -121,6 +121,7 @@ export class MemStorage implements IStorage {
       const favoritesData = {
         favoriteRecipes: Object.fromEntries(this.favoriteRecipes),
         favoriteWorkouts: Object.fromEntries(this.favoriteWorkouts),
+        calculatorResults: Object.fromEntries(this.calculatorResults),
         nextId: this.nextId
       };
       
@@ -141,6 +142,10 @@ export class MemStorage implements IStorage {
         
         if (data.favoriteWorkouts) {
           this.favoriteWorkouts = new Map(Object.entries(data.favoriteWorkouts));
+        }
+        
+        if (data.calculatorResults) {
+          this.calculatorResults = new Map(Object.entries(data.calculatorResults));
         }
         
         if (data.nextId) {
@@ -589,6 +594,9 @@ export class MemStorage implements IStorage {
     const userResults = this.calculatorResults.get(resultData.userId) || [];
     userResults.push(result);
     this.calculatorResults.set(resultData.userId, userResults);
+    
+    // Save to persistent storage immediately
+    this.saveFavoritesToFile();
     
     return result;
   }
