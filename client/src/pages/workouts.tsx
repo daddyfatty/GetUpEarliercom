@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Clock, Flame, Play, Star, Dumbbell, User, Eye } from "lucide-react";
+import { Clock, Flame, Play, Star, Dumbbell, Eye } from "lucide-react";
 import { Link } from "wouter";
 import type { Workout } from "@shared/schema";
 
@@ -122,149 +122,150 @@ export default function Workouts() {
               const youtubeId = workout.videoUrl ? extractYouTubeId(workout.videoUrl) : null;
               
               return (
-                <Link key={workout.id} href={`/workouts/${workout.id}`} className="block">
-                  <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 cursor-pointer">
+                <div key={workout.id} className="group">
+                  <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 cursor-pointer h-full">
                     {/* YouTube Video Thumbnail */}
                     {youtubeId && (
-                      <div className="relative group">
-                        <img 
-                          src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
-                          alt={workout.title}
-                          className="w-full h-48 object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
-                          <div className="bg-white/90 dark:bg-gray-800/90 rounded-full p-3 group-hover:scale-110 transition-transform duration-300">
-                            <Play className="w-8 h-8 text-primary" />
+                      <Link href={`/workouts/${workout.id}`}>
+                        <div className="relative group/video">
+                          <img 
+                            src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+                            alt={workout.title}
+                            className="w-full h-48 object-cover"
+                          />
+                          <div className="absolute inset-0 bg-black/20 group-hover/video:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+                            <div className="bg-white/90 dark:bg-gray-800/90 rounded-full p-3 group-hover/video:scale-110 transition-transform duration-300">
+                              <Play className="w-8 h-8 text-primary" />
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </Link>
                     )}
                   
-                  <CardHeader>
-                    <div className="flex items-center justify-between mb-2">
-                      <Badge className={getCategoryColor(workout.category)}>
-                        {workout.category}
-                      </Badge>
-                      <div className="flex items-center space-x-1">
-                        {Array.from({ length: 3 }).map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-4 h-4 ${
-                              i < difficultyStars ? "text-accent fill-current" : "text-gray-300"
-                            }`}
-                          />
-                        ))}
-                        <Badge variant="outline" className={getDifficultyColor(workout.difficulty)}>
-                          {workout.difficulty}
+                    <CardHeader>
+                      <div className="flex items-center justify-between mb-2">
+                        <Badge className={getCategoryColor(workout.category)}>
+                          {workout.category}
                         </Badge>
-                      </div>
-                    </div>
-                    <CardTitle className="text-xl text-gray-900 dark:text-white">
-                      {workout.title}
-                    </CardTitle>
-                  </CardHeader>
-                  
-                  <CardContent className="pt-0">
-                    <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-                      {workout.description}
-                    </p>
-                    
-                    {/* Author Attribution */}
-                    {(workout as any).authorId && (workout as any).authorName && (workout as any).authorPhoto && (
-                      <div className="flex items-center mb-4">
-                        <div className="flex items-center space-x-2">
-                          <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-blue-200 dark:border-blue-600">
-                            <img 
-                              src={(workout as any).authorPhoto} 
-                              alt={`${(workout as any).authorName} - Workout Creator`}
-                              className="w-full h-full object-cover"
+                        <div className="flex items-center space-x-1">
+                          {Array.from({ length: 3 }).map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`w-4 h-4 ${
+                                i < difficultyStars ? "text-accent fill-current" : "text-gray-300"
+                              }`}
                             />
+                          ))}
+                          <Badge variant="outline" className={getDifficultyColor(workout.difficulty)}>
+                            {workout.difficulty}
+                          </Badge>
+                        </div>
+                      </div>
+                      <CardTitle className="text-xl text-gray-900 dark:text-white">
+                        <Link href={`/workouts/${workout.id}`} className="hover:text-accent transition-colors">
+                          {workout.title}
+                        </Link>
+                      </CardTitle>
+                    </CardHeader>
+                  
+                    <CardContent className="pt-0">
+                      <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+                        {workout.description}
+                      </p>
+                    
+                      {/* Author Attribution */}
+                      {(workout as any).authorId && (workout as any).authorName && (workout as any).authorPhoto && (
+                        <div className="flex items-center mb-4">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-blue-200 dark:border-blue-600">
+                              <img 
+                                src={(workout as any).authorPhoto} 
+                                alt={`${(workout as any).authorName} - Workout Creator`}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                              by {(workout as any).authorName}
+                            </span>
                           </div>
-                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                            by {(workout as any).authorName}
+                        </div>
+                      )}
+                    
+                      {/* Workout Stats */}
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                          <span className="flex items-center">
+                            <Clock className="w-4 h-4 text-accent mr-1" />
+                            {workout.duration} min
+                          </span>
+                          <span className="flex items-center">
+                            <Flame className="w-4 h-4 text-accent mr-1" />
+                            {workout.caloriesBurned} cal
                           </span>
                         </div>
                       </div>
-                    )}
-                    
-                    {/* Workout Stats */}
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
-                        <span className="flex items-center">
-                          <Clock className="w-4 h-4 text-accent mr-1" />
-                          {workout.duration} min
-                        </span>
-                        <span className="flex items-center">
-                          <Flame className="w-4 h-4 text-accent mr-1" />
-                          {workout.caloriesBurned} cal
-                        </span>
-                      </div>
-                    </div>
 
-                    {/* Equipment Tags */}
-                    {workout.equipment && workout.equipment.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {workout.equipment.map((item, index) => (
-                          <Badge key={index} variant="secondary" className="text-xs">
-                            <Dumbbell className="w-3 h-3 mr-1" />
-                            {item}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Exercise List Preview */}
-                    {workout.exercises && workout.exercises.length > 0 && (
-                      <div className="mb-4">
-                        <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
-                          Exercises ({workout.exercises.length})
-                        </h4>
-                        <div className="space-y-1">
-                          {workout.exercises.slice(0, 3).map((exercise, index) => (
-                            <div key={index} className="text-sm text-gray-600 dark:text-gray-400">
-                              • {exercise.name} {exercise.sets && exercise.reps && `(${exercise.sets} sets × ${exercise.reps})`}
-                            </div>
+                      {/* Equipment Tags */}
+                      {workout.equipment && workout.equipment.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {workout.equipment.map((item, index) => (
+                            <Badge key={index} variant="secondary" className="text-xs">
+                              <Dumbbell className="w-3 h-3 mr-1" />
+                              {item}
+                            </Badge>
                           ))}
-                          {workout.exercises.length > 3 && (
-                            <div className="text-sm text-gray-500 dark:text-gray-500">
-                              +{workout.exercises.length - 3} more exercises
-                            </div>
-                          )}
                         </div>
-                      </div>
-                    )}
+                      )}
 
-                    {/* Action Buttons */}
-                    <div className="flex gap-2">
-                      <Button 
-                        variant="default" 
-                        size="sm"
-                        className="flex-1"
-                        asChild
-                      >
-                        <Link href={`/workouts/${workout.id}`}>
-                          <Eye className="w-4 h-4 mr-2" />
-                          View Details
-                        </Link>
-                      </Button>
-                      {youtubeId && (
+                      {/* Exercise List Preview */}
+                      {workout.exercises && workout.exercises.length > 0 && (
+                        <div className="mb-4">
+                          <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
+                            Exercises ({workout.exercises.length})
+                          </h4>
+                          <div className="space-y-1">
+                            {workout.exercises.slice(0, 3).map((exercise, index) => (
+                              <div key={index} className="text-sm text-gray-600 dark:text-gray-400">
+                                • {exercise.name} {exercise.sets && exercise.reps && `(${exercise.sets} sets × ${exercise.reps})`}
+                              </div>
+                            ))}
+                            {workout.exercises.length > 3 && (
+                              <div className="text-sm text-gray-500 dark:text-gray-500">
+                                +{workout.exercises.length - 3} more exercises
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Action Buttons */}
+                      <div className="flex gap-2">
                         <Button 
-                          variant="outline" 
+                          variant="default" 
                           size="sm"
                           className="flex-1"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            window.open(`https://www.youtube.com/watch?v=${youtubeId}`, '_blank');
-                          }}
+                          asChild
                         >
-                          <Play className="w-4 h-4 mr-2" />
-                          Watch Video
+                          <Link href={`/workouts/${workout.id}`}>
+                            <Eye className="w-4 h-4 mr-2" />
+                            View Details
+                          </Link>
                         </Button>
-                      )}
-                    </div>
-                  </CardContent>
+                        {youtubeId && (
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            className="flex-1"
+                            onClick={() => window.open(`https://www.youtube.com/watch?v=${youtubeId}`, '_blank')}
+                          >
+                            <Play className="w-4 h-4 mr-2" />
+                            Watch Video
+                          </Button>
+                        )}
+                      </div>
+                    </CardContent>
                   </Card>
-                </Link>
+                </div>
               );
             })}
           </div>
