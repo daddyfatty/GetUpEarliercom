@@ -184,7 +184,7 @@ export default function Profile() {
   }
 
   // Get recent results for display
-  const recentResults = calculatorResults?.slice(0, 5) || [];
+  const recentResults = Array.isArray(calculatorResults) ? calculatorResults.slice(0, 5) : [];
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
@@ -504,9 +504,9 @@ export default function Profile() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {favoriteRecipes.length > 0 ? (
+              {Array.isArray(favoriteRecipes) && favoriteRecipes.length > 0 ? (
                 <div className="space-y-3">
-                  {favoriteRecipes.slice(0, 3).map((recipe) => (
+                  {favoriteRecipes.slice(0, 3).map((recipe: any) => (
                     <Link key={recipe.id} href={`/recipes/${recipe.id}`}>
                       <div className="p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer">
                         <div className="flex items-center gap-3">
@@ -531,7 +531,7 @@ export default function Profile() {
                       </div>
                     </Link>
                   ))}
-                  {favoriteRecipes.length > 3 && (
+                  {Array.isArray(favoriteRecipes) && favoriteRecipes.length > 3 && (
                     <Link href="/favorites">
                       <Button variant="outline" size="sm" className="w-full">
                         View All ({favoriteRecipes.length})
@@ -566,7 +566,7 @@ export default function Profile() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {calculatorResults.slice(0, 3).map((result) => (
+                {Array.isArray(calculatorResults) ? calculatorResults.slice(0, 3).map((result: any) => (
                   <div key={result.id} className="flex items-center gap-3 text-sm">
                     <Calculator className="h-4 w-4 text-blue-500" />
                     <div className="flex-1">
@@ -576,9 +576,9 @@ export default function Profile() {
                       </div>
                     </div>
                   </div>
-                ))}
+                )) : null}
                 
-                {favoriteRecipes.slice(0, 2).map((recipe) => (
+                {Array.isArray(favoriteRecipes) ? favoriteRecipes.slice(0, 2).map((recipe: any) => (
                   <div key={`fav-${recipe.id}`} className="flex items-center gap-3 text-sm">
                     <Heart className="h-4 w-4 text-red-500" />
                     <div className="flex-1">
@@ -586,7 +586,7 @@ export default function Profile() {
                       <div className="text-xs text-gray-500">Recently</div>
                     </div>
                   </div>
-                ))}
+                )) : null}
 
                 {hasProfileData && (
                   <div className="flex items-center gap-3 text-sm">
@@ -598,7 +598,7 @@ export default function Profile() {
                   </div>
                 )}
 
-                {!calculatorResults.length && !favoriteRecipes.length && !hasProfileData && (
+                {(!Array.isArray(calculatorResults) || calculatorResults.length === 0) && (!Array.isArray(favoriteRecipes) || favoriteRecipes.length === 0) && !hasProfileData && (
                   <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                     <TrendingUp className="h-12 w-12 mx-auto mb-3 opacity-50" />
                     <p>No recent activity</p>
