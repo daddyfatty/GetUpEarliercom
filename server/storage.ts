@@ -813,6 +813,8 @@ export class MemStorage implements IStorage {
 
 // Database storage implementation
 export class DatabaseStorage implements IStorage {
+  private favoriteWorkouts: Set<string> = new Set(); // Simple in-memory storage for favorites
+
   // User methods
   async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
@@ -946,7 +948,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async addFavoriteWorkout(userId: number, workoutId: number): Promise<FavoriteWorkout> {
-    // Mock implementation - return a favorite workout object
+    const key = `${userId}-${workoutId}`;
+    this.favoriteWorkouts.add(key);
+    
     const favorite: FavoriteWorkout = {
       id: Date.now(),
       userId: "dev_user_1",
@@ -957,13 +961,13 @@ export class DatabaseStorage implements IStorage {
   }
 
   async removeFavoriteWorkout(userId: number, workoutId: number): Promise<boolean> {
-    // Mock implementation - always return true
-    return true;
+    const key = `${userId}-${workoutId}`;
+    return this.favoriteWorkouts.delete(key);
   }
 
   async isWorkoutFavorited(userId: number, workoutId: number): Promise<boolean> {
-    // Mock implementation - return false for now
-    return false;
+    const key = `${userId}-${workoutId}`;
+    return this.favoriteWorkouts.has(key);
   }
 
   // Stub implementations for other methods (not currently used)
