@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { storage } from "./memStorage";
 import { insertUserSchema, insertRecipeSchema, insertWorkoutSchema, insertGoalSchema, insertFoodEntrySchema } from "@shared/schema";
 import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal";
 import { workoutService } from "./workoutService";
@@ -484,7 +484,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // User favorites routes
   app.get("/api/users/:userId/favorites", async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = req.params.userId;
       const favorites = await storage.getUserFavoriteRecipes(userId);
       res.json(favorites);
     } catch (error: any) {
@@ -495,7 +495,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/users/:userId/favorites", async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = req.params.userId;
       const { recipeId } = req.body;
       
       if (!recipeId) {
@@ -512,7 +512,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.delete("/api/users/:userId/favorites/:recipeId", async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = req.params.userId;
       const recipeId = parseInt(req.params.recipeId);
       
       const removed = await storage.removeFavoriteRecipe(userId, recipeId);
@@ -527,23 +527,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/users/:userId/favorites/:recipeId/check", async (req, res) => {
-    try {
-      const userId = parseInt(req.params.userId);
-      const recipeId = parseInt(req.params.recipeId);
-      
-      const isFavorited = await storage.isRecipeFavorited(userId, recipeId);
-      res.json({ isFavorited });
-    } catch (error: any) {
-      console.error("Error checking favorite status:", error);
-      res.status(500).json({ message: "Error checking favorite status: " + error.message });
-    }
-  });
-
   // User favorite workouts routes
   app.get("/api/users/:userId/favorite-workouts", async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = req.params.userId;
       const favorites = await storage.getUserFavoriteWorkouts(userId);
       res.json(favorites);
     } catch (error: any) {
@@ -554,7 +541,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/users/:userId/favorite-workouts", async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = req.params.userId;
       const { workoutId } = req.body;
       
       if (!workoutId) {
@@ -571,7 +558,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.delete("/api/users/:userId/favorite-workouts/:workoutId", async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = req.params.userId;
       const workoutId = parseInt(req.params.workoutId);
       
       const removed = await storage.removeFavoriteWorkout(userId, workoutId);
@@ -586,23 +573,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/users/:userId/favorite-workouts/:workoutId/check", async (req, res) => {
-    try {
-      const userId = parseInt(req.params.userId);
-      const workoutId = parseInt(req.params.workoutId);
-      
-      const isFavorited = await storage.isWorkoutFavorited(userId, workoutId);
-      res.json({ isFavorited });
-    } catch (error: any) {
-      console.error("Error checking favorite workout status:", error);
-      res.status(500).json({ message: "Error checking favorite workout status: " + error.message });
-    }
-  });
-
   // Meal plan routes
   app.get("/api/users/:userId/meal-plans", async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = req.params.userId;
       const mealPlans = await storage.getUserMealPlans(userId);
       res.json(mealPlans);
     } catch (error: any) {
