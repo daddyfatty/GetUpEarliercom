@@ -132,6 +132,144 @@ export class MemStorage implements IStorage {
       updatedAt: new Date()
     };
     this.users.set("dev_user_1", defaultUser);
+
+    // Initialize with authentic workout data
+    const authenticWorkout: Workout = {
+      id: 5,
+      title: "Chest & Biceps Finisher - The Ultimate Push-up Workout - Body Weight & Iron Master Dumbbells",
+      description: "A comprehensive chest and biceps finisher workout combining bodyweight movements with dumbbell exercises for maximum muscle activation.",
+      category: "Strength Training",
+      difficulty: "intermediate",
+      duration: 30,
+      caloriesBurned: 250,
+      exercises: [
+        {
+          name: "Push-ups",
+          sets: 3,
+          reps: 15,
+          rest: 60
+        },
+        {
+          name: "Dumbbell Bicep Curls",
+          sets: 3,
+          reps: 12,
+          rest: 60
+        },
+        {
+          name: "Diamond Push-ups",
+          sets: 2,
+          reps: 10,
+          rest: 45
+        }
+      ],
+      equipment: ["dumbbells", "bodyweight"],
+      targetMuscles: ["chest", "biceps", "triceps"],
+      imageUrl: null,
+      videoUrl: "https://www.youtube.com/watch?v=example",
+      authorId: "michael_baker",
+      authorName: "Michael Baker",
+      authorPhoto: null,
+      createdAt: new Date()
+    };
+    this.workouts.set(5, authenticWorkout);
+
+    // Initialize with authentic recipe data
+    const authenticRecipes = [
+      {
+        id: 1,
+        title: "Homemade Granola",
+        description: "100% organic homemade granola with 0 sketchy ingredients that break off into awesome chunks. This granola is my go-to carb loading snack for marathon training. I created it out of frustration with store-bought granola that's packed with sugar and preservatives.",
+        category: ["Breakfast", "Snacks"],
+        dietType: ["Vegetarian", "Gluten-Free"],
+        tags: ["healthy", "homemade", "organic"],
+        prepTime: 15,
+        cookTime: 25,
+        totalTime: 40,
+        servings: 8,
+        servingSize: "1/2 cup",
+        calories: 280,
+        protein: 8,
+        carbs: 32,
+        fat: 14,
+        fiber: 6,
+        sugar: 8,
+        sodium: 95,
+        ingredients: [
+          "3 cups old-fashioned oats",
+          "1/2 cup chopped almonds",
+          "1/2 cup chopped walnuts",
+          "1/4 cup maple syrup",
+          "1/4 cup coconut oil",
+          "1 tsp vanilla extract",
+          "1/2 tsp cinnamon",
+          "1/4 tsp salt",
+          "1/3 cup dried cranberries"
+        ],
+        instructions: [
+          "Preheat oven to 300°F",
+          "Mix dry ingredients in a large bowl",
+          "Warm maple syrup and coconut oil, add vanilla",
+          "Pour wet ingredients over dry and mix well",
+          "Spread on parchment-lined baking sheet",
+          "Bake 20-25 minutes, stirring once",
+          "Add dried fruit after cooling"
+        ],
+        imageUrl: "/attached_assets/granola_image.jpg",
+        videoUrl: null,
+        authorId: "michael_baker",
+        authorName: "Michael Baker",
+        authorPhoto: "/attached_assets/michael_baker.jpg",
+        createdAt: new Date()
+      },
+      {
+        id: 2,
+        title: "Quick Chicken Goulash",
+        description: "An easy one I make with Bell & Evans ground chicken breast is a quick goulash. I chop up onions and bell peppers, brown the chicken, add diced tomatoes, and season with paprika and garlic. Simple, healthy, and filling.",
+        category: ["Dinner", "Main Course"],
+        dietType: ["High Protein", "Gluten-Free"],
+        tags: ["quick", "healthy", "protein"],
+        prepTime: 10,
+        cookTime: 20,
+        totalTime: 30,
+        servings: 4,
+        servingSize: "1 cup",
+        calories: 320,
+        protein: 28,
+        carbs: 12,
+        fat: 18,
+        fiber: 3,
+        sugar: 8,
+        sodium: 480,
+        ingredients: [
+          "1 lb Bell & Evans ground chicken breast",
+          "1 large onion, diced",
+          "2 bell peppers, chopped",
+          "1 can diced tomatoes",
+          "2 tsp paprika",
+          "3 cloves garlic, minced",
+          "Salt and pepper to taste",
+          "2 tbsp olive oil"
+        ],
+        instructions: [
+          "Heat olive oil in large skillet",
+          "Sauté onions and peppers until soft",
+          "Add ground chicken and brown",
+          "Add garlic and paprika, cook 1 minute",
+          "Add diced tomatoes and simmer 15 minutes",
+          "Season with salt and pepper"
+        ],
+        imageUrl: "/attached_assets/chicken_goulash.jpg",
+        videoUrl: null,
+        authorId: "michael_baker",
+        authorName: "Michael Baker",
+        authorPhoto: "/attached_assets/michael_baker.jpg",
+        createdAt: new Date()
+      }
+    ];
+
+    authenticRecipes.forEach(recipe => {
+      this.recipes.set(recipe.id, recipe);
+    });
   }
 
   // User methods

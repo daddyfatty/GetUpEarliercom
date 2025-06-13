@@ -587,7 +587,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/users/:userId/meal-plans", async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = req.params.userId;
       const { name, date } = req.body;
       
       if (!date) {

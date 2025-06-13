@@ -998,4 +998,6 @@ export class DatabaseStorage implements IStorage {
   async removeRecipeFromMealPlan(mealPlanId: number, recipeId: number): Promise<boolean> { return false; }
 }
 
-export const storage = new DatabaseStorage();
+// Use MemStorage instead of DatabaseStorage for stable operation
+import { MemStorage } from './memStorage';
+export const storage = new MemStorage();
