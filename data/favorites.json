@@ -6,6 +6,12 @@
         "userId": "dev_user_1",
         "recipeId": 2,
         "createdAt": "2025-06-13T10:45:25.163Z"
+      },
+      {
+        "id": 2,
+        "userId": "dev_user_1",
+        "recipeId": 1,
+        "createdAt": "2025-06-13T10:49:33.846Z"
       }
     ]
   },
@@ -19,6 +25,18 @@
       }
     ]
   },
+  "calculatorResults": {
+    "dev_user_1": [
+      {
+        "userId": "dev_user_1",
+        "calculatorType": "alcohol",
+        "results": "{\"totalCalories\": 460, \"totalCarbs\": 30.2, \"totalProtein\": 3.2, \"weeklyGain\": 0.13, \"weeklyCalories\": 460}",
+        "userInputs": "{\"beer\": 2, \"wine\": 1, \"wineServing\": \"quarter\", \"spirits\": 0, \"cocktails\": 0}",
+        "id": 1,
+        "createdAt": "2025-06-13T10:50:09.207Z"
+      }
+    ]
+  },
   "nextId": {
     "recipe": 1,
     "workout": 1,
@@ -26,10 +44,10 @@
     "foodEntry": 1,
     "achievement": 1,
     "waterIntake": 1,
-    "favoriteRecipe": 2,
+    "favoriteRecipe": 3,
     "favoriteWorkout": 2,
     "mealPlan": 1,
     "mealPlanRecipe": 1,
-    "calculatorResult": 1
+    "calculatorResult": 2
   }
 }

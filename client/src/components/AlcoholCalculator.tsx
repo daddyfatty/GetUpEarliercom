@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Beer, Wine, Scale, TrendingUp, Save, AlertTriangle, Activity, Target, Calendar, Heart, BarChart3, Flame, Calculator } from "lucide-react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
@@ -20,8 +20,15 @@ export default function AlcoholCalculator() {
   const [unitSystem, setUnitSystem] = useState<'metric' | 'imperial'>('imperial');
   const [activityLevel, setActivityLevel] = useState("moderate");
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const { toast } = useToast();
   const { isAuthenticated } = useAuth();
+
+  // Load existing calculator results
+  const { data: calculatorResults } = useQuery({
+    queryKey: ['/api/calculator-results'],
+    enabled: isAuthenticated
+  });
 
   // Enhanced nutrition data
   const BEER_CALORIES = 153;
@@ -72,6 +79,30 @@ export default function AlcoholCalculator() {
   };
 
   const metabolicImpact = getMetabolicImpact();
+
+  // Load saved calculator data on mount
+  useEffect(() => {
+    if (calculatorResults && calculatorResults.length > 0 && !dataLoaded) {
+      const alcoholResults = calculatorResults.filter((result: any) => result.calculatorType === 'alcohol');
+      if (alcoholResults.length > 0) {
+        const mostRecent = alcoholResults[alcoholResults.length - 1];
+        try {
+          const userInputs = typeof mostRecent.userInputs === 'string' 
+            ? JSON.parse(mostRecent.userInputs) 
+            : mostRecent.userInputs;
+          
+          setBeerCount(userInputs.beer || 0);
+          setWineCount(userInputs.wine || 0);
+          setWineServing(userInputs.wineServing || "quarter");
+          setSpiritsCount(userInputs.spirits || 0);
+          setCocktailCount(userInputs.cocktails || 0);
+          setDataLoaded(true);
+        } catch (error) {
+          console.log("Error loading saved data:", error);
+        }
+      }
+    }
+  }, [calculatorResults, dataLoaded]);
 
   // Auto-save profile data when user is authenticated
   useEffect(() => {

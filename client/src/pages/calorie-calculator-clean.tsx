@@ -9,6 +9,7 @@ import { Slider } from "@/components/ui/slider";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Calculator, User, Save, LoaderCircle } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 
 interface CalculationResults {
   bmr: number;
@@ -98,7 +99,13 @@ export default function CalorieCalculator() {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const { toast } = useToast();
+
+  // Load existing calculator results
+  const { data: calculatorResults } = useQuery({
+    queryKey: ['/api/calculator-results']
+  });
 
   const calculateBMR = (weightKg: number, heightCm: number, ageYears: number, sex: 'male' | 'female'): number => {
     if (sex === 'male') {
