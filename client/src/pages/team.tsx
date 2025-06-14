@@ -39,68 +39,68 @@ export default function Team() {
             
             {/* Michael Baker */}
             <Link href="/team/michael">
-              <Card className="cursor-pointer transition-all duration-300 hover:shadow-2xl hover:scale-105 group bg-white/70 backdrop-blur-sm border-0 shadow-xl overflow-hidden">
-                <div className="relative">
+              <Card className="cursor-pointer transition-all duration-300 hover:shadow-2xl hover:scale-105 group bg-white/70 backdrop-blur-sm border-0 shadow-xl overflow-hidden h-full flex flex-col">
+                <div className="relative flex-1 flex flex-col">
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--coaching-primary))]/5 via-purple-500/5 to-[hsl(var(--coaching-accent))]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   
-                  <CardHeader className="text-center p-8 relative z-10">
-                    <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl ring-4 ring-white/50 group-hover:ring-purple-200 transition-all duration-300">
-                      <img 
-                        src={headshotPath} 
-                        alt="Michael Baker" 
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                      />
-                    </div>
-                    
-                    <CardTitle className="text-3xl font-bold mb-2 text-gray-900 group-hover:text-[hsl(var(--coaching-primary))] transition-colors">
-                      Michael Baker
-                    </CardTitle>
-                    
-                    <CardDescription className="text-lg mb-6 text-gray-600 leading-relaxed max-w-md mx-auto">
-                      Certified Personal Trainer, Integrative Nutrition Health Coach & Running Coach
-                    </CardDescription>
-                    
-                    {/* Professional Certification Badges */}
-                    <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Professional Certifications</h4>
-                      <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto">
-                        <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                          <img 
-                            src={personalTrainerBadge} 
-                            alt="ISSA Personal Trainer" 
-                            className="h-12 w-auto mx-auto"
-                          />
-                          <p className="text-xs text-gray-600 mt-1 font-medium">ISSA Personal Trainer</p>
-                        </div>
-                        <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                          <img 
-                            src={nutritionBadge} 
-                            alt="Integrative Nutrition Health Coach" 
-                            className="h-12 w-auto mx-auto"
-                          />
-                          <p className="text-xs text-gray-600 mt-1 font-medium">Nutrition Coach</p>
-                        </div>
-                        <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                          <img 
-                            src={runningCoachBadge} 
-                            alt="ISSA Running Coach" 
-                            className="h-12 w-auto mx-auto"
-                          />
-                          <p className="text-xs text-gray-600 mt-1 font-medium">Running Coach</p>
-                        </div>
-                        <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                          <img 
-                            src={rytMikeBadge} 
-                            alt="RYT 200 Yoga Teacher" 
-                            className="h-12 w-auto mx-auto"
-                          />
-                          <p className="text-xs text-gray-600 mt-1 font-medium">RYT 200 Yoga</p>
+                  <CardHeader className="text-center p-8 relative z-10 flex-1 flex flex-col justify-between">
+                    <div className="flex flex-col">
+                      <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl ring-4 ring-white/50 group-hover:ring-purple-200 transition-all duration-300">
+                        <img 
+                          src={headshotPath} 
+                          alt="Michael Baker" 
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                      
+                      <CardTitle className="text-3xl font-bold mb-2 text-gray-900 group-hover:text-[hsl(var(--coaching-primary))] transition-colors">
+                        Michael Baker
+                      </CardTitle>
+                      
+                      <CardDescription className="text-lg mb-6 text-gray-600 leading-relaxed max-w-md mx-auto">
+                        Certified Personal Trainer, Integrative Nutrition Health Coach & Running Coach
+                      </CardDescription>
+                      
+                      {/* Professional Certification Badges */}
+                      <div className="mb-6 flex-1">
+                        <h4 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Professional Certifications</h4>
+                        <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto h-48 content-start">
+                          <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow h-24 flex flex-col justify-center">
+                            <img 
+                              src={personalTrainerBadge} 
+                              alt="ISSA Personal Trainer" 
+                              className="h-12 w-auto mx-auto mb-1"
+                            />
+                            <p className="text-xs text-gray-600 font-medium text-center">ISSA Personal Trainer</p>
+                          </div>
+                          <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow h-24 flex flex-col justify-center">
+                            <img 
+                              src={nutritionBadge} 
+                              alt="Integrative Nutrition Health Coach" 
+                              className="h-12 w-auto mx-auto mb-1"
+                            />
+                            <p className="text-xs text-gray-600 font-medium text-center">Nutrition Coach</p>
+                          </div>
+                          <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow h-24 flex flex-col justify-center">
+                            <img 
+                              src={runningCoachBadge} 
+                              alt="ISSA Running Coach" 
+                              className="h-12 w-auto mx-auto mb-1"
+                            />
+                            <p className="text-xs text-gray-600 font-medium text-center">Running Coach</p>
+                          </div>
+                          <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow h-24 flex flex-col justify-center">
+                            <img 
+                              src={rytMikeBadge} 
+                              alt="RYT 200 Yoga Teacher" 
+                              className="h-12 w-auto mx-auto mb-1"
+                            />
+                            <p className="text-xs text-gray-600 font-medium text-center">RYT 200 Yoga</p>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    
-
                     
                     <Button className="bg-gradient-to-r from-[hsl(var(--coaching-primary))] to-purple-600 hover:from-purple-700 hover:to-[hsl(var(--coaching-accent))] text-white px-8 py-3 rounded-full font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
                       View Full Profile
@@ -113,52 +113,55 @@ export default function Team() {
 
             {/* Erica Baker */}
             <Link href="/team/erica">
-              <Card className="cursor-pointer transition-all duration-300 hover:shadow-2xl hover:scale-105 group bg-white/70 backdrop-blur-sm border-0 shadow-xl overflow-hidden">
-                <div className="relative">
+              <Card className="cursor-pointer transition-all duration-300 hover:shadow-2xl hover:scale-105 group bg-white/70 backdrop-blur-sm border-0 shadow-xl overflow-hidden h-full flex flex-col">
+                <div className="relative flex-1 flex flex-col">
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--coaching-primary))]/5 via-purple-500/5 to-[hsl(var(--coaching-accent))]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   
-                  <CardHeader className="text-center p-8 relative z-10">
-                    <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl ring-4 ring-white/50 group-hover:ring-purple-200 transition-all duration-300">
-                      <img 
-                        src={ericaPath} 
-                        alt="Erica Baker" 
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                      />
-                    </div>
-                    
-                    <CardTitle className="text-3xl font-bold mb-2 text-gray-900 group-hover:text-[hsl(var(--coaching-primary))] transition-colors">
-                      Erica Baker
-                    </CardTitle>
-                    
-                    <CardDescription className="text-lg mb-6 text-gray-600 leading-relaxed max-w-md mx-auto">
-                      E-RYT 200 Experienced Registered Yoga Teacher
-                    </CardDescription>
-                    
-                    {/* Professional Certification Badges */}
-                    <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Professional Certifications</h4>
-                      <div className="flex justify-center gap-6 max-w-sm mx-auto">
-                        <div className="bg-white/80 p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow flex-1">
-                          <img 
-                            src={eryBadge} 
-                            alt="E-RYT 200 Yoga Teacher" 
-                            className="h-14 w-auto mx-auto"
-                          />
-                          <p className="text-xs text-gray-600 mt-2 font-medium">E-RYT 200 Yoga Alliance</p>
-                        </div>
-                        <div className="bg-white/80 p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow flex-1">
-                          <img 
-                            src={yaerBadge} 
-                            alt="Yoga Alliance E-RYT" 
-                            className="h-14 w-auto mx-auto"
-                          />
-                          <p className="text-xs text-gray-600 mt-2 font-medium">Yoga Alliance Certified</p>
+                  <CardHeader className="text-center p-8 relative z-10 flex-1 flex flex-col justify-between">
+                    <div className="flex flex-col">
+                      <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl ring-4 ring-white/50 group-hover:ring-purple-200 transition-all duration-300">
+                        <img 
+                          src={ericaPath} 
+                          alt="Erica Baker" 
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                      
+                      <CardTitle className="text-3xl font-bold mb-2 text-gray-900 group-hover:text-[hsl(var(--coaching-primary))] transition-colors">
+                        Erica Baker
+                      </CardTitle>
+                      
+                      <CardDescription className="text-lg mb-6 text-gray-600 leading-relaxed max-w-md mx-auto">
+                        E-RYT 200 Experienced Registered Yoga Teacher
+                      </CardDescription>
+                      
+                      {/* Professional Certification Badges */}
+                      <div className="mb-6 flex-1">
+                        <h4 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Professional Certifications</h4>
+                        <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto h-48 content-start">
+                          <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow h-24 flex flex-col justify-center">
+                            <img 
+                              src={eryBadge} 
+                              alt="E-RYT 200 Yoga Teacher" 
+                              className="h-12 w-auto mx-auto mb-1"
+                            />
+                            <p className="text-xs text-gray-600 font-medium text-center">E-RYT 200 Yoga Alliance</p>
+                          </div>
+                          <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow h-24 flex flex-col justify-center">
+                            <img 
+                              src={yaerBadge} 
+                              alt="Yoga Alliance E-RYT" 
+                              className="h-12 w-auto mx-auto mb-1"
+                            />
+                            <p className="text-xs text-gray-600 font-medium text-center">Yoga Alliance Certified</p>
+                          </div>
+                          {/* Empty slots to maintain grid alignment */}
+                          <div className="opacity-0 h-24"></div>
+                          <div className="opacity-0 h-24"></div>
                         </div>
                       </div>
                     </div>
-                    
-
                     
                     <Button className="bg-gradient-to-r from-[hsl(var(--coaching-primary))] to-purple-600 hover:from-purple-700 hover:to-[hsl(var(--coaching-accent))] text-white px-8 py-3 rounded-full font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
                       View Full Profile
