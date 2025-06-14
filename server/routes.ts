@@ -848,15 +848,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Check if recipe is favorited
   app.get("/api/users/:userId/favorites/:recipeId/check", async (req, res) => {
     try {
-      // Development mode - always use consistent user ID
-      const developmentUserId = 1;
+      const userId = req.params.userId;
       const recipeId = parseInt(req.params.recipeId);
       
-      const isFavorited = await storage.isRecipeFavorited(developmentUserId, recipeId);
+      const isFavorited = await storage.isRecipeFavorited(userId, recipeId);
       res.json({ isFavorited });
     } catch (error) {
       console.error("Error checking favorite status:", error);
       res.status(500).json({ message: "Failed to check favorite status" });
+    }
+  });
+
+  // Check if workout is favorited
+  app.get("/api/users/:userId/favorite-workouts/:workoutId/check", async (req, res) => {
+    try {
+      const userId = req.params.userId;
+      const workoutId = parseInt(req.params.workoutId);
+      
+      const isFavorited = await storage.isWorkoutFavorited(userId, workoutId);
+      res.json({ isFavorited });
+    } catch (error) {
+      console.error("Error checking workout favorite status:", error);
+      res.status(500).json({ message: "Failed to check workout favorite status" });
     }
   });
 

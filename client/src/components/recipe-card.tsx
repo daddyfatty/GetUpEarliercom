@@ -1,12 +1,9 @@
-import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Clock, Dumbbell, ArrowRight, Heart } from "lucide-react";
+import { Clock, Dumbbell, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
-import { useToast } from "@/hooks/use-toast";
-import { apiRequest, queryClient } from "@/lib/queryClient";
-import { useMutation } from "@tanstack/react-query";
+import { FavoriteButton } from "@/components/FavoriteButton";
 import type { Recipe } from "@shared/schema";
 
 interface RecipeCardProps {
@@ -14,104 +11,6 @@ interface RecipeCardProps {
 }
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
-  const { toast } = useToast();
-  const [isFavorited, setIsFavorited] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    // Check authentication and favorite status
-    const checkAuthAndFavorite = async () => {
-      try {
-        // In development, always authenticated
-        setIsAuthenticated(true);
-        
-        // Check if this recipe is favorited by fetching user favorites
-        const favorites = await apiRequest("GET", "/api/users/dev_user_1/favorites");
-        const isFav = favorites.some((fav: any) => fav.id === recipe.id);
-        setIsFavorited(isFav);
-      } catch (error) {
-        console.error("Error checking favorite status:", error);
-        setIsAuthenticated(true); // Still authenticated in dev mode
-        setIsFavorited(false);
-      }
-    };
-    checkAuthAndFavorite();
-  }, [recipe.id]);
-
-  // Mutation for adding favorite
-  const addFavoriteMutation = useMutation({
-    mutationFn: async () => {
-      return await apiRequest("POST", "/api/users/dev_user_1/favorites", { recipeId: recipe.id });
-    },
-    onSuccess: () => {
-      setIsFavorited(true);
-      queryClient.invalidateQueries({ queryKey: ["/api/users/dev_user_1/favorites"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/user/profile"] });
-      toast({
-        title: "Added to Favorites",
-        description: `${recipe.title} added to your favorites.`,
-      });
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Could not add to favorites. Please try again.",
-        variant: "destructive",
-      });
-    }
-  });
-
-  // Mutation for removing favorite
-  const removeFavoriteMutation = useMutation({
-    mutationFn: async () => {
-      return await apiRequest("DELETE", `/api/users/dev_user_1/favorites/${recipe.id}`);
-    },
-    onSuccess: () => {
-      setIsFavorited(false);
-      queryClient.invalidateQueries({ queryKey: ["/api/users/dev_user_1/favorites"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/user/profile"] });
-      toast({
-        title: "Removed from Favorites",
-        description: `${recipe.title} removed from your favorites.`,
-      });
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Could not remove from favorites. Please try again.",
-        variant: "destructive",
-      });
-    }
-  });
-
-  const handleFavoriteClick = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (!isAuthenticated) {
-      toast({
-        title: "Sign Up Required",
-        description: "Create an account to save your favorite recipes.",
-        action: (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => window.location.href = "/api/login"}
-          >
-            Sign Up
-          </Button>
-        ),
-      });
-      return;
-    }
-
-    if (isFavorited) {
-      removeFavoriteMutation.mutate();
-    } else {
-      addFavoriteMutation.mutate();
-    }
-  };
-
   const getCategoryColor = (category: string) => {
     switch (category) {
       case "breakfast":
@@ -151,16 +50,12 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
               )}
             </div>
             <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
+              <FavoriteButton 
+                type="recipe" 
+                id={recipe.id} 
                 size="sm"
-                onClick={handleFavoriteClick}
-                className="p-1 h-8 w-8 hover:bg-red-50"
-              >
-                <Heart 
-                  className={`h-4 w-4 ${isFavorited ? 'fill-red-500 text-red-500' : 'text-gray-400 hover:text-red-500'}`}
-                />
-              </Button>
+                className="text-gray-400 hover:text-red-500"
+              />
               <span className="text-gray-500 dark:text-gray-400 text-sm flex items-center">
                 <Clock className="w-4 h-4 mr-1" />
                 {recipe.prepTime} min
