@@ -102,47 +102,10 @@ export default function CalorieCalculator() {
   const [dataLoaded, setDataLoaded] = useState(false);
   const { toast } = useToast();
 
-  // Load existing calculator results
+  // Load existing calculator results for display purposes only
   const { data: calculatorResults } = useQuery({
     queryKey: ['/api/calculator-results']
   });
-
-  // Load saved calculator data on mount
-  useEffect(() => {
-    if (calculatorResults && Array.isArray(calculatorResults) && calculatorResults.length > 0 && !dataLoaded) {
-      const calorieResults = calculatorResults.filter((result: any) => result.calculatorType === 'calorie');
-      if (calorieResults.length > 0) {
-        const mostRecent = calorieResults[calorieResults.length - 1];
-        try {
-          const userInputs = typeof mostRecent.userInputs === 'string' 
-            ? JSON.parse(mostRecent.userInputs) 
-            : mostRecent.userInputs;
-          
-          setSex(userInputs.sex || 'male');
-          setAge(userInputs.age?.toString() || '');
-          setHeight(userInputs.height?.toString() || '');
-          setCurrentWeight(userInputs.currentWeight?.toString() || '');
-          setDesiredWeight(userInputs.desiredWeight?.toString() || '');
-          setActivityLevel([parseFloat(userInputs.activityLevel) || 1.2]);
-          setGoal(userInputs.goal || 'maintenance');
-          setUnitSystem(userInputs.unitSystem || 'imperial');
-          setMacroProfile(userInputs.macroProfile || 'balanced');
-          setDietaryRestrictions(userInputs.dietaryRestrictions || []);
-          setSupplementGoals(userInputs.supplementGoals || []);
-          
-          // Also restore the results
-          const savedResults = typeof mostRecent.results === 'string' 
-            ? JSON.parse(mostRecent.results) 
-            : mostRecent.results;
-          setResults(savedResults);
-          
-          setDataLoaded(true);
-        } catch (error) {
-          console.log("Error loading saved data:", error);
-        }
-      }
-    }
-  }, [calculatorResults, dataLoaded]);
 
   const calculateBMR = (weightKg: number, heightCm: number, ageYears: number, sex: 'male' | 'female'): number => {
     if (sex === 'male') {
@@ -390,6 +353,7 @@ export default function CalorieCalculator() {
     setIsLoading(true);
     try {
       const profileData = await apiRequest("GET", "/api/user/profile");
+      console.log("Loading profile data:", profileData);
       
       if (profileData.age) setAge(profileData.age.toString());
       if (profileData.sex) setSex(profileData.sex);
@@ -408,6 +372,7 @@ export default function CalorieCalculator() {
         });
       }
     } catch (error) {
+      console.log("Profile load error:", error);
       if (showToast) {
         toast({
           title: "Load Failed", 
@@ -420,19 +385,13 @@ export default function CalorieCalculator() {
     }
   };
 
-  // Auto-load profile data when component mounts and when navigating back to page
+  // Auto-load profile data only once when component mounts
   useEffect(() => {
-    loadProfile(false); // Don't show toast on initial load
-  }, []);
-
-  // Also reload profile data when coming back to this page (in case it was updated elsewhere)
-  useEffect(() => {
-    const handleFocus = () => {
-      loadProfile(false);
-    };
-    window.addEventListener('focus', handleFocus);
-    return () => window.removeEventListener('focus', handleFocus);
-  }, []);
+    if (!dataLoaded) {
+      loadProfile(false); // Don't show toast on initial load
+      setDataLoaded(true);
+    }
+  }, [dataLoaded]);
 
   const getGoalDescription = (goal: string) => {
     switch (goal) {
