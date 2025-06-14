@@ -35,7 +35,7 @@ export default function Team() {
       {/* Team Members */}
       <section className="py-24 -mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-stretch">
             
             {/* Michael Baker */}
             <Link href="/team/michael">
@@ -100,9 +100,7 @@ export default function Team() {
                       </div>
                     </div>
                     
-                    <Badge className="mb-6 bg-gradient-to-r from-[hsl(var(--coaching-primary))] to-purple-600 text-white px-6 py-2 text-sm font-semibold">
-                      30+ Years Experience
-                    </Badge>
+
                     
                     <Button className="bg-gradient-to-r from-[hsl(var(--coaching-primary))] to-purple-600 hover:from-purple-700 hover:to-[hsl(var(--coaching-accent))] text-white px-8 py-3 rounded-full font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
                       View Full Profile
@@ -160,9 +158,7 @@ export default function Team() {
                       </div>
                     </div>
                     
-                    <Badge className="mb-6 bg-gradient-to-r from-[hsl(var(--coaching-primary))] to-purple-600 text-white px-6 py-2 text-sm font-semibold">
-                      15+ Years Experience
-                    </Badge>
+
                     
                     <Button className="bg-gradient-to-r from-[hsl(var(--coaching-primary))] to-purple-600 hover:from-purple-700 hover:to-[hsl(var(--coaching-accent))] text-white px-8 py-3 rounded-full font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
                       View Full Profile
