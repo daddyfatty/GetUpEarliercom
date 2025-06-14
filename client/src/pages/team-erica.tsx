@@ -5,6 +5,8 @@ import { Mail, Phone, Calendar, Clock, MapPin, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 import ericaPath from "@assets/678ab3d4caec71062e65470f_erddd_1749497849578.jpg";
 import yogaAlliancePath from "@assets/67916c3970c6de430a570260_67916c07869e9844f99f5710_download%20(19)_1749497839094.png";
+import eryBadge from "@assets/RYTMIKE_1749505314924.png";
+import yaerBadge from "@assets/YAER_1749505224126.png";
 
 export default function TeamErica() {
   return (
@@ -80,6 +82,29 @@ export default function TeamErica() {
                     You can find her teaching small group classes in her home studio, private lessons and recorded classes 
                     of varying lengths on her YouTube channel.
                   </p>
+
+                  {/* Professional Credentials */}
+                  <div className="mt-6">
+                    <h4 className="text-lg font-semibold text-gray-900 mb-4">Professional Certifications</h4>
+                    <div className="grid grid-cols-2 gap-4 max-w-md">
+                      <div className="text-center bg-white p-4 rounded-lg shadow-sm border">
+                        <img 
+                          src={eryBadge} 
+                          alt="E-RYT 200 Yoga Teacher" 
+                          className="h-16 w-auto mx-auto mb-2"
+                        />
+                        <p className="text-xs text-gray-600 font-medium">E-RYT 200 Yoga Alliance</p>
+                      </div>
+                      <div className="text-center bg-white p-4 rounded-lg shadow-sm border">
+                        <img 
+                          src={yaerBadge} 
+                          alt="Yoga Alliance E-RYT" 
+                          className="h-16 w-auto mx-auto mb-2"
+                        />
+                        <p className="text-xs text-gray-600 font-medium">Yoga Alliance Certified</p>
+                      </div>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
 

@@ -4,6 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Mail, Phone, Calendar, Clock, MapPin, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
+import personalTrainerBadge from "@assets/67910d333568168655f4b0e8_Badges-PT (1)_1749504702546.png";
+import nutritionBadge from "@assets/67910ddf1426fe137b7a5cfa_HCTP_INHC_Badge (1)-p-500 (1)_1749504702546.png";
+import runningCoachBadge from "@assets/67910e09c2597e3ff6174ecb_Badges-run-coach (1)_1749504702546.png";
+import rytMikeBadge from "@assets/67910e23033a488a11f42952_erty (1)_1749504702546.png";
 
 export default function TeamMichael() {
   return (
@@ -72,6 +76,45 @@ export default function TeamMichael() {
                     lasting success. His philosophy centers on building strength, confidence, and 
                     healthy relationships with food and exercise.
                   </p>
+
+                  {/* Professional Credentials */}
+                  <div className="mt-6">
+                    <h4 className="text-lg font-semibold text-gray-900 mb-4">Professional Certifications</h4>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="text-center bg-white p-4 rounded-lg shadow-sm border">
+                        <img 
+                          src={personalTrainerBadge} 
+                          alt="ISSA Personal Trainer" 
+                          className="h-16 w-auto mx-auto mb-2"
+                        />
+                        <p className="text-xs text-gray-600 font-medium">ISSA Personal Trainer</p>
+                      </div>
+                      <div className="text-center bg-white p-4 rounded-lg shadow-sm border">
+                        <img 
+                          src={nutritionBadge} 
+                          alt="Integrative Nutrition Health Coach" 
+                          className="h-16 w-auto mx-auto mb-2"
+                        />
+                        <p className="text-xs text-gray-600 font-medium">Integrative Nutrition Health Coach</p>
+                      </div>
+                      <div className="text-center bg-white p-4 rounded-lg shadow-sm border">
+                        <img 
+                          src={runningCoachBadge} 
+                          alt="ISSA Running Coach" 
+                          className="h-16 w-auto mx-auto mb-2"
+                        />
+                        <p className="text-xs text-gray-600 font-medium">ISSA Running Coach</p>
+                      </div>
+                      <div className="text-center bg-white p-4 rounded-lg shadow-sm border">
+                        <img 
+                          src={rytMikeBadge} 
+                          alt="RYT 200 Yoga Teacher" 
+                          className="h-16 w-auto mx-auto mb-2"
+                        />
+                        <p className="text-xs text-gray-600 font-medium">RYT 200 Yoga Teacher</p>
+                      </div>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
 
