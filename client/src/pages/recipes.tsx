@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Search, Filter, Plus, Utensils, Clock, Users } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { BookPromotion } from "@/components/book-promotion";
 import type { Recipe } from "@shared/schema";
 
 export default function Recipes() {
@@ -233,6 +234,9 @@ export default function Recipes() {
           )}
         </div>
       </div>
+      
+      {/* Book Promotion Section */}
+      <BookPromotion />
     </div>
   );
 }

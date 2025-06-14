@@ -13,6 +13,7 @@ import { Slider } from "@/components/ui/slider";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
+import { BookPromotion } from "@/components/book-promotion";
 import type { Recipe } from "@shared/schema";
 
 export default function RecipeDetail() {
@@ -930,6 +931,9 @@ export default function RecipeDetail() {
           </div>
         </DialogContent>
       </Dialog>
+      
+      {/* Book Promotion Section */}
+      <BookPromotion />
     </div>
   );
 }
