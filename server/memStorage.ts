@@ -65,10 +65,12 @@ export interface IStorage {
   getUserFavoriteRecipes(userId: string): Promise<Recipe[]>;
   addFavoriteRecipe(userId: string, recipeId: number): Promise<FavoriteRecipe>;
   removeFavoriteRecipe(userId: string, recipeId: number): Promise<boolean>;
+  isRecipeFavorited(userId: string, recipeId: number): Promise<boolean>;
 
   getUserFavoriteWorkouts(userId: string): Promise<Workout[]>;
   addFavoriteWorkout(userId: string, workoutId: number): Promise<FavoriteWorkout>;
   removeFavoriteWorkout(userId: string, workoutId: number): Promise<boolean>;
+  isWorkoutFavorited(userId: string, workoutId: number): Promise<boolean>;
 
   // Meal plan methods
   getUserMealPlans(userId: string): Promise<MealPlan[]>;
@@ -748,6 +750,16 @@ export class MemStorage implements IStorage {
     const filteredRecipes = planRecipes.filter(recipe => recipe.recipeId !== recipeId);
     this.mealPlanRecipes.set(mealPlanId, filteredRecipes);
     return filteredRecipes.length < planRecipes.length;
+  }
+
+  async isRecipeFavorited(userId: string, recipeId: number): Promise<boolean> {
+    const favorites = this.favoriteRecipes.get(userId) || [];
+    return favorites.some(fav => fav.recipeId === recipeId);
+  }
+
+  async isWorkoutFavorited(userId: string, workoutId: number): Promise<boolean> {
+    const favorites = this.favoriteWorkouts.get(userId) || [];
+    return favorites.some(fav => fav.workoutId === workoutId);
   }
 }
 

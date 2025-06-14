@@ -5,7 +5,7 @@ import { Heart, ChefHat } from "lucide-react";
 
 export default function Favorites() {
   const { data: favoriteRecipes, isLoading, error } = useQuery({
-    queryKey: ["/api/users/1/favorites"],
+    queryKey: ["/api/users/dev_user_1/favorites"],
     retry: false,
   });
 
