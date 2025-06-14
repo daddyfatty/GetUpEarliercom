@@ -8,17 +8,17 @@
     "height": 67,
     "age": 50,
     "sex": "male",
-    "currentWeight": 180,
-    "desiredWeight": 170,
-    "activityLevel": "1.55",
+    "currentWeight": 165,
+    "desiredWeight": 155,
+    "activityLevel": "1.725",
     "goal": "loss",
     "unitSystem": "imperial",
-    "macroProfile": "balanced",
+    "macroProfile": "high-protein",
     "timezone": null,
     "language": "en",
     "notifications": true,
     "isActive": true,
     "createdAt": "2025-06-13T10:59:04.716Z",
-    "updatedAt": "2025-06-14T09:51:45.907Z"
+    "updatedAt": "2025-06-14T09:54:15.350Z"
   }
 }

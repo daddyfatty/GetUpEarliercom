@@ -322,22 +322,44 @@ export default function Coaching() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-[hsl(var(--navy))] text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Start Your Transformation?</h2>
-          <p className="text-xl text-blue-200 mb-8 max-w-2xl mx-auto">
-            Book a free 30-minute consultation to discuss your goals and create a personalized plan for success.
-          </p>
+      {/* Ready to Transform Section */}
+      <section className="py-20 bg-gradient-to-br from-[hsl(var(--coaching-primary))] via-purple-700 to-[hsl(var(--coaching-accent))] text-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Transform?</h2>
+            <p className="text-xl md:text-2xl text-purple-100 max-w-4xl mx-auto leading-relaxed">
+              Get personalized training and coaching from a certified trainer, yoga teacher, running coach, and integrative nutrition coach. 
+              Bridge the gap from inactivity to strength and sustainable healthy habits.
+            </p>
+          </div>
           
-          <Button 
-            size="lg"
-            className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90 text-white px-8 py-3 text-lg font-medium group"
-            onClick={() => window.open('https://calendly.com/michaelbakerdigital/30minute', '_blank')}
-          >
-            Schedule Free Consultation
-            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+            <Button 
+              size="lg" 
+              className="bg-white text-[hsl(var(--coaching-text))] hover:bg-[hsl(var(--coaching-light))] font-bold text-lg px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 min-w-[200px]"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
+              <Users className="h-5 w-5 mr-2" />
+              View Coaching Packages
+              <ArrowRight className="h-5 w-5 ml-2" />
+            </Button>
+            
+            <Button 
+              size="lg" 
+              className="bg-gradient-to-r from-[hsl(var(--coaching-accent))] to-[hsl(var(--coaching-primary))] hover:from-[hsl(var(--coaching-accent))]/90 hover:to-[hsl(var(--coaching-primary))]/90 text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 min-w-[200px]"
+              onClick={() => window.open('https://calendly.com/michaelbakerdigital/30minute', '_blank')}
+            >
+              <Calendar className="h-5 w-5 mr-2" />
+              Free Consultation
+              <ArrowRight className="h-5 w-5 ml-2" />
+            </Button>
+          </div>
+          
+          <div className="text-center mt-8">
+            <p className="text-purple-200 text-sm">
+              No commitment required • 30-minute consultation • Personalized recommendations
+            </p>
+          </div>
         </div>
       </section>
     </div>
