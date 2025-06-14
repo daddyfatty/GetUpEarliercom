@@ -28,24 +28,17 @@ export default function TeamErica() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="text-center md:text-left flex-1">
+            <div className="text-center md:text-left">
               <h1 className="text-4xl font-bold mb-2">Erica Baker</h1>
               <p className="text-xl text-blue-100 mb-4">
                 E-RYT 200 Yoga Instructor
               </p>
-              <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-4">
+              <div className="flex flex-wrap justify-center md:justify-start gap-2">
                 <Badge variant="secondary" className="bg-white/20 text-white">15+ Years Experience</Badge>
                 <Badge variant="secondary" className="bg-white/20 text-white">E-RYT 200</Badge>
                 <Badge variant="secondary" className="bg-white/20 text-white">3000+ Teaching Hours</Badge>
                 <Badge variant="secondary" className="bg-white/20 text-white">Former Studio Owner</Badge>
               </div>
-            </div>
-            <div className="w-20">
-              <img 
-                src={yogaAlliancePath} 
-                alt="Yoga Alliance Certified" 
-                className="w-full h-auto"
-              />
             </div>
           </div>
         </div>
