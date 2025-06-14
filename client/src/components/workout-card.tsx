@@ -1,10 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Clock, Flame, Play, Star, Heart } from "lucide-react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
+import { Clock, Flame, Play, Star } from "lucide-react";
+import { FavoriteButton } from "@/components/FavoriteButton";
 import type { Workout } from "@shared/schema";
 
 interface WorkoutCardProps {
@@ -12,68 +10,6 @@ interface WorkoutCardProps {
 }
 
 export function WorkoutCard({ workout }: WorkoutCardProps) {
-  const queryClient = useQueryClient();
-  const { toast } = useToast();
-
-  const { data: favoriteWorkouts = [] } = useQuery<Workout[]>({
-    queryKey: ["/api/users/dev_user_1/favorite-workouts"],
-    retry: false,
-  });
-
-  const addFavoriteMutation = useMutation({
-    mutationFn: async (workoutId: number) => {
-      return apiRequest("POST", `/api/users/dev_user_1/favorite-workouts`, { workoutId });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/users/dev_user_1/favorite-workouts"] });
-      toast({
-        title: "Added to favorites",
-        description: "Workout has been added to your favorites",
-      });
-    },
-    onError: (error) => {
-      console.error("Error adding favorite:", error);
-      toast({
-        title: "Error",
-        description: "Failed to add workout to favorites",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const removeFavoriteMutation = useMutation({
-    mutationFn: async (workoutId: number) => {
-      return apiRequest("DELETE", `/api/users/dev_user_1/favorite-workouts/${workoutId}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/users/dev_user_1/favorite-workouts"] });
-      toast({
-        title: "Removed from favorites",
-        description: "Workout has been removed from your favorites",
-      });
-    },
-    onError: (error) => {
-      console.error("Error removing favorite:", error);
-      toast({
-        title: "Error",
-        description: "Failed to remove workout from favorites",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const isWorkoutFavorited = (workoutId: number) => {
-    return favoriteWorkouts.some(fav => fav.id === workoutId);
-  };
-
-  const handleFavoriteToggle = (workoutId: number) => {
-    if (isWorkoutFavorited(workoutId)) {
-      removeFavoriteMutation.mutate(workoutId);
-    } else {
-      addFavoriteMutation.mutate(workoutId);
-    }
-  };
-
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case "beginner":
@@ -158,25 +94,12 @@ export function WorkoutCard({ workout }: WorkoutCardProps) {
             {workout.category}
           </Badge>
           <div className="flex items-center space-x-2">
-            <Button
-              variant="ghost"
+            <FavoriteButton 
+              type="workout" 
+              id={workout.id} 
               size="sm"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleFavoriteToggle(workout.id);
-              }}
-              disabled={addFavoriteMutation.isPending || removeFavoriteMutation.isPending}
-              className="hover:bg-red-50 dark:hover:bg-red-900/20 p-1 h-auto"
-            >
-              <Heart
-                className={`w-5 h-5 ${
-                  isWorkoutFavorited(workout.id)
-                    ? "text-red-500 fill-red-500"
-                    : "text-gray-400 hover:text-red-500"
-                } transition-colors`}
-              />
-            </Button>
+              className="text-gray-400 hover:text-red-500"
+            />
             <Badge variant="outline" className={getDifficultyColor(workout.difficulty)}>
               {workout.difficulty}
             </Badge>

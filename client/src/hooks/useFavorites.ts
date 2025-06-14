@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import type { Recipe, Workout } from "@shared/schema";
 
 const DEVELOPMENT_USER_ID = "dev_user_1";
 
@@ -10,25 +11,25 @@ export function useFavorites() {
   const queryClient = useQueryClient();
 
   // Fetch user's favorite recipes
-  const { data: favoriteRecipes = [] } = useQuery({
+  const { data: favoriteRecipes = [] } = useQuery<Recipe[]>({
     queryKey: [`/api/users/${DEVELOPMENT_USER_ID}/favorites`],
     retry: false,
   });
 
   // Fetch user's favorite workouts
-  const { data: favoriteWorkouts = [] } = useQuery({
+  const { data: favoriteWorkouts = [] } = useQuery<Workout[]>({
     queryKey: [`/api/users/${DEVELOPMENT_USER_ID}/favorite-workouts`],
     retry: false,
   });
 
   // Check if a recipe is favorited
   const isRecipeFavorited = useCallback((recipeId: number) => {
-    return favoriteRecipes.some((recipe: any) => recipe.id === recipeId);
+    return favoriteRecipes.some((recipe: Recipe) => recipe.id === recipeId);
   }, [favoriteRecipes]);
 
   // Check if a workout is favorited
   const isWorkoutFavorited = useCallback((workoutId: number) => {
-    return favoriteWorkouts.some((workout: any) => workout.id === workoutId);
+    return favoriteWorkouts.some((workout: Workout) => workout.id === workoutId);
   }, [favoriteWorkouts]);
 
   // Add recipe to favorites
