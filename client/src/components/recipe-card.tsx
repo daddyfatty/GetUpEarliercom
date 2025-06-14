@@ -54,7 +54,6 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
                 type="recipe" 
                 id={recipe.id} 
                 size="sm"
-                className="text-gray-400 hover:text-red-500"
               />
               <span className="text-gray-500 dark:text-gray-400 text-sm flex items-center">
                 <Clock className="w-4 h-4 mr-1" />

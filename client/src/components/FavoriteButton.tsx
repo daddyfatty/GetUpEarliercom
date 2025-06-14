@@ -48,7 +48,7 @@ export function FavoriteButton({ type, id, className, size = "md" }: FavoriteBut
           "transition-all duration-200",
           isFavorited 
             ? "fill-red-500 text-red-500" 
-            : "text-white hover:text-red-300"
+            : "text-gray-400 hover:text-red-500"
         )}
       />
     </button>

@@ -1,6 +1,13 @@
 {
   "favoriteRecipes": {
-    "dev_user_1": []
+    "dev_user_1": [
+      {
+        "id": 5,
+        "userId": "dev_user_1",
+        "recipeId": 1,
+        "createdAt": "2025-06-14T09:53:42.017Z"
+      }
+    ]
   },
   "favoriteWorkouts": {
     "dev_user_1": [
@@ -47,7 +54,7 @@
     "foodEntry": 1,
     "achievement": 1,
     "waterIntake": 1,
-    "favoriteRecipe": 5,
+    "favoriteRecipe": 6,
     "favoriteWorkout": 3,
     "mealPlan": 1,
     "mealPlanRecipe": 1,

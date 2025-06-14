@@ -5,8 +5,8 @@
     "firstName": "Demo",
     "lastName": "User",
     "profileImageUrl": null,
-    "height": 72,
-    "age": 30,
+    "height": 67,
+    "age": 50,
     "sex": "male",
     "currentWeight": 180,
     "desiredWeight": 170,
@@ -19,6 +19,6 @@
     "notifications": true,
     "isActive": true,
     "createdAt": "2025-06-13T10:59:04.716Z",
-    "updatedAt": "2025-06-14T09:48:31.900Z"
+    "updatedAt": "2025-06-14T09:51:45.907Z"
   }
 }
