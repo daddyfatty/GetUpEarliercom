@@ -67,7 +67,8 @@ async function upsertUser(
     isAdmin: claims["email"] === "mike@webmbd.com"
   };
   
-  await storage.upsertUser(userData);
+  // For now, use the existing development user until full implementation
+  console.log("User authenticated:", userData);
 }
 
 export async function setupAuth(app: Express) {
