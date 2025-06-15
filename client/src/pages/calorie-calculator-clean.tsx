@@ -352,31 +352,74 @@ export default function CalorieCalculator() {
   const loadProfile = async (showToast = true) => {
     setIsLoading(true);
     try {
-      const profileData = await apiRequest("GET", "/api/user/profile");
-      console.log("Loading profile data:", profileData);
+      // First try to load the last calculation inputs
+      let dataLoaded = false;
       
-      if (profileData.age) setAge(profileData.age.toString());
-      if (profileData.sex) setSex(profileData.sex);
-      if (profileData.height) setHeight(profileData.height.toString());
-      if (profileData.currentWeight) setCurrentWeight(profileData.currentWeight.toString());
-      if (profileData.desiredWeight) setDesiredWeight(profileData.desiredWeight.toString());
-      if (profileData.activityLevel) setActivityLevel([parseFloat(profileData.activityLevel)]);
-      if (profileData.goal) setGoal(profileData.goal);
-      if (profileData.unitSystem) setUnitSystem(profileData.unitSystem);
-      if (profileData.macroProfile) setMacroProfile(profileData.macroProfile);
+      try {
+        const calculatorResults = await apiRequest("GET", "/api/calculator-results");
+        
+        // Find the most recent calorie calculator result
+        const latestCalorieResult = calculatorResults
+          ?.filter((result: any) => result.calculatorType === 'calorie')
+          ?.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
+        
+        if (latestCalorieResult?.userInputs) {
+          const inputs = JSON.parse(latestCalorieResult.userInputs);
+          console.log("Loading last calculation inputs:", inputs);
+          
+          // Load form data from last calculation
+          if (inputs.age) setAge(inputs.age.toString());
+          if (inputs.sex) setSex(inputs.sex);
+          if (inputs.height) setHeight(inputs.height.toString());
+          if (inputs.currentWeight) setCurrentWeight(inputs.currentWeight.toString());
+          if (inputs.desiredWeight) setDesiredWeight(inputs.desiredWeight.toString());
+          if (inputs.activityLevel) setActivityLevel([parseFloat(inputs.activityLevel)]);
+          if (inputs.goal) setGoal(inputs.goal);
+          if (inputs.unitSystem) setUnitSystem(inputs.unitSystem);
+          if (inputs.macroProfile) setMacroProfile(inputs.macroProfile);
+          if (inputs.dietaryRestrictions) setDietaryRestrictions(inputs.dietaryRestrictions);
+          if (inputs.supplementGoals) setSupplementGoals(inputs.supplementGoals);
+          
+          // Also load the results if available
+          if (latestCalorieResult.results) {
+            setResults(JSON.parse(latestCalorieResult.results));
+          }
+          
+          dataLoaded = true;
+          console.log("Loaded last calculation data successfully");
+        }
+      } catch (calcError) {
+        console.log("No previous calculation found, falling back to profile:", calcError);
+      }
+      
+      // If no calculation data found, fall back to profile data
+      if (!dataLoaded) {
+        const profileData = await apiRequest("GET", "/api/user/profile");
+        console.log("Loading profile data:", profileData);
+        
+        if (profileData.age) setAge(profileData.age.toString());
+        if (profileData.sex) setSex(profileData.sex);
+        if (profileData.height) setHeight(profileData.height.toString());
+        if (profileData.currentWeight) setCurrentWeight(profileData.currentWeight.toString());
+        if (profileData.desiredWeight) setDesiredWeight(profileData.desiredWeight.toString());
+        if (profileData.activityLevel) setActivityLevel([parseFloat(profileData.activityLevel)]);
+        if (profileData.goal) setGoal(profileData.goal);
+        if (profileData.unitSystem) setUnitSystem(profileData.unitSystem);
+        if (profileData.macroProfile) setMacroProfile(profileData.macroProfile);
+      }
 
       if (showToast) {
         toast({
-          title: "Profile Loaded",
-          description: "Your saved calculator settings have been loaded.",
+          title: dataLoaded ? "Last Calculation Loaded" : "Profile Loaded",
+          description: dataLoaded ? "Your last calculation has been restored." : "Your saved profile settings have been loaded.",
         });
       }
     } catch (error) {
-      console.log("Profile load error:", error);
+      console.log("Data load error:", error);
       if (showToast) {
         toast({
           title: "Load Failed", 
-          description: "Could not load profile. Please try again.",
+          description: "Could not load saved data. Please try again.",
           variant: "destructive",
         });
       }

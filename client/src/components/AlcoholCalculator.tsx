@@ -82,23 +82,34 @@ export default function AlcoholCalculator() {
 
   // Load saved calculator data on mount
   useEffect(() => {
-    if (calculatorResults && calculatorResults.length > 0 && !dataLoaded) {
-      const alcoholResults = calculatorResults.filter((result: any) => result.calculatorType === 'alcohol');
+    if (calculatorResults && Array.isArray(calculatorResults) && calculatorResults.length > 0 && !dataLoaded) {
+      // Find the most recent alcohol calculator result
+      const alcoholResults = calculatorResults
+        .filter((result: any) => result.calculatorType === 'alcohol')
+        .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      
       if (alcoholResults.length > 0) {
-        const mostRecent = alcoholResults[alcoholResults.length - 1];
+        const mostRecent = alcoholResults[0];
         try {
           const userInputs = typeof mostRecent.userInputs === 'string' 
             ? JSON.parse(mostRecent.userInputs) 
             : mostRecent.userInputs;
+          
+          console.log("Loading last alcohol calculation inputs:", userInputs);
           
           setBeerCount(userInputs.beer || 0);
           setWineCount(userInputs.wine || 0);
           setWineServing(userInputs.wineServing || "quarter");
           setSpiritsCount(userInputs.spirits || 0);
           setCocktailCount(userInputs.cocktails || 0);
+          if (userInputs.currentWeight) setCurrentWeight(userInputs.currentWeight.toString());
+          if (userInputs.unitSystem) setUnitSystem(userInputs.unitSystem);
+          if (userInputs.activityLevel) setActivityLevel(userInputs.activityLevel);
+          
           setDataLoaded(true);
+          console.log("Loaded last alcohol calculation data successfully");
         } catch (error) {
-          console.log("Error loading saved data:", error);
+          console.log("Error loading saved alcohol calculation data:", error);
         }
       }
     }
@@ -142,7 +153,10 @@ export default function AlcoholCalculator() {
           wine: wineCount,
           wineServing,
           spirits: spiritsCount,
-          cocktails: cocktailCount
+          cocktails: cocktailCount,
+          currentWeight: currentWeight,
+          unitSystem: unitSystem,
+          activityLevel: activityLevel
         }),
         results: JSON.stringify({
           totalCalories,
