@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { BookPromotion } from "@/components/BookPromotion";
+// import { BookPromotion } from "@/components/BookPromotion";
 import { Dumbbell, Utensils, Target, Users } from "lucide-react";
 
 export default function Landing() {
@@ -77,10 +77,10 @@ export default function Landing() {
           </Card>
         </div>
 
-        {/* Book Promotion */}
-        <div className="max-w-3xl mx-auto mb-16">
+        {/* Book Promotion - temporarily commented out */}
+        {/* <div className="max-w-3xl mx-auto mb-16">
           <BookPromotion />
-        </div>
+        </div> */}
 
         {/* About Section */}
         <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg max-w-4xl mx-auto">

@@ -2,7 +2,6 @@ import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
 import { insertUserSchema, insertRecipeSchema, insertWorkoutSchema, insertGoalSchema, insertFoodEntrySchema } from "@shared/schema";
 import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal";
 import { workoutService } from "./workoutService";
@@ -17,7 +16,7 @@ if (STRIPE_CONFIGURED) {
   try {
     import("stripe").then((Stripe) => {
       stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
-        apiVersion: "2023-10-16",
+        apiVersion: "2024-06-20",
       });
       console.log("Stripe configured successfully");
     }).catch((error) => {
@@ -29,22 +28,13 @@ if (STRIPE_CONFIGURED) {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Initialize Replit authentication
-  await setupAuth(app);
-
   // Serve static assets
   app.use('/assets', express.static('/home/runner/workspace/attached_assets'));
   
-  // Authentication route for getting current user
-  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
-    try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      res.json(user);
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Failed to fetch user" });
-    }
+  // Temporary authentication route for development
+  app.get('/api/auth/user', async (req: any, res) => {
+    const user = await storage.getUser("1");
+    res.json(user);
   });
 
   // Recipe routes
