@@ -302,35 +302,133 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserFavoriteRecipes(userId: string): Promise<FavoriteRecipe[]> {
-    return [];
+    try {
+      const favorites = await db
+        .select()
+        .from(favoriteRecipes)
+        .where(eq(favoriteRecipes.userId, userId));
+      return favorites;
+    } catch (error) {
+      console.error("Error getting user favorite recipes:", error);
+      return [];
+    }
   }
 
   async addFavoriteRecipe(userId: string, recipeId: number): Promise<FavoriteRecipe> {
-    throw new Error("Not implemented");
+    try {
+      const [favorite] = await db
+        .insert(favoriteRecipes)
+        .values({
+          userId,
+          recipeId,
+          createdAt: new Date()
+        })
+        .returning();
+      return favorite;
+    } catch (error) {
+      console.error("Error adding favorite recipe:", error);
+      throw error;
+    }
   }
 
   async removeFavoriteRecipe(userId: string, recipeId: number): Promise<boolean> {
-    return false;
+    try {
+      const result = await db
+        .delete(favoriteRecipes)
+        .where(
+          and(
+            eq(favoriteRecipes.userId, userId),
+            eq(favoriteRecipes.recipeId, recipeId)
+          )
+        );
+      return true;
+    } catch (error) {
+      console.error("Error removing favorite recipe:", error);
+      return false;
+    }
   }
 
   async isRecipeFavorited(userId: string, recipeId: number): Promise<boolean> {
-    return false;
+    try {
+      const [favorite] = await db
+        .select()
+        .from(favoriteRecipes)
+        .where(
+          and(
+            eq(favoriteRecipes.userId, userId),
+            eq(favoriteRecipes.recipeId, recipeId)
+          )
+        );
+      return !!favorite;
+    } catch (error) {
+      console.error("Error checking if recipe is favorited:", error);
+      return false;
+    }
   }
 
   async getUserFavoriteWorkouts(userId: string): Promise<FavoriteWorkout[]> {
-    return [];
+    try {
+      const favorites = await db
+        .select()
+        .from(favoriteWorkouts)
+        .where(eq(favoriteWorkouts.userId, userId));
+      return favorites;
+    } catch (error) {
+      console.error("Error getting user favorite workouts:", error);
+      return [];
+    }
   }
 
   async addFavoriteWorkout(userId: string, workoutId: number): Promise<FavoriteWorkout> {
-    throw new Error("Not implemented");
+    try {
+      const [favorite] = await db
+        .insert(favoriteWorkouts)
+        .values({
+          userId,
+          workoutId,
+          createdAt: new Date()
+        })
+        .returning();
+      return favorite;
+    } catch (error) {
+      console.error("Error adding favorite workout:", error);
+      throw error;
+    }
   }
 
   async removeFavoriteWorkout(userId: string, workoutId: number): Promise<boolean> {
-    return false;
+    try {
+      const result = await db
+        .delete(favoriteWorkouts)
+        .where(
+          and(
+            eq(favoriteWorkouts.userId, userId),
+            eq(favoriteWorkouts.workoutId, workoutId)
+          )
+        );
+      return true;
+    } catch (error) {
+      console.error("Error removing favorite workout:", error);
+      return false;
+    }
   }
 
-  async isWorkoutFavorited(userId: number, workoutId: number): Promise<boolean> {
-    return false;
+  async isWorkoutFavorited(userId: string, workoutId: number): Promise<boolean> {
+    try {
+      const [favorite] = await db
+        .select()
+        .from(favoriteWorkouts)
+        .where(
+          and(
+            eq(favoriteWorkouts.userId, userId),
+            eq(favoriteWorkouts.workoutId, workoutId)
+          )
+        );
+      return !!favorite;
+    } catch (error) {
+      console.error("Error checking if workout is favorited:", error);
+      return false;
+    }
   }
 
   async getUserMealPlans(userId: number): Promise<MealPlan[]> {
