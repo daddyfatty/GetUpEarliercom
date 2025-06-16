@@ -24,12 +24,12 @@ export function useFavorites() {
 
   // Check if a recipe is favorited
   const isRecipeFavorited = useCallback((recipeId: number) => {
-    return favoriteRecipes.some((recipe: Recipe) => recipe.id === recipeId);
+    return favoriteRecipes.some((favorite: any) => favorite.recipeId === recipeId);
   }, [favoriteRecipes]);
 
   // Check if a workout is favorited
   const isWorkoutFavorited = useCallback((workoutId: number) => {
-    return favoriteWorkouts.some((workout: Workout) => workout.id === workoutId);
+    return favoriteWorkouts.some((favorite: any) => favorite.workoutId === workoutId);
   }, [favoriteWorkouts]);
 
   // Add recipe to favorites
