@@ -505,6 +505,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Recipe ID is required" });
       }
 
+      // Check if already favorited to prevent duplicates
+      const isAlreadyFavorited = await storage.isRecipeFavorited(userId, recipeId);
+      if (isAlreadyFavorited) {
+        return res.status(200).json({ message: "Recipe is already in favorites" });
+      }
+
       const favorite = await storage.addFavoriteRecipe(userId, recipeId);
       res.json(favorite);
     } catch (error: any) {
@@ -549,6 +555,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       if (!workoutId) {
         return res.status(400).json({ message: "Workout ID is required" });
+      }
+
+      // Check if already favorited to prevent duplicates
+      const isAlreadyFavorited = await storage.isWorkoutFavorited(userId, workoutId);
+      if (isAlreadyFavorited) {
+        return res.status(200).json({ message: "Workout is already in favorites" });
       }
 
       const favorite = await storage.addFavoriteWorkout(userId, workoutId);
