@@ -51,15 +51,23 @@ export default function Recipes() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
+  // Clear all recipe cache on mount to ensure fresh data
+  useEffect(() => {
+    queryClient.clear();
+    queryClient.invalidateQueries({ queryKey: ["/api/recipes"] });
+  }, [queryClient]);
+
   const { data: recipes = [], isLoading } = useQuery<Recipe[]>({
     queryKey: ["/api/recipes", searchQuery, categoryFilter, dietFilter],
+    staleTime: 0,
+    gcTime: 0,
     queryFn: async () => {
       const params = new URLSearchParams();
       if (searchQuery) params.append("search", searchQuery);
       if (categoryFilter !== "all") params.append("category", categoryFilter);
       if (dietFilter !== "all") params.append("dietType", dietFilter);
       
-      const response = await fetch(`/api/recipes?${params.toString()}`);
+      const response = await fetch(`/api/recipes?${params.toString()}?t=${Date.now()}`);
       if (!response.ok) throw new Error("Failed to fetch recipes");
       const data = await response.json();
       return data;
