@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./memStorage";
+import { storage } from "./storage-clean";
 import { insertUserSchema, insertRecipeSchema, insertWorkoutSchema, insertGoalSchema, insertFoodEntrySchema } from "@shared/schema";
 import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal";
 import { workoutService } from "./workoutService";
@@ -726,10 +726,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Development mode - use default user ID
       const developmentUserId = "dev_user_1";
 
+      console.log("Profile API: Fetching user from storage...");
       let user = await storage.getUser(developmentUserId);
+      console.log("Profile API: Retrieved user data:", user ? `age=${user.age}, source=database` : "not found");
       
       if (!user) {
         // Create development user if doesn't exist
+        console.log("Profile API: Creating new development user...");
         user = await storage.createUser({
           id: developmentUserId,
           email: "developer@getupear.lier.com",
@@ -751,6 +754,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         macroProfile: user.macroProfile || 'balanced'
       };
 
+      console.log("Profile API: Returning profile data with age:", profileData.age);
       res.json(profileData);
     } catch (error) {
       console.error("Error fetching user profile:", error);
