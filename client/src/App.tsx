@@ -6,8 +6,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { useAuth } from "@/hooks/useAuth";
-import Landing from "@/pages/landing";
 import Home from "@/pages/home";
 import Recipes from "@/pages/recipes";
 import RecipeDetail from "@/pages/recipe-detail";
@@ -45,7 +43,6 @@ function Router() {
     window.scrollTo(0, 0);
   }, [location]);
 
-  // Show full application to everyone - authentication happens at the page level
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />

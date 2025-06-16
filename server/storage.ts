@@ -9,7 +9,6 @@ export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  upsertUser(user: Partial<User> & { id: string }): Promise<User>;
   updateUser(id: string, updates: Partial<User>): Promise<User | undefined>;
   updateUserProfile(id: string, profileData: {
     age?: number;
@@ -145,11 +144,11 @@ export class MemStorage implements IStorage {
 
     const regularUser: User = {
       id: "dev_user_1", 
-      email: "mike@webmbd.com",
+      email: "michael@getupeariler.com",
       firstName: "Michael",
       lastName: "Baker",
       profileImageUrl: null,
-      isAdmin: true,
+      isAdmin: false,
       subscriptionTier: "premium",
       stripeCustomerId: null,
       stripeSubscriptionId: null,
@@ -470,60 +469,17 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const user: User = { 
-      id: insertUser.id || `user_${this.currentId++}`,
+      id: this.currentId++, 
       ...insertUser,
       isAdmin: insertUser.isAdmin ?? false,
       subscriptionTier: insertUser.subscriptionTier ?? "free",
       stripeCustomerId: null,
       stripeSubscriptionId: null,
       paypalCustomerId: null,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      createdAt: new Date()
     };
     this.users.set(user.id, user);
     return user;
-  }
-
-  async upsertUser(userData: Partial<User> & { id: string }): Promise<User> {
-    const existingUser = this.users.get(userData.id);
-    if (existingUser) {
-      // Update existing user - set admin status for mike@webmbd.com
-      const updatedUser = {
-        ...existingUser,
-        ...userData,
-        isAdmin: userData.email === "mike@webmbd.com" ? true : (userData.isAdmin ?? existingUser.isAdmin),
-        updatedAt: new Date(),
-      };
-      this.users.set(userData.id, updatedUser);
-      return updatedUser;
-    } else {
-      // Create new user - set admin status for mike@webmbd.com
-      const newUser: User = {
-        id: userData.id,
-        email: userData.email || null,
-        firstName: userData.firstName || null,
-        lastName: userData.lastName || null,
-        profileImageUrl: userData.profileImageUrl || null,
-        isAdmin: userData.email === "mike@webmbd.com" ? true : (userData.isAdmin || false),
-        subscriptionTier: userData.subscriptionTier || "free",
-        stripeCustomerId: userData.stripeCustomerId || null,
-        stripeSubscriptionId: userData.stripeSubscriptionId || null,
-        paypalCustomerId: userData.paypalCustomerId || null,
-        age: userData.age || null,
-        sex: userData.sex || null,
-        height: userData.height || null,
-        currentWeight: userData.currentWeight || null,
-        desiredWeight: userData.desiredWeight || null,
-        activityLevel: userData.activityLevel || null,
-        goal: userData.goal || null,
-        unitSystem: userData.unitSystem || null,
-        macroProfile: userData.macroProfile || null,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-      this.users.set(newUser.id, newUser);
-      return newUser;
-    }
   }
 
   async updateUser(id: string, updates: Partial<User>): Promise<User | undefined> {
@@ -1042,4 +998,6 @@ export class DatabaseStorage implements IStorage {
   async removeRecipeFromMealPlan(mealPlanId: number, recipeId: number): Promise<boolean> { return false; }
 }
 
+// Use MemStorage instead of DatabaseStorage for stable operation
+import { MemStorage } from './memStorage';
 export const storage = new MemStorage();

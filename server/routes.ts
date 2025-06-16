@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { storage } from "./memStorage";
 import { insertUserSchema, insertRecipeSchema, insertWorkoutSchema, insertGoalSchema, insertFoodEntrySchema } from "@shared/schema";
 import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal";
 import { workoutService } from "./workoutService";
@@ -16,7 +16,7 @@ if (STRIPE_CONFIGURED) {
   try {
     import("stripe").then((Stripe) => {
       stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
-        apiVersion: "2024-06-20",
+        apiVersion: "2023-10-16",
       });
       console.log("Stripe configured successfully");
     }).catch((error) => {
@@ -31,10 +31,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Serve static assets
   app.use('/assets', express.static('/home/runner/workspace/attached_assets'));
   
-  // Temporary authentication route for development
-  app.get('/api/auth/user', async (req: any, res) => {
-    const user = await storage.getUser("1");
-    res.json(user);
+  // Authentication routes
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      
+      if (!email || !password) {
+        return res.status(400).json({ message: "Email and password are required" });
+      }
+
+      const user = await storage.getUserByEmail(email);
+      
+      if (!user || user.password !== password) {
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+
+      // In a real app, you'd use proper session management or JWT
+      const { password: _, ...userWithoutPassword } = user;
+      res.json({ user: userWithoutPassword });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/auth/register", async (req, res) => {
+    try {
+      const userData = insertUserSchema.parse(req.body);
+      
+      const existingUser = await storage.getUserByEmail(userData.email);
+      if (existingUser) {
+        return res.status(400).json({ message: "User already exists" });
+      }
+
+      const user = await storage.createUser(userData);
+      const { password: _, ...userWithoutPassword } = user;
+      res.status(201).json({ user: userWithoutPassword });
+    } catch (error) {
+      res.status(400).json({ message: "Invalid user data" });
+    }
   });
 
   // Recipe routes
