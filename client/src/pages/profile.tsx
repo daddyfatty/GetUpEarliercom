@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { User, Edit, Save, Calculator, Heart, Dumbbell, ChefHat, TrendingUp, Clock } from "lucide-react";
 import { Link } from "wouter";
+import { FavoriteButton } from "@/components/FavoriteButton";
 
 interface ProfileData {
   age?: number;
@@ -84,19 +85,43 @@ export default function Profile() {
     staleTime: 0
   });
 
-  // Fetch favorite recipes
-  const { data: favoriteRecipes = [] as Recipe[] } = useQuery({
+  // Fetch favorite recipe IDs
+  const { data: favoriteRecipeIds = [] } = useQuery({
     queryKey: ['/api/users/dev_user_1/favorites'],
     enabled: isAuthenticated,
     staleTime: 0
   });
 
-  // Fetch favorite workouts
-  const { data: favoriteWorkouts = [] as Workout[] } = useQuery({
+  // Fetch all recipes to get complete data for favorites
+  const { data: allRecipes = [] } = useQuery({
+    queryKey: ['/api/recipes'],
+    enabled: isAuthenticated,
+    staleTime: 0
+  });
+
+  // Fetch favorite workout IDs
+  const { data: favoriteWorkoutIds = [] } = useQuery({
     queryKey: ['/api/users/dev_user_1/favorite-workouts'],
     enabled: isAuthenticated,
     staleTime: 0
   });
+
+  // Fetch all workouts to get complete data for favorites
+  const { data: allWorkouts = [] } = useQuery({
+    queryKey: ['/api/workouts'],
+    enabled: isAuthenticated,
+    staleTime: 0
+  });
+
+  // Process favorite recipes with complete data
+  const favoriteRecipes = favoriteRecipeIds
+    .map((fav: any) => allRecipes.find((recipe: any) => recipe.id === fav.recipeId))
+    .filter(Boolean);
+
+  // Process favorite workouts with complete data
+  const favoriteWorkouts = favoriteWorkoutIds
+    .map((fav: any) => allWorkouts.find((workout: any) => workout.id === fav.workoutId))
+    .filter(Boolean);
 
   useEffect(() => {
     if (profileData && !profileLoading) {
@@ -509,9 +534,9 @@ export default function Profile() {
               {Array.isArray(favoriteRecipes) && favoriteRecipes.length > 0 ? (
                 <div className="space-y-3">
                   {favoriteRecipes.slice(0, 3).map((recipe: any, index: number) => (
-                    <Link key={`recipe-${recipe.id}-${index}`} href={`/recipes/${recipe.id}`}>
-                      <div className="p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer">
-                        <div className="flex items-center gap-3">
+                    <div key={`recipe-${recipe.id}-${index}`} className="p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <Link href={`/recipes/${recipe.id}`} className="flex items-center gap-3 flex-1 min-w-0">
                           <div className="w-10 h-10 rounded bg-orange-100 dark:bg-orange-900 flex items-center justify-center flex-shrink-0">
                             {recipe.imageUrl ? (
                               <img 
@@ -537,9 +562,14 @@ export default function Profile() {
                               </Badge>
                             </div>
                           </div>
-                        </div>
+                        </Link>
+                        <FavoriteButton
+                          type="recipe"
+                          id={recipe.id}
+                          className="flex-shrink-0"
+                        />
                       </div>
-                    </Link>
+                    </div>
                   ))}
                   {Array.isArray(favoriteRecipes) && favoriteRecipes.length > 3 && (
                     <Link href="/favorites">
@@ -578,9 +608,9 @@ export default function Profile() {
               {Array.isArray(favoriteWorkouts) && favoriteWorkouts.length > 0 ? (
                 <div className="space-y-3">
                   {favoriteWorkouts.slice(0, 3).map((workout: any) => (
-                    <Link key={workout.id} href={`/workouts/${workout.id}`}>
-                      <div className="p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer">
-                        <div className="flex items-center gap-3">
+                    <div key={workout.id} className="p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <Link href={`/workouts/${workout.id}`} className="flex items-center gap-3 flex-1 min-w-0">
                           <div className="w-10 h-10 rounded bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
                             <Dumbbell className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                           </div>
@@ -594,9 +624,14 @@ export default function Profile() {
                               </Badge>
                             </div>
                           </div>
-                        </div>
+                        </Link>
+                        <FavoriteButton
+                          type="workout"
+                          id={workout.id}
+                          className="flex-shrink-0"
+                        />
                       </div>
-                    </Link>
+                    </div>
                   ))}
                   {Array.isArray(favoriteWorkouts) && favoriteWorkouts.length > 3 && (
                     <Link href="/workouts">
