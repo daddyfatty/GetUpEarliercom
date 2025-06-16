@@ -87,20 +87,27 @@ export interface IStorage {
 export class DatabaseStorage implements IStorage {
 
   constructor() {
-    this.users = new Map();
-    this.recipes = new Map();
-    this.workouts = new Map();
-    this.goals = new Map();
-    this.foodEntries = new Map();
-    this.achievements = new Map();
-    this.waterIntakes = new Map();
-    this.favoriteRecipes = new Map();
-    this.favoriteWorkouts = new Map();
-    this.mealPlans = new Map();
-    this.mealPlanRecipes = new Map();
-    this.calculatorResults = new Map();
-    this.currentId = 1;
-    this.seedData();
+    // Database storage doesn't need in-memory maps or seeding
+    this.initializeDatabase();
+  }
+
+  private async initializeDatabase() {
+    // Ensure development user exists in database
+    try {
+      const existingUser = await this.getUser("dev_user_1");
+      if (!existingUser) {
+        await this.createUser({
+          id: "dev_user_1",
+          email: "michael@getupeariler.com",
+          firstName: "Michael",
+          lastName: "Baker",
+          isAdmin: false,
+          subscriptionTier: "premium"
+        });
+      }
+    } catch (error) {
+      console.error("Error initializing database user:", error);
+    }
   }
 
   private seedData() {
@@ -996,4 +1003,7 @@ export class DatabaseStorage implements IStorage {
 
 // Use MemStorage instead of DatabaseStorage for stable operation
 import { MemStorage } from './memStorage';
-export const storage = new MemStorage();
+// Import the clean database storage for profile persistence
+import { DatabaseStorage, IStorage } from "./storage-clean";
+
+export const storage: IStorage = new DatabaseStorage();

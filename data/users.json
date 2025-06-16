@@ -5,13 +5,13 @@
     "firstName": "Demo",
     "lastName": "User",
     "profileImageUrl": null,
-    "height": null,
-    "age": null,
-    "sex": null,
-    "currentWeight": null,
-    "desiredWeight": null,
-    "activityLevel": null,
-    "goal": null,
+    "height": 72,
+    "age": 45,
+    "sex": "male",
+    "currentWeight": 180,
+    "desiredWeight": 175,
+    "activityLevel": "very_active",
+    "goal": "weight_loss",
     "unitSystem": "imperial",
     "macroProfile": "balanced",
     "timezone": null,
@@ -19,6 +19,6 @@
     "notifications": true,
     "isActive": true,
     "createdAt": "2025-06-13T10:59:04.716Z",
-    "updatedAt": "2025-06-16T14:24:49.754Z"
+    "updatedAt": "2025-06-16T14:29:53.537Z"
   }
 }
