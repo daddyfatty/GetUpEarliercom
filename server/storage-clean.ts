@@ -106,6 +106,7 @@ export class DatabaseStorage implements IStorage {
   async getUser(id: string): Promise<User | undefined> {
     try {
       const [user] = await db.select().from(users).where(eq(users.id, id));
+      console.log("DatabaseStorage: Retrieved user from database:", user ? `age=${user.age}` : "not found");
       return user || undefined;
     } catch (error) {
       console.error("Error getting user:", error);
