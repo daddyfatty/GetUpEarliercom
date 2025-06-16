@@ -22,7 +22,8 @@ import {
   Bell,
   Shield,
   Users,
-  TrendingUp
+  TrendingUp,
+  Monitor
 } from "lucide-react";
 import type { Recipe, Workout } from "@shared/schema";
 

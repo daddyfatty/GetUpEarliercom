@@ -74,6 +74,7 @@ function Router() {
           <Route path="/saved-results" component={SavedResults} />
           <Route path="/user-profile" component={UserProfile} />
           <Route path="/admin" component={Admin} />
+          <Route path="/admin/dashboard" component={AdminDashboard} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/subscribe" component={Subscribe} />
           <Route component={NotFound} />
