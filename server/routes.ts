@@ -123,9 +123,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         Object.assign(recipeData, nutrition);
       }
       
-      const recipe = await storage.createRecipe(recipeData);
+      const recipe = await recipeService.createRecipe(recipeData);
       res.status(201).json(recipe);
     } catch (error) {
+      console.error("Error creating recipe:", error);
       res.status(400).json({ message: "Invalid recipe data" });
     }
   });
@@ -135,13 +136,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const id = parseInt(req.params.id);
       const updates = req.body;
       
-      const recipe = await storage.updateRecipe(id, updates);
+      const recipe = await recipeService.updateRecipe(id, updates);
       if (!recipe) {
         return res.status(404).json({ message: "Recipe not found" });
       }
       
       res.json(recipe);
     } catch (error) {
+      console.error("Error updating recipe:", error);
       res.status(400).json({ message: "Failed to update recipe" });
     }
   });
@@ -149,7 +151,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.delete("/api/recipes/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      const deleted = await storage.deleteRecipe(id);
+      const deleted = await recipeService.deleteRecipe(id);
       
       if (!deleted) {
         return res.status(404).json({ message: "Recipe not found" });
@@ -157,6 +159,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json({ message: "Recipe deleted successfully" });
     } catch (error) {
+      console.error("Error deleting recipe:", error);
       res.status(500).json({ message: "Failed to delete recipe" });
     }
   });
