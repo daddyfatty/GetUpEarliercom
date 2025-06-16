@@ -84,20 +84,7 @@ export interface IStorage {
   createCalculatorResult(result: InsertCalculatorResult): Promise<CalculatorResult>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-  private recipes: Map<number, Recipe>;
-  private workouts: Map<number, Workout>;
-  private goals: Map<number, Goal>;
-  private foodEntries: Map<number, FoodEntry>;
-  private achievements: Map<number, Achievement>;
-  private waterIntakes: Map<number, WaterIntake>;
-  private favoriteRecipes: Map<number, FavoriteRecipe>;
-  private favoriteWorkouts: Map<number, FavoriteWorkout>;
-  private mealPlans: Map<number, MealPlan>;
-  private mealPlanRecipes: Map<number, MealPlanRecipe>;
-  private calculatorResults: Map<number, CalculatorResult>;
-  private currentId: number;
+export class DatabaseStorage implements IStorage {
 
   constructor() {
     this.users = new Map();
@@ -460,35 +447,36 @@ export class MemStorage implements IStorage {
   }
 
   async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(user => user.email === email);
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user || undefined;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const user: User = { 
-      id: this.currentId++, 
-      ...insertUser,
-      isAdmin: insertUser.isAdmin ?? false,
-      subscriptionTier: insertUser.subscriptionTier ?? "free",
-      stripeCustomerId: null,
-      stripeSubscriptionId: null,
-      paypalCustomerId: null,
-      createdAt: new Date()
-    };
-    this.users.set(user.id, user);
+    const [user] = await db
+      .insert(users)
+      .values({
+        ...insertUser,
+        isAdmin: insertUser.isAdmin ?? false,
+        subscriptionTier: insertUser.subscriptionTier ?? "free",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      })
+      .returning();
     return user;
   }
 
   async updateUser(id: string, updates: Partial<User>): Promise<User | undefined> {
-    const user = this.users.get(id);
-    if (!user) return undefined;
-    
-    const updatedUser = { ...user, ...updates, updatedAt: new Date() };
-    this.users.set(id, updatedUser);
-    return updatedUser;
+    const [user] = await db
+      .update(users)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(users.id, id))
+      .returning();
+    return user || undefined;
   }
 
   async updateUserProfile(id: string, profileData: {
@@ -502,7 +490,15 @@ export class MemStorage implements IStorage {
     unitSystem?: string;
     macroProfile?: string;
   }): Promise<User | undefined> {
-    return this.updateUser(id, profileData);
+    const [user] = await db
+      .update(users)
+      .set({ 
+        ...profileData, 
+        updatedAt: new Date() 
+      })
+      .where(eq(users.id, id))
+      .returning();
+    return user || undefined;
   }
 
   async getRecipes(): Promise<Recipe[]> {
