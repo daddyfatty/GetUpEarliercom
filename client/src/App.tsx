@@ -26,6 +26,7 @@ import TeamMichael from "@/pages/team-michael";
 import TeamErica from "@/pages/team-erica";
 import UserProfile from "@/pages/user-profile";
 import Admin from "@/pages/admin";
+import AdminDashboard from "@/pages/admin-dashboard";
 import Checkout from "@/pages/checkout";
 import Subscribe from "@/pages/subscribe";
 import CalorieCalculator from "@/pages/calorie-calculator-clean";
