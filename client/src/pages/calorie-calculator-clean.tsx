@@ -501,14 +501,13 @@ export default function CalorieCalculator() {
               {/* Age */}
               <div className="space-y-2">
                 <Label htmlFor="age" className="text-base font-semibold">Age (years)</Label>
-                <Input
+                <input
                   id="age"
                   type="number"
                   value={age}
                   onChange={(e) => setAge(e.target.value)}
                   placeholder="Enter your age"
-                  className="text-base"
-                  key={`age-${age}`}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base"
                 />
               </div>
 
@@ -517,14 +516,13 @@ export default function CalorieCalculator() {
                 <Label htmlFor="height" className="text-base font-semibold">
                   Height ({unitSystem === 'metric' ? 'cm' : 'inches'})
                 </Label>
-                <Input
+                <input
                   id="height"
                   type="number"
                   value={height}
                   onChange={(e) => setHeight(e.target.value)}
                   placeholder={unitSystem === 'metric' ? 'Enter your height in cm' : 'Enter your height in inches'}
-                  className="text-base"
-                  key={`height-${height}`}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base"
                 />
               </div>
 
@@ -533,14 +531,13 @@ export default function CalorieCalculator() {
                 <Label htmlFor="currentWeight" className="text-base font-semibold">
                   Current Weight ({unitSystem === 'metric' ? 'kg' : 'lbs'})
                 </Label>
-                <Input
+                <input
                   id="currentWeight"
                   type="number"
                   value={currentWeight}
                   onChange={(e) => setCurrentWeight(e.target.value)}
                   placeholder={unitSystem === 'metric' ? 'Enter your current weight in kg' : 'Enter your current weight in pounds'}
-                  className="text-base"
-                  key={`currentWeight-${currentWeight}`}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base"
                 />
               </div>
 
@@ -549,14 +546,13 @@ export default function CalorieCalculator() {
                 <Label htmlFor="desiredWeight" className="text-base font-semibold">
                   Desired Weight ({unitSystem === 'metric' ? 'kg' : 'lbs'})
                 </Label>
-                <Input
+                <input
                   id="desiredWeight"
                   type="number"
                   value={desiredWeight}
                   onChange={(e) => setDesiredWeight(e.target.value)}
                   placeholder={unitSystem === 'metric' ? 'Enter your desired weight in kg' : 'Enter your desired weight in pounds'}
-                  className="text-base"
-                  key={`desiredWeight-${desiredWeight}`}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base"
                 />
               </div>
 
