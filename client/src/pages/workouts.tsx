@@ -1,19 +1,15 @@
 import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Clock, Flame, Play, Star, Dumbbell, Eye } from "lucide-react";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { Link } from "wouter";
-import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
 import type { Workout } from "@shared/schema";
 
 export default function Workouts() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const queryClient = useQueryClient();
-  const { toast } = useToast();
   
   const { data: workouts = [], isLoading } = useQuery({
     queryKey: ["/api/workouts", selectedCategory],
@@ -155,25 +151,7 @@ export default function Workouts() {
                           {workout.category}
                         </Badge>
                         <div className="flex items-center space-x-2">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              handleFavoriteToggle(workout.id);
-                            }}
-                            disabled={addFavoriteMutation.isPending || removeFavoriteMutation.isPending}
-                            className="hover:bg-red-50 dark:hover:bg-red-900/20 p-1 h-auto"
-                          >
-                            <Heart
-                              className={`w-5 h-5 ${
-                                isWorkoutFavorited(workout.id)
-                                  ? "text-red-500 fill-red-500"
-                                  : "text-gray-400 hover:text-red-500"
-                              } transition-colors`}
-                            />
-                          </Button>
+                          <FavoriteButton type="workout" id={workout.id} size="sm" />
                           <Badge variant="outline" className={getDifficultyColor(workout.difficulty)}>
                             {workout.difficulty}
                           </Badge>
