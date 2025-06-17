@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Clock, Flame, Star, Dumbbell, Play, ArrowLeft, CheckCircle, X } from "lucide-react";
 import { Link } from "wouter";
+import { FavoriteButton } from "@/components/FavoriteButton";
 import type { Workout } from "@shared/schema";
 
 export default function WorkoutDetail() {
@@ -163,18 +164,21 @@ export default function WorkoutDetail() {
                 <Badge className={getCategoryColor(workout.category)}>
                   {workout.category}
                 </Badge>
-                <div className="flex items-center space-x-1">
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-4 h-4 ${
-                        i < difficultyStars ? "text-accent fill-current" : "text-gray-300"
-                      }`}
-                    />
-                  ))}
-                  <Badge variant="outline" className={getDifficultyColor(workout.difficulty)}>
-                    {workout.difficulty}
-                  </Badge>
+                <div className="flex items-center space-x-2">
+                  <FavoriteButton type="workout" id={workout.id} size="sm" />
+                  <div className="flex items-center space-x-1">
+                    {Array.from({ length: 3 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`w-4 h-4 ${
+                          i < difficultyStars ? "text-accent fill-current" : "text-gray-300"
+                        }`}
+                      />
+                    ))}
+                    <Badge variant="outline" className={getDifficultyColor(workout.difficulty)}>
+                      {workout.difficulty}
+                    </Badge>
+                  </div>
                 </div>
               </div>
               
