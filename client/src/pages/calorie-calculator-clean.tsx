@@ -84,6 +84,14 @@ const activityDescriptions = {
 };
 
 export default function CalorieCalculator() {
+  const { toast } = useToast();
+  
+  // Fetch profile data using React Query
+  const { data: profileData, isLoading: profileLoading } = useQuery({
+    queryKey: ['/api/user/profile'],
+    staleTime: 0
+  });
+
   const [sex, setSex] = useState<'male' | 'female'>('male');
   const [unitSystem, setUnitSystem] = useState<'metric' | 'imperial'>('imperial');
   const [age, setAge] = useState<string>('');
@@ -99,13 +107,40 @@ export default function CalorieCalculator() {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [dataLoaded, setDataLoaded] = useState(false);
-  const { toast } = useToast();
 
   // Load existing calculator results for display purposes only
   const { data: calculatorResults } = useQuery({
     queryKey: ['/api/calculator-results']
   });
+
+  // Load profile data when it becomes available
+  useEffect(() => {
+    if (profileData && !profileLoading) {
+      console.log('Populating form fields with profile data:', profileData);
+      
+      const profile = profileData as any;
+      
+      // Force update all form fields with loaded data
+      if (profile.age) setAge(profile.age.toString());
+      if (profile.sex) setSex(profile.sex);
+      if (profile.height) setHeight(profile.height.toString());
+      if (profile.currentWeight) setCurrentWeight(profile.currentWeight.toString());
+      if (profile.desiredWeight) setDesiredWeight(profile.desiredWeight.toString());
+      if (profile.activityLevel) setActivityLevel([parseFloat(profile.activityLevel)]);
+      if (profile.goal) setGoal(profile.goal);
+      if (profile.macroProfile) setMacroProfile(profile.macroProfile);
+      if (profile.unitSystem) setUnitSystem(profile.unitSystem);
+      
+      console.log('Form fields populated with values:', {
+        age: profile.age,
+        sex: profile.sex,
+        height: profile.height,
+        currentWeight: profile.currentWeight,
+        desiredWeight: profile.desiredWeight,
+        activityLevel: profile.activityLevel
+      });
+    }
+  }, [profileData, profileLoading]);
 
   const calculateBMR = (weightKg: number, heightCm: number, ageYears: number, sex: 'male' | 'female'): number => {
     if (sex === 'male') {
@@ -349,30 +384,13 @@ export default function CalorieCalculator() {
     }
   };
 
-  const loadProfile = async (showToast = true) => {
-    setIsLoading(true);
-    try {
-      // Always load profile data first as the primary source
-      const profileData = await apiRequest("GET", "/api/user/profile");
-
-      
-      // Load profile data into form
-      if (profileData.age) setAge(profileData.age.toString());
-      if (profileData.sex) setSex(profileData.sex);
-      if (profileData.height) setHeight(profileData.height.toString());
-      if (profileData.currentWeight) setCurrentWeight(profileData.currentWeight.toString());
-      if (profileData.desiredWeight) setDesiredWeight(profileData.desiredWeight.toString());
-      if (profileData.activityLevel) setActivityLevel([parseFloat(profileData.activityLevel)]);
-      if (profileData.goal) setGoal(profileData.goal);
-      if (profileData.unitSystem) setUnitSystem(profileData.unitSystem);
-      if (profileData.macroProfile) setMacroProfile(profileData.macroProfile);
-
-      // Try to load the last calculation results (for display only, not form data)
+  // Load previous calculation results when calculatorResults data is available
+  useEffect(() => {
+    const results = calculatorResults as any[];
+    if (results && results.length > 0) {
       try {
-        const calculatorResults = await apiRequest("GET", "/api/calculator-results");
-        
         // Find the most recent calorie calculator result
-        const latestCalorieResult = calculatorResults
+        const latestCalorieResult = results
           ?.filter((result: any) => result.calculatorType === 'calorie')
           ?.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
         
@@ -382,46 +400,8 @@ export default function CalorieCalculator() {
       } catch (calcError) {
         console.log("No previous calculation results found");
       }
-
-      if (showToast) {
-        toast({
-          title: "Profile Loaded",
-          description: "Your saved profile settings have been loaded.",
-        });
-      }
-    } catch (error) {
-      console.log("Data load error:", error);
-      if (showToast) {
-        toast({
-          title: "Load Failed", 
-          description: "Could not load saved data. Please try again.",
-          variant: "destructive",
-        });
-      }
-    } finally {
-      setIsLoading(false);
     }
-  };
-
-  // Auto-load profile data only once when component mounts
-  useEffect(() => {
-    let mounted = true;
-    
-    const initializeData = async () => {
-      if (mounted && !dataLoaded) {
-        await loadProfile(false); // Don't show toast on initial load
-        if (mounted) {
-          setDataLoaded(true);
-        }
-      }
-    };
-    
-    initializeData();
-    
-    return () => {
-      mounted = false;
-    };
-  }, []); // Run only once on mount
+  }, [calculatorResults]);
 
   const getGoalDescription = (goal: string) => {
     switch (goal) {
