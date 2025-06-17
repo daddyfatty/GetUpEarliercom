@@ -113,34 +113,58 @@ export default function CalorieCalculator() {
     queryKey: ['/api/calculator-results']
   });
 
-  // Load profile data when it becomes available
+  // Initialize form with default values and update when profile loads
   useEffect(() => {
     if (profileData && !profileLoading) {
-      console.log('Populating form fields with profile data:', profileData);
+      console.log('Profile data structure:', JSON.stringify(profileData, null, 2));
       
       const profile = profileData as any;
       
-      // Force update all form fields with loaded data
-      if (profile.age) setAge(profile.age.toString());
-      if (profile.sex) setSex(profile.sex);
-      if (profile.height) setHeight(profile.height.toString());
-      if (profile.currentWeight) setCurrentWeight(profile.currentWeight.toString());
-      if (profile.desiredWeight) setDesiredWeight(profile.desiredWeight.toString());
-      if (profile.activityLevel) setActivityLevel([parseFloat(profile.activityLevel)]);
-      if (profile.goal) setGoal(profile.goal);
-      if (profile.macroProfile) setMacroProfile(profile.macroProfile);
-      if (profile.unitSystem) setUnitSystem(profile.unitSystem);
+      // Direct state updates with debug logs
+      console.log('Setting age from', profile.age, 'to state');
+      setAge(profile.age ? profile.age.toString() : '');
       
-      console.log('Form fields populated with values:', {
-        age: profile.age,
-        sex: profile.sex,
-        height: profile.height,
-        currentWeight: profile.currentWeight,
-        desiredWeight: profile.desiredWeight,
-        activityLevel: profile.activityLevel
-      });
+      console.log('Setting sex from', profile.sex, 'to state');
+      setSex(profile.sex || 'male');
+      
+      console.log('Setting height from', profile.height, 'to state');
+      setHeight(profile.height ? profile.height.toString() : '');
+      
+      console.log('Setting currentWeight from', profile.currentWeight, 'to state');
+      setCurrentWeight(profile.currentWeight ? profile.currentWeight.toString() : '');
+      
+      console.log('Setting desiredWeight from', profile.desiredWeight, 'to state');
+      setDesiredWeight(profile.desiredWeight ? profile.desiredWeight.toString() : '');
+      
+      console.log('Setting activityLevel from', profile.activityLevel, 'to state');
+      setActivityLevel([parseFloat(profile.activityLevel) || 1.2]);
+      
+      console.log('Setting goal from', profile.goal, 'to state');
+      setGoal(profile.goal || 'maintenance');
+      
+      console.log('Setting macroProfile from', profile.macroProfile, 'to state');
+      setMacroProfile(profile.macroProfile || 'balanced');
+      
+      console.log('Setting unitSystem from', profile.unitSystem, 'to state');
+      setUnitSystem(profile.unitSystem || 'imperial');
+      
+      console.log('All profile data applied to React state');
     }
   }, [profileData, profileLoading]);
+
+  // Show loading state while profile data is being fetched
+  if (profileLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto" />
+            <p className="mt-4 text-gray-600 dark:text-gray-400">Loading your profile...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const calculateBMR = (weightKg: number, heightCm: number, ageYears: number, sex: 'male' | 'female'): number => {
     if (sex === 'male') {
@@ -504,11 +528,12 @@ export default function CalorieCalculator() {
                 <input
                   id="age"
                   type="number"
-                  value={age}
+                  value={age || ''}
                   onChange={(e) => setAge(e.target.value)}
                   placeholder="Enter your age"
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base"
                 />
+                {age && <div className="text-xs text-green-600">Current value: {age}</div>}
               </div>
 
               {/* Height */}
