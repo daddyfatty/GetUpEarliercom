@@ -102,6 +102,9 @@ export default function CalorieCalculator() {
   const [dataLoaded, setDataLoaded] = useState(false);
   const { toast } = useToast();
 
+  // Debug current state values
+  console.log('Current form state:', { age, sex, height, currentWeight, desiredWeight, activityLevel, goal, unitSystem, macroProfile });
+
   // Load existing calculator results for display purposes only
   const { data: calculatorResults } = useQuery({
     queryKey: ['/api/calculator-results']
