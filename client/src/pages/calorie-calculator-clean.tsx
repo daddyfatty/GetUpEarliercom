@@ -107,6 +107,7 @@ export default function CalorieCalculator() {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   // Load existing calculator results for display purposes only
   const { data: calculatorResults } = useQuery({
@@ -149,11 +150,12 @@ export default function CalorieCalculator() {
       setUnitSystem(profile.unitSystem || 'imperial');
       
       console.log('All profile data applied to React state');
+      setDataLoaded(true);
     }
   }, [profileData, profileLoading]);
 
   // Show loading state while profile data is being fetched
-  if (profileLoading) {
+  if (profileLoading || !dataLoaded) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -528,12 +530,12 @@ export default function CalorieCalculator() {
                 <input
                   id="age"
                   type="number"
-                  value={age || ''}
+                  value={age}
                   onChange={(e) => setAge(e.target.value)}
                   placeholder="Enter your age"
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base"
                 />
-                {age && <div className="text-xs text-green-600">Current value: {age}</div>}
+                <div className="text-xs text-blue-600">React state value: "{age}"</div>
               </div>
 
               {/* Height */}
