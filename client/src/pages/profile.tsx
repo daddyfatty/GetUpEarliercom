@@ -73,7 +73,7 @@ export default function Profile() {
     desiredWeight: '',
     activityLevel: '',
     goal: '',
-    unitSystem: 'metric',
+    unitSystem: 'imperial',
     macroProfile: 'balanced'
   });
 
@@ -124,8 +124,10 @@ export default function Profile() {
     .filter(Boolean);
 
   useEffect(() => {
+    console.log('Profile effect triggered:', { profileData, profileLoading });
     if (profileData && !profileLoading) {
-      setFormData({
+      console.log('Updating form data with profile:', profileData);
+      const newFormData = {
         age: profileData.age?.toString() || '',
         sex: profileData.sex || '',
         height: profileData.height?.toString() || '',
@@ -133,9 +135,11 @@ export default function Profile() {
         desiredWeight: profileData.desiredWeight?.toString() || '',
         activityLevel: profileData.activityLevel || '',
         goal: profileData.goal || '',
-        unitSystem: profileData.unitSystem || 'metric',
+        unitSystem: profileData.unitSystem || 'imperial',
         macroProfile: profileData.macroProfile || 'balanced'
-      });
+      };
+      console.log('Setting form data to:', newFormData);
+      setFormData(newFormData);
     }
   }, [profileData, profileLoading]);
 
