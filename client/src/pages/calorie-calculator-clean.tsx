@@ -357,15 +357,42 @@ export default function CalorieCalculator() {
       console.log("Loading profile data:", profileData);
       
       // Load profile data into form
-      if (profileData.age) setAge(profileData.age.toString());
-      if (profileData.sex) setSex(profileData.sex);
-      if (profileData.height) setHeight(profileData.height.toString());
-      if (profileData.currentWeight) setCurrentWeight(profileData.currentWeight.toString());
-      if (profileData.desiredWeight) setDesiredWeight(profileData.desiredWeight.toString());
-      if (profileData.activityLevel) setActivityLevel([parseFloat(profileData.activityLevel)]);
-      if (profileData.goal) setGoal(profileData.goal);
-      if (profileData.unitSystem) setUnitSystem(profileData.unitSystem);
-      if (profileData.macroProfile) setMacroProfile(profileData.macroProfile);
+      if (profileData.age) {
+        console.log('Setting age:', profileData.age);
+        setAge(profileData.age.toString());
+      }
+      if (profileData.sex) {
+        console.log('Setting sex:', profileData.sex);
+        setSex(profileData.sex);
+      }
+      if (profileData.height) {
+        console.log('Setting height:', profileData.height);
+        setHeight(profileData.height.toString());
+      }
+      if (profileData.currentWeight) {
+        console.log('Setting currentWeight:', profileData.currentWeight);
+        setCurrentWeight(profileData.currentWeight.toString());
+      }
+      if (profileData.desiredWeight) {
+        console.log('Setting desiredWeight:', profileData.desiredWeight);
+        setDesiredWeight(profileData.desiredWeight.toString());
+      }
+      if (profileData.activityLevel) {
+        console.log('Setting activityLevel:', profileData.activityLevel);
+        setActivityLevel([parseFloat(profileData.activityLevel)]);
+      }
+      if (profileData.goal) {
+        console.log('Setting goal:', profileData.goal);
+        setGoal(profileData.goal);
+      }
+      if (profileData.unitSystem) {
+        console.log('Setting unitSystem:', profileData.unitSystem);
+        setUnitSystem(profileData.unitSystem);
+      }
+      if (profileData.macroProfile) {
+        console.log('Setting macroProfile:', profileData.macroProfile);
+        setMacroProfile(profileData.macroProfile);
+      }
 
       // Try to load the last calculation results (for display only, not form data)
       try {
