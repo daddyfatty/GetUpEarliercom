@@ -528,6 +528,7 @@ export default function CalorieCalculator() {
                   onChange={(e) => setAge(e.target.value)}
                   placeholder="Enter your age"
                   className="text-base"
+                  key={`age-${age}`}
                 />
               </div>
 
@@ -543,6 +544,7 @@ export default function CalorieCalculator() {
                   onChange={(e) => setHeight(e.target.value)}
                   placeholder={unitSystem === 'metric' ? 'Enter your height in cm' : 'Enter your height in inches'}
                   className="text-base"
+                  key={`height-${height}`}
                 />
               </div>
 
@@ -558,6 +560,7 @@ export default function CalorieCalculator() {
                   onChange={(e) => setCurrentWeight(e.target.value)}
                   placeholder={unitSystem === 'metric' ? 'Enter your current weight in kg' : 'Enter your current weight in pounds'}
                   className="text-base"
+                  key={`currentWeight-${currentWeight}`}
                 />
               </div>
 
@@ -573,6 +576,7 @@ export default function CalorieCalculator() {
                   onChange={(e) => setDesiredWeight(e.target.value)}
                   placeholder={unitSystem === 'metric' ? 'Enter your desired weight in kg' : 'Enter your desired weight in pounds'}
                   className="text-base"
+                  key={`desiredWeight-${desiredWeight}`}
                 />
               </div>
 
