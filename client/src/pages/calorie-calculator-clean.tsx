@@ -102,9 +102,6 @@ export default function CalorieCalculator() {
   const [dataLoaded, setDataLoaded] = useState(false);
   const { toast } = useToast();
 
-  // Debug current state values
-  console.log('Current form state:', { age, sex, height, currentWeight, desiredWeight, activityLevel, goal, unitSystem, macroProfile });
-
   // Load existing calculator results for display purposes only
   const { data: calculatorResults } = useQuery({
     queryKey: ['/api/calculator-results']
@@ -357,45 +354,18 @@ export default function CalorieCalculator() {
     try {
       // Always load profile data first as the primary source
       const profileData = await apiRequest("GET", "/api/user/profile");
-      console.log("Loading profile data:", profileData);
+
       
       // Load profile data into form
-      if (profileData.age) {
-        console.log('Setting age:', profileData.age);
-        setAge(profileData.age.toString());
-      }
-      if (profileData.sex) {
-        console.log('Setting sex:', profileData.sex);
-        setSex(profileData.sex);
-      }
-      if (profileData.height) {
-        console.log('Setting height:', profileData.height);
-        setHeight(profileData.height.toString());
-      }
-      if (profileData.currentWeight) {
-        console.log('Setting currentWeight:', profileData.currentWeight);
-        setCurrentWeight(profileData.currentWeight.toString());
-      }
-      if (profileData.desiredWeight) {
-        console.log('Setting desiredWeight:', profileData.desiredWeight);
-        setDesiredWeight(profileData.desiredWeight.toString());
-      }
-      if (profileData.activityLevel) {
-        console.log('Setting activityLevel:', profileData.activityLevel);
-        setActivityLevel([parseFloat(profileData.activityLevel)]);
-      }
-      if (profileData.goal) {
-        console.log('Setting goal:', profileData.goal);
-        setGoal(profileData.goal);
-      }
-      if (profileData.unitSystem) {
-        console.log('Setting unitSystem:', profileData.unitSystem);
-        setUnitSystem(profileData.unitSystem);
-      }
-      if (profileData.macroProfile) {
-        console.log('Setting macroProfile:', profileData.macroProfile);
-        setMacroProfile(profileData.macroProfile);
-      }
+      if (profileData.age) setAge(profileData.age.toString());
+      if (profileData.sex) setSex(profileData.sex);
+      if (profileData.height) setHeight(profileData.height.toString());
+      if (profileData.currentWeight) setCurrentWeight(profileData.currentWeight.toString());
+      if (profileData.desiredWeight) setDesiredWeight(profileData.desiredWeight.toString());
+      if (profileData.activityLevel) setActivityLevel([parseFloat(profileData.activityLevel)]);
+      if (profileData.goal) setGoal(profileData.goal);
+      if (profileData.unitSystem) setUnitSystem(profileData.unitSystem);
+      if (profileData.macroProfile) setMacroProfile(profileData.macroProfile);
 
       // Try to load the last calculation results (for display only, not form data)
       try {
@@ -435,11 +405,23 @@ export default function CalorieCalculator() {
 
   // Auto-load profile data only once when component mounts
   useEffect(() => {
-    if (!dataLoaded) {
-      loadProfile(false); // Don't show toast on initial load
-      setDataLoaded(true);
-    }
-  }, [dataLoaded]);
+    let mounted = true;
+    
+    const initializeData = async () => {
+      if (mounted && !dataLoaded) {
+        await loadProfile(false); // Don't show toast on initial load
+        if (mounted) {
+          setDataLoaded(true);
+        }
+      }
+    };
+    
+    initializeData();
+    
+    return () => {
+      mounted = false;
+    };
+  }, []); // Run only once on mount
 
   const getGoalDescription = (goal: string) => {
     switch (goal) {
