@@ -3,7 +3,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Clock, Flame, Play, Star, Dumbbell, Eye, Heart } from "lucide-react";
+import { Clock, Flame, Play, Star, Dumbbell, Eye } from "lucide-react";
+import { FavoriteButton } from "@/components/FavoriteButton";
 import { Link } from "wouter";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -22,62 +23,7 @@ export default function Workouts() {
     }
   });
 
-  const { data: favoriteWorkouts = [] } = useQuery<Workout[]>({
-    queryKey: ["/api/users/dev_user_1/favorite-workouts"],
-    retry: false,
-  });
 
-  const addFavoriteMutation = useMutation({
-    mutationFn: async (workoutId: number) => {
-      return apiRequest("POST", "/api/users/dev_user_1/favorite-workouts", { workoutId });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/users/dev_user_1/favorite-workouts"] });
-      toast({
-        title: "Added to favorites",
-        description: "Workout added to your favorites successfully!",
-      });
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to add workout to favorites. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const removeFavoriteMutation = useMutation({
-    mutationFn: async (workoutId: number) => {
-      return apiRequest("DELETE", `/api/users/dev_user_1/favorite-workouts/${workoutId}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/users/dev_user_1/favorite-workouts"] });
-      toast({
-        title: "Removed from favorites",
-        description: "Workout removed from your favorites.",
-      });
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to remove workout from favorites. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const isWorkoutFavorited = (workoutId: number) => {
-    return favoriteWorkouts.some((workout: Workout) => workout.id === workoutId);
-  };
-
-  const handleFavoriteToggle = (workoutId: number) => {
-    if (isWorkoutFavorited(workoutId)) {
-      removeFavoriteMutation.mutate(workoutId);
-    } else {
-      addFavoriteMutation.mutate(workoutId);
-    }
-  };
 
   const categories = ["strength", "cardio", "hiit", "flexibility", "yoga", "calisthenics", "tutorial"];
 
