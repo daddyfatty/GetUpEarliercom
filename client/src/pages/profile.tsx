@@ -398,6 +398,37 @@ export default function Profile() {
             </Card>
           </div>
 
+          {/* Quick Stats Summary */}
+          {profileData?.targetCalories && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5" />
+                  Current Goals
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium">Target Calories:</span>
+                    <span className="text-lg font-bold text-blue-600">{profileData.targetCalories} calories/day</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm">
+                    <span>TDEE:</span>
+                    <span className="font-medium">{calculatorResults && calculatorResults.length > 0 ? 
+                      Math.round((JSON.parse(calculatorResults[0].results) as any).tdee || 0) : 'N/A'} calories/day</span>
+                  </div>
+                  <div className="pt-2 border-t">
+                    <Link to="/calorie-calculator" className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                      <Calculator className="h-3 w-3" />
+                      Recalculate
+                    </Link>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Calculator History */}
           <Card>
             <CardHeader>
@@ -481,7 +512,7 @@ export default function Profile() {
                             </div>
                             <div className="flex justify-between">
                               <span>Target Calories:</span>
-                              <span className="font-semibold text-blue-600">{Math.round((data as any).calories || 0)} calories/day</span>
+                              <span className="font-semibold text-blue-600">{Math.round((data as any).goalCalories || (data as any).calories || 0)} calories/day</span>
                             </div>
                             {(data as any).macros && (
                               <div className="pt-2 border-t border-gray-200 dark:border-gray-600">

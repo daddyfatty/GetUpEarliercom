@@ -368,7 +368,7 @@ export default function CalorieCalculator() {
         results: JSON.stringify(results)
       });
 
-      // Also save data to profile for persistence
+      // Also save data to profile for persistence, including target calories
       await apiRequest("POST", "/api/user/profile", {
         age: parseInt(age),
         sex,
@@ -378,7 +378,8 @@ export default function CalorieCalculator() {
         activityLevel: (activityLevel[0] || 1.2).toString(),
         goal,
         unitSystem,
-        macroProfile
+        macroProfile,
+        targetCalories: Math.round(results.calories)
       });
 
       // Invalidate calculator results cache to refresh profile display

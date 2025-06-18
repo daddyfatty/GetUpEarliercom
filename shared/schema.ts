@@ -35,6 +35,7 @@ export const users = pgTable("users", {
   goal: text("goal"), // maintenance, loss, gain
   unitSystem: text("unit_system"), // metric, imperial
   macroProfile: text("macro_profile"), // balanced, moderate-protein, high-protein, high-carb
+  targetCalories: integer("target_calories"), // calculated daily target calories
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
