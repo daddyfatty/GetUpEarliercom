@@ -95,18 +95,25 @@ export default function CalorieCalculatorSimple() {
   // Load previous calculation results
   useEffect(() => {
     if (calculatorResults) {
+      console.log("SIMPLE: Raw calculator results:", calculatorResults);
       const results = calculatorResults as any[];
       const latestCalorieResult = results
         ?.filter((result: any) => result.calculatorType === 'calorie')
         ?.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
       
+      console.log("SIMPLE: Latest calorie result:", latestCalorieResult);
+      
       if (latestCalorieResult?.results) {
         try {
-          setResults(JSON.parse(latestCalorieResult.results));
-          console.log("SIMPLE: Loaded previous results");
+          const parsedResults = JSON.parse(latestCalorieResult.results);
+          console.log("SIMPLE: Parsed previous results:", parsedResults);
+          setResults(parsedResults);
+          console.log("SIMPLE: Loaded previous results successfully");
         } catch (e) {
-          console.log("SIMPLE: No previous results");
+          console.log("SIMPLE: Error parsing results:", e);
         }
+      } else {
+        console.log("SIMPLE: No previous results found");
       }
     }
   }, [calculatorResults]);
