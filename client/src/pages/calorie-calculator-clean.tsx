@@ -155,6 +155,13 @@ export default function CalorieCalculator() {
       
       console.log('All profile data applied to React state');
       setDataLoaded(true);
+      
+      // If we have complete profile data but no targetCalories, trigger a calculation
+      if (profile.age && profile.height && profile.currentWeight && profile.desiredWeight && !profile.targetCalories) {
+        setTimeout(() => {
+          calculateCalories();
+        }, 100);
+      }
     }
   }, [profileData, profileLoading]);
 
@@ -342,6 +349,28 @@ export default function CalorieCalculator() {
     };
 
     setResults(calculationResults);
+    
+    // Auto-save the target calories to profile immediately after calculation
+    const profileUpdateData = {
+      age: parseInt(age),
+      sex,
+      height: parseInt(height),
+      currentWeight: parseFloat(currentWeight),
+      desiredWeight: parseFloat(desiredWeight),
+      activityLevel: (activityLevel[0] || 1.2).toString(),
+      goal,
+      unitSystem,
+      macroProfile,
+      targetCalories: Math.round(calculationResults.calories)
+    };
+    
+    // Save silently in background
+    apiRequest("POST", "/api/user/profile", profileUpdateData)
+      .then(() => {
+        // Refresh profile cache to show updated target calories
+        queryClient.invalidateQueries({ queryKey: ['/api/user/profile'] });
+      })
+      .catch(console.error);
   };
 
   const saveResults = async () => {

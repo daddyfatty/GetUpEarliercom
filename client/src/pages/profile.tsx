@@ -24,6 +24,7 @@ interface ProfileData {
   goal?: string;
   unitSystem?: string;
   macroProfile?: string;
+  targetCalories?: number;
 }
 
 interface CalculatorResult {
