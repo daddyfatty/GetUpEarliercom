@@ -138,7 +138,7 @@ export default function CalorieCalculator() {
       setDesiredWeight(profile.desiredWeight ? profile.desiredWeight.toString() : '');
       
       console.log('Setting activityLevel from', profile.activityLevel, 'to state');
-      setActivityLevel(profile.activityLevel || '1.2');
+      setActivityLevel([parseFloat(profile.activityLevel) || 1.2]);
       
       console.log('Setting goal from', profile.goal, 'to state');
       setGoal(profile.goal || 'maintenance');
