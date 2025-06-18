@@ -154,19 +154,7 @@ export default function CalorieCalculator() {
     }
   }, [profileData, profileLoading]);
 
-  // Show loading state while profile data is being fetched
-  if (profileLoading || !dataLoaded) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto" />
-            <p className="mt-4 text-gray-600 dark:text-gray-400">Loading your profile...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+
 
   const calculateBMR = (weightKg: number, heightCm: number, ageYears: number, sex: 'male' | 'female'): number => {
     if (sex === 'male') {
@@ -422,6 +410,7 @@ export default function CalorieCalculator() {
         
         if (latestCalorieResult?.results) {
           setResults(JSON.parse(latestCalorieResult.results));
+          console.log("Previous calculation results loaded");
         }
       } catch (calcError) {
         console.log("No previous calculation results found");
