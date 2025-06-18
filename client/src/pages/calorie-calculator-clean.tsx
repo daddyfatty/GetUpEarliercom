@@ -48,104 +48,86 @@ const macroProfiles = {
     description: "Balanced macronutrient distribution for general health"
   },
   'moderate-protein': {
-    carbs: 35,
-    protein: 35,
+    carbs: 45,
+    protein: 25,
     fat: 30,
-    description: "Moderate protein for active individuals"
+    description: "Moderate protein with balanced carbs and fats"
   },
   'high-protein': {
     carbs: 30,
     protein: 40,
     fat: 30,
-    description: "High protein for muscle building and recovery"
+    description: "High protein for muscle building and weight loss"
   },
-  'high-carb': {
-    carbs: 55,
-    protein: 20,
-    fat: 25,
-    description: "High carb for endurance athletes"
+  'low-carb': {
+    carbs: 20,
+    protein: 35,
+    fat: 45,
+    description: "Low carb for fat loss and metabolic health"
   },
-  keto: {
+  'keto': {
     carbs: 5,
     protein: 25,
     fat: 70,
-    description: "Very low carb ketogenic diet"
-  },
-  paleo: {
-    carbs: 30,
-    protein: 30,
-    fat: 40,
-    description: "Paleo-friendly macronutrient ratios"
+    description: "Ketogenic diet for rapid fat loss"
   }
-};
-
-const activityDescriptions = {
-  1.2: "Sedentary (little/no exercise)",
-  1.375: "Light activity (light exercise 1-3 days/week)", 
-  1.55: "Moderate activity (moderate exercise 3-5 days/week)",
-  1.725: "Very active (hard exercise 6-7 days/week)",
-  1.9: "Extremely active (very hard exercise, physical job)"
 };
 
 export default function CalorieCalculator() {
   const { toast } = useToast();
   
-  // Fetch profile data using React Query
-  const { data: profileData, isLoading: profileLoading } = useQuery({
-    queryKey: ['/api/user/profile'],
-    staleTime: 0
-  });
-
-  const [sex, setSex] = useState<'male' | 'female'>('male');
-  const [unitSystem, setUnitSystem] = useState<'metric' | 'imperial'>('imperial');
-  const [age, setAge] = useState<string>('');
-  const [height, setHeight] = useState<string>('');
-  const [currentWeight, setCurrentWeight] = useState<string>('');
-  const [desiredWeight, setDesiredWeight] = useState<string>('');
-  const [activityLevel, setActivityLevel] = useState<number[]>([1.2]);
-  const [goal, setGoal] = useState<'maintenance' | 'loss' | 'gain'>('maintenance');
-  const [macroProfile, setMacroProfile] = useState<'balanced' | 'high-protein' | 'moderate-protein' | 'high-carb' | 'keto' | 'paleo'>('balanced');
-  const [dietaryRestrictions, setDietaryRestrictions] = useState<string[]>([]);
-  const [supplementGoals, setSupplementGoals] = useState<string[]>([]);
+  // Form state
+  const [age, setAge] = useState('');
+  const [sex, setSex] = useState('male');
+  const [height, setHeight] = useState('');
+  const [currentWeight, setCurrentWeight] = useState('');
+  const [desiredWeight, setDesiredWeight] = useState('');
+  const [activityLevel, setActivityLevel] = useState([1.2]);
+  const [goal, setGoal] = useState('loss');  
+  const [unitSystem, setUnitSystem] = useState('imperial');
+  const [macroProfile, setMacroProfile] = useState('balanced');
   const [results, setResults] = useState<CalculationResults | null>(null);
-  const [showAdvanced, setShowAdvanced] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [dataLoaded, setDataLoaded] = useState(false);
 
-  // Load existing calculator results for display purposes only
-  const { data: calculatorResults } = useQuery({
-    queryKey: ['/api/calculator-results']
+  // Profile data query
+  const { data: profileData, isLoading: profileLoading } = useQuery({
+    queryKey: ['/api/user/profile'],
+    retry: false,
   });
 
-  // Initialize form with default values and update when profile loads
+  // Calculator results query
+  const { data: calculatorResults } = useQuery({
+    queryKey: ['/api/calculator-results'],
+    retry: false,
+  });
+
+  // Load existing profile data and set form defaults
   useEffect(() => {
-    if (profileData && !profileLoading) {
-      console.log('Profile data structure:', JSON.stringify(profileData, null, 2));
+    if (profileData && !profileLoading && !dataLoaded) {
+      const profile = profileData;
+      console.log('Profile data structure:', JSON.stringify(profile, null, 2));
       
-      const profile = profileData as any;
-      
-      // Direct state updates with debug logs
       console.log('Setting age from', profile.age, 'to state');
-      setAge(profile.age ? profile.age.toString() : '');
+      setAge(profile.age?.toString() || '');
       
       console.log('Setting sex from', profile.sex, 'to state');
       setSex(profile.sex || 'male');
       
       console.log('Setting height from', profile.height, 'to state');
-      setHeight(profile.height ? profile.height.toString() : '');
+      setHeight(profile.height?.toString() || '');
       
       console.log('Setting currentWeight from', profile.currentWeight, 'to state');
-      setCurrentWeight(profile.currentWeight ? profile.currentWeight.toString() : '');
+      setCurrentWeight(profile.currentWeight?.toString() || '');
       
       console.log('Setting desiredWeight from', profile.desiredWeight, 'to state');
-      setDesiredWeight(profile.desiredWeight ? profile.desiredWeight.toString() : '');
+      setDesiredWeight(profile.desiredWeight?.toString() || '');
       
       console.log('Setting activityLevel from', profile.activityLevel, 'to state');
-      setActivityLevel([parseFloat(profile.activityLevel) || 1.2]);
+      const activityValue = parseFloat(profile.activityLevel) || 1.2;
+      setActivityLevel([activityValue]);
       
       console.log('Setting goal from', profile.goal, 'to state');
-      setGoal(profile.goal || 'maintenance');
+      setGoal(profile.goal || 'loss');
       
       console.log('Setting macroProfile from', profile.macroProfile, 'to state');
       setMacroProfile(profile.macroProfile || 'balanced');
@@ -159,121 +141,54 @@ export default function CalorieCalculator() {
       // If we have complete profile data but no targetCalories, trigger a calculation
       if (profile.age && profile.height && profile.currentWeight && profile.desiredWeight && !profile.targetCalories) {
         setTimeout(() => {
-          calculateCalories();
+          // Calculate directly with profile data instead of form state
+          calculateCaloriesWithData(
+            profile.age.toString(),
+            profile.height.toString(),
+            profile.currentWeight.toString(),
+            profile.desiredWeight.toString()
+          );
         }, 100);
       }
     }
   }, [profileData, profileLoading]);
 
-  const calculateBMR = (weightKg: number, heightCm: number, ageYears: number, sex: 'male' | 'female'): number => {
-    if (sex === 'male') {
-      return (10 * weightKg) + (6.25 * heightCm) - (5 * ageYears) + 5;
-    } else {
-      return (10 * weightKg) + (6.25 * heightCm) - (5 * ageYears) - 161;
+  // Load and display previous calculation results
+  useEffect(() => {
+    if (calculatorResults && Array.isArray(calculatorResults)) {
+      console.log('Raw calculator results:', calculatorResults);
+      
+      const calorieResults = calculatorResults.filter(r => r.calculatorType === 'calorie');
+      if (calorieResults.length > 0) {
+        const latestResult = calorieResults[0];
+        console.log('Latest calorie result:', latestResult);
+        console.log('Setting previous calculation results:', latestResult.results);
+        setResults(latestResult.results);
+      }
     }
-  };
+  }, [calculatorResults]);
 
-  const calculateBodyFatPercentage = (weightKg: number, heightCm: number, age: number, sex: 'male' | 'female'): number => {
-    const bmi = weightKg / ((heightCm / 100) ** 2);
-    let estimatedBF;
-    
-    if (sex === 'male') {
-      estimatedBF = (1.20 * bmi) + (0.23 * age) - 16.2;
-    } else {
-      estimatedBF = (1.20 * bmi) + (0.23 * age) - 5.4;
-    }
-    
-    return Math.max(5, Math.min(50, estimatedBF));
-  };
-
-  const calculateAdvancedMetrics = (weightKg: number, heightCm: number, ageYears: number, sex: 'male' | 'female', targetCalories: number) => {
-    const bodyFatPercentage = calculateBodyFatPercentage(weightKg, heightCm, ageYears, sex);
-    const leanBodyMass = weightKg * (1 - bodyFatPercentage / 100);
-    
-    const dailyWaterIntake = Math.round(weightKg * 35 + (targetCalories * 0.5));
-    
-    const mealTiming = {
-      breakfast: Math.round(targetCalories * 0.25),
-      lunch: Math.round(targetCalories * 0.35),
-      dinner: Math.round(targetCalories * 0.30),
-      snacks: Math.round(targetCalories * 0.10)
-    };
-
-    const supplementSuggestions = [];
-    if (supplementGoals.includes('muscle-building')) {
-      supplementSuggestions.push('Whey Protein', 'Creatine Monohydrate');
-    }
-    if (supplementGoals.includes('fat-loss')) {
-      supplementSuggestions.push('Green Tea Extract', 'L-Carnitine');
-    }
-    if (supplementGoals.includes('energy')) {
-      supplementSuggestions.push('B-Complex', 'Caffeine');
-    }
-    if (supplementGoals.includes('recovery')) {
-      supplementSuggestions.push('Magnesium', 'Omega-3');
-    }
-
-    return {
-      bodyFatPercentage: Math.round(bodyFatPercentage * 10) / 10,
-      leanBodyMass: Math.round(leanBodyMass * 10) / 10,
-      dailyWaterIntake,
-      mealTiming,
-      supplementSuggestions
-    };
-  };
-
-  const calculateCalories = () => {
-    if (!age || !height || !currentWeight || !desiredWeight) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
-      });
+  const calculateCaloriesWithData = (ageValue: string, heightValue: string, currentWeightValue: string, desiredWeightValue: string) => {
+    if (!ageValue || !heightValue || !currentWeightValue || !desiredWeightValue) {
       return;
     }
 
-    // Auto-save profile data when calculation is made
-    const profileData = {
-      age: parseInt(age),
-      sex,
-      height: parseInt(height),
-      currentWeight: parseFloat(currentWeight),
-      desiredWeight: parseFloat(desiredWeight),
-      activityLevel: (activityLevel[0] || 1.2).toString(),
-      goal,
-      unitSystem,
-      macroProfile
-    };
-
-    // Save to profile silently in background
-    apiRequest("POST", "/api/user/profile", profileData).catch(console.error);
-
-    const ageNum = parseInt(age);
-    const heightNum = parseFloat(height);
-    const currentWeightNum = parseFloat(currentWeight);
-    const desiredWeightNum = parseFloat(desiredWeight);
+    const ageNum = parseInt(ageValue);
+    const heightNum = parseFloat(heightValue);
+    const currentWeightNum = parseFloat(currentWeightValue);
+    const desiredWeightNum = parseFloat(desiredWeightValue);
 
     // Validate all inputs are valid numbers
     if (isNaN(ageNum) || isNaN(heightNum) || isNaN(currentWeightNum) || isNaN(desiredWeightNum)) {
-      toast({
-        title: "Invalid Input",
-        description: "Please ensure all fields contain valid numbers.",
-        variant: "destructive",
-      });
       return;
     }
 
     if (ageNum < 10 || ageNum > 100) {
-      toast({
-        title: "Invalid Age",
-        description: "Please enter a valid age between 10 and 100.",
-        variant: "destructive",
-      });
       return;
     }
 
     let weightKg, heightCm, desiredWeightKg;
-    
+
     if (unitSystem === 'imperial') {
       weightKg = currentWeightNum * 0.453592;
       heightCm = heightNum * 2.54;
@@ -284,19 +199,12 @@ export default function CalorieCalculator() {
       desiredWeightKg = desiredWeightNum;
     }
 
-    // Additional validation for converted values
     if (weightKg <= 0 || heightCm <= 0 || desiredWeightKg <= 0) {
-      toast({
-        title: "Invalid Values",
-        description: "Weight and height must be positive numbers.",
-        variant: "destructive",
-      });
       return;
     }
 
     const bmr = calculateBMR(weightKg, heightCm, ageNum, sex);
-    const activityMultiplier = activityLevel[0] || 1.2;
-    const tdee = bmr * activityMultiplier;
+    const tdee = bmr * (activityLevel[0] || 1.2);
 
     let targetCalories = tdee;
     let weeklyChangeRate = 0;
@@ -352,11 +260,11 @@ export default function CalorieCalculator() {
     
     // Auto-save the target calories to profile immediately after calculation
     const profileUpdateData = {
-      age: parseInt(age),
+      age: ageNum,
       sex,
-      height: parseInt(height),
-      currentWeight: parseFloat(currentWeight),
-      desiredWeight: parseFloat(desiredWeight),
+      height: heightNum,
+      currentWeight: currentWeightNum,
+      desiredWeight: desiredWeightNum,
       activityLevel: (activityLevel[0] || 1.2).toString(),
       goal,
       unitSystem,
@@ -371,469 +279,398 @@ export default function CalorieCalculator() {
         queryClient.invalidateQueries({ queryKey: ['/api/user/profile'] });
       })
       .catch(console.error);
+
+    // Save calculation results to database
+    const calculationData = {
+      bmr: calculationResults.bmr,
+      tdee: calculationResults.tdee,
+      goalCalories: calculationResults.calories,
+      protein: calculationResults.macros?.protein,
+      carbs: calculationResults.macros?.carbs,
+      fat: calculationResults.macros?.fat,
+      goal: calculationResults.goal,
+      activityLevel: (activityLevel[0] || 1.2).toString(),
+      calculatedAt: new Date().toISOString(),
+    };
+
+    const userInputs = {
+      age: ageValue,
+      sex,
+      height: heightValue,
+      currentWeight: currentWeightValue,
+      desiredWeight: desiredWeightValue,
+      activityLevel: (activityLevel[0] || 1.2).toString(),
+      goal,
+      unitSystem,
+      macroProfile
+    };
+
+    // Save calculation result to database for history
+    apiRequest("POST", "/api/calculator-results", {
+      calculatorType: 'calorie',
+      results: calculationData,
+      userInputs
+    })
+    .then(() => {
+      console.log('Calculation saved successfully');
+      // Refresh the calculator results cache
+      queryClient.invalidateQueries({ queryKey: ['/api/calculator-results'] });
+    })
+    .catch(error => {
+      console.error('Error saving calculation:', error);
+    });
   };
 
-  const saveResults = async () => {
-    if (!results) return;
+  const calculateBMR = (weightKg: number, heightCm: number, ageYears: number, sex: 'male' | 'female'): number => {
+    if (sex === 'male') {
+      return (10 * weightKg) + (6.25 * heightCm) - (5 * ageYears) + 5;
+    } else {
+      return (10 * weightKg) + (6.25 * heightCm) - (5 * ageYears) - 161;
+    }
+  };
 
-    setIsSaving(true);
-    try {
-      // Save calculation results
-      await apiRequest("POST", "/api/calculator-results", {
-        calculatorType: 'calorie',
-        userInputs: JSON.stringify({
-          sex,
-          age: parseInt(age),
-          height: parseInt(height),
-          currentWeight: parseFloat(currentWeight),
-          desiredWeight: parseFloat(desiredWeight),
-          activityLevel: (activityLevel[0] || 1.2).toString(),
-          goal,
-          unitSystem,
-          macroProfile,
-          dietaryRestrictions,
-          supplementGoals
-        }),
-        results: JSON.stringify(results)
-      });
+  const calculateAdvancedMetrics = (weightKg: number, heightCm: number, age: number, sex: 'male' | 'female', calories: number) => {
+    // Body fat estimation using Navy method (simplified)
+    let bodyFatPercentage;
+    if (sex === 'male') {
+      bodyFatPercentage = 86.010 * Math.log10(100 - 78) - 70.041 * Math.log10(heightCm) + 36.76;
+    } else {
+      bodyFatPercentage = 163.205 * Math.log10(100 + 78 - 63) - 97.684 * Math.log10(heightCm) - 78.387 * Math.log10(63) + 4.786;
+    }
+    bodyFatPercentage = Math.max(5, Math.min(50, bodyFatPercentage));
 
-      // Also save data to profile for persistence, including target calories
-      await apiRequest("POST", "/api/user/profile", {
-        age: parseInt(age),
-        sex,
-        height: parseInt(height),
-        currentWeight: parseFloat(currentWeight),
-        desiredWeight: parseFloat(desiredWeight),
-        activityLevel: (activityLevel[0] || 1.2).toString(),
-        goal,
-        unitSystem,
-        macroProfile,
-        targetCalories: Math.round(results.calories)
-      });
+    const leanBodyMass = weightKg * (1 - bodyFatPercentage / 100);
+    const dailyWaterIntake = Math.round(weightKg * 35); // ml per kg bodyweight
 
-      // Invalidate calculator results cache to refresh profile display
-      queryClient.invalidateQueries({ queryKey: ['/api/calculator-results'] });
-      queryClient.invalidateQueries({ queryKey: ['/api/user/profile'] });
-      
+    const mealTiming = {
+      breakfast: Math.round(calories * 0.25),
+      lunch: Math.round(calories * 0.35),
+      dinner: Math.round(calories * 0.30),
+      snacks: Math.round(calories * 0.10)
+    };
+
+    const supplementSuggestions = [
+      "Whey Protein Powder",
+      "Creatine Monohydrate", 
+      "Omega-3 Fish Oil",
+      "Vitamin D3",
+      "Magnesium"
+    ];
+
+    return {
+      bodyFatPercentage: Math.round(bodyFatPercentage * 10) / 10,
+      leanBodyMass: Math.round(leanBodyMass * 10) / 10,
+      dailyWaterIntake,
+      mealTiming,
+      supplementSuggestions
+    };
+  };
+
+  const calculateCalories = () => {
+    if (!age || !height || !currentWeight || !desiredWeight) {
       toast({
-        title: "Results Saved",
-        description: "Your calculation results and profile have been saved.",
-      });
-    } catch (error) {
-      toast({
-        title: "Save Failed",
-        description: "Could not save results. Please try again.",
+        title: "Missing Information",
+        description: "Please fill in all required fields.",
         variant: "destructive",
       });
-    } finally {
-      setIsSaving(false);
+      return;
     }
+
+    calculateCaloriesWithData(age, height, currentWeight, desiredWeight);
   };
 
-  // Load previous calculation results when calculatorResults data is available
-  useEffect(() => {
-    const results = calculatorResults as any[];
-    if (results && results.length > 0) {
-      try {
-        console.log('Raw calculator results:', results);
-        
-        // Find the most recent calorie calculator result
-        const latestCalorieResult = results
-          ?.filter((result: any) => result.calculatorType === 'calorie')
-          ?.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
-        
-        console.log('Latest calorie result:', latestCalorieResult);
-        
-        if (latestCalorieResult?.results) {
-          // Check if results is a string that needs parsing or already an object
-          const parsedResults = typeof latestCalorieResult.results === 'string' 
-            ? JSON.parse(latestCalorieResult.results) 
-            : latestCalorieResult.results;
-          
-          console.log('Setting previous calculation results:', parsedResults);
-          
-          // Ensure the results object has the correct structure for display
-          const formattedResults = {
-            bmr: parsedResults.bmr || 0,
-            tdee: parsedResults.tdee || 0,
-            goalCalories: parsedResults.goalCalories || parsedResults.calories || 0,
-            calories: parsedResults.goalCalories || parsedResults.calories || 0,
-            protein: parsedResults.protein || 0,
-            carbs: parsedResults.carbs || 0,
-            fat: parsedResults.fat || 0,
-            goal: parsedResults.goal || 'maintenance',
-            macroProfile: parsedResults.macroProfile || 'balanced',
-            ...parsedResults
-          };
-          
-          setResults(formattedResults);
-        }
-      } catch (calcError) {
-        console.log("Error parsing calculation results:", calcError);
-      }
-    } else {
-      console.log("No calculator results available");
-    }
-  }, [calculatorResults]);
-
-  const getGoalDescription = (goal: string) => {
-    switch (goal) {
-      case 'loss':
-        return 'Weight Loss';
-      case 'gain':
-        return 'Weight Gain';
-      default:
-        return 'Weight Maintenance';
-    }
+  const getActivityLevelDescription = (level: number) => {
+    if (level <= 1.2) return "Sedentary (little/no exercise)";
+    if (level <= 1.375) return "Lightly active (light exercise 1-3 days/week)";
+    if (level <= 1.55) return "Moderately active (moderate exercise 3-5 days/week)";
+    if (level <= 1.725) return "Very active (hard exercise 6-7 days/week)";
+    return "Super active (very hard exercise, physical job)";
   };
 
-  const getActivityLevelValue = (value: number) => {
-    const closest = Object.keys(activityDescriptions)
-      .map(Number)
-      .reduce((prev, curr) => 
-        Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
-      );
-    return closest;
-  };
-
-  const toggleDietaryRestriction = (restriction: string) => {
-    setDietaryRestrictions(prev => 
-      prev.includes(restriction) 
-        ? prev.filter(r => r !== restriction)
-        : [...prev, restriction]
-    );
-  };
-
-  const toggleSupplementGoal = (goal: string) => {
-    setSupplementGoals(prev => 
-      prev.includes(goal) 
-        ? prev.filter(g => g !== goal)
-        : [...prev, goal]
-    );
-  };
-
-  // Show loading while data is being fetched
-  if (profileLoading || !dataLoaded) {
+  if (profileLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-800 flex items-center justify-center">
-        <div className="text-center text-white">
-          <div className="animate-spin w-8 h-8 border-4 border-white border-t-transparent rounded-full mx-auto mb-4" />
-          <p className="text-xl">Loading your saved data...</p>
+      <div className="h-screen flex items-center justify-center">
+        <div className="flex items-center gap-2">
+          <LoaderCircle className="w-6 h-6 animate-spin" />
+          <span>Loading your profile...</span>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-800">
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        {/* Header Section */}
-        <div className="mb-8 text-center">
-          <h1 className="text-5xl font-bold text-white mb-4">
-            Daily Caloric Intake & Macro Calculator
-          </h1>
-          <p className="text-xl text-purple-100 max-w-4xl mx-auto">
-            Calculate your daily caloric needs and macronutrient requirements based on your personal details, activity level, and fitness goals with support for both Metric and Imperial units.
-          </p>
+    <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="flex items-center gap-3 mb-8">
+        <Calculator className="w-8 h-8 text-blue-600" />
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Daily Calorie Calculator</h1>
+          <p className="text-gray-600">Calculate your daily calorie needs and macro breakdown</p>
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Personal Details Card */}
-          <Card className="shadow-xl border-0 bg-white backdrop-blur-sm">
-            <CardHeader className="bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-t-lg">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div>
+          <Card>
+            <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <User className="h-5 w-5" />
-                Personal Details
+                <User className="w-5 h-5" />
+                Personal Information
               </CardTitle>
-              <CardDescription className="text-orange-100">
-                Enter your information to calculate your daily caloric needs
+              <CardDescription>
+                Enter your basic information to calculate your calorie needs
               </CardDescription>
             </CardHeader>
-            <CardContent className="p-6 space-y-6">
-              {/* Unit System Toggle */}
-              <div className="space-y-3">
-                <Label className="text-base font-semibold">Unit System</Label>
-                <RadioGroup
-                  value={unitSystem}
-                  onValueChange={(value) => setUnitSystem(value as 'metric' | 'imperial')}
-                  className="flex gap-8"
-                >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="imperial" id="imperial" />
-                    <Label htmlFor="imperial" className="cursor-pointer">Imperial (lb, inches)</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="metric" id="metric" />
-                    <Label htmlFor="metric" className="cursor-pointer">Metric (kg, cm)</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-
-              {/* Sex Selection */}
-              <div className="space-y-2">
-                <Label className="text-base font-semibold">Sex</Label>
-                <Select value={sex} onValueChange={(value) => setSex(value as 'male' | 'female')}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="male">Male</SelectItem>
-                    <SelectItem value="female">Female</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Age */}
-              <div className="space-y-2">
-                <Label htmlFor="age" className="text-base font-semibold">Age (years)</Label>
-                <input
-                  id="age"
-                  type="number"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                  placeholder="Enter your age"
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base"
-                />
-                <div className="text-xs text-blue-600">React state value: "{age}"</div>
-              </div>
-
-              {/* Height */}
-              <div className="space-y-2">
-                <Label htmlFor="height" className="text-base font-semibold">
-                  Height ({unitSystem === 'metric' ? 'cm' : 'inches'})
-                </Label>
-                <input
-                  id="height"
-                  type="number"
-                  value={height}
-                  onChange={(e) => setHeight(e.target.value)}
-                  placeholder={unitSystem === 'metric' ? 'Enter your height in cm' : 'Enter your height in inches'}
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base"
-                />
-              </div>
-
-              {/* Current Weight */}
-              <div className="space-y-2">
-                <Label htmlFor="currentWeight" className="text-base font-semibold">
-                  Current Weight ({unitSystem === 'metric' ? 'kg' : 'lbs'})
-                </Label>
-                <input
-                  id="currentWeight"
-                  type="number"
-                  value={currentWeight}
-                  onChange={(e) => setCurrentWeight(e.target.value)}
-                  placeholder={unitSystem === 'metric' ? 'Enter your current weight in kg' : 'Enter your current weight in pounds'}
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base"
-                />
-              </div>
-
-              {/* Desired Weight */}
-              <div className="space-y-2">
-                <Label htmlFor="desiredWeight" className="text-base font-semibold">
-                  Desired Weight ({unitSystem === 'metric' ? 'kg' : 'lbs'})
-                </Label>
-                <input
-                  id="desiredWeight"
-                  type="number"
-                  value={desiredWeight}
-                  onChange={(e) => setDesiredWeight(e.target.value)}
-                  placeholder={unitSystem === 'metric' ? 'Enter your desired weight in kg' : 'Enter your desired weight in pounds'}
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base"
-                />
-              </div>
-
-              {/* Activity Level */}
-              <div className="space-y-4">
-                <Label className="text-base font-semibold">
-                  Activity Level: {activityDescriptions[getActivityLevelValue(activityLevel[0]) as keyof typeof activityDescriptions]}
-                </Label>
-                <Slider
-                  value={activityLevel}
-                  onValueChange={setActivityLevel}
-                  min={1.2}
-                  max={1.9}
-                  step={0.175}
-                  className="w-full"
-                />
-                <div className="flex justify-between text-sm text-gray-500">
-                  <span>Sedentary</span>
-                  <span>Very Active</span>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="age">Age</Label>
+                  <Input
+                    id="age"
+                    type="number"
+                    placeholder="25"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Label>Sex</Label>
+                  <RadioGroup value={sex} onValueChange={setSex} className="flex gap-6 mt-2">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="male" id="male" />
+                      <Label htmlFor="male">Male</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="female" id="female" />
+                      <Label htmlFor="female">Female</Label>
+                    </div>
+                  </RadioGroup>
                 </div>
               </div>
 
-              {/* Goal */}
-              <div className="space-y-2">
-                <Label className="text-base font-semibold">Primary Goal</Label>
-                <Select value={goal} onValueChange={(value) => setGoal(value as 'maintenance' | 'loss' | 'gain')}>
+              <div>
+                <Label>Unit System</Label>
+                <Select value={unitSystem} onValueChange={setUnitSystem}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="maintenance">Maintain Weight</SelectItem>
-                    <SelectItem value="loss">Lose Weight</SelectItem>
-                    <SelectItem value="gain">Gain Weight</SelectItem>
+                    <SelectItem value="imperial">Imperial (lbs, inches)</SelectItem>
+                    <SelectItem value="metric">Metric (kg, cm)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
-              {/* Macro Profile */}
-              <div className="space-y-2">
-                <Label className="text-base font-semibold">Macro Profile</Label>
-                <Select value={macroProfile} onValueChange={(value) => setMacroProfile(value as any)}>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="height">
+                    Height ({unitSystem === 'imperial' ? 'inches' : 'cm'})
+                  </Label>
+                  <Input
+                    id="height"
+                    type="number"
+                    placeholder={unitSystem === 'imperial' ? '70' : '178'}
+                    value={height}
+                    onChange={(e) => setHeight(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="currentWeight">
+                    Current Weight ({unitSystem === 'imperial' ? 'lbs' : 'kg'})
+                  </Label>
+                  <Input
+                    id="currentWeight"
+                    type="number"
+                    placeholder={unitSystem === 'imperial' ? '150' : '68'}
+                    value={currentWeight}
+                    onChange={(e) => setCurrentWeight(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="desiredWeight">
+                  Desired Weight ({unitSystem === 'imperial' ? 'lbs' : 'kg'})
+                </Label>
+                <Input
+                  id="desiredWeight"
+                  type="number"
+                  placeholder={unitSystem === 'imperial' ? '140' : '63'}
+                  value={desiredWeight}
+                  onChange={(e) => setDesiredWeight(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <Label>Goal</Label>
+                <Select value={goal} onValueChange={setGoal}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="balanced">Balanced</SelectItem>
-                    <SelectItem value="moderate-protein">Moderate Protein</SelectItem>
-                    <SelectItem value="high-protein">High Protein</SelectItem>
-                    <SelectItem value="high-carb">High Carb</SelectItem>
-                    <SelectItem value="keto">Ketogenic</SelectItem>
-                    <SelectItem value="paleo">Paleo</SelectItem>
+                    <SelectItem value="loss">Weight Loss</SelectItem>
+                    <SelectItem value="maintenance">Maintain Weight</SelectItem>
+                    <SelectItem value="gain">Weight Gain</SelectItem>
                   </SelectContent>
                 </Select>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+              </div>
+
+              <div>
+                <Label>Activity Level: {getActivityLevelDescription(activityLevel[0])}</Label>
+                <Slider
+                  value={activityLevel}
+                  onValueChange={setActivityLevel}
+                  max={1.9}
+                  min={1.2}
+                  step={0.125}
+                  className="mt-2"
+                />
+                <div className="flex justify-between text-sm text-gray-500 mt-1">
+                  <span>Sedentary</span>
+                  <span>Super Active</span>
+                </div>
+              </div>
+
+              <div>
+                <Label>Macro Profile</Label>
+                <Select value={macroProfile} onValueChange={setMacroProfile}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(macroProfiles).map(([key, profile]) => (
+                      <SelectItem key={key} value={key}>
+                        {key.charAt(0).toUpperCase() + key.slice(1).replace('-', ' ')} 
+                        ({profile.carbs}C/{profile.protein}P/{profile.fat}F)
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-sm text-gray-500 mt-1">
                   {macroProfiles[macroProfile]?.description}
                 </p>
               </div>
 
-              {/* Action Button */}
-              <div className="pt-6">
-                <Button 
-                  onClick={calculateCalories} 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                  size="lg"
-                >
-                  <Calculator className="h-5 w-5 mr-2" />
-                  Calculate
-                </Button>
-              </div>
+              <Button onClick={calculateCalories} className="w-full" size="lg">
+                <Calculator className="w-4 h-4 mr-2" />
+                Calculate Calories
+              </Button>
             </CardContent>
           </Card>
+        </div>
 
-          {/* Results Panel */}
-          <Card className="shadow-xl border-0 bg-white backdrop-blur-sm">
-            <CardHeader className="bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-t-lg">
-              <CardTitle className="flex items-center gap-2">
-                <Calculator className="h-5 w-5" />
-                Your Caloric & Macro Needs
-              </CardTitle>
-              <CardDescription className="text-green-100">
-                Complete the form to see your personalized results
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="p-6">
-              {results ? (
-                <div className="space-y-6">
-                  <div className="flex justify-between items-center">
-                    <h3 className="text-lg font-semibold">Your Results</h3>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={saveResults}
-                      disabled={isSaving}
-                    >
-                      {isSaving ? (
-                        <LoaderCircle className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Save className="h-4 w-4" />
-                      )}
-                    </Button>
+        <div>
+          {results && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-green-600">Your Results</CardTitle>
+                <CardDescription>
+                  Daily calorie and macro recommendations based on your goals
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-blue-50 p-4 rounded-lg text-center">
+                    <div className="text-2xl font-bold text-blue-600">{results.bmr}</div>
+                    <div className="text-sm text-gray-600">BMR (calories)</div>
                   </div>
-
-                  {/* BMR and TDEE */}
-                  <div className="grid grid-cols-2 gap-4 text-center">
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="text-2xl font-bold text-gray-700">{Math.round(results.bmr || 0)}</div>
-                      <div className="text-sm text-gray-500">BMR (calories/day)</div>
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="text-2xl font-bold text-gray-700">{Math.round(results.tdee || 0)}</div>
-                      <div className="text-sm text-gray-500">TDEE (calories/day)</div>
-                    </div>
+                  <div className="bg-green-50 p-4 rounded-lg text-center">
+                    <div className="text-2xl font-bold text-green-600">{results.tdee}</div>
+                    <div className="text-sm text-gray-600">TDEE (calories)</div>
                   </div>
+                </div>
 
-                  {/* Daily Target Calories */}
-                  <div className="text-center bg-gradient-to-r from-blue-50 to-green-50 p-6 rounded-lg">
-                    <div className="text-4xl font-bold text-blue-600 mb-2">{Math.round((results as any).goalCalories || results.calories || 0)}</div>
-                    <div className="text-lg text-gray-600">Daily Target Calories</div>
+                <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg text-center">
+                  <div className="text-3xl font-bold text-purple-600 mb-2">
+                    {results.calories}
                   </div>
-
-                  {/* Macronutrient Breakdown */}
-                  <div className="space-y-4">
-                    <h4 className="font-semibold text-lg">Macronutrient Breakdown</h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center p-3 bg-red-50 rounded">
-                        <span className="font-medium text-red-700">Protein</span>
-                        <span className="font-bold">{(results as any).protein || results.macros?.protein || 0}g</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-blue-50 rounded">
-                        <span className="font-medium text-blue-700">Carbohydrates</span>
-                        <span className="font-bold">{(results as any).carbs || results.macros?.carbs || 0}g</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-yellow-50 rounded">
-                        <span className="font-medium text-yellow-700">Fat</span>
-                        <span className="font-bold">{(results as any).fat || results.macros?.fat || 0}g</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Progress Timeline */}
-                  {results.weeklyChangeRate && results.timeToGoal && (
-                    <div className="space-y-3 bg-purple-50 p-4 rounded-lg">
-                      <h4 className="font-semibold">Progress Timeline</h4>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span>Weekly Rate:</span>
-                          <span className="font-medium">
-                            {Math.abs(results.weeklyChangeRate)} lbs/week
-                          </span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Time to Goal:</span>
-                          <span className="font-medium">{results.timeToGoal} weeks</span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Additional Metrics */}
-                  {results.bodyFatPercentage && (
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div className="bg-gray-50 p-3 rounded text-center">
-                        <div className="font-bold text-lg">{results.bodyFatPercentage}%</div>
-                        <div className="text-gray-600">Body Fat</div>
-                      </div>
-                      <div className="bg-gray-50 p-3 rounded text-center">
-                        <div className="font-bold text-lg">{results.leanBodyMass}kg</div>
-                        <div className="text-gray-600">Lean Mass</div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Water Intake */}
-                  {results.dailyWaterIntake && (
-                    <div className="bg-cyan-50 p-4 rounded-lg text-center">
-                      <div className="text-2xl font-bold text-cyan-600">
-                        {Math.round(results.dailyWaterIntake / 250)} glasses
-                      </div>
-                      <div className="text-sm text-cyan-700">
-                        Daily Water Intake ({results.dailyWaterIntake}ml)
-                      </div>
+                  <div className="text-lg text-gray-700">Daily Calorie Target</div>
+                  {results.weeklyChangeRate && (
+                    <div className="text-sm text-gray-600 mt-1">
+                      {results.weeklyChangeRate > 0 ? '+' : ''}{results.weeklyChangeRate} lbs/week
                     </div>
                   )}
                 </div>
-              ) : (
-                <div className="text-center py-12">
-                  <Calculator className="h-16 w-16 mx-auto mb-4 text-gray-300" />
-                  <h3 className="text-xl font-semibold mb-2 text-gray-600">Ready to Calculate Your Needs?</h3>
-                  <p className="text-gray-500 mb-4">
-                    Fill out the form on the left to get your personalized daily caloric intake and macronutrient breakdown.
-                  </p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+
+                {results.macros && (
+                  <div>
+                    <h3 className="font-semibold mb-3">Daily Macronutrients</h3>
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="bg-yellow-50 p-3 rounded-lg text-center">
+                        <div className="text-xl font-bold text-yellow-600">{results.macros.carbs}g</div>
+                        <div className="text-sm text-gray-600">Carbs</div>
+                      </div>
+                      <div className="bg-red-50 p-3 rounded-lg text-center">
+                        <div className="text-xl font-bold text-red-600">{results.macros.protein}g</div>
+                        <div className="text-sm text-gray-600">Protein</div>
+                      </div>
+                      <div className="bg-orange-50 p-3 rounded-lg text-center">
+                        <div className="text-xl font-bold text-orange-600">{results.macros.fat}g</div>
+                        <div className="text-sm text-gray-600">Fat</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {results.timeToGoal && results.timeToGoal > 0 && (
+                  <div className="bg-blue-50 p-4 rounded-lg">
+                    <h3 className="font-semibold text-blue-700 mb-1">Estimated Timeline</h3>
+                    <p className="text-blue-600">
+                      Approximately {results.timeToGoal} weeks to reach your goal
+                    </p>
+                  </div>
+                )}
+
+                {results.bodyFatPercentage && (
+                  <div>
+                    <h3 className="font-semibold mb-3">Body Composition</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="bg-gray-50 p-3 rounded-lg">
+                        <div className="text-lg font-bold">{results.bodyFatPercentage}%</div>
+                        <div className="text-sm text-gray-600">Est. Body Fat</div>
+                      </div>
+                      <div className="bg-gray-50 p-3 rounded-lg">
+                        <div className="text-lg font-bold">{results.leanBodyMass}kg</div>
+                        <div className="text-sm text-gray-600">Lean Mass</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {results.dailyWaterIntake && (
+                  <div className="bg-cyan-50 p-4 rounded-lg">
+                    <h3 className="font-semibold text-cyan-700 mb-1">Daily Water Intake</h3>
+                    <p className="text-cyan-600">
+                      {results.dailyWaterIntake}ml ({Math.round(results.dailyWaterIntake / 240)} cups)
+                    </p>
+                  </div>
+                )}
+
+                {results.mealTiming && (
+                  <div>
+                    <h3 className="font-semibold mb-3">Suggested Meal Distribution</h3>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span>Breakfast:</span>
+                        <span className="font-medium">{results.mealTiming.breakfast} cal</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Lunch:</span>
+                        <span className="font-medium">{results.mealTiming.lunch} cal</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Dinner:</span>
+                        <span className="font-medium">{results.mealTiming.dinner} cal</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Snacks:</span>
+                        <span className="font-medium">{results.mealTiming.snacks} cal</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </div>
