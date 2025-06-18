@@ -29,6 +29,7 @@ export default function CalorieCalculatorSimple() {
 
   const [results, setResults] = useState<any>(null);
   const [isCalculating, setIsCalculating] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   // Load profile data
   const { data: profileData, isLoading: profileLoading } = useQuery({
@@ -62,6 +63,7 @@ export default function CalorieCalculatorSimple() {
       
       console.log("SIMPLE: Setting form data", newFormData);
       setFormData(newFormData);
+      setDataLoaded(true);
     }
   }, [profileData, profileLoading]);
 
@@ -122,6 +124,7 @@ export default function CalorieCalculatorSimple() {
       return apiRequest('POST', '/api/calculator-results', {
         calculatorType: 'calorie',
         results: JSON.stringify(results),
+        userInputs: JSON.stringify(formData), // Include user inputs
       });
     },
     onSuccess: () => {
@@ -269,8 +272,9 @@ export default function CalorieCalculatorSimple() {
                     value={formData.age}
                     onChange={(e) => handleInputChange('age', e.target.value)}
                     placeholder="Enter your age"
+                    key={`age-${formData.age}-${dataLoaded}`}
                   />
-                  <div className="text-xs text-blue-600 mt-1">Value: "{formData.age}"</div>
+                  <div className="text-xs text-blue-600 mt-1">Value: "{formData.age}" | Loaded: {dataLoaded ? 'Yes' : 'No'}</div>
                 </div>
                 <div>
                   <Label htmlFor="sex">Sex</Label>
@@ -296,6 +300,7 @@ export default function CalorieCalculatorSimple() {
                     value={formData.height}
                     onChange={(e) => handleInputChange('height', e.target.value)}
                     placeholder={`Enter height in ${formData.unitSystem === 'metric' ? 'cm' : 'inches'}`}
+                    key={`height-${formData.height}-${dataLoaded}`}
                   />
                   <div className="text-xs text-blue-600 mt-1">Value: "{formData.height}"</div>
                 </div>
@@ -307,6 +312,7 @@ export default function CalorieCalculatorSimple() {
                     value={formData.currentWeight}
                     onChange={(e) => handleInputChange('currentWeight', e.target.value)}
                     placeholder={`Enter weight in ${formData.unitSystem === 'metric' ? 'kg' : 'lbs'}`}
+                    key={`currentWeight-${formData.currentWeight}-${dataLoaded}`}
                   />
                   <div className="text-xs text-blue-600 mt-1">Value: "{formData.currentWeight}"</div>
                 </div>
@@ -321,6 +327,7 @@ export default function CalorieCalculatorSimple() {
                   value={formData.desiredWeight}
                   onChange={(e) => handleInputChange('desiredWeight', e.target.value)}
                   placeholder={`Enter goal weight in ${formData.unitSystem === 'metric' ? 'kg' : 'lbs'}`}
+                  key={`desiredWeight-${formData.desiredWeight}-${dataLoaded}`}
                 />
                 <div className="text-xs text-blue-600 mt-1">Value: "{formData.desiredWeight}"</div>
               </div>
