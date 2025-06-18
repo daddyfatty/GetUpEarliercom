@@ -15,7 +15,11 @@ interface CalculationResults {
   bmr: number;
   tdee: number;
   calories: number;
-  macros: {
+  goalCalories?: number;
+  protein?: number;
+  carbs?: number;
+  fat?: number;
+  macros?: {
     carbs: number;
     protein: number;
     fat: number;
@@ -417,7 +421,22 @@ export default function CalorieCalculator() {
             : latestCalorieResult.results;
           
           console.log('Setting previous calculation results:', parsedResults);
-          setResults(parsedResults);
+          
+          // Ensure the results object has the correct structure for display
+          const formattedResults = {
+            bmr: parsedResults.bmr || 0,
+            tdee: parsedResults.tdee || 0,
+            goalCalories: parsedResults.goalCalories || parsedResults.calories || 0,
+            calories: parsedResults.goalCalories || parsedResults.calories || 0,
+            protein: parsedResults.protein || 0,
+            carbs: parsedResults.carbs || 0,
+            fat: parsedResults.fat || 0,
+            goal: parsedResults.goal || 'maintenance',
+            macroProfile: parsedResults.macroProfile || 'balanced',
+            ...parsedResults
+          };
+          
+          setResults(formattedResults);
         }
       } catch (calcError) {
         console.log("Error parsing calculation results:", calcError);
@@ -706,25 +725,25 @@ export default function CalorieCalculator() {
 
                   {/* Daily Target Calories */}
                   <div className="text-center bg-gradient-to-r from-blue-50 to-green-50 p-6 rounded-lg">
-                    <div className="text-4xl font-bold text-blue-600 mb-2">{Math.round(results.calories || 0)}</div>
+                    <div className="text-4xl font-bold text-blue-600 mb-2">{Math.round((results as any).goalCalories || results.calories || 0)}</div>
                     <div className="text-lg text-gray-600">Daily Target Calories</div>
                   </div>
 
                   {/* Macronutrient Breakdown */}
                   <div className="space-y-4">
-                    <h4 className="font-semibold text-lg">Your personalized macronutrient breakdown will appear here</h4>
+                    <h4 className="font-semibold text-lg">Macronutrient Breakdown</h4>
                     <div className="space-y-3">
                       <div className="flex justify-between items-center p-3 bg-red-50 rounded">
                         <span className="font-medium text-red-700">Protein</span>
-                        <span className="font-bold">{results.macros.protein}g</span>
+                        <span className="font-bold">{(results as any).protein || results.macros?.protein || 0}g</span>
                       </div>
                       <div className="flex justify-between items-center p-3 bg-blue-50 rounded">
                         <span className="font-medium text-blue-700">Carbohydrates</span>
-                        <span className="font-bold">{results.macros.carbs}g</span>
+                        <span className="font-bold">{(results as any).carbs || results.macros?.carbs || 0}g</span>
                       </div>
                       <div className="flex justify-between items-center p-3 bg-yellow-50 rounded">
                         <span className="font-medium text-yellow-700">Fat</span>
-                        <span className="font-bold">{results.macros.fat}g</span>
+                        <span className="font-bold">{(results as any).fat || results.macros?.fat || 0}g</span>
                       </div>
                     </div>
                   </div>
