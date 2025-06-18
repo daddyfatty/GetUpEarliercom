@@ -154,20 +154,6 @@ export default function CalorieCalculator() {
     }
   }, [profileData, profileLoading]);
 
-  // Show loading state while profile data is being fetched
-  if (profileLoading || !dataLoaded) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto" />
-            <p className="mt-4 text-gray-600 dark:text-gray-400">Loading your profile...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   const calculateBMR = (weightKg: number, heightCm: number, ageYears: number, sex: 'male' | 'female'): number => {
     if (sex === 'male') {
       return (10 * weightKg) + (6.25 * heightCm) - (5 * ageYears) + 5;
@@ -415,17 +401,29 @@ export default function CalorieCalculator() {
     const results = calculatorResults as any[];
     if (results && results.length > 0) {
       try {
+        console.log('Raw calculator results:', results);
+        
         // Find the most recent calorie calculator result
         const latestCalorieResult = results
           ?.filter((result: any) => result.calculatorType === 'calorie')
           ?.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
         
+        console.log('Latest calorie result:', latestCalorieResult);
+        
         if (latestCalorieResult?.results) {
-          setResults(JSON.parse(latestCalorieResult.results));
+          // Check if results is a string that needs parsing or already an object
+          const parsedResults = typeof latestCalorieResult.results === 'string' 
+            ? JSON.parse(latestCalorieResult.results) 
+            : latestCalorieResult.results;
+          
+          console.log('Setting previous calculation results:', parsedResults);
+          setResults(parsedResults);
         }
       } catch (calcError) {
-        console.log("No previous calculation results found");
+        console.log("Error parsing calculation results:", calcError);
       }
+    } else {
+      console.log("No calculator results available");
     }
   }, [calculatorResults]);
 
@@ -464,6 +462,18 @@ export default function CalorieCalculator() {
         : [...prev, goal]
     );
   };
+
+  // Show loading while data is being fetched
+  if (profileLoading || !dataLoaded) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-800 flex items-center justify-center">
+        <div className="text-center text-white">
+          <div className="animate-spin w-8 h-8 border-4 border-white border-t-transparent rounded-full mx-auto mb-4" />
+          <p className="text-xl">Loading your saved data...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-800">
