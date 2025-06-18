@@ -56,6 +56,14 @@ export default function Profile() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
+
+  const getActivityLevelDescription = (level: number) => {
+    if (level <= 1.2) return "Sedentary (little/no exercise)";
+    if (level <= 1.375) return "Lightly active (light exercise 1-3 days/week)";
+    if (level <= 1.55) return "Moderately active (moderate exercise 3-5 days/week)";
+    if (level <= 1.725) return "Very active (hard exercise 6-7 days/week)";
+    return "Super active (very hard exercise, physical job)";
+  };
   
   // Fetch user profile data
   const { data: profileData, isLoading: profileLoading } = useQuery<ProfileData>({
@@ -359,16 +367,16 @@ export default function Profile() {
                           <SelectValue placeholder="Select activity level" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="sedentary">Sedentary (little/no exercise)</SelectItem>
-                          <SelectItem value="lightly_active">Lightly Active (light exercise 1-3 days/week)</SelectItem>
-                          <SelectItem value="moderately_active">Moderately Active (moderate exercise 3-5 days/week)</SelectItem>
-                          <SelectItem value="very_active">Very Active (hard exercise 6-7 days/week)</SelectItem>
-                          <SelectItem value="extremely_active">Extremely Active (very hard exercise, physical job)</SelectItem>
+                          <SelectItem value="1.2">Sedentary (little/no exercise)</SelectItem>
+                          <SelectItem value="1.375">Lightly Active (light exercise 1-3 days/week)</SelectItem>
+                          <SelectItem value="1.55">Moderately Active (moderate exercise 3-5 days/week)</SelectItem>
+                          <SelectItem value="1.725">Very Active (hard exercise 6-7 days/week)</SelectItem>
+                          <SelectItem value="1.9">Super Active (very hard exercise, physical job)</SelectItem>
                         </SelectContent>
                       </Select>
                     ) : (
                       <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                        {profileData?.activityLevel ? profileData.activityLevel.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : "Not specified"}
+                        {profileData?.activityLevel ? getActivityLevelDescription(parseFloat(profileData.activityLevel)) : "Not specified"}
                       </p>
                     )}
                   </div>
@@ -381,16 +389,36 @@ export default function Profile() {
                           <SelectValue placeholder="Select your goal" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="lose_weight">Lose Weight</SelectItem>
-                          <SelectItem value="gain_weight">Gain Weight</SelectItem>
-                          <SelectItem value="maintain_weight">Maintain Weight</SelectItem>
-                          <SelectItem value="build_muscle">Build Muscle</SelectItem>
-                          <SelectItem value="improve_endurance">Improve Endurance</SelectItem>
+                          <SelectItem value="loss">Weight Loss</SelectItem>
+                          <SelectItem value="maintenance">Maintain Weight</SelectItem>
+                          <SelectItem value="gain">Weight Gain</SelectItem>
                         </SelectContent>
                       </Select>
                     ) : (
                       <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                         {profileData?.goal ? profileData.goal.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : "Not specified"}
+                      </p>
+                    )}
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="macroProfile">Macro Profile</Label>
+                    {isEditing ? (
+                      <Select value={formData.macroProfile} onValueChange={(value) => handleInputChange('macroProfile', value)}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select macro profile" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="balanced">Balanced (40C/30P/30F)</SelectItem>
+                          <SelectItem value="moderate-protein">Moderate Protein (45C/25P/30F)</SelectItem>
+                          <SelectItem value="high-protein">High Protein (30C/40P/30F)</SelectItem>
+                          <SelectItem value="low-carb">Low Carb (20C/35P/45F)</SelectItem>
+                          <SelectItem value="keto">Keto (5C/25P/70F)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                        {profileData?.macroProfile ? profileData.macroProfile.charAt(0).toUpperCase() + profileData.macroProfile.slice(1).replace('-', ' ') : "Not specified"}
                       </p>
                     )}
                   </div>
