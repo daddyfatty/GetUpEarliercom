@@ -48,22 +48,47 @@ export default function CalorieCalculatorSimple() {
       
       const profile = profileData as any;
       
-      // Direct assignment - no complex state management
-      const newFormData = {
-        age: profile.age ? String(profile.age) : '',
-        sex: profile.sex || 'male',
-        height: profile.height ? String(profile.height) : '',
-        currentWeight: profile.currentWeight ? String(profile.currentWeight) : '',
-        desiredWeight: profile.desiredWeight ? String(profile.desiredWeight) : '',
-        activityLevel: profile.activityLevel || '1.55',
-        goal: profile.goal || 'loss',
-        unitSystem: profile.unitSystem || 'imperial',
-        macroProfile: profile.macroProfile || 'high-protein'
-      };
-      
-      console.log("SIMPLE: Setting form data", newFormData);
-      setFormData(newFormData);
-      setDataLoaded(true);
+      // Use setTimeout to ensure DOM is ready for data population
+      setTimeout(() => {
+        const newFormData = {
+          age: profile.age ? String(profile.age) : '',
+          sex: profile.sex || 'male',
+          height: profile.height ? String(profile.height) : '',
+          currentWeight: profile.currentWeight ? String(profile.currentWeight) : '',
+          desiredWeight: profile.desiredWeight ? String(profile.desiredWeight) : '',
+          activityLevel: profile.activityLevel || '1.55',
+          goal: profile.goal || 'loss',
+          unitSystem: profile.unitSystem || 'imperial',
+          macroProfile: profile.macroProfile || 'high-protein'
+        };
+        
+        console.log("SIMPLE: Setting form data with delay", newFormData);
+        setFormData(newFormData);
+        setDataLoaded(true);
+        
+        // Force update input values directly in the DOM as backup
+        const ageInput = document.getElementById('age') as HTMLInputElement;
+        const heightInput = document.getElementById('height') as HTMLInputElement;
+        const currentWeightInput = document.getElementById('currentWeight') as HTMLInputElement;
+        const desiredWeightInput = document.getElementById('desiredWeight') as HTMLInputElement;
+        
+        if (ageInput && newFormData.age) {
+          ageInput.value = newFormData.age;
+          console.log("SIMPLE: Force set age input to", newFormData.age);
+        }
+        if (heightInput && newFormData.height) {
+          heightInput.value = newFormData.height;
+          console.log("SIMPLE: Force set height input to", newFormData.height);
+        }
+        if (currentWeightInput && newFormData.currentWeight) {
+          currentWeightInput.value = newFormData.currentWeight;
+          console.log("SIMPLE: Force set currentWeight input to", newFormData.currentWeight);
+        }
+        if (desiredWeightInput && newFormData.desiredWeight) {
+          desiredWeightInput.value = newFormData.desiredWeight;
+          console.log("SIMPLE: Force set desiredWeight input to", newFormData.desiredWeight);
+        }
+      }, 200);
     }
   }, [profileData, profileLoading]);
 
@@ -269,10 +294,10 @@ export default function CalorieCalculatorSimple() {
                   <Input
                     id="age"
                     type="number"
-                    value={formData.age}
+                    value={formData.age || ''}
                     onChange={(e) => handleInputChange('age', e.target.value)}
                     placeholder="Enter your age"
-                    key={`age-${formData.age}-${dataLoaded}`}
+                    key={`age-${dataLoaded}-${formData.age}`}
                   />
                   <div className="text-xs text-blue-600 mt-1">Value: "{formData.age}" | Loaded: {dataLoaded ? 'Yes' : 'No'}</div>
                 </div>
