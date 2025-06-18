@@ -29,7 +29,7 @@ import Admin from "@/pages/admin";
 import AdminDashboard from "@/pages/admin-dashboard";
 import Checkout from "@/pages/checkout";
 import Subscribe from "@/pages/subscribe";
-import CalorieCalculator from "@/pages/calorie-calculator-simple";
+import CalorieCalculator from "@/pages/calorie-calculator-clean";
 import AlcoholCalculatorPage from "@/pages/alcohol-calculator";
 import Profile from "@/pages/profile";
 import Favorites from "@/pages/favorites";

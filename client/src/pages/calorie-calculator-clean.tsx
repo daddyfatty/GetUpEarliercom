@@ -154,7 +154,19 @@ export default function CalorieCalculator() {
     }
   }, [profileData, profileLoading]);
 
-
+  // Show loading state while profile data is being fetched
+  if (profileLoading || !dataLoaded) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto" />
+            <p className="mt-4 text-gray-600 dark:text-gray-400">Loading your profile...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const calculateBMR = (weightKg: number, heightCm: number, ageYears: number, sex: 'male' | 'female'): number => {
     if (sex === 'male') {
@@ -410,7 +422,6 @@ export default function CalorieCalculator() {
         
         if (latestCalorieResult?.results) {
           setResults(JSON.parse(latestCalorieResult.results));
-          console.log("Previous calculation results loaded");
         }
       } catch (calcError) {
         console.log("No previous calculation results found");
@@ -519,13 +530,12 @@ export default function CalorieCalculator() {
                 <input
                   id="age"
                   type="number"
-                  value={age || ''}
+                  value={age}
                   onChange={(e) => setAge(e.target.value)}
                   placeholder="Enter your age"
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base"
-                  key={`age-${age}-${dataLoaded}`}
                 />
-                <div className="text-xs text-blue-600 bg-blue-50 p-1 rounded">Input value: "{age}" | Data loaded: {dataLoaded ? 'Yes' : 'No'}</div>
+                <div className="text-xs text-blue-600">React state value: "{age}"</div>
               </div>
 
               {/* Height */}
@@ -536,13 +546,11 @@ export default function CalorieCalculator() {
                 <input
                   id="height"
                   type="number"
-                  value={height || ''}
+                  value={height}
                   onChange={(e) => setHeight(e.target.value)}
                   placeholder={unitSystem === 'metric' ? 'Enter your height in cm' : 'Enter your height in inches'}
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base"
-                  key={`height-${height}-${dataLoaded}`}
                 />
-                <div className="text-xs text-blue-600 bg-blue-50 p-1 rounded">Input value: "{height}"</div>
               </div>
 
               {/* Current Weight */}
@@ -553,13 +561,11 @@ export default function CalorieCalculator() {
                 <input
                   id="currentWeight"
                   type="number"
-                  value={currentWeight || ''}
+                  value={currentWeight}
                   onChange={(e) => setCurrentWeight(e.target.value)}
                   placeholder={unitSystem === 'metric' ? 'Enter your current weight in kg' : 'Enter your current weight in pounds'}
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base"
-                  key={`currentWeight-${currentWeight}-${dataLoaded}`}
                 />
-                <div className="text-xs text-blue-600 bg-blue-50 p-1 rounded">Input value: "{currentWeight}"</div>
               </div>
 
               {/* Desired Weight */}
@@ -570,11 +576,10 @@ export default function CalorieCalculator() {
                 <input
                   id="desiredWeight"
                   type="number"
-                  value={desiredWeight || ''}
+                  value={desiredWeight}
                   onChange={(e) => setDesiredWeight(e.target.value)}
                   placeholder={unitSystem === 'metric' ? 'Enter your desired weight in kg' : 'Enter your desired weight in pounds'}
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-base"
-                  key={`desiredWeight-${desiredWeight}-${dataLoaded}`}
                 />
               </div>
 
