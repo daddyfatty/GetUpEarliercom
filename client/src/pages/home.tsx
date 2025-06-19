@@ -29,82 +29,130 @@ export default function Home() {
       {/* Combined Three-Column Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
             {/* Column 1: Latest Recipe */}
-            <div className="text-center">
-              <div className="mb-8">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">Latest Recipe</h2>
-                <p className="text-lg text-gray-600 dark:text-gray-300">
-                  Discover nutritious, delicious recipes updated weekly.
-                </p>
-                <div className="bg-accent/10 text-accent px-3 py-2 rounded-full inline-block mt-3 text-sm font-medium">
-                  <TrendingUp className="inline w-4 h-4 mr-2" />
-                  New recipes added weekly!
-                </div>
-              </div>
-              
-              {featuredRecipes.length > 0 && (
-                <div className="mb-8">
-                  <RecipeCard recipe={featuredRecipes[0]} />
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden h-full flex flex-col">
+              {/* Featured Image */}
+              {featuredRecipes.length > 0 && featuredRecipes[0].imageUrl && (
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={featuredRecipes[0].imageUrl} 
+                    alt={featuredRecipes[0].title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-4 right-4">
+                    <div className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                      <TrendingUp className="inline w-4 h-4 mr-1" />
+                      New!
+                    </div>
+                  </div>
                 </div>
               )}
               
-              <Link href="/recipes">
-                <Button 
-                  size="lg" 
-                  className="font-semibold text-white hover:opacity-90"
-                  style={{ backgroundColor: '#ef4444' }}
-                >
-                  <ChefHat className="h-5 w-5 mr-2" />
-                  View All Recipes
-                </Button>
-              </Link>
+              <div className="p-6 flex flex-col flex-grow text-center">
+                <div className="mb-6 flex-grow">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Latest Recipe</h2>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    Discover nutritious, delicious recipes updated weekly.
+                  </p>
+                  {featuredRecipes.length > 0 && (
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                      {featuredRecipes[0].title}
+                    </h3>
+                  )}
+                </div>
+                
+                <Link href="/recipes" className="mt-auto">
+                  <Button 
+                    size="lg" 
+                    className="w-full font-semibold text-white hover:opacity-90"
+                    style={{ backgroundColor: '#ef4444' }}
+                  >
+                    <ChefHat className="h-5 w-5 mr-2" />
+                    View All Recipes
+                  </Button>
+                </Link>
+              </div>
             </div>
 
             {/* Column 2: Latest Workout */}
-            <div className="text-center">
-              <div className="mb-8">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">Latest Workout</h2>
-                <p className="text-lg text-gray-600 dark:text-gray-300">
-                  Simple, effective workouts for every fitness level.
-                </p>
-              </div>
-              
-              {featuredWorkouts.length > 0 && (
-                <div className="mb-8">
-                  <WorkoutCard workout={featuredWorkouts[0]} />
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden h-full flex flex-col">
+              {/* Featured Image */}
+              {featuredWorkouts.length > 0 && featuredWorkouts[0].thumbnailUrl && (
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={featuredWorkouts[0].thumbnailUrl} 
+                    alt={featuredWorkouts[0].title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                    <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center">
+                      <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M8 5v10l8-5-8-5z"/>
+                      </svg>
+                    </div>
+                  </div>
                 </div>
               )}
               
-              <Link href="/workouts">
-                <Button 
-                  size="lg" 
-                  className="font-semibold text-black hover:opacity-90"
-                  style={{ backgroundColor: '#B3D7E9' }}
-                >
-                  <Dumbbell className="h-5 w-5 mr-2" />
-                  View All Workouts
-                </Button>
-              </Link>
+              <div className="p-6 flex flex-col flex-grow text-center">
+                <div className="mb-6 flex-grow">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Latest Workout</h2>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    Simple, effective workouts for every fitness level.
+                  </p>
+                  {featuredWorkouts.length > 0 && (
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                      {featuredWorkouts[0].title}
+                    </h3>
+                  )}
+                </div>
+                
+                <Link href="/workouts" className="mt-auto">
+                  <Button 
+                    size="lg" 
+                    className="w-full font-semibold text-black hover:opacity-90"
+                    style={{ backgroundColor: '#B3D7E9' }}
+                  >
+                    <Dumbbell className="h-5 w-5 mr-2" />
+                    View All Workouts
+                  </Button>
+                </Link>
+              </div>
             </div>
 
             {/* Column 3: Ready to Transform */}
-            <div className="text-center">
-              <div className="bg-gradient-to-br from-[hsl(var(--coaching-primary))] via-purple-700 to-[hsl(var(--coaching-accent))] text-white p-8 rounded-2xl shadow-lg h-full flex flex-col justify-between">
-                <div>
-                  <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to Transform?</h2>
-                  <p className="text-lg text-purple-100 mb-8 leading-relaxed">
-                    Get personalized training and coaching from a certified trainer, yoga teacher, running coach, and integrative nutrition coach. 
-                    Bridge the gap from inactivity to strength and sustainable healthy habits.
+            <div className="bg-gradient-to-br from-[hsl(var(--coaching-primary))] via-purple-700 to-[hsl(var(--coaching-accent))] rounded-2xl shadow-lg overflow-hidden h-full flex flex-col">
+              {/* Featured Image/Thumbnail */}
+              <div className="relative h-48 overflow-hidden">
+                <div className="w-full h-full bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <Users className="w-16 h-16 mx-auto mb-4 opacity-80" />
+                    <div className="text-sm font-medium">Personal Coaching</div>
+                  </div>
+                </div>
+                <div className="absolute top-4 right-4">
+                  <div className="bg-white bg-opacity-20 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    <Star className="inline w-4 h-4 mr-1" />
+                    Featured
+                  </div>
+                </div>
+              </div>
+              
+              <div className="p-6 flex flex-col flex-grow text-center text-white">
+                <div className="mb-6 flex-grow">
+                  <h2 className="text-2xl font-bold mb-3">Ready to Transform?</h2>
+                  <p className="text-purple-100 mb-4 leading-relaxed">
+                    Get personalized training and coaching from a certified trainer, yoga teacher, running coach, and integrative nutrition coach.
                   </p>
                 </div>
                 
-                <div className="space-y-4">
+                <div className="space-y-3 mt-auto">
                   <Link href="/coaching">
                     <Button 
                       size="lg" 
-                      className="w-full bg-white text-[hsl(var(--coaching-text))] hover:bg-[hsl(var(--coaching-light))] font-bold text-lg px-6 py-3 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
+                      className="w-full bg-white text-[hsl(var(--coaching-text))] hover:bg-gray-100 font-bold px-6 py-3 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
                     >
                       <Users className="h-5 w-5 mr-2" />
                       View Coaching Packages
@@ -113,15 +161,15 @@ export default function Home() {
                   
                   <Button 
                     size="lg" 
-                    className="w-full bg-gradient-to-r from-[hsl(var(--coaching-accent))] to-[hsl(var(--coaching-primary))] hover:from-[hsl(var(--coaching-accent))]/90 hover:to-[hsl(var(--coaching-primary))]/90 text-white font-bold text-lg px-6 py-3 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
+                    className="w-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white font-bold px-6 py-3 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 border border-white border-opacity-30"
                     onClick={() => window.open('https://calendly.com/michaelbakerdigital/30minute', '_blank')}
                   >
                     <Calendar className="h-5 w-5 mr-2" />
                     Free Consultation
                   </Button>
                   
-                  <p className="text-purple-200 text-sm mt-4">
-                    No commitment required • 30-minute consultation • Personalized recommendations
+                  <p className="text-purple-200 text-xs mt-3">
+                    No commitment required • 30-minute consultation
                   </p>
                 </div>
               </div>
