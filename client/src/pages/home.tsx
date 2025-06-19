@@ -29,10 +29,10 @@ export default function Home() {
       {/* Combined Three-Column Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-stretch">
             
             {/* Column 1: Latest Recipe */}
-            <div className="text-center">
+            <div className="text-center flex flex-col h-full">
               <div className="mb-8">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">Latest Recipe</h2>
                 <p className="text-lg text-gray-600 dark:text-gray-300">
@@ -44,26 +44,30 @@ export default function Home() {
                 </div>
               </div>
               
-              {featuredRecipes.length > 0 && (
-                <div className="mb-8">
-                  <RecipeCard recipe={featuredRecipes[0]} />
-                </div>
-              )}
+              <div className="flex-1 flex flex-col justify-center">
+                {featuredRecipes.length > 0 && (
+                  <div className="mb-8">
+                    <RecipeCard recipe={featuredRecipes[0]} />
+                  </div>
+                )}
+              </div>
               
-              <Link href="/recipes">
-                <Button 
-                  size="lg" 
-                  className="font-semibold text-white hover:opacity-90"
-                  style={{ backgroundColor: '#ef4444' }}
-                >
-                  <ChefHat className="h-5 w-5 mr-2" />
-                  View All Recipes
-                </Button>
-              </Link>
+              <div className="mt-auto">
+                <Link href="/recipes">
+                  <Button 
+                    size="lg" 
+                    className="font-semibold text-white hover:opacity-90"
+                    style={{ backgroundColor: '#ef4444' }}
+                  >
+                    <ChefHat className="h-5 w-5 mr-2" />
+                    View All Recipes
+                  </Button>
+                </Link>
+              </div>
             </div>
 
             {/* Column 2: Latest Workout */}
-            <div className="text-center">
+            <div className="text-center flex flex-col h-full">
               <div className="mb-8">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">Latest Workout</h2>
                 <p className="text-lg text-gray-600 dark:text-gray-300">
@@ -71,26 +75,30 @@ export default function Home() {
                 </p>
               </div>
               
-              {featuredWorkouts.length > 0 && (
-                <div className="mb-8">
-                  <WorkoutCard workout={featuredWorkouts[0]} />
-                </div>
-              )}
+              <div className="flex-1 flex flex-col justify-center">
+                {featuredWorkouts.length > 0 && (
+                  <div className="mb-8">
+                    <WorkoutCard workout={featuredWorkouts[0]} />
+                  </div>
+                )}
+              </div>
               
-              <Link href="/workouts">
-                <Button 
-                  size="lg" 
-                  className="font-semibold text-black hover:opacity-90"
-                  style={{ backgroundColor: '#B3D7E9' }}
-                >
-                  <Dumbbell className="h-5 w-5 mr-2" />
-                  View All Workouts
-                </Button>
-              </Link>
+              <div className="mt-auto">
+                <Link href="/workouts">
+                  <Button 
+                    size="lg" 
+                    className="font-semibold text-black hover:opacity-90"
+                    style={{ backgroundColor: '#B3D7E9' }}
+                  >
+                    <Dumbbell className="h-5 w-5 mr-2" />
+                    View All Workouts
+                  </Button>
+                </Link>
+              </div>
             </div>
 
             {/* Column 3: Ready to Transform */}
-            <div className="text-center">
+            <div className="text-center flex flex-col h-full">
               <div className="bg-gradient-to-br from-[hsl(var(--coaching-primary))] via-purple-700 to-[hsl(var(--coaching-accent))] text-white p-8 rounded-2xl shadow-lg h-full flex flex-col justify-between">
                 <div>
                   <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to Transform?</h2>
