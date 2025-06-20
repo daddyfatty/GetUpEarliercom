@@ -581,7 +581,7 @@ export default function CalorieCalculator() {
 
                 <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg text-center">
                   <div className="text-3xl font-bold text-purple-600 mb-2">
-                    {results.calories}
+                    {results.goalCalories || results.calories}
                   </div>
                   <div className="text-lg text-gray-700">Daily Calorie Target</div>
                   {results.weeklyChangeRate && (
