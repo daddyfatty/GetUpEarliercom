@@ -1,43 +1,27 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, User, Bell, ChevronDown, LogIn, UserPlus, Search } from "lucide-react";
-import { SiFacebook } from "react-icons/si";
 import { Button } from "@/components/ui/button";
-import { 
-  Sheet, 
-  SheetContent, 
-  SheetTrigger 
-} from "@/components/ui/sheet";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
-import logoPath from "@assets/getupeariler_logo.png";
-
-const navItems = [
-  { href: "/recipes", label: "Recipes" },
-  { href: "/workouts", label: "Workouts" },
-  { href: "/services", label: "1-on-1 Services" },
-  { href: "/blog", label: "Blog" },
-];
+import { useToast } from "@/hooks/use-toast";
+import { Menu, Bell, User, LogOut, ChevronDown } from "lucide-react";
+import { SiFacebook } from "react-icons/si";
+import logoPath from "@assets/logo_1749324568864.png";
 
 export function Navigation() {
   const [location] = useLocation();
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const [loginForm, setLoginForm] = useState({ email: "", password: "" });
+  const [registerForm, setRegisterForm] = useState({ username: "", email: "", password: "" });
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const { isAuthenticated, user } = useAuth();
+  const { user, isAuthenticated, login, logout } = useAuth();
+  const isAdmin = user?.email === "admin@getupear.lier.com";
+  const { toast } = useToast();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,8 +32,69 @@ export function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const calculatorItems = [
+    { href: "/nutrition", label: "Food Tracker" },
+    { href: "/calorie-calculator", label: "Calorie Calculator" },
+    { href: "/alcohol-calculator", label: "Alcohol Calculator" },
+  ];
+
+  const navItems = [
+    { href: "/services", label: "1-on-1 Services" },
+    { href: "/recipes", label: "Recipes" },
+    { href: "/workouts", label: "Workouts" },
+    { href: "/blog", label: "Blog" },
+    ...(isAdmin ? [{ href: "/admin", label: "Admin" }] : []),
+  ];
+
+  const aboutItems = [
+    { href: "/about", label: "About" },
+    { href: "/coaching", label: "Coaching" },
+    { href: "/team", label: "Team" },
+    { href: "/contact", label: "Contact" },
+  ];
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      login(loginForm.email);
+      setIsLoginOpen(false);
+      setLoginForm({ email: "", password: "" });
+      toast({ title: "Welcome back!", description: "You've been logged in successfully." });
+    } catch (error) {
+      toast({ title: "Login failed", description: "Please check your credentials", variant: "destructive" });
+    }
+  };
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      login(registerForm.email);
+      setIsRegisterOpen(false);
+      setRegisterForm({ username: "", email: "", password: "" });
+      toast({ title: "Account created!", description: "Welcome to Get Up Earlier!" });
+    } catch (error) {
+      toast({ title: "Registration failed", description: "Please try again", variant: "destructive" });
+    }
+  };
+
   return (
     <>
+      {/* Desktop Header with Centered Logo */}
+      <div className="hidden md:block bg-[hsl(var(--navy))]">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center">
+            <Link href="/">
+              <img 
+                src={logoPath} 
+                alt="Get Up Earlier" 
+                className="h-24 w-auto max-w-[700px] object-contain"
+              />
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Sticky Navigation Bar */}
       <nav className={`bg-[hsl(var(--navy))] shadow-sm sticky top-0 z-50 transition-all duration-300 ${
         isScrolled ? 'shadow-lg' : ''
       }`}>
@@ -85,20 +130,76 @@ export function Navigation() {
                 </div>
                 
                 <div className="flex items-baseline space-x-6 lg:space-x-8">
-                  {navItems.map((item) => (
-                    <Link key={item.href} href={item.href}>
-                      <span
-                        className={`px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer uppercase font-heading ${
-                          location === item.href
-                            ? "text-[hsl(var(--orange))] bg-white/10"
-                            : "text-white hover:text-[hsl(var(--orange))] hover:bg-white/5"
-                        }`}
-                      >
-                        {item.label}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
+                {navItems.map((item) => (
+                  <Link key={item.href} href={item.href}>
+                    <span
+                      className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap ${
+                        location === item.href
+                          ? "text-[hsl(var(--orange))] bg-white/10"
+                          : "text-white hover:text-[hsl(var(--orange))]"
+                      }`}
+                    >
+                      {item.label}
+                    </span>
+                  </Link>
+                ))}
+                
+                {/* Calculators Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <span
+                      className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                        calculatorItems.some(item => location === item.href)
+                          ? "text-[hsl(var(--orange))] bg-white/10"
+                          : "text-white hover:text-[hsl(var(--orange))]"
+                      }`}
+                    >
+                      Calculators
+                      <ChevronDown className="ml-1 h-4 w-4" />
+                    </span>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="center" className="bg-white border border-gray-200 shadow-lg">
+                    {calculatorItems.map((item) => (
+                      <DropdownMenuItem key={item.href} asChild>
+                        <Link href={item.href}>
+                          <span className="font-medium text-gray-900 hover:text-[hsl(var(--orange))] cursor-pointer w-full">
+                            {item.label}
+                          </span>
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                
+                {/* About Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <span
+                      className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                        aboutItems.some(item => location === item.href)
+                          ? "text-[hsl(var(--orange))] bg-white/10"
+                          : "text-white hover:text-[hsl(var(--orange))]"
+                      }`}
+                    >
+                      About
+                      <ChevronDown className="ml-1 h-4 w-4" />
+                    </span>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="center" className="bg-white border border-gray-200 shadow-lg">
+                    {aboutItems.map((item) => (
+                      <DropdownMenuItem key={item.href} asChild>
+                        <Link href={item.href}>
+                          <span className="font-medium text-gray-900 hover:text-[hsl(var(--orange))] cursor-pointer w-full">
+                            {item.label}
+                          </span>
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
+
               </div>
               
               {/* Right side: Actions */}
@@ -129,46 +230,69 @@ export function Navigation() {
                         <ChevronDown className="h-3 w-3" />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuContent align="end" className="bg-white border border-gray-200 shadow-lg">
                       <DropdownMenuItem asChild>
-                        <Link href="/profile" className="w-full">
-                          Profile
+                        <Link href="/profile">
+                          <User className="h-4 w-4 mr-2" />
+                          My Profile
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
-                        <Link href="/settings" className="w-full">
-                          Settings
+                        <Link href="/favorites">
+                          <span className="h-4 w-4 mr-2">♥</span>
+                          Favorites
                         </Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <a href="/api/logout" className="w-full">
-                          Logout
-                        </a>
+                      <DropdownMenuItem asChild>
+                        <Link href="/saved-results">
+                          <span className="h-4 w-4 mr-2">📊</span>
+                          Saved Results
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={logout}
+                        className="text-red-600 hover:text-red-700"
+                      >
+                        <LogOut className="h-4 w-4 mr-2" />
+                        Sign Out
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 ) : (
-                  <div className="flex items-center space-x-2">
-                    <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
+                  <div className="flex space-x-2">
+                    <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
                       <DialogTrigger asChild>
                         <Button variant="ghost" size="sm" className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10">
-                          <Search className="h-4 w-4" />
+                          Sign In
                         </Button>
                       </DialogTrigger>
-                      <DialogContent className="sm:max-w-md">
+                      <DialogContent>
                         <DialogHeader>
-                          <DialogTitle>Search</DialogTitle>
-                          <DialogDescription>
-                            Search for recipes, workouts, or blog posts
-                          </DialogDescription>
+                          <DialogTitle>Sign In</DialogTitle>
+                          <DialogDescription>Enter your credentials to access your account</DialogDescription>
                         </DialogHeader>
-                        <form className="flex items-center space-x-2">
-                          <Input 
-                            type="text" 
-                            placeholder="What are you looking for?"
-                            className="flex-1"
-                          />
-                          <Button type="submit">Search</Button>
+                        <form onSubmit={handleLogin} className="space-y-4">
+                          <div>
+                            <Label htmlFor="login-email">Email</Label>
+                            <Input
+                              id="login-email"
+                              type="email"
+                              value={loginForm.email}
+                              onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
+                              required
+                            />
+                          </div>
+                          <div>
+                            <Label htmlFor="login-password">Password</Label>
+                            <Input
+                              id="login-password"
+                              type="password"
+                              value={loginForm.password}
+                              onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
+                              required
+                            />
+                          </div>
+                          <Button type="submit" className="w-full">Sign In</Button>
                         </form>
                       </DialogContent>
                     </Dialog>
@@ -206,53 +330,91 @@ export function Navigation() {
                         </span>
                       </Link>
                     ))}
-                    
-                    <div className="border-t pt-4 mt-6">
+
+                    {/* Calculators Section for Mobile */}
+                    <div className="border-t pt-4">
+                      <div className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">Calculators</div>
+                      {calculatorItems.map((item) => (
+                        <Link key={item.href} href={item.href}>
+                          <span
+                            className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading ${
+                              location === item.href
+                                ? "text-[hsl(var(--orange))] bg-orange-50"
+                                : "text-gray-900 hover:text-[hsl(var(--orange))]"
+                            }`}
+                          >
+                            {item.label}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+
+                    {/* About Section for Mobile */}
+                    <div className="border-t pt-4">
+                      <div className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 px-3">About</div>
+                      {aboutItems.map((item) => (
+                        <Link key={item.href} href={item.href}>
+                          <span
+                            className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading ${
+                              location === item.href
+                                ? "text-[hsl(var(--orange))] bg-orange-50"
+                                : "text-gray-900 hover:text-[hsl(var(--orange))]"
+                            }`}
+                          >
+                            {item.label}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+
+                    {/* Facebook Group Link */}
+                    <div className="pt-4 border-t">
                       <a 
                         href="https://www.facebook.com/groups/getupearlier" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center space-x-2 px-3 py-2 text-gray-900 hover:text-[hsl(var(--orange))] transition-colors"
+                        className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-[hsl(var(--orange))] transition-colors"
                       >
-                        <SiFacebook className="h-5 w-5" />
-                        <span>Join Facebook Group</span>
+                        <SiFacebook className="h-5 w-5 mr-3" />
+                        Join Facebook Group
                       </a>
-                      
-                      {isAuthenticated ? (
-                        <div className="space-y-2 mt-4">
-                          <Link href="/profile">
-                            <span className="block px-3 py-2 text-gray-900 hover:text-[hsl(var(--orange))] transition-colors">
-                              Profile
-                            </span>
-                          </Link>
-                          <Link href="/settings">
-                            <span className="block px-3 py-2 text-gray-900 hover:text-[hsl(var(--orange))] transition-colors">
-                              Settings
-                            </span>
-                          </Link>
-                          <a href="/api/logout" className="block px-3 py-2 text-gray-900 hover:text-[hsl(var(--orange))] transition-colors">
-                            Logout
-                          </a>
-                        </div>
-                      ) : (
-                        <div className="space-y-2 mt-4">
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            onClick={() => setIsSearchOpen(true)}
-                            className="w-full justify-start text-gray-900 hover:text-[hsl(var(--orange))]"
-                          >
-                            <Search className="h-4 w-4 mr-2" />
-                            Search
-                          </Button>
-                          <Link href="/services">
-                            <Button className="w-full bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90">
-                              Sign Up
-                            </Button>
-                          </Link>
-                        </div>
-                      )}
                     </div>
+
+                    {isAuthenticated ? (
+                      <div className="pt-4 border-t">
+                        <div className="flex items-center space-x-2 mb-4">
+                          <User className="h-5 w-5 text-gray-500" />
+                          <span className="text-sm text-gray-700">
+                            {user?.firstName || user?.email}
+                          </span>
+                        </div>
+                        <Button 
+                          variant="outline" 
+                          onClick={logout}
+                          className="w-full justify-start"
+                        >
+                          <LogOut className="h-4 w-4 mr-2" />
+                          Sign Out
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="pt-4 border-t space-y-2">
+                        <Button 
+                          variant="outline" 
+                          onClick={() => setIsLoginOpen(true)}
+                          className="w-full"
+                        >
+                          Sign In
+                        </Button>
+                        <Link href="/services">
+                          <Button 
+                            className="w-full bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90"
+                          >
+                            Sign Up
+                          </Button>
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </SheetContent>
               </Sheet>
