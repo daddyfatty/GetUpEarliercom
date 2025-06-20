@@ -81,7 +81,7 @@ export function Navigation() {
     <>
       {/* Desktop Header with Centered Logo */}
       <div className="hidden md:block bg-[hsl(var(--navy))]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center">
             <Link href="/">
               <img 
@@ -98,7 +98,7 @@ export function Navigation() {
       <nav className={`bg-[hsl(var(--navy))] shadow-sm sticky top-0 z-50 transition-all duration-300 ${
         isScrolled ? 'shadow-lg' : ''
       }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className={`flex justify-between items-center h-28 transition-all duration-300 ${
             isScrolled ? 'md:h-20' : 'md:h-12'
           }`}>
