@@ -6,7 +6,7 @@ import { WorkoutCard } from "@/components/workout-card";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { Clock, TrendingUp, Users, Star, ChefHat, Dumbbell, ArrowRight, Calendar } from "lucide-react";
+import { Clock, TrendingUp, Users, Star, ChefHat, Dumbbell, ArrowRight, Calendar, Target } from "lucide-react";
 import type { Recipe, Workout } from "@shared/schema";
 import gymImagePath from "@assets/download - 2025-06-20T164725.183_1750452478509.png";
 
@@ -102,7 +102,12 @@ export default function Home() {
             <div className="text-center flex flex-col h-full">
               <div className="bg-gradient-to-br from-[hsl(var(--coaching-primary))] via-purple-700 to-[hsl(var(--coaching-accent))] text-white p-6 rounded-2xl shadow-lg h-full flex flex-col">
                 <div className="mb-4">
-                  <h2 className="text-2xl font-bold text-white mb-2">Ready to Transform?</h2>
+                  <h2 className="text-2xl font-bold text-white mb-2">1-on-1 Strength Training</h2>
+                  <p className="text-purple-100 mb-2 text-[14px]">Personalized coaching tailored to your goals</p>
+                  <div className="bg-purple-200/20 text-purple-100 px-3 py-1 rounded-full inline-block text-sm font-medium">
+                    <Star className="inline w-4 h-4 mr-1" />
+                    30 years of experience!
+                  </div>
                 </div>
                 
                 <div className="flex-1 flex flex-col justify-center">
