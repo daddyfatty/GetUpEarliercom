@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 // import PayPalButton from "@/components/PayPalButton";
 import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
+import { CoachingSection } from "@/components/coaching-section";
 
 export default function Coaching() {
   const { toast } = useToast();
@@ -183,6 +184,8 @@ export default function Coaching() {
           </div>
         </div>
       </section>
+
+      <CoachingSection />
 
       {/* Services Section */}
       <section className="py-16">
