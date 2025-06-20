@@ -33,63 +33,65 @@ export default function Home() {
             
             {/* Column 1: Latest Recipe */}
             <div className="text-center flex flex-col h-full">
-              <div className="mb-4">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Latest Recipe</h2>
-                <p className="text-gray-600 dark:text-gray-300 mb-2">Interactive, clean, lean high-protein recipes</p>
-                <div className="bg-accent/10 text-accent px-3 py-1 rounded-full inline-block text-sm font-medium">
-                  <TrendingUp className="inline w-4 h-4 mr-1" />
-                  New recipes added weekly!
-                </div>
-              </div>
-              
-              <div className="flex-1 flex flex-col justify-center">
-                {featuredRecipes.length > 0 && (
-                  <div className="mb-4">
-                    <RecipeCard recipe={featuredRecipes[0]} />
+              <div className="bg-gradient-to-br from-red-500 via-red-600 to-red-700 text-white p-6 rounded-2xl shadow-lg h-full flex flex-col">
+                <div className="mb-4">
+                  <h2 className="text-2xl font-bold text-white mb-2">Latest Recipe</h2>
+                  <p className="text-red-100 mb-2">Interactive, clean, lean high-protein recipes</p>
+                  <div className="bg-red-200/20 text-red-100 px-3 py-1 rounded-full inline-block text-sm font-medium">
+                    <TrendingUp className="inline w-4 h-4 mr-1" />
+                    New recipes added weekly!
                   </div>
-                )}
-              </div>
-              
-              <div className="mt-auto">
-                <Link href="/recipes">
-                  <Button 
-                    size="lg" 
-                    className="font-semibold text-white hover:opacity-90"
-                    style={{ backgroundColor: '#ef4444' }}
-                  >
-                    <ChefHat className="h-5 w-5 mr-2" />
-                    View All Recipes
-                  </Button>
-                </Link>
+                </div>
+                
+                <div className="flex-1 flex flex-col justify-center">
+                  {featuredRecipes.length > 0 && (
+                    <div className="mb-4">
+                      <RecipeCard recipe={featuredRecipes[0]} />
+                    </div>
+                  )}
+                </div>
+                
+                <div className="mt-auto">
+                  <Link href="/recipes">
+                    <Button 
+                      size="lg" 
+                      className="w-full font-semibold text-red-700 bg-white hover:bg-red-50 shadow-lg transform hover:scale-105 transition-all duration-200"
+                    >
+                      <ChefHat className="h-5 w-5 mr-2" />
+                      View All Recipes
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
 
             {/* Column 2: Latest Workout */}
             <div className="text-center flex flex-col h-full">
-              <div className="mb-4">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Latest Workout</h2>
-                <p className="text-gray-600 dark:text-gray-300 mb-2">Simple, effective workouts for every fitness level</p>
-              </div>
-              
-              <div className="flex-1 flex flex-col justify-center">
-                {featuredWorkouts.length > 0 && (
-                  <div className="mb-4">
-                    <WorkoutCard workout={featuredWorkouts[0]} />
-                  </div>
-                )}
-              </div>
-              
-              <div className="mt-auto">
-                <Link href="/workouts">
-                  <Button 
-                    size="lg" 
-                    className="font-semibold text-black hover:opacity-90"
-                    style={{ backgroundColor: '#B3D7E9' }}
-                  >
-                    <Dumbbell className="h-5 w-5 mr-2" />
-                    View All Workouts
-                  </Button>
-                </Link>
+              <div className="bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 text-white p-6 rounded-2xl shadow-lg h-full flex flex-col">
+                <div className="mb-4">
+                  <h2 className="text-2xl font-bold text-white mb-2">Latest Workout</h2>
+                  <p className="text-blue-100 mb-2">Simple, effective workouts for every fitness level</p>
+                </div>
+                
+                <div className="flex-1 flex flex-col justify-center">
+                  {featuredWorkouts.length > 0 && (
+                    <div className="mb-4">
+                      <WorkoutCard workout={featuredWorkouts[0]} />
+                    </div>
+                  )}
+                </div>
+                
+                <div className="mt-auto">
+                  <Link href="/workouts">
+                    <Button 
+                      size="lg" 
+                      className="w-full font-semibold text-blue-700 bg-white hover:bg-blue-50 shadow-lg transform hover:scale-105 transition-all duration-200"
+                    >
+                      <Dumbbell className="h-5 w-5 mr-2" />
+                      View All Workouts
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
 
