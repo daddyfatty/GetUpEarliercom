@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Clock, Flame, Play, Star, Dumbbell, Eye } from "lucide-react";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { PageSubscriptionCTA } from "@/components/page-subscription-cta";
 import { Link } from "wouter";
 import type { Workout } from "@shared/schema";
 
@@ -282,6 +283,9 @@ export default function Workouts() {
           )}
         </div>
       </div>
+      
+      {/* Subscription CTA */}
+      <PageSubscriptionCTA />
     </div>
   );
 }
