@@ -68,7 +68,7 @@ export default function Home() {
               <div className="bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 text-white p-6 rounded-2xl shadow-lg h-full flex flex-col">
                 <div className="mb-4">
                   <h2 className="text-2xl font-bold text-white mb-2">Latest Workout</h2>
-                  <p className="text-blue-100 mb-2">Simple, effective workouts for every fitness level</p>
+                  <p className="text-blue-100 mb-2 text-[14px]">Simple, effective workouts for every fitness level</p>
                 </div>
                 
                 <div className="flex-1 flex flex-col justify-center">
