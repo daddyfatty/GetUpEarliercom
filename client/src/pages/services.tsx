@@ -34,7 +34,7 @@ export default function Services() {
       title: "Certified Running Coaching",
       description: "I work alongside beginner runners to help them break through their own limits. Learn how to progress from never running to completing a 5K, a 5-miler, or more.",
       color: "purple",
-      image: "https://via.placeholder.com/400x240/9F7AEA/FFFFFF?text=Running+Coaching",
+      image: "/assets/download - 2025-06-20T170430.001_1750453483739.png",
       badge: "RUNNING"
     },
     {
@@ -42,7 +42,7 @@ export default function Services() {
       title: "Private Yoga",
       description: "Immerse yourself in a personalized yoga experience.",
       color: "blue",
-      image: "https://via.placeholder.com/400x240/4299E1/FFFFFF?text=Private+Yoga",
+      image: "/assets/download - 2025-06-20T170516.226_1750453530152.png",
       badge: "PRIVATE YOGA"
     },
     {
@@ -50,7 +50,7 @@ export default function Services() {
       title: "Small Group Yoga",
       description: "Elevate your yoga practice with our semi-private Vinyasa yoga sessions.",
       color: "pink",
-      image: "https://via.placeholder.com/400x240/ED64A6/FFFFFF?text=Group+Yoga",
+      image: "/assets/download - 2025-06-20T170538.818_1750453554236.png",
       badge: "GROUP YOGA"
     }
   ];
@@ -104,61 +104,64 @@ export default function Services() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="bg-white py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Services</h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Comprehensive wellness support tailored to your individual needs and goals
-          </p>
+      {/* Hero Section + Services Grid with Gradient Background */}
+      <section className="bg-gradient-to-b from-[#BCDCEC] to-white">
+        {/* Hero Section */}
+        <div className="py-16">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">Services</h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Comprehensive wellness support tailored to your individual needs and goals
+            </p>
+          </div>
         </div>
-      </section>
 
-      {/* Services Grid */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <Card key={index} className="bg-white shadow-sm hover:shadow-md transition-shadow border-0 overflow-hidden">
-                <div className="relative">
-                  <img 
-                    src={service.image} 
-                    alt={service.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="absolute top-3 right-3">
-                    <Badge 
-                      variant="secondary" 
-                      className={`text-xs font-medium px-2 py-1 ${
-                        service.color === 'blue' ? 'bg-blue-100 text-blue-800' :
-                        service.color === 'green' ? 'bg-green-100 text-green-800' :
-                        service.color === 'red' ? 'bg-red-100 text-red-800' :
-                        service.color === 'purple' ? 'bg-purple-100 text-purple-800' :
-                        service.color === 'pink' ? 'bg-pink-100 text-pink-800' :
-                        'bg-gray-100 text-gray-800'
-                      }`}
-                    >
-                      {service.badge}
-                    </Badge>
+        {/* Services Grid */}
+        <div className="pb-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {services.map((service, index) => (
+                <Card key={index} className="bg-white shadow-sm hover:shadow-md transition-shadow border-0 overflow-hidden">
+                  <div className="relative">
+                    <img 
+                      src={service.image} 
+                      alt={service.title}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="absolute top-3 right-3">
+                      <Badge 
+                        variant="secondary" 
+                        className={`text-xs font-medium px-2 py-1 ${
+                          service.color === 'blue' ? 'bg-blue-100 text-blue-800' :
+                          service.color === 'green' ? 'bg-green-100 text-green-800' :
+                          service.color === 'red' ? 'bg-red-100 text-red-800' :
+                          service.color === 'purple' ? 'bg-purple-100 text-purple-800' :
+                          service.color === 'pink' ? 'bg-pink-100 text-pink-800' :
+                          'bg-gray-100 text-gray-800'
+                        }`}
+                      >
+                        {service.badge}
+                      </Badge>
+                    </div>
                   </div>
-                </div>
-                <CardHeader className="text-center pb-4">
-                  <CardTitle className="text-lg font-semibold text-gray-900">
-                    {service.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-gray-600 text-center mb-6 leading-relaxed">
-                    {service.description}
-                  </CardDescription>
-                  <div className="text-center">
-                    <Button variant="outline" size="sm">
-                      Read More →
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  <CardHeader className="text-center pb-4">
+                    <CardTitle className="text-lg font-semibold text-gray-900">
+                      {service.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-gray-600 text-center mb-6 leading-relaxed">
+                      {service.description}
+                    </CardDescription>
+                    <div className="text-center">
+                      <Button variant="outline" size="sm">
+                        Read More →
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>
