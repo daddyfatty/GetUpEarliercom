@@ -70,8 +70,8 @@ export default function Blog() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:bg-gray-900 py-8">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <div className="container mx-auto px-4 py-12">
           <div className="text-center">
             <p className="text-red-600 dark:text-red-400">Failed to load blog posts.</p>
           </div>
@@ -81,34 +81,16 @@ export default function Blog() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:bg-gray-900 py-8">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-block bg-teal-600/10 text-teal-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Health & Fitness Blog
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-            Expert Insights &<br className="hidden sm:block" />
-            <span className="text-teal-600">Wellness</span>
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Expert insights on nutrition, fitness, wellness, and achieving your health goals from our certified trainers and coaches.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-teal-600 rounded-full"></div>
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Weekly Updates</span>
-              </div>
-            </div>
-            <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Expert Tips</span>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Search and Filter */}

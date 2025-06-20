@@ -108,7 +108,7 @@ export default function Services() {
       <section className="bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white">
         {/* Hero Section */}
         <div className="py-16">
-          <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="inline-block bg-purple-800/10 text-purple-800 px-3 py-1 rounded-full text-sm font-medium mb-4">
               1-on-1 Services
             </div>
@@ -138,7 +138,7 @@ export default function Services() {
 
         {/* Services Grid */}
         <div className="pb-16">
-          <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {services.map((service, index) => (
                 <Card key={index} className="bg-white shadow-sm hover:shadow-md transition-shadow border-0 overflow-hidden">
@@ -187,7 +187,7 @@ export default function Services() {
       </section>
       {/* Strength Training & Coaching Packages */}
       <section className="py-16 bg-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Strength Training & Coaching

@@ -81,7 +81,7 @@ export function Navigation() {
     <>
       {/* Desktop Header with Centered Logo */}
       <div className="hidden md:block bg-[hsl(var(--navy))]">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-center">
             <Link href="/">
               <img 
@@ -98,7 +98,7 @@ export function Navigation() {
       <nav className={`bg-[hsl(var(--navy))] shadow-sm sticky top-0 z-50 transition-all duration-300 ${
         isScrolled ? 'shadow-lg' : ''
       }`}>
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className={`flex justify-between items-center h-28 transition-all duration-300 ${
             isScrolled ? 'md:h-20' : 'md:h-12'
           }`}>
@@ -113,23 +113,22 @@ export function Navigation() {
               </Link>
             </div>
 
-            {/* Desktop Navigation - Full Width Layout */}
-            <div className="hidden md:flex items-center justify-between w-full">
-              {/* Left side: Logo (when scrolled) */}
-              <div className={`flex items-center transition-all duration-300 ${
-                isScrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-              }`}>
-                <Link href="/">
-                  <img 
-                    src={logoPath} 
-                    alt="Get Up Earlier" 
-                    className="h-16 w-auto object-contain"
-                  />
-                </Link>
-              </div>
-              
-              {/* Center: Navigation Items */}
-              <div className="flex items-baseline space-x-6 lg:space-x-8">
+            {/* Desktop Logo (appears when scrolled) */}
+            <div className={`hidden md:flex items-center transition-all duration-300 ${
+              isScrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+            }`}>
+              <Link href="/">
+                <img 
+                  src={logoPath} 
+                  alt="Get Up Earlier" 
+                  className="h-20 w-auto object-contain"
+                />
+              </Link>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center justify-center flex-1">
+              <div className="flex items-baseline justify-center space-x-6 lg:space-x-8">
                 {navItems.map((item) => (
                   <Link key={item.href} href={item.href}>
                     <span
@@ -198,9 +197,11 @@ export function Navigation() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-              
-              {/* Right side: Actions */}
-              <div className="flex items-center space-x-4">
+            </div>
+
+            {/* Desktop Actions */}
+            <div className="hidden md:block">
+              <div className="ml-4 flex items-center md:ml-6 space-x-4">
                 <a 
                   href="https://www.facebook.com/groups/getupearlier" 
                   target="_blank" 
@@ -415,7 +416,6 @@ export function Navigation() {
                   </div>
                 </SheetContent>
               </Sheet>
-            </div>
             </div>
           </div>
         </div>
