@@ -32,11 +32,11 @@ export function HeroSection() {
                   View Recipes
                 </Button>
               </Link>
-              <Link href="/coaching">
+              <Link href="/services">
                 <Button 
                   className="bg-[hsl(var(--coaching-primary))] hover:bg-[hsl(var(--coaching-primary))]/90 text-white font-semibold px-6 py-3"
                 >
-                  Personal Coaching
+                  View Services
                 </Button>
               </Link>
             </div>

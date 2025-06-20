@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Clock, TrendingUp, Users, Star, ChefHat, Dumbbell, ArrowRight, Calendar } from "lucide-react";
 import type { Recipe, Workout } from "@shared/schema";
+import gymImagePath from "@assets/download - 2025-06-20T164725.183_1750452478509.png";
 
 export default function Home() {
   const { data: recipes = [] } = useQuery<Recipe[]>({
@@ -69,6 +70,10 @@ export default function Home() {
                 <div className="mb-4">
                   <h2 className="text-2xl font-bold text-white mb-2">Latest Workout</h2>
                   <p className="text-blue-100 mb-2 text-[14px]">Simple, effective workouts for every fitness level</p>
+                  <div className="bg-blue-200/20 text-blue-100 px-3 py-1 rounded-full inline-block text-sm font-medium">
+                    <Dumbbell className="inline w-4 h-4 mr-1" />
+                    New workouts added weekly!
+                  </div>
                 </div>
                 
                 <div className="flex-1 flex flex-col justify-center">
@@ -103,8 +108,8 @@ export default function Home() {
                 <div className="flex-1 flex flex-col justify-center">
                   <div className="mb-4">
                     <img 
-                      src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=240&fit=crop&crop=center"
-                      alt="Personal training and fitness coaching"
+                      src={gymImagePath}
+                      alt="Professional strength training gym with squat racks and free weights"
                       className="w-full h-48 object-cover rounded-lg mb-4"
                     />
                     <p className="text-purple-100 text-sm leading-relaxed">
@@ -115,13 +120,13 @@ export default function Home() {
                 </div>
                 
                 <div className="mt-auto space-y-3">
-                  <Link href="/coaching">
+                  <Link href="/services">
                     <Button 
                       size="lg" 
                       className="w-full bg-white text-[hsl(var(--coaching-text))] hover:bg-[hsl(var(--coaching-light))] font-bold shadow-lg transform hover:scale-105 transition-all duration-200"
                     >
                       <Users className="h-5 w-5 mr-2" />
-                      View Coaching Packages
+                      View Services
                     </Button>
                   </Link>
                   
