@@ -10,7 +10,7 @@ export default function Services() {
       title: "1-on-1 Personal Strength Training",
       description: "Powerful, distraction-free 30-minute workouts incorporating traditional compound free-weight movements, bodyweight exercises, and outdoor activities.",
       color: "blue",
-      image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=240&fit=crop&crop=center",
+      image: "/assets/download - 2025-06-20T164725.183_1750453386689.png",
       badge: "PERSONAL TRAINING"
     },
     {
@@ -18,7 +18,7 @@ export default function Services() {
       title: "Virtual Nutrition Coaching",
       description: "Providing education on clean eating, understanding calories, healthy digital shopping, and creating personalized sustainable meal plans.",
       color: "green",
-      image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=240&fit=crop&crop=center",
+      image: "/assets/download - 2025-06-20T170333.649_1750453429860.png",
       badge: "JIIN"
     },
     {
@@ -26,7 +26,7 @@ export default function Services() {
       title: "Accountability Coaching",
       description: "Identify unhealthy habits and break free with small changes, learning to be mindful in real life without relying on a facility, AI, or an app. 1-on-1 live.",
       color: "red",
-      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=240&fit=crop&crop=center",
+      image: "/assets/678aad8cfd0dcde677a14418_hike2-p-800_1750453452584.jpg",
       badge: "ACCOUNTABILITY"
     },
     {
@@ -34,7 +34,7 @@ export default function Services() {
       title: "Certified Running Coaching",
       description: "I work alongside beginner runners to help them break through their own limits. Learn how to progress from never running to completing a 5K, a 5-miler, or more.",
       color: "purple",
-      image: "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=400&h=240&fit=crop&crop=center",
+      image: "https://via.placeholder.com/400x240/9F7AEA/FFFFFF?text=Running+Coaching",
       badge: "RUNNING"
     },
     {
@@ -42,7 +42,7 @@ export default function Services() {
       title: "Private Yoga",
       description: "Immerse yourself in a personalized yoga experience.",
       color: "blue",
-      image: "https://images.unsplash.com/photo-1506629905607-af5f6b13f7fe?w=400&h=240&fit=crop&crop=center",
+      image: "https://via.placeholder.com/400x240/4299E1/FFFFFF?text=Private+Yoga",
       badge: "PRIVATE YOGA"
     },
     {
@@ -50,7 +50,7 @@ export default function Services() {
       title: "Small Group Yoga",
       description: "Elevate your yoga practice with our semi-private Vinyasa yoga sessions.",
       color: "pink",
-      image: "https://images.unsplash.com/photo-1588286840104-8957b019727f?w=400&h=240&fit=crop&crop=center",
+      image: "https://via.placeholder.com/400x240/ED64A6/FFFFFF?text=Group+Yoga",
       badge: "GROUP YOGA"
     }
   ];
@@ -119,11 +119,30 @@ export default function Services() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <Card key={index} className="bg-white shadow-sm hover:shadow-md transition-shadow border-0">
-                <CardHeader className="text-center pb-4">
-                  <div className="mx-auto mb-4 p-3 bg-gray-50 rounded-lg w-fit">
-                    {service.icon}
+              <Card key={index} className="bg-white shadow-sm hover:shadow-md transition-shadow border-0 overflow-hidden">
+                <div className="relative">
+                  <img 
+                    src={service.image} 
+                    alt={service.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="absolute top-3 right-3">
+                    <Badge 
+                      variant="secondary" 
+                      className={`text-xs font-medium px-2 py-1 ${
+                        service.color === 'blue' ? 'bg-blue-100 text-blue-800' :
+                        service.color === 'green' ? 'bg-green-100 text-green-800' :
+                        service.color === 'red' ? 'bg-red-100 text-red-800' :
+                        service.color === 'purple' ? 'bg-purple-100 text-purple-800' :
+                        service.color === 'pink' ? 'bg-pink-100 text-pink-800' :
+                        'bg-gray-100 text-gray-800'
+                      }`}
+                    >
+                      {service.badge}
+                    </Badge>
                   </div>
+                </div>
+                <CardHeader className="text-center pb-4">
                   <CardTitle className="text-lg font-semibold text-gray-900">
                     {service.title}
                   </CardTitle>
