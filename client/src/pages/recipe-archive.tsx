@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, Search, Clock, Users, ChefHat } from "lucide-react";
 import { RecipeCard } from "@/components/recipe-card";
+import { PageSubscriptionCTA } from "@/components/page-subscription-cta";
 import type { Recipe } from "@shared/schema";
 
 export default function RecipeArchive() {
@@ -250,6 +251,9 @@ export default function RecipeArchive() {
           </div>
         </div>
       </div>
+      
+      {/* Subscription CTA */}
+      <PageSubscriptionCTA />
     </div>
   );
 }
