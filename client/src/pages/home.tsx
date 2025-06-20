@@ -34,7 +34,7 @@ export default function Home() {
               <div className="bg-gradient-to-br from-red-500 via-red-600 to-red-700 text-white p-6 rounded-2xl shadow-lg h-full flex flex-col">
                 <div className="mb-4">
                   <h2 className="text-2xl font-bold text-white mb-2">Latest Recipe</h2>
-                  <p className="text-red-100 mb-2">Interactive, clean, lean high-protein recipes</p>
+                  <p className="text-red-100 mb-2 text-[14px]">Interactive, clean, lean high-protein recipes</p>
                   <div className="bg-red-200/20 text-red-100 px-3 py-1 rounded-full inline-block text-sm font-medium">
                     <TrendingUp className="inline w-4 h-4 mr-1" />
                     New recipes added weekly!
