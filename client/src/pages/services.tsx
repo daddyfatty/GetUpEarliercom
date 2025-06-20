@@ -105,7 +105,7 @@ export default function Services() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section + Services Grid with Gradient Background */}
-      <section className="bg-gradient-to-b from-[#BCDCEC] to-white">
+      <section className="bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white">
         {/* Hero Section */}
         <div className="py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
