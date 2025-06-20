@@ -35,9 +35,7 @@ export default function Home() {
             <div className="text-center flex flex-col h-full">
               <div className="mb-4">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Latest Recipe</h2>
-                <p className="text-gray-600 dark:text-gray-300 mb-2">
-                  Discover nutritious, delicious recipes updated weekly.
-                </p>
+                <p className="text-gray-600 dark:text-gray-300 mb-2">Interactive clean lean, high protein recipes</p>
                 <div className="bg-accent/10 text-accent px-3 py-1 rounded-full inline-block text-sm font-medium">
                   <TrendingUp className="inline w-4 h-4 mr-1" />
                   New recipes added weekly!
