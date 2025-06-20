@@ -43,7 +43,6 @@ export function Navigation() {
     { href: "/recipes", label: "Recipes" },
     { href: "/workouts", label: "Workouts" },
     { href: "/blog", label: "Blog" },
-    ...(isAuthenticated ? [{ href: "/profile", label: "Profile" }] : []),
     ...(isAdmin ? [{ href: "/admin", label: "Admin" }] : []),
   ];
 
@@ -128,8 +127,8 @@ export function Navigation() {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center justify-center flex-1 max-w-4xl mx-auto">
-              <div className="flex items-baseline justify-between w-full px-4 lg:px-8">
+            <div className="hidden md:flex items-center justify-center flex-1">
+              <div className="flex items-baseline justify-center space-x-6 lg:space-x-8">
                 {navItems.map((item) => (
                   <Link key={item.href} href={item.href}>
                     <span

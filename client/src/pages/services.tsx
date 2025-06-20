@@ -9,37 +9,49 @@ export default function Services() {
       icon: <Zap className="h-8 w-8 text-blue-500" />,
       title: "1-on-1 Personal Strength Training",
       description: "Powerful, distraction-free 30-minute workouts incorporating traditional compound free-weight movements, bodyweight exercises, and outdoor activities.",
-      color: "blue"
+      color: "blue",
+      image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=240&fit=crop&crop=center",
+      badge: "PERSONAL TRAINING"
     },
     {
       icon: <Heart className="h-8 w-8 text-green-500" />,
       title: "Virtual Nutrition Coaching",
       description: "Providing education on clean eating, understanding calories, healthy digital shopping, and creating personalized sustainable meal plans.",
-      color: "green"
+      color: "green",
+      image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=240&fit=crop&crop=center",
+      badge: "JIIN"
     },
     {
       icon: <Target className="h-8 w-8 text-red-500" />,
       title: "Accountability Coaching",
       description: "Identify unhealthy habits and break free with small changes, learning to be mindful in real life without relying on a facility, AI, or an app. 1-on-1 live.",
-      color: "red"
+      color: "red",
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=240&fit=crop&crop=center",
+      badge: "ACCOUNTABILITY"
     },
     {
       icon: <Users className="h-8 w-8 text-purple-500" />,
       title: "Certified Running Coaching",
       description: "I work alongside beginner runners to help them break through their own limits. Learn how to progress from never running to completing a 5K, a 5-miler, or more.",
-      color: "purple"
+      color: "purple",
+      image: "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=400&h=240&fit=crop&crop=center",
+      badge: "RUNNING"
     },
     {
       icon: <Dumbbell className="h-8 w-8 text-blue-500" />,
       title: "Private Yoga",
       description: "Immerse yourself in a personalized yoga experience.",
-      color: "blue"
+      color: "blue",
+      image: "https://images.unsplash.com/photo-1506629905607-af5f6b13f7fe?w=400&h=240&fit=crop&crop=center",
+      badge: "PRIVATE YOGA"
     },
     {
       icon: <User className="h-8 w-8 text-pink-500" />,
       title: "Small Group Yoga",
       description: "Elevate your yoga practice with our semi-private Vinyasa yoga sessions.",
-      color: "pink"
+      color: "pink",
+      image: "https://images.unsplash.com/photo-1588286840104-8957b019727f?w=400&h=240&fit=crop&crop=center",
+      badge: "GROUP YOGA"
     }
   ];
 
