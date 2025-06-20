@@ -39,7 +39,7 @@ export function Navigation() {
   ];
 
   const navItems = [
-    { href: "/services", label: "Services" },
+    { href: "/services", label: "1-on-1 Services" },
     { href: "/recipes", label: "Recipes" },
     { href: "/workouts", label: "Workouts" },
     { href: "/blog", label: "Blog" },

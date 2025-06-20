@@ -19,7 +19,7 @@ export default function Services() {
       description: "Providing education on clean eating, understanding calories, healthy digital shopping, and creating personalized sustainable meal plans.",
       color: "green",
       image: "/assets/download - 2025-06-20T170333.649_1750453429860.png",
-      badge: "JIIN"
+      badge: "IIN"
     },
     {
       icon: <Target className="h-8 w-8 text-red-500" />,
@@ -110,16 +110,14 @@ export default function Services() {
         <div className="py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Services</h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Comprehensive wellness support tailored to your individual needs and goals
-            </p>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Comprehensive support tailored to your individual needs and goals</p>
           </div>
         </div>
 
         {/* Services Grid */}
         <div className="pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {services.map((service, index) => (
                 <Card key={index} className="bg-white shadow-sm hover:shadow-md transition-shadow border-0 overflow-hidden">
                   <div className="relative">
@@ -165,7 +163,6 @@ export default function Services() {
           </div>
         </div>
       </section>
-
       {/* Strength Training & Coaching Packages */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

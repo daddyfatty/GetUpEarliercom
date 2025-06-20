@@ -16,20 +16,20 @@ export function HeroSection() {
               Strength training, nutrition coaching, and accountability that actually works.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/workouts">
-                <Button 
-                  className="font-semibold text-black hover:opacity-90 px-6 py-3"
-                  style={{ backgroundColor: '#B3D7E9' }}
-                >
-                  View Workouts
-                </Button>
-              </Link>
               <Link href="/recipes">
                 <Button 
                   className="font-semibold text-white hover:opacity-90 border-2 border-transparent px-6 py-3"
                   style={{ backgroundColor: '#ef4444' }}
                 >
                   View Recipes
+                </Button>
+              </Link>
+              <Link href="/workouts">
+                <Button 
+                  className="font-semibold text-black hover:opacity-90 px-6 py-3"
+                  style={{ backgroundColor: '#B3D7E9' }}
+                >
+                  View Workouts
                 </Button>
               </Link>
               <Link href="/services">
