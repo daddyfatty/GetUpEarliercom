@@ -113,22 +113,23 @@ export function Navigation() {
               </Link>
             </div>
 
-            {/* Desktop Logo (appears when scrolled) */}
-            <div className={`hidden md:flex items-center transition-all duration-300 ${
-              isScrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-            }`}>
-              <Link href="/">
-                <img 
-                  src={logoPath} 
-                  alt="Get Up Earlier" 
-                  className="h-20 w-auto object-contain"
-                />
-              </Link>
-            </div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center justify-center flex-1">
-              <div className="flex items-baseline justify-center space-x-6 lg:space-x-8">
+            {/* Desktop Navigation - Full Width Layout */}
+            <div className="hidden md:flex items-center justify-between w-full">
+              {/* Left side: Logo (when scrolled) and Nav Items */}
+              <div className="flex items-center space-x-8">
+                <div className={`flex items-center transition-all duration-300 ${
+                  isScrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+                }`}>
+                  <Link href="/">
+                    <img 
+                      src={logoPath} 
+                      alt="Get Up Earlier" 
+                      className="h-16 w-auto object-contain"
+                    />
+                  </Link>
+                </div>
+                
+                <div className="flex items-baseline space-x-6 lg:space-x-8">
                 {navItems.map((item) => (
                   <Link key={item.href} href={item.href}>
                     <span
@@ -199,9 +200,10 @@ export function Navigation() {
               </div>
             </div>
 
-            {/* Desktop Actions */}
-            <div className="hidden md:block">
-              <div className="ml-4 flex items-center md:ml-6 space-x-4">
+              </div>
+              
+              {/* Right side: Actions */}
+              <div className="flex items-center space-x-4">
                 <a 
                   href="https://www.facebook.com/groups/getupearlier" 
                   target="_blank" 
