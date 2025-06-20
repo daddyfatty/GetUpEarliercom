@@ -101,14 +101,14 @@ export default function Home() {
               
               <div className="flex-1 flex flex-col justify-center">
                 <div className="mb-4">
-                  <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                  <div className="bg-gradient-to-br from-[hsl(var(--coaching-primary))] via-purple-700 to-[hsl(var(--coaching-accent))] rounded-lg shadow-md overflow-hidden">
                     <img 
                       src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=240&fit=crop&crop=center"
                       alt="Personal training and fitness coaching"
                       className="w-full h-48 object-cover"
                     />
                     <div className="p-4">
-                      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                      <p className="text-purple-100 text-sm leading-relaxed">
                         Get personalized training and coaching from a certified trainer, yoga teacher, running coach, and integrative nutrition coach. 
                         Bridge the gap from inactivity to strength and sustainable healthy habits.
                       </p>
