@@ -9,6 +9,8 @@ export function SiteFooter() {
   const [email, setEmail] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
   const { toast } = useToast();
+  
+  console.log("SiteFooter is rendering");
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
