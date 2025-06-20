@@ -39,7 +39,7 @@ export function Navigation() {
   ];
 
   const navItems = [
-    { href: "/coaching", label: "Services" },
+    { href: "/services", label: "Services" },
     { href: "/recipes", label: "Recipes" },
     { href: "/workouts", label: "Workouts" },
     { href: "/blog", label: "Blog" },
@@ -49,6 +49,7 @@ export function Navigation() {
 
   const aboutItems = [
     { href: "/about", label: "About" },
+    { href: "/coaching", label: "Coaching" },
     { href: "/team", label: "Team" },
     { href: "/contact", label: "Contact" },
   ];
@@ -295,7 +296,7 @@ export function Navigation() {
                       </DialogContent>
                     </Dialog>
 
-                    <Link href="/coaching">
+                    <Link href="/services">
                       <Button size="sm" className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90">
                         Sign Up
                       </Button>
@@ -404,7 +405,7 @@ export function Navigation() {
                         >
                           Sign In
                         </Button>
-                        <Link href="/coaching">
+                        <Link href="/services">
                           <Button 
                             className="w-full bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange))]/90"
                           >
