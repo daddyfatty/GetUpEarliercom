@@ -211,24 +211,46 @@ export default function CalorieCalculator() {
     let timeToGoal = 0;
     
     if (goal === 'loss') {
-      const weightToLose = weightKg - desiredWeightKg;
-      let deficit;
-      if (weightToLose > 20) {
-        deficit = 750;
-      } else if (weightToLose > 10) {
-        deficit = 500;
+      // Convert to pounds for calculation consistency
+      const weightToLoseLbs = unitSystem === 'imperial' ? 
+        (currentWeightNum - desiredWeightNum) : 
+        (weightKg - desiredWeightKg) * 2.20462;
+      
+      // Safe weight loss: 0.5-2 lbs per week
+      // 1 lb = 3500 calories, so 1-2 lbs/week = 500-1000 cal deficit
+      let weeklyLossRate;
+      if (weightToLoseLbs <= 10) {
+        weeklyLossRate = 0.5; // 0.5 lbs/week for small amounts
+      } else if (weightToLoseLbs <= 25) {
+        weeklyLossRate = 1.0; // 1 lb/week for moderate amounts
       } else {
-        deficit = 250;
+        weeklyLossRate = 1.5; // 1.5 lbs/week for larger amounts
       }
+      
+      const deficit = weeklyLossRate * 500; // 500 cal deficit = 1 lb/week
       targetCalories = tdee - deficit;
-      weeklyChangeRate = -(deficit * 7 / 3500);
-      timeToGoal = Math.ceil(weightToLose / Math.abs(weeklyChangeRate));
+      
+      // Ensure minimum calories for health (1200 for women, 1500 for men)
+      const minCalories = sex === 'male' ? 1500 : 1200;
+      if (targetCalories < minCalories) {
+        targetCalories = minCalories;
+        weeklyLossRate = (tdee - targetCalories) / 500;
+      }
+      
+      weeklyChangeRate = -weeklyLossRate;
+      timeToGoal = Math.ceil(weightToLoseLbs / weeklyLossRate);
     } else if (goal === 'gain') {
-      const weightToGain = desiredWeightKg - weightKg;
-      const surplus = weightToGain > 5 ? 500 : 300;
+      // Convert to pounds for calculation consistency
+      const weightToGainLbs = unitSystem === 'imperial' ? 
+        (desiredWeightNum - currentWeightNum) : 
+        (desiredWeightKg - weightKg) * 2.20462;
+      
+      // Healthy weight gain: 0.5-1 lb per week
+      const weeklyGainRate = weightToGainLbs > 20 ? 1.0 : 0.5;
+      const surplus = weeklyGainRate * 500; // 500 cal surplus = 1 lb/week
       targetCalories = tdee + surplus;
-      weeklyChangeRate = surplus * 7 / 3500;
-      timeToGoal = Math.ceil(weightToGain / weeklyChangeRate);
+      weeklyChangeRate = weeklyGainRate;
+      timeToGoal = Math.ceil(weightToGainLbs / weeklyGainRate);
     }
 
     const profile = macroProfiles[macroProfile];
