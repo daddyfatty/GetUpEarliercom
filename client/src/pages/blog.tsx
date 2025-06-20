@@ -57,7 +57,7 @@ export default function Blog() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <div className="container mx-auto px-4 py-12">
           <div className="text-center">
             <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto" />
@@ -70,7 +70,7 @@ export default function Blog() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <div className="container mx-auto px-4 py-12">
           <div className="text-center">
             <p className="text-red-600 dark:text-red-400">Failed to load blog posts.</p>
@@ -81,16 +81,34 @@ export default function Blog() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Health & Fitness Blog
+          <div className="inline-block bg-indigo-600/10 text-indigo-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
+            Expert Content
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+            Health & Fitness<br className="hidden sm:block" />
+            <span className="text-indigo-600">Blog</span>
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">
             Expert insights on nutrition, fitness, wellness, and achieving your health goals from our certified trainers and coaches.
           </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-indigo-600 rounded-full"></div>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Expert Insights</span>
+              </div>
+            </div>
+            <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Updated Weekly</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Search and Filter */}
