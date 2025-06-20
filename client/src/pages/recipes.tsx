@@ -90,12 +90,12 @@ export default function Recipes() {
     <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:bg-gray-900 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <div className="inline-block bg-[#61c493]/10 text-[#61c493] px-3 py-1 rounded-full text-sm font-medium mb-4">
+          <div className="inline-block bg-red-500/10 text-red-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
             Fresh Recipe Collection
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
             The Clean & Lean<br className="hidden sm:block" />
-            <span className="text-[#61c493]">Eating Guide</span>
+            <span className="text-red-600">Eating Guide</span>
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
             Interactive recipes and tips to focus on protein, eat real food and hit your target macros.
@@ -103,7 +103,7 @@ export default function Recipes() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-[#61c493] rounded-full"></div>
+                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Weekly Updates</span>
               </div>
             </div>

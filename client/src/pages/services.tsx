@@ -109,8 +109,30 @@ export default function Services() {
         {/* Hero Section */}
         <div className="py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Services</h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Comprehensive support tailored to your individual needs and goals</p>
+            <div className="inline-block bg-purple-800/10 text-purple-800 px-3 py-1 rounded-full text-sm font-medium mb-4">
+              1-on-1 Services
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+              Comprehensive<br className="hidden sm:block" />
+              <span className="text-purple-800">Support</span>
+            </h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+              Personalized coaching tailored to your individual needs and goals
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-purple-800 rounded-full"></div>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">30 Years Experience</span>
+                </div>
+              </div>
+              <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Certified Training</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
