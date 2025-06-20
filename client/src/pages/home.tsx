@@ -42,7 +42,7 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <div className="flex-1 flex flex-col justify-center">
+                <div className="flex-1 flex flex-col">
                   {featuredRecipes.length > 0 && (
                     <div className="mb-4">
                       <RecipeCard recipe={featuredRecipes[0]} />
@@ -76,7 +76,7 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <div className="flex-1 flex flex-col justify-center">
+                <div className="flex-1 flex flex-col">
                   {featuredWorkouts.length > 0 && (
                     <div className="mb-4">
                       <WorkoutCard workout={featuredWorkouts[0]} />
@@ -110,7 +110,7 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <div className="flex-1 flex flex-col justify-center">
+                <div className="flex-1 flex flex-col">
                   <div className="mb-4">
                     <img 
                       src={gymImagePath}
