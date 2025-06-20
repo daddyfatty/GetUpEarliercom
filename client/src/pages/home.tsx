@@ -1,6 +1,5 @@
 import { HeroSection } from "@/components/hero-section";
 import { BookPromotion } from "@/components/book-promotion";
-import { NewsletterSignup } from "@/components/newsletter-signup";
 import { RecipeCard } from "@/components/recipe-card";
 import { WorkoutCard } from "@/components/workout-card";
 import { Button } from "@/components/ui/button";
@@ -185,7 +184,6 @@ export default function Home() {
         </div>
       </section>
       <BookPromotion />
-      <NewsletterSignup />
     </div>
   );
 }
