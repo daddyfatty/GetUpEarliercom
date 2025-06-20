@@ -302,7 +302,7 @@ export default function CalorieCalculator() {
       })
       .catch(console.error);
 
-    // Save calculation results to database
+    // Save calculation results to database with all advanced metrics
     const calculationData = {
       bmr: calculationResults.bmr,
       tdee: calculationResults.tdee,
@@ -312,6 +312,13 @@ export default function CalorieCalculator() {
       fat: calculationResults.macros?.fat,
       goal: calculationResults.goal,
       activityLevel: (activityLevel[0] || 1.2).toString(),
+      weeklyChangeRate: calculationResults.weeklyChangeRate,
+      timeToGoal: calculationResults.timeToGoal,
+      bodyFatPercentage: calculationResults.bodyFatPercentage,
+      leanBodyMass: calculationResults.leanBodyMass,
+      dailyWaterIntake: calculationResults.dailyWaterIntake,
+      mealTiming: calculationResults.mealTiming,
+      supplementSuggestions: calculationResults.supplementSuggestions,
       calculatedAt: new Date().toISOString(),
     };
 
@@ -330,7 +337,7 @@ export default function CalorieCalculator() {
     // Save calculation result to database for history
     apiRequest("POST", "/api/calculator-results", {
       calculatorType: 'calorie',
-      results: calculationData,
+      results: calculationResults, // Save complete results object with all metrics
       userInputs
     })
     .then(() => {
@@ -695,6 +702,17 @@ export default function CalorieCalculator() {
                         <span>Snacks:</span>
                         <span className="font-medium">{results.mealTiming.snacks} cal</span>
                       </div>
+                    </div>
+                  </div>
+                )}
+
+                {results.supplementSuggestions && results.supplementSuggestions.length > 0 && (
+                  <div className="bg-green-50 p-4 rounded-lg">
+                    <h3 className="font-semibold text-green-700 mb-2">Recommended Supplements</h3>
+                    <div className="space-y-1">
+                      {results.supplementSuggestions.map((supplement, index) => (
+                        <div key={index} className="text-sm text-green-600">• {supplement}</div>
+                      ))}
                     </div>
                   </div>
                 )}
