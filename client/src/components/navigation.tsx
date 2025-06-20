@@ -115,21 +115,21 @@ export function Navigation() {
 
             {/* Desktop Navigation - Full Width Layout */}
             <div className="hidden md:flex items-center justify-between w-full">
-              {/* Left side: Logo (when scrolled) and Nav Items */}
-              <div className="flex items-center space-x-8">
-                <div className={`flex items-center transition-all duration-300 ${
-                  isScrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-                }`}>
-                  <Link href="/">
-                    <img 
-                      src={logoPath} 
-                      alt="Get Up Earlier" 
-                      className="h-16 w-auto object-contain"
-                    />
-                  </Link>
-                </div>
-                
-                <div className="flex items-baseline space-x-6 lg:space-x-8">
+              {/* Left side: Logo (when scrolled) */}
+              <div className={`flex items-center transition-all duration-300 ${
+                isScrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+              }`}>
+                <Link href="/">
+                  <img 
+                    src={logoPath} 
+                    alt="Get Up Earlier" 
+                    className="h-16 w-auto object-contain"
+                  />
+                </Link>
+              </div>
+              
+              {/* Center: Navigation Items */}
+              <div className="flex items-baseline space-x-6 lg:space-x-8">
                 {navItems.map((item) => (
                   <Link key={item.href} href={item.href}>
                     <span
@@ -197,9 +197,6 @@ export function Navigation() {
                     ))}
                   </DropdownMenuContent>
                 </DropdownMenu>
-              </div>
-            </div>
-
               </div>
               
               {/* Right side: Actions */}
@@ -418,6 +415,7 @@ export function Navigation() {
                   </div>
                 </SheetContent>
               </Sheet>
+            </div>
             </div>
           </div>
         </div>
