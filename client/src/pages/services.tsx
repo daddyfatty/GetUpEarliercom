@@ -81,7 +81,7 @@ export default function Services() {
         "Powerful 30 minute workouts",
         "In-person Orange, CT or virtual anywhere*"
       ],
-      buttonText: "Add to Cart",
+      buttonText: "Book Session",
       isPopular: true,
       badge: "Most Popular",
       backgroundColor: "bg-slate-900",
@@ -268,7 +268,7 @@ export default function Services() {
                         <Button 
                           className="w-full bg-blue-400 hover:bg-blue-500 text-gray-900 font-medium py-3"
                         >
-                          {pkg.buttonText}
+                          Book Session
                         </Button>
                         <Button 
                           className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-medium py-3"
