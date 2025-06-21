@@ -259,19 +259,19 @@ export default function Services() {
                     
                     {pkg.isFree ? (
                       <Button 
-                        className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-3"
+                        className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-6 px-8 text-lg rounded-lg h-16"
                       >
                         {pkg.buttonText} →
                       </Button>
                     ) : pkg.backgroundColor === 'bg-slate-900' ? (
                       <>
                         <Button 
-                          className="w-full bg-blue-400 hover:bg-blue-500 text-gray-900 font-medium py-3"
+                          className="w-full bg-blue-400 hover:bg-blue-500 text-gray-900 font-medium py-6 px-8 text-lg rounded-lg h-16 mb-4"
                         >
                           Book Session
                         </Button>
                         <Button 
-                          className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-medium py-3"
+                          className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-medium py-6 px-8 text-lg rounded-lg h-16"
                         >
                           Buy now
                         </Button>
@@ -279,14 +279,14 @@ export default function Services() {
                     ) : (
                       <>
                         <Button 
-                          className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-3"
+                          className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-6 px-8 text-lg rounded-lg h-16"
                         >
-                          💳 {pkg.buttonText}
+                          💳 Book Session
                         </Button>
-                        <Button variant="outline" size="sm" className="w-full">
+                        <Button variant="outline" className="w-full py-6 px-8 text-lg rounded-lg h-16 mt-3">
                           💰 Pay with PayPal
                         </Button>
-                        <Button variant="ghost" size="sm" className="w-full text-gray-600">
+                        <Button variant="ghost" className="w-full text-gray-600 py-6 px-8 text-lg rounded-lg h-16 mt-3">
                           📅 Book Consultation First
                         </Button>
                       </>
