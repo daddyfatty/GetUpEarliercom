@@ -433,7 +433,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { scrapeBlogPosts } = await import('./blog-scraper');
       const scrapedPosts = await scrapeBlogPosts();
       
-      // Get new Facebook posts from database (if any)
+      // Get database posts (Facebook and any others) - order by creation time (newest first)
       const { blogPosts } = await import('../shared/schema');
       const { db } = await import('./db');
       const { desc } = await import('drizzle-orm');
@@ -446,14 +446,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           ...post,
           tags: typeof post.tags === 'string' ? JSON.parse(post.tags) : post.tags
         }));
-
-      // Sort Facebook posts by date, newest first
-      const facebookPosts = formattedDbPosts.sort((a, b) => 
-        new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime()
-      );
       
-      // Combine: Facebook posts first, then original scraped posts in their order
-      const allPosts = [...facebookPosts, ...scrapedPosts];
+      // Combine all posts: newest database posts first, then original scraped posts
+      const allPosts = [...formattedDbPosts, ...scrapedPosts];
       
       res.json(allPosts);
     } catch (error: any) {
