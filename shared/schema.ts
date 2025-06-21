@@ -247,6 +247,30 @@ export const insertCalculatorResultSchema = createInsertSchema(calculatorResults
   createdAt: true,
 });
 
+// Blog posts table for Facebook integration
+export const blogPosts = pgTable("blog_posts", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  excerpt: text("excerpt").notNull(),
+  content: text("content").notNull(),
+  author: text("author").notNull().default("Michael Baker"),
+  publishedDate: text("published_date").notNull(),
+  category: text("category").notNull(),
+  tags: text("tags").notNull(), // JSON string of array
+  imageUrl: text("image_url"),
+  videoUrl: text("video_url"),
+  readTime: integer("read_time").notNull(),
+  isVideo: boolean("is_video").default(false),
+  originalUrl: text("original_url"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
+  createdAt: true,
+  updatedAt: true,
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type Recipe = typeof recipes.$inferSelect;
@@ -271,3 +295,5 @@ export type MealPlanRecipe = typeof mealPlanRecipes.$inferSelect;
 export type InsertMealPlanRecipe = z.infer<typeof insertMealPlanRecipeSchema>;
 export type CalculatorResult = typeof calculatorResults.$inferSelect;
 export type InsertCalculatorResult = z.infer<typeof insertCalculatorResultSchema>;
+export type BlogPost = typeof blogPosts.$inferSelect;
+export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;

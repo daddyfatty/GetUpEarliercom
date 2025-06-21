@@ -426,16 +426,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Blog routes - fetch from live website
+  // Blog routes - fetch from database and live website
   app.get("/api/blog", async (req, res) => {
     try {
+      // First try to get posts from database (Facebook synced posts)
+      const { blogPosts } = await import('../shared/schema');
+      const { db } = await import('./db');
+      const dbPosts = await db.select().from(blogPosts).orderBy(blogPosts.publishedDate);
+      
+      // Convert database posts to blog format
+      const formattedDbPosts = dbPosts.map(post => ({
+        ...post,
+        tags: JSON.parse(post.tags)
+      }));
+      
+      // Also get posts from live website scraping
       const { scrapeBlogPosts } = await import('./blog-scraper');
-      const blogPosts = await scrapeBlogPosts();
-      res.json(blogPosts);
+      const scrapedPosts = await scrapeBlogPosts();
+      
+      // Combine both sources, removing duplicates
+      const allPosts = [...formattedDbPosts, ...scrapedPosts];
+      const uniquePosts = allPosts.filter((post, index, self) => 
+        index === self.findIndex(p => p.id === post.id)
+      );
+      
+      // Sort by published date, newest first
+      uniquePosts.sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
+      
+      res.json(uniquePosts);
     } catch (error: any) {
       console.error("Error fetching blog posts:", error);
       
-      // Fallback to sample data if scraping fails
+      // Fallback to sample data if both methods fail
       const fallbackPosts = [
         {
           id: "winter-running-motivation",

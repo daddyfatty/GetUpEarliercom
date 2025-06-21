@@ -41,6 +41,20 @@ app.use((req, res, next) => {
 
 (async () => {
   const server = await registerRoutes(app);
+  
+  // Start automatic Facebook group post sync
+  try {
+    const { facebookAutoSync } = await import('./facebook-auto-sync');
+    await facebookAutoSync.setupAutoSync();
+    
+    // Run initial sync
+    setTimeout(async () => {
+      await facebookAutoSync.syncNewPosts();
+    }, 30000); // Wait 30 seconds after startup
+    
+  } catch (error) {
+    console.log('Facebook auto-sync setup skipped:', error);
+  }
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
