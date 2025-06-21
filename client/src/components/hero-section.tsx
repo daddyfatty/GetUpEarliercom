@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Trophy, Users, Dumbbell, ChefHat } from "lucide-react";
+import { SiFacebook } from "react-icons/si";
 
 import _20250517_073713_00_00_08_03_Still003 from "@assets/20250517_073713.00_00_08_03.Still003.jpg";
 
@@ -55,8 +56,8 @@ export function HeroSection() {
               onClick={() => window.open('https://www.facebook.com/groups/getupearlier', '_blank')}
             >
               <div className="flex items-center space-x-3">
-                <div className="bg-primary p-2 rounded-full">
-                  <Trophy className="w-5 h-5 text-white" />
+                <div className="bg-blue-600 p-2 rounded-full">
+                  <SiFacebook className="w-5 h-5 text-white" />
                 </div>
                 <div>
                   <p className="font-semibold text-gray-900">1000+ Members Facebook Group</p>
