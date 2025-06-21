@@ -13,8 +13,8 @@ import RecipeArchive from "@/pages/recipe-archive";
 import Workouts from "@/pages/workouts";
 import WorkoutDetail from "@/pages/workout-detail";
 import WorkoutVideo from "@/pages/workout-video";
-import Nutrition from "@/pages/nutrition";
-import Tracker from "@/pages/tracker";
+
+
 import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog-post";
 
@@ -57,10 +57,10 @@ function Router() {
           <Route path="/workouts" component={Workouts} />
           <Route path="/workouts/:id" component={WorkoutDetail} />
           <Route path="/workouts/:id/video" component={WorkoutVideo} />
-          <Route path="/nutrition" component={Nutrition} />
+
           <Route path="/calorie-calculator" component={CalorieCalculator} />
           <Route path="/alcohol-calculator" component={AlcoholCalculatorPage} />
-          <Route path="/tracker" component={Tracker} />
+
           <Route path="/blog" component={Blog} />
           <Route path="/blog/:id" component={BlogPost} />
 
