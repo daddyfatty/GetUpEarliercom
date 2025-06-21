@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Zap, Heart, Target, Users, Dumbbell, User } from "lucide-react";
+import { Link } from "wouter";
 
 export default function Services() {
   const services = [
@@ -258,18 +259,22 @@ export default function Services() {
                     )}
                     
                     {pkg.isFree ? (
-                      <Button 
-                        className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-6 px-8 text-lg rounded-lg h-16"
-                      >
-                        {pkg.buttonText} →
-                      </Button>
+                      <Link href="/contact">
+                        <Button 
+                          className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-6 px-8 text-lg rounded-lg h-16"
+                        >
+                          {pkg.buttonText} →
+                        </Button>
+                      </Link>
                     ) : pkg.backgroundColor === 'bg-slate-900' ? (
                       <>
-                        <Button 
-                          className="w-full bg-blue-400 hover:bg-blue-500 text-gray-900 font-medium py-6 px-8 text-lg rounded-lg h-16 mb-4"
-                        >
-                          Book Session
-                        </Button>
+                        <Link href="/contact">
+                          <Button 
+                            className="w-full bg-blue-400 hover:bg-blue-500 text-gray-900 font-medium py-6 px-8 text-lg rounded-lg h-16 mb-4"
+                          >
+                            Book Session
+                          </Button>
+                        </Link>
                         <Button 
                           className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-medium py-6 px-8 text-lg rounded-lg h-16"
                         >
@@ -278,17 +283,21 @@ export default function Services() {
                       </>
                     ) : (
                       <>
-                        <Button 
-                          className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-6 px-8 text-lg rounded-lg h-16"
-                        >
-                          💳 Book Session
-                        </Button>
+                        <Link href="/contact">
+                          <Button 
+                            className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-6 px-8 text-lg rounded-lg h-16"
+                          >
+                            💳 Book Session
+                          </Button>
+                        </Link>
                         <Button variant="outline" className="w-full py-6 px-8 text-lg rounded-lg h-16 mt-3">
                           💰 Pay with PayPal
                         </Button>
-                        <Button variant="ghost" className="w-full text-gray-600 py-6 px-8 text-lg rounded-lg h-16 mt-3">
-                          📅 Book Consultation First
-                        </Button>
+                        <Link href="/contact">
+                          <Button variant="ghost" className="w-full text-gray-600 py-6 px-8 text-lg rounded-lg h-16 mt-3">
+                            📅 Book Consultation First
+                          </Button>
+                        </Link>
                       </>
                     )}
                   </div>
