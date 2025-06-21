@@ -313,8 +313,9 @@ export function Navigation() {
             <div className="md:hidden">
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="sm" className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10 h-24 w-24 p-2">
+                  <Button variant="ghost" size="sm" className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10 h-28 w-28 p-2 flex flex-col items-center justify-center gap-1">
                     <Menu className="h-20 w-20" strokeWidth={4} />
+                    <span className="text-xs font-semibold tracking-wider">MENU</span>
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="right" className="w-[300px] sm:w-[400px]">
