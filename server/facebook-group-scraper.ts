@@ -16,30 +16,44 @@ interface FacebookGroupPost {
 }
 
 export class FacebookGroupScraper {
-  private groupUrl = 'https://www.facebook.com/groups/getupearlier';
+  private groupId = 'getupearlier'; // Your group name/ID
+  private rssUrl = `https://www.facebook.com/feeds/page.php?id=${this.groupId}&format=rss20`;
   private targetAuthor = 'Michael Baker';
   
-  private async fetchGroupPage(): Promise<string> {
+  private async fetchRSSFeed(): Promise<string> {
     try {
-      const response = await fetch(this.groupUrl, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-          'Accept-Language': 'en-US,en;q=0.5',
-          'Accept-Encoding': 'gzip, deflate, br',
-          'DNT': '1',
-          'Connection': 'keep-alive',
-          'Upgrade-Insecure-Requests': '1'
+      // Try multiple RSS feed URLs for Facebook groups
+      const possibleUrls = [
+        `https://www.facebook.com/feeds/page.php?id=${this.groupId}&format=rss20`,
+        `https://www.facebook.com/groups/${this.groupId}/feed/?format=rss`,
+        `https://m.facebook.com/groups/${this.groupId}?format=rss`,
+        `https://rss.app/feeds/facebook-group-${this.groupId}.xml`
+      ];
+
+      for (const url of possibleUrls) {
+        try {
+          console.log(`Facebook RSS: Trying ${url}`);
+          const response = await fetch(url, {
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (compatible; RSS Reader)',
+              'Accept': 'application/rss+xml, application/xml, text/xml'
+            }
+          });
+
+          if (response.ok) {
+            const rssText = await response.text();
+            console.log(`Facebook RSS: Successfully fetched from ${url}`);
+            return rssText;
+          }
+        } catch (error) {
+          console.log(`Facebook RSS: Failed to fetch from ${url}:`, error);
+          continue;
         }
-      });
-      
-      if (!response.ok) {
-        throw new Error(`Failed to fetch group page: ${response.status}`);
       }
-      
-      return await response.text();
+
+      throw new Error('No working RSS feed found for Facebook group');
     } catch (error) {
-      console.error('Error fetching Facebook group page:', error);
+      console.error('Error fetching Facebook RSS feed:', error);
       throw error;
     }
   }
