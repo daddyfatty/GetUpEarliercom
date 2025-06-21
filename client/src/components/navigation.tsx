@@ -314,7 +314,7 @@ export function Navigation() {
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="sm" className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10 h-16 w-16">
-                    <Menu className="h-8 w-8" />
+                    <Menu className="h-8 w-8" strokeWidth={3} />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="right" className="w-[300px] sm:w-[400px]">
