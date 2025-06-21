@@ -27,6 +27,7 @@ import TeamMichael from "@/pages/team-michael";
 import TeamErica from "@/pages/team-erica";
 import UserProfile from "@/pages/user-profile";
 import Admin from "@/pages/admin";
+import AdminFacebook from "@/pages/admin-facebook";
 import AdminDashboard from "@/pages/admin-dashboard";
 import Checkout from "@/pages/checkout";
 import Subscribe from "@/pages/subscribe";
@@ -76,6 +77,7 @@ function Router() {
           <Route path="/saved-results" component={SavedResults} />
           <Route path="/user-profile" component={UserProfile} />
           <Route path="/admin" component={Admin} />
+          <Route path="/admin/facebook" component={AdminFacebook} />
           <Route path="/admin/dashboard" component={AdminDashboard} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/subscribe" component={Subscribe} />
