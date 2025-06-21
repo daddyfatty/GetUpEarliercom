@@ -240,103 +240,31 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4b208ba3ba86d732f_maxresdefault_live-3.jpeg',
       tags: ['deadlifts', 'women-over-40', 'live-workout']
     },
-    {
-      id: 'post-18',
-      url: 'https://www.getupearlier.com/post/strength-train-and-lift-for-real-life-dont-weaken-drgabriellelyon-strength-lift-run-hike',
-      title: 'Strength train and lift for real life - don\'t weaken | @drgabriellelyon #Strength #Lift #Run #Hike',
-      category: 'Strength Training',
-      author: 'Michael Baker',
-      excerpt: 'The importance of strength training for real-life activities and functional movement.',
-      content: 'The importance of strength training for real-life activities, functional movement, and maintaining vitality as we age.',
-      isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/77-7pYbK30Q',
-      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3cc4969db27e1e3b080f_maxresdefault-11.jpeg',
-      tags: ['functional-strength', 'real-life', 'dr-gabrielle-lyon']
-    },
-    {
-      id: 'post-19',
-      url: 'https://www.getupearlier.com/post/squat-jump-sets-strength-athletes-squats-are-necessary-strength-fitover40-squatjumps-coach',
-      title: 'Squat Jump Sets - Strength & Athletes | Squats are necessary #Strength #FitOver40 #SquatJumps #Coach',
-      category: 'Plyometrics',
-      author: 'Michael Baker',
-      excerpt: 'Explosive squat jumps for building athletic power and maintaining strength after 40.',
-      content: 'Squat jumps are essential for developing explosive power and maintaining athletic performance as we age. This exercise bridges the gap between strength training and sport-specific movements, making it crucial for athletes and fitness enthusiasts over 40 who want to maintain their power output and functional movement capacity.',
-      isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/kVpv8-5XWOI',
-      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/6794b76b83b2663913c2e57e_squat-jumps-featured.jpg',
-      tags: ['squat-jumps', 'plyometrics', 'explosive-power', 'over-40']
-    },
-    {
-      id: 'post-20',
-      url: 'https://www.getupearlier.com/post/pre-run-warmup-routine-running-warmup-runner-marathon-training-coach',
-      title: 'Pre-run warmup routine | #Running #Warmup #Runner #Marathon #Training #Coach',
-      category: 'Running',
-      author: 'Michael Baker',
-      excerpt: 'Dynamic warmup routine to activate your body before running and reduce injury risk.',
-      content: 'This comprehensive pre-run warmup routine activates your muscles, improves range of motion, and prepares your cardiovascular system for running. Essential for marathon training and injury prevention.',
-      isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/Ru2QXYf7dVk',
-      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e24f2c21e13fddde7a6_maxresdefault-19.jpeg',
-      tags: ['warmup', 'running', 'marathon-training', 'injury-prevention']
-    },
-    {
-      id: 'post-21',
-      url: 'https://www.getupearlier.com/post/nutrition-for-endurance-athletes-fuel-performance-nutrition-endurance-athlete-coach',
-      title: 'Nutrition for Endurance Athletes | Fuel Performance #Nutrition #Endurance #Athlete #Coach',
-      category: 'Nutrition',
-      author: 'Michael Baker',
-      excerpt: 'Comprehensive nutrition guide for endurance athletes to optimize performance and recovery.',
-      content: 'Proper nutrition is the foundation of endurance performance. Learn how to fuel your body before, during, and after training sessions and competitions for optimal results.',
-      isVideo: false,
-      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e24c9939cfa0f502e5f_maxresdefault-9.jpeg',
-      tags: ['nutrition', 'endurance', 'fueling', 'performance', 'recovery']
-    },
-    {
-      id: 'post-22',
-      url: 'https://www.getupearlier.com/post/strength-training-for-runners-running-strength-marathon-training-coach',
-      title: 'Strength Training for Runners | #Running #Strength #Marathon #Training #Coach',
-      category: 'Cross Training',
-      author: 'Michael Baker',
-      excerpt: 'Essential strength exercises every runner needs for better performance and injury prevention.',
-      content: 'Runners who incorporate strength training see significant improvements in performance and dramatic reductions in injury rates. This video covers the key exercises every runner should be doing: single-leg squats, deadlifts, core stability work, and plyometric movements that directly translate to better running economy.',
-      isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/vBK3bWmgPXI',
-      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e24f2c21e13fddde7a5_maxresdefault-18.jpeg',
-      tags: ['strength-training', 'runners', 'cross-training', 'injury-prevention']
-    },
-    {
-      id: 'post-23',
-      url: 'https://www.getupearlier.com/post/recovery-techniques-athletes-recovery-massage-stretching-coach',
-      title: 'Recovery Techniques for Athletes | #Recovery #Massage #Stretching #Coach',
-      category: 'Recovery',
-      author: 'Michael Baker',
-      excerpt: 'Essential recovery techniques to optimize athletic performance and prevent burnout.',
-      content: 'Recovery is where adaptation happens. Learn effective techniques including massage, stretching, and active recovery methods to maximize your training gains and prevent overuse injuries.',
-      isVideo: false,
-      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e24969db27e1e3b080b_maxresdefault-14.jpeg',
-      tags: ['recovery', 'massage', 'stretching', 'active-recovery', 'performance']
-    },
-    {
-      id: 'post-24',
-      url: 'https://www.getupearlier.com/post/mindset-training-mental-toughness-athlete-mindset-coach',
-      title: 'Mindset Training | Mental Toughness #Athlete #Mindset #Coach',
-      category: 'Mental Training',
-      author: 'Michael Baker',
-      excerpt: 'Building the mental fortitude that separates champions from the rest.',
-      content: 'Mental toughness isn\'t just about pushing through pain - it\'s about developing the psychological skills that allow you to perform under pressure, recover from setbacks, and maintain consistency in your training. This covers visualization techniques, self-talk strategies, and the mindset shifts that turn obstacles into opportunities.',
-      isVideo: true,
-      videoUrl: 'https://www.youtube.com/embed/9BWrmFT3i8M',
-      imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e24969db27e1e3b0809_maxresdefault-12.jpeg',
-      tags: ['mental-toughness', 'mindset', 'psychology', 'resilience', 'focus']
-    }
+
+
   ];
 
-  return posts.map((post, index) => ({
-    ...post,
-    originalUrl: post.url,
-    publishedDate: new Date(Date.now() - Math.random() * 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    readTime: Math.ceil((post.content?.length || 500) / 200)
-  }));
+  return posts
+    .filter(post => {
+      // Remove posts with missing or invalid content
+      if (!post.content || post.content.trim().length < 50) return false;
+      if (!post.title || post.title.trim().length < 5) return false;
+      if (!post.excerpt || post.excerpt.trim().length < 10) return false;
+      
+      // Remove posts with broken or missing video URLs
+      if (post.isVideo && (!post.videoUrl || post.videoUrl.includes('undefined'))) return false;
+      
+      // Remove posts with broken image URLs
+      if (post.imageUrl && (post.imageUrl.includes('undefined') || post.imageUrl.length < 10)) return false;
+      
+      return true;
+    })
+    .map((post, index) => ({
+      ...post,
+      originalUrl: post.url,
+      publishedDate: new Date(Date.now() - Math.random() * 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      readTime: Math.ceil((post.content?.length || 500) / 200)
+    }));
 }
 
 export async function fetchFullPostContent(url: string): Promise<string> {
