@@ -88,21 +88,6 @@ export default function Services() {
       backgroundColor: "bg-slate-900",
       textColor: "text-white",
       quantityInput: true
-    },
-    {
-      title: "Monthly Package - 5 Sessions",
-      price: "$225/mo",
-      description: "Consistent support for building lasting transformation.",
-      features: [
-        "Up to 5 monthly sessions",
-        "Custom workout plans",
-        "Progress tracking",
-        "Email support",
-        "Flexible scheduling"
-      ],
-      buttonText: "Pay with Card",
-      isPopular: false,
-      badge: "Up to 8 Sessions"
     }
   ];
 
