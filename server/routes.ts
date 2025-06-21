@@ -436,7 +436,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get new Facebook posts from database (if any)
       const { blogPosts } = await import('../shared/schema');
       const { db } = await import('./db');
-      const dbPosts = await db.select().from(blogPosts).orderBy(blogPosts.publishedDate);
+      const { desc } = await import('drizzle-orm');
+      const dbPosts = await db.select().from(blogPosts).orderBy(desc(blogPosts.publishedDate));
       
       // Convert database posts to blog format and filter out blank posts
       const formattedDbPosts = dbPosts
@@ -952,24 +953,87 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/paypal/order", createPaypalOrder);
   app.post("/api/paypal/order/:orderID/capture", capturePaypalOrder);
 
-  // Facebook RSS scraper routes
-  app.post("/api/blog/fetch-facebook-post", async (req, res) => {
+  // Facebook post creation routes
+  app.post("/api/blog/create-facebook-post", async (req, res) => {
     try {
-      console.log("Facebook RSS API called with:", req.body);
-      const { postUrl } = req.body;
+      const { title, content, images, postUrl } = req.body;
       
-      if (!postUrl) {
-        return res.status(400).json({ message: "Post URL is required" });
+      if (!title || !content) {
+        return res.status(400).json({ message: "Title and content are required" });
       }
       
-      const { facebookRSScraper } = await import('./facebook-rss-scraper');
-      const result = await facebookRSScraper.fetchLatestPost(postUrl);
+      // Extract post ID from URL or generate one
+      const postIdMatch = postUrl?.match(/posts\/(\d+)/) || [];
+      const postId = postIdMatch[1] || Date.now().toString();
       
-      console.log("Facebook RSS result:", result);
-      res.json(result);
+      // Use first image as featured image
+      const featuredImage = images && images.length > 0 ? images[0] : undefined;
+      
+      // Categorize post based on content
+      const contentLower = content.toLowerCase();
+      let category = 'General';
+      if (contentLower.includes('recipe') || contentLower.includes('nutrition')) {
+        category = 'Nutrition';
+      } else if (contentLower.includes('workout') || contentLower.includes('training')) {
+        category = 'Workouts';
+      } else if (contentLower.includes('running') || contentLower.includes('marathon')) {
+        category = 'Running';
+      } else if (contentLower.includes('inspiration') || contentLower.includes('motivation')) {
+        category = 'Inspiration';
+      }
+      
+      // Extract tags
+      const hashtagMatches = content.match(/#\w+/g) || [];
+      const hashtags = hashtagMatches.map(tag => tag.slice(1).toLowerCase());
+      const tags = [...hashtags];
+      
+      if (contentLower.includes('50 years old') || contentLower.includes('over 40')) {
+        tags.push('over-40', 'mature-athlete');
+      }
+      if (contentLower.includes('ironmaster') || contentLower.includes('dumbbell')) {
+        tags.push('ironmaster', 'dumbbells');
+      }
+      if (contentLower.includes('pr') || contentLower.includes('personal record')) {
+        tags.push('personal-record');
+      }
+      
+      const blogPost = {
+        id: `fb-group-${postId}`,
+        title: title,
+        excerpt: content.slice(0, 200) + (content.length > 200 ? '...' : ''),
+        content: content,
+        author: 'Michael Baker',
+        publishedDate: new Date().toISOString(),
+        category: category,
+        tags: JSON.stringify(Array.from(new Set(tags))),
+        imageUrl: featuredImage,
+        videoUrl: null,
+        readTime: Math.ceil(content.length / 200) || 1,
+        isVideo: false,
+        originalUrl: postUrl
+      };
+
+      // Check if post already exists
+      const existingPost = await db.select().from(blogPosts).where(eq(blogPosts.id, blogPost.id));
+      
+      if (existingPost.length === 0) {
+        await db.insert(blogPosts).values(blogPost);
+        console.log(`Added new Facebook post: "${title}"`);
+        res.json({ 
+          success: true, 
+          message: `Successfully added post: "${title}" with ${images?.length || 0} images`,
+          post: blogPost
+        });
+      } else {
+        res.json({ 
+          success: false, 
+          message: `Post already exists: "${title}"` 
+        });
+      }
+      
     } catch (error: any) {
-      console.error("Error fetching Facebook post:", error);
-      res.status(500).json({ message: "Error fetching Facebook post: " + error.message });
+      console.error("Error creating Facebook post:", error);
+      res.status(500).json({ message: "Error creating Facebook post: " + error.message });
     }
   });
 
