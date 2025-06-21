@@ -31,11 +31,14 @@ export default function Home() {
             
             {/* Column 1: Latest Recipe */}
             <div className="text-center flex flex-col h-full">
-              <div className="bg-gradient-to-br from-red-500 via-red-600 to-red-700 text-white p-6 rounded-2xl shadow-lg h-full flex flex-col">
+              <div className="bg-white border-2 border-red-200 p-6 rounded-2xl shadow-lg h-full flex flex-col">
                 <div className="mb-4">
-                  <h2 className="text-2xl font-bold text-white mb-2">Latest Recipe</h2>
-                  <p className="text-red-100 mb-2 text-[14px]">Interactive, clean, lean high-protein recipes</p>
-                  <div className="bg-red-200/20 text-red-100 px-3 py-1 rounded-full inline-block text-sm font-medium">
+                  <div className="inline-block bg-red-500/10 text-red-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
+                    Fresh Recipe Collection
+                  </div>
+                  <h2 className="text-2xl font-bold text-red-600 mb-2">Latest Recipe</h2>
+                  <p className="text-gray-600 mb-2 text-[14px]">Interactive, clean, lean high-protein recipes</p>
+                  <div className="bg-red-100 text-red-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
                     <TrendingUp className="inline w-4 h-4 mr-1" />
                     New recipes added weekly!
                   </div>
@@ -53,7 +56,7 @@ export default function Home() {
                   <Link href="/recipes">
                     <Button 
                       size="lg" 
-                      className="w-full font-semibold text-red-700 bg-white hover:bg-red-50 shadow-lg transform hover:scale-105 transition-all duration-200"
+                      className="w-full font-semibold text-white bg-red-600 hover:bg-red-700 shadow-lg transform hover:scale-105 transition-all duration-200"
                     >
                       <ChefHat className="h-5 w-5 mr-2" />
                       View All Recipes
@@ -65,11 +68,14 @@ export default function Home() {
 
             {/* Column 2: Latest Workout */}
             <div className="text-center flex flex-col h-full">
-              <div className="bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 text-white p-6 rounded-2xl shadow-lg h-full flex flex-col">
+              <div className="bg-white border-2 border-blue-200 p-6 rounded-2xl shadow-lg h-full flex flex-col">
                 <div className="mb-4">
-                  <h2 className="text-2xl font-bold text-white mb-2">Latest Workout</h2>
-                  <p className="text-blue-100 mb-2 text-[14px]">Simple, effective workouts for every fitness level</p>
-                  <div className="bg-blue-200/20 text-blue-100 px-3 py-1 rounded-full inline-block text-sm font-medium">
+                  <div className="inline-block bg-blue-600/10 text-blue-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
+                    Workout Collection
+                  </div>
+                  <h2 className="text-2xl font-bold text-blue-600 mb-2">Latest Workout</h2>
+                  <p className="text-gray-600 mb-2 text-[14px]">Simple, effective workouts for every fitness level</p>
+                  <div className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
                     <Dumbbell className="inline w-4 h-4 mr-1" />
                     New workouts added weekly!
                   </div>
@@ -87,7 +93,7 @@ export default function Home() {
                   <Link href="/workouts">
                     <Button 
                       size="lg" 
-                      className="w-full font-semibold text-blue-700 bg-white hover:bg-blue-50 shadow-lg transform hover:scale-105 transition-all duration-200"
+                      className="w-full font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-lg transform hover:scale-105 transition-all duration-200"
                     >
                       <Dumbbell className="h-5 w-5 mr-2" />
                       View All Workouts
@@ -99,11 +105,14 @@ export default function Home() {
 
             {/* Column 3: Ready to Transform */}
             <div className="text-center flex flex-col h-full">
-              <div className="bg-gradient-to-br from-[hsl(var(--coaching-primary))] via-purple-700 to-[hsl(var(--coaching-accent))] text-white p-6 rounded-2xl shadow-lg h-full flex flex-col">
+              <div className="bg-white border-2 border-purple-200 p-6 rounded-2xl shadow-lg h-full flex flex-col">
                 <div className="mb-4">
-                  <h2 className="text-2xl font-bold text-white mb-2">1-on-1 Strength Training</h2>
-                  <p className="text-purple-100 mb-2 text-[14px]">Personalized coaching tailored to your goals</p>
-                  <div className="bg-purple-200/20 text-purple-100 px-3 py-1 rounded-full inline-block text-sm font-medium">
+                  <div className="inline-block bg-purple-800/10 text-purple-800 px-3 py-1 rounded-full text-sm font-medium mb-2">
+                    1-on-1 Services
+                  </div>
+                  <h2 className="text-2xl font-bold text-purple-800 mb-2">1-on-1 Strength Training</h2>
+                  <p className="text-gray-600 mb-2 text-[14px]">Personalized coaching tailored to your goals</p>
+                  <div className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
                     <Star className="inline w-4 h-4 mr-1" />
                     30 years of experience!
                   </div>
@@ -114,9 +123,9 @@ export default function Home() {
                     <img 
                       src={gymImagePath}
                       alt="Professional strength training gym with squat racks and free weights"
-                      className="w-full h-48 object-cover rounded-lg mb-4"
+                      className="w-full h-48 object-cover rounded-lg mb-4 border border-purple-200"
                     />
-                    <p className="text-purple-100 text-sm leading-relaxed">
+                    <p className="text-gray-600 text-sm leading-relaxed">
                       Get personalized training and coaching from a certified trainer, yoga teacher, running coach, and integrative nutrition coach. 
                       Bridge the gap from inactivity to strength and sustainable healthy habits.
                     </p>
@@ -127,7 +136,7 @@ export default function Home() {
                   <Link href="/services">
                     <Button 
                       size="lg" 
-                      className="w-full bg-white text-[hsl(var(--coaching-text))] hover:bg-[hsl(var(--coaching-light))] font-bold shadow-lg transform hover:scale-105 transition-all duration-200"
+                      className="w-full bg-purple-800 text-white hover:bg-purple-900 font-bold shadow-lg transform hover:scale-105 transition-all duration-200"
                     >
                       <Users className="h-5 w-5 mr-2" />
                       View Services
@@ -136,14 +145,14 @@ export default function Home() {
                   
                   <Button 
                     size="lg" 
-                    className="w-full bg-gradient-to-r from-[hsl(var(--coaching-accent))] to-[hsl(var(--coaching-primary))] hover:from-[hsl(var(--coaching-accent))]/90 hover:to-[hsl(var(--coaching-primary))]/90 text-white font-bold rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
+                    className="w-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white font-bold rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
                     onClick={() => window.open('https://calendly.com/michaelbakerdigital/30minute', '_blank')}
                   >
                     <Calendar className="h-5 w-5 mr-2" />
                     Free Consultation
                   </Button>
                   
-                  <p className="text-purple-200 text-xs mt-2">
+                  <p className="text-gray-500 text-xs mt-2">
                     No commitment required • 30-minute consultation • Personalized recommendations
                   </p>
                 </div>
