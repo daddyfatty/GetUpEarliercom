@@ -42,27 +42,8 @@ app.use((req, res, next) => {
 (async () => {
   const server = await registerRoutes(app);
   
-  // Start automatic Facebook group post sync
-  try {
-    const { facebookGroupScraper } = await import('./facebook-group-scraper');
-    
-    // Run initial sync of last 2 posts from Michael Baker
-    setTimeout(async () => {
-      console.log('Starting initial Facebook group sync...');
-      await facebookGroupScraper.scrapeRecentPosts();
-    }, 10000); // Wait 10 seconds after startup
-    
-    // Set up periodic sync every 2 hours
-    setInterval(async () => {
-      console.log('Running scheduled Facebook group sync...');
-      await facebookGroupScraper.scrapeRecentPosts();
-    }, 2 * 60 * 60 * 1000); // Every 2 hours
-    
-    console.log('Facebook group scraper initialized - will sync Michael Baker posts every 2 hours');
-    
-  } catch (error) {
-    console.log('Facebook group sync setup skipped:', error);
-  }
+  // Facebook group sync temporarily disabled
+  console.log('Facebook group sync temporarily disabled - requires RSS feed URL or API credentials');
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;

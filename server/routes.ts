@@ -426,84 +426,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Blog routes - restore original blog post ordering
+  // Blog routes - use original blog scraper
   app.get("/api/blog", async (req, res) => {
     try {
-      // Get hardcoded blog posts in original order
-      const staticPosts = [
-        {
-          id: "post-8",
-          url: "https://www.getupearlier.com/post/banana-ice-cream-sundae-smoothie-cup-vitamix",
-          title: "Banana Ice Cream Sundae Smoothie \"Cup\" (Vitamix)",
-          category: "nutrition",
-          author: "Michael Baker",
-          publishedDate: "2024-12-15T00:00:00Z",
-          excerpt: "This granola is my go-to carb loading snack for marathon training. I created it out of frustration with store-bought granola that breaks off into tiny pieces instead of satisfying chunks.",
-          content: "This granola is my go-to carb loading snack for marathon training. I created it out of frustration with store-bought granola that breaks off into tiny pieces instead of satisfying chunks. This recipe creates perfect clusters that hold together and provide sustained energy for long training runs.",
-          tags: ["nutrition", "granola", "marathon", "carb-loading"],
-          imageUrl: "https://cdn.prod.website-files.com/678a4458aad73fea7208fc9f/678ab3d4caec71062e65470f_erddd_1749497849578.jpg",
-          readTime: 4,
-          isVideo: false,
-          originalUrl: "https://www.getupearlier.com/blog/banana-smoothie-vitamix"
-        },
-        {
-          id: "post-9",
-          title: "Ground Chicken Breast Quick Goulash",
-          excerpt: "An easy one I make with Bell & Evans ground chicken breast is a quick goulash. I chop up onions and carrots and other veggies and brown them in a pot.",
-          content: "An easy one I make with Bell & Evans ground chicken breast is a quick goulash. I chop up onions and carrots and other veggies and brown them in a pot. Then I add the ground chicken and brown that. Then I add diced tomatoes, tomato sauce, and spices. Let it simmer for 30 minutes. Serve over rice or pasta. It's a complete meal with protein and vegetables.",
-          author: "Michael Baker",
-          publishedDate: "2024-12-12T00:00:00Z",
-          category: "nutrition",
-          tags: ["nutrition", "recipe", "chicken", "easy-meals"],
-          imageUrl: "https://cdn.prod.website-files.com/678a4458aad73fea7208fc9f/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
-          readTime: 3,
-          isVideo: false,
-          originalUrl: "https://www.getupearlier.com/blog/ground-chicken-goulash"
-        },
-        {
-          id: "post-10",
-          title: "Ultimate Endurance Fuel: Easy Peanut Butter, Cinnamon, Honey Granola Recipe (Full Fat)",
-          excerpt: "100% organic homemade granola with 0 sketchy ingredients that break off into awesome chunks. This granola is perfect for marathon training and provides sustained energy.",
-          content: "100% organic homemade granola with 0 sketchy ingredients that break off into awesome chunks. This granola is my go-to carb loading snack for marathon training and long endurance sessions. Made with organic oats, natural peanut butter, raw honey, and Ceylon cinnamon.",
-          author: "Michael Baker",
-          publishedDate: "2024-12-10T00:00:00Z",
-          category: "nutrition",
-          tags: ["nutrition", "granola", "endurance", "organic"],
-          imageUrl: "https://cdn.prod.website-files.com/678a4458aad73fea7208fc9f/678ac2a40110f9b97844413c_download%20(18)-p-500_1749497849578.png",
-          readTime: 5,
-          isVideo: false,
-          originalUrl: "https://www.getupearlier.com/blog/peanut-butter-granola"
-        },
-        {
-          id: "winter-running-motivation",
-          title: "Winter Running: Finding Your Fire When It's Cold",
-          excerpt: "Winter running doesn't have to be a struggle. Here's how to maintain motivation during the coldest months.",
-          content: "Winter running presents unique challenges, but with the right mindset and preparation, it can become one of your favorite times to train...",
-          author: "Michael Baker",
-          publishedDate: "2024-12-08T00:00:00Z",
-          category: "running",
-          tags: ["running", "winter", "motivation"],
-          imageUrl: "https://cdn.prod.website-files.com/678a4458aad73fea7208fc9f/678ab3d4caec71062e65470f_erddd_1749497849578.jpg",
-          readTime: 5,
-          isVideo: false,
-          originalUrl: "https://www.getupearlier.com/blog/winter-running-motivation"
-        },
-        {
-          id: "nutrition-fundamentals",
-          title: "Nutrition Fundamentals for Active Adults",
-          excerpt: "Essential nutrition principles to fuel your workouts and recovery effectively.",
-          content: "Understanding the basics of nutrition is crucial for anyone leading an active lifestyle...",
-          author: "Michael Baker",
-          publishedDate: "2024-12-05T00:00:00Z",
-          category: "nutrition",
-          tags: ["nutrition", "fundamentals", "health"],
-          imageUrl: "https://cdn.prod.website-files.com/678a4458aad73fea7208fc9f/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg",
-          readTime: 7,
-          isVideo: false,
-          originalUrl: "https://www.getupearlier.com/blog/nutrition-fundamentals"
-        }
-      ];
-
+      // Get original posts from website scraper
+      const { scrapeBlogPosts } = await import('./blog-scraper');
+      const scrapedPosts = await scrapeBlogPosts();
+      
       // Get new Facebook posts from database (if any)
       const { blogPosts } = await import('../shared/schema');
       const { db } = await import('./db');
@@ -522,8 +451,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime()
       );
       
-      // Combine: Facebook posts first, then original posts in order
-      const allPosts = [...facebookPosts, ...staticPosts];
+      // Combine: Facebook posts first, then original scraped posts in their order
+      const allPosts = [...facebookPosts, ...scrapedPosts];
       
       res.json(allPosts);
     } catch (error: any) {
