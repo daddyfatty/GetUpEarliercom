@@ -952,6 +952,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/paypal/order", createPaypalOrder);
   app.post("/api/paypal/order/:orderID/capture", capturePaypalOrder);
 
+  // Facebook RSS scraper routes
+  app.post("/api/blog/fetch-facebook-post", async (req, res) => {
+    try {
+      console.log("Facebook RSS API called with:", req.body);
+      const { postUrl } = req.body;
+      
+      if (!postUrl) {
+        return res.status(400).json({ message: "Post URL is required" });
+      }
+      
+      const { facebookRSScraper } = await import('./facebook-rss-scraper');
+      const result = await facebookRSScraper.fetchLatestPost(postUrl);
+      
+      console.log("Facebook RSS result:", result);
+      res.json(result);
+    } catch (error: any) {
+      console.error("Error fetching Facebook post:", error);
+      res.status(500).json({ message: "Error fetching Facebook post: " + error.message });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
