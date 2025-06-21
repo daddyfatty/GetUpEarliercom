@@ -117,18 +117,7 @@ export function Navigation() {
               </Link>
             </div>
 
-            {/* Desktop Logo (appears when scrolled) */}
-            <div className={`hidden md:flex items-center transition-all duration-300 ${
-              isScrolled ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-            }`}>
-              <Link href="/">
-                <img 
-                  src={logoPath} 
-                  alt="Get Up Earlier" 
-                  className="h-20 w-auto object-contain"
-                />
-              </Link>
-            </div>
+
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center justify-center flex-1">
