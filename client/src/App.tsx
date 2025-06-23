@@ -19,10 +19,8 @@ import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog-post";
 
 import About from "@/pages/about";
-import Coaching from "@/pages/coaching";
 import Services from "@/pages/services";
 import Contact from "@/pages/contact";
-import Team from "@/pages/team";
 import TeamMichael from "@/pages/team-michael";
 import TeamErica from "@/pages/team-erica";
 import UserProfile from "@/pages/user-profile";
@@ -66,10 +64,8 @@ function Router() {
           <Route path="/blog/:id" component={BlogPost} />
 
           <Route path="/about" component={About} />
-          <Route path="/coaching" component={Coaching} />
           <Route path="/services" component={Services} />
           <Route path="/contact" component={Contact} />
-          <Route path="/team" component={Team} />
           <Route path="/team/michael" component={TeamMichael} />
           <Route path="/team/erica" component={TeamErica} />
           <Route path="/profile" component={Profile} />
