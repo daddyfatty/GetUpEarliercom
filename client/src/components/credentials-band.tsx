@@ -25,9 +25,6 @@ export function CredentialsBand() {
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
             Professional Credentials
           </h3>
-          <p className="text-gray-600 dark:text-gray-300">
-            Certified by leading industry organizations
-          </p>
         </div>
         
         <div className="relative">
