@@ -49,44 +49,68 @@ export default function About() {
         </div>
 
         {/* ABOUT SECTION */}
-        <section id="about" className="max-w-6xl mx-auto mb-16">
-          {/* Bio Section */}
-          <div className="text-center mb-16">
-            <div className="w-32 h-32 rounded-full overflow-hidden mx-auto mb-6 border-8 border-white shadow-xl">
-              <img 
-                src={headshotPath} 
-                alt="Michael Baker" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Michael Baker
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-8">
-              Certified Personal Trainer, Integrative Nutrition Health Coach & Running Coach
-            </p>
-          </div>
+        <section id="about" className="max-w-7xl mx-auto mb-16">
+          <Card className="bg-gradient-to-br from-blue-50 via-white to-blue-50 dark:from-gray-800 dark:to-gray-900 border-0 shadow-2xl overflow-hidden">
+            <CardContent className="p-0">
+              <div className="grid lg:grid-cols-5 gap-0">
+                {/* Left Side - Photo and Basic Info */}
+                <div className="lg:col-span-2 bg-gradient-to-br from-blue-600 to-blue-800 dark:from-blue-900 dark:to-gray-900 p-8 lg:p-12 text-white flex flex-col justify-center items-center text-center">
+                  <div className="w-48 h-48 rounded-full overflow-hidden mb-8 border-8 border-white/20 shadow-2xl">
+                    <img 
+                      src={headshotPath} 
+                      alt="Michael Baker" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  
+                  <h2 className="text-4xl font-bold mb-4 text-white">
+                    Michael Baker
+                  </h2>
+                  
+                  <div className="space-y-2 mb-6">
+                    <p className="text-blue-100 text-lg font-medium">Certified Personal Trainer</p>
+                    <p className="text-blue-100 text-lg font-medium">Integrative Nutrition Health Coach</p>
+                    <p className="text-blue-100 text-lg font-medium">Running Coach & Yoga Teacher</p>
+                  </div>
+                  
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-3">
+                    <p className="text-white font-semibold text-lg">30+ Years Experience</p>
+                  </div>
+                </div>
 
-          <Card className="mb-12">
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">My Story</h3>
-              <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300">
-                <p className="mb-4">
-                  Hello, I'm Michael Baker. I am a 50-year-old strength trainer, certified personal trainer, running coach, 
-                  health coach, and yoga teacher. I'm also a former yoga studio owner and a dedicated health and wellness 
-                  practitioner with over 30 years of experience. I began Get Up Earlier (GetUpEarlier.com) because getting 
-                  up earlier was step one in transforming my routine and overall well-being, especially after spending years 
-                  sitting at a computer as a digital professional.
-                </p>
-                
-                <p className="mb-4">
-                  My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus 
-                  on helping people rely on intuition, providing a personal experience, and introducing them to strength training, 
-                  alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts. While 
-                  my own marathon training or strength achievements might seem extreme, I'm not trying to turn anyone into a 
-                  bodybuilder or marathon runner. I'm simply showing that, especially beyond 40, 50, 60, and 70 years old, 
-                  these things are possible. It's about inspiration and helping people make realistic, sustainable changes.
-                </p>
+                {/* Right Side - Story */}
+                <div className="lg:col-span-3 p-8 lg:p-12">
+                  <div className="max-w-none">
+                    <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 relative">
+                      My Story
+                      <div className="absolute -bottom-2 left-0 w-16 h-1 bg-blue-600 rounded-full"></div>
+                    </h3>
+                    
+                    <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-6">
+                      <p className="text-lg leading-relaxed">
+                        Hello, I'm Michael Baker. I am a 50-year-old strength trainer, certified personal trainer, running coach, 
+                        health coach, and yoga teacher. I'm also a former yoga studio owner and a dedicated health and wellness 
+                        practitioner with over 30 years of experience. I began <span className="font-semibold text-blue-600">Get Up Earlier</span> (GetUpEarlier.com) because getting 
+                        up earlier was step one in transforming my routine and overall well-being, especially after spending years 
+                        sitting at a computer as a digital professional.
+                      </p>
+                      
+                      <div className="bg-blue-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-blue-600">
+                        <p className="text-lg leading-relaxed mb-0">
+                          My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus 
+                          on helping people rely on intuition, providing a personal experience, and introducing them to strength training, 
+                          alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts.
+                        </p>
+                      </div>
+                      
+                      <p className="text-lg leading-relaxed">
+                        While my own marathon training or strength achievements might seem extreme, I'm not trying to turn anyone into a 
+                        bodybuilder or marathon runner. I'm simply showing that, especially beyond 40, 50, 60, and 70 years old, 
+                        these things are possible. <span className="font-semibold text-blue-600">It's about inspiration and helping people make realistic, sustainable changes.</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
