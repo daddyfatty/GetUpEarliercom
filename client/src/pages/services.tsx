@@ -83,8 +83,7 @@ export default function Services() {
         "In-person Orange, CT or virtual anywhere*"
       ],
       buttonText: "Book Session",
-      isPopular: true,
-      badge: "Most Popular",
+      isPopular: false,
       backgroundColor: "bg-slate-900",
       textColor: "text-white",
       quantityInput: true
