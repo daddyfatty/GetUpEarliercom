@@ -20,7 +20,8 @@ export default function Services() {
       buttonText: "Reach Out And Book Session",
       isPopular: false,
       isFree: true,
-      backgroundColor: "bg-orange-50"
+      backgroundColor: "bg-orange-50",
+      badge: undefined
     },
     {
       title: "1-on-1 Personal Training",
@@ -36,7 +37,8 @@ export default function Services() {
       isPopular: false,
       backgroundColor: "bg-slate-900",
       textColor: "text-white",
-      quantityInput: true
+      quantityInput: true,
+      badge: undefined
     }
   ];
 

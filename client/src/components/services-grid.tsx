@@ -93,7 +93,7 @@ export function ServicesGrid({
         </div>
       )}
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className={`grid gap-8 ${showImages ? 'grid-cols-1 lg:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
         {servicesData.map((service, index) => (
           <Card key={index} className="h-full hover:shadow-lg transition-shadow duration-300 group">
             {showImages && service.image && (
