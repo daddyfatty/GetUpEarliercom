@@ -71,6 +71,8 @@ export default function About() {
                     <p className="text-blue-100 text-lg font-medium">Certified Personal Trainer</p>
                     <p className="text-blue-100 text-lg font-medium">Integrative Nutrition Health Coach</p>
                     <p className="text-blue-100 text-lg font-medium">Running Coach & Yoga Teacher</p>
+                    <p className="text-blue-100 text-lg font-medium">25 Year Digital Professional</p>
+                    <p className="text-blue-100 text-lg font-medium">Lifelong Fitness Practitioner</p>
                   </div>
                   
                   <Link href="/contact">
