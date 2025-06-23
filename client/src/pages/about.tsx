@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CredentialsBand } from "@/components/credentials-band";
+import { ServicesGrid } from "@/components/services-grid";
 import { ArrowLeft, Award, Calendar, Users, Heart, Target, Dumbbell, Zap, User, ChevronDown, ChevronUp } from "lucide-react";
 
 import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
@@ -28,50 +29,7 @@ export default function About() {
     setExpandedSection(expandedSection === section ? null : section);
   };
 
-  const services = [
-    {
-      icon: <Zap className="h-8 w-8 text-blue-500" />,
-      title: "1-on-1 Personal Strength Training",
-      description: "Powerful, distraction-free 30-minute workouts incorporating traditional compound free-weight movements, bodyweight exercises, and outdoor activities.",
-      color: "blue",
-      badge: "PERSONAL TRAINING"
-    },
-    {
-      icon: <Heart className="h-8 w-8 text-green-500" />,
-      title: "Virtual Nutrition Coaching",
-      description: "Providing education on clean eating, understanding calories, healthy digital shopping, and creating personalized sustainable meal plans.",
-      color: "green",
-      badge: "IIN"
-    },
-    {
-      icon: <Target className="h-8 w-8 text-red-500" />,
-      title: "Accountability Coaching",
-      description: "Identify unhealthy habits and break free with small changes, learning to be mindful in real life without relying on a facility, AI, or an app. 1-on-1 live.",
-      color: "red",
-      badge: "ACCOUNTABILITY"
-    },
-    {
-      icon: <Users className="h-8 w-8 text-purple-500" />,
-      title: "Certified Running Coaching",
-      description: "I work alongside beginner runners to help them break through their own limits. Learn how to progress from never running to completing a 5K, a 5-miler, or more.",
-      color: "purple",
-      badge: "RUNNING"
-    },
-    {
-      icon: <Dumbbell className="h-8 w-8 text-blue-500" />,
-      title: "Private Yoga",
-      description: "Immerse yourself in a personalized yoga experience.",
-      color: "blue",
-      badge: "PRIVATE YOGA"
-    },
-    {
-      icon: <User className="h-8 w-8 text-pink-500" />,
-      title: "Small Group Yoga",
-      description: "Elevate your yoga practice with our semi-private Vinyasa yoga sessions.",
-      color: "pink",
-      badge: "GROUP YOGA"
-    }
-  ];
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -281,33 +239,7 @@ export default function About() {
         {/* COACHING SECTION */}
         <section id="coaching" className="bg-white dark:bg-gray-900 py-16 -mx-4 px-4 mt-16">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                1-on-1 Services
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                Personalized coaching services designed to help you achieve your health and fitness goals
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {services.map((service, index) => (
-                <Card key={index} className="h-full hover:shadow-lg transition-shadow duration-300">
-                  <CardHeader className="text-center">
-                    <div className="mb-4">{service.icon}</div>
-                    <Badge variant="secondary" className="mb-3 w-fit mx-auto">
-                      {service.badge}
-                    </Badge>
-                    <CardTitle className="text-xl mb-3">{service.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-gray-600 dark:text-gray-300">
-                      {service.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <ServicesGrid />
 
             <div className="text-center mt-12">
               <Link href="/services">

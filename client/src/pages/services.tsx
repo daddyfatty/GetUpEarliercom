@@ -1,60 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Zap, Heart, Target, Users, Dumbbell, User } from "lucide-react";
+import { ServicesGrid } from "@/components/services-grid";
 import { Link } from "wouter";
 
 export default function Services() {
-  const services = [
-    {
-      icon: <Zap className="h-8 w-8 text-blue-500" />,
-      title: "1-on-1 Personal Strength Training",
-      description: "Powerful, distraction-free 30-minute workouts incorporating traditional compound free-weight movements, bodyweight exercises, and outdoor activities.",
-      color: "blue",
-      image: "/assets/download - 2025-06-20T164725.183_1750453386689.png",
-      badge: "PERSONAL TRAINING"
-    },
-    {
-      icon: <Heart className="h-8 w-8 text-green-500" />,
-      title: "Virtual Nutrition Coaching",
-      description: "Providing education on clean eating, understanding calories, healthy digital shopping, and creating personalized sustainable meal plans.",
-      color: "green",
-      image: "/assets/download - 2025-06-20T170333.649_1750453429860.png",
-      badge: "IIN"
-    },
-    {
-      icon: <Target className="h-8 w-8 text-red-500" />,
-      title: "Accountability Coaching",
-      description: "Identify unhealthy habits and break free with small changes, learning to be mindful in real life without relying on a facility, AI, or an app. 1-on-1 live.",
-      color: "red",
-      image: "/assets/678aad8cfd0dcde677a14418_hike2-p-800_1750453452584.jpg",
-      badge: "ACCOUNTABILITY"
-    },
-    {
-      icon: <Users className="h-8 w-8 text-purple-500" />,
-      title: "Certified Running Coaching",
-      description: "I work alongside beginner runners to help them break through their own limits. Learn how to progress from never running to completing a 5K, a 5-miler, or more.",
-      color: "purple",
-      image: "/assets/download - 2025-06-20T170430.001_1750453483739.png",
-      badge: "RUNNING"
-    },
-    {
-      icon: <Dumbbell className="h-8 w-8 text-blue-500" />,
-      title: "Private Yoga",
-      description: "Immerse yourself in a personalized yoga experience.",
-      color: "blue",
-      image: "/assets/download - 2025-06-20T170516.226_1750453530152.png",
-      badge: "PRIVATE YOGA"
-    },
-    {
-      icon: <User className="h-8 w-8 text-pink-500" />,
-      title: "Small Group Yoga",
-      description: "Elevate your yoga practice with our semi-private Vinyasa yoga sessions.",
-      color: "pink",
-      image: "/assets/download - 2025-06-20T170538.818_1750453554236.png",
-      badge: "GROUP YOGA"
-    }
-  ];
 
   const packages = [
     {
@@ -127,49 +77,12 @@ export default function Services() {
         {/* Services Grid */}
         <div className="pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {services.map((service, index) => (
-                <Card key={index} className="bg-white shadow-sm hover:shadow-md transition-shadow border-0 overflow-hidden">
-                  <div className="relative">
-                    <img 
-                      src={service.image} 
-                      alt={service.title}
-                      className="w-full h-48 object-cover"
-                    />
-                    <div className="absolute top-3 right-3">
-                      <Badge 
-                        variant="secondary" 
-                        className={`text-xs font-medium px-2 py-1 ${
-                          service.color === 'blue' ? 'bg-blue-100 text-blue-800' :
-                          service.color === 'green' ? 'bg-green-100 text-green-800' :
-                          service.color === 'red' ? 'bg-red-100 text-red-800' :
-                          service.color === 'purple' ? 'bg-purple-100 text-purple-800' :
-                          service.color === 'pink' ? 'bg-pink-100 text-pink-800' :
-                          'bg-gray-100 text-gray-800'
-                        }`}
-                      >
-                        {service.badge}
-                      </Badge>
-                    </div>
-                  </div>
-                  <CardHeader className="text-center pb-4">
-                    <CardTitle className="text-lg font-semibold text-gray-900">
-                      {service.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-gray-600 text-center mb-6 leading-relaxed">
-                      {service.description}
-                    </CardDescription>
-                    <div className="text-center">
-                      <Button variant="outline" size="sm">
-                        Read More →
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <ServicesGrid 
+              showImages={true} 
+              showReadMore={true} 
+              title=""
+              subtitle=""
+            />
           </div>
         </div>
       </section>
