@@ -239,7 +239,10 @@ export default function About() {
         {/* COACHING SECTION */}
         <section id="coaching" className="bg-white dark:bg-gray-900 py-16 -mx-4 px-4 mt-16">
           <div className="max-w-7xl mx-auto">
-            <ServicesGrid />
+            <ServicesGrid 
+              showImages={true} 
+              showReadMore={true} 
+            />
 
             <div className="text-center mt-12">
               <Link href="/services">
