@@ -69,8 +69,8 @@ export default function About() {
             Meet the Team
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-            About Our<br className="hidden sm:block" />
-            <span className="text-blue-600">Health & Fitness Team</span>
+            About Get Up Earlier<br className="hidden sm:block" />
+            <span className="text-blue-600">1-on-1 Strength Training, Nutrition, Yoga & Accountability Coaching</span>
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">
             Meet our certified professionals dedicated to transforming lives through personalized health and fitness coaching with over 30 years of combined experience.
