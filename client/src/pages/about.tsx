@@ -73,9 +73,11 @@ export default function About() {
                     <p className="text-blue-100 text-lg font-medium">Running Coach & Yoga Teacher</p>
                   </div>
                   
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-3">
-                    <p className="text-white font-semibold text-lg">30+ Years Experience</p>
-                  </div>
+                  <Link href="/contact">
+                    <Button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white border-white/30 px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105">
+                      Let's Work Together →
+                    </Button>
+                  </Link>
                 </div>
 
                 {/* Right Side - Story */}
