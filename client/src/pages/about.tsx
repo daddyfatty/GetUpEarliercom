@@ -73,22 +73,19 @@ export default function About() {
               <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300">
                 <p className="mb-4">
                   Hello, I'm Michael Baker. I am a 50-year-old strength trainer, certified personal trainer, running coach, 
-                  health coach, and yoga teacher. I'm also a former yoga studio owner and a digital professional with over 
-                  30 years of experience.
+                  health coach, and yoga teacher. I'm also a former yoga studio owner and a dedicated health and wellness 
+                  practitioner with over 30 years of experience. I began Get Up Earlier (GetUpEarlier.com) because getting 
+                  up earlier was step one in transforming my routine and overall well-being, especially after spending years 
+                  sitting at a computer as a digital professional.
                 </p>
                 
                 <p className="mb-4">
-                  My approach to health and fitness is both authentic and sustainable. I believe in the power of small, 
-                  consistent changes that create lasting transformation. Whether you're just starting your fitness journey 
-                  or looking to break through plateaus, I'm here to guide you with personalized strategies that work for 
-                  your unique lifestyle.
-                </p>
-                
-                <p className="mb-4">
-                  As someone who has maintained peak physical condition into my 50s, I understand the challenges of staying 
-                  fit as we age. My training philosophy emphasizes functional movement, strength building, and injury prevention. 
-                  I've helped hundreds of clients achieve their health goals through a combination of smart training, 
-                  practical nutrition, and mindful accountability.
+                  My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus 
+                  on helping people rely on intuition, providing a personal experience, and introducing them to strength training, 
+                  alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts. While 
+                  my own marathon training or strength achievements might seem extreme, I'm not trying to turn anyone into a 
+                  bodybuilder or marathon runner. I'm simply showing that, especially beyond 40, 50, 60, and 70 years old, 
+                  these things are possible. It's about inspiration and helping people make realistic, sustainable changes.
                 </p>
               </div>
             </CardContent>
