@@ -68,12 +68,12 @@ export default function About() {
           <div className="inline-block bg-blue-600/10 text-blue-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
             Meet the Team
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-            About Get Up Earlier<br className="hidden sm:block" />
-            <span className="text-blue-600">1-on-1 Strength Training, Nutrition, Yoga & Accountability Coaching</span>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            <span className="text-black dark:text-white">About</span><br className="hidden sm:block" />
+            <span className="text-blue-900 dark:text-blue-400">Get Up Earlier</span>
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">
-            Meet our certified professionals dedicated to transforming lives through personalized health and fitness coaching with over 30 years of combined experience.
+            1-on-1 Strength Training, Nutrition, Yoga & Accountability Coaching
           </p>
         </div>
 
