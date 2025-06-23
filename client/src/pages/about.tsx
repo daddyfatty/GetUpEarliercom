@@ -121,34 +121,7 @@ export default function About() {
           </CardContent>
         </Card>
 
-        {/* Credentials Section */}
-        <Card className="mb-16">
-          <CardContent className="p-8">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Professional Credentials</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="text-center">
-                <Award className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">ISSA Certified</h3>
-                <p className="text-gray-600 dark:text-gray-300">Personal Trainer</p>
-              </div>
-              <div className="text-center">
-                <Heart className="w-12 h-12 text-green-600 mx-auto mb-4" />
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">IIN Certified</h3>
-                <p className="text-gray-600 dark:text-gray-300">Health Coach</p>
-              </div>
-              <div className="text-center">
-                <Target className="w-12 h-12 text-red-600 mx-auto mb-4" />
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">ISSA Certified</h3>
-                <p className="text-gray-600 dark:text-gray-300">Running Coach</p>
-              </div>
-              <div className="text-center">
-                <Users className="w-12 h-12 text-purple-600 mx-auto mb-4" />
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">RYT 200</h3>
-                <p className="text-gray-600 dark:text-gray-300">Yoga Teacher</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+
       </section>
 
       {/* CREDENTIALS BAND */}
