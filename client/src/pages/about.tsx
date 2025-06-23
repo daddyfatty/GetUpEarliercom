@@ -1,9 +1,10 @@
+import { useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CredentialsBand } from "@/components/credentials-band";
-import { ArrowLeft, Award, Calendar, Users, Heart, Target, Dumbbell, Zap, User } from "lucide-react";
+import { ArrowLeft, Award, Calendar, Users, Heart, Target, Dumbbell, Zap, User, ChevronDown, ChevronUp } from "lucide-react";
 
 import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
 import ericaPath from "@assets/678ab3d4caec71062e65470f_erddd_1749497849578.jpg";
@@ -14,7 +15,19 @@ import rytMikeBadge from "@assets/RYTMIKE_1749505314924.png";
 import eryBadge from "@assets/67910e23033a488a11f42952_erty (1)_1749505199203.png";
 import yaerBadge from "@assets/YAER_1749505224126.png";
 
+// Gym/Yoga Space Images
+import gymSpace from "@assets/download - 2025-06-23T105919.083_1750690773931.png";
+import yogaSpace from "@assets/download - 2025-06-23T105922.235_1750690773931.png";
+import ericaYogaPose from "@assets/download - 2025-06-23T105914.482_1750690773931.png";
+import michaelHeadshot from "@assets/download - 2025-06-23T105909.352_1750690773932.png";
+
 export default function About() {
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
+
+  const toggleSection = (section: string) => {
+    setExpandedSection(expandedSection === section ? null : section);
+  };
+
   const services = [
     {
       icon: <Zap className="h-8 w-8 text-blue-500" />,
@@ -128,129 +141,139 @@ export default function About() {
         <CredentialsBand />
 
         {/* TEAM SECTION */}
-        <section id="team" className="bg-gradient-to-br from-gray-50 to-purple-50/30 dark:from-gray-800 dark:to-purple-900/20 py-16 -mx-4 px-4">
+        <section id="team" className="bg-white dark:bg-gray-900 py-16 -mx-4 px-4">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                Meet Our Team
+                Certified Professionals
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                Certified professionals with decades of combined experience, dedicated to transforming lives
-              </p>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-stretch">
+            <div className="grid lg:grid-cols-2 gap-12 max-w-4xl mx-auto items-center">
               {/* Michael Baker */}
-              <Link href="/team/michael">
-                <Card className="cursor-pointer transition-all duration-300 hover:shadow-2xl hover:scale-105 group bg-white/70 backdrop-blur-sm border-0 shadow-xl overflow-hidden h-full flex flex-col">
-                  <CardHeader className="text-center p-8 relative z-10 flex-1 flex flex-col justify-between">
-                    <div className="flex flex-col">
-                      <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl ring-4 ring-white/50 group-hover:ring-purple-200 transition-all duration-300">
-                        <img 
-                          src={headshotPath} 
-                          alt="Michael Baker" 
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        />
-                      </div>
-                      
-                      <CardTitle className="text-3xl font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
-                        Michael Baker
-                      </CardTitle>
-                      
-                      <CardDescription className="text-lg mb-6 text-gray-600 leading-relaxed max-w-md mx-auto">
-                        Certified Personal Trainer, Integrative Nutrition Health Coach & Running Coach
-                      </CardDescription>
-                      
-                      {/* Professional Certification Badges */}
-                      <div className="mb-6 flex-1">
-                        <h4 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Professional Certifications</h4>
-                        <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto">
-                          <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                            <img 
-                              src={personalTrainerBadge} 
-                              alt="ISSA Personal Trainer" 
-                              className="h-12 w-auto mx-auto mb-1"
-                            />
-                            <p className="text-xs text-gray-600 font-medium text-center">ISSA Personal Trainer</p>
-                          </div>
-                          <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                            <img 
-                              src={nutritionBadge} 
-                              alt="Integrative Nutrition Health Coach" 
-                              className="h-12 w-auto mx-auto mb-1"
-                            />
-                            <p className="text-xs text-gray-600 font-medium text-center">Nutrition Coach</p>
-                          </div>
-                          <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                            <img 
-                              src={runningCoachBadge} 
-                              alt="ISSA Running Coach" 
-                              className="h-12 w-auto mx-auto mb-1"
-                            />
-                            <p className="text-xs text-gray-600 font-medium text-center">Running Coach</p>
-                          </div>
-                          <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                            <img 
-                              src={rytMikeBadge} 
-                              alt="RYT 200 Yoga Teacher" 
-                              className="h-12 w-auto mx-auto mb-1"
-                            />
-                            <p className="text-xs text-gray-600 font-medium text-center">RYT 200 Yoga</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardHeader>
-                </Card>
-              </Link>
+              <div className="text-center">
+                <div className="w-64 h-64 mx-auto mb-4 overflow-hidden shadow-lg border-4 border-gray-200 rounded-lg">
+                  <img 
+                    src={michaelHeadshot} 
+                    alt="Michael Baker" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <p className="text-sm text-gray-600 mb-2">Personal Trainer, Nutrition Coach</p>
+                <h3 className="text-xl font-bold text-gray-900">Michael Baker</h3>
+              </div>
 
               {/* Erica Baker */}
-              <Link href="/team/erica">
-                <Card className="cursor-pointer transition-all duration-300 hover:shadow-2xl hover:scale-105 group bg-white/70 backdrop-blur-sm border-0 shadow-xl overflow-hidden h-full flex flex-col">
-                  <CardHeader className="text-center p-8 relative z-10 flex-1 flex flex-col justify-between">
-                    <div className="flex flex-col">
-                      <div className="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden shadow-2xl ring-4 ring-white/50 group-hover:ring-purple-200 transition-all duration-300">
-                        <img 
-                          src={ericaPath} 
-                          alt="Erica Baker" 
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        />
-                      </div>
-                      
-                      <CardTitle className="text-3xl font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
-                        Erica Baker
-                      </CardTitle>
-                      
-                      <CardDescription className="text-lg mb-6 text-gray-600 leading-relaxed max-w-md mx-auto">
-                        Registered Yoga Teacher & Wellness Specialist
-                      </CardDescription>
-                      
-                      {/* Professional Certification Badges */}
-                      <div className="mb-6 flex-1">
-                        <h4 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Professional Certifications</h4>
-                        <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto">
-                          <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                            <img 
-                              src={eryBadge} 
-                              alt="ERY Certification" 
-                              className="h-12 w-auto mx-auto mb-1"
-                            />
-                            <p className="text-xs text-gray-600 font-medium text-center">ERY Certified</p>
-                          </div>
-                          <div className="bg-white/80 p-3 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                            <img 
-                              src={yaerBadge} 
-                              alt="YAER Certification" 
-                              className="h-12 w-auto mx-auto mb-1"
-                            />
-                            <p className="text-xs text-gray-600 font-medium text-center">YAER Specialist</p>
-                          </div>
-                        </div>
-                      </div>
+              <div className="text-center">
+                <div className="w-64 h-64 mx-auto mb-4 overflow-hidden shadow-lg border-4 border-gray-200 rounded-lg">
+                  <img 
+                    src={ericaYogaPose} 
+                    alt="Erica Baker" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <p className="text-sm text-gray-600 mb-2">RYT Yoga Teacher</p>
+                <h3 className="text-xl font-bold text-gray-900">Erica Baker</h3>
+              </div>
+            </div>
+
+            {/* In-Home Private Boutique Section */}
+            <div className="mt-20 max-w-6xl mx-auto">
+              <div className="text-left mb-8">
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                  In-Home Private Boutique
+                </h3>
+                <p className="text-xl text-gray-600 dark:text-gray-300">
+                  Fitness Space Orange, CT
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6 mb-8">
+                <div className="rounded-lg overflow-hidden shadow-lg">
+                  <img 
+                    src={gymSpace} 
+                    alt="Private Strength Training Studio" 
+                    className="w-full h-64 object-cover"
+                  />
+                </div>
+                <div className="rounded-lg overflow-hidden shadow-lg">
+                  <img 
+                    src={yogaSpace} 
+                    alt="Dedicated Pristine Yoga Space" 
+                    className="w-full h-64 object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* Expandable Sections */}
+              <div className="space-y-4">
+                <div className="border border-gray-200 rounded-lg">
+                  <button
+                    onClick={() => toggleSection('private-studio')}
+                    className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                  >
+                    <span className="font-semibold text-gray-900">01. Private Strength Training Studio</span>
+                    {expandedSection === 'private-studio' ? 
+                      <ChevronUp className="h-5 w-5 text-gray-500" /> : 
+                      <ChevronDown className="h-5 w-5 text-gray-500" />
+                    }
+                  </button>
+                  {expandedSection === 'private-studio' && (
+                    <div className="px-6 pb-4">
+                      <p className="text-gray-600">
+                        Experience personalized training in a distraction-free private gym equipped with the 
+                        essentials. Our studio includes a power rack, pulley systems, free weights, and a Rogue 
+                        Echo bike, perfect for 1-on-1 sessions tailored to your fitness goals. Ideal for those seeking 
+                        focused and effective strength training in a professional setting.
+                      </p>
                     </div>
-                  </CardHeader>
-                </Card>
-              </Link>
+                  )}
+                </div>
+
+                <div className="border border-gray-200 rounded-lg">
+                  <button
+                    onClick={() => toggleSection('yoga-space')}
+                    className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                  >
+                    <span className="font-semibold text-gray-900">02. Dedicated Pristine Yoga Space</span>
+                    {expandedSection === 'yoga-space' ? 
+                      <ChevronUp className="h-5 w-5 text-gray-500" /> : 
+                      <ChevronDown className="h-5 w-5 text-gray-500" />
+                    }
+                  </button>
+                  {expandedSection === 'yoga-space' && (
+                    <div className="px-6 pb-4">
+                      <p className="text-gray-600">
+                        Immerse yourself in a peaceful, dedicated yoga space designed for mindful practice. 
+                        Our pristine studio provides the perfect environment for private or small group yoga sessions, 
+                        featuring natural lighting and a calming atmosphere that promotes relaxation and focus.
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="border border-gray-200 rounded-lg">
+                  <button
+                    onClick={() => toggleSection('instructors')}
+                    className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                  >
+                    <span className="font-semibold text-gray-900">03. Certified, Seasoned Instructors</span>
+                    {expandedSection === 'instructors' ? 
+                      <ChevronUp className="h-5 w-5 text-gray-500" /> : 
+                      <ChevronDown className="h-5 w-5 text-gray-500" />
+                    }
+                  </button>
+                  {expandedSection === 'instructors' && (
+                    <div className="px-6 pb-4">
+                      <p className="text-gray-600">
+                        Work with certified professionals who bring decades of experience in personal training, 
+                        nutrition coaching, and yoga instruction. Our team is dedicated to helping you achieve 
+                        your health and fitness goals through personalized guidance and expert knowledge.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </section>
