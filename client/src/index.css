@@ -37,6 +37,24 @@
   --coaching-text: 262 83% 20%; /* Dark purple for text */
 }
 
+/* Credentials Band Animation */
+@keyframes scroll-infinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-infinite {
+  animation: scroll-infinite 30s linear infinite;
+}
+
+.animate-scroll-infinite:hover {
+  animation-play-state: paused;
+}
+
 .dark {
   --background: 207 38% 14%; /* #152035 - Dark blue */
   --foreground: 0 0% 100%;

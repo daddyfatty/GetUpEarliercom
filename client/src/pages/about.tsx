@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { CredentialsBand } from "@/components/credentials-band";
 import { ArrowLeft, Award, Calendar, Users, Heart, Target, Dumbbell, Zap, User } from "lucide-react";
 
 import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
@@ -149,6 +150,9 @@ export default function About() {
           </CardContent>
         </Card>
       </section>
+
+      {/* CREDENTIALS BAND */}
+      <CredentialsBand />
 
       {/* TEAM SECTION */}
       <section id="team" className="bg-gradient-to-br from-gray-50 to-purple-50/30 dark:from-gray-800 dark:to-purple-900/20 py-16">
