@@ -1,10 +1,41 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ServicesGrid } from "@/components/services-grid";
 import { Link } from "wouter";
+import CheckoutModal from "@/components/checkout-modal";
 
 export default function Services() {
+  const [checkoutModal, setCheckoutModal] = useState<{
+    isOpen: boolean;
+    packageTitle: string;
+    price: string;
+    description: string;
+  }>({
+    isOpen: false,
+    packageTitle: '',
+    price: '',
+    description: ''
+  });
+
+  const openCheckout = (packageTitle: string, price: string, description: string) => {
+    setCheckoutModal({
+      isOpen: true,
+      packageTitle,
+      price,
+      description
+    });
+  };
+
+  const closeCheckout = () => {
+    setCheckoutModal({
+      isOpen: false,
+      packageTitle: '',
+      price: '',
+      description: ''
+    });
+  };
 
   const packages = [
     {
@@ -176,6 +207,7 @@ export default function Services() {
                         </Link>
                         <Button 
                           className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-medium py-6 px-8 text-lg rounded-lg h-16"
+                          onClick={() => openCheckout(pkg.title, pkg.price, pkg.description)}
                         >
                           Buy now
                         </Button>
@@ -206,6 +238,15 @@ export default function Services() {
           </div>
         </div>
       </section>
+
+      {/* Checkout Modal */}
+      <CheckoutModal
+        isOpen={checkoutModal.isOpen}
+        onClose={closeCheckout}
+        packageTitle={checkoutModal.packageTitle}
+        price={checkoutModal.price}
+        description={checkoutModal.description}
+      />
     </div>
   );
 }
