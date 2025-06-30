@@ -54,7 +54,7 @@ export default function Services() {
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
               Comprehensive<br className="hidden sm:block" />
-              <span className="text-purple-800">Support</span>
+              <span className="text-purple-800">Coaching & Training</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
               Personalized coaching tailored to your individual needs and goals
