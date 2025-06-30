@@ -38,7 +38,7 @@ export default function Home() {
                   <div className="inline-block bg-purple-800/10 text-purple-800 px-3 py-1 rounded-full text-sm font-medium mb-2">
                     1-on-1 Services
                   </div>
-                  <h2 className="text-2xl font-bold text-purple-800 mb-2">1-on-1 Strength Training</h2>
+                  <h2 className="text-2xl font-bold text-purple-800 mb-2">Strength, Nutrition, Yoga</h2>
                   <p className="text-gray-600 mb-2 text-[14px]">Personalized coaching tailored to your goals</p>
                   <div className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
                     <MapPin className="inline w-4 h-4 mr-1" />
@@ -196,13 +196,10 @@ export default function Home() {
           </div>
         </div>
       </section>
-      
       {/* Client Reviews */}
       <ClientReviews />
-      
       {/* Credentials Band */}
       <CredentialsBand />
-      
       <BookPromotion />
     </div>
   );
