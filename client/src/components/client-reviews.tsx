@@ -1,4 +1,11 @@
 import { Star } from "lucide-react";
+import davidImage from "@assets/678ae0317069e15526c3487a_download (23)_1751313391609.png";
+import mikeImage from "@assets/678ceb00a3ca26bcb4e7e32a_de_1751313391609.jpg";
+import michelleImage from "@assets/678ae0313289077684c96176_unnamed (3)_1751313391610.png";
+import ericaImage from "@assets/678ae0311e6f644579d9217f_unnamed (4)_1751313391610.png";
+import terranceImage from "@assets/678ae031dc0ec5a880b0909f_unnamed (6)_1751313391610.png";
+import chadImage from "@assets/download - 2025-06-30T155603.648_1751313391609.png";
+import steveImage from "@assets/download - 2025-06-30T155611.484_1751313391608.png";
 
 const reviews = [
   {
@@ -7,7 +14,7 @@ const reviews = [
     location: "Milford, CT",
     rating: 5,
     review: "Needed a kick start back to life and got that from Michael. He's knowledgeable, adapts to your preferences and optimized. Highly recommended. 10/10",
-    avatar: "DS"
+    avatar: davidImage
   },
   {
     id: 2,
@@ -15,7 +22,7 @@ const reviews = [
     location: "Orange, CT",
     rating: 5,
     review: "Mike is very dedicated to health and wellness, including having a strong knowledge base about nutrition. I have trained with him for several months and have attained my fitness goals. He's taught me many alternative ways to workout, deviating from traditional exercises.",
-    avatar: "MR"
+    avatar: mikeImage
   },
   {
     id: 3,
@@ -23,7 +30,7 @@ const reviews = [
     location: "Orange, CT",
     rating: 5,
     review: "Shout out to Michael J Baker! Listen, even Certified Personal Trainers can use some good advice, motivation and need a sounding board to reach their goals. He's a stand up guy who is knowledgeable, a family man and just a great mentor for anyone trying to love their best life! Thanks Mike! You're the best!",
-    avatar: "MT"
+    avatar: michelleImage
   },
   {
     id: 4,
@@ -31,7 +38,7 @@ const reviews = [
     location: "Orange, CT",
     rating: 5,
     review: "Mike has inspired me to do so many things over the years including yoga, weight lifting, running and overall guidance on food. I am pretty sure I was his first client and he really knows how to motivate and get great results!",
-    avatar: "EB"
+    avatar: ericaImage
   },
   {
     id: 5,
@@ -39,7 +46,7 @@ const reviews = [
     location: "Bellows Falls, VT",
     rating: 5,
     review: "Mike has been amazing to work with. Someone to give advice and keep me accountable without ever talking down to me or making me feel bad about my choices or decisions. He has helped me with Diet and Exercise, understands my goals and my situation, helps me through at my pace. He is invested in me doing better. Give him a shot.",
-    avatar: "T"
+    avatar: terranceImage
   },
   {
     id: 6,
@@ -47,7 +54,7 @@ const reviews = [
     location: "Milford, CT",
     rating: 5,
     review: "I started with MB Wellness in early March 2023. The passion Michael brings to every session is second to none, whether it is a cardio day, stretch/yoga day, or strength day he is always encouraging me and talking through some 'roadblocks' I may have had the previous week. If you are a 40+ male and looking to get back in shape in a private one-on-one setting, Michael is your man. He will guide you physically and mentally getting you to your goals and beyond.",
-    avatar: "C"
+    avatar: chadImage
   },
   {
     id: 7,
@@ -55,7 +62,7 @@ const reviews = [
     location: "Orange, CT",
     rating: 5,
     review: "Working with Mike has been a game-changer. From day one, it was clear that I had stumbled upon a true gem in the world of personal training. First and foremost, Mike has a remarkable setup at his home for one-on-one training. It's the perfect blend of a comfortable, private space and a fully-equipped gym, creating an ideal environment for focused workouts. The moment I stepped in, I felt at ease and motivated to push my limits.",
-    avatar: "SM"
+    avatar: steveImage
   }
 ];
 
@@ -89,9 +96,11 @@ export function ClientReviews() {
 
               {/* Author Info */}
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">{review.avatar}</span>
-                </div>
+                <img 
+                  src={review.avatar} 
+                  alt={review.name}
+                  className="w-10 h-10 rounded-full object-cover"
+                />
                 <div>
                   <p className="font-semibold text-gray-900 dark:text-white text-sm">
                     {review.name}
