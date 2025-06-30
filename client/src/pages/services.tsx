@@ -214,64 +214,64 @@ export default function Services() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" style={{ gap: '25px' }}>
             {packages.map((pkg, index) => (
-              <Card key={index} className={`${pkg.backgroundColor || 'bg-white'} ${pkg.textColor || 'text-gray-900'} ${pkg.isPopular ? 'ring-2 ring-blue-500 shadow-lg' : 'shadow-sm'} relative`}>
-                {pkg.isPopular && pkg.badge && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <Badge className="bg-blue-500 text-white px-4 py-1">
-                      {pkg.badge}
-                    </Badge>
-                  </div>
-                )}
-                
-                <CardContent className="p-8">
-                  <div className="mb-6">
-                    <h3 className={`text-xl font-semibold mb-4 ${pkg.textColor || 'text-gray-900'}`}>
-                      {pkg.title}
-                    </h3>
-                    
-                    <div className="flex items-baseline gap-3 mb-4">
-                      <span className={`text-4xl font-bold ${pkg.isFree ? 'text-gray-900' : pkg.textColor || 'text-gray-900'}`}>
-                        {pkg.price}
-                      </span>
-                      {pkg.priceTag && (
-                        <Badge variant="secondary" className="bg-gray-500 text-white text-xs">
-                          {pkg.priceTag}
-                        </Badge>
-                      )}
+              <Link key={index} href="/contact">
+                <Card className={`${pkg.backgroundColor || 'bg-white'} ${pkg.textColor || 'text-gray-900'} ${pkg.isPopular ? 'ring-2 ring-blue-500 shadow-lg' : 'shadow-sm'} relative cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:ring-2 hover:ring-blue-200`}>
+                  {pkg.isPopular && pkg.badge && (
+                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                      <Badge className="bg-blue-500 text-white px-4 py-1">
+                        {pkg.badge}
+                      </Badge>
                     </div>
-                    
-                    <div className={`text-sm leading-relaxed mb-6 ${pkg.textColor || 'text-gray-700'} space-y-3`}>
-                      {pkg.description.split('. ').map((sentence, index, array) => {
-                        if (index === array.length - 1) {
-                          return <p key={index}>{sentence}</p>;
-                        }
-                        return <p key={index}>{sentence}.</p>;
-                      })}
+                  )}
+                  
+                  <CardContent className="p-8">
+                    <div className="mb-6">
+                      <h3 className={`text-xl font-semibold mb-4 ${pkg.textColor || 'text-gray-900'}`}>
+                        {pkg.title}
+                      </h3>
+                      
+                      <div className="flex items-baseline gap-3 mb-4">
+                        <span className={`text-4xl font-bold ${pkg.isFree ? 'text-gray-900' : pkg.textColor || 'text-gray-900'}`}>
+                          {pkg.price}
+                        </span>
+                        {pkg.priceTag && (
+                          <Badge variant="secondary" className="bg-gray-500 text-white text-xs">
+                            {pkg.priceTag}
+                          </Badge>
+                        )}
+                      </div>
+                      
+                      <div className={`text-sm leading-relaxed mb-6 ${pkg.textColor || 'text-gray-700'} space-y-3`}>
+                        {pkg.description.split('. ').map((sentence, index, array) => {
+                          if (index === array.length - 1) {
+                            return <p key={index}>{sentence}</p>;
+                          }
+                          return <p key={index}>{sentence}.</p>;
+                        })}
+                      </div>
                     </div>
-                  </div>
 
-                  <ul className="space-y-3 mb-8">
-                    {pkg.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-start">
-                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <span className={`text-sm ${pkg.textColor || 'text-gray-700'}`}>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+                    <ul className="space-y-3 mb-8">
+                      {pkg.features.map((feature, featureIndex) => (
+                        <li key={featureIndex} className="flex items-start">
+                          <div className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                          <span className={`text-sm ${pkg.textColor || 'text-gray-700'}`}>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
 
-                  {pkg.isFree && (
-                    <div className="space-y-3">
-                      <Link href="/contact">
+                    {pkg.isFree && (
+                      <div className="space-y-3">
                         <Button 
                           className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-6 px-8 text-lg rounded-lg h-16"
                         >
                           {pkg.buttonText} →
                         </Button>
-                      </Link>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>
