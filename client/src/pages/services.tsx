@@ -212,10 +212,10 @@ export default function Services() {
             </p>
           </div>
 
-          <div className="columns-1 lg:columns-2 gap-6 space-y-6" style={{ gap: '25px' }}>
+          <div className="columns-1 lg:columns-2" style={{ gap: '25px' }}>
             {packages.map((pkg, index) => (
               <Link key={index} href="/contact">
-                <Card className={`${pkg.backgroundColor || 'bg-white'} ${pkg.textColor || 'text-gray-900'} ${pkg.isPopular ? 'ring-2 ring-blue-500 shadow-lg' : 'shadow-sm'} relative cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:ring-2 hover:ring-blue-200 break-inside-avoid mb-6`}>
+                <Card className={`${pkg.backgroundColor || 'bg-white'} ${pkg.textColor || 'text-gray-900'} ${pkg.isPopular ? 'ring-2 ring-blue-500 shadow-lg' : 'shadow-sm'} relative cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:ring-2 hover:ring-blue-200 break-inside-avoid`} style={{ margin: '25px' }}>
                   {pkg.isPopular && pkg.badge && (
                     <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                       <Badge className="bg-blue-500 text-white px-4 py-1">
