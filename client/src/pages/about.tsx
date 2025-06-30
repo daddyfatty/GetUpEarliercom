@@ -270,7 +270,7 @@ export default function About() {
             />
 
             <div className="text-center mt-12">
-              <Link href="/services#pricing">
+              <Link href="/services#services-pricing">
                 <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
                   Services Pricing
                 </Button>
