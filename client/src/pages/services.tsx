@@ -55,7 +55,7 @@ export default function Services() {
       badge: undefined
     },
     {
-      title: "Personal Strength Training",
+      title: "1-on-1 Personal Strength Training",
       price: "$50",
       priceTag: "Per 30 Minute Session",
       description: "Maximize your time with efficient, results-driven 30-minute strength sessions designed to build strength and improve fitness. Each session incorporates strength training, weight lifting, compound exercises, bodyweight movements, yoga-inspired stretches, efficient drills, portable workouts, and nutrition information you can take with you when you travel and navigate life on your own. When there is AI, no app, no coach, or no trainer to help you.",
