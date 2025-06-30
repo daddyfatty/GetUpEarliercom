@@ -155,7 +155,7 @@ export default function About() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <p className="text-sm text-gray-600 mb-2">RYT Yoga Teacher</p>
+                <p className="text-sm text-gray-600 mb-2">E-RYT Yoga Teacher</p>
                 <h3 className="text-xl font-bold text-gray-900">Erica Baker</h3>
               </div>
             </div>

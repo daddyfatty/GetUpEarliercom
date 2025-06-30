@@ -12,7 +12,7 @@ export function CredentialsBand() {
     { src: runningCoachBadge, alt: "ISSA Running Coach Certified", name: "Running Coach" },
     { src: eryBadge1, alt: "E-RYT 200 Yoga Teacher", name: "E-RYT 200" },
     { src: eryBadge2, alt: "E-RYT 200 Yoga Alliance", name: "Yoga Alliance" },
-    { src: ericaYogaBadge, alt: "Erica Lee Baker Yoga", name: "Specialized Training" },
+    { src: ericaYogaBadge, alt: "Erica Baker E-RYT Yoga Teacher", name: "E-RYT Certified" },
   ];
 
   // Duplicate the credentials array to create seamless loop
