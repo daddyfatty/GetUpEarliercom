@@ -17,6 +17,13 @@ export function HeroSection() {
               Strength training, nutrition coaching, and accountability that actually works.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/services" className="w-full sm:w-auto">
+                <Button 
+                  className="w-full bg-[hsl(var(--coaching-primary))] hover:bg-[hsl(var(--coaching-primary))]/90 text-white font-semibold px-8 py-4 text-lg"
+                >
+                  View Services
+                </Button>
+              </Link>
               <Link href="/recipes" className="w-full sm:w-auto">
                 <Button 
                   className="w-full font-semibold text-white hover:opacity-90 border-2 border-transparent px-8 py-4 text-lg"
@@ -31,13 +38,6 @@ export function HeroSection() {
                   style={{ backgroundColor: '#B3D7E9' }}
                 >
                   View Workouts
-                </Button>
-              </Link>
-              <Link href="/services" className="w-full sm:w-auto">
-                <Button 
-                  className="w-full bg-[hsl(var(--coaching-primary))] hover:bg-[hsl(var(--coaching-primary))]/90 text-white font-semibold px-8 py-4 text-lg"
-                >
-                  View Services
                 </Button>
               </Link>
             </div>
