@@ -14,13 +14,9 @@ export function HeroSection() {
             <p className="text-sm text-blue-200 mb-4 tracking-wider uppercase">
               PERSONAL TRAINING, NUTRITION & ACCOUNTABILITY COACHING
             </p>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 font-brand">
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-8 font-brand">
               Bridging the gap from inactivity and poor diet to strength and healthy habits
             </h1>
-            <p className="text-xl mb-8 text-blue-100">
-              Bridge the gap from inactivity and poor diet to strength and healthy habits. 
-              Strength training, nutrition coaching, and accountability that actually works.
-            </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/services" className="w-full sm:w-auto">
                 <Button 
