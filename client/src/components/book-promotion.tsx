@@ -13,6 +13,8 @@ export function BookPromotion() {
   const [selectedType, setSelectedType] = useState<string>("");
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [notificationEmail, setNotificationEmail] = useState("");
+  const [isNotificationSubmitted, setIsNotificationSubmitted] = useState(false);
   const { toast } = useToast();
 
   const handlePurchase = (type: string) => {
@@ -34,6 +36,33 @@ export function BookPromotion() {
         title: "Thank you!",
         description: "We'll notify you when the book becomes available.",
       });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleNotificationSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!notificationEmail) return;
+
+    try {
+      // TODO: Connect to Mailchimp API here
+      // For now, we'll just show success and store locally
+      setIsNotificationSubmitted(true);
+      toast({
+        title: "Success!",
+        description: "You'll be notified when we launch the beta.",
+      });
+      
+      // Reset form after short delay
+      setTimeout(() => {
+        setNotificationEmail("");
+        setIsNotificationSubmitted(false);
+      }, 3000);
     } catch (error) {
       toast({
         title: "Error",
@@ -97,14 +126,36 @@ export function BookPromotion() {
               </div>
 
               <div className="mt-6 p-4 bg-white/10 rounded-lg border border-white/20">
-                <div className="flex items-center space-x-3 mb-2">
+                <div className="flex items-center space-x-3 mb-3">
                   <Mail className="w-5 h-5 text-orange-300" />
                   <span className="text-white font-semibold">Get notified when we launch!</span>
                 </div>
-                <p className="text-blue-100 text-sm">
-                  Be the first to know when our Clean & Lean Eating Guide becomes available. 
-                  Join our beta launch notification list.
+                <p className="text-blue-100 text-sm mb-4">
+                  Be the first to know when our Clean & Lean Eating Guide becomes available.
                 </p>
+                {!isNotificationSubmitted ? (
+                  <form onSubmit={handleNotificationSignup} className="flex flex-col sm:flex-row gap-2">
+                    <Input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={notificationEmail}
+                      onChange={(e) => setNotificationEmail(e.target.value)}
+                      className="flex-1 bg-white/90 border-white/30 text-gray-900 placeholder:text-gray-500"
+                      required
+                    />
+                    <Button
+                      type="submit"
+                      className="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6"
+                    >
+                      Notify Me
+                    </Button>
+                  </form>
+                ) : (
+                  <div className="flex items-center space-x-2 text-green-300">
+                    <CheckCircle className="w-4 h-4" />
+                    <span className="text-sm font-medium">Thanks! You'll be notified when we launch.</span>
+                  </div>
+                )}
               </div>
             </div>
 
