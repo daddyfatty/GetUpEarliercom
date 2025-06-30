@@ -1,5 +1,5 @@
 import { Star } from "lucide-react";
-import davidImage from "@assets/678ae0317069e15526c3487a_download (23)_1751313391609.png";
+import davidImage from "@assets/678ae0317069e15526c3487a_download (23)_1751313478409.png";
 import mikeImage from "@assets/678ceb00a3ca26bcb4e7e32a_de_1751313391609.jpg";
 import michelleImage from "@assets/678ae0313289077684c96176_unnamed (3)_1751313391610.png";
 import ericaImage from "@assets/678ae0311e6f644579d9217f_unnamed (4)_1751313391610.png";
