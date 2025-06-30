@@ -100,9 +100,9 @@ export default function Services() {
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" style={{ gap: '25px' }}>
             {packages.map((pkg, index) => (
-              <Card key={index} className={`w-full ${pkg.backgroundColor || 'bg-white'} ${pkg.textColor || 'text-gray-900'} ${pkg.isPopular ? 'ring-2 ring-blue-500 shadow-lg' : 'shadow-sm'}`}>
+              <Card key={index} className={`${pkg.backgroundColor || 'bg-white'} ${pkg.textColor || 'text-gray-900'} ${pkg.isPopular ? 'ring-2 ring-blue-500 shadow-lg' : 'shadow-sm'} relative`}>
                 {pkg.isPopular && pkg.badge && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                     <Badge className="bg-blue-500 text-white px-4 py-1">
