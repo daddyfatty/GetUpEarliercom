@@ -203,7 +203,8 @@ export function Navigation() {
                   <span className="text-xs font-medium hidden lg:inline">Group</span>
                 </a>
                 
-                {isAuthenticated && (
+                {/* TEMPORARILY HIDDEN - Bell notification and user profile section */}
+                {/* {isAuthenticated && (
                   <Button variant="ghost" size="sm" className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10">
                     <Bell className="h-4 w-4" />
                   </Button>
@@ -246,7 +247,8 @@ export function Navigation() {
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                ) : (
+                ) : ( */}
+                {false && (
                   <div className="flex space-x-2">
                     <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
                       <DialogTrigger asChild>
