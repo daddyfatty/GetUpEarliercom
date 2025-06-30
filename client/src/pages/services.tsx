@@ -104,6 +104,40 @@ export default function Services() {
       textColor: "text-gray-900",
       quantityInput: true,
       badge: undefined
+    },
+    {
+      title: "1-on-1 Nutrition Coaching",
+      price: "$50",
+      priceTag: "Per 30 Minute Session",
+      description: "Achieve your goals with a personalized, one-time nutrition coaching session—no commitment required. Whether it's weight loss, muscle building, or recovery, I'll guide you through clean eating, understanding calories, and creating sustainable habits. Together, we'll simplify nutrition and tailor it to your lifestyle. In this 30-minute virtual session, you'll learn specifics based on your needs about macronutrients—protein, carbs, and fat—along with food quality and healthy digital shopping tips. Gain actionable insights to support balanced eating, better energy, and smarter choices for lasting results.",
+      features: [
+        "100% customized coaching",
+        "1-on-1. No fake AI bots, prefabricated apps or automations.",
+        "Virtual anywhere*"
+      ],
+      buttonText: "Book Session",
+      isPopular: false,
+      backgroundColor: "bg-slate-900",
+      textColor: "text-white",
+      quantityInput: true,
+      badge: undefined
+    },
+    {
+      title: "1-on-1 Running Coaching Session",
+      price: "$50",
+      priceTag: "Per 30 Minute Session",
+      description: "Achieve your running goals with personalized coaching tailored to your starting point—no prior experience required. Whether you're stepping up from the couch to tackle your first 5K or a beginner aspiring to complete a half or full marathon, I'll guide you through a structured, approachable plan that fits your life and abilities. In our virtual or in-person sessions, you'll gain expert insights on pacing, running form, and building endurance safely. From setting realistic milestones to mastering recovery strategies, I'll help you progress with confidence. Let's make your running journey enjoyable, sustainable, and successful—step by step.",
+      features: [
+        "100% customized coaching",
+        "Couch to 5K and Beyond",
+        "In-person Orange, CT or virtual anywhere*"
+      ],
+      buttonText: "Book Session",
+      isPopular: false,
+      backgroundColor: "bg-slate-900",
+      textColor: "text-white",
+      quantityInput: true,
+      badge: undefined
     }
   ];
 
@@ -207,22 +241,8 @@ export default function Services() {
                     ))}
                   </ul>
 
-                  <div className="space-y-3">
-                    {pkg.quantityInput && (
-                      <div className="mb-4">
-                        <label className={`block text-sm font-medium mb-2 ${pkg.textColor || 'text-gray-700'}`}>
-                          30 Minute Training / Coaching Session
-                        </label>
-                        <input 
-                          type="number" 
-                          defaultValue="1" 
-                          min="1"
-                          className="w-16 px-3 py-2 border rounded-md text-gray-900 bg-white"
-                        />
-                      </div>
-                    )}
-                    
-                    {pkg.isFree ? (
+                  {pkg.isFree && (
+                    <div className="space-y-3">
                       <Link href="/contact">
                         <Button 
                           className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-6 px-8 text-lg rounded-lg h-16"
@@ -230,16 +250,8 @@ export default function Services() {
                           {pkg.buttonText} →
                         </Button>
                       </Link>
-                    ) : (
-                      <Link href="/contact">
-                        <Button 
-                          className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-6 px-8 text-lg rounded-lg h-16"
-                        >
-                          Book Session
-                        </Button>
-                      </Link>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             ))}
