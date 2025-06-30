@@ -11,7 +11,12 @@ export function HeroSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 font-brand">Back to Basics: Strength Training, Clean Eating & Accountability</h1>
+            <p className="text-sm text-blue-200 mb-4 tracking-wider uppercase">
+              PERSONAL TRAINING, NUTRITION & ACCOUNTABILITY COACHING
+            </p>
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 font-brand">
+              Bridging the gap from inactivity and poor diet to strength and healthy habits
+            </h1>
             <p className="text-xl mb-8 text-blue-100">
               Bridge the gap from inactivity and poor diet to strength and healthy habits. 
               Strength training, nutrition coaching, and accountability that actually works.
