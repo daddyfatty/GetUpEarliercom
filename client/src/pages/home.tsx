@@ -3,6 +3,7 @@ import { BookPromotion } from "@/components/book-promotion";
 import { RecipeCard } from "@/components/recipe-card";
 import { WorkoutCard } from "@/components/workout-card";
 import { CredentialsBand } from "@/components/credentials-band";
+import { ClientReviews } from "@/components/client-reviews";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
@@ -195,6 +196,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+      
+      {/* Client Reviews */}
+      <ClientReviews />
       
       {/* Credentials Band */}
       <CredentialsBand />
