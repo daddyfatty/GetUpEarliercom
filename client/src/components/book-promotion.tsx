@@ -59,18 +59,22 @@ export function BookPromotion() {
                 <div className="text-center">
                   <div className="text-3xl font-bold mb-2">50+</div>
                   <div className="text-blue-200">Clean Recipes</div>
+                  <div className="text-xs text-orange-300 font-medium mt-1">BETA COMING SOON</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold mb-2">12</div>
                   <div className="text-blue-200">Categories</div>
+                  <div className="text-xs text-orange-300 font-medium mt-1">BETA COMING SOON</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold mb-2">Lifetime</div>
                   <div className="text-blue-200">Updates</div>
+                  <div className="text-xs text-orange-300 font-medium mt-1">BETA COMING SOON</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold mb-2">4.9★</div>
-                  <div className="text-blue-200">Rating</div>
+                  <div className="text-3xl font-bold mb-2">Beta</div>
+                  <div className="text-blue-200">Launch Soon</div>
+                  <div className="text-xs text-orange-300 font-medium mt-1">BETA COMING SOON</div>
                 </div>
               </div>
 
@@ -92,13 +96,15 @@ export function BookPromotion() {
                 </Button>
               </div>
 
-              <div className="mt-6 flex items-center space-x-4">
-                <div className="flex items-center space-x-1">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-yellow-300 fill-current" />
-                  ))}
+              <div className="mt-6 p-4 bg-white/10 rounded-lg border border-white/20">
+                <div className="flex items-center space-x-3 mb-2">
+                  <Mail className="w-5 h-5 text-orange-300" />
+                  <span className="text-white font-semibold">Get notified when we launch!</span>
                 </div>
-                <span className="text-emerald-200">4.9/5 from 2,847 reviews</span>
+                <p className="text-blue-100 text-sm">
+                  Be the first to know when our Clean & Lean Eating Guide becomes available. 
+                  Join our beta launch notification list.
+                </p>
               </div>
             </div>
 
@@ -109,23 +115,19 @@ export function BookPromotion() {
                 className="rounded-2xl shadow-2xl w-full h-auto"
               />
               
-              {/* Floating testimonial */}
+              {/* Beta Launch Notification */}
               <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg max-w-xs">
                 <div className="flex items-center space-x-3 mb-2">
-                  <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">SM</span>
+                  <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
+                    <Mail className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900 text-sm">Sarah M.</p>
-                    <div className="flex items-center space-x-1">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
-                      ))}
-                    </div>
+                    <p className="font-semibold text-gray-900 text-sm">Beta Launch</p>
+                    <div className="text-xs text-orange-500 font-medium">COMING SOON</div>
                   </div>
                 </div>
                 <p className="text-gray-600 text-sm">
-                  "This book changed my relationship with food. The recipes are delicious and easy to follow!"
+                  "Join our notification list to be the first to get access when we launch!"
                 </p>
               </div>
             </div>
