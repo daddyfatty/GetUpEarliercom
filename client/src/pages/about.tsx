@@ -272,7 +272,7 @@ export default function About() {
             <div className="text-center mt-12">
               <Link href="/services">
                 <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
-                  View Full Services & Pricing
+                  Services Pricing
                 </Button>
               </Link>
             </div>
