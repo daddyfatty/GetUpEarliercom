@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ServicesGrid } from "@/components/services-grid";
 import { Link } from "wouter";
 import CheckoutModal from "@/components/checkout-modal";
@@ -18,6 +19,8 @@ export default function Services() {
     price: '',
     description: ''
   });
+
+  const [personalTrainingModal, setPersonalTrainingModal] = useState(false);
 
   useEffect(() => {
     // Handle anchor scrolling on page load
@@ -82,7 +85,8 @@ export default function Services() {
       backgroundColor: "bg-slate-900",
       textColor: "text-white",
       quantityInput: true,
-      badge: undefined
+      badge: undefined,
+      hasReadMore: true
     },
     {
       title: "1-on-1 Nutrition Coaching",
@@ -269,6 +273,22 @@ export default function Services() {
                         </Button>
                       </div>
                     )}
+                    
+                    {pkg.hasReadMore && (
+                      <div className="mt-auto pt-4">
+                        <Button 
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setPersonalTrainingModal(true);
+                          }}
+                          variant="outline"
+                          className="w-full border-white text-white hover:bg-white hover:text-gray-900"
+                        >
+                          Read More →
+                        </Button>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               </Link>
@@ -285,6 +305,58 @@ export default function Services() {
         price={checkoutModal.price}
         description={checkoutModal.description}
       />
+
+      {/* Personal Training Details Modal */}
+      <Dialog open={personalTrainingModal} onOpenChange={setPersonalTrainingModal}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold mb-4">1-on-1 Personal Strength Training</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <p className="text-gray-700 leading-relaxed">
+                I believe in "lifting heavy things" with high intensity at least twice per week. I focus on traditional compound exercises, drop sets, body-weight strength training, and physical outdoor work like running, hiking, and basic calisthenics, along with increasing flexibility through customized yoga-style stretches. All supported and built on truly understanding and implementing "clean eating."
+              </p>
+              
+              <p className="text-gray-700 leading-relaxed">
+                I'm here to help you break free from inactivity, your gym rut, or advance your fitness. You need a push in the right direction and accountability.
+              </p>
+              
+              <p className="text-gray-700 leading-relaxed">
+                One or two 30-minute sessions per week will change your life. You will be amazed by how much we can accomplish in this short time, how quickly your strength improves, and how much you gain as you navigate life. Learn to reframe your time and thoughts about working out, and see how it can all be naturally and intuitively integrated into your life.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 mt-8">
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">100% customized training</h4>
+                <p className="text-sm text-gray-600">1-on-1. No fake AI bots, prefabricated apps or automations.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Powerful 30 minute compound exercise workouts</h4>
+                <p className="text-sm text-gray-600">Designed to achieve progress in a short amount of time</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">In-person Orange, CT or virtual anywhere*</h4>
+                <p className="text-sm text-gray-600">*Virtual Options: Google Meet, Zoom, or Microsoft Teams</p>
+              </div>
+            </div>
+
+            <div className="flex justify-center pt-4">
+              <Link href="/contact">
+                <Button 
+                  className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3"
+                  onClick={() => setPersonalTrainingModal(false)}
+                >
+                  Get Started Today →
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
