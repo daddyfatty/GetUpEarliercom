@@ -2,7 +2,6 @@ import personalTrainerBadge from "@assets/67910d333568168655f4b0e8_Badges-PT (1)
 import nutritionBadge from "@assets/67910ddf1426fe137b7a5cfa_HCTP_INHC_Badge (1)_1750689834268.png";
 import runningCoachBadge from "@assets/67910e09c2597e3ff6174ecb_Badges-run-coach (1) (1)_1750689834268.png";
 import eryBadge1 from "@assets/download - 2025-06-23T104234.203_1750689834267.png";
-import eryBadge2 from "@assets/download - 2025-06-23T104237.082_1750689834267.png";
 import ericaYogaBadge from "@assets/download - 2025-06-23T104304.623_1750689834267.png";
 
 export function CredentialsBand() {
@@ -11,7 +10,6 @@ export function CredentialsBand() {
     { src: nutritionBadge, alt: "Integrative Nutrition Health Coach", name: "Nutrition Coach" },
     { src: runningCoachBadge, alt: "ISSA Running Coach Certified", name: "Running Coach" },
     { src: eryBadge1, alt: "E-RYT 200 Yoga Teacher", name: "E-RYT 200" },
-    { src: eryBadge2, alt: "E-RYT 200 Yoga Alliance", name: "Yoga Alliance" },
     { src: ericaYogaBadge, alt: "Erica Baker E-RYT Yoga Teacher", name: "E-RYT Certified" },
   ];
 
