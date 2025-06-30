@@ -212,10 +212,10 @@ export default function Services() {
             </p>
           </div>
 
-          <div className="columns-1 lg:columns-2" style={{ gap: '10px' }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {packages.map((pkg, index) => (
               <Link key={index} href="/contact">
-                <Card className={`${pkg.backgroundColor || 'bg-white'} ${pkg.textColor || 'text-gray-900'} ${pkg.isPopular ? 'ring-2 ring-blue-500 shadow-lg' : 'shadow-sm'} relative cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:ring-2 hover:ring-blue-200 break-inside-avoid`} style={{ margin: '15px' }}>
+                <Card className={`${pkg.backgroundColor || 'bg-white'} ${pkg.textColor || 'text-gray-900'} ${pkg.isPopular ? 'ring-2 ring-blue-500 shadow-lg' : 'shadow-sm'} relative cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:ring-2 hover:ring-blue-200 h-full flex flex-col`}>
                   {pkg.isPopular && pkg.badge && (
                     <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                       <Badge className="bg-blue-500 text-white px-4 py-1">
@@ -224,7 +224,7 @@ export default function Services() {
                     </div>
                   )}
                   
-                  <CardContent className="p-8">
+                  <CardContent className="p-8 flex-1 flex flex-col">
                     <div className="mb-6">
                       <h3 className={`text-xl font-semibold mb-4 ${pkg.textColor || 'text-gray-900'}`}>
                         {pkg.title}
@@ -251,7 +251,7 @@ export default function Services() {
                       </div>
                     </div>
 
-                    <ul className="space-y-3 mb-8">
+                    <ul className="space-y-3 mb-8 flex-1">
                       {pkg.features.map((feature, featureIndex) => (
                         <li key={featureIndex} className="flex items-start">
                           <div className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
@@ -261,7 +261,7 @@ export default function Services() {
                     </ul>
 
                     {pkg.isFree && (
-                      <div className="space-y-3">
+                      <div className="space-y-3 mt-auto">
                         <Button 
                           className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-6 px-8 text-lg rounded-lg h-16"
                         >
