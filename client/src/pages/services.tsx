@@ -70,6 +70,40 @@ export default function Services() {
       textColor: "text-white",
       quantityInput: true,
       badge: undefined
+    },
+    {
+      title: "1-on-1 Private Yoga with Erica",
+      price: "$75",
+      priceTag: "Per 60 Minute Session",
+      description: "Immerse yourself in a personalized yoga experience in our pristine, dedicated yoga space designed for tranquility and focus. Tailored sessions accommodate all skill levels, providing a serene environment ideal for one-on-one practice. Whether you are beginning your yoga journey or deepening your practice, our studio offers the perfect setting, customized to fit your schedule. Experience the balance and peace of mind that comes with a dedicated space and personalized attention.",
+      features: [
+        "Dedicated Yoga Studio",
+        "Personalized Sessions",
+        "Ideal for All Levels"
+      ],
+      buttonText: "Book Session",
+      isPopular: false,
+      backgroundColor: "bg-orange-50",
+      textColor: "text-gray-900",
+      quantityInput: true,
+      badge: undefined
+    },
+    {
+      title: "Small Group Yoga with Erica",
+      price: "$25",
+      priceTag: "Per 60 Minute Session",
+      description: "Elevate your yoga practice with our semi-private Vinyasa yoga sessions, designed for small groups to ensure personalized attention and a supportive atmosphere. Perfect for those who prefer a more intimate setting, our classes cater to all levels, offering tailored guidance that respects individual pace and progress.",
+      features: [
+        "Small Group Setting",
+        "Vinyasa Flow Practice",
+        "Personalized Instruction"
+      ],
+      buttonText: "Book Session",
+      isPopular: false,
+      backgroundColor: "bg-orange-50",
+      textColor: "text-gray-900",
+      quantityInput: true,
+      badge: undefined
     }
   ];
 
