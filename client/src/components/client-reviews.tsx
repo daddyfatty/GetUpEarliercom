@@ -79,9 +79,9 @@ export function ClientReviews() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
           {reviews.map((review) => (
-            <div key={review.id} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+            <div key={review.id} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg break-inside-avoid mb-6">
               {/* Star Rating */}
               <div className="flex items-center space-x-1 mb-4">
                 {Array.from({ length: 5 }).map((_, i) => (
