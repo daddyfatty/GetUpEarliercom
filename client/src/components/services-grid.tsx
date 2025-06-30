@@ -101,12 +101,12 @@ export function ServicesGrid({
                 <img 
                   src={service.image} 
                   alt={service.title}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute top-4 left-4">
+                <div className="absolute top-6 right-6">
                   <Badge 
                     variant="secondary" 
-                    className={`bg-${service.color}-500 text-white shadow-lg`}
+                    className={`bg-${service.color}-500 text-white shadow-lg text-sm px-3 py-1`}
                   >
                     {service.badge}
                   </Badge>
@@ -114,7 +114,7 @@ export function ServicesGrid({
               </div>
             )}
             
-            <CardHeader className="text-center">
+            <CardHeader className="text-center px-8 py-6">
               {!showImages && (
                 <>
                   <div className="mb-4">{service.icon}</div>
@@ -123,18 +123,18 @@ export function ServicesGrid({
                   </Badge>
                 </>
               )}
-              <CardTitle className={`${showImages ? 'text-lg' : 'text-xl'} mb-3`}>
+              <CardTitle className={`${showImages ? 'text-2xl' : 'text-xl'} mb-4 font-bold leading-tight`}>
                 {service.title}
               </CardTitle>
             </CardHeader>
             
-            <CardContent>
-              <CardDescription className="text-gray-600 dark:text-gray-300">
+            <CardContent className="px-8 pb-8">
+              <CardDescription className={`text-gray-600 dark:text-gray-300 ${showImages ? 'text-lg' : 'text-base'} leading-relaxed`}>
                 {service.description}
               </CardDescription>
               {showReadMore && (
-                <div className="text-center mt-6">
-                  <Button variant="outline" size="sm">
+                <div className="text-center mt-8">
+                  <Button variant="outline" size="lg" className="text-lg px-6 py-3">
                     Read More →
                   </Button>
                 </div>
