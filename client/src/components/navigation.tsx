@@ -43,8 +43,8 @@ export function Navigation() {
 
   const navItems = [
     { href: "/services", label: "1-on-1 Services" },
-    { href: "/recipes", label: "Recipes" },
-    { href: "/workouts", label: "Workouts" },
+    { href: "/recipes", label: "Recipes", beta: true },
+    { href: "/workouts", label: "Workouts", beta: true },
     { href: "/blog", label: "Blog" },
     ...(isAdmin ? [{ href: "/admin", label: "Admin" }] : []),
   ];
@@ -122,13 +122,18 @@ export function Navigation() {
                 {navItems.map((item) => (
                   <Link key={item.href} href={item.href}>
                     <span
-                      className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap ${
+                      className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
                         location === item.href
                           ? "text-[hsl(var(--orange))] bg-white/10"
                           : "text-white hover:text-[hsl(var(--orange))]"
                       }`}
                     >
                       {item.label}
+                      {item.beta && (
+                        <span className="ml-1 text-xs bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
+                          BETA
+                        </span>
+                      )}
                     </span>
                   </Link>
                 ))}
@@ -350,13 +355,18 @@ export function Navigation() {
                     {navItems.map((item) => (
                       <Link key={item.href} href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
                         <span
-                          className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading ${
+                          className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading flex items-center ${
                             location === item.href
                               ? "text-[hsl(var(--orange))] bg-orange-50"
                               : "text-gray-900 hover:text-[hsl(var(--orange))]"
                           }`}
                         >
                           {item.label}
+                          {item.beta && (
+                            <span className="ml-2 text-xs bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
+                              BETA
+                            </span>
+                          )}
                         </span>
                       </Link>
                     ))}
