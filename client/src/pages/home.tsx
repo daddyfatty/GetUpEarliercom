@@ -30,81 +30,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            {/* Column 1: Latest Recipe */}
-            <div className="text-center flex flex-col h-full">
-              <div className="bg-white border-2 border-red-200 p-6 rounded-2xl shadow-lg h-full flex flex-col">
-                <div className="mb-4">
-                  <div className="inline-block bg-red-500/10 text-red-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
-                    Fresh Recipe Collection
-                  </div>
-                  <h2 className="text-2xl font-bold text-red-600 mb-2">Latest Recipe</h2>
-                  <p className="text-gray-600 mb-2 text-[14px]">Interactive, clean, lean high-protein recipes</p>
-                  <div className="bg-red-100 text-red-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
-                    <TrendingUp className="inline w-4 h-4 mr-1" />
-                    New recipes added weekly!
-                  </div>
-                </div>
-                
-                <div className="flex-1 flex flex-col">
-                  {featuredRecipes.length > 0 && (
-                    <div className="mb-4">
-                      <RecipeCard recipe={featuredRecipes[0]} />
-                    </div>
-                  )}
-                </div>
-                
-                <div className="mt-auto">
-                  <Link href="/recipes">
-                    <Button 
-                      size="lg" 
-                      className="w-full font-semibold text-white bg-red-600 hover:bg-red-700 shadow-lg transform hover:scale-105 transition-all duration-200"
-                    >
-                      <ChefHat className="h-5 w-5 mr-2" />
-                      View All Recipes
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Column 2: Latest Workout */}
-            <div className="text-center flex flex-col h-full">
-              <div className="bg-white border-2 border-blue-200 p-6 rounded-2xl shadow-lg h-full flex flex-col">
-                <div className="mb-4">
-                  <div className="inline-block bg-blue-600/10 text-blue-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
-                    Workout Collection
-                  </div>
-                  <h2 className="text-2xl font-bold text-blue-600 mb-2">Latest Workout</h2>
-                  <p className="text-gray-600 mb-2 text-[14px]">Simple, effective workouts for every fitness level</p>
-                  <div className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
-                    <Dumbbell className="inline w-4 h-4 mr-1" />
-                    New workouts added weekly!
-                  </div>
-                </div>
-                
-                <div className="flex-1 flex flex-col">
-                  {featuredWorkouts.length > 0 && (
-                    <div className="mb-4">
-                      <WorkoutCard workout={featuredWorkouts[0]} />
-                    </div>
-                  )}
-                </div>
-                
-                <div className="mt-auto">
-                  <Link href="/workouts">
-                    <Button 
-                      size="lg" 
-                      className="w-full font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-lg transform hover:scale-105 transition-all duration-200"
-                    >
-                      <Dumbbell className="h-5 w-5 mr-2" />
-                      View All Workouts
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Column 3: Ready to Transform */}
+            {/* Column 1: 1-on-1 Services */}
             <div className="text-center flex flex-col h-full">
               <div className="bg-white border-2 border-purple-200 p-6 rounded-2xl shadow-lg h-full flex flex-col">
                 <div className="mb-4">
@@ -159,6 +85,80 @@ export default function Home() {
                 </div>
               </div>
             </div>
+
+            {/* Column 2: Latest Recipe */}
+            <div className="text-center flex flex-col h-full">
+              <div className="bg-white border-2 border-red-200 p-6 rounded-2xl shadow-lg h-full flex flex-col">
+                <div className="mb-4">
+                  <div className="inline-block bg-red-500/10 text-red-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
+                    Fresh Recipe Collection
+                  </div>
+                  <h2 className="text-2xl font-bold text-red-600 mb-2">Latest Recipe</h2>
+                  <p className="text-gray-600 mb-2 text-[14px]">Interactive, clean, lean high-protein recipes</p>
+                  <div className="bg-red-100 text-red-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
+                    <TrendingUp className="inline w-4 h-4 mr-1" />
+                    New recipes added weekly!
+                  </div>
+                </div>
+                
+                <div className="flex-1 flex flex-col">
+                  {featuredRecipes.length > 0 && (
+                    <div className="mb-4">
+                      <RecipeCard recipe={featuredRecipes[0]} />
+                    </div>
+                  )}
+                </div>
+                
+                <div className="mt-auto">
+                  <Link href="/recipes">
+                    <Button 
+                      size="lg" 
+                      className="w-full font-semibold text-white bg-red-600 hover:bg-red-700 shadow-lg transform hover:scale-105 transition-all duration-200"
+                    >
+                      <ChefHat className="h-5 w-5 mr-2" />
+                      View All Recipes
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Column 3: Latest Workout */}
+            <div className="text-center flex flex-col h-full">
+              <div className="bg-white border-2 border-blue-200 p-6 rounded-2xl shadow-lg h-full flex flex-col">
+                <div className="mb-4">
+                  <div className="inline-block bg-blue-600/10 text-blue-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
+                    Workout Collection
+                  </div>
+                  <h2 className="text-2xl font-bold text-blue-600 mb-2">Latest Workout</h2>
+                  <p className="text-gray-600 mb-2 text-[14px]">Simple, effective workouts for every fitness level</p>
+                  <div className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
+                    <Dumbbell className="inline w-4 h-4 mr-1" />
+                    New workouts added weekly!
+                  </div>
+                </div>
+                
+                <div className="flex-1 flex flex-col">
+                  {featuredWorkouts.length > 0 && (
+                    <div className="mb-4">
+                      <WorkoutCard workout={featuredWorkouts[0]} />
+                    </div>
+                  )}
+                </div>
+                
+                <div className="mt-auto">
+                  <Link href="/workouts">
+                    <Button 
+                      size="lg" 
+                      className="w-full font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-lg transform hover:scale-105 transition-all duration-200"
+                    >
+                      <Dumbbell className="h-5 w-5 mr-2" />
+                      View All Workouts
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
             
           </div>
         </div>
@@ -167,6 +167,14 @@ export default function Home() {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div className="p-6">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Star className="w-8 h-8 text-purple-600" />
+              </div>
+              <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">4.9★</div>
+              <div className="text-gray-600 dark:text-gray-300">Average Rating</div>
+            </div>
+            
             <div className="p-6">
               <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <ChefHat className="w-8 h-8 text-red-600" />
@@ -181,14 +189,6 @@ export default function Home() {
               </div>
               <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">100+</div>
               <div className="text-gray-600 dark:text-gray-300">Workout Plans</div>
-            </div>
-            
-            <div className="p-6">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Star className="w-8 h-8 text-purple-600" />
-              </div>
-              <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">4.9★</div>
-              <div className="text-gray-600 dark:text-gray-300">Average Rating</div>
             </div>
           </div>
         </div>
