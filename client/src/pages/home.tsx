@@ -6,7 +6,7 @@ import { CredentialsBand } from "@/components/credentials-band";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { Clock, TrendingUp, Users, Star, ChefHat, Dumbbell, ArrowRight, Calendar, Target } from "lucide-react";
+import { Clock, TrendingUp, Users, Star, ChefHat, Dumbbell, ArrowRight, Calendar, Target, MapPin } from "lucide-react";
 import type { Recipe, Workout } from "@shared/schema";
 import gymImagePath from "@assets/download - 2025-06-20T164725.183_1750452478509.png";
 
@@ -40,8 +40,8 @@ export default function Home() {
                   <h2 className="text-2xl font-bold text-purple-800 mb-2">1-on-1 Strength Training</h2>
                   <p className="text-gray-600 mb-2 text-[14px]">Personalized coaching tailored to your goals</p>
                   <div className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
-                    <Star className="inline w-4 h-4 mr-1" />
-                    30 years of experience!
+                    <MapPin className="inline w-4 h-4 mr-1" />
+                    Local Orange CT or virtual anywhere
                   </div>
                 </div>
                 
