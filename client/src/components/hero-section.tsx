@@ -60,7 +60,7 @@ export function HeroSection() {
                   <SiFacebook className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <p className="font-semibold text-gray-900">1000+ Members Facebook Group</p>
+                  <p className="font-semibold text-gray-900">900+ Members Facebook Group</p>
                   <p className="text-sm text-gray-600">Join the community</p>
                 </div>
               </div>
