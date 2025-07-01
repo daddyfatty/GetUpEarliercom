@@ -7,9 +7,9 @@ export function GoogleReviews() {
   const googleReviewsUrl = "https://g.co/kgs/T7W69wT";
 
   return (
-    <section className="py-16 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900">
+    <section className="py-16 bg-gray-50 dark:bg-gray-900">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
           See What Our Customers Are Saying
         </h2>
         

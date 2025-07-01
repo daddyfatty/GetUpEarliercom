@@ -197,10 +197,10 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* Client Reviews */}
-      <ClientReviews />
       {/* Google Reviews */}
       <GoogleReviews />
+      {/* Client Reviews */}
+      <ClientReviews />
       {/* Credentials Band */}
       <CredentialsBand />
       <BookPromotion />
