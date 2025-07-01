@@ -2,8 +2,8 @@ import { Star, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function GoogleReviews() {
-  const rating = 4.8;
-  const reviewCount = 46;
+  const rating = 5.0;
+  const reviewCount = 12;
   const googleReviewsUrl = "https://g.co/kgs/T7W69wT";
 
   return (
