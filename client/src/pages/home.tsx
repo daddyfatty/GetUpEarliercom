@@ -63,27 +63,16 @@ function LatestBlogCard() {
       </div>
       
       <div className="mt-auto">
-        {latestPost ? (
+        <Link href="/blog">
           <Button 
             size="lg" 
             className="w-full font-semibold text-white bg-green-600 hover:bg-green-700 shadow-lg transform hover:scale-105 transition-all duration-200"
-            onClick={() => window.open(latestPost.originalUrl || '#', '_blank')}
           >
             <BookOpen className="h-5 w-5 mr-2" />
-            Read Full Post
-            <ExternalLink className="h-4 w-4 ml-2" />
+            View All Blog Posts
+            <ArrowRight className="h-4 w-4 ml-2" />
           </Button>
-        ) : (
-          <Link href="/blog">
-            <Button 
-              size="lg" 
-              className="w-full font-semibold text-white bg-green-600 hover:bg-green-700 shadow-lg transform hover:scale-105 transition-all duration-200"
-            >
-              <BookOpen className="h-5 w-5 mr-2" />
-              View All Posts
-            </Button>
-          </Link>
-        )}
+        </Link>
       </div>
     </div>
   );
