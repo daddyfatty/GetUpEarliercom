@@ -20,61 +20,61 @@ function LatestBlogCard() {
   const latestPost = blogPosts[0];
 
   return (
-    <div className="bg-white border-2 border-green-200 p-6 rounded-2xl shadow-lg h-full flex flex-col">
-      <div className="mb-4">
-        <div className="inline-block bg-green-600/10 text-green-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
-          Latest Blog
+    <Link href={latestPost ? `/blog/${latestPost.id}` : "/blog"} className="block h-full">
+      <div className="bg-white border-2 border-green-200 p-6 rounded-2xl shadow-lg h-full flex flex-col hover:shadow-xl hover:border-green-300 transition-all duration-200 cursor-pointer">
+        <div className="mb-4">
+          <div className="inline-block bg-green-600/10 text-green-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
+            Latest Blog
+          </div>
+          <h2 className="text-2xl font-bold text-green-600 mb-2">Latest Blog</h2>
+          <p className="text-gray-600 mb-2 text-[14px]">Health, fitness, and nutrition insights</p>
+          <div className="bg-green-100 text-green-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
+            <BookOpen className="inline w-4 h-4 mr-1" />
+            New posts added regularly!
+          </div>
         </div>
-        <h2 className="text-2xl font-bold text-green-600 mb-2">Latest Blog</h2>
-        <p className="text-gray-600 mb-2 text-[14px]">Health, fitness, and nutrition insights</p>
-        <div className="bg-green-100 text-green-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
-          <BookOpen className="inline w-4 h-4 mr-1" />
-          New posts added regularly!
-        </div>
-      </div>
-      
-      <div className="flex-1 flex flex-col">
-        {latestPost ? (
-          <div className="mb-4">
-            {latestPost.imageUrl && (
-              <img 
-                src={latestPost.imageUrl}
-                alt={latestPost.title}
-                className="w-full h-48 object-cover rounded-lg mb-4 border border-green-200"
-              />
-            )}
-            <h3 className="font-bold text-gray-900 mb-2 text-lg leading-tight">
-              {latestPost.title}
-            </h3>
-            <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
-              {latestPost.excerpt}
-            </p>
-            <div className="mt-2 flex items-center text-xs text-gray-500">
-              <Clock className="w-3 h-3 mr-1" />
-              {latestPost.publishedDate ? new Date(latestPost.publishedDate).toLocaleDateString() : 'Recent'}
+        
+        <div className="flex-1 flex flex-col">
+          {latestPost ? (
+            <div className="mb-4">
+              {latestPost.imageUrl && (
+                <img 
+                  src={latestPost.imageUrl}
+                  alt={latestPost.title}
+                  className="w-full h-48 object-cover rounded-lg mb-4 border border-green-200"
+                />
+              )}
+              <h3 className="font-bold text-gray-900 mb-2 text-lg leading-tight">
+                {latestPost.title}
+              </h3>
+              <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                {latestPost.excerpt}
+              </p>
+              <div className="mt-2 flex items-center text-xs text-gray-500">
+                <Clock className="w-3 h-3 mr-1" />
+                {latestPost.publishedDate ? new Date(latestPost.publishedDate).toLocaleDateString() : 'Recent'}
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className="mb-4 text-center text-gray-500">
-            <BookOpen className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-            <p>Loading latest blog post...</p>
-          </div>
-        )}
-      </div>
-      
-      <div className="mt-auto">
-        <Link href="/blog">
+          ) : (
+            <div className="mb-4 text-center text-gray-500">
+              <BookOpen className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+              <p>Loading latest blog post...</p>
+            </div>
+          )}
+        </div>
+        
+        <div className="mt-auto">
           <Button 
             size="lg" 
             className="w-full font-semibold text-white bg-green-600 hover:bg-green-700 shadow-lg transform hover:scale-105 transition-all duration-200"
           >
             <BookOpen className="h-5 w-5 mr-2" />
-            View All Blog Posts
+            Read Full Post
             <ArrowRight className="h-4 w-4 ml-2" />
           </Button>
-        </Link>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
