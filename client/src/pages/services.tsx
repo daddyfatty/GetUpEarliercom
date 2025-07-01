@@ -176,17 +176,11 @@ export default function Services() {
               Personalized coaching tailored to your individual needs and goals
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-purple-800 rounded-full"></div>
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">30 Years Experience</span>
-                </div>
+              <div className="inline-block bg-purple-800/10 text-purple-800 px-4 py-2 rounded-full text-sm font-medium">
+                30 Years Experience
               </div>
-              <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Certified Training</span>
-                </div>
+              <div className="inline-block bg-amber-500/10 text-amber-700 px-4 py-2 rounded-full text-sm font-medium">
+                Certified Training
               </div>
             </div>
           </div>
