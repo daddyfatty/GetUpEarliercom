@@ -4,6 +4,7 @@ import { RecipeCard } from "@/components/recipe-card";
 import { WorkoutCard } from "@/components/workout-card";
 import { CredentialsBand } from "@/components/credentials-band";
 import { ClientReviews } from "@/components/client-reviews";
+import { GoogleReviews } from "@/components/google-reviews";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
@@ -198,6 +199,8 @@ export default function Home() {
       </section>
       {/* Client Reviews */}
       <ClientReviews />
+      {/* Google Reviews */}
+      <GoogleReviews />
       {/* Credentials Band */}
       <CredentialsBand />
       <BookPromotion />
