@@ -110,10 +110,6 @@ export default function BlogPost() {
                 <span className="font-medium">{post.author}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                <span>{formatDate(post.publishedDate)}</span>
-              </div>
-              <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4" />
                 <span>{post.readTime} min read</span>
               </div>

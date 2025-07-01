@@ -50,10 +50,6 @@ function LatestBlogCard() {
               <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
                 {latestPost.excerpt}
               </p>
-              <div className="mt-2 flex items-center text-xs text-gray-500">
-                <Clock className="w-3 h-3 mr-1" />
-                {latestPost.publishedDate ? new Date(latestPost.publishedDate).toLocaleDateString() : 'Recent'}
-              </div>
             </div>
           ) : (
             <div className="mb-4 text-center text-gray-500">

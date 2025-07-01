@@ -207,10 +207,7 @@ export default function Blog() {
                     </div>
                   </div>
                   
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
-                      {formatDate(post.publishedDate)}
-                    </span>
+                  <div className="flex justify-end">
                     <Link href={`/blog/${post.id}`}>
                       <Button size="sm" className="gap-1">
                         Read More
