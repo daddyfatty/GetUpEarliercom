@@ -25,6 +25,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       title: 'Hit a new strength PR of 100lbs dumbbells x 8 reps | 50 years old 5\' 7" 165lbs @IronmasterPro',
       category: 'Strength Training',
       author: 'Michael Baker',
+      publishedDate: '2024-12-15T10:00:00.000Z',
       excerpt: 'Hit a new strength PR of 100lbs dumbbells x 8 reps. The last rep took around 10 SECONDS of not giving up.',
       content: 'Hit a new strength PR of 100lbs dumbbells x 8 reps. The last rep took around 10 SECONDS of not giving up. That last rep and the negative (eccentric) did the trick. I followed this with one more working set of 100 x 5.\n\nMale 50 years old 5\' 7" 165lbs\n\nI\'m doing the same thing for my strength training clients at their precise levels. No gimmicks just smart compound movements with iron or bodyweight at an elevated intensity. Week after week.\n\nHowever. If you want to get back at it and don\'t need a trainer I highly recommend Ironmaster adjustable dumbbells.\n\nFrom around COVID time through now I was able to elevate back to this. I would never have gotten every heavy dumbbell from 75-120lbs so I would have never elevated past the old 50lb dumbbells I had for 20+ years.\n\nIf space is an issue and you want to lift heavy (70+lbs) this solves the problem. 3+ years of constant use and dropping as needed. Indestructible! My set can go as high as 105lbs. I\'m about to graduate to the 120\'s.',
       isVideo: true,
@@ -38,6 +39,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
       title: 'Why drop sets on incline dumbbell presses (@dr.mike.israetel approved)',
       category: 'Strength Training',
       author: 'Michael Baker',
+      publishedDate: '2024-12-10T09:30:00.000Z',
       excerpt: 'Dr. Mike Israetel approved drop sets on incline dumbbell presses for maximum muscle growth.',
       content: 'Drop sets are one of the most effective intensity techniques for building muscle, especially when time is limited. Dr. Mike Israetel research shows that drop sets can significantly increase training volume and muscle protein synthesis. For people over 40 with busy schedules, incline dumbbell press drop sets provide maximum bang for your buck - hitting the upper chest, front delts, and triceps in one efficient movement pattern.',
       isVideo: true,
@@ -262,7 +264,7 @@ export async function scrapeBlogPosts(): Promise<BlogPost[]> {
     .map((post, index) => ({
       ...post,
       originalUrl: post.url,
-      publishedDate: new Date(Date.now() - Math.random() * 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      publishedDate: post.publishedDate || new Date(Date.now() - Math.random() * 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       readTime: Math.ceil((post.content?.length || 500) / 200)
     }));
 }

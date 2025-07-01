@@ -36,9 +36,9 @@ function LatestBlogCard() {
       <div className="flex-1 flex flex-col">
         {latestPost ? (
           <div className="mb-4">
-            {latestPost.image && (
+            {latestPost.imageUrl && (
               <img 
-                src={latestPost.image}
+                src={latestPost.imageUrl}
                 alt={latestPost.title}
                 className="w-full h-48 object-cover rounded-lg mb-4 border border-green-200"
               />
@@ -51,7 +51,7 @@ function LatestBlogCard() {
             </p>
             <div className="mt-2 flex items-center text-xs text-gray-500">
               <Clock className="w-3 h-3 mr-1" />
-              {new Date(latestPost.date).toLocaleDateString()}
+              {latestPost.publishedDate ? new Date(latestPost.publishedDate).toLocaleDateString() : 'Recent'}
             </div>
           </div>
         ) : (
@@ -67,7 +67,7 @@ function LatestBlogCard() {
           <Button 
             size="lg" 
             className="w-full font-semibold text-white bg-green-600 hover:bg-green-700 shadow-lg transform hover:scale-105 transition-all duration-200"
-            onClick={() => window.open(latestPost.url, '_blank')}
+            onClick={() => window.open(latestPost.originalUrl || '#', '_blank')}
           >
             <BookOpen className="h-5 w-5 mr-2" />
             Read Full Post
