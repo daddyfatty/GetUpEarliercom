@@ -15,10 +15,10 @@ export function GoogleReviews() {
         
         <div className="bg-white rounded-2xl p-8 shadow-xl max-w-2xl mx-auto">
           <h3 className="text-2xl font-bold text-gray-900 mb-2">
-            Barth Insurance Agency
+            Get Up Earlier - Personal Training
           </h3>
           <p className="text-gray-600 mb-6">
-            100 Lansdale Ave suite p, Milford, CT 06460, United States
+            Orange, CT - Personal Training & Nutrition Coaching
           </p>
           
           <div className="flex items-center justify-center space-x-2 mb-6">
