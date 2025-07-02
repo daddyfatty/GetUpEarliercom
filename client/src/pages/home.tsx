@@ -270,23 +270,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* Star Pattern Background Section */}
-      <section className="py-12 bg-gray-200 dark:bg-gray-700 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="grid grid-cols-12 gap-4 h-full items-center justify-items-center opacity-20">
-            {Array.from({ length: 60 }).map((_, i) => (
-              <Star 
-                key={i} 
-                className="w-3 h-3 text-gray-500 fill-current" 
-                style={{
-                  transform: `rotate(${i * 45}deg)`
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-      
       {/* Google Reviews */}
       <GoogleReviews />
       {/* Client Reviews */}
