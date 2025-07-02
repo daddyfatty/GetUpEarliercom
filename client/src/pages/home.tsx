@@ -289,10 +289,14 @@ export default function Home() {
       <section className="relative bg-[hsl(var(--navy))] overflow-hidden">
         {/* Large Background Star */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <Star 
+          <svg 
             className="w-[1200px] h-[1200px] text-white/3 fill-current transition-transform duration-100 ease-out" 
             style={{ transform: `rotate(${starRotation}deg)` }}
-          />
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+          </svg>
         </div>
         
         <div className="relative z-10 py-16">
