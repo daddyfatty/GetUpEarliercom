@@ -24,13 +24,12 @@ export function GoogleReviews() {
 
           
           <Button 
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg transition-all duration-200 transform hover:scale-105"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-2 rounded-md text-sm transition-colors"
             onClick={() => window.open(googleReviewsUrl, '_blank')}
           >
             <div className="flex items-center space-x-2">
-              <span className="text-xl">G</span>
+              <span className="font-bold text-base">G</span>
               <span>View on Google</span>
-              <ExternalLink className="w-4 h-4" />
             </div>
           </Button>
         </div>
