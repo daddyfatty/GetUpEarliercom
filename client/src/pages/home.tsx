@@ -182,7 +182,7 @@ export default function Home() {
                   <div className="flex-1 flex flex-col">
                     {featuredRecipes.length > 0 && (
                       <div className="mb-4">
-                        <RecipeCard recipe={featuredRecipes[0]} />
+                        <RecipeCard recipe={featuredRecipes[0]} disableLink={true} />
                       </div>
                     )}
                   </div>
@@ -219,7 +219,7 @@ export default function Home() {
                   <div className="flex-1 flex flex-col">
                     {featuredWorkouts.length > 0 && (
                       <div className="mb-4">
-                        <WorkoutCard workout={featuredWorkouts[0]} />
+                        <WorkoutCard workout={featuredWorkouts[0]} disableLink={true} />
                       </div>
                     )}
                   </div>

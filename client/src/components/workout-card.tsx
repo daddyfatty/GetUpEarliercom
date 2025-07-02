@@ -7,9 +7,10 @@ import type { Workout } from "@shared/schema";
 
 interface WorkoutCardProps {
   workout: Workout;
+  disableLink?: boolean;
 }
 
-export function WorkoutCard({ workout }: WorkoutCardProps) {
+export function WorkoutCard({ workout, disableLink = false }: WorkoutCardProps) {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case "beginner":

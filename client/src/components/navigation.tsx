@@ -149,6 +149,9 @@ export function Navigation() {
                       }`}
                     >
                       Calculators
+                      <span className="ml-1 text-xs bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
+                        BETA
+                      </span>
                       <ChevronDown className="ml-1 h-4 w-4" />
                     </span>
                   </DropdownMenuTrigger>
@@ -374,7 +377,12 @@ export function Navigation() {
                     {/* Calculators Collapsible Section */}
                     <Collapsible open={isCalculatorsOpen} onOpenChange={setIsCalculatorsOpen}>
                       <CollapsibleTrigger className="flex items-center justify-between w-full px-3 py-2 text-left border-t pt-4">
-                        <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Calculators</span>
+                        <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider flex items-center">
+                          Calculators
+                          <span className="ml-2 text-xs bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
+                            BETA
+                          </span>
+                        </span>
                         <ChevronRight className={`h-4 w-4 transition-transform ${isCalculatorsOpen ? 'rotate-90' : ''}`} />
                       </CollapsibleTrigger>
                       <CollapsibleContent className="space-y-1 mt-2">
