@@ -112,35 +112,35 @@ export default function Home() {
             {/* Top Row */}
             {/* Column 1: 1-on-1 Services */}
             <div className="text-center flex flex-col h-full">
-              <div className="bg-white border-2 border-purple-200 p-6 rounded-2xl shadow-lg h-full flex flex-col">
-                <div className="mb-4">
-                  <div className="inline-block bg-purple-800/10 text-purple-800 px-3 py-1 rounded-full text-sm font-medium mb-2">
-                    1-on-1 Services
-                  </div>
-                  <h2 className="text-2xl font-bold text-purple-800 mb-2">Strength, Nutrition, Yoga</h2>
-                  <p className="text-gray-600 mb-2 text-[14px]">Personalized coaching tailored to your goals</p>
-                  <div className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
-                    <MapPin className="inline w-4 h-4 mr-1" />
-                    Local Orange CT or virtual anywhere
-                  </div>
-                </div>
-                
-                <div className="flex-1 flex flex-col">
+              <Link href="/services" className="block h-full">
+                <div className="bg-white border-2 border-purple-200 p-6 rounded-2xl shadow-lg h-full flex flex-col hover:shadow-xl hover:border-purple-300 transition-all duration-200 cursor-pointer">
                   <div className="mb-4">
-                    <img 
-                      src={gymImagePath}
-                      alt="Professional strength training gym with squat racks and free weights"
-                      className="w-full h-48 object-cover rounded-lg mb-4 border border-purple-200"
-                    />
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      Get personalized training and coaching from a certified trainer, yoga teacher, running coach, and integrative nutrition coach. 
-                      Bridge the gap from inactivity to strength and sustainable healthy habits.
-                    </p>
+                    <div className="inline-block bg-purple-800/10 text-purple-800 px-3 py-1 rounded-full text-sm font-medium mb-2">
+                      1-on-1 Services
+                    </div>
+                    <h2 className="text-2xl font-bold text-purple-800 mb-2">Strength, Nutrition, Yoga</h2>
+                    <p className="text-gray-600 mb-2 text-[14px]">Personalized coaching tailored to your goals</p>
+                    <div className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
+                      <MapPin className="inline w-4 h-4 mr-1" />
+                      Local Orange CT or virtual anywhere
+                    </div>
                   </div>
-                </div>
-                
-                <div className="mt-auto space-y-3">
-                  <Link href="/services">
+                  
+                  <div className="flex-1 flex flex-col">
+                    <div className="mb-4">
+                      <img 
+                        src={gymImagePath}
+                        alt="Professional strength training gym with squat racks and free weights"
+                        className="w-full h-48 object-cover rounded-lg mb-4 border border-purple-200"
+                      />
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Get personalized training and coaching from a certified trainer, yoga teacher, running coach, and integrative nutrition coach. 
+                        Bridge the gap from inactivity to strength and sustainable healthy habits.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-auto">
                     <Button 
                       size="lg" 
                       className="w-full bg-purple-800 text-white hover:bg-purple-900 font-bold shadow-lg transform hover:scale-105 transition-all duration-200"
@@ -148,22 +148,9 @@ export default function Home() {
                       <Users className="h-5 w-5 mr-2" />
                       View Services
                     </Button>
-                  </Link>
-                  
-                  <Button 
-                    size="lg" 
-                    className="w-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 text-white font-bold rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
-                    onClick={() => window.open('https://calendly.com/michaelbakerdigital/30minute', '_blank')}
-                  >
-                    <Calendar className="h-5 w-5 mr-2" />
-                    Free Consultation
-                  </Button>
-                  
-                  <p className="text-gray-500 text-xs mt-2">
-                    No commitment required • 30-minute consultation • Personalized recommendations
-                  </p>
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
 
             {/* Column 2: Latest Blog */}
@@ -178,29 +165,29 @@ export default function Home() {
             
             {/* Column 1: Latest Recipe */}
             <div className="text-center flex flex-col h-full">
-              <div className="bg-white border-2 border-red-200 p-6 rounded-2xl shadow-lg h-full flex flex-col">
-                <div className="mb-4">
-                  <div className="inline-block bg-red-500/10 text-red-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
-                    Fresh Recipe Collection
-                  </div>
-                  <h2 className="text-2xl font-bold text-red-600 mb-2">Latest Recipe</h2>
-                  <p className="text-gray-600 mb-2 text-[14px]">Interactive, clean, lean high-protein recipes</p>
-                  <div className="bg-red-100 text-red-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
-                    <TrendingUp className="inline w-4 h-4 mr-1" />
-                    New recipes added weekly!
-                  </div>
-                </div>
-                
-                <div className="flex-1 flex flex-col">
-                  {featuredRecipes.length > 0 && (
-                    <div className="mb-4">
-                      <RecipeCard recipe={featuredRecipes[0]} />
+              <Link href="/recipes" className="block h-full">
+                <div className="bg-white border-2 border-red-200 p-6 rounded-2xl shadow-lg h-full flex flex-col hover:shadow-xl hover:border-red-300 transition-all duration-200 cursor-pointer">
+                  <div className="mb-4">
+                    <div className="inline-block bg-red-500/10 text-red-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
+                      Fresh Recipe Collection
                     </div>
-                  )}
-                </div>
-                
-                <div className="mt-auto">
-                  <Link href="/recipes">
+                    <h2 className="text-2xl font-bold text-red-600 mb-2">Latest Recipe</h2>
+                    <p className="text-gray-600 mb-2 text-[14px]">Interactive, clean, lean high-protein recipes</p>
+                    <div className="bg-red-100 text-red-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
+                      <TrendingUp className="inline w-4 h-4 mr-1" />
+                      New recipes added weekly!
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1 flex flex-col">
+                    {featuredRecipes.length > 0 && (
+                      <div className="mb-4">
+                        <RecipeCard recipe={featuredRecipes[0]} />
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="mt-auto">
                     <Button 
                       size="lg" 
                       className="w-full font-semibold text-white bg-red-600 hover:bg-red-700 shadow-lg transform hover:scale-105 transition-all duration-200"
@@ -208,36 +195,36 @@ export default function Home() {
                       <ChefHat className="h-5 w-5 mr-2" />
                       View All Recipes
                     </Button>
-                  </Link>
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
 
             {/* Column 2: Latest Workout */}
             <div className="text-center flex flex-col h-full">
-              <div className="bg-white border-2 border-blue-200 p-6 rounded-2xl shadow-lg h-full flex flex-col">
-                <div className="mb-4">
-                  <div className="inline-block bg-blue-600/10 text-blue-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
-                    Workout Collection
-                  </div>
-                  <h2 className="text-2xl font-bold text-blue-600 mb-2">Latest Workout</h2>
-                  <p className="text-gray-600 mb-2 text-[14px]">Simple, effective workouts for every fitness level</p>
-                  <div className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
-                    <Dumbbell className="inline w-4 h-4 mr-1" />
-                    New workouts added weekly!
-                  </div>
-                </div>
-                
-                <div className="flex-1 flex flex-col">
-                  {featuredWorkouts.length > 0 && (
-                    <div className="mb-4">
-                      <WorkoutCard workout={featuredWorkouts[0]} />
+              <Link href="/workouts" className="block h-full">
+                <div className="bg-white border-2 border-blue-200 p-6 rounded-2xl shadow-lg h-full flex flex-col hover:shadow-xl hover:border-blue-300 transition-all duration-200 cursor-pointer">
+                  <div className="mb-4">
+                    <div className="inline-block bg-blue-600/10 text-blue-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
+                      Workout Collection
                     </div>
-                  )}
-                </div>
-                
-                <div className="mt-auto">
-                  <Link href="/workouts">
+                    <h2 className="text-2xl font-bold text-blue-600 mb-2">Latest Workout</h2>
+                    <p className="text-gray-600 mb-2 text-[14px]">Simple, effective workouts for every fitness level</p>
+                    <div className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
+                      <Dumbbell className="inline w-4 h-4 mr-1" />
+                      New workouts added weekly!
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1 flex flex-col">
+                    {featuredWorkouts.length > 0 && (
+                      <div className="mb-4">
+                        <WorkoutCard workout={featuredWorkouts[0]} />
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="mt-auto">
                     <Button 
                       size="lg" 
                       className="w-full font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-lg transform hover:scale-105 transition-all duration-200"
@@ -245,9 +232,9 @@ export default function Home() {
                       <Dumbbell className="h-5 w-5 mr-2" />
                       View All Workouts
                     </Button>
-                  </Link>
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
             
           </div>
