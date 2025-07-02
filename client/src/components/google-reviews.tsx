@@ -17,9 +17,6 @@ export function GoogleReviews() {
         </p>
         
         <div className="bg-white rounded-2xl p-8 shadow-xl max-w-2xl mx-auto">
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">
-            Get Up Earlier - Personal Training
-          </h3>
           <p className="text-gray-600 mb-6">
             Orange, CT - Personal Training & Nutrition Coaching
           </p>
