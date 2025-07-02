@@ -7,8 +7,13 @@ export function GoogleReviews() {
   const googleReviewsUrl = "https://g.co/kgs/T7W69wT";
 
   return (
-    <section className="py-16 bg-[hsl(var(--navy))]">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section className="py-16 bg-[hsl(var(--navy))] relative overflow-hidden">
+      {/* Large Background Star */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <Star className="w-96 h-96 text-white/5 fill-current" />
+      </div>
+      
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
           Don't just take our word for it
         </h2>
@@ -35,11 +40,11 @@ export function GoogleReviews() {
           </div>
           
           <Button 
-            className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-1.5 rounded text-sm transition-colors"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-full text-sm transition-colors shadow-md"
             onClick={() => window.open(googleReviewsUrl, '_blank')}
           >
-            <div className="flex items-center space-x-1.5">
-              <span className="font-bold text-sm">G</span>
+            <div className="flex items-center space-x-2">
+              <span className="font-bold text-base">G</span>
               <span>View on Google</span>
             </div>
           </Button>
