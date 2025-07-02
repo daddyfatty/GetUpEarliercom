@@ -271,16 +271,15 @@ export default function Home() {
         </div>
       </section>
       {/* Star Pattern Background Section */}
-      <section className="py-8 bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="flex flex-wrap justify-center items-center h-full">
-            {Array.from({ length: 50 }).map((_, i) => (
+      <section className="py-12 bg-gray-200 dark:bg-gray-700 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="grid grid-cols-12 gap-4 h-full items-center justify-items-center opacity-20">
+            {Array.from({ length: 60 }).map((_, i) => (
               <Star 
                 key={i} 
-                className="w-4 h-4 text-gray-400 m-2" 
+                className="w-3 h-3 text-gray-500 fill-current" 
                 style={{
-                  transform: `rotate(${Math.random() * 360}deg)`,
-                  opacity: Math.random() * 0.3 + 0.1
+                  transform: `rotate(${i * 45}deg)`
                 }}
               />
             ))}

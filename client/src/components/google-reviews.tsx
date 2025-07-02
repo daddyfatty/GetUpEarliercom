@@ -16,19 +16,30 @@ export function GoogleReviews() {
           Hear from some of my amazing clients
         </p>
         
-        <div className="bg-white rounded-2xl p-8 shadow-xl max-w-2xl mx-auto">
-          <p className="text-gray-600 mb-6">
+        <div className="bg-white rounded-2xl p-6 shadow-xl max-w-md mx-auto text-center">
+          <h3 className="text-lg font-semibold text-gray-900 mb-1">
+            Get Up Earlier - Personal Training
+          </h3>
+          <p className="text-gray-600 text-sm mb-4">
             Orange, CT - Personal Training & Nutrition Coaching
           </p>
           
-
+          <div className="flex items-center justify-center space-x-2 mb-4">
+            <span className="text-2xl font-bold text-gray-900">5.0</span>
+            <div className="flex space-x-1">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+              ))}
+            </div>
+            <span className="text-gray-600 text-sm">12 reviews</span>
+          </div>
           
           <Button 
-            className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-2 rounded-md text-sm transition-colors"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-1.5 rounded text-sm transition-colors"
             onClick={() => window.open(googleReviewsUrl, '_blank')}
           >
-            <div className="flex items-center space-x-2">
-              <span className="font-bold text-base">G</span>
+            <div className="flex items-center space-x-1.5">
+              <span className="font-bold text-sm">G</span>
               <span>View on Google</span>
             </div>
           </Button>
