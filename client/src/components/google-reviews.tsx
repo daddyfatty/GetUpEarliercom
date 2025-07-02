@@ -10,7 +10,7 @@ export function GoogleReviews() {
     <section className="py-16 bg-[hsl(var(--navy))] relative overflow-hidden">
       {/* Large Background Star */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <Star className="w-96 h-96 text-white/5 fill-current" />
+        <Star className="w-[800px] h-[800px] text-white/3 fill-current" />
       </div>
       
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
@@ -44,7 +44,11 @@ export function GoogleReviews() {
             onClick={() => window.open(googleReviewsUrl, '_blank')}
           >
             <div className="flex items-center space-x-2">
-              <span className="font-bold text-base">G</span>
+              <div className="w-5 h-5 flex items-center justify-center">
+                <div className="text-base font-bold bg-gradient-to-r from-blue-500 via-red-500 via-yellow-400 to-green-500 bg-clip-text text-transparent">
+                  G
+                </div>
+              </div>
               <span>View on Google</span>
             </div>
           </Button>
