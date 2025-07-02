@@ -11,6 +11,7 @@ import { Link } from "wouter";
 import { Clock, TrendingUp, Users, Star, ChefHat, Dumbbell, ArrowRight, Calendar, Target, MapPin, BookOpen, ExternalLink } from "lucide-react";
 import type { Recipe, Workout, BlogPost } from "@shared/schema";
 import gymImagePath from "@assets/download - 2025-06-20T164725.183_1750452478509.png";
+import { useEffect, useState } from "react";
 
 function LatestBlogCard() {
   const { data: blogPosts = [] } = useQuery<BlogPost[]>({
@@ -82,6 +83,20 @@ export default function Home() {
   const { data: workouts = [] } = useQuery<Workout[]>({
     queryKey: ["/api/workouts"],
   });
+
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Calculate rotation based on scroll position (20% = 72 degrees max)
+  const starRotation = (scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 72;
 
   const featuredRecipes = recipes.slice(0, 3);
   const featuredWorkouts = workouts.slice(0, 3);
@@ -274,7 +289,10 @@ export default function Home() {
       <section className="relative bg-[hsl(var(--navy))] overflow-hidden">
         {/* Large Background Star */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <Star className="w-[1200px] h-[1200px] text-white/3 fill-current" />
+          <Star 
+            className="w-[1200px] h-[1200px] text-white/3 fill-current transition-transform duration-100 ease-out" 
+            style={{ transform: `rotate(${starRotation}deg)` }}
+          />
         </div>
         
         <div className="relative z-10 py-16">
