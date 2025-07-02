@@ -270,10 +270,18 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* Google Reviews */}
-      <GoogleReviews />
-      {/* Client Reviews */}
-      <ClientReviews />
+      {/* Combined Reviews Section */}
+      <section className="relative bg-[hsl(var(--navy))] overflow-hidden">
+        {/* Large Background Star */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <Star className="w-[1200px] h-[1200px] text-white/3 fill-current" />
+        </div>
+        
+        <div className="relative z-10 py-16">
+          <GoogleReviews />
+          <ClientReviews />
+        </div>
+      </section>
       {/* Credentials Band */}
       <CredentialsBand />
       <BookPromotion />

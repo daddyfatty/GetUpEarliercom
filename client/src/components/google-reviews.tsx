@@ -7,13 +7,8 @@ export function GoogleReviews() {
   const googleReviewsUrl = "https://g.co/kgs/T7W69wT";
 
   return (
-    <section className="py-16 bg-[hsl(var(--navy))] relative overflow-hidden">
-      {/* Large Background Star - spans both review sections */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ height: 'calc(100vh + 200px)', top: '-100px' }}>
-        <Star className="w-[1000px] h-[1000px] text-white/3 fill-current" />
-      </div>
-      
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+    <div className="pb-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
           Don't just take our word for it
         </h2>
@@ -54,6 +49,6 @@ export function GoogleReviews() {
           </Button>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
