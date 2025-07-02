@@ -8,9 +8,9 @@ export function GoogleReviews() {
 
   return (
     <section className="py-16 bg-[hsl(var(--navy))] relative overflow-hidden">
-      {/* Large Background Star */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <Star className="w-[800px] h-[800px] text-white/3 fill-current" />
+      {/* Large Background Star - spans both review sections */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ height: 'calc(100vh + 200px)', top: '-100px' }}>
+        <Star className="w-[1000px] h-[1000px] text-white/3 fill-current" />
       </div>
       
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
