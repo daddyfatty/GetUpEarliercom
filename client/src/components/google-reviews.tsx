@@ -7,12 +7,12 @@ export function GoogleReviews() {
   const googleReviewsUrl = "https://g.co/kgs/T7W69wT";
 
   return (
-    <section className="py-16 bg-gray-50 dark:bg-gray-900">
+    <section className="py-16 bg-[hsl(var(--navy))]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
           Don't just take our word for it
         </h2>
-        <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+        <p className="text-xl text-white/80 mb-8">
           Hear from some of my amazing clients
         </p>
         
