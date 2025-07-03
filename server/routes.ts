@@ -490,6 +490,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Webflow blog scraper endpoint
+  app.post("/api/scrape-webflow-blog", async (req, res) => {
+    try {
+      console.log('API: Starting Webflow blog scraper...');
+      const { scrapeWebflowBlog } = await import('./webflow-blog-scraper');
+      const result = await scrapeWebflowBlog();
+      
+      res.json({
+        message: `Webflow blog scraping completed successfully`,
+        success: result.success,
+        savedCount: result.savedCount,
+        totalFound: result.totalFound
+      });
+    } catch (error: any) {
+      console.error("Error in Webflow blog scraper:", error);
+      res.status(500).json({ 
+        message: "Failed to scrape Webflow blog", 
+        error: error.message 
+      });
+    }
+  });
+
   // PayPal routes
   app.get("/setup", async (req, res) => {
     await loadPaypalDefault(req, res);
