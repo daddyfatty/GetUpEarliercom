@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { ServicesGrid } from "@/components/services-grid";
 import { Link } from "wouter";
 import CheckoutModal from "@/components/checkout-modal";
+import { MapPin, Award } from "lucide-react";
 
 export default function Services() {
   const [checkoutModal, setCheckoutModal] = useState<{
@@ -181,10 +182,12 @@ export default function Services() {
               Personalized coaching tailored to your individual needs and goals
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <div className="inline-block bg-purple-800/10 text-purple-800 px-4 py-2 rounded-full text-sm font-medium">
+              <div className="inline-flex items-center gap-2 bg-purple-800/10 text-purple-800 px-4 py-2 rounded-full text-sm font-medium">
+                <MapPin className="h-4 w-4" />
                 Local Orange CT or virtual anywhere
               </div>
-              <div className="inline-block bg-amber-500/10 text-amber-700 px-4 py-2 rounded-full text-sm font-medium">
+              <div className="inline-flex items-center gap-2 bg-amber-500/10 text-amber-700 px-4 py-2 rounded-full text-sm font-medium">
+                <Award className="h-4 w-4" />
                 Certified Training
               </div>
             </div>
