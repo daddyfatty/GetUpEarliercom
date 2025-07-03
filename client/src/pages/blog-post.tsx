@@ -74,17 +74,54 @@ export default function BlogPost() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <div className="container mx-auto px-4 py-12">
-        {/* Navigation */}
-        <div className="mb-8 flex justify-between items-center">
-          <Link href="/blog">
-            <Button variant="ghost" className="gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Back to Blog
-            </Button>
-          </Link>
-          
+    <div className="min-h-screen bg-white dark:bg-gray-900">
+      {/* Full-width Blue Header Section - No gaps */}
+      <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white">
+        <div className="py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="text-sm font-medium text-blue-200 mb-4 uppercase tracking-wide">
+              {post.category}
+            </div>
+            
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight max-w-4xl mx-auto">
+              {post.title}
+            </h1>
+            
+            {/* Author Block with Photo - Clickable */}
+            <Link href="/about" className="flex flex-col items-center space-y-4 mt-8 hover:opacity-80 transition-opacity cursor-pointer">
+              <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-blue-300 bg-white">
+                <img 
+                  src="@assets/image_1751579313139.png" 
+                  alt={post.author}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-semibold text-white mb-2">
+                  {post.author}
+                </div>
+              </div>
+            </Link>
+            
+            {/* Post Meta */}
+            <div className="flex items-center justify-center space-x-4 text-blue-100 mt-6 text-sm">
+              <span>{formatDate(post.publishedDate)}</span>
+              <span>•</span>
+              <span>{post.readTime} min read</span>
+              {post.isVideo && (
+                <>
+                  <span>•</span>
+                  <span>Video Content</span>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-8">
+        {/* Edit Button - Moved to white area */}
+        <div className="mb-8 flex justify-end">
           {post && (
             <Link href={`/blog/${post.id}/edit`}>
               <Button variant="outline" className="gap-2">
@@ -93,54 +130,6 @@ export default function BlogPost() {
               </Button>
             </Link>
           )}
-        </div>
-
-        {/* Full-width Blue Header Section */}
-        <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white -mx-4 sm:-mx-6 lg:-mx-8 mb-8">
-          <div className="py-20 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto text-center">
-              <div className="text-sm font-medium text-blue-200 mb-4 uppercase tracking-wide">
-                {post.category}
-              </div>
-              
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight max-w-4xl mx-auto">
-                {post.title}
-              </h1>
-              
-              {/* Author Block with Photo - Clickable */}
-              <Link href="/about" className="flex flex-col items-center space-y-4 mt-8 hover:opacity-80 transition-opacity cursor-pointer">
-                <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-blue-300 bg-white">
-                  <img 
-                    src="/assets/image_1751578947789.png" 
-                    alt={post.author}
-                    className="w-full h-full object-cover object-top scale-110"
-                    style={{ objectPosition: '50% 20%' }}
-                  />
-                </div>
-                <div className="text-center">
-                  <div className="text-xl font-semibold text-white mb-2">
-                    {post.author}
-                  </div>
-                  <div className="text-blue-200 text-sm max-w-md mx-auto">
-                    Bridging the gap from inactivity and poor diet to strength and healthy habits
-                  </div>
-                </div>
-              </Link>
-              
-              {/* Post Meta */}
-              <div className="flex items-center justify-center space-x-4 text-blue-100 mt-6 text-sm">
-                <span>{formatDate(post.publishedDate)}</span>
-                <span>•</span>
-                <span>{post.readTime} min read</span>
-                {post.isVideo && (
-                  <>
-                    <span>•</span>
-                    <span>Video Content</span>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Article Content Container */}
@@ -170,7 +159,7 @@ export default function BlogPost() {
               </div>
               
               <div className="text-gray-600 dark:text-gray-400 leading-relaxed space-y-4">
-                {post.content.split('\n').map((paragraph, index) => (
+                {post.content?.split('\n').map((paragraph, index) => (
                   paragraph.trim() && (
                     <p key={index} className="mb-4">
                       {paragraph}
@@ -196,24 +185,19 @@ export default function BlogPost() {
           )}
 
           {/* Author Bio - Clickable */}
-          <div className="mt-12 p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">About the Author</h3>
+          <div className="mt-12 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg">
             <Link href="/about" className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
               <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-200 dark:border-gray-700 flex-shrink-0">
                 <img 
-                  src="/assets/image_1751578947789.png" 
+                  src="@assets/image_1751579313139.png" 
                   alt="Michael Baker"
-                  className="w-full h-full object-cover object-top scale-110"
-                  style={{ objectPosition: '50% 20%' }}
+                  className="w-full h-full object-cover"
                 />
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 dark:text-white">{post.author}</h4>
+                <h4 className="font-semibold text-gray-900 dark:text-white text-lg">{post.author}</h4>
                 <p className="text-gray-600 dark:text-gray-400 mt-1">
-                  {post.author === 'Michael Baker' 
-                    ? 'Certified Personal Trainer (ISSA), Integrative Nutrition Health Coach, Running Coach (ISSA), and RYT 200 Yoga Instructor with 30 years of experience helping clients achieve their fitness goals.'
-                    : 'E-RYT 200 Certified Yoga Instructor specializing in therapeutic yoga, flexibility training, and pain relief through mindful movement and proper alignment.'
-                  }
+                  Bridging the gap from inactivity and poor diet to strength and healthy habits
                 </p>
               </div>
             </Link>
