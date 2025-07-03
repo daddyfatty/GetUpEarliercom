@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 3, 2025: Fixed duplicate video display issue by updating blog post layout to match GetUpEarlier.com format
 - July 3, 2025: Fixed YouTube URL validation in blog CMS - created flexible schema to handle both string and array tag inputs, enabling proper video content editing
 - July 3, 2025: Fixed JavaScript errors in blog system - resolved tags handling for both blog listing and individual post pages
 - July 3, 2025: Blog CMS system fully operational with clean data from GetUpEarlier.com
