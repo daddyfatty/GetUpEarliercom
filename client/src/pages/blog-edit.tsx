@@ -52,7 +52,7 @@ export default function BlogEdit() {
         content: post.content,
         category: post.category,
         imageUrl: post.imageUrl,
-        tags: post.tags
+        tags: Array.isArray(post.tags) ? post.tags : []
       });
     }
   }, [post, isEditing]);
@@ -406,7 +406,8 @@ export default function BlogEdit() {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
-                  {(isEditing ? editData.tags : post.tags)?.map((tag, index) => (
+                  {Array.isArray(isEditing ? editData.tags : post.tags) && 
+                   (isEditing ? editData.tags : post.tags).map((tag, index) => (
                     <Badge key={index} variant="outline">
                       {tag}
                     </Badge>
