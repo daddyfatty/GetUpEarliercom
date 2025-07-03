@@ -148,7 +148,7 @@ export default function Blog() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post) => (
-              <Card key={post.id} className="group hover:shadow-lg transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 relative">
+              <Card key={post.id} className="group hover:shadow-lg transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700">
                 <Link href={`/blog/${post.id}`} className="block">
                   <div className="relative overflow-hidden">
                     {post.imageUrl && (
@@ -173,15 +173,6 @@ export default function Blog() {
                     )}
                   </div>
                 </Link>
-                
-                {/* Edit Button */}
-                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                  <Link href={`/blog/${post.id}/edit`}>
-                    <Button size="sm" variant="secondary" className="h-8 w-8 p-0 bg-white/90 hover:bg-white">
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                  </Link>
-                </div>
                   
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-2 mb-2">

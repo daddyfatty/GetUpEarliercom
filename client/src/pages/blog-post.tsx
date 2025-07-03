@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Clock, User, Calendar } from "lucide-react";
+import { ArrowLeft, Clock, User, Calendar, Edit } from "lucide-react";
 import { PageSubscriptionCTA } from "@/components/page-subscription-cta";
 
 interface BlogPost {
@@ -76,12 +76,19 @@ export default function BlogPost() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="container mx-auto px-4 py-12">
-        {/* Back Button */}
-        <div className="mb-8">
+        {/* Navigation */}
+        <div className="mb-8 flex justify-between items-center">
           <Link href="/blog">
             <Button variant="ghost" className="gap-2">
               <ArrowLeft className="h-4 w-4" />
               Back to Blog
+            </Button>
+          </Link>
+          
+          <Link href={`/blog/${post.id}/edit`}>
+            <Button variant="outline" className="gap-2">
+              <Edit className="h-4 w-4" />
+              Edit
             </Button>
           </Link>
         </div>
