@@ -111,7 +111,7 @@ export default function Services() {
       title: "1-on-1 Running Coaching Session",
       price: "$50",
       priceTag: "Per 30 Minute Session",
-      description: "Achieve your running goals with personalized coaching tailored to your starting point. No prior experience required. Whether you are stepping up from the couch to tackle your first 5K or a beginner aiming to complete a half or full marathon, I will guide you through a structured, approachable plan that fits your life and abilities. In our virtual or in-person sessions, you will gain insights on pacing, nutrition, running form, and building endurance safely. Any or all of these can be prioritized based on your goals. We will also cover recovery tactics including nutrition, mobility work, sleep optimization, and low-impact cross training to support sustainable progress. If you are strength training, I will help you time your sessions to complement your endurance work without burnout. You will learn how to intuitively adjust volume and intensity so your strength does not disappear during your running progression. From setting realistic milestones to mastering recovery, we will make your running journey effective, enjoyable, and sustainable. Step by step.",
+      description: "I work alongside beginner runners to help them break through their own limits. Learn how to progress from never running to completing a 5K, a 5-miler, a half marathon, or even a full marathon, with support for nutrition and recovery included.",
       features: [
         "100% customized coaching",
         "Couch to 5K and Beyond",
