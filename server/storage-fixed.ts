@@ -80,7 +80,7 @@ export interface IStorage {
   createCalculatorResult(result: InsertCalculatorResult): Promise<CalculatorResult>;
 
   // Blog post methods
-  getBlogPosts(): Promise<BlogPost[]>;
+  getAllBlogPosts(): Promise<BlogPost[]>;
   getBlogPost(id: string): Promise<BlogPost | undefined>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   updateBlogPost(id: string, updates: Partial<BlogPost>): Promise<BlogPost | undefined>;
@@ -192,40 +192,7 @@ export class DatabaseStorage implements IStorage {
     }
   }
 
-  // Blog post methods
-  async getBlogPosts(): Promise<BlogPost[]> {
-    return await db.select().from(blogPosts).orderBy(desc(blogPosts.publishedDate));
-  }
 
-  async getBlogPost(id: string): Promise<BlogPost | undefined> {
-    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
-    return post;
-  }
-
-  async createBlogPost(post: InsertBlogPost): Promise<BlogPost> {
-    const [newPost] = await db.insert(blogPosts).values({
-      ...post,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }).returning();
-    return newPost;
-  }
-
-  async updateBlogPost(id: string, updates: Partial<BlogPost>): Promise<BlogPost | undefined> {
-    const [updatedPost] = await db.update(blogPosts)
-      .set({
-        ...updates,
-        updatedAt: new Date()
-      })
-      .where(eq(blogPosts.id, id))
-      .returning();
-    return updatedPost;
-  }
-
-  async deleteBlogPost(id: string): Promise<boolean> {
-    const result = await db.delete(blogPosts).where(eq(blogPosts.id, id));
-    return result.rowCount > 0;
-  }
 
   // Calculator results methods
   async getUserCalculatorResults(userId: string): Promise<CalculatorResult[]> {
@@ -303,6 +270,63 @@ export class DatabaseStorage implements IStorage {
   async createMealPlan(mealPlan: InsertMealPlan): Promise<MealPlan> { throw new Error("Not implemented"); }
   async getMealPlanRecipes(mealPlanId: number): Promise<(MealPlanRecipe & { recipe: Recipe })[]> { return []; }
   async addRecipeToMealPlan(mealPlanId: number, recipeId: number, mealType: string): Promise<MealPlanRecipe> { throw new Error("Not implemented"); }
+
+  // Blog CMS methods
+  async getAllBlogPosts(): Promise<BlogPost[]> {
+    try {
+      const posts = await db.select().from(blogPosts).orderBy(desc(blogPosts.createdAt));
+      return posts;
+    } catch (error) {
+      console.error("Error fetching all blog posts:", error);
+      return [];
+    }
+  }
+
+  async getBlogPost(id: string): Promise<BlogPost | undefined> {
+    try {
+      const [post] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
+      return post || undefined;
+    } catch (error) {
+      console.error("Error fetching blog post:", error);
+      return undefined;
+    }
+  }
+
+  async createBlogPost(post: InsertBlogPost): Promise<BlogPost> {
+    try {
+      console.log("Creating blog post with values:", JSON.stringify(post, null, 2));
+      const [newPost] = await db.insert(blogPosts).values(post).returning();
+      return newPost;
+    } catch (error) {
+      console.error("Error creating blog post:", error);
+      console.error("Failed with post data:", JSON.stringify(post, null, 2));
+      throw error;
+    }
+  }
+
+  async updateBlogPost(id: string, updates: Partial<BlogPost>): Promise<BlogPost | undefined> {
+    try {
+      const [updatedPost] = await db
+        .update(blogPosts)
+        .set(updates)
+        .where(eq(blogPosts.id, id))
+        .returning();
+      return updatedPost || undefined;
+    } catch (error) {
+      console.error("Error updating blog post:", error);
+      return undefined;
+    }
+  }
+
+  async deleteBlogPost(id: string): Promise<boolean> {
+    try {
+      const result = await db.delete(blogPosts).where(eq(blogPosts.id, id));
+      return result.rowCount !== null && result.rowCount > 0;
+    } catch (error) {
+      console.error("Error deleting blog post:", error);
+      return false;
+    }
+  }
 }
 
 export const storage = new DatabaseStorage();

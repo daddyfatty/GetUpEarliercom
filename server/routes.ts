@@ -11,6 +11,14 @@ import { eq } from "drizzle-orm";
 import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal";
 import { workoutService } from "./workoutService";
 import { recipeService } from "./recipeService";
+import { 
+  initializeBlogCMS, 
+  getAllBlogPosts as cmsGetAllBlogPosts, 
+  getBlogPost as cmsGetBlogPost, 
+  createBlogPost as cmsCreateBlogPost, 
+  updateBlogPost as cmsUpdateBlogPost, 
+  deleteBlogPost as cmsDeleteBlogPost 
+} from './blog-cms';
 
 // Check if Stripe is configured
 const STRIPE_CONFIGURED = !!process.env.STRIPE_SECRET_KEY;
@@ -483,8 +491,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Blog routes - use original blog scraper
-  app.get("/api/blog", async (req, res) => {
+  // Blog CMS routes
+  app.get("/api/blog", cmsGetAllBlogPosts);
+  app.get("/api/blog/:id", cmsGetBlogPost);
+  app.post("/api/blog", cmsCreateBlogPost);
+  app.put("/api/blog/:id", cmsUpdateBlogPost);
+  app.delete("/api/blog/:id", cmsDeleteBlogPost);
+
+  // Initialize Blog CMS with clean data
+  app.post("/api/blog/initialize", async (req, res) => {
+    try {
+      await initializeBlogCMS();
+      res.json({ success: true, message: "Blog CMS initialized with clean data" });
+    } catch (error: any) {
+      console.error("Error initializing blog CMS:", error);
+      res.status(500).json({ message: "Error initializing blog CMS: " + error.message });
+    }
+  });
+
+  // Initialize CMS on startup if no posts exist
+  setTimeout(async () => {
+    try {
+      const posts = await storage.getAllBlogPosts();
+      if (posts.length === 0) {
+        console.log("No blog posts found, initializing CMS with clean data...");
+        await initializeBlogCMS();
+        console.log("Blog CMS initialized successfully");
+      }
+    } catch (error) {
+      console.error("Error checking/initializing blog CMS:", error);
+    }
+  }, 1000);
+
+  // Legacy blog routes for backward compatibility
+  app.get("/api/blog-legacy", async (req, res) => {
     try {
       // Get original posts from website scraper
       const { scrapeBlogPosts } = await import('./blog-scraper');
@@ -515,7 +555,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error("Error fetching blog posts:", error);
       
-      // Fallback to sample data if both methods fail
+      // Return empty array instead of fallback data
       const fallbackPosts = [
         {
           id: "winter-running-motivation",
