@@ -111,7 +111,7 @@ export default function BlogPost() {
               <div className="flex flex-col items-center space-y-4 mt-8">
                 <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-blue-300 bg-white">
                   <img 
-                    src="/assets/678ae0313289077684c96176_unnamed (3)_1751313391610.png" 
+                    src="/assets/image_1751578947789.png" 
                     alt={post.author}
                     className="w-full h-full object-cover"
                   />
