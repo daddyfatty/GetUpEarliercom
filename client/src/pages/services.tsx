@@ -25,6 +25,7 @@ export default function Services() {
   const [nutritionCoachingModal, setNutritionCoachingModal] = useState(false);
   const [runningCoachingModal, setRunningCoachingModal] = useState(false);
   const [accountabilityCoachingModal, setAccountabilityCoachingModal] = useState(false);
+  const [privateYogaModal, setPrivateYogaModal] = useState(false);
 
   useEffect(() => {
     // Handle anchor scrolling on page load
@@ -143,7 +144,8 @@ export default function Services() {
       backgroundColor: "bg-orange-50",
       textColor: "text-gray-900",
       quantityInput: true,
-      badge: undefined
+      badge: undefined,
+      hasReadMore: true
     },
     {
       title: "Small Group Yoga with Erica",
@@ -231,6 +233,8 @@ export default function Services() {
                         setNutritionCoachingModal(true);
                       } else if (pkg.title === "1-on-1 Running Coaching Session") {
                         setRunningCoachingModal(true);
+                      } else if (pkg.title === "1-on-1 Private Yoga with Erica") {
+                        setPrivateYogaModal(true);
                       }
                     } else {
                       window.location.href = "/contact";
@@ -303,6 +307,8 @@ export default function Services() {
                               setNutritionCoachingModal(true);
                             } else if (pkg.title === "1-on-1 Running Coaching Session") {
                               setRunningCoachingModal(true);
+                            } else if (pkg.title === "1-on-1 Private Yoga with Erica") {
+                              setPrivateYogaModal(true);
                             }
                           }}
                           className="w-full bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300 font-medium py-3 px-6 rounded-lg"
@@ -624,6 +630,63 @@ export default function Services() {
                   onClick={() => setAccountabilityCoachingModal(false)}
                 >
                   Get Accountability Support →
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Private Yoga Details Modal */}
+      <Dialog open={privateYogaModal} onOpenChange={setPrivateYogaModal}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold mb-4">1-on-1 Private Yoga with Erica</DialogTitle>
+            <DialogDescription>
+              Personalized yoga in our dedicated studio space designed for tranquility and focus
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <p className="text-gray-700 leading-relaxed">
+                Immerse yourself in a personalized yoga experience in our pristine, dedicated yoga space designed for tranquility and focus. Tailored sessions accommodate all skill levels, providing a serene environment ideal for one-on-one practice. Whether you are beginning your yoga journey or deepening your practice, our studio offers the perfect setting, customized to fit your schedule. Experience the balance and peace of mind that comes with a dedicated space and personalized attention.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Dedicated Yoga Studio</h4>
+                <p className="text-sm text-gray-600">A pristine, tranquil space specifically designed for yoga practice, promoting peace and focus.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Personalized Sessions</h4>
+                <p className="text-sm text-gray-600">Customized yoga classes tailored to individual skill levels and personal goals, ensuring optimal progression and comfort.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Flexible Scheduling</h4>
+                <p className="text-sm text-gray-600">Sessions arranged to fit your unique timetable, making it easy to integrate yoga into your busy life.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Ideal for All Levels</h4>
+                <p className="text-sm text-gray-600">Suitable for beginners through advanced practitioners, with modifications and challenges to suit everyone.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Private One-on-One Instruction</h4>
+                <p className="text-sm text-gray-600">Personal attention from experienced instructors, enhancing your practice through detailed guidance and support.</p>
+              </div>
+            </div>
+
+            <div className="flex justify-center pt-4">
+              <Link href="/contact">
+                <Button 
+                  className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3"
+                  onClick={() => setPrivateYogaModal(false)}
+                >
+                  Book Your Private Session →
                 </Button>
               </Link>
             </div>
