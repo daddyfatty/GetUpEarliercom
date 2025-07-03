@@ -82,6 +82,7 @@ export function ServicesGrid({
   className = ""
 }: ServicesGridProps) {
   const [personalTrainingModal, setPersonalTrainingModal] = useState(false);
+  const [nutritionCoachingModal, setNutritionCoachingModal] = useState(false);
 
   return (
     <div className={className}>
@@ -149,6 +150,18 @@ export function ServicesGrid({
                   </Button>
                 </div>
               )}
+              {showReadMore && service.title === "Virtual Nutrition Coaching" && (
+                <div className="text-center mt-8">
+                  <Button 
+                    variant="outline" 
+                    size="lg" 
+                    className="text-lg px-6 py-3"
+                    onClick={() => setNutritionCoachingModal(true)}
+                  >
+                    Read More →
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
         ))}
@@ -199,6 +212,89 @@ export function ServicesGrid({
                   onClick={() => setPersonalTrainingModal(false)}
                 >
                   Get Started Today →
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Virtual Nutrition Coaching Details Modal */}
+      <Dialog open={nutritionCoachingModal} onOpenChange={setNutritionCoachingModal}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold mb-4">Virtual Nutrition Coaching</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <p className="text-gray-700 leading-relaxed">
+                You can't out-train, out-run, or out-yoga a bad diet or eating too many calories. If the goal is weight loss, muscle building, endurance or muscle retention, you must learn about food. As an experienced strength trainer and certified health coach, I understand the critical role diet plays in achieving your fitness goals. Everyone has unique needs, and together, we'll develop a customized plan based on sound, actionable information. This includes a full understanding of calories, macronutrient needs, single ingredient vs. ultra-processed foods, and healthy digital shopping.
+              </p>
+              
+              <p className="text-gray-700 leading-relaxed">
+                <strong>Live 1-on-1 no automations, AI or programs. We communicate, share links and get you locked in!</strong>
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 mt-8">
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Gain insight into balanced eating habits</h4>
+                <p className="text-sm text-gray-600">Learn how to create sustainable nutrition plans that work for your lifestyle.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Support weight loss and muscle recovery</h4>
+                <p className="text-sm text-gray-600">Understanding how nutrition directly impacts your fitness goals.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Boost metabolism and energy levels</h4>
+                <p className="text-sm text-gray-600">Optimize your food choices to feel energized throughout the day.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Improve self-confidence and body image</h4>
+                <p className="text-sm text-gray-600">Build a healthy relationship with food and your body.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Learn how to shop for healthy food digitally</h4>
+                <p className="text-sm text-gray-600">Navigate online grocery shopping and meal planning efficiently.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Insights into macronutrients & micronutrients</h4>
+                <p className="text-sm text-gray-600">Understanding the building blocks of proper nutrition.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Strategies for sustainable lifestyle changes</h4>
+                <p className="text-sm text-gray-600">Making changes that last without extreme restrictions.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Education on product labels and food trends</h4>
+                <p className="text-sm text-gray-600">Learn to read labels and separate fact from marketing.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Guidance on trending diets and debunking myths</h4>
+                <p className="text-sm text-gray-600">Get evidence-based advice on popular diet trends.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Continuous support to help you make smarter food choices</h4>
+                <p className="text-sm text-gray-600">Ongoing guidance to build long-term healthy eating habits.</p>
+              </div>
+            </div>
+
+            <div className="flex justify-center pt-4">
+              <Link href="/contact">
+                <Button 
+                  className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3"
+                  onClick={() => setNutritionCoachingModal(false)}
+                >
+                  Reach out here to get going →
                 </Button>
               </Link>
             </div>
