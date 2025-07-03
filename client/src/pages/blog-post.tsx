@@ -95,38 +95,58 @@ export default function BlogPost() {
           )}
         </div>
 
-        {/* Article Header */}
-        <article className="max-w-4xl mx-auto">
-          <header className="mb-8">
-            <div className="flex items-center gap-2 mb-4">
-              <Badge variant="secondary">
+        {/* Full-width Blue Header Section */}
+        <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white -mx-4 sm:-mx-6 lg:-mx-8 mb-8">
+          <div className="py-20 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="text-sm font-medium text-blue-200 mb-4 uppercase tracking-wide">
                 {post.category}
-              </Badge>
-              {post.isVideo && (
-                <Badge variant="outline">
-                  Video
-                </Badge>
-              )}
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-              {post.title}
-            </h1>
-            
-            <div className="flex flex-wrap items-center gap-6 text-gray-600 dark:text-gray-400">
-              <div className="flex items-center gap-2">
-                <User className="h-4 w-4" />
-                <span className="font-medium">{post.author}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
+              
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight max-w-4xl mx-auto">
+                {post.title}
+              </h1>
+              
+              {/* Author Block with Photo */}
+              <div className="flex flex-col items-center space-y-4 mt-8">
+                <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-blue-300 bg-white">
+                  <img 
+                    src="/assets/678ae0313289077684c96176_unnamed (3)_1751313391610.png" 
+                    alt={post.author}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="text-center">
+                  <div className="text-xl font-semibold text-white mb-2">
+                    {post.author}
+                  </div>
+                  <div className="text-blue-200 text-sm max-w-md mx-auto">
+                    Bridging the gap from inactivity and poor diet to strength and healthy habits
+                  </div>
+                </div>
+              </div>
+              
+              {/* Post Meta */}
+              <div className="flex items-center justify-center space-x-4 text-blue-100 mt-6 text-sm">
+                <span>{formatDate(post.publishedDate)}</span>
+                <span>•</span>
                 <span>{post.readTime} min read</span>
+                {post.isVideo && (
+                  <>
+                    <span>•</span>
+                    <span>Video Content</span>
+                  </>
+                )}
               </div>
             </div>
-          </header>
+          </div>
+        </div>
 
-          {/* Featured Media - Single Video Display */}
-          {post.isVideo && post.videoUrl ? (
+        {/* Article Content Container */}
+        <article className="max-w-4xl mx-auto">
+
+          {/* Video Section */}
+          {post.isVideo && post.videoUrl && (
             <div className="mb-8">
               <div className="aspect-video w-full bg-black rounded-lg overflow-hidden shadow-lg">
                 <iframe
@@ -139,27 +159,23 @@ export default function BlogPost() {
                 />
               </div>
             </div>
-          ) : post.imageUrl ? (
-            <div className="mb-8">
-              <div className="aspect-video w-full rounded-lg overflow-hidden">
-                <img
-                  src={post.imageUrl}
-                  alt={post.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-          ) : null}
+          )}
 
           {/* Article Content */}
-          <div className="prose prose-lg max-w-none dark:prose-invert">
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg p-8 border border-gray-200 dark:border-gray-700">
-              <div className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-6 font-medium">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg border border-gray-200 dark:border-gray-700">
+            <div className="prose prose-lg max-w-none dark:prose-invert">
+              <div className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-8 font-medium border-b border-gray-200 dark:border-gray-600 pb-6">
                 {post.excerpt}
               </div>
               
-              <div className="text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-line">
-                {post.content}
+              <div className="text-gray-600 dark:text-gray-400 leading-relaxed space-y-4">
+                {post.content.split('\n').map((paragraph, index) => (
+                  paragraph.trim() && (
+                    <p key={index} className="mb-4">
+                      {paragraph}
+                    </p>
+                  )
+                ))}
               </div>
             </div>
           </div>
