@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { ArrowLeft, Save, X, Trash2, Loader2, ImageIcon } from "lucide-react";
+import { ArrowLeft, Save, X, Trash2, Loader2, ImageIcon, Play } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -52,6 +52,8 @@ export default function BlogEdit() {
         content: post.content,
         category: post.category,
         imageUrl: post.imageUrl,
+        videoUrl: post.videoUrl,
+        isVideo: post.isVideo,
         tags: Array.isArray(post.tags) ? post.tags : []
       });
     }
@@ -123,6 +125,8 @@ export default function BlogEdit() {
         content: post.content,
         category: post.category,
         imageUrl: post.imageUrl,
+        videoUrl: post.videoUrl,
+        isVideo: post.isVideo,
         tags: post.tags
       });
     }
@@ -478,6 +482,88 @@ export default function BlogEdit() {
                       <div className="text-center py-8 text-gray-500">
                         <ImageIcon className="mx-auto h-8 w-8 mb-2" />
                         <p className="text-sm">No image set</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Video URL */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Play className="h-5 w-5" />
+                  Video Content
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {isEditing ? (
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Video URL (YouTube Embed)</label>
+                      <Input
+                        value={editData.videoUrl || ""}
+                        onChange={(e) => setEditData({ ...editData, videoUrl: e.target.value })}
+                        placeholder="https://www.youtube.com/embed/VIDEO_ID"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">
+                        Use YouTube embed format: https://www.youtube.com/embed/VIDEO_ID
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        id="isVideo"
+                        checked={editData.isVideo || false}
+                        onChange={(e) => setEditData({ ...editData, isVideo: e.target.checked })}
+                        className="rounded"
+                      />
+                      <label htmlFor="isVideo" className="text-sm font-medium">
+                        Mark as video post
+                      </label>
+                    </div>
+
+                    {(editData.videoUrl || post.videoUrl) && (
+                      <div className="space-y-2">
+                        <p className="text-sm font-medium">Video Preview:</p>
+                        <div className="aspect-video w-full bg-black rounded-lg overflow-hidden">
+                          <iframe
+                            src={editData.videoUrl || post.videoUrl}
+                            title="Video preview"
+                            className="w-full h-full border-0"
+                            allowFullScreen
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div>
+                    {post.videoUrl ? (
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Badge variant={post.isVideo ? "default" : "secondary"}>
+                            {post.isVideo ? "Video Post" : "Regular Post"}
+                          </Badge>
+                        </div>
+                        <div className="aspect-video w-full bg-black rounded-lg overflow-hidden">
+                          <iframe
+                            src={post.videoUrl}
+                            title="Video content"
+                            className="w-full h-full border-0"
+                            allowFullScreen
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          />
+                        </div>
+                        <p className="text-xs text-gray-500 break-words">{post.videoUrl}</p>
+                      </div>
+                    ) : (
+                      <div className="text-center py-8 text-gray-500">
+                        <Play className="mx-auto h-8 w-8 mb-2" />
+                        <p className="text-sm">No video set</p>
                       </div>
                     )}
                   </div>

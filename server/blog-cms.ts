@@ -46,8 +46,8 @@ const cleanBlogPosts = [
     author: 'Michael Baker',
     publishedDate: '2024-12-05T08:00:00.000Z',
     imageUrl: 'https://cdn.prod.website-files.com/678a4458aad73fea7208fc9f/678a5eb0dfc262c4f1966dd3_AI-Wintrer-Runner4-text.png',
-    videoUrl: '',
-    isVideo: false,
+    videoUrl: 'https://www.youtube.com/embed/PLACEHOLDER_VIDEO_1', // Admin can edit with real video
+    isVideo: true,
     status: 'published'
   },
   {
@@ -61,8 +61,8 @@ const cleanBlogPosts = [
     author: 'Michael Baker',
     publishedDate: '2024-12-01T07:00:00.000Z',
     imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/678e3e27ed8efc26069bc262_training-ericaleebakerback-trice.jpeg',
-    videoUrl: '',
-    isVideo: false,
+    videoUrl: 'https://www.youtube.com/embed/PLACEHOLDER_VIDEO_2', // Admin can edit with real video
+    isVideo: true,
     status: 'published'
   },
   {
@@ -76,8 +76,8 @@ const cleanBlogPosts = [
     author: 'Michael Baker',
     publishedDate: '2024-11-28T06:30:00.000Z',
     imageUrl: 'https://cdn.prod.website-files.com/678a4459aad73fea7208fd29/6794b76b83b2663913c2e57e_2025-01-21%2008-28-19.00_15_49_08.Still007.jpg',
-    videoUrl: '',
-    isVideo: false,
+    videoUrl: 'https://www.youtube.com/embed/PLACEHOLDER_VIDEO_3', // Admin can edit with real video
+    isVideo: true,
     status: 'published'
   }
 ];
