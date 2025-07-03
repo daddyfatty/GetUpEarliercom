@@ -99,7 +99,6 @@ export function ServicesGrid({
           )}
         </div>
       )}
-
       <div className={`grid gap-8 ${showImages ? 'grid-cols-1 lg:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
         {servicesData.map((service, index) => (
           <Card 
@@ -197,7 +196,6 @@ export function ServicesGrid({
           </Card>
         ))}
       </div>
-
       {/* Personal Training Details Modal */}
       <Dialog open={personalTrainingModal} onOpenChange={setPersonalTrainingModal}>
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
@@ -252,7 +250,6 @@ export function ServicesGrid({
           </div>
         </DialogContent>
       </Dialog>
-
       {/* Virtual Nutrition Coaching Details Modal */}
       <Dialog open={nutritionCoachingModal} onOpenChange={setNutritionCoachingModal}>
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
@@ -338,7 +335,6 @@ export function ServicesGrid({
           </div>
         </DialogContent>
       </Dialog>
-
       {/* Running Coaching Details Modal */}
       <Dialog open={runningCoachingModal} onOpenChange={setRunningCoachingModal}>
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
@@ -350,9 +346,7 @@ export function ServicesGrid({
           </DialogHeader>
           <div className="space-y-6">
             <div className="space-y-4">
-              <p className="text-gray-700 leading-relaxed">
-                As a certified Running Coach, I work with beginner and intermediate runners to help them improve form, prevent injuries, and reach personal bests. Whether you're preparing for a 5k, half marathon, full marathon, or just starting your running journey, I'll develop a custom plan to fit your unique needs. My approach integrates form refinement, injury prevention, and mental support, along with nutrition guidance and recovery strategies as essential components to keep you healthy, motivated, and consistently progressing.
-              </p>
+              <p className="text-gray-700 leading-relaxed">As a certified Running Coach, I work with beginner and intermediate runners to help them improve form, prevent injuries, and reach personal bests. Whether you're preparing for a 5k, half marathon, full marathon, or just starting your running journey, I'll provide 1-on-1 guidance or develop a custom plan to fit your unique needs. My approach integrates form refinement, injury prevention, and mental support, along with nutrition guidance and recovery strategies as essential components to keep you healthy, motivated, and consistently progressing.</p>
             </div>
 
             <div className="space-y-4">
