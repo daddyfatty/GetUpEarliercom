@@ -182,7 +182,7 @@ export default function Services() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <div className="inline-block bg-purple-800/10 text-purple-800 px-4 py-2 rounded-full text-sm font-medium">
-                30 Years Experience
+                Local Orange CT or virtual anywhere
               </div>
               <div className="inline-block bg-amber-500/10 text-amber-700 px-4 py-2 rounded-full text-sm font-medium">
                 Certified Training
