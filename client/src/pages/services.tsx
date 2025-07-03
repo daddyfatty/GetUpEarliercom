@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
 import { ServicesGrid } from "@/components/services-grid";
 import { Link } from "wouter";
 import CheckoutModal from "@/components/checkout-modal";
@@ -22,6 +22,7 @@ export default function Services() {
 
   const [personalTrainingModal, setPersonalTrainingModal] = useState(false);
   const [nutritionCoachingModal, setNutritionCoachingModal] = useState(false);
+  const [runningCoachingModal, setRunningCoachingModal] = useState(false);
 
   useEffect(() => {
     // Handle anchor scrolling on page load
@@ -122,7 +123,8 @@ export default function Services() {
       backgroundColor: "bg-slate-900",
       textColor: "text-white",
       quantityInput: true,
-      badge: undefined
+      badge: undefined,
+      hasReadMore: true
     },
     {
       title: "1-on-1 Private Yoga with Erica",
@@ -223,6 +225,8 @@ export default function Services() {
                         setPersonalTrainingModal(true);
                       } else if (pkg.title === "1-on-1 Nutrition Coaching") {
                         setNutritionCoachingModal(true);
+                      } else if (pkg.title === "1-on-1 Running Coaching Session") {
+                        setRunningCoachingModal(true);
                       }
                     } else {
                       window.location.href = "/contact";
@@ -293,6 +297,8 @@ export default function Services() {
                               setPersonalTrainingModal(true);
                             } else if (pkg.title === "1-on-1 Nutrition Coaching") {
                               setNutritionCoachingModal(true);
+                            } else if (pkg.title === "1-on-1 Running Coaching Session") {
+                              setRunningCoachingModal(true);
                             }
                           }}
                           className="w-full bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300 font-medium py-3 px-6 rounded-lg"
@@ -323,6 +329,9 @@ export default function Services() {
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold mb-4">1-on-1 Personal Strength Training</DialogTitle>
+            <DialogDescription>
+              Comprehensive strength training tailored to your fitness level and goals
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-6">
             <div className="space-y-4">
@@ -375,6 +384,9 @@ export default function Services() {
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold mb-4">Virtual Nutrition Coaching</DialogTitle>
+            <DialogDescription>
+              Personalized nutrition guidance with live 1-on-1 coaching sessions
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-6">
             <div className="space-y-4">
@@ -446,6 +458,81 @@ export default function Services() {
                   onClick={() => setNutritionCoachingModal(false)}
                 >
                   Reach out here to get going →
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Running Coaching Details Modal */}
+      <Dialog open={runningCoachingModal} onOpenChange={setRunningCoachingModal}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold mb-4">Certified Running Coaching</DialogTitle>
+            <DialogDescription>
+              Personalized running coaching for beginners to advanced runners
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <p className="text-gray-700 leading-relaxed">
+                As a certified Running Coach, I work with beginner and intermediate runners to help them improve form, prevent injuries, and reach personal bests. Whether you're preparing for a 5k, half marathon, full marathon, or just starting your running journey, I'll develop a custom plan to fit your unique needs. My approach integrates form refinement, injury prevention, and mental support, along with nutrition guidance and recovery strategies as essential components to keep you healthy, motivated, and consistently progressing.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold text-gray-900">Coaching Includes:</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-gray-900">Go from Couch to 5k</h4>
+                  <p className="text-sm text-gray-600">Structured progression for complete beginners</p>
+                </div>
+                
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-gray-900">Personalized running plans</h4>
+                  <p className="text-sm text-gray-600">Custom training schedules based on your goals</p>
+                </div>
+                
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-gray-900">Technique and form coaching</h4>
+                  <p className="text-sm text-gray-600">Improve efficiency and reduce injury risk</p>
+                </div>
+                
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-gray-900">Injury prevention strategies</h4>
+                  <p className="text-sm text-gray-600">Stay healthy and consistent in your training</p>
+                </div>
+                
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-gray-900">Motivation and mental support</h4>
+                  <p className="text-sm text-gray-600">Build confidence and mental resilience</p>
+                </div>
+                
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-gray-900">Nutrition and recovery guidance</h4>
+                  <p className="text-sm text-gray-600">Fuel your body for optimal performance</p>
+                </div>
+                
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-gray-900">Training for all fitness levels</h4>
+                  <p className="text-sm text-gray-600">Programs tailored to your current ability</p>
+                </div>
+                
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-gray-900">Regular progress tracking</h4>
+                  <p className="text-sm text-gray-600">Monitor improvements and adjust plans</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center pt-4">
+              <Link href="/contact">
+                <Button 
+                  className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3"
+                  onClick={() => setRunningCoachingModal(false)}
+                >
+                  Start Your Running Journey →
                 </Button>
               </Link>
             </div>
