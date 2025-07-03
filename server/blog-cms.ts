@@ -3,6 +3,18 @@ import { storage } from './storage';
 import { insertBlogPostSchema } from '@shared/schema';
 import { z } from 'zod';
 
+// Create a flexible schema for blog post updates that handles both string and array tags
+const flexibleBlogPostSchema = insertBlogPostSchema.extend({
+  tags: z.union([z.string(), z.array(z.string())]).optional()
+});
+
+// Helper function to normalize tags
+function normalizeTags(tags: string | string[] | undefined): string | undefined {
+  if (!tags) return undefined;
+  if (Array.isArray(tags)) return JSON.stringify(tags);
+  return tags;
+}
+
 // Clean blog posts from the scraper - authentic content from GetUpEarlier.com
 const cleanBlogPosts = [
   {
@@ -144,13 +156,15 @@ export async function getBlogPost(req: Request, res: Response) {
 
 export async function createBlogPost(req: Request, res: Response) {
   try {
-    // Convert tags array to JSON string if it's an array
-    if (req.body.tags && Array.isArray(req.body.tags)) {
-      req.body.tags = JSON.stringify(req.body.tags);
-    }
+    const validatedData = flexibleBlogPostSchema.parse(req.body);
     
-    const validatedData = insertBlogPostSchema.parse(req.body);
-    const post = await storage.createBlogPost(validatedData);
+    // Normalize tags to string format for database storage
+    const normalizedData = {
+      ...validatedData,
+      tags: normalizeTags(validatedData.tags) || '[]'
+    };
+    
+    const post = await storage.createBlogPost(normalizedData);
     res.status(201).json(post);
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -165,13 +179,18 @@ export async function updateBlogPost(req: Request, res: Response) {
   try {
     const { id } = req.params;
     
-    // Convert tags array to JSON string if it's an array
-    if (req.body.tags && Array.isArray(req.body.tags)) {
-      req.body.tags = JSON.stringify(req.body.tags);
+    const validatedData = flexibleBlogPostSchema.partial().parse(req.body);
+    
+    // Normalize tags to string format for database storage, only if tags field is present
+    const normalizedData: any = {
+      ...validatedData
+    };
+    
+    if (validatedData.tags !== undefined) {
+      normalizedData.tags = normalizeTags(validatedData.tags) || '[]';
     }
     
-    const validatedData = insertBlogPostSchema.partial().parse(req.body);
-    const post = await storage.updateBlogPost(id, validatedData);
+    const post = await storage.updateBlogPost(id, normalizedData);
     if (!post) {
       return res.status(404).json({ error: 'Blog post not found' });
     }
