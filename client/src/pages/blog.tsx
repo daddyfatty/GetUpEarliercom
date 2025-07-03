@@ -228,11 +228,11 @@ export default function Blog() {
                     </Link>
                   </div>
                   
-                  {post.tags.length > 0 && (
+                  {post.tags && post.tags.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-3">
-                      {post.tags.slice(0, 3).map((tag) => (
+                      {(typeof post.tags === 'string' ? post.tags.split(',') : post.tags).slice(0, 3).map((tag: string) => (
                         <Badge key={tag} variant="outline" className="text-xs">
-                          {tag}
+                          {tag.trim()}
                         </Badge>
                       ))}
                     </div>
