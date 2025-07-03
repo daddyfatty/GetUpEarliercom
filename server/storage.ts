@@ -1,4 +1,4 @@
-import type { User, Recipe, Workout, Goal, FoodEntry, Achievement, WaterIntake, FavoriteRecipe, FavoriteWorkout, MealPlan, MealPlanRecipe, CalculatorResult, InsertUser, InsertRecipe, InsertWorkout, InsertGoal, InsertFoodEntry, InsertAchievement, InsertWaterIntake, InsertFavoriteRecipe, InsertFavoriteWorkout, InsertMealPlan, InsertMealPlanRecipe, InsertCalculatorResult } from "../shared/schema";
+import type { User, Recipe, Workout, Goal, FoodEntry, Achievement, WaterIntake, FavoriteRecipe, FavoriteWorkout, MealPlan, MealPlanRecipe, CalculatorResult, BlogPost, InsertUser, InsertRecipe, InsertWorkout, InsertGoal, InsertFoodEntry, InsertAchievement, InsertWaterIntake, InsertFavoriteRecipe, InsertFavoriteWorkout, InsertMealPlan, InsertMealPlanRecipe, InsertCalculatorResult, InsertBlogPost } from "../shared/schema";
 import { users, recipes, workouts, goals, foodEntries, achievements, waterIntake, favoriteRecipes, favoriteWorkouts, mealPlans, mealPlanRecipes, calculatorResults } from "../shared/schema";
 import { db } from "./db";
 import { eq, and, desc, sql } from "drizzle-orm";
@@ -82,6 +82,13 @@ export interface IStorage {
   // Calculator results methods
   getUserCalculatorResults(userId: string): Promise<CalculatorResult[]>;
   createCalculatorResult(result: InsertCalculatorResult): Promise<CalculatorResult>;
+
+  // Blog post methods
+  getBlogPosts(): Promise<BlogPost[]>;
+  getBlogPost(id: string): Promise<BlogPost | undefined>;
+  createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
+  updateBlogPost(id: string, updates: Partial<BlogPost>): Promise<BlogPost | undefined>;
+  deleteBlogPost(id: string): Promise<boolean>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -999,6 +1006,46 @@ export class DatabaseStorage implements IStorage {
   async getMealPlanRecipes(mealPlanId: number): Promise<MealPlanRecipe[]> { return []; }
   async addRecipeToMealPlan(mealPlanRecipe: InsertMealPlanRecipe): Promise<MealPlanRecipe> { throw new Error("Not implemented"); }
   async removeRecipeFromMealPlan(mealPlanId: number, recipeId: number): Promise<boolean> { return false; }
+
+  // Blog post methods
+  async getBlogPosts(): Promise<BlogPost[]> {
+    const { blogPosts } = await import('../shared/schema');
+    return await db.select().from(blogPosts).orderBy(desc(blogPosts.publishedDate));
+  }
+
+  async getBlogPost(id: string): Promise<BlogPost | undefined> {
+    const { blogPosts } = await import('../shared/schema');
+    const [post] = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
+    return post;
+  }
+
+  async createBlogPost(post: InsertBlogPost): Promise<BlogPost> {
+    const { blogPosts } = await import('../shared/schema');
+    const [newPost] = await db.insert(blogPosts).values({
+      ...post,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }).returning();
+    return newPost;
+  }
+
+  async updateBlogPost(id: string, updates: Partial<BlogPost>): Promise<BlogPost | undefined> {
+    const { blogPosts } = await import('../shared/schema');
+    const [updatedPost] = await db.update(blogPosts)
+      .set({
+        ...updates,
+        updatedAt: new Date()
+      })
+      .where(eq(blogPosts.id, id))
+      .returning();
+    return updatedPost;
+  }
+
+  async deleteBlogPost(id: string): Promise<boolean> {
+    const { blogPosts } = await import('../shared/schema');
+    const result = await db.delete(blogPosts).where(eq(blogPosts.id, id));
+    return result.rowCount > 0;
+  }
 }
 
 // Use MemStorage instead of DatabaseStorage for stable operation

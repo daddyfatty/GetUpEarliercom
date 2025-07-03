@@ -1075,6 +1075,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Blog post edit and delete routes
+  app.get("/api/blog/:id", async (req, res) => {
+    try {
+      const post = await storage.getBlogPost(req.params.id);
+      if (!post) {
+        return res.status(404).json({ message: "Blog post not found" });
+      }
+      res.json(post);
+    } catch (error: any) {
+      console.error("Error fetching blog post:", error);
+      res.status(500).json({ message: "Error fetching blog post: " + error.message });
+    }
+  });
+
+  app.put("/api/blog/:id", async (req, res) => {
+    try {
+      const updates = req.body;
+      
+      // Parse tags if it's a string
+      if (updates.tags && typeof updates.tags === 'string') {
+        updates.tags = JSON.parse(updates.tags);
+      }
+
+      const updatedPost = await storage.updateBlogPost(req.params.id, updates);
+      if (!updatedPost) {
+        return res.status(404).json({ message: "Blog post not found" });
+      }
+      res.json(updatedPost);
+    } catch (error: any) {
+      console.error("Error updating blog post:", error);
+      res.status(500).json({ message: "Error updating blog post: " + error.message });
+    }
+  });
+
+  app.delete("/api/blog/:id", async (req, res) => {
+    try {
+      const success = await storage.deleteBlogPost(req.params.id);
+      if (!success) {
+        return res.status(404).json({ message: "Blog post not found" });
+      }
+      res.json({ success: true, message: "Blog post deleted successfully" });
+    } catch (error: any) {
+      console.error("Error deleting blog post:", error);
+      res.status(500).json({ message: "Error deleting blog post: " + error.message });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

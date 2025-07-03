@@ -17,6 +17,7 @@ import WorkoutVideo from "@/pages/workout-video";
 
 import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog-post";
+import BlogEdit from "@/pages/blog-edit";
 
 import About from "@/pages/about";
 import Services from "@/pages/services";
@@ -61,6 +62,7 @@ function Router() {
           <Route path="/alcohol-calculator" component={AlcoholCalculatorPage} />
 
           <Route path="/blog" component={Blog} />
+          <Route path="/blog/:id/edit" component={BlogEdit} />
           <Route path="/blog/:id" component={BlogPost} />
 
           <Route path="/about" component={About} />
