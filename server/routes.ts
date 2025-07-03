@@ -501,7 +501,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .filter(post => post.content && post.content.trim().length > 0)
         .map(post => ({
           ...post,
-          tags: typeof post.tags === 'string' ? JSON.parse(post.tags) : post.tags
+          publishedDate: post.publishedDate || post.createdAt?.toISOString() || new Date().toISOString(),
+          readTime: post.readTime || Math.ceil((post.content?.length || 0) / 200), // Calculate read time if not set
+          isVideo: Boolean(post.videoUrl),
+          originalUrl: post.originalUrl || '',
+          tags: typeof post.tags === 'string' ? JSON.parse(post.tags) : post.tags || []
         }));
       
       // Combine all posts: newest database posts first, then original scraped posts

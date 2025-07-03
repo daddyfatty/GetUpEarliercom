@@ -151,26 +151,30 @@ export default function Blog() {
               <Card key={post.id} className="group hover:shadow-lg transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700">
                 <Link href={`/blog/${post.id}`} className="block">
                   <div className="relative overflow-hidden">
-                    {post.imageUrl && (
-                      <div className="aspect-video relative overflow-hidden">
+                    <div className="aspect-video relative overflow-hidden bg-gray-100 dark:bg-gray-700">
+                      {post.imageUrl ? (
                         <img
                           src={post.imageUrl}
                           alt={post.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
+                            target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' viewBox='0 0 400 225'%3E%3Crect width='400' height='225' fill='%23f3f4f6'/%3E%3Ctext x='200' y='112.5' text-anchor='middle' dominant-baseline='middle' fill='%23666' font-family='Arial' font-size='14'%3E" + post.category + "%3C/text%3E%3C/svg%3E";
                           }}
                         />
-                        {post.isVideo && (
-                          <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                            <div className="bg-white/90 rounded-full p-3">
-                              <Play className="h-6 w-6 text-primary" />
-                            </div>
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-600">
+                          <span className="text-gray-500 dark:text-gray-400 text-sm">{post.category}</span>
+                        </div>
+                      )}
+                      {post.isVideo && (
+                        <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                          <div className="bg-white/90 rounded-full p-3">
+                            <Play className="h-6 w-6 text-primary" />
                           </div>
-                        )}
-                      </div>
-                    )}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </Link>
                   
