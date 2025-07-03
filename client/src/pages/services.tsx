@@ -214,8 +214,21 @@ export default function Services() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {packages.map((pkg, index) => (
-              <Link key={index} href="/contact">
-                <Card className={`${pkg.backgroundColor || 'bg-white'} ${pkg.textColor || 'text-gray-900'} ${pkg.isPopular ? 'ring-2 ring-blue-500 shadow-lg' : 'shadow-sm'} relative cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:ring-2 hover:ring-blue-200 h-full flex flex-col`}>
+              <div key={index}>
+                <Card 
+                  className={`${pkg.backgroundColor || 'bg-white'} ${pkg.textColor || 'text-gray-900'} ${pkg.isPopular ? 'ring-2 ring-blue-500 shadow-lg' : 'shadow-sm'} relative cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:ring-2 hover:ring-blue-200 h-full flex flex-col`}
+                  onClick={() => {
+                    if (pkg.hasReadMore) {
+                      if (pkg.title === "1-on-1 Personal Strength Training") {
+                        setPersonalTrainingModal(true);
+                      } else if (pkg.title === "1-on-1 Nutrition Coaching") {
+                        setNutritionCoachingModal(true);
+                      }
+                    } else {
+                      window.location.href = "/contact";
+                    }
+                  }}
+                >
                   {pkg.isPopular && pkg.badge && (
                     <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                       <Badge className="bg-blue-500 text-white px-4 py-1">
@@ -282,8 +295,7 @@ export default function Services() {
                               setNutritionCoachingModal(true);
                             }
                           }}
-                          variant="outline"
-                          className="w-full border-white text-white hover:bg-white hover:text-gray-900"
+                          className="w-full bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300 font-medium py-3 px-6 rounded-lg"
                         >
                           Read More →
                         </Button>
@@ -291,7 +303,7 @@ export default function Services() {
                     )}
                   </CardContent>
                 </Card>
-              </Link>
+              </div>
             ))}
           </div>
         </div>

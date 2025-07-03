@@ -101,7 +101,17 @@ export function ServicesGrid({
 
       <div className={`grid gap-8 ${showImages ? 'grid-cols-1 lg:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
         {servicesData.map((service, index) => (
-          <Card key={index} className="h-full hover:shadow-lg transition-shadow duration-300 group">
+          <Card 
+            key={index} 
+            className="h-full hover:shadow-lg transition-shadow duration-300 group cursor-pointer"
+            onClick={() => {
+              if (showReadMore && service.title === "1-on-1 Personal Strength Training") {
+                setPersonalTrainingModal(true);
+              } else if (showReadMore && service.title === "Virtual Nutrition Coaching") {
+                setNutritionCoachingModal(true);
+              }
+            }}
+          >
             {showImages && service.image && (
               <div className="relative overflow-hidden rounded-t-lg">
                 <img 
@@ -141,10 +151,12 @@ export function ServicesGrid({
               {showReadMore && service.title === "1-on-1 Personal Strength Training" && (
                 <div className="text-center mt-8">
                   <Button 
-                    variant="outline" 
                     size="lg" 
-                    className="text-lg px-6 py-3"
-                    onClick={() => setPersonalTrainingModal(true)}
+                    className="text-lg px-6 py-3 bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setPersonalTrainingModal(true);
+                    }}
                   >
                     Read More →
                   </Button>
@@ -153,10 +165,12 @@ export function ServicesGrid({
               {showReadMore && service.title === "Virtual Nutrition Coaching" && (
                 <div className="text-center mt-8">
                   <Button 
-                    variant="outline" 
                     size="lg" 
-                    className="text-lg px-6 py-3"
-                    onClick={() => setNutritionCoachingModal(true)}
+                    className="text-lg px-6 py-3 bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setNutritionCoachingModal(true);
+                    }}
                   >
                     Read More →
                   </Button>
