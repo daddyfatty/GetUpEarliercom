@@ -40,7 +40,7 @@ export default function BlogEdit() {
   const categories = ["nutrition", "running", "inspiration", "workouts", "yoga / stretching", "iron master dumbbells"];
 
   const { data: post, isLoading, error } = useQuery<BlogPost>({
-    queryKey: ["/api/blog", params?.id],
+    queryKey: [`/api/blog/${params?.id}`],
     enabled: !!params?.id
   });
 
@@ -68,7 +68,7 @@ export default function BlogEdit() {
         description: "Blog post updated successfully",
       });
       setIsEditing(false);
-      queryClient.invalidateQueries({ queryKey: ["/api/blog", params?.id] });
+      queryClient.invalidateQueries({ queryKey: [`/api/blog/${params?.id}`] });
       queryClient.invalidateQueries({ queryKey: ["/api/blog"] });
     },
     onError: (error) => {

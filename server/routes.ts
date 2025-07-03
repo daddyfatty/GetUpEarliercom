@@ -1,8 +1,10 @@
 import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage-clean";
-import { insertUserSchema, insertRecipeSchema, insertWorkoutSchema, insertGoalSchema, insertFoodEntrySchema } from "@shared/schema";
+import { storage } from "./storage-fixed";
+import { insertUserSchema, insertRecipeSchema, insertWorkoutSchema, insertGoalSchema, insertFoodEntrySchema, blogPosts } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal";
 import { workoutService } from "./workoutService";
 import { recipeService } from "./recipeService";
