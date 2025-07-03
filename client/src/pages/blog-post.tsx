@@ -107,13 +107,14 @@ export default function BlogPost() {
                 {post.title}
               </h1>
               
-              {/* Author Block with Photo */}
-              <div className="flex flex-col items-center space-y-4 mt-8">
+              {/* Author Block with Photo - Clickable */}
+              <Link href="/about" className="flex flex-col items-center space-y-4 mt-8 hover:opacity-80 transition-opacity cursor-pointer">
                 <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-blue-300 bg-white">
                   <img 
                     src="/assets/image_1751578947789.png" 
                     alt={post.author}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-top scale-110"
+                    style={{ objectPosition: '50% 20%' }}
                   />
                 </div>
                 <div className="text-center">
@@ -124,7 +125,7 @@ export default function BlogPost() {
                     Bridging the gap from inactivity and poor diet to strength and healthy habits
                   </div>
                 </div>
-              </div>
+              </Link>
               
               {/* Post Meta */}
               <div className="flex items-center justify-center space-x-4 text-blue-100 mt-6 text-sm">
@@ -194,12 +195,17 @@ export default function BlogPost() {
             </div>
           )}
 
-          {/* Author Bio */}
+          {/* Author Bio - Clickable */}
           <div className="mt-12 p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">About the Author</h3>
-            <div className="flex items-start gap-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
-                {post.author.split(' ').map(n => n[0]).join('')}
+            <Link href="/about" className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+              <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-200 dark:border-gray-700 flex-shrink-0">
+                <img 
+                  src="/assets/image_1751578947789.png" 
+                  alt="Michael Baker"
+                  className="w-full h-full object-cover object-top scale-110"
+                  style={{ objectPosition: '50% 20%' }}
+                />
               </div>
               <div>
                 <h4 className="font-semibold text-gray-900 dark:text-white">{post.author}</h4>
@@ -210,7 +216,7 @@ export default function BlogPost() {
                   }
                 </p>
               </div>
-            </div>
+            </Link>
           </div>
         </article>
       </div>
