@@ -512,6 +512,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Fix thumbnails for existing blog posts
+  app.post("/api/fix-blog-thumbnails", async (req, res) => {
+    try {
+      console.log('API: Starting thumbnail fix...');
+      const { fixBlogThumbnails } = await import('./webflow-blog-scraper');
+      const result = await fixBlogThumbnails();
+      
+      res.json({
+        message: `Thumbnail fix completed successfully`,
+        success: result.success,
+        updatedCount: result.updatedCount
+      });
+    } catch (error: any) {
+      console.error("Error fixing thumbnails:", error);
+      res.status(500).json({ 
+        message: "Failed to fix thumbnails", 
+        error: error.message 
+      });
+    }
+  });
+
   // PayPal routes
   app.get("/setup", async (req, res) => {
     await loadPaypalDefault(req, res);

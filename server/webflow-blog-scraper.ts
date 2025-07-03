@@ -1,7 +1,7 @@
 import * as cheerio from 'cheerio';
 import { db } from './db';
 import { blogPosts } from '../shared/schema';
-import { eq } from 'drizzle-orm';
+import { eq, and, ne, isNotNull } from 'drizzle-orm';
 
 interface WebflowBlogPost {
   id: string;
@@ -94,14 +94,23 @@ export class WebflowBlogScraper {
       const fullUrl = postUrl.startsWith('http') ? postUrl : `${this.baseUrl}${postUrl}`;
       
       try {
-        // Extract basic info from the listing page
-        const postContainer = linkElement.closest('div').parent();
+        // Extract basic info from the listing page - look for the specific post container
+        const postContainer = linkElement.closest('.w-dyn-item, .blog-post-item, .post-item').length > 0 
+          ? linkElement.closest('.w-dyn-item, .blog-post-item, .post-item')
+          : linkElement.closest('div');
+        
         const title = linkElement.find('strong').text().trim() || 
                      linkElement.text().trim() || 
                      this.extractTitleFromUrl(postUrl);
         
+        // Look for the specific thumbnail image within this post container
         const image = postContainer.find('img').first();
-        const imageUrl = image.attr('src') || image.attr('data-src');
+        let imageUrl = image.attr('src') || image.attr('data-src');
+        
+        // Clean up the image URL - remove any query parameters that might be causing issues
+        if (imageUrl && imageUrl.includes('?')) {
+          imageUrl = imageUrl.split('?')[0];
+        }
         
         // Get category from the listing (look for category text near the image)
         const categoryElement = postContainer.find('div').filter((_, el) => {
@@ -178,8 +187,32 @@ export class WebflowBlogScraper {
 
       // If still no image, try to find one on the post page
       if (!imageUrl) {
-        const postImage = $('img').first();
-        imageUrl = postImage.attr('src') || postImage.attr('data-src');
+        // Look for various image selectors on the post page
+        const imageSelectors = [
+          'meta[property="og:image"]',
+          'meta[name="twitter:image"]',
+          '[class*="featured-image"] img',
+          '[class*="post-image"] img',
+          '[class*="hero-image"] img',
+          'img[src*="uploads"]',
+          'img[src*="images"]',
+          'img'
+        ];
+        
+        for (const selector of imageSelectors) {
+          const img = $(selector).first();
+          if (selector.includes('meta')) {
+            imageUrl = img.attr('content');
+          } else {
+            imageUrl = img.attr('src') || img.attr('data-src');
+          }
+          if (imageUrl) break;
+        }
+        
+        // Clean up the image URL
+        if (imageUrl && imageUrl.includes('?')) {
+          imageUrl = imageUrl.split('?')[0];
+        }
       }
 
       // Generate excerpt from content
@@ -264,6 +297,88 @@ export class WebflowBlogScraper {
     }
 
     console.log(`Webflow Scraper: Completed - ${savedCount} new posts saved, ${skippedCount} existing posts skipped`);
+  }
+
+  /**
+   * Fix thumbnails for existing blog posts by re-scraping their original URLs
+   */
+  async fixExistingThumbnails(): Promise<{ success: boolean; updatedCount: number }> {
+    try {
+      console.log('Webflow Scraper: Starting thumbnail fix for existing posts...');
+      
+      // Get all existing blog posts that have original URLs
+      const existingPosts = await db.select().from(blogPosts);
+      
+      console.log(`Found ${existingPosts.length} existing posts to fix thumbnails for`);
+      
+      let updatedCount = 0;
+      
+      for (const post of existingPosts) {
+        if (!post.originalUrl) continue;
+        
+        try {
+          console.log(`Fixing thumbnail for: ${post.title}`);
+          
+          // Re-scrape the post to get the correct thumbnail
+          const response = await fetch(post.originalUrl);
+          if (!response.ok) continue;
+          
+          const html = await response.text();
+          const $ = cheerio.load(html);
+          
+          // Use the improved image extraction logic
+          let newImageUrl = '';
+          const imageSelectors = [
+            'meta[property="og:image"]',
+            'meta[name="twitter:image"]',
+            '[class*="featured-image"] img',
+            '[class*="post-image"] img',
+            '[class*="hero-image"] img',
+            'img[src*="uploads"]',
+            'img[src*="images"]',
+            'img'
+          ];
+          
+          for (const selector of imageSelectors) {
+            const img = $(selector).first();
+            if (selector.includes('meta')) {
+              newImageUrl = img.attr('content') || '';
+            } else {
+              newImageUrl = img.attr('src') || img.attr('data-src') || '';
+            }
+            if (newImageUrl) break;
+          }
+          
+          // Clean up the image URL
+          if (newImageUrl && newImageUrl.includes('?')) {
+            newImageUrl = newImageUrl.split('?')[0];
+          }
+          
+          // Only update if we found a different/better image
+          if (newImageUrl && newImageUrl !== post.imageUrl) {
+            await db.update(blogPosts)
+              .set({ imageUrl: newImageUrl })
+              .where(eq(blogPosts.id, post.id));
+            
+            console.log(`Updated thumbnail for "${post.title}"`);
+            updatedCount++;
+          }
+          
+          // Add delay between requests
+          await this.delay(300);
+          
+        } catch (error) {
+          console.error(`Error fixing thumbnail for ${post.title}:`, error);
+        }
+      }
+      
+      console.log(`Webflow Scraper: Thumbnail fix completed - updated ${updatedCount} posts`);
+      return { success: true, updatedCount };
+      
+    } catch (error) {
+      console.error('Webflow Scraper: Error in fixExistingThumbnails:', error);
+      return { success: false, updatedCount: 0 };
+    }
   }
 
   /**
@@ -357,8 +472,13 @@ export class WebflowBlogScraper {
   }
 }
 
-// Export a convenience function
+// Export convenience functions
 export async function scrapeWebflowBlog(): Promise<{ success: boolean; savedCount: number; totalFound: number }> {
   const scraper = new WebflowBlogScraper();
   return await scraper.scrapeAndSave();
+}
+
+export async function fixBlogThumbnails(): Promise<{ success: boolean; updatedCount: number }> {
+  const scraper = new WebflowBlogScraper();
+  return await scraper.fixExistingThumbnails();
 }

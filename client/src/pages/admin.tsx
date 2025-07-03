@@ -2,16 +2,22 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, Download, CheckCircle, AlertCircle } from "lucide-react";
+import { Loader2, Download, CheckCircle, AlertCircle, ImageIcon } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 
 export default function Admin() {
   const [scraping, setScraping] = useState(false);
+  const [fixingThumbnails, setFixingThumbnails] = useState(false);
   const [result, setResult] = useState<{
     success: boolean;
     message: string;
     savedCount?: number;
     totalFound?: number;
+  } | null>(null);
+  const [thumbnailResult, setThumbnailResult] = useState<{
+    success: boolean;
+    message: string;
+    updatedCount?: number;
   } | null>(null);
 
   const handleWebflowScrape = async () => {
@@ -36,6 +42,30 @@ export default function Admin() {
       });
     } finally {
       setScraping(false);
+    }
+  };
+
+  const handleFixThumbnails = async () => {
+    setFixingThumbnails(true);
+    setThumbnailResult(null);
+
+    try {
+      const response = await apiRequest("POST", "/api/fix-blog-thumbnails");
+      const data = await response.json();
+      
+      setThumbnailResult({
+        success: data.success,
+        message: data.message,
+        updatedCount: data.updatedCount
+      });
+    } catch (error) {
+      console.error("Thumbnail fix error:", error);
+      setThumbnailResult({
+        success: false,
+        message: error instanceof Error ? error.message : "Failed to fix thumbnails"
+      });
+    } finally {
+      setFixingThumbnails(false);
     }
   };
 
@@ -103,6 +133,73 @@ export default function Admin() {
                       {result.success && result.savedCount !== undefined && result.totalFound !== undefined && (
                         <div className="mt-1 text-sm">
                           Found {result.totalFound} posts, saved {result.savedCount} new posts to database
+                        </div>
+                      )}
+                    </AlertDescription>
+                  </div>
+                </div>
+              </Alert>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Thumbnail Fix Tool */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <ImageIcon className="h-5 w-5" />
+              Fix Blog Thumbnails
+            </CardTitle>
+            <CardDescription>
+              Fix duplicate thumbnails by re-scraping images from the original blog posts
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="text-sm text-gray-600">
+              <p>This will go through existing blog posts and re-extract their proper thumbnail images from the original Webflow pages.</p>
+              <p className="mt-2">Features:</p>
+              <ul className="list-disc list-inside mt-1 space-y-1">
+                <li>Re-scrapes each post's original URL for correct thumbnail</li>
+                <li>Uses improved image extraction logic</li>
+                <li>Only updates posts with different/better images</li>
+                <li>Preserves existing data while fixing image URLs</li>
+              </ul>
+            </div>
+
+            <Button 
+              onClick={handleFixThumbnails}
+              disabled={fixingThumbnails}
+              className="w-full sm:w-auto"
+              size="lg"
+              variant="outline"
+            >
+              {fixingThumbnails ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Fixing Thumbnails...
+                </>
+              ) : (
+                <>
+                  <ImageIcon className="mr-2 h-4 w-4" />
+                  Fix Thumbnails
+                </>
+              )}
+            </Button>
+
+            {thumbnailResult && (
+              <Alert className={thumbnailResult.success ? "border-green-200 bg-green-50" : "border-red-200 bg-red-50"}>
+                <div className="flex items-start gap-2">
+                  {thumbnailResult.success ? (
+                    <CheckCircle className="h-4 w-4 text-green-600 mt-0.5" />
+                  ) : (
+                    <AlertCircle className="h-4 w-4 text-red-600 mt-0.5" />
+                  )}
+                  <div className="flex-1">
+                    <AlertDescription className={thumbnailResult.success ? "text-green-800" : "text-red-800"}>
+                      <div className="font-medium">{thumbnailResult.message}</div>
+                      {thumbnailResult.success && thumbnailResult.updatedCount !== undefined && (
+                        <div className="mt-1 text-sm">
+                          Successfully updated {thumbnailResult.updatedCount} blog post thumbnails
                         </div>
                       )}
                     </AlertDescription>
