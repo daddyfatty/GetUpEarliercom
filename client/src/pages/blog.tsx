@@ -29,7 +29,10 @@ export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   const { data: posts, isLoading, error } = useQuery<BlogPost[]>({
-    queryKey: ["/api/blog"]
+    queryKey: ["/api/blog"],
+    onSuccess: (data) => {
+      console.log('Blog posts received:', data?.slice(0, 2)); // Log first 2 posts
+    }
   });
 
   const categories = ["all", "nutrition", "running", "inspiration", "workouts", "yoga / stretching", "iron master dumbbells"];
@@ -157,9 +160,14 @@ export default function Blog() {
                           src={post.imageUrl}
                           alt={post.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          onLoad={(e) => {
+                            console.log('Image loaded successfully:', post.imageUrl);
+                          }}
                           onError={(e) => {
+                            console.error('Image failed to load:', post.imageUrl);
                             const target = e.target as HTMLImageElement;
-                            target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225' viewBox='0 0 400 225'%3E%3Crect width='400' height='225' fill='%23f3f4f6'/%3E%3Ctext x='200' y='112.5' text-anchor='middle' dominant-baseline='middle' fill='%23666' font-family='Arial' font-size='14'%3E" + post.category + "%3C/text%3E%3C/svg%3E";
+                            target.style.display = 'none';
+                            target.parentElement!.innerHTML = `<div class="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-600"><span class="text-gray-500 dark:text-gray-400 text-sm">${post.category}</span></div>`;
                           }}
                         />
                       ) : (
