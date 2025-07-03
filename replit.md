@@ -89,6 +89,8 @@ The database schema includes:
 
 ```
 Changelog:
+- July 3, 2025: Removed 3 unwanted blog posts ("Winter Running Motivation", "Test", "Joe Rogan discomfort") per user request
+- July 3, 2025: Updated blog author sections with Michael Baker's actual professional photo and made both header and footer author areas clickable links to about page
 - July 3, 2025: Fixed duplicate video display issue by updating blog post layout to match GetUpEarlier.com format
 - July 3, 2025: Fixed YouTube URL validation in blog CMS - created flexible schema to handle both string and array tag inputs, enabling proper video content editing
 - July 3, 2025: Fixed JavaScript errors in blog system - resolved tags handling for both blog listing and individual post pages
