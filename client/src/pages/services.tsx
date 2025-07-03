@@ -23,6 +23,7 @@ export default function Services() {
   const [personalTrainingModal, setPersonalTrainingModal] = useState(false);
   const [nutritionCoachingModal, setNutritionCoachingModal] = useState(false);
   const [runningCoachingModal, setRunningCoachingModal] = useState(false);
+  const [accountabilityCoachingModal, setAccountabilityCoachingModal] = useState(false);
 
   useEffect(() => {
     // Handle anchor scrolling on page load
@@ -533,6 +534,93 @@ export default function Services() {
                   onClick={() => setRunningCoachingModal(false)}
                 >
                   Start Your Running Journey →
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Accountability Coaching Details Modal */}
+      <Dialog open={accountabilityCoachingModal} onOpenChange={setAccountabilityCoachingModal}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold mb-4">Accountability Coaching</DialogTitle>
+            <DialogDescription>
+              Your Partner in Achieving Health and Fitness Goals
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <p className="text-gray-700 leading-relaxed">
+                I offer personalized accountability & lifestyle coaching to support your health and fitness journey. With unlimited one-on-one communication via text or Facebook Messenger, I provide continuous guidance and motivation. Additionally, I hold two 20-minute live check-ins per month to assess your progress and adjust strategies as needed. This combination of daily support and regular live interactions ensures you stay on track and make consistent progress toward your objectives.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold text-gray-900">Coaching Areas:</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-gray-900">Weight loss</h4>
+                  <p className="text-sm text-gray-600">Sustainable weight management strategies</p>
+                </div>
+                
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-gray-900">Running</h4>
+                  <p className="text-sm text-gray-600">Running goals and training consistency</p>
+                </div>
+                
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-gray-900">Personal training</h4>
+                  <p className="text-sm text-gray-600">Strength training accountability and form</p>
+                </div>
+                
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-gray-900">Fitness</h4>
+                  <p className="text-sm text-gray-600">Overall fitness and activity goals</p>
+                </div>
+                
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-gray-900">Lifestyle</h4>
+                  <p className="text-sm text-gray-600">Healthy habit formation and maintenance</p>
+                </div>
+                
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-gray-900">Nutrition goals</h4>
+                  <p className="text-sm text-gray-600">Dietary changes and meal planning support</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-blue-50 p-6 rounded-lg">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">What's Included:</h3>
+              <ul className="space-y-2 text-gray-700">
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  Unlimited one-on-one communication via text or Facebook Messenger
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  Two 20-minute live check-ins per month
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  Progress assessment and strategy adjustments
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  Continuous guidance and motivation
+                </li>
+              </ul>
+            </div>
+
+            <div className="flex justify-center pt-4">
+              <Link href="/contact">
+                <Button 
+                  className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3"
+                  onClick={() => setAccountabilityCoachingModal(false)}
+                >
+                  Get Accountability Support →
                 </Button>
               </Link>
             </div>
