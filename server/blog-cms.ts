@@ -144,6 +144,11 @@ export async function getBlogPost(req: Request, res: Response) {
 
 export async function createBlogPost(req: Request, res: Response) {
   try {
+    // Convert tags array to JSON string if it's an array
+    if (req.body.tags && Array.isArray(req.body.tags)) {
+      req.body.tags = JSON.stringify(req.body.tags);
+    }
+    
     const validatedData = insertBlogPostSchema.parse(req.body);
     const post = await storage.createBlogPost(validatedData);
     res.status(201).json(post);
@@ -159,6 +164,12 @@ export async function createBlogPost(req: Request, res: Response) {
 export async function updateBlogPost(req: Request, res: Response) {
   try {
     const { id } = req.params;
+    
+    // Convert tags array to JSON string if it's an array
+    if (req.body.tags && Array.isArray(req.body.tags)) {
+      req.body.tags = JSON.stringify(req.body.tags);
+    }
+    
     const validatedData = insertBlogPostSchema.partial().parse(req.body);
     const post = await storage.updateBlogPost(id, validatedData);
     if (!post) {
