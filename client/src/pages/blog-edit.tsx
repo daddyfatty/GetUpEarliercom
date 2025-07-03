@@ -339,32 +339,146 @@ export default function BlogEdit() {
               <CardContent>
                 {isEditing ? (
                   <div className="space-y-4">
-                    <Input
-                      value={editData.imageUrl || ""}
-                      onChange={(e) => setEditData({ ...editData, imageUrl: e.target.value })}
-                      placeholder="Image URL"
-                    />
-                    {editData.imageUrl && (
-                      <div className="text-sm text-gray-600 dark:text-gray-400">
-                        <p>Preview:</p>
-                        <img
-                          src={editData.imageUrl}
-                          alt="Preview"
-                          className="w-full h-32 object-cover rounded mt-2"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Image URL</label>
+                      <Input
+                        value={editData.imageUrl || ""}
+                        onChange={(e) => setEditData({ ...editData, imageUrl: e.target.value })}
+                        placeholder="https://example.com/image.jpg"
+                      />
+                    </div>
+                    
+                    <div className="text-center">
+                      <p className="text-sm text-gray-500 mb-2">or</p>
+                      <div 
+                        className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 hover:border-gray-400 dark:hover:border-gray-500 transition-colors"
+                        onDragOver={(e) => {
+                          e.preventDefault();
+                          e.currentTarget.classList.add('border-blue-400', 'bg-blue-50', 'dark:bg-blue-900/10');
+                        }}
+                        onDragLeave={(e) => {
+                          e.preventDefault();
+                          e.currentTarget.classList.remove('border-blue-400', 'bg-blue-50', 'dark:bg-blue-900/10');
+                        }}
+                        onDrop={async (e) => {
+                          e.preventDefault();
+                          e.currentTarget.classList.remove('border-blue-400', 'bg-blue-50', 'dark:bg-blue-900/10');
+                          
+                          const files = e.dataTransfer.files;
+                          const file = files[0];
+                          
+                          if (file && file.type.startsWith('image/')) {
+                            try {
+                              const formData = new FormData();
+                              formData.append('image', file);
+                              
+                              const response = await fetch('/api/upload', {
+                                method: 'POST',
+                                body: formData,
+                              });
+                              
+                              if (response.ok) {
+                                const data = await response.json();
+                                setEditData({ ...editData, imageUrl: data.url });
+                              } else {
+                                throw new Error('Upload failed');
+                              }
+                            } catch (error) {
+                              console.error('Error uploading file:', error);
+                              // Fallback to local file preview
+                              const reader = new FileReader();
+                              reader.onload = (e) => {
+                                setEditData({ ...editData, imageUrl: e.target?.result as string });
+                              };
+                              reader.readAsDataURL(file);
+                            }
+                          }
+                        }}
+                      >
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              try {
+                                const formData = new FormData();
+                                formData.append('image', file);
+                                
+                                const response = await fetch('/api/upload', {
+                                  method: 'POST',
+                                  body: formData,
+                                });
+                                
+                                if (response.ok) {
+                                  const data = await response.json();
+                                  setEditData({ ...editData, imageUrl: data.url });
+                                } else {
+                                  throw new Error('Upload failed');
+                                }
+                              } catch (error) {
+                                console.error('Error uploading file:', error);
+                                // Fallback to local file preview
+                                const reader = new FileReader();
+                                reader.onload = (e) => {
+                                  setEditData({ ...editData, imageUrl: e.target?.result as string });
+                                };
+                                reader.readAsDataURL(file);
+                              }
+                            }
                           }}
+                          className="hidden"
+                          id="image-upload"
                         />
+                        <label htmlFor="image-upload" className="cursor-pointer">
+                          <div className="text-center">
+                            <ImageIcon className="mx-auto h-8 w-8 text-gray-400" />
+                            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                              Click to upload or drag and drop
+                            </p>
+                            <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+                    
+                    {(editData.imageUrl || post.imageUrl) && (
+                      <div>
+                        <p className="text-sm font-medium mb-2">Preview:</p>
+                        <div className="relative">
+                          <img
+                            src={editData.imageUrl || post.imageUrl}
+                            alt="Featured image preview"
+                            className="w-full h-40 object-cover rounded-lg border"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect width='100%25' height='100%25' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='14' fill='%23666' text-anchor='middle' dy='.3em'%3EImage not found%3C/text%3E%3C/svg%3E";
+                            }}
+                          />
+                        </div>
                       </div>
                     )}
                   </div>
                 ) : (
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                  <div>
                     {post.imageUrl ? (
-                      <p className="break-words">{post.imageUrl}</p>
+                      <div className="space-y-2">
+                        <img
+                          src={post.imageUrl}
+                          alt="Featured image"
+                          className="w-full h-40 object-cover rounded-lg border"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200'%3E%3Crect width='100%25' height='100%25' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='14' fill='%23666' text-anchor='middle' dy='.3em'%3EImage not found%3C/text%3E%3C/svg%3E";
+                          }}
+                        />
+                        <p className="text-xs text-gray-500 break-words">{post.imageUrl}</p>
+                      </div>
                     ) : (
-                      <p>No image set</p>
+                      <div className="text-center py-8 text-gray-500">
+                        <ImageIcon className="mx-auto h-8 w-8 mb-2" />
+                        <p className="text-sm">No image set</p>
+                      </div>
                     )}
                   </div>
                 )}

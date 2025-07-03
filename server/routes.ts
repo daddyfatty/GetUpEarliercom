@@ -1,5 +1,8 @@
 import type { Express } from "express";
 import express from "express";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
 import { createServer, type Server } from "http";
 import { storage } from "./storage-fixed";
 import { insertUserSchema, insertRecipeSchema, insertWorkoutSchema, insertGoalSchema, insertFoodEntrySchema, blogPosts } from "@shared/schema";
@@ -29,9 +32,41 @@ if (STRIPE_CONFIGURED) {
   }
 }
 
+// Configure multer for file uploads
+const uploadsDir = path.join(process.cwd(), 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: uploadsDir,
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+    }
+  }),
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = /jpeg|jpg|png|gif|webp/;
+    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = allowedTypes.test(file.mimetype);
+    
+    if (mimetype && extname) {
+      return cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed'));
+    }
+  }
+});
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Serve static assets
   app.use('/assets', express.static('/home/runner/workspace/attached_assets'));
+  app.use('/uploads', express.static(uploadsDir)); // Serve uploaded files
+  app.use(express.json({ limit: "50mb" }));
   
   // Authentication routes
   app.post("/api/auth/login", async (req, res) => {
@@ -163,6 +198,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting recipe:", error);
       res.status(500).json({ message: "Failed to delete recipe" });
+    }
+  });
+
+  // File upload endpoint
+  app.post("/api/upload", upload.single('image'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No file uploaded" });
+      }
+      
+      const fileUrl = `/uploads/${req.file.filename}`;
+      res.json({ 
+        message: "File uploaded successfully",
+        url: fileUrl,
+        originalName: req.file.originalname,
+        size: req.file.size
+      });
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      res.status(500).json({ message: "Failed to upload file" });
     }
   });
 
