@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Clock, User, Calendar, Edit } from "lucide-react";
+import { ArrowLeft, Clock, User, Calendar, Edit, Play } from "lucide-react";
 import { PageSubscriptionCTA } from "@/components/page-subscription-cta";
 
 interface BlogPost {
@@ -128,15 +128,21 @@ export default function BlogPost() {
           {/* Featured Media */}
           {post.isVideo && post.videoUrl ? (
             <div className="mb-8">
-              <div className="aspect-video w-full bg-black rounded-lg overflow-hidden">
+              <div className="aspect-video w-full bg-black rounded-lg overflow-hidden shadow-lg">
                 <iframe
                   src={post.videoUrl}
                   title={post.title}
-                  className="w-full h-full"
+                  className="w-full h-full border-0"
                   allowFullScreen
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
                 />
               </div>
+              {post.imageUrl && (
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">
+                  Watch the full workout demonstration above
+                </p>
+              )}
             </div>
           ) : post.imageUrl ? (
             <div className="mb-8">
@@ -160,6 +166,29 @@ export default function BlogPost() {
               <div className="text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-line">
                 {post.content}
               </div>
+
+              {/* Embedded Video Section within Content */}
+              {post.isVideo && post.videoUrl && (
+                <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                    <Play className="h-5 w-5 text-primary" />
+                    Watch the Full Demonstration
+                  </h3>
+                  <div className="aspect-video w-full bg-black rounded-lg overflow-hidden shadow-lg">
+                    <iframe
+                      src={post.videoUrl}
+                      title={`${post.title} - Video Demonstration`}
+                      className="w-full h-full border-0"
+                      allowFullScreen
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                    />
+                  </div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-3 text-center italic">
+                    Follow along with Michael's demonstration for proper form and technique
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 
