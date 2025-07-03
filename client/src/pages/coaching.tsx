@@ -71,7 +71,7 @@ export default function Coaching() {
     },
     {
       title: "Certified Running Coaching",
-      description: "I work alongside beginner runners to help them break through their own limits. Learn how to progress from never running to completing a 5K, a 5-miler, or more.",
+      description: "I work alongside beginner runners to help them break through their own limits. Learn how to progress from never running to completing a 5K, a 5-miler, a half marathon, or even a full marathon, with support for nutrition and recovery included.",
       icon: Users,
       color: "text-purple-600",
       bgColor: "bg-purple-50"
