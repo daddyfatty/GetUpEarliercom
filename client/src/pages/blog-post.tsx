@@ -85,12 +85,14 @@ export default function BlogPost() {
             </Button>
           </Link>
           
-          <Link href={`/blog/${post.id}/edit`}>
-            <Button variant="outline" className="gap-2">
-              <Edit className="h-4 w-4" />
-              Edit
-            </Button>
-          </Link>
+          {post && (
+            <Link href={`/blog/${post.id}/edit`}>
+              <Button variant="outline" className="gap-2">
+                <Edit className="h-4 w-4" />
+                Edit
+              </Button>
+            </Link>
+          )}
         </div>
 
         {/* Article Header */}
