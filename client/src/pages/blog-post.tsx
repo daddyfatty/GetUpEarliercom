@@ -76,10 +76,7 @@ export default function BlogPost() {
     );
   }
 
-  // Debug log to see the structure of the post data
-  console.log("Blog post data:", post);
-  console.log("Post categories:", post.categories);
-  console.log("Post category:", post.category);
+
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
@@ -179,31 +176,40 @@ export default function BlogPost() {
           </div>
 
           {/* Categories - Clickable */}
-          {(post.category || (post.categories && post.categories.length > 0)) && (
-            <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                {post.categories && post.categories.length > 1 ? 'Categories' : 'Category'}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {/* Primary category */}
-                {post.category && (
+          <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              {post.categories && post.categories.length > 1 ? 'Categories' : 'Category'}
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {/* Show all categories from the categories array if it exists, otherwise show the primary category */}
+              {post.categories && post.categories.length > 0 ? (
+                // Show all categories
+                post.categories.map((category, index) => (
+                  <Link key={category} href={`/blog?category=${encodeURIComponent(category)}`}>
+                    <Badge 
+                      variant="outline" 
+                      className={`text-sm cursor-pointer transition-colors ${
+                        index === 0 || category === post.category
+                          ? 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300'
+                          : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100 hover:border-gray-300'
+                      }`}
+                    >
+                      {category}
+                    </Badge>
+                  </Link>
+                ))
+              ) : (
+                // Fallback to primary category only
+                post.category && (
                   <Link href={`/blog?category=${encodeURIComponent(post.category)}`}>
                     <Badge variant="outline" className="text-sm bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
                       {post.category}
                     </Badge>
                   </Link>
-                )}
-                {/* Additional categories */}
-                {post.categories?.filter(cat => cat !== post.category).map((category) => (
-                  <Link key={category} href={`/blog?category=${encodeURIComponent(category)}`}>
-                    <Badge variant="outline" className="text-sm bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100 hover:border-gray-300 cursor-pointer transition-colors">
-                      {category}
-                    </Badge>
-                  </Link>
-                ))}
-              </div>
+                )
+              )}
             </div>
-          )}
+          </div>
 
           {/* Author Bio - Clickable */}
           <div className="mt-12 p-6 bg-gray-100 dark:bg-gray-800 rounded-lg">
