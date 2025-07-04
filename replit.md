@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 4, 2025: Created dedicated category archive pages with /category/:category URLs, made all category tags clickable throughout the blog system
 - July 3, 2025: Removed 3 unwanted blog posts ("Winter Running Motivation", "Test", "Joe Rogan discomfort") per user request
 - July 3, 2025: Updated blog author sections with Michael Baker's actual professional photo and made both header and footer author areas clickable links to about page
 - July 3, 2025: Fixed duplicate video display issue by updating blog post layout to match GetUpEarlier.com format

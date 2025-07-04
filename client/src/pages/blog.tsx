@@ -199,9 +199,11 @@ export default function Blog() {
                   
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-2 mb-2">
-                    <Badge variant="secondary" className="text-xs">
-                      {post.category}
-                    </Badge>
+                    <Link href={`/category/${encodeURIComponent(post.category)}`}>
+                      <Badge variant="secondary" className="text-xs cursor-pointer hover:bg-secondary/80 transition-colors">
+                        {post.category}
+                      </Badge>
+                    </Link>
                     {post.isVideo && (
                       <Badge variant="outline" className="text-xs">
                         Video
@@ -239,15 +241,26 @@ export default function Blog() {
                     </Link>
                   </div>
                   
-                  {post.category && (
-                    <div className="flex mt-3">
-                      <Link href={`/blog?category=${encodeURIComponent(post.category)}`}>
-                        <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
-                          {post.category}
-                        </Badge>
-                      </Link>
-                    </div>
-                  )}
+                  {/* Display all categories as clickable tags */}
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    {post.categories && post.categories.length > 0 ? (
+                      post.categories.map((category) => (
+                        <Link key={category} href={`/category/${encodeURIComponent(category)}`}>
+                          <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
+                            {category}
+                          </Badge>
+                        </Link>
+                      ))
+                    ) : (
+                      post.category && (
+                        <Link href={`/category/${encodeURIComponent(post.category)}`}>
+                          <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
+                            {post.category}
+                          </Badge>
+                        </Link>
+                      )
+                    )}
+                  </div>
                 </CardContent>
               </Card>
             ))}
