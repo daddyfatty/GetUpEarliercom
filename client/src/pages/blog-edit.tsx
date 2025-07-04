@@ -62,7 +62,14 @@ export default function BlogEdit() {
 
   const updateMutation = useMutation({
     mutationFn: async (updates: Partial<BlogPost>) => {
+      console.log("Sending update request with data:", updates);
       const response = await apiRequest("PUT", `/api/blog/${params?.id}`, updates);
+      console.log("Update response:", response);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       return response.json();
     },
     onSuccess: () => {

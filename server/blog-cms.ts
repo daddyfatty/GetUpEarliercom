@@ -180,6 +180,9 @@ export async function updateBlogPost(req: Request, res: Response) {
   try {
     const { id } = req.params;
     
+    console.log('Received blog post update request for ID:', id);
+    console.log('Request body:', JSON.stringify(req.body, null, 2));
+    
     const validatedData = flexibleBlogPostSchema.partial().parse(req.body);
     
     // Normalize tags to string format for database storage, only if tags field is present
@@ -196,13 +199,18 @@ export async function updateBlogPost(req: Request, res: Response) {
       normalizedData.categories = validatedData.categories;
     }
     
+    console.log('Normalized data for database:', JSON.stringify(normalizedData, null, 2));
+    
     const post = await storage.updateBlogPost(id, normalizedData);
     if (!post) {
       return res.status(404).json({ error: 'Blog post not found' });
     }
+    
+    console.log('Successfully updated blog post:', post.id);
     res.json(post);
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.error('Validation error:', error.errors);
       return res.status(400).json({ error: 'Invalid blog post data', details: error.errors });
     }
     console.error('Error updating blog post:', error);
