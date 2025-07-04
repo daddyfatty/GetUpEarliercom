@@ -16,7 +16,6 @@ interface BlogPost {
   author: string;
   publishedDate: string;
   category: string;
-  tags: string[];
   imageUrl?: string;
   videoUrl?: string;
   readTime: number;
@@ -29,15 +28,12 @@ export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   const { data: posts, isLoading, error } = useQuery<BlogPost[]>({
-    queryKey: ["/api/blog"],
-    onSuccess: (data) => {
-      console.log('Blog posts received:', data?.slice(0, 2)); // Log first 2 posts
-    }
+    queryKey: ["/api/blog"]
   });
 
   const categories = ["all", "nutrition", "running", "inspiration", "workouts", "yoga / stretching", "iron master dumbbells"];
 
-  const filteredPosts = posts?.filter(post => {
+  const filteredPosts = posts?.filter((post: BlogPost) => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          post.author.toLowerCase().includes(searchTerm.toLowerCase());
@@ -150,7 +146,7 @@ export default function Blog() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.map((post) => (
+            {filteredPosts.map((post: BlogPost) => (
               <Card key={post.id} className="group hover:shadow-lg transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700">
                 <Link href={`/blog/${post.id}`} className="block">
                   <div className="relative overflow-hidden">
@@ -228,13 +224,11 @@ export default function Blog() {
                     </Link>
                   </div>
                   
-                  {post.tags && post.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mt-3">
-                      {(typeof post.tags === 'string' ? post.tags.split(',') : post.tags).slice(0, 3).map((tag: string) => (
-                        <Badge key={tag} variant="outline" className="text-xs">
-                          {tag.trim()}
-                        </Badge>
-                      ))}
+                  {post.category && (
+                    <div className="flex mt-3">
+                      <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                        {post.category}
+                      </Badge>
                     </div>
                   )}
                 </CardContent>

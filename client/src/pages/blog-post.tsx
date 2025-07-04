@@ -171,16 +171,14 @@ export default function BlogPost() {
             </div>
           </div>
 
-          {/* Tags */}
-          {post.tags && post.tags.length > 0 && (
+          {/* Category */}
+          {post.category && (
             <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tags</h3>
-              <div className="flex flex-wrap gap-2">
-                {(typeof post.tags === 'string' ? post.tags.split(',') : post.tags).map((tag: string) => (
-                  <Badge key={tag} variant="outline" className="text-sm">
-                    {tag.trim()}
-                  </Badge>
-                ))}
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Category</h3>
+              <div className="flex">
+                <Badge variant="outline" className="text-sm bg-blue-50 text-blue-700 border-blue-200">
+                  {post.category}
+                </Badge>
               </div>
             </div>
           )}

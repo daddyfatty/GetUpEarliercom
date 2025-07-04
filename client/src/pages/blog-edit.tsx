@@ -20,7 +20,6 @@ interface BlogPost {
   author: string;
   publishedDate: string;
   category: string;
-  tags: string[];
   imageUrl?: string;
   videoUrl?: string;
   readTime: number;
@@ -53,8 +52,7 @@ export default function BlogEdit() {
         category: post.category,
         imageUrl: post.imageUrl,
         videoUrl: post.videoUrl,
-        isVideo: post.isVideo,
-        tags: Array.isArray(post.tags) ? post.tags : []
+        isVideo: post.isVideo
       });
     }
   }, [post, isEditing]);
@@ -126,8 +124,7 @@ export default function BlogEdit() {
         category: post.category,
         imageUrl: post.imageUrl,
         videoUrl: post.videoUrl,
-        isVideo: post.isVideo,
-        tags: post.tags
+        isVideo: post.isVideo
       });
     }
   };
@@ -599,22 +596,7 @@ export default function BlogEdit() {
               </CardContent>
             </Card>
 
-            {/* Tags */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Tags</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {Array.isArray(isEditing ? editData.tags : post.tags) && 
-                   (isEditing ? editData.tags : post.tags).map((tag, index) => (
-                    <Badge key={index} variant="outline">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+
 
             {/* Post Info */}
             <Card>
