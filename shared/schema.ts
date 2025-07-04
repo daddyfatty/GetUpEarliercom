@@ -255,7 +255,8 @@ export const blogPosts = pgTable("blog_posts", {
   content: text("content").notNull(),
   author: text("author").notNull().default("Michael Baker"),
   publishedDate: text("published_date").notNull(),
-  category: text("category").notNull(),
+  category: text("category").notNull(), // Primary category for backward compatibility
+  categories: text("categories").array(), // Multiple categories array
   tags: text("tags").notNull(), // JSON string of array
   imageUrl: text("image_url"),
   videoUrl: text("video_url"),

@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { ArrowLeft, Save, X, Trash2, Loader2, ImageIcon, Play } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
@@ -20,6 +21,7 @@ interface BlogPost {
   author: string;
   publishedDate: string;
   category: string;
+  categories?: string[];
   imageUrl?: string;
   videoUrl?: string;
   readTime: number;
@@ -50,6 +52,7 @@ export default function BlogEdit() {
         excerpt: post.excerpt,
         content: post.content,
         category: post.category,
+        categories: post.categories || [post.category],
         imageUrl: post.imageUrl,
         videoUrl: post.videoUrl,
         isVideo: post.isVideo
@@ -122,6 +125,7 @@ export default function BlogEdit() {
         excerpt: post.excerpt,
         content: post.content,
         category: post.category,
+        categories: post.categories || [post.category],
         imageUrl: post.imageUrl,
         videoUrl: post.videoUrl,
         isVideo: post.isVideo
@@ -568,30 +572,73 @@ export default function BlogEdit() {
               </CardContent>
             </Card>
 
-            {/* Category */}
+            {/* Categories */}
             <Card>
               <CardHeader>
-                <CardTitle>Category</CardTitle>
+                <CardTitle>Categories</CardTitle>
               </CardHeader>
               <CardContent>
                 {isEditing ? (
-                  <Select 
-                    value={editData.category} 
-                    onValueChange={(value) => setEditData({ ...editData, category: value })}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {categories.map((category) => (
-                        <SelectItem key={category} value={category}>
-                          {category.charAt(0).toUpperCase() + category.slice(1)}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <div className="space-y-4">
+                    {/* Primary Category */}
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Primary Category</label>
+                      <Select 
+                        value={editData.category} 
+                        onValueChange={(value) => setEditData({ ...editData, category: value })}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select primary category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {categories.map((category) => (
+                            <SelectItem key={category} value={category}>
+                              {category.charAt(0).toUpperCase() + category.slice(1)}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    {/* Additional Categories */}
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Additional Categories</label>
+                      <div className="grid grid-cols-2 gap-2">
+                        {categories.filter(cat => cat !== editData.category).map((category) => (
+                          <div key={category} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={category}
+                              checked={editData.categories?.includes(category) || false}
+                              onCheckedChange={(checked) => {
+                                const currentCategories = editData.categories || [editData.category || ''];
+                                if (checked) {
+                                  setEditData({ 
+                                    ...editData, 
+                                    categories: [...currentCategories, category] 
+                                  });
+                                } else {
+                                  setEditData({ 
+                                    ...editData, 
+                                    categories: currentCategories.filter(c => c !== category) 
+                                  });
+                                }
+                              }}
+                            />
+                            <label htmlFor={category} className="text-sm">
+                              {category.charAt(0).toUpperCase() + category.slice(1)}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 ) : (
-                  <Badge variant="secondary">{post.category}</Badge>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="default">{post.category}</Badge>
+                    {post.categories?.filter(cat => cat !== post.category).map((category) => (
+                      <Badge key={category} variant="secondary">{category}</Badge>
+                    ))}
+                  </div>
                 )}
               </CardContent>
             </Card>

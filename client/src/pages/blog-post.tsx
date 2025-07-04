@@ -15,6 +15,7 @@ interface BlogPost {
   author: string;
   publishedDate: string;
   category: string;
+  categories?: string[];
   tags: string[];
   imageUrl?: string;
   videoUrl?: string;
@@ -172,14 +173,29 @@ export default function BlogPost() {
             </div>
           </div>
 
-          {/* Category */}
-          {post.category && (
+          {/* Categories - Clickable */}
+          {(post.category || (post.categories && post.categories.length > 0)) && (
             <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Category</h3>
-              <div className="flex">
-                <Badge variant="outline" className="text-sm bg-blue-50 text-blue-700 border-blue-200">
-                  {post.category}
-                </Badge>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                {post.categories && post.categories.length > 1 ? 'Categories' : 'Category'}
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {/* Primary category */}
+                {post.category && (
+                  <Link href={`/blog?category=${encodeURIComponent(post.category)}`}>
+                    <Badge variant="outline" className="text-sm bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
+                      {post.category}
+                    </Badge>
+                  </Link>
+                )}
+                {/* Additional categories */}
+                {post.categories?.filter(cat => cat !== post.category).map((category) => (
+                  <Link key={category} href={`/blog?category=${encodeURIComponent(category)}`}>
+                    <Badge variant="outline" className="text-sm bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100 hover:border-gray-300 cursor-pointer transition-colors">
+                      {category}
+                    </Badge>
+                  </Link>
+                ))}
               </div>
             </div>
           )}

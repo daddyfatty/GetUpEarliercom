@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,6 +16,7 @@ interface BlogPost {
   author: string;
   publishedDate: string;
   category: string;
+  categories?: string[];
   imageUrl?: string;
   videoUrl?: string;
   readTime: number;
@@ -24,6 +25,7 @@ interface BlogPost {
 }
 
 export default function Blog() {
+  const [location] = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
@@ -31,14 +33,27 @@ export default function Blog() {
     queryKey: ["/api/blog"]
   });
 
+  // Handle URL parameters for category filtering
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get('category');
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+    }
+  }, [location]);
+
   const categories = ["all", "nutrition", "running", "inspiration", "workouts", "yoga / stretching", "iron master dumbbells"];
 
   const filteredPosts = posts?.filter((post: BlogPost) => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          post.author.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    // Check if post matches selected category (in primary category or additional categories)
     const matchesCategory = selectedCategory === "all" || 
-                           post.category.toLowerCase() === selectedCategory.toLowerCase();
+                           post.category.toLowerCase() === selectedCategory.toLowerCase() ||
+                           (post.categories && post.categories.some(cat => cat.toLowerCase() === selectedCategory.toLowerCase()));
+    
     return matchesSearch && matchesCategory;
   }) || [];
 
@@ -226,9 +241,11 @@ export default function Blog() {
                   
                   {post.category && (
                     <div className="flex mt-3">
-                      <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
-                        {post.category}
-                      </Badge>
+                      <Link href={`/blog?category=${encodeURIComponent(post.category)}`}>
+                        <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
+                          {post.category}
+                        </Badge>
+                      </Link>
                     </div>
                   )}
                 </CardContent>
