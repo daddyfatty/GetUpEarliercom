@@ -1190,25 +1190,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/blog/:id", async (req, res) => {
-    try {
-      const updates = req.body;
-      
-      // Parse tags if it's a string
-      if (updates.tags && typeof updates.tags === 'string') {
-        updates.tags = JSON.parse(updates.tags);
-      }
 
-      const updatedPost = await storage.updateBlogPost(req.params.id, updates);
-      if (!updatedPost) {
-        return res.status(404).json({ message: "Blog post not found" });
-      }
-      res.json(updatedPost);
-    } catch (error: any) {
-      console.error("Error updating blog post:", error);
-      res.status(500).json({ message: "Error updating blog post: " + error.message });
-    }
-  });
 
   app.delete("/api/blog/:id", async (req, res) => {
     try {

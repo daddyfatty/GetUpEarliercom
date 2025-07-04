@@ -3,9 +3,10 @@ import { storage } from './storage';
 import { insertBlogPostSchema } from '@shared/schema';
 import { z } from 'zod';
 
-// Create a flexible schema for blog post updates that handles both string and array tags
+// Create a flexible schema for blog post updates that handles both string and array tags and categories
 const flexibleBlogPostSchema = insertBlogPostSchema.extend({
-  tags: z.union([z.string(), z.array(z.string())]).optional()
+  tags: z.union([z.string(), z.array(z.string())]).optional(),
+  categories: z.array(z.string()).optional()
 });
 
 // Helper function to normalize tags
@@ -188,6 +189,11 @@ export async function updateBlogPost(req: Request, res: Response) {
     
     if (validatedData.tags !== undefined) {
       normalizedData.tags = normalizeTags(validatedData.tags) || '[]';
+    }
+    
+    // Handle categories - convert array to database format if present
+    if (validatedData.categories !== undefined) {
+      normalizedData.categories = validatedData.categories;
     }
     
     const post = await storage.updateBlogPost(id, normalizedData);
