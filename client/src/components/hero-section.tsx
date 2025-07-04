@@ -2,12 +2,13 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Trophy, Users, Dumbbell, ChefHat } from "lucide-react";
 import { SiFacebook } from "react-icons/si";
+import { HeroGradient } from "@/components/hero-gradient";
 
 import _20250517_073713_00_00_08_03_Still003 from "@assets/20250517_073713.00_00_08_03.Still003.jpg";
 
 export function HeroSection() {
   return (
-    <section className="hero-gradient text-white">
+    <HeroGradient className="text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
@@ -69,6 +70,6 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-    </section>
+    </HeroGradient>
   );
 }

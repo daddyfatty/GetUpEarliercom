@@ -3,6 +3,7 @@ import { useParams, Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Clock, User, Calendar, Edit, Play } from "lucide-react";
+import { HeroGradient } from "@/components/hero-gradient";
 
 
 
@@ -76,8 +77,8 @@ export default function BlogPost() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
-      {/* Full-width Blue Header Section - No gaps */}
-      <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white">
+      {/* Full-width Hero Gradient Header Section - No gaps */}
+      <HeroGradient className="text-white">
         <div className="py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <div className="text-sm font-medium text-blue-200 mb-4 uppercase tracking-wide">
@@ -118,7 +119,7 @@ export default function BlogPost() {
             </div>
           </div>
         </div>
-      </div>
+      </HeroGradient>
 
       <div className="container mx-auto px-4 py-8">
         {/* Edit Button - Moved to white area */}
@@ -203,8 +204,6 @@ export default function BlogPost() {
           </div>
         </article>
       </div>
-      
-
     </div>
   );
 }
