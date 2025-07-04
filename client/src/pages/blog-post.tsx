@@ -3,7 +3,7 @@ import { useParams, Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Clock, User, Calendar, Edit, Play } from "lucide-react";
-import { PageSubscriptionCTA } from "@/components/page-subscription-cta";
+
 
 
 interface BlogPost {
@@ -206,8 +206,7 @@ export default function BlogPost() {
         </article>
       </div>
       
-      {/* Subscription CTA */}
-      <PageSubscriptionCTA />
+
     </div>
   );
 }
