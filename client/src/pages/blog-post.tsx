@@ -91,7 +91,7 @@ export default function BlogPost() {
             <Link href="/about" className="flex flex-col items-center space-y-4 mt-8 hover:opacity-80 transition-opacity cursor-pointer">
               <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-blue-300 bg-white">
                 <img 
-                  src="@assets/image_1751579313139.png" 
+                  src="@assets/image_1751620074840.png" 
                   alt={post.author}
                   className="w-full h-full object-cover"
                 />
@@ -189,7 +189,7 @@ export default function BlogPost() {
             <Link href="/about" className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
               <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-200 dark:border-gray-700 flex-shrink-0">
                 <img 
-                  src="@assets/image_1751579313139.png" 
+                  src="@assets/image_1751620074840.png" 
                   alt="Michael Baker"
                   className="w-full h-full object-cover"
                 />
