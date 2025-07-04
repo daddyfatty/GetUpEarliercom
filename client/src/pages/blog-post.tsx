@@ -76,6 +76,11 @@ export default function BlogPost() {
     );
   }
 
+  // Debug log to see the structure of the post data
+  console.log("Blog post data:", post);
+  console.log("Post categories:", post.categories);
+  console.log("Post category:", post.category);
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Full-width Hero Gradient Header Section - No gaps */}
