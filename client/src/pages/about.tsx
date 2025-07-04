@@ -96,7 +96,7 @@ export default function About() {
                         health coach, and yoga teacher. I'm also a former yoga studio owner and a dedicated health and wellness 
                         practitioner with over 30 years of experience. I began <span className="font-semibold text-blue-600">Get Up Earlier</span> (GetUpEarlier.com) because getting 
                         up earlier was step one in transforming my routine and overall well-being, especially after spending years 
-                        sitting at a computer as a digital professional.
+                        sitting at a computer as a <a href="https://WebMBD.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">digital professional</a>.
                       </p>
                       
                       <div className="bg-blue-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-blue-600">
