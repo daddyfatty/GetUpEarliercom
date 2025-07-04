@@ -26,6 +26,7 @@ export default function Services() {
   const [runningCoachingModal, setRunningCoachingModal] = useState(false);
   const [accountabilityCoachingModal, setAccountabilityCoachingModal] = useState(false);
   const [privateYogaModal, setPrivateYogaModal] = useState(false);
+  const [smallGroupYogaModal, setSmallGroupYogaModal] = useState(false);
 
   useEffect(() => {
     // Handle anchor scrolling on page load
@@ -162,7 +163,8 @@ export default function Services() {
       backgroundColor: "bg-orange-50",
       textColor: "text-gray-900",
       quantityInput: true,
-      badge: undefined
+      badge: undefined,
+      hasReadMore: true
     }
   ];
 
@@ -235,6 +237,8 @@ export default function Services() {
                         setRunningCoachingModal(true);
                       } else if (pkg.title === "1-on-1 Private Yoga with Erica") {
                         setPrivateYogaModal(true);
+                      } else if (pkg.title === "Small Group Yoga with Erica") {
+                        setSmallGroupYogaModal(true);
                       }
                     } else {
                       window.location.href = "/contact";
@@ -687,6 +691,83 @@ export default function Services() {
                   onClick={() => setPrivateYogaModal(false)}
                 >
                   Book Your Private Session →
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Small Group Yoga Details Modal */}
+      <Dialog open={smallGroupYogaModal} onOpenChange={setSmallGroupYogaModal}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold mb-4">Small Group Yoga with Erica</DialogTitle>
+            <DialogDescription>
+              Elevate your yoga practice with personalized attention in a supportive group setting
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <p className="text-gray-700 leading-relaxed">
+                Elevate your yoga practice with our semi-private Vinyasa yoga sessions, designed for small groups to ensure personalized attention and a supportive atmosphere. Perfect for those who prefer a more intimate setting, our classes cater to all levels, offering tailored guidance that respects individual pace and progress.
+              </p>
+            </div>
+
+            <div className="bg-blue-50 p-6 rounded-lg">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">Current Schedule:</h3>
+              <p className="text-gray-700 mb-4">Take my Saturday 8am or Wednesday 9am class in my Orange, CT home studio:</p>
+              <div className="space-y-2 text-gray-700">
+                <div className="flex items-center">
+                  <span className="font-semibold w-24">Saturdays:</span>
+                  <span>8-9am</span>
+                </div>
+                <div className="flex items-center">
+                  <span className="font-semibold w-24">Wednesdays:</span>
+                  <span>9-10am</span>
+                </div>
+                <div className="flex items-center">
+                  <span className="font-semibold w-24">Class fee:</span>
+                  <span>$25</span>
+                </div>
+              </div>
+              <p className="text-gray-700 mt-4">Contact me to join or to make private class arrangements.</p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Small Group Setting</h4>
+                <p className="text-sm text-gray-600">Limited class sizes (6 max) for a more intimate and focused experience, fostering a strong sense of community.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Vinyasa Flow Practice</h4>
+                <p className="text-sm text-gray-600">Dynamic sessions that synchronize movement with breath, suitable for enhancing flexibility, strength, and balance.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Personalized Instruction</h4>
+                <p className="text-sm text-gray-600">Attentive coaching that addresses the needs and goals of each participant, ensuring everyone receives the benefits of expert guidance.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Flexible Class Times</h4>
+                <p className="text-sm text-gray-600">Classes scheduled to accommodate various lifestyles, making regular yoga practice accessible and convenient.</p>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Supportive Environment</h4>
+                <p className="text-sm text-gray-600">A nurturing space that encourages personal growth and mind-body connection, ideal for deepening yoga skills collectively.</p>
+              </div>
+            </div>
+
+            <div className="flex justify-center pt-4">
+              <Link href="/contact">
+                <Button 
+                  className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3"
+                  onClick={() => setSmallGroupYogaModal(false)}
+                >
+                  Contact to Join Classes →
                 </Button>
               </Link>
             </div>
