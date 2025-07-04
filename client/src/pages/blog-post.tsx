@@ -185,7 +185,7 @@ export default function BlogPost() {
               {post.categories && post.categories.length > 0 ? (
                 // Show all categories
                 post.categories.map((category, index) => (
-                  <Link key={category} href={`/blog?category=${encodeURIComponent(category)}`}>
+                  <Link key={category} href={`/category/${encodeURIComponent(category)}`}>
                     <Badge 
                       variant="outline" 
                       className={`text-sm cursor-pointer transition-colors ${
@@ -201,7 +201,7 @@ export default function BlogPost() {
               ) : (
                 // Fallback to primary category only
                 post.category && (
-                  <Link href={`/blog?category=${encodeURIComponent(post.category)}`}>
+                  <Link href={`/category/${encodeURIComponent(post.category)}`}>
                     <Badge variant="outline" className="text-sm bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
                       {post.category}
                     </Badge>

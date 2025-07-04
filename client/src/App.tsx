@@ -18,6 +18,7 @@ import WorkoutVideo from "@/pages/workout-video";
 import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog-post";
 import BlogEdit from "@/pages/blog-edit";
+import CategoryPage from "@/pages/category";
 
 import About from "@/pages/about";
 import Services from "@/pages/services";
@@ -64,6 +65,7 @@ function Router() {
           <Route path="/blog" component={Blog} />
           <Route path="/blog/:id/edit" component={BlogEdit} />
           <Route path="/blog/:id" component={BlogPost} />
+          <Route path="/category/:category" component={CategoryPage} />
 
           <Route path="/about" component={About} />
           <Route path="/services" component={Services} />
