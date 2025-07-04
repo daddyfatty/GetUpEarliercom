@@ -620,23 +620,23 @@ export function ServicesGrid({
             </div>
 
             <div className="bg-blue-50 p-6 rounded-lg">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Current Schedule:</h3>
-              <p className="text-gray-700 mb-4">Take my Saturday 8am or Wednesday 9am class in my Orange, CT home studio:</p>
-              <div className="space-y-2 text-gray-700">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Current Schedule:</h3>
+              <p className="text-gray-700 mb-6">Take my Saturday 8am or Wednesday 9am class in my Orange, CT home studio:</p>
+              <div className="space-y-3 text-gray-700 mb-6">
                 <div className="flex items-center">
-                  <span className="font-semibold w-24">Saturdays:</span>
+                  <span className="font-semibold min-w-[100px]">Saturdays:</span>
                   <span>8-9am</span>
                 </div>
                 <div className="flex items-center">
-                  <span className="font-semibold w-24">Wednesdays:</span>
+                  <span className="font-semibold min-w-[100px]">Wednesdays:</span>
                   <span>9-10am</span>
                 </div>
                 <div className="flex items-center">
-                  <span className="font-semibold w-24">Class fee:</span>
+                  <span className="font-semibold min-w-[100px]">Class fee:</span>
                   <span>$25</span>
                 </div>
               </div>
-              <p className="text-gray-700 mt-4">Contact me to join or to make private class arrangements.</p>
+              <p className="text-gray-700">Contact me to join or to make private class arrangements.</p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
