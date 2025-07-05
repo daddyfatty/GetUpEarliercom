@@ -91,10 +91,7 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
             </div>
           </div>
 
-          {/* Disclaimer */}
-          <div className="text-xs text-gray-500 dark:text-gray-400 text-center mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
-            <p>As an Amazon Associate, I earn from qualifying purchases. Prices subject to change.</p>
-          </div>
+
         </div>
       </div>
     );
@@ -196,10 +193,7 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
           </div>
         </div>
 
-        {/* Disclaimer */}
-        <div className="text-xs text-gray-500 dark:text-gray-400 text-center mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
-          <p>As an Amazon Associate, I earn from qualifying purchases. Prices subject to change.</p>
-        </div>
+
       </div>
     </div>
   );
