@@ -19,6 +19,7 @@ import {
   updateBlogPost as cmsUpdateBlogPost, 
   deleteBlogPost as cmsDeleteBlogPost 
 } from './blog-cms';
+import { getCachedLinkPreview } from './link-preview';
 
 // Check if Stripe is configured
 const STRIPE_CONFIGURED = !!process.env.STRIPE_SECRET_KEY;
@@ -1202,6 +1203,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error("Error deleting blog post:", error);
       res.status(500).json({ message: "Error deleting blog post: " + error.message });
+    }
+  });
+
+  // Link Preview API endpoint
+  app.get("/api/link-preview", async (req, res) => {
+    try {
+      const { url } = req.query;
+      
+      if (!url || typeof url !== 'string') {
+        return res.status(400).json({ message: "URL parameter is required" });
+      }
+
+      // Only allow Amazon URLs for security
+      if (!url.includes('amazon.') && !url.includes('amzn.')) {
+        return res.status(400).json({ message: "Only Amazon URLs are supported" });
+      }
+
+      console.log(`Fetching link preview for: ${url}`);
+      const preview = await getCachedLinkPreview(url);
+      
+      if (!preview) {
+        return res.status(404).json({ message: "Could not fetch link preview" });
+      }
+
+      res.json(preview);
+    } catch (error: any) {
+      console.error("Error fetching link preview:", error);
+      res.status(500).json({ message: "Error fetching link preview: " + error.message });
     }
   });
 
