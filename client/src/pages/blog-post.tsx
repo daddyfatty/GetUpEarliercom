@@ -141,6 +141,24 @@ export default function BlogPost() {
         {/* Article Content Container */}
         <article className="max-w-4xl mx-auto">
 
+          {/* Featured Image Section */}
+          {post.imageUrl && (
+            <div className="mb-8">
+              <div className="w-full rounded-lg overflow-hidden shadow-lg bg-gray-100 dark:bg-gray-800">
+                <img
+                  src={post.imageUrl}
+                  alt={post.title}
+                  className="w-full h-auto object-cover"
+                  onError={(e) => {
+                    // Hide image if it fails to load
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.parentElement!.style.display = 'none';
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
           {/* Video Section */}
           {post.isVideo && post.videoUrl && (
             <div className="mb-8">
