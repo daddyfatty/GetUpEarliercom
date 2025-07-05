@@ -33,11 +33,41 @@ export function BlogContentRenderer({ content }: BlogContentRendererProps) {
       // Add Amazon preview component
       const url = match[1];
       const title = match[2];
+      
+      // Determine product image based on title/content
+      let productImage = "/attached_assets/20250702_065601_1751710941826.jpg"; // default water bottle
+      let productPrice = "$24.99";
+      let productDescription = "Recommended by certified trainers for optimal performance and hydration during training.";
+      
+      // Map specific products based on exact titles
+      if (title.includes("Get the soft water bottle here")) {
+        productImage = "/attached_assets/20250702_065601_1751710941826.jpg";
+        productPrice = "$24.99";
+        productDescription = "Soft, flexible water bottle perfect for compression shorts without bouncing.";
+      } else if (title.includes("Shop double electrolyte gels")) {
+        productImage = "/attached_assets/20250702_065853_1751710941827.jpg";
+        productPrice = "$32.99";
+        productDescription = "Double electrolyte gels provide sustained energy without sugar crash during long runs.";
+      } else if (title.includes("Order NUUN tablets online")) {
+        // Use a different image for NUUN tablets to distinguish from gels
+        productImage = "/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800.jpg";
+        productPrice = "$19.99";
+        productDescription = "NUUN electrolyte tablets available at CVS, Dick's, REI, and most grocery stores.";
+      } else {
+        // Generic fallback for any other Amazon links
+        productImage = "/attached_assets/20250702_065601_1751710941826.jpg";
+        productPrice = "$24.99";
+        productDescription = "Recommended by certified trainers for optimal performance and hydration during training.";
+      }
+      
       parts.push(
         <AmazonPreview
           key={`amazon-${match.index}`}
           url={url}
           title={title}
+          imageUrl={productImage}
+          price={productPrice}
+          description={productDescription}
         />
       );
 
