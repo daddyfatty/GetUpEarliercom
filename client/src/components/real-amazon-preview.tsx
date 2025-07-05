@@ -84,7 +84,6 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
             <div className="flex items-center gap-2 text-orange-500">
               <ShoppingCart className="h-4 w-4" />
               <span className="font-bold text-sm">amazon</span>
-              <span className="text-xs text-gray-500">Affiliate Link</span>
             </div>
             <div className="text-xs text-gray-500">
               Click to view on Amazon
@@ -186,7 +185,6 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
           <div className="flex items-center gap-2 text-orange-500">
             <ShoppingCart className="h-4 w-4" />
             <span className="font-bold text-sm">amazon</span>
-            <span className="text-xs text-gray-500">Affiliate Link</span>
           </div>
           <div className="text-xs text-gray-500">
             Click to view on Amazon
