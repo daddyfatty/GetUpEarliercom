@@ -47,22 +47,54 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
     );
   }
 
-  if (error || !preview) {
-    // Fallback to clickable link if preview fails
+  if (error || !preview || preview.title === 'Amazon Product') {
+    // Enhanced fallback with better product display
     return (
-      <div className="my-6 p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white">{title}</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">Click to view on Amazon</p>
+      <div 
+        className="my-6 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-800 shadow-sm hover:shadow-lg hover:border-orange-200 transition-all cursor-pointer group"
+        onClick={() => window.open(url, '_blank')}
+      >
+        <div className="p-4">
+          <div className="flex gap-4">
+            {/* Generic Product Image */}
+            <div className="w-32 h-32 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center">
+              <ShoppingCart className="h-12 w-12 text-gray-400" />
+            </div>
+            
+            {/* Product Info */}
+            <div className="flex-1 space-y-2">
+              <h3 className="font-semibold text-lg text-gray-900 dark:text-white">
+                {title}
+              </h3>
+              
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
+                Click to view product details and pricing on Amazon
+              </p>
+
+              <div className="flex items-center gap-2 flex-wrap">
+                <Badge variant="outline" className="bg-orange-50 text-orange-600 border-orange-200">
+                  Amazon Product
+                </Badge>
+              </div>
+            </div>
           </div>
-          <Button
-            onClick={() => window.open(url, '_blank')}
-            className="bg-orange-500 hover:bg-orange-600 text-white"
-          >
-            <ShoppingCart className="h-4 w-4 mr-2" />
-            View on Amazon
-          </Button>
+
+          {/* Amazon Logo Indicator */}
+          <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex items-center gap-2 text-orange-500">
+              <ShoppingCart className="h-4 w-4" />
+              <span className="font-bold text-sm">amazon</span>
+              <span className="text-xs text-gray-500">Affiliate Link</span>
+            </div>
+            <div className="text-xs text-gray-500">
+              Click to view on Amazon
+            </div>
+          </div>
+
+          {/* Disclaimer */}
+          <div className="text-xs text-gray-500 dark:text-gray-400 text-center mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
+            <p>As an Amazon Associate, I earn from qualifying purchases. Prices subject to change.</p>
+          </div>
         </div>
       </div>
     );
