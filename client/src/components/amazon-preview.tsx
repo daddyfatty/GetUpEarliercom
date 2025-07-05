@@ -26,16 +26,10 @@ export function AmazonPreview({
   description = "Recommended by certified trainers for optimal performance and hydration during training."
 }: AmazonPreviewProps) {
   return (
-    <div className="my-6 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow">
-      {/* Amazon Header */}
-      <div className="bg-gradient-to-r from-orange-400 to-yellow-400 px-4 py-2">
-        <div className="flex items-center gap-2 text-white">
-          <ShoppingCart className="h-4 w-4" />
-          <span className="font-bold text-sm">amazon</span>
-          <span className="text-xs opacity-90">Affiliate Link</span>
-        </div>
-      </div>
-
+    <div 
+      className="my-6 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-800 shadow-sm hover:shadow-lg hover:border-orange-200 transition-all cursor-pointer group"
+      onClick={() => window.open(url, '_blank')}
+    >
       <div className="p-4">
         <div className="flex gap-4">
           {/* Product Image */}
@@ -94,23 +88,16 @@ export function AmazonPreview({
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex gap-3 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-          <Button 
-            onClick={() => window.open(url, '_blank')} 
-            className="flex-1 bg-orange-500 hover:bg-orange-600 text-white"
-          >
-            <ShoppingCart className="h-4 w-4 mr-2" />
-            View on Amazon
-          </Button>
-          <Button 
-            variant="outline" 
-            onClick={() => window.open(url, '_blank')}
-            className="border-orange-200 text-orange-600 hover:bg-orange-50"
-          >
-            <ExternalLink className="h-4 w-4 mr-2" />
-            Open Link
-          </Button>
+        {/* Amazon Logo Indicator */}
+        <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex items-center gap-2 text-orange-500">
+            <ShoppingCart className="h-4 w-4" />
+            <span className="font-bold text-sm">amazon</span>
+            <span className="text-xs text-gray-500">Affiliate Link</span>
+          </div>
+          <div className="text-xs text-gray-500">
+            Click to view on Amazon
+          </div>
         </div>
 
         {/* Disclaimer */}
