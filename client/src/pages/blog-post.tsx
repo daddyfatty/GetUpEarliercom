@@ -4,10 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Clock, User, Calendar, Edit, Play } from "lucide-react";
 import { HeroGradient } from "@/components/hero-gradient";
-import { LinkPreview } from "@/components/link-preview";
-import { useEffect, useRef, useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Star, ShoppingCart, ExternalLink, X } from "lucide-react";
+import { BlogContentRenderer } from "@/components/blog-content-renderer";
 
 
 
@@ -30,13 +27,6 @@ interface BlogPost {
 
 export default function BlogPost() {
   const { id } = useParams();
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewData, setPreviewData] = useState<{url: string, title: string} | null>(null);
-
-  const showAmazonPreview = (url: string, title: string) => {
-    setPreviewData({url, title});
-    setPreviewOpen(true);
-  };
 
   const { data: posts, isLoading, error } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog"]
@@ -174,29 +164,7 @@ export default function BlogPost() {
                 {post.excerpt}
               </div>
               
-              <div 
-                className="text-gray-600 dark:text-gray-400 leading-relaxed space-y-4"
-                dangerouslySetInnerHTML={{ __html: post.content }}
-                ref={(el) => {
-                  if (el) {
-                    // Add click handlers to Amazon link spans
-                    const amazonLinks = el.querySelectorAll('.amazon-link');
-                    amazonLinks.forEach((link) => {
-                      const url = link.getAttribute('data-url');
-                      if (url) {
-                        const htmlElement = link as HTMLElement;
-                        htmlElement.style.cursor = 'pointer';
-                        htmlElement.style.color = '#2563eb';
-                        htmlElement.style.textDecoration = 'underline';
-                        htmlElement.addEventListener('click', (e) => {
-                          e.preventDefault();
-                          showAmazonPreview(url, link.textContent || '');
-                        });
-                      }
-                    });
-                  }
-                }}
-              />
+              <BlogContentRenderer content={post.content} />
             </div>
           </div>
 
@@ -256,93 +224,6 @@ export default function BlogPost() {
           </div>
         </article>
       </div>
-
-      {/* Amazon Preview Modal */}
-      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="flex items-center justify-between">
-              Product Preview
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setPreviewOpen(false)}
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </DialogTitle>
-          </DialogHeader>
-
-          {previewData && (
-            <div className="space-y-4">
-              <div className="flex gap-4">
-                <div className="w-32 h-32 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                  <img 
-                    src="/attached_assets/20250702_065601_1751710941826.jpg" 
-                    alt="Product"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                
-                <div className="flex-1 space-y-2">
-                  <h3 className="font-semibold text-lg line-clamp-2">
-                    {previewData.title}
-                  </h3>
-                  
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center">
-                      {[...Array(5)].map((_, i) => (
-                        <Star 
-                          key={i} 
-                          className={`h-4 w-4 ${
-                            i < 4 ? 'text-yellow-400 fill-current' : 'text-gray-300'
-                          }`} 
-                        />
-                      ))}
-                      <span className="text-sm text-gray-600 ml-1">
-                        4.5 (1,247 reviews)
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl font-bold text-orange-600">
-                      $24.99
-                    </span>
-                    <Badge variant="outline" className="bg-blue-50 text-blue-700">
-                      Prime
-                    </Badge>
-                  </div>
-
-                  <div className="text-sm text-green-600 font-medium">
-                    In Stock
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-gray-600 text-sm">
-                Recommended by certified trainers for optimal performance and hydration during training.
-              </p>
-
-              <div className="flex gap-3 pt-4">
-                <Button onClick={() => window.open(previewData.url, '_blank')} className="flex-1">
-                  <ShoppingCart className="h-4 w-4 mr-2" />
-                  View on Amazon
-                </Button>
-                <Button variant="outline" onClick={() => window.open(previewData.url, '_blank')}>
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Open Link
-                </Button>
-              </div>
-
-              <div className="text-xs text-gray-500 text-center pt-2">
-                <p>This preview helps you see product details before visiting Amazon.</p>
-                <p>Prices and availability are subject to change.</p>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
