@@ -57,7 +57,7 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
         <div className="p-4">
           <div className="flex gap-4">
             {/* Generic Product Image */}
-            <div className="w-32 h-32 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center">
+            <div className="w-36 h-36 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center p-2">
               <ShoppingCart className="h-12 w-12 text-gray-400" />
             </div>
             
@@ -108,12 +108,12 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
       <div className="p-4">
         <div className="flex gap-4">
           {/* Product Image */}
-          <div className="w-32 h-32 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden flex-shrink-0">
+          <div className="w-36 h-36 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden flex-shrink-0 p-2">
             {preview.image ? (
               <img 
                 src={preview.image}
                 alt={preview.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
                 onError={(e) => {
                   // Fallback to a placeholder if image fails to load
                   const target = e.target as HTMLImageElement;
