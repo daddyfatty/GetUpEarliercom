@@ -144,64 +144,8 @@ export default function BlogPost() {
         {/* Article Content Container */}
         <article className="max-w-4xl mx-auto">
 
-          {/* Featured Image Section - Smaller with Lightbox */}
-          {post.imageUrl && (
-            <div className="mb-8 flex justify-center">
-              <div 
-                className="max-w-md rounded-lg overflow-hidden shadow-lg bg-gray-100 dark:bg-gray-800 cursor-pointer hover:shadow-xl transition-shadow group relative"
-                onClick={() => {
-                  setLightboxImage(post.imageUrl!);
-                  setLightboxOpen(true);
-                }}
-              >
-                <img
-                  src={post.imageUrl}
-                  alt={post.title}
-                  className="w-full h-auto object-cover"
-                  onError={(e) => {
-                    // Hide image if it fails to load
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.style.display = 'none';
-                  }}
-                />
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center">
-                  <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Video Section */}
-          {post.isVideo && post.videoUrl && (
-            <div className="mb-8">
-              <div className="aspect-video w-full bg-black rounded-lg overflow-hidden shadow-lg">
-                <iframe
-                  src={post.videoUrl}
-                  title={post.title}
-                  className="w-full h-full border-0"
-                  allowFullScreen
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Article Content */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg border border-gray-200 dark:border-gray-700">
-            <div className="prose prose-lg max-w-none dark:prose-invert">
-              <div className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-8 font-medium border-b border-gray-200 dark:border-gray-600 pb-6">
-                {post.excerpt}
-              </div>
-              
-              <BlogContentRenderer content={post.content} />
-            </div>
-          </div>
-
           {/* Image Gallery Section */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg border border-gray-200 dark:border-gray-700 mt-8">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Gallery</h3>
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg border border-gray-200 dark:border-gray-700 mb-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Image 1 - Running shoes */}
               <div 
@@ -258,6 +202,63 @@ export default function BlogPost() {
               </div>
             </div>
           </div>
+
+          {/* Featured Image Section - Smaller with Lightbox */}
+          {post.imageUrl && (
+            <div className="mb-8 flex justify-center">
+              <div 
+                className="max-w-md rounded-lg overflow-hidden shadow-lg bg-gray-100 dark:bg-gray-800 cursor-pointer hover:shadow-xl transition-shadow group relative"
+                onClick={() => {
+                  setLightboxImage(post.imageUrl!);
+                  setLightboxOpen(true);
+                }}
+              >
+                <img
+                  src={post.imageUrl}
+                  alt={post.title}
+                  className="w-full h-auto object-cover"
+                  onError={(e) => {
+                    // Hide image if it fails to load
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.parentElement!.style.display = 'none';
+                  }}
+                />
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center">
+                  <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Video Section */}
+          {post.isVideo && post.videoUrl && (
+            <div className="mb-8">
+              <div className="aspect-video w-full bg-black rounded-lg overflow-hidden shadow-lg">
+                <iframe
+                  src={post.videoUrl}
+                  title={post.title}
+                  className="w-full h-full border-0"
+                  allowFullScreen
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Article Content */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg border border-gray-200 dark:border-gray-700">
+            <div className="prose prose-lg max-w-none dark:prose-invert">
+              <div className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-8 font-medium border-b border-gray-200 dark:border-gray-600 pb-6">
+                {post.excerpt}
+              </div>
+              
+              <BlogContentRenderer content={post.content} />
+            </div>
+          </div>
+
+
 
           {/* Categories - Clickable */}
           <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
