@@ -199,6 +199,66 @@ export default function BlogPost() {
             </div>
           </div>
 
+          {/* Image Gallery Section */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg border border-gray-200 dark:border-gray-700 mt-8">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Gallery</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Image 1 - Running shoes */}
+              <div 
+                className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                onClick={() => {
+                  setLightboxImage("/attached_assets/download - 2025-07-05T124857.113_1751734734091.png");
+                  setLightboxOpen(true);
+                }}
+              >
+                <img
+                  src="/attached_assets/download - 2025-07-05T124857.113_1751734734091.png"
+                  alt="Running shoes and hydration gear"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center">
+                  <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </div>
+              </div>
+
+              {/* Image 2 - Fitly bottle and supplements */}
+              <div 
+                className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                onClick={() => {
+                  setLightboxImage("/attached_assets/20250702_065601_1751734734092.jpg");
+                  setLightboxOpen(true);
+                }}
+              >
+                <img
+                  src="/attached_assets/20250702_065601_1751734734092.jpg"
+                  alt="Fitly bottle with nutrition supplements"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center">
+                  <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </div>
+              </div>
+
+              {/* Image 3 - Fitly bottle in freezer */}
+              <div 
+                className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                onClick={() => {
+                  setLightboxImage("/attached_assets/20250702_065853_1751734734092.jpg");
+                  setLightboxOpen(true);
+                }}
+              >
+                <img
+                  src="/attached_assets/20250702_065853_1751734734092.jpg"
+                  alt="Fitly bottle stored in freezer"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center">
+                  <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Categories - Clickable */}
           <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
