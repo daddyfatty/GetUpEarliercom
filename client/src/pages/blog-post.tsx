@@ -2,9 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Clock, User, Calendar, Edit, Play } from "lucide-react";
+import { ArrowLeft, Clock, User, Calendar, Edit, Play, Expand } from "lucide-react";
 import { HeroGradient } from "@/components/hero-gradient";
 import { BlogContentRenderer } from "@/components/blog-content-renderer";
+import { useState } from "react";
 
 
 
@@ -27,6 +28,8 @@ interface BlogPost {
 
 export default function BlogPost() {
   const { id } = useParams();
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState<string>("");
 
   const { data: posts, isLoading, error } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog"]
@@ -141,10 +144,16 @@ export default function BlogPost() {
         {/* Article Content Container */}
         <article className="max-w-4xl mx-auto">
 
-          {/* Featured Image Section */}
+          {/* Featured Image Section - Smaller with Lightbox */}
           {post.imageUrl && (
-            <div className="mb-8">
-              <div className="w-full rounded-lg overflow-hidden shadow-lg bg-gray-100 dark:bg-gray-800">
+            <div className="mb-8 flex justify-center">
+              <div 
+                className="max-w-md rounded-lg overflow-hidden shadow-lg bg-gray-100 dark:bg-gray-800 cursor-pointer hover:shadow-xl transition-shadow group relative"
+                onClick={() => {
+                  setLightboxImage(post.imageUrl!);
+                  setLightboxOpen(true);
+                }}
+              >
                 <img
                   src={post.imageUrl}
                   alt={post.title}
@@ -155,6 +164,10 @@ export default function BlogPost() {
                     e.currentTarget.parentElement!.style.display = 'none';
                   }}
                 />
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center">
+                  <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </div>
               </div>
             </div>
           )}
@@ -242,6 +255,31 @@ export default function BlogPost() {
           </div>
         </article>
       </div>
+
+      {/* Lightbox Modal */}
+      {lightboxOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center p-4"
+          onClick={() => setLightboxOpen(false)}
+        >
+          <div className="relative max-w-7xl max-h-full">
+            <button
+              onClick={() => setLightboxOpen(false)}
+              className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors"
+            >
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <img
+              src={lightboxImage}
+              alt={post.title}
+              className="max-w-full max-h-full object-contain rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
