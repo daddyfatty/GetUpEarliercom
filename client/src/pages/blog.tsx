@@ -199,11 +199,6 @@ export default function Blog() {
                   
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-2 mb-2">
-                    <Link href={`/category/${encodeURIComponent(post.category)}`}>
-                      <Badge variant="secondary" className="text-xs cursor-pointer hover:bg-secondary/80 transition-colors">
-                        {post.category}
-                      </Badge>
-                    </Link>
                     {post.isVideo && (
                       <Badge variant="outline" className="text-xs">
                         Video
