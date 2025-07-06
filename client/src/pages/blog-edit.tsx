@@ -38,7 +38,7 @@ export default function BlogEdit() {
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState<Partial<BlogPost>>({});
 
-  const categories = ["nutrition", "running", "inspiration", "workouts", "yoga / stretching", "iron master dumbbells"];
+  const categories = ["running", "nutrition", "workouts", "inspiration", "yoga / stretching", "iron master dumbbells"];
 
   const { data: post, isLoading, error } = useQuery<BlogPost>({
     queryKey: [`/api/blog/${params?.id}`],
