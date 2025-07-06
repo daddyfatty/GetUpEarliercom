@@ -230,7 +230,7 @@ export default function Services() {
                   onClick={() => {
                     if (pkg.hasReadMore) {
                       if (pkg.title === "1-on-1 Personal Strength Training") {
-                        setPersonalTrainingModal(true);
+                        window.location.href = "/services/personal-strength-training";
                       } else if (pkg.title === "1-on-1 Nutrition Coaching") {
                         setNutritionCoachingModal(true);
                       } else if (pkg.title === "1-on-1 Running Coaching Session") {

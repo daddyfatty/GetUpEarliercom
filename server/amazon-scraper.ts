@@ -25,27 +25,27 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
     isPrime: false,
     asin: 'B09L6JM2T6'
   },
-  'B07ZDXBMX6': {
+  'B018NZJC70': {
     title: 'Nuun Sport Electrolyte Tablets with Magnesium, Calcium, Potassium, Chloride & Sodium, Gluten Free & Non-GMO',
     description: 'HYDRATION MADE FOR YOUR ACTIVE LIFE: Nuun Sport electrolyte tablets offer a perfect sports drink for daily use, including 5 essential electrolytes and 1g of sugar',
-    image: 'https://m.media-amazon.com/images/I/81Gdus5Zj4L._AC_SL1500_.jpg',
-    price: '$20.40',
+    image: 'https://m.media-amazon.com/images/I/81Gdus5Zj4L.__AC_SX300_SY300_QL70_ML2_.jpg',
+    price: '$23.42',
     rating: 4.4,
-    reviews: 56086,
+    reviews: 56112,
     availability: 'In Stock',
     isPrime: true,
-    asin: 'B07ZDXBMX6'
+    asin: 'B018NZJC70'
   },
-  'B08B5TVQKM': {
-    title: 'Double Electrolyte Energy Gels - Natural Fuel for Running, Cycling, and Endurance Sports',
-    description: 'These provide sustained energy without the sugar crash. Perfect for marathon training and long-distance running.',
-    image: 'https://m.media-amazon.com/images/I/71rQGsKX8sL._AC_SL1500_.jpg',
-    price: '$18.99',
-    rating: 4.3,
-    reviews: 1824,
+  'B076PR27Z1': {
+    title: 'Huma Plus (Double Electrolytes) - Chia Energy Gel, BlackBerry Banana, 12 Gels - Stomach Friendly, Real Food Energy',
+    description: 'PLUS = 2x NATURAL ELECTROLYTES – Sourced from Coconut Water, Sea Salt, and Chia Seeds. Double the electrolytes of original Huma Gel. 240-250mg Sodium, 65mg Potassium. Contains 100% All-Natural, Real-Food Ingredients.',
+    image: 'https://m.media-amazon.com/images/I/71ynS-qChqL.__AC_SY300_SX300_QL70_ML2_.jpg',
+    price: '$32.95',
+    rating: 4.5,
+    reviews: 2762,
     availability: 'In Stock',
     isPrime: true,
-    asin: 'B08B5TVQKM'
+    asin: 'B076PR27Z1'
   }
 };
 

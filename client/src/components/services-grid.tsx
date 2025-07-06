@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Zap, Heart, Target, Users, Dumbbell, User } from "lucide-react";
 
 export interface Service {
@@ -81,6 +81,7 @@ export function ServicesGrid({
   showReadMore = false,
   className = ""
 }: ServicesGridProps) {
+  const [, setLocation] = useLocation();
   const [personalTrainingModal, setPersonalTrainingModal] = useState(false);
   const [nutritionCoachingModal, setNutritionCoachingModal] = useState(false);
   const [runningCoachingModal, setRunningCoachingModal] = useState(false);
@@ -109,7 +110,7 @@ export function ServicesGrid({
             className="h-full hover:shadow-lg transition-shadow duration-300 group cursor-pointer"
             onClick={() => {
               if (showReadMore && service.title === "1-on-1 Personal Strength Training") {
-                setPersonalTrainingModal(true);
+                setLocation("/services/personal-strength-training");
               } else if (showReadMore && service.title === "Virtual Nutrition Coaching") {
                 setNutritionCoachingModal(true);
               } else if (showReadMore && service.title === "Certified Running Coaching") {
@@ -166,7 +167,7 @@ export function ServicesGrid({
                     className="text-lg px-6 py-3 bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setPersonalTrainingModal(true);
+                      setLocation("/services/personal-strength-training");
                     }}
                   >
                     Read More →
