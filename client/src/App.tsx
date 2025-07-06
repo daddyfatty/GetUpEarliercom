@@ -63,7 +63,8 @@ function Router() {
           <Route path="/alcohol-calculator" component={AlcoholCalculatorPage} />
 
           <Route path="/blog" component={Blog} />
-          <Route path="/blog/:id/edit" component={BlogEdit} />
+          {/* Edit route only available in development */}
+          {import.meta.env.DEV && <Route path="/blog/:id/edit" component={BlogEdit} />}
           <Route path="/blog/:id" component={BlogPost} />
           <Route path="/category/:category" component={CategoryPage} />
 

@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 6, 2025: Hidden blog edit functionality in production - edit buttons and routes only available in development mode for security
 - July 5, 2025: Created gallery section with 3 images formatted as perfectly cropped squares with lightbox functionality and hover effects
 - July 5, 2025: Added lightbox functionality to blog featured images - images now display smaller (max-width 448px) with click-to-expand functionality and smooth hover effects
 - July 5, 2025: Enhanced Amazon product preview display with larger image containers (36x36) and object-contain sizing to show complete product shots without cropping

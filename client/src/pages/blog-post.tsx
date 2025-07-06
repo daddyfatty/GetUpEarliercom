@@ -129,17 +129,19 @@ export default function BlogPost() {
       </HeroGradient>
 
       <div className="container mx-auto px-4 py-8">
-        {/* Edit Button - Moved to white area */}
-        <div className="mb-8 flex justify-end">
-          {post && (
-            <Link href={`/blog/${post.id}/edit`}>
-              <Button variant="outline" className="gap-2">
-                <Edit className="h-4 w-4" />
-                Edit
-              </Button>
-            </Link>
-          )}
-        </div>
+        {/* Edit Button - Only show in development */}
+        {import.meta.env.DEV && (
+          <div className="mb-8 flex justify-end">
+            {post && (
+              <Link href={`/blog/${post.id}/edit`}>
+                <Button variant="outline" className="gap-2">
+                  <Edit className="h-4 w-4" />
+                  Edit
+                </Button>
+              </Link>
+            )}
+          </div>
+        )}
 
         {/* Article Content Container */}
         <article className="max-w-4xl mx-auto">
