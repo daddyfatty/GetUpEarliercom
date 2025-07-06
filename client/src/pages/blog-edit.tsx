@@ -48,15 +48,34 @@ export default function BlogEdit() {
   useEffect(() => {
     if (post) {
       // Initialize categories array properly - ensure it always includes the primary category
-      const initialCategories = post.categories && post.categories.length > 0 
-        ? post.categories 
-        : [post.category].filter(Boolean);
+      // Filter categories to only include ones that exist in our predefined categories list
+      const validCategories = post.categories 
+        ? post.categories.filter(cat => categories.includes(cat.toLowerCase()))
+        : [];
+      
+      // Ensure primary category is included and is lowercase
+      const primaryCategory = post.category ? post.category.toLowerCase() : '';
+      const initialCategories = validCategories.length > 0 
+        ? validCategories 
+        : primaryCategory ? [primaryCategory] : [];
+
+      // Make sure primary category is in the list if it's valid
+      if (primaryCategory && categories.includes(primaryCategory) && !initialCategories.includes(primaryCategory)) {
+        initialCategories.unshift(primaryCategory);
+      }
+
+      console.log('Post data:', { 
+        category: post.category, 
+        categories: post.categories, 
+        primaryCategory, 
+        initialCategories 
+      });
 
       setEditData({
         title: post.title,
         excerpt: post.excerpt,
         content: post.content,
-        category: post.category,
+        category: primaryCategory,
         categories: initialCategories,
         imageUrl: post.imageUrl,
         videoUrl: post.videoUrl,
