@@ -46,19 +46,24 @@ export default function BlogEdit() {
   });
 
   useEffect(() => {
-    if (post && !isEditing) {
+    if (post) {
+      // Initialize categories array properly - ensure it always includes the primary category
+      const initialCategories = post.categories && post.categories.length > 0 
+        ? post.categories 
+        : [post.category].filter(Boolean);
+
       setEditData({
         title: post.title,
         excerpt: post.excerpt,
         content: post.content,
         category: post.category,
-        categories: post.categories || [post.category],
+        categories: initialCategories,
         imageUrl: post.imageUrl,
         videoUrl: post.videoUrl,
         isVideo: post.isVideo
       });
     }
-  }, [post, isEditing]);
+  }, [post]);
 
   const updateMutation = useMutation({
     mutationFn: async (updates: Partial<BlogPost>) => {
@@ -120,12 +125,17 @@ export default function BlogEdit() {
   const handleCancel = () => {
     setIsEditing(false);
     if (post) {
+      // Reset to original post data
+      const initialCategories = post.categories && post.categories.length > 0 
+        ? post.categories 
+        : [post.category].filter(Boolean);
+
       setEditData({
         title: post.title,
         excerpt: post.excerpt,
         content: post.content,
         category: post.category,
-        categories: post.categories || [post.category],
+        categories: initialCategories,
         imageUrl: post.imageUrl,
         videoUrl: post.videoUrl,
         isVideo: post.isVideo
@@ -585,7 +595,19 @@ export default function BlogEdit() {
                       <label className="block text-sm font-medium mb-2">Primary Category</label>
                       <Select 
                         value={editData.category} 
-                        onValueChange={(value) => setEditData({ ...editData, category: value })}
+                        onValueChange={(value) => {
+                          // When primary category changes, update the categories array
+                          const currentCategories = editData.categories || [];
+                          const newCategories = currentCategories.filter(cat => cat !== editData.category);
+                          if (!newCategories.includes(value)) {
+                            newCategories.unshift(value); // Add new primary category at the beginning
+                          }
+                          setEditData({ 
+                            ...editData, 
+                            category: value,
+                            categories: newCategories
+                          });
+                        }}
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select primary category" />
