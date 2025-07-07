@@ -43,6 +43,24 @@ export function HeroSection() {
                 </Button>
               </Link>
             </div>
+            
+            {/* Facebook Group Section */}
+            <div className="mt-8">
+              <div 
+                className="bg-white/10 backdrop-blur-sm border border-white/20 p-4 rounded-xl shadow-lg cursor-pointer hover:bg-white/20 hover:scale-105 transition-all duration-300 transform"
+                onClick={() => window.open('https://www.facebook.com/groups/getupearlier', '_blank')}
+              >
+                <div className="flex items-center space-x-4">
+                  <div className="bg-blue-600 p-3 rounded-full hover:bg-blue-700 transition-colors duration-300">
+                    <SiFacebook className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-white mb-1">900+ Members Facebook Group</h3>
+                    <p className="text-blue-100">Join the community</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           
           <div className="relative">

@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Clock, TrendingUp, Users, Star, ChefHat, Dumbbell, ArrowRight, Calendar, Target, MapPin, BookOpen, ExternalLink } from "lucide-react";
-import { SiFacebook } from "react-icons/si";
 import type { Recipe, Workout, BlogPost } from "@shared/schema";
 import gymImagePath from "@assets/download - 2025-06-20T164725.183_1750452478509.png";
 import { useEffect, useState } from "react";
@@ -242,27 +241,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Facebook Group Section */}
-      <section className="py-8 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto">
-            <div 
-              className="bg-white border-2 border-blue-200 p-6 rounded-2xl shadow-lg cursor-pointer hover:shadow-xl hover:border-blue-300 hover:scale-105 transition-all duration-300 transform"
-              onClick={() => window.open('https://www.facebook.com/groups/getupearlier', '_blank')}
-            >
-              <div className="flex items-center space-x-4">
-                <div className="bg-blue-600 p-3 rounded-full hover:bg-blue-700 transition-colors duration-300">
-                  <SiFacebook className="w-8 h-8 text-white" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-1">900+ Members Facebook Group</h3>
-                  <p className="text-lg text-gray-600">Join the community</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Stats Section */}
       <section className="py-16">
