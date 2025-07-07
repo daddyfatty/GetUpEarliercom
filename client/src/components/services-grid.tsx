@@ -116,7 +116,7 @@ export function ServicesGrid({
               } else if (showReadMore && service.title === "Certified Running Coaching") {
                 setRunningCoachingModal(true);
               } else if (showReadMore && service.title === "Accountability Coaching") {
-                setAccountabilityCoachingModal(true);
+                setLocation("/services/accountability-coaching");
               } else if (showReadMore && service.title === "Private Yoga") {
                 setPrivateYogaModal(true);
               } else if (showReadMore && service.title === "Small Group Yoga") {
@@ -209,7 +209,7 @@ export function ServicesGrid({
                     className="text-lg px-6 py-3 bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setAccountabilityCoachingModal(true);
+                      setLocation("/services/accountability-coaching");
                     }}
                   >
                     Read More →

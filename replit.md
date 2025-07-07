@@ -89,6 +89,11 @@ The database schema includes:
 
 ```
 Changelog:
+- July 7, 2025: Created dedicated Accountability Coaching page with comprehensive content on goal tracking, daily check-ins, and habit formation
+- July 7, 2025: Updated text colors on Personal Strength Training page to white/light colors for better contrast against dark gradient background
+- July 7, 2025: Created dedicated Virtual Nutrition Coaching page with virtual session details, meal planning support, and personalized nutrition guidance
+- July 7, 2025: Built dedicated Personal Strength Training page converting from modal to full page with routing, philosophy section, and call-to-action
+- July 7, 2025: Converted services from modal presentations to dedicated pages for better UX and SEO
 - July 6, 2025: Hidden blog edit functionality in production - edit buttons and routes only available in development mode for security
 - July 5, 2025: Created gallery section with 3 images formatted as perfectly cropped squares with lightbox functionality and hover effects
 - July 5, 2025: Added lightbox functionality to blog featured images - images now display smaller (max-width 448px) with click-to-expand functionality and smooth hover effects
