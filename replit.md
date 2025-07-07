@@ -89,6 +89,8 @@ The database schema includes:
 
 ```
 Changelog:
+- July 7, 2025: Moved credentials band below both profile sections and removed blue background for transparent appearance
+- July 7, 2025: Removed "My Story" titles from both Michael and Erica profile sections to streamline content presentation
 - July 7, 2025: Added dedicated Erica Baker section to About page with custom green (#E1ECE7) gradient background and comprehensive bio content
 - July 7, 2025: Added "What Makes It Special" benefits section to Private Yoga page with 4 detailed benefit cards
 - July 7, 2025: Removed philosophy section titles from all service pages (Running, Training, Nutrition, Accountability, Small Group Yoga) to streamline content presentation

@@ -85,10 +85,7 @@ export default function About() {
                 {/* Right Side - Story */}
                 <div className="lg:col-span-3 p-8 lg:p-12">
                   <div className="max-w-none">
-                    <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 relative">
-                      My Story
-                      <div className="absolute -bottom-2 left-0 w-16 h-1 bg-blue-600 rounded-full"></div>
-                    </h3>
+
                     
                     <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-6">
                       <p className="text-lg leading-relaxed">
@@ -157,10 +154,7 @@ export default function About() {
                 {/* Right Side - Story */}
                 <div className="lg:col-span-3 p-8 lg:p-12">
                   <div className="max-w-none">
-                    <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 relative">
-                      My Story
-                      <div className="absolute -bottom-2 left-0 w-16 h-1 bg-green-600 rounded-full"></div>
-                    </h3>
+
                     
                     <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-6">
                       <p className="text-lg leading-relaxed">
