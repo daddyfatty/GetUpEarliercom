@@ -124,4 +124,5 @@ Changelog:
 
 ```
 Preferred communication style: Simple, everyday language.
+Content creation: Use only user's authentic words - never write additional content unless specifically asked.
 ```
