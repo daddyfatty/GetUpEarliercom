@@ -32,7 +32,8 @@ export const servicesData: Service[] = [
     description: "Providing education on clean eating, understanding calories, healthy digital shopping, and creating personalized sustainable meal plans.",
     color: "green",
     image: "/assets/download - 2025-06-20T170333.649_1750453429860.png",
-    badge: "IIN"
+    badge: "IIN",
+    certificationLogo: "/assets/iin-cert-logo.png"
   },
   {
     icon: <Target className="h-8 w-8 text-red-500" />,
@@ -138,7 +139,7 @@ export function ServicesGrid({
                     <img 
                       src={service.certificationLogo} 
                       alt="Certification"
-                      className="h-16 w-auto shadow-lg rounded-md bg-white p-1"
+                      className={`${service.title === "Virtual Nutrition Coaching" ? "h-20 w-20" : "h-16 w-auto"} shadow-lg rounded-md bg-white p-1`}
                     />
                   ) : (
                     <Badge 
@@ -161,7 +162,7 @@ export function ServicesGrid({
                       <img 
                         src={service.certificationLogo} 
                         alt="Certification"
-                        className="h-16 w-auto shadow-lg rounded-md bg-white p-1"
+                        className={`${service.title === "Virtual Nutrition Coaching" ? "h-20 w-20" : "h-16 w-auto"} shadow-lg rounded-md bg-white p-1`}
                       />
                     </div>
                   ) : (
