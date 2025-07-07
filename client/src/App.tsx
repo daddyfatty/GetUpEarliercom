@@ -23,6 +23,7 @@ import CategoryPage from "@/pages/category";
 import About from "@/pages/about";
 import Services from "@/pages/services";
 import PersonalStrengthTraining from "@/pages/personal-strength-training";
+import VirtualNutritionCoaching from "@/pages/virtual-nutrition-coaching";
 import Contact from "@/pages/contact";
 import TeamMichael from "@/pages/team-michael";
 import TeamErica from "@/pages/team-erica";
@@ -72,6 +73,7 @@ function Router() {
           <Route path="/about" component={About} />
           <Route path="/services" component={Services} />
           <Route path="/services/personal-strength-training" component={PersonalStrengthTraining} />
+        <Route path="/services/virtual-nutrition-coaching" component={VirtualNutritionCoaching} />
           <Route path="/contact" component={Contact} />
           <Route path="/team/michael" component={TeamMichael} />
           <Route path="/team/erica" component={TeamErica} />

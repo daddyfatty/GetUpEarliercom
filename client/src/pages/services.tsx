@@ -232,7 +232,7 @@ export default function Services() {
                       if (pkg.title === "1-on-1 Personal Strength Training") {
                         window.location.href = "/services/personal-strength-training";
                       } else if (pkg.title === "1-on-1 Nutrition Coaching") {
-                        setNutritionCoachingModal(true);
+                        window.location.href = "/services/virtual-nutrition-coaching";
                       } else if (pkg.title === "1-on-1 Running Coaching Session") {
                         setRunningCoachingModal(true);
                       } else if (pkg.title === "1-on-1 Private Yoga with Erica") {
