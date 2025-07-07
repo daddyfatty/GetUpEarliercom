@@ -123,40 +123,67 @@ export default function About() {
         {/* CREDENTIALS BAND */}
         <CredentialsBand />
 
-        {/* TEAM SECTION */}
-        <section id="team" className="bg-white dark:bg-gray-900 py-16 -mx-4 px-4">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                Certified Professionals
-              </h2>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-12 max-w-4xl mx-auto items-center">
-              {/* Michael Baker */}
-              <div className="text-center">
-                <div className="w-64 h-64 mx-auto mb-4 overflow-hidden shadow-lg border-4 border-gray-200 rounded-lg">
-                  <img 
-                    src={michaelHeadshot} 
-                    alt="Michael Baker" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <p className="text-sm text-gray-600 mb-2">Personal Trainer, Nutrition Coach</p>
-                <h3 className="text-xl font-bold text-gray-900">Michael Baker</h3>
-              </div>
-
-              {/* Erica Baker */}
-              <div className="text-center">
-                <div className="w-64 h-64 mx-auto mb-4 overflow-hidden shadow-lg border-4 border-gray-200 rounded-lg">
+        {/* ERICA BAKER SECTION */}
+        <section id="erica" className="bg-white dark:bg-gray-900 py-16 -mx-4 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Erica Image */}
+              <div className="text-center lg:text-left">
+                <div className="w-80 h-80 mx-auto lg:mx-0 mb-6 overflow-hidden shadow-lg border-4 border-gray-200 rounded-lg">
                   <img 
                     src={ericaYogaPose} 
                     alt="Erica Baker" 
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <p className="text-sm text-gray-600 mb-2">E-RYT Yoga Teacher</p>
-                <h3 className="text-xl font-bold text-gray-900">Erica Baker</h3>
+              </div>
+
+              {/* Erica Information */}
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                    Erica Baker
+                  </h2>
+                  <p className="text-xl text-gray-600 dark:text-gray-300 mb-4">
+                    e-RYT Yoga Teacher
+                  </p>
+                  <div className="text-gray-600 dark:text-gray-300 space-y-1">
+                    <p>Yoga Alliance E-RYT 200 Yoga Instructor with over 3000 hours teaching experience in both large and small group settings.</p>
+                    <div className="flex items-center gap-4 mt-4">
+                      <div className="bg-blue-50 dark:bg-gray-800 px-4 py-2 rounded-lg">
+                        <p className="text-sm font-semibold text-blue-900 dark:text-blue-100">Experience</p>
+                        <p className="text-lg font-bold text-blue-900 dark:text-blue-100">15 Years</p>
+                      </div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">
+                        <p><strong>Text:</strong> 12033312031</p>
+                        <p><strong>Email:</strong> ejelormine@gmail.com</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4 text-gray-700 dark:text-gray-300">
+                  <p>
+                    Erica is an E-RYT 200 Yoga Instructor with over 2000 hours teaching experience in both large and small group settings. For the last decade, she has taught yoga from a place of authenticity and developed her own unique style and an ability to work well with all levels.
+                  </p>
+                  <p>
+                    As a former boutique yoga studio owner and wellness enthusiast, she brings her health and fitness knowledge and passion to others with her fun energy and physical classes. Every single one of her classes is unique, but you can always count on a consistent experience working on overall strength, mobility, flexibility, balance and stress relief.
+                  </p>
+                  <p>
+                    Erica believes Yoga is just one facet of nourishing your body to create optimal health and prevent disease. She truly enjoys helping others improve their overall health as well as making them laugh a little too. You can find her teaching small group classes in her home studio, private lessons and recorded classes of varying lengths on her YouTube channel
+                  </p>
+                </div>
+
+                <div className="bg-purple-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-purple-600">
+                  <h3 className="text-lg font-semibold text-purple-900 dark:text-purple-100 mb-3">Current Schedule:</h3>
+                  <p className="text-purple-800 dark:text-purple-200 mb-2">Take my Saturday 8am or Wednesday 9am class in my Orange, CT home studio:</p>
+                  <div className="space-y-2 text-purple-800 dark:text-purple-200">
+                    <p><strong>Saturdays:</strong> 8-9am</p>
+                    <p><strong>Wednesdays:</strong> 9-10am</p>
+                    <p><strong>Class fee:</strong> $25</p>
+                  </div>
+                  <p className="text-purple-800 dark:text-purple-200 mt-3">Contact me to join or to make private class arrangements.</p>
+                </div>
               </div>
             </div>
 
