@@ -78,21 +78,23 @@ export function HeroSection() {
           
           <div className="relative">
             {randomPost ? (
-              <Link href={`/blog/${randomPost.id}`}>
-                <div className="cursor-pointer hover:scale-105 transition-transform duration-300">
-                  <img 
-                    src={randomPost.imageUrl || '/api/placeholder/600/400'} 
-                    alt={randomPost.title}
-                    className="rounded-2xl shadow-2xl w-full h-auto object-cover"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-2xl">
-                    <p className="text-white/80 text-sm font-medium mb-2 uppercase tracking-wider">Latest Post:</p>
-                    <h3 className="text-white text-xl font-bold leading-tight">
-                      {randomPost.title}
-                    </h3>
+              <div>
+                <p className="text-white/80 text-sm font-medium mb-4 uppercase tracking-wider">Latest Post:</p>
+                <Link href={`/blog/${randomPost.id}`}>
+                  <div className="cursor-pointer hover:scale-105 transition-transform duration-300">
+                    <img 
+                      src={randomPost.imageUrl || '/api/placeholder/600/400'} 
+                      alt={randomPost.title}
+                      className="rounded-2xl shadow-2xl w-full h-auto object-cover"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-2xl">
+                      <h3 className="text-white text-xl font-bold leading-tight">
+                        {randomPost.title}
+                      </h3>
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             ) : (
               <div className="rounded-2xl shadow-2xl w-full h-64 bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
                 <div className="text-center">
