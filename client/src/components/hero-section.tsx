@@ -86,6 +86,7 @@ export function HeroSection() {
                     className="rounded-2xl shadow-2xl w-full h-auto object-cover"
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-2xl">
+                    <p className="text-white/70 text-sm font-medium mb-2">Latest Post:</p>
                     <h3 className="text-white text-xl font-bold leading-tight">
                       {randomPost.title}
                     </h3>
