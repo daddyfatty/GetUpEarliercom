@@ -13,35 +13,35 @@ export default function PersonalStrengthTraining() {
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-4xl mx-auto text-center">
             <Link href="/services">
-              <Button variant="outline" className="mb-6">
+              <Button variant="outline" className="mb-6 bg-white/10 text-white border-white/20 hover:bg-white/20">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Services
               </Button>
             </Link>
             
-            <div className="inline-block bg-purple-800/10 text-purple-800 px-3 py-1 rounded-full text-sm font-medium mb-4">
+            <div className="inline-block bg-purple-300/20 text-purple-100 px-3 py-1 rounded-full text-sm font-medium mb-4">
               1-on-1 Personal Training
             </div>
             
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
               Personal Strength<br className="hidden sm:block" />
-              <span className="text-purple-800">Training</span>
+              <span className="text-purple-300">Training</span>
             </h1>
             
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8">
               Comprehensive strength training tailored to your fitness level and goals
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-              <div className="inline-flex items-center gap-2 bg-purple-800/10 text-purple-800 px-4 py-2 rounded-full text-sm font-medium">
+              <div className="inline-flex items-center gap-2 bg-purple-300/20 text-purple-100 px-4 py-2 rounded-full text-sm font-medium">
                 <MapPin className="h-4 w-4" />
                 Orange, CT or Virtual
               </div>
-              <div className="inline-flex items-center gap-2 bg-amber-500/10 text-amber-700 px-4 py-2 rounded-full text-sm font-medium">
+              <div className="inline-flex items-center gap-2 bg-amber-300/20 text-amber-100 px-4 py-2 rounded-full text-sm font-medium">
                 <Clock className="h-4 w-4" />
                 30-minute sessions
               </div>
-              <div className="inline-flex items-center gap-2 bg-green-500/10 text-green-700 px-4 py-2 rounded-full text-sm font-medium">
+              <div className="inline-flex items-center gap-2 bg-green-300/20 text-green-100 px-4 py-2 rounded-full text-sm font-medium">
                 <User className="h-4 w-4" />
                 100% Customized
               </div>
