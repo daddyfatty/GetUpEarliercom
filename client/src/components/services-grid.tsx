@@ -114,7 +114,7 @@ export function ServicesGrid({
               } else if (showReadMore && service.title === "Virtual Nutrition Coaching") {
                 setLocation("/services/virtual-nutrition-coaching");
               } else if (showReadMore && service.title === "Certified Running Coaching") {
-                setRunningCoachingModal(true);
+                setLocation("/services/certified-running-coaching");
               } else if (showReadMore && service.title === "Accountability Coaching") {
                 setLocation("/services/accountability-coaching");
               } else if (showReadMore && service.title === "Private Yoga") {
@@ -195,7 +195,7 @@ export function ServicesGrid({
                     className="text-lg px-6 py-3 bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setRunningCoachingModal(true);
+                      setLocation("/services/certified-running-coaching");
                     }}
                   >
                     Read More →

@@ -234,7 +234,7 @@ export default function Services() {
                       } else if (pkg.title === "1-on-1 Nutrition Coaching") {
                         window.location.href = "/services/virtual-nutrition-coaching";
                       } else if (pkg.title === "1-on-1 Running Coaching Session") {
-                        setRunningCoachingModal(true);
+                        window.location.href = "/services/certified-running-coaching";
                       } else if (pkg.title === "1-on-1 Private Yoga with Erica") {
                         setPrivateYogaModal(true);
                       } else if (pkg.title === "Small Group Yoga with Erica") {
