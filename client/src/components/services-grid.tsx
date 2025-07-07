@@ -56,7 +56,7 @@ export const servicesData: Service[] = [
   {
     icon: <Dumbbell className="h-8 w-8 text-blue-500" />,
     title: "Private Yoga",
-    description: "Immerse yourself in a personalized yoga experience.",
+    description: "Experience the journey of self-discovery, mindfulness, and inner peace in our dedicated yoga studio.",
     color: "blue",
     image: "/assets/download - 2025-06-20T170516.226_1750453530152.png",
     badge: "PRIVATE YOGA",
@@ -584,7 +584,13 @@ export function ServicesGrid({
           <div className="space-y-6">
             <div className="space-y-4">
               <p className="text-gray-700 leading-relaxed">
-                Immerse yourself in a personalized yoga experience in our pristine, dedicated yoga space designed for tranquility and focus. Tailored sessions accommodate all skill levels, providing a serene environment ideal for one-on-one practice. Whether you are beginning your yoga journey or deepening your practice, our studio offers the perfect setting, customized to fit your schedule. Experience the balance and peace of mind that comes with a dedicated space and personalized attention.
+                Yoga is more than just physical movement—it's a journey of self-discovery, mindfulness, and inner peace. In our dedicated yoga studio, I create a sacred space where you can disconnect from the outside world and reconnect with your true self through personalized practice.
+              </p>
+              <p className="text-gray-700 leading-relaxed">
+                Whether you're a complete beginner taking your first steps into yoga or an experienced practitioner looking to deepen your practice, I tailor each session to meet you exactly where you are. My approach emphasizes proper alignment, breath awareness, and mindful movement while honoring your body's unique needs and limitations.
+              </p>
+              <p className="text-gray-700 leading-relaxed">
+                In our tranquil studio environment, free from distractions and external pressures, you'll have the space to explore poses at your own pace, ask questions freely, and develop a sustainable practice that serves your physical, mental, and emotional well-being.
               </p>
             </div>
 

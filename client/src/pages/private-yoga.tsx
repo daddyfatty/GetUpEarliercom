@@ -25,7 +25,7 @@ export default function PrivateYoga() {
             </h1>
             
             <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8">
-              Immerse yourself in a personalized yoga experience in our pristine, dedicated yoga space designed for tranquility and focus
+              Experience the journey of self-discovery, mindfulness, and inner peace in our dedicated yoga studio
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
