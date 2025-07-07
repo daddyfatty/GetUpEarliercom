@@ -120,9 +120,6 @@ export default function About() {
           </Card>
         </section>
 
-        {/* CREDENTIALS BAND */}
-        <CredentialsBand />
-
         {/* ERICA SECTION */}
         <section id="erica" className="max-w-7xl mx-auto mb-16">
           <Card className="bg-gradient-to-br from-green-50 via-white to-green-50 dark:from-gray-800 dark:to-gray-900 border-0 shadow-2xl overflow-hidden">
@@ -190,6 +187,9 @@ export default function About() {
             </CardContent>
           </Card>
         </section>
+
+        {/* CREDENTIALS BAND */}
+        <CredentialsBand />
 
         {/* TEAM SECTION */}
         <section id="team" className="bg-white dark:bg-gray-900 py-16 -mx-4 px-4">
