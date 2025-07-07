@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 7, 2025: Added ISSA Running Coach certification logo to Certified Running Coaching service card
 - July 7, 2025: Added IIN certification logo to Accountability Coaching service card, replacing text badge with professional certification imagery
 - July 7, 2025: Added permanent class schedule to Small Group Yoga page with specific times (Saturdays 8-9am, Wednesdays 9-10am) and $25 class fee
 - July 7, 2025: Created dedicated Accountability Coaching page with comprehensive content on goal tracking, daily check-ins, and habit formation

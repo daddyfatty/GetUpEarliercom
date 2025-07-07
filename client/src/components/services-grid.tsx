@@ -50,7 +50,8 @@ export const servicesData: Service[] = [
     description: "I work alongside beginner runners to help them break through their own limits. Learn how to progress from never running to completing a 5K, a 5-miler, a half marathon, or even a full marathon, with support for nutrition and recovery included.",
     color: "purple",
     image: "/assets/download - 2025-06-20T170430.001_1750453483739.png",
-    badge: "RUNNING"
+    badge: "RUNNING",
+    certificationLogo: "/assets/running-coach-cert-logo.png"
   },
   {
     icon: <Dumbbell className="h-8 w-8 text-blue-500" />,
