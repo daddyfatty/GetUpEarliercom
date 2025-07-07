@@ -29,8 +29,6 @@ export default function About() {
     setExpandedSection(expandedSection === section ? null : section);
   };
 
-
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="container mx-auto px-4 py-12">
@@ -48,241 +46,207 @@ export default function About() {
           </p>
         </div>
 
-        {/* ABOUT SECTION */}
-        <section id="about" className="max-w-7xl mx-auto mb-16">
-          <Card className="bg-gradient-to-br from-blue-50 via-white to-blue-50 dark:from-gray-800 dark:to-gray-900 border-0 shadow-2xl overflow-hidden">
-            <CardContent className="p-0">
-              <div className="grid lg:grid-cols-5 gap-0">
-                {/* Left Side - Photo and Basic Info */}
-                <div className="lg:col-span-2 bg-gradient-to-br from-blue-600 to-blue-800 dark:from-blue-900 dark:to-gray-900 p-8 lg:p-12 text-white flex flex-col justify-center items-center text-center">
-                  <div className="w-48 h-48 rounded-full overflow-hidden mb-8 border-8 border-white/20 shadow-2xl">
-                    <img 
-                      src={headshotPath} 
-                      alt="Michael Baker" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  
-                  <h2 className="text-4xl font-bold mb-4 text-white">
+        {/* Michael Baker Section */}
+        <section className="mb-16">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="order-2 md:order-1">
+                <div className="mb-6">
+                  <Badge className="mb-2">Founder & Head Coach</Badge>
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
                     Michael Baker
                   </h2>
-                  
-                  <div className="space-y-2 mb-6">
-                    <p className="text-blue-100 text-lg font-medium">Certified Personal Trainer</p>
-                    <p className="text-blue-100 text-lg font-medium">Integrative Nutrition Health Coach</p>
-                    <p className="text-blue-100 text-lg font-medium">Running Coach & Yoga Teacher</p>
-                    <p className="text-blue-100 text-lg font-medium">25 Year Digital Professional</p>
-                    <p className="text-blue-100 text-lg font-medium">Lifelong Fitness Practitioner</p>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    I'm driven by the belief that everyone deserves to feel strong and confident in their own skin. 
+                    My journey began with my own transformation - from being out of shape to becoming a certified 
+                    personal trainer and nutrition coach. I've dedicated my career to helping people unlock their 
+                    potential through personalized training and nutrition guidance.
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    With multiple certifications and years of experience, I specialize in creating sustainable 
+                    programs that fit your lifestyle. Whether you're just starting your fitness journey or 
+                    looking to break through plateaus, I'm here to provide the support and expertise you need.
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <Badge variant="outline">ISSA Certified Personal Trainer</Badge>
+                    <Badge variant="outline">ISSA Certified Running Coach</Badge>
+                    <Badge variant="outline">IIN Certified Nutrition Coach</Badge>
                   </div>
-                  
-                  <Link href="/contact">
-                    <Button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white border-white/30 px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105">
-                      Let's Work Together →
-                    </Button>
-                  </Link>
-                </div>
-
-                {/* Right Side - Story */}
-                <div className="lg:col-span-3 p-8 lg:p-12">
-                  <div className="max-w-none">
-                    <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 relative">
-                      My Story
-                      <div className="absolute -bottom-2 left-0 w-16 h-1 bg-blue-600 rounded-full"></div>
-                    </h3>
-                    
-                    <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-6">
-                      <p className="text-lg leading-relaxed">
-                        Hello, I'm Michael Baker. I am a 50-year-old strength trainer, certified personal trainer, running coach, 
-                        health coach, and yoga teacher. I'm also a former yoga studio owner and a dedicated health and wellness 
-                        practitioner with over 30 years of experience. I began <span className="font-semibold text-blue-600">Get Up Earlier</span> (GetUpEarlier.com) because getting 
-                        up earlier was step one in transforming my routine and overall well-being, especially after spending years 
-                        sitting at a computer as a <a href="https://WebMBD.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">digital professional</a>.
-                      </p>
-                      
-                      <div className="bg-blue-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-blue-600">
-                        <p className="text-lg leading-relaxed mb-0">
-                          My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus 
-                          on helping people rely on intuition, providing a personal experience, and introducing them to strength training, 
-                          alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts.
-                        </p>
-                      </div>
-                      
-                      <p className="text-lg leading-relaxed">
-                        While my own marathon training or strength achievements might seem extreme, I'm not trying to turn anyone into a 
-                        bodybuilder or marathon runner. I'm simply showing that, especially beyond 40, 50, 60, and 70 years old, 
-                        these things are possible. <span className="font-semibold text-blue-600">It's about inspiration and helping people make realistic, sustainable changes.</span>
-                      </p>
-                    </div>
+                  <div className="flex flex-wrap gap-2">
+                    <img src={personalTrainerBadge} alt="ISSA Personal Trainer" className="h-4" />
+                    <img src={runningCoachBadge} alt="ISSA Running Coach" className="h-4" />
+                    <img src={nutritionBadge} alt="IIN Nutrition Coach" className="h-5 w-5" />
                   </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        </section>
-
-        {/* CREDENTIALS BAND */}
-        <CredentialsBand />
-
-        {/* ERICA BAKER SECTION */}
-        <section id="erica" className="bg-white dark:bg-gray-900 py-16 -mx-4 px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Erica Image */}
-              <div className="text-center lg:text-left">
-                <div className="w-80 h-80 mx-auto lg:mx-0 mb-6 overflow-hidden shadow-lg border-4 border-gray-200 rounded-lg">
+              <div className="order-1 md:order-2">
+                <div className="relative">
                   <img 
-                    src={ericaYogaPose} 
-                    alt="Erica Baker" 
-                    className="w-full h-full object-cover"
+                    src={headshotPath} 
+                    alt="Michael Baker - Certified Personal Trainer" 
+                    className="w-full max-w-md mx-auto rounded-lg shadow-lg"
                   />
-                </div>
-              </div>
-
-              {/* Erica Information */}
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                    Erica Baker
-                  </h2>
-                  <p className="text-xl text-gray-600 dark:text-gray-300 mb-4">
-                    e-RYT Yoga Teacher
-                  </p>
-                  <div className="text-gray-600 dark:text-gray-300 space-y-1">
-                    <p>Yoga Alliance E-RYT 200 Yoga Instructor with over 3000 hours teaching experience in both large and small group settings.</p>
-                    <div className="flex items-center gap-4 mt-4">
-                      <div className="bg-blue-50 dark:bg-gray-800 px-4 py-2 rounded-lg">
-                        <p className="text-sm font-semibold text-blue-900 dark:text-blue-100">Experience</p>
-                        <p className="text-lg font-bold text-blue-900 dark:text-blue-100">15 Years</p>
-                      </div>
-                      <div className="text-sm text-gray-600 dark:text-gray-300">
-                        <p><strong>Text:</strong> 12033312031</p>
-                        <p><strong>Email:</strong> ejelormine@gmail.com</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-4 text-gray-700 dark:text-gray-300">
-                  <p>
-                    Erica is an E-RYT 200 Yoga Instructor with over 2000 hours teaching experience in both large and small group settings. For the last decade, she has taught yoga from a place of authenticity and developed her own unique style and an ability to work well with all levels.
-                  </p>
-                  <p>
-                    As a former boutique yoga studio owner and wellness enthusiast, she brings her health and fitness knowledge and passion to others with her fun energy and physical classes. Every single one of her classes is unique, but you can always count on a consistent experience working on overall strength, mobility, flexibility, balance and stress relief.
-                  </p>
-                  <p>
-                    Erica believes Yoga is just one facet of nourishing your body to create optimal health and prevent disease. She truly enjoys helping others improve their overall health as well as making them laugh a little too. You can find her teaching small group classes in her home studio, private lessons and recorded classes of varying lengths on her YouTube channel
-                  </p>
-                </div>
-
-                <div className="bg-purple-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-purple-600">
-                  <h3 className="text-lg font-semibold text-purple-900 dark:text-purple-100 mb-3">Current Schedule:</h3>
-                  <p className="text-purple-800 dark:text-purple-200 mb-2">Take my Saturday 8am or Wednesday 9am class in my Orange, CT home studio:</p>
-                  <div className="space-y-2 text-purple-800 dark:text-purple-200">
-                    <p><strong>Saturdays:</strong> 8-9am</p>
-                    <p><strong>Wednesdays:</strong> 9-10am</p>
-                    <p><strong>Class fee:</strong> $25</p>
-                  </div>
-                  <p className="text-purple-800 dark:text-purple-200 mt-3">Contact me to join or to make private class arrangements.</p>
                 </div>
               </div>
             </div>
+          </div>
+        </section>
 
-            {/* In-Home Private Boutique Section */}
-            <div className="mt-20 max-w-6xl mx-auto">
-              <div className="text-left mb-8">
-                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                  In-Home Private Boutique
-                </h3>
-                <p className="text-xl text-gray-600 dark:text-gray-300">
-                  Fitness Space Orange, CT
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6 mb-8">
-                <div className="rounded-lg overflow-hidden shadow-lg">
+        {/* Erica Baker Section */}
+        <section className="mb-16">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="order-1">
+                <div className="relative">
                   <img 
-                    src={gymSpace} 
-                    alt="Private Strength Training Studio" 
-                    className="w-full h-64 object-cover"
-                  />
-                </div>
-                <div className="rounded-lg overflow-hidden shadow-lg">
-                  <img 
-                    src={yogaSpace} 
-                    alt="Dedicated Pristine Yoga Space" 
-                    className="w-full h-64 object-cover"
+                    src={ericaPath} 
+                    alt="Erica Baker - Certified Yoga Instructor" 
+                    className="w-full max-w-md mx-auto rounded-lg shadow-lg"
                   />
                 </div>
               </div>
-
-              {/* Expandable Sections */}
-              <div className="space-y-4">
-                <div className="border border-gray-200 rounded-lg">
-                  <button
-                    onClick={() => toggleSection('private-studio')}
-                    className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
-                  >
-                    <span className="font-semibold text-gray-900">01. Private Strength Training Studio</span>
-                    {expandedSection === 'private-studio' ? 
-                      <ChevronUp className="h-5 w-5 text-gray-500" /> : 
-                      <ChevronDown className="h-5 w-5 text-gray-500" />
-                    }
-                  </button>
-                  {expandedSection === 'private-studio' && (
-                    <div className="px-6 pb-4">
-                      <p className="text-gray-600">
-                        Experience personalized training in a distraction-free private gym equipped with the 
-                        essentials. Our studio includes a power rack, pulley systems, free weights, and a Rogue 
-                        Echo bike, perfect for 1-on-1 sessions tailored to your fitness goals. Ideal for those seeking 
-                        focused and effective strength training in a professional setting.
-                      </p>
+              <div className="order-2">
+                <div className="mb-6">
+                  <div className="text-center">
+                    <div className="bg-[#F0886A] text-black px-4 py-2 font-bold text-lg rounded-t-lg">
+                      ERICA LEE BAKER YOGA
                     </div>
-                  )}
-                </div>
-
-                <div className="border border-gray-200 rounded-lg">
-                  <button
-                    onClick={() => toggleSection('yoga-space')}
-                    className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
-                  >
-                    <span className="font-semibold text-gray-900">02. Dedicated Pristine Yoga Space</span>
-                    {expandedSection === 'yoga-space' ? 
-                      <ChevronUp className="h-5 w-5 text-gray-500" /> : 
-                      <ChevronDown className="h-5 w-5 text-gray-500" />
-                    }
-                  </button>
-                  {expandedSection === 'yoga-space' && (
-                    <div className="px-6 pb-4">
-                      <p className="text-gray-600">
-                        Immerse yourself in a peaceful, dedicated yoga space designed for mindful practice. 
-                        Our pristine studio provides the perfect environment for private or small group yoga sessions, 
-                        featuring natural lighting and a calming atmosphere that promotes relaxation and focus.
-                      </p>
+                    <div className="bg-[#A8E6B2] p-6 rounded-b-lg">
+                      <div className="mb-4">
+                        <p className="text-gray-800 mb-4">
+                          Erica brings over 15 years of experience helping people discover their inner strength and flexibility. 
+                          Her gentle approach creates a safe space for practitioners of all levels to explore movement, 
+                          mindfulness, and personal growth.
+                        </p>
+                        <p className="text-gray-800 mb-4">
+                          With extensive training in various yoga styles, Erica specializes in creating personalized 
+                          sequences that honor your body's unique needs and limitations. Her classes blend physical 
+                          practice with meditation and breathwork for a truly transformative experience.
+                        </p>
+                        <div className="flex justify-center mb-4">
+                          <span className="bg-[#F0886A] text-black px-4 py-2 rounded-full text-sm font-bold">
+                            15+ Years Experience
+                          </span>
+                        </div>
+                        <div className="flex justify-center mb-4">
+                          <img src={rytMikeBadge} alt="RYT-200" className="h-5 w-5 mr-2" />
+                          <img src={eryBadge} alt="Advanced Certification" className="h-5 w-5 mr-2" />
+                          <img src={yaerBadge} alt="Yoga Alliance" className="h-5 w-5" />
+                        </div>
+                      </div>
+                      <div className="bg-white p-4 rounded-lg">
+                        <h3 className="font-bold mb-2">Class Schedule</h3>
+                        <div className="text-sm text-gray-600">
+                          <p>Small Group Yoga:</p>
+                          <p>• Saturdays 8:00-9:00 AM</p>
+                          <p>• Wednesdays 9:00-10:00 AM</p>
+                          <p>• $25 per class</p>
+                        </div>
+                      </div>
                     </div>
-                  )}
+                  </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-                <div className="border border-gray-200 rounded-lg">
-                  <button
-                    onClick={() => toggleSection('instructors')}
-                    className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
-                  >
-                    <span className="font-semibold text-gray-900">03. Certified, Seasoned Instructors</span>
-                    {expandedSection === 'instructors' ? 
-                      <ChevronUp className="h-5 w-5 text-gray-500" /> : 
-                      <ChevronDown className="h-5 w-5 text-gray-500" />
-                    }
-                  </button>
-                  {expandedSection === 'instructors' && (
-                    <div className="px-6 pb-4">
-                      <p className="text-gray-600">
-                        Work with certified professionals who bring decades of experience in personal training, 
-                        nutrition coaching, and yoga instruction. Our team is dedicated to helping you achieve 
-                        your health and fitness goals through personalized guidance and expert knowledge.
-                      </p>
-                    </div>
-                  )}
-                </div>
+        {/* In-Home Private Boutique Section */}
+        <section className="bg-gray-50 dark:bg-gray-800 py-16 -mx-4 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-left mb-8">
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                In-Home Private Boutique
+              </h3>
+              <p className="text-xl text-gray-600 dark:text-gray-300">
+                Fitness Space Orange, CT
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <div className="rounded-lg overflow-hidden shadow-lg">
+                <img 
+                  src={gymSpace} 
+                  alt="Private Strength Training Studio" 
+                  className="w-full h-64 object-cover"
+                />
+              </div>
+              <div className="rounded-lg overflow-hidden shadow-lg">
+                <img 
+                  src={yogaSpace} 
+                  alt="Dedicated Pristine Yoga Space" 
+                  className="w-full h-64 object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Expandable Sections */}
+            <div className="space-y-4">
+              <div className="border border-gray-200 rounded-lg">
+                <button
+                  onClick={() => toggleSection('private-studio')}
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                >
+                  <span className="font-semibold text-gray-900">01. Private Strength Training Studio</span>
+                  {expandedSection === 'private-studio' ? 
+                    <ChevronUp className="h-5 w-5 text-gray-500" /> : 
+                    <ChevronDown className="h-5 w-5 text-gray-500" />
+                  }
+                </button>
+                {expandedSection === 'private-studio' && (
+                  <div className="px-6 pb-4">
+                    <p className="text-gray-600">
+                      Experience personalized training in a distraction-free private gym equipped with the 
+                      essentials. Our studio includes a power rack, pulley systems, free weights, and a Rogue 
+                      Echo bike, perfect for 1-on-1 sessions tailored to your fitness goals. Ideal for those seeking 
+                      focused and effective strength training in a professional setting.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <div className="border border-gray-200 rounded-lg">
+                <button
+                  onClick={() => toggleSection('yoga-space')}
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                >
+                  <span className="font-semibold text-gray-900">02. Dedicated Pristine Yoga Space</span>
+                  {expandedSection === 'yoga-space' ? 
+                    <ChevronUp className="h-5 w-5 text-gray-500" /> : 
+                    <ChevronDown className="h-5 w-5 text-gray-500" />
+                  }
+                </button>
+                {expandedSection === 'yoga-space' && (
+                  <div className="px-6 pb-4">
+                    <p className="text-gray-600">
+                      Immerse yourself in a peaceful, dedicated yoga space designed for mindful practice. 
+                      Our pristine studio provides the perfect environment for private or small group yoga sessions, 
+                      featuring natural lighting and a calming atmosphere that promotes relaxation and focus.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <div className="border border-gray-200 rounded-lg">
+                <button
+                  onClick={() => toggleSection('instructors')}
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                >
+                  <span className="font-semibold text-gray-900">03. Certified, Seasoned Instructors</span>
+                  {expandedSection === 'instructors' ? 
+                    <ChevronUp className="h-5 w-5 text-gray-500" /> : 
+                    <ChevronDown className="h-5 w-5 text-gray-500" />
+                  }
+                </button>
+                {expandedSection === 'instructors' && (
+                  <div className="px-6 pb-4">
+                    <p className="text-gray-600">
+                      Work with certified professionals who bring decades of experience in personal training, 
+                      nutrition coaching, and yoga instruction. Our team is dedicated to helping you achieve 
+                      your health and fitness goals through personalized guidance and expert knowledge.
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -291,18 +255,16 @@ export default function About() {
         {/* COACHING SECTION */}
         <section id="coaching" className="bg-white dark:bg-gray-900 py-16 -mx-4 px-4 mt-16">
           <div className="max-w-7xl mx-auto">
-            <ServicesGrid 
-              showImages={true} 
-              showReadMore={true} 
-            />
-
-            <div className="text-center mt-12">
-              <Link href="/services#services-pricing">
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
-                  Services Pricing
-                </Button>
-              </Link>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                Our Coaching Services
+              </h2>
+              <p className="text-xl text-gray-600 dark:text-gray-300">
+                Personalized programs designed for your unique goals and lifestyle
+              </p>
             </div>
+            
+            <ServicesGrid />
           </div>
         </section>
       </div>
