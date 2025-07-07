@@ -3,10 +3,23 @@ import { Button } from "@/components/ui/button";
 import { Trophy, Users, Dumbbell, ChefHat } from "lucide-react";
 import { SiFacebook } from "react-icons/si";
 import { HeroGradient } from "@/components/hero-gradient";
-
-import _20250517_073713_00_00_08_03_Still003 from "@assets/20250517_073713.00_00_08_03.Still003.jpg";
+import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
+import type { BlogPost } from "@shared/schema";
 
 export function HeroSection() {
+  const [randomPost, setRandomPost] = useState<BlogPost | null>(null);
+  
+  const { data: blogPosts } = useQuery<BlogPost[]>({
+    queryKey: ['/api/blog'],
+  });
+
+  useEffect(() => {
+    if (blogPosts && blogPosts.length > 0) {
+      const randomIndex = Math.floor(Math.random() * blogPosts.length);
+      setRandomPost(blogPosts[randomIndex]);
+    }
+  }, [blogPosts]);
   return (
     <HeroGradient className="text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -64,13 +77,29 @@ export function HeroSection() {
           </div>
           
           <div className="relative">
-            <img 
-              src={_20250517_073713_00_00_08_03_Still003} 
-              alt="People exercising outdoors" 
-              className="rounded-2xl shadow-2xl w-full h-auto"
-            />
-            
-
+            {randomPost ? (
+              <Link href={`/blog/${randomPost.id}`}>
+                <div className="cursor-pointer hover:scale-105 transition-transform duration-300">
+                  <img 
+                    src={randomPost.featuredImage || '/api/placeholder/600/400'} 
+                    alt={randomPost.title}
+                    className="rounded-2xl shadow-2xl w-full h-auto object-cover"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-2xl">
+                    <h3 className="text-white text-xl font-bold leading-tight">
+                      {randomPost.title}
+                    </h3>
+                  </div>
+                </div>
+              </Link>
+            ) : (
+              <div className="rounded-2xl shadow-2xl w-full h-64 bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-2"></div>
+                  <p className="text-white/70">Loading blog post...</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
