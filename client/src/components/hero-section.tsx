@@ -79,7 +79,7 @@ export function HeroSection() {
           <div className="relative">
             {randomPost ? (
               <div>
-                <p className="text-white/80 text-sm font-medium mb-4 uppercase tracking-wider">Latest Post:</p>
+                <p className="text-white/80 text-sm font-medium mb-4 uppercase tracking-wider">Random Post:</p>
                 <Link href={`/blog/${randomPost.id}`}>
                   <div className="cursor-pointer hover:scale-105 transition-transform duration-300 relative">
                     <div className="w-full h-80 overflow-hidden rounded-2xl shadow-2xl">

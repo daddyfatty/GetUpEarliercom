@@ -89,7 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
-- July 7, 2025: Replaced static hero image with dynamic random blog post featured image and title that changes on each page load - creates fresh content experience
+- July 7, 2025: Replaced static hero image with dynamic random blog post system featuring "Random Post:" label, consistent image sizing, and title overlay that changes on each page load - creates fresh content experience
 - July 7, 2025: Moved Facebook Group section to appear directly below the hero buttons (View Services, View Recipes, View Workouts) in the hero section for better visibility and user engagement
 - July 7, 2025: Created reusable Permanent Class Schedule component for Erica's yoga classes (Saturdays 8-9am, Wednesdays 9-10am, $25 fee) - implemented across About page, Team Erica page, and Small Group Yoga page
 - July 7, 2025: Updated Michael's profile section to use navy color from header/nav for consistent branding
