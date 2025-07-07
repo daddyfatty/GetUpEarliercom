@@ -13,21 +13,29 @@ import type { Recipe, Workout, BlogPost } from "@shared/schema";
 import gymImagePath from "@assets/download - 2025-06-20T164725.183_1750452478509.png";
 import { useEffect, useState } from "react";
 
-function LatestBlogCard() {
+function RandomBlogCard() {
   const { data: blogPosts = [] } = useQuery<BlogPost[]>({
     queryKey: ["/api/blog"],
   });
 
-  const latestPost = blogPosts[0];
+  // Select a random blog post on each render
+  const [randomPost, setRandomPost] = useState<BlogPost | null>(null);
+
+  useEffect(() => {
+    if (blogPosts.length > 0) {
+      const randomIndex = Math.floor(Math.random() * blogPosts.length);
+      setRandomPost(blogPosts[randomIndex]);
+    }
+  }, [blogPosts]);
 
   return (
-    <Link href={latestPost ? `/blog/${latestPost.id}` : "/blog"} className="block h-full">
+    <Link href={randomPost ? `/blog/${randomPost.id}` : "/blog"} className="block h-full">
       <div className="bg-white border-2 border-green-200 p-6 rounded-2xl shadow-lg h-full flex flex-col hover:shadow-xl hover:border-green-300 transition-all duration-200 cursor-pointer">
         <div className="mb-4">
           <div className="inline-block bg-green-600/10 text-green-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
-            Latest Blog
+            Random Blog Post
           </div>
-          <h2 className="text-2xl font-bold text-green-600 mb-2">Latest Blog</h2>
+          <h2 className="text-2xl font-bold text-green-600 mb-2">Featured Blog</h2>
           <p className="text-gray-600 mb-2 text-[14px]">Health, fitness, and nutrition insights</p>
           <div className="bg-green-100 text-green-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
             <BookOpen className="inline w-4 h-4 mr-1" />
@@ -36,26 +44,23 @@ function LatestBlogCard() {
         </div>
         
         <div className="flex-1 flex flex-col">
-          {latestPost ? (
+          {randomPost ? (
             <div className="mb-4">
-              {latestPost.imageUrl && (
+              {randomPost.imageUrl && (
                 <img 
-                  src={latestPost.imageUrl}
-                  alt={latestPost.title}
+                  src={randomPost.imageUrl}
+                  alt={randomPost.title}
                   className="w-full h-48 object-cover rounded-lg mb-4 border border-green-200"
                 />
               )}
               <h3 className="font-bold text-gray-900 mb-2 text-lg leading-tight">
-                {latestPost.title}
+                {randomPost.title}
               </h3>
-              <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
-                {latestPost.excerpt}
-              </p>
             </div>
           ) : (
             <div className="mb-4 text-center text-gray-500">
               <BookOpen className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-              <p>Loading latest blog post...</p>
+              <p>Loading blog post...</p>
             </div>
           )}
         </div>
@@ -155,7 +160,7 @@ export default function Home() {
 
             {/* Column 2: Latest Blog */}
             <div className="text-center flex flex-col h-full">
-              <LatestBlogCard />
+              <RandomBlogCard />
             </div>
 
           </div>
