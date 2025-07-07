@@ -41,7 +41,8 @@ export const servicesData: Service[] = [
     description: "Identify unhealthy habits and break free with small changes, learning to be mindful in real life without relying on a facility, AI, or an app. 1-on-1 live.",
     color: "red",
     image: "/assets/678aad8cfd0dcde677a14418_hike2-p-800_1750453452584.jpg",
-    badge: "ACCOUNTABILITY"
+    badge: "ACCOUNTABILITY",
+    certificationLogo: "/assets/iin-cert-logo.png"
   },
   {
     icon: <Users className="h-8 w-8 text-purple-500" />,
@@ -139,7 +140,7 @@ export function ServicesGrid({
                     <img 
                       src={service.certificationLogo} 
                       alt="Certification"
-                      className={`${service.title === "Virtual Nutrition Coaching" ? "h-20 w-20" : "h-16 w-auto"} shadow-lg rounded-md bg-white p-1`}
+                      className={`${service.title === "Virtual Nutrition Coaching" || service.title === "Accountability Coaching" ? "h-20 w-20" : "h-16 w-auto"} shadow-lg rounded-md bg-white p-1`}
                     />
                   ) : (
                     <Badge 
@@ -162,7 +163,7 @@ export function ServicesGrid({
                       <img 
                         src={service.certificationLogo} 
                         alt="Certification"
-                        className={`${service.title === "Virtual Nutrition Coaching" ? "h-20 w-20" : "h-16 w-auto"} shadow-lg rounded-md bg-white p-1`}
+                        className={`${service.title === "Virtual Nutrition Coaching" || service.title === "Accountability Coaching" ? "h-20 w-20" : "h-16 w-auto"} shadow-lg rounded-md bg-white p-1`}
                       />
                     </div>
                   ) : (
