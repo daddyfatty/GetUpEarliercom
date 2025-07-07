@@ -52,21 +52,7 @@ export function HeroSection() {
               className="rounded-2xl shadow-2xl w-full h-auto"
             />
             
-            {/* Floating Facebook group card */}
-            <div 
-              className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg cursor-pointer hover:shadow-xl hover:scale-105 hover:bg-blue-50 transition-all duration-300 transform"
-              onClick={() => window.open('https://www.facebook.com/groups/getupearlier', '_blank')}
-            >
-              <div className="flex items-center space-x-3">
-                <div className="bg-blue-600 p-2 rounded-full hover:bg-blue-700 transition-colors duration-300">
-                  <SiFacebook className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900">900+ Members Facebook Group</p>
-                  <p className="text-sm text-gray-600">Join the community</p>
-                </div>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
