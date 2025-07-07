@@ -13,6 +13,7 @@ export interface Service {
   color: string;
   image?: string;
   badge: string;
+  certificationLogo?: string;
 }
 
 export const servicesData: Service[] = [
@@ -22,7 +23,8 @@ export const servicesData: Service[] = [
     description: "Powerful, distraction-free 30-minute workouts incorporating traditional compound free-weight movements, bodyweight exercises, and outdoor activities.",
     color: "blue",
     image: "/assets/download - 2025-06-20T164725.183_1750453386689.png",
-    badge: "PERSONAL TRAINING"
+    badge: "PERSONAL TRAINING",
+    certificationLogo: "/assets/personal-trainer-cert-logo.png"
   },
   {
     icon: <Heart className="h-8 w-8 text-green-500" />,
@@ -132,12 +134,20 @@ export function ServicesGrid({
                   className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute top-6 right-6">
-                  <Badge 
-                    variant="secondary" 
-                    className={`bg-${service.color}-500 text-white shadow-lg text-sm px-3 py-1`}
-                  >
-                    {service.badge}
-                  </Badge>
+                  {service.certificationLogo ? (
+                    <img 
+                      src={service.certificationLogo} 
+                      alt="Certification"
+                      className="h-16 w-auto shadow-lg rounded-md bg-white p-1"
+                    />
+                  ) : (
+                    <Badge 
+                      variant="secondary" 
+                      className={`bg-${service.color}-500 text-white shadow-lg text-sm px-3 py-1`}
+                    >
+                      {service.badge}
+                    </Badge>
+                  )}
                 </div>
               </div>
             )}
@@ -146,9 +156,19 @@ export function ServicesGrid({
               {!showImages && (
                 <>
                   <div className="mb-4">{service.icon}</div>
-                  <Badge variant="secondary" className="mb-3 w-fit mx-auto">
-                    {service.badge}
-                  </Badge>
+                  {service.certificationLogo ? (
+                    <div className="mb-3 flex justify-center">
+                      <img 
+                        src={service.certificationLogo} 
+                        alt="Certification"
+                        className="h-16 w-auto shadow-lg rounded-md bg-white p-1"
+                      />
+                    </div>
+                  ) : (
+                    <Badge variant="secondary" className="mb-3 w-fit mx-auto">
+                      {service.badge}
+                    </Badge>
+                  )}
                 </>
               )}
               <CardTitle className={`${showImages ? 'text-2xl' : 'text-xl'} mb-4 font-bold leading-tight`}>
