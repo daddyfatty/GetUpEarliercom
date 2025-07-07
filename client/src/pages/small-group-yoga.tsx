@@ -217,6 +217,52 @@ export default function SmallGroupYoga() {
             </div>
           </div>
 
+          {/* Schedule Section */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Permanent Class Schedule</h2>
+            <div className="max-w-2xl mx-auto">
+              <Card className="p-8 shadow-lg border-2 border-purple-200">
+                <CardContent className="p-0">
+                  <div className="text-center mb-8">
+                    <p className="text-lg text-gray-700 mb-6">
+                      Take my Saturday 8am or Wednesday 9am class in my Orange, CT home studio, email me to join the class.
+                    </p>
+                    
+                    <div className="grid md:grid-cols-2 gap-6 mb-6">
+                      <div className="text-center">
+                        <div className="flex items-center justify-center mb-2">
+                          <Clock className="h-5 w-5 text-purple-600 mr-2" />
+                          <h3 className="text-xl font-semibold text-gray-900">Saturdays</h3>
+                        </div>
+                        <p className="text-lg text-gray-700">8-9am</p>
+                      </div>
+                      
+                      <div className="text-center">
+                        <div className="flex items-center justify-center mb-2">
+                          <Clock className="h-5 w-5 text-purple-600 mr-2" />
+                          <h3 className="text-xl font-semibold text-gray-900">Wednesdays</h3>
+                        </div>
+                        <p className="text-lg text-gray-700">9-10am</p>
+                      </div>
+                    </div>
+                    
+                    <div className="text-center mb-6">
+                      <Badge variant="secondary" className="text-lg px-4 py-2 bg-purple-100 text-purple-800">
+                        Class fee: $25
+                      </Badge>
+                    </div>
+                    
+                    <div className="text-center">
+                      <p className="text-lg font-semibold text-purple-600">
+                        Contact me to join!
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
           {/* Call to Action */}
           <div className="text-center bg-gradient-to-r from-teal-50 to-purple-50 p-12 rounded-2xl">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Practice Together?</h2>
