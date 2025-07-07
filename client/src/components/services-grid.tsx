@@ -59,7 +59,8 @@ export const servicesData: Service[] = [
     description: "Immerse yourself in a personalized yoga experience.",
     color: "blue",
     image: "/assets/download - 2025-06-20T170516.226_1750453530152.png",
-    badge: "PRIVATE YOGA"
+    badge: "PRIVATE YOGA",
+    certificationLogo: "/assets/yoga-alliance-cert-logo.png"
   },
   {
     icon: <User className="h-8 w-8 text-pink-500" />,
@@ -67,7 +68,8 @@ export const servicesData: Service[] = [
     description: "Elevate your yoga practice with our semi-private Vinyasa yoga sessions.",
     color: "pink",
     image: "/assets/download - 2025-06-20T170538.818_1750453554236.png",
-    badge: "GROUP YOGA"
+    badge: "GROUP YOGA",
+    certificationLogo: "/assets/yoga-alliance-cert-logo.png"
   }
 ];
 
@@ -141,7 +143,7 @@ export function ServicesGrid({
                     <img 
                       src={service.certificationLogo} 
                       alt="Certification"
-                      className={`${service.title === "Virtual Nutrition Coaching" || service.title === "Accountability Coaching" ? "h-20 w-20" : "h-16 w-auto"} shadow-lg rounded-md bg-white p-1`}
+                      className={`${service.title === "Virtual Nutrition Coaching" || service.title === "Accountability Coaching" || service.title === "Private Yoga" || service.title === "Small Group Yoga" ? "h-20 w-20" : "h-16 w-auto"} shadow-lg rounded-md bg-white p-1`}
                     />
                   ) : (
                     <Badge 
@@ -164,7 +166,7 @@ export function ServicesGrid({
                       <img 
                         src={service.certificationLogo} 
                         alt="Certification"
-                        className={`${service.title === "Virtual Nutrition Coaching" || service.title === "Accountability Coaching" ? "h-20 w-20" : "h-16 w-auto"} shadow-lg rounded-md bg-white p-1`}
+                        className={`${service.title === "Virtual Nutrition Coaching" || service.title === "Accountability Coaching" || service.title === "Private Yoga" || service.title === "Small Group Yoga" ? "h-20 w-20" : "h-16 w-auto"} shadow-lg rounded-md bg-white p-1`}
                       />
                     </div>
                   ) : (
