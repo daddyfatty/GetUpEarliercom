@@ -123,6 +123,74 @@ export default function About() {
         {/* CREDENTIALS BAND */}
         <CredentialsBand />
 
+        {/* ERICA SECTION */}
+        <section id="erica" className="max-w-7xl mx-auto mb-16">
+          <Card className="bg-gradient-to-br from-green-50 via-white to-green-50 dark:from-gray-800 dark:to-gray-900 border-0 shadow-2xl overflow-hidden">
+            <CardContent className="p-0">
+              <div className="grid lg:grid-cols-5 gap-0">
+                {/* Left Side - Photo and Basic Info */}
+                <div className="lg:col-span-2 bg-gradient-to-br from-[#E1ECE7] to-[#C4D6CC] dark:from-green-900 dark:to-gray-900 p-8 lg:p-12 text-gray-800 dark:text-white flex flex-col justify-center items-center text-center">
+                  <div className="w-48 h-48 rounded-full overflow-hidden mb-8 border-8 border-white/20 shadow-2xl">
+                    <img 
+                      src={ericaPath} 
+                      alt="Erica Baker" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  
+                  <h2 className="text-4xl font-bold mb-4 text-gray-800 dark:text-white">
+                    Erica Baker
+                  </h2>
+                  
+                  <div className="space-y-2 mb-6">
+                    <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">E-RYT 200 Yoga Instructor</p>
+                    <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">2000+ Hours Teaching Experience</p>
+                    <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">Former Boutique Studio Owner</p>
+                    <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">Wellness Enthusiast</p>
+                    <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">YouTube Content Creator</p>
+                  </div>
+                  
+                  <Link href="/contact">
+                    <Button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-gray-800 dark:text-white border-white/30 px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105">
+                      Let's Work Together →
+                    </Button>
+                  </Link>
+                </div>
+
+                {/* Right Side - Story */}
+                <div className="lg:col-span-3 p-8 lg:p-12">
+                  <div className="max-w-none">
+                    <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 relative">
+                      My Story
+                      <div className="absolute -bottom-2 left-0 w-16 h-1 bg-green-600 rounded-full"></div>
+                    </h3>
+                    
+                    <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-6">
+                      <p className="text-lg leading-relaxed">
+                        Erica is an E-RYT 200 Yoga Instructor with over 2000 hours teaching experience in both large and small group settings. For the last decade, she has taught yoga from a place of authenticity and developed her own unique style and an ability to work well with all levels.
+                      </p>
+                      
+                      <p className="text-lg leading-relaxed">
+                        As a former boutique yoga studio owner and wellness enthusiast, she brings her health and fitness knowledge and passion to others with her fun energy and physical classes. Every single one of her classes is unique, but you can always count on a consistent experience working on overall strength, mobility, flexibility, balance and stress relief.
+                      </p>
+                      
+                      <div className="bg-green-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-green-600">
+                        <p className="text-lg leading-relaxed mb-0">
+                          Erica believes Yoga is just one facet of nourishing your body to create optimal health and prevent disease. She truly enjoys helping others improve their overall health as well as making them laugh a little too.
+                        </p>
+                      </div>
+                      
+                      <p className="text-lg leading-relaxed">
+                        You can find her teaching small group classes in her home studio, private lessons and recorded classes of varying lengths on her YouTube channel.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+
         {/* TEAM SECTION */}
         <section id="team" className="bg-white dark:bg-gray-900 py-16 -mx-4 px-4">
           <div className="max-w-7xl mx-auto">

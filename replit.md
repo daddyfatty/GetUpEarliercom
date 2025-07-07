@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 7, 2025: Added dedicated Erica Baker section to About page with custom green (#E1ECE7) gradient background and comprehensive bio content
 - July 7, 2025: Added "What Makes It Special" benefits section to Private Yoga page with 4 detailed benefit cards
 - July 7, 2025: Removed philosophy section titles from all service pages (Running, Training, Nutrition, Accountability, Small Group Yoga) to streamline content presentation
 - July 7, 2025: Updated Private Yoga copy across all pages to use authentic user voice focusing on journey of self-discovery and mindfulness
