@@ -52,7 +52,6 @@ export default function SmallGroupYoga() {
           
           {/* Philosophy Section */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">The Power of Small Group Practice</h2>
             <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
               <p>
                 Small group yoga combines the personalized attention of private sessions with the inspiring energy and community connection that comes from practicing alongside others. In our intimate studio setting, you'll experience the perfect balance of individual guidance and group synergy.

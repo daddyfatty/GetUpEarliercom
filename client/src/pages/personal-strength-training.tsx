@@ -52,7 +52,6 @@ export default function PersonalStrengthTraining() {
           
           {/* Philosophy Section */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">My Training Philosophy</h2>
             <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
               <p>
                 I believe in "lifting heavy things" with high intensity at least twice per week. I focus on traditional compound exercises, drop sets, body-weight strength training, and physical outdoor work like running, hiking, and basic calisthenics, along with increasing flexibility through customized yoga-style stretches. All supported and built on truly understanding and implementing "clean eating."

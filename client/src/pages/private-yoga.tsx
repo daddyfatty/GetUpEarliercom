@@ -65,6 +65,68 @@ export default function PrivateYoga() {
             </div>
           </div>
 
+          {/* What Makes It Special Section */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">What Makes It Special</h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="bg-white rounded-lg shadow-lg p-8 border border-gray-100">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900">Dedicated Yoga Studio</h3>
+                </div>
+                <p className="text-gray-700 leading-relaxed">
+                  A pristine, tranquil space specifically designed for yoga practice, promoting peace and focus.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-lg p-8 border border-gray-100">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900">Personalized Sessions</h3>
+                </div>
+                <p className="text-gray-700 leading-relaxed">
+                  Customized yoga classes tailored to individual skill levels and personal goals, ensuring optimal progression and comfort.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-lg p-8 border border-gray-100">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900">Flexible Scheduling</h3>
+                </div>
+                <p className="text-gray-700 leading-relaxed">
+                  Sessions arranged to fit your unique timetable, making it easy to integrate yoga into your busy life.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-lg p-8 border border-gray-100">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900">All Levels Welcome</h3>
+                </div>
+                <p className="text-gray-700 leading-relaxed">
+                  Suitable for beginners through advanced practitioners, with modifications and challenges to suit everyone.
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* Key Features */}
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">What Makes It Special</h2>

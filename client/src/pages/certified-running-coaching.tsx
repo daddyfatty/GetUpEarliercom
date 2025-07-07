@@ -51,7 +51,6 @@ export default function CertifiedRunningCoaching() {
           
           {/* Philosophy Section */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">My Running Philosophy</h2>
             <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
               <p>
                 Running is one of the most accessible and transformative forms of exercise, but it requires the right approach to be safe, enjoyable, and effective. My coaching philosophy centers on gradual progression, injury prevention, and building a sustainable relationship with running that lasts a lifetime.

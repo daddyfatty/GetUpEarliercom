@@ -52,7 +52,6 @@ export default function AccountabilityCoaching() {
           
           {/* Philosophy Section */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">My Accountability Philosophy</h2>
             <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
               <p>
                 Real change happens when you have someone in your corner who believes in you and holds you accountable to your goals. Accountability coaching isn't about judgment—it's about creating a supportive partnership that keeps you moving forward, even when motivation wanes.

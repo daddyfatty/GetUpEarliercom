@@ -89,6 +89,8 @@ The database schema includes:
 
 ```
 Changelog:
+- July 7, 2025: Added "What Makes It Special" benefits section to Private Yoga page with 4 detailed benefit cards
+- July 7, 2025: Removed philosophy section titles from all service pages (Running, Training, Nutrition, Accountability, Small Group Yoga) to streamline content presentation
 - July 7, 2025: Updated Private Yoga copy across all pages to use authentic user voice focusing on journey of self-discovery and mindfulness
 - July 7, 2025: Removed "Erica's Yoga Philosophy" title from Private Yoga page to streamline content presentation
 - July 7, 2025: Added Yoga Alliance certification logo to both Private Yoga and Small Group Yoga service cards

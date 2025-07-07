@@ -52,7 +52,6 @@ export default function VirtualNutritionCoaching() {
           
           {/* Philosophy Section */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">My Nutrition Philosophy</h2>
             <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
               <p>
                 Nutrition isn't about restriction or perfect eating—it's about creating a sustainable relationship with food that supports your goals and lifestyle. My approach focuses on education, gradual changes, and building habits that last.

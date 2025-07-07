@@ -136,9 +136,11 @@ export default function Services() {
       priceTag: "Per 60 Minute Session",
       description: "Yoga is more than just physical movement—it's a journey of self-discovery, mindfulness, and inner peace. In our dedicated yoga studio, I create a sacred space where you can disconnect from the outside world and reconnect with your true self through personalized practice.",
       features: [
-        "Dedicated Yoga Studio",
-        "Personalized Sessions",
-        "Ideal for All Levels"
+        "Dedicated Yoga Studio: A pristine, tranquil space specifically designed for yoga practice, promoting peace and focus",
+        "Personalized Sessions: Customized yoga classes tailored to individual skill levels and personal goals, ensuring optimal progression and comfort",
+        "Flexible Scheduling: Sessions arranged to fit your unique timetable, making it easy to integrate yoga into your busy life",
+        "Ideal for All Levels: Suitable for beginners through advanced practitioners, with modifications and challenges to suit everyone",
+        "Private One-on-One Instruction: Personal attention from experienced instructors, enhancing your practice through detailed guidance and support"
       ],
       buttonText: "Book Session",
       isPopular: false,
