@@ -236,9 +236,9 @@ export default function Services() {
                       } else if (pkg.title === "1-on-1 Running Coaching Session") {
                         window.location.href = "/services/certified-running-coaching";
                       } else if (pkg.title === "1-on-1 Private Yoga with Erica") {
-                        setPrivateYogaModal(true);
+                        window.location.href = "/services/private-yoga";
                       } else if (pkg.title === "Small Group Yoga with Erica") {
-                        setSmallGroupYogaModal(true);
+                        window.location.href = "/services/small-group-yoga";
                       }
                     } else {
                       window.location.href = "/contact";

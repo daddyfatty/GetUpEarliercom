@@ -118,9 +118,9 @@ export function ServicesGrid({
               } else if (showReadMore && service.title === "Accountability Coaching") {
                 setLocation("/services/accountability-coaching");
               } else if (showReadMore && service.title === "Private Yoga") {
-                setPrivateYogaModal(true);
+                setLocation("/services/private-yoga");
               } else if (showReadMore && service.title === "Small Group Yoga") {
-                setSmallGroupYogaModal(true);
+                setLocation("/services/small-group-yoga");
               }
             }}
           >
@@ -223,7 +223,7 @@ export function ServicesGrid({
                     className="text-lg px-6 py-3 bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setPrivateYogaModal(true);
+                      setLocation("/services/private-yoga");
                     }}
                   >
                     Read More →
@@ -237,7 +237,7 @@ export function ServicesGrid({
                     className="text-lg px-6 py-3 bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setSmallGroupYogaModal(true);
+                      setLocation("/services/small-group-yoga");
                     }}
                   >
                     Read More →

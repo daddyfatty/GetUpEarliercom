@@ -26,6 +26,8 @@ import PersonalStrengthTraining from "@/pages/personal-strength-training";
 import VirtualNutritionCoaching from "@/pages/virtual-nutrition-coaching";
 import AccountabilityCoaching from "@/pages/accountability-coaching";
 import CertifiedRunningCoaching from "@/pages/certified-running-coaching";
+import PrivateYoga from "@/pages/private-yoga";
+import SmallGroupYoga from "@/pages/small-group-yoga";
 import Contact from "@/pages/contact";
 import TeamMichael from "@/pages/team-michael";
 import TeamErica from "@/pages/team-erica";
@@ -78,6 +80,8 @@ function Router() {
         <Route path="/services/virtual-nutrition-coaching" component={VirtualNutritionCoaching} />
         <Route path="/services/accountability-coaching" component={AccountabilityCoaching} />
         <Route path="/services/certified-running-coaching" component={CertifiedRunningCoaching} />
+        <Route path="/services/private-yoga" component={PrivateYoga} />
+        <Route path="/services/small-group-yoga" component={SmallGroupYoga} />
           <Route path="/contact" component={Contact} />
           <Route path="/team/michael" component={TeamMichael} />
           <Route path="/team/erica" component={TeamErica} />
