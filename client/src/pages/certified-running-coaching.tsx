@@ -45,7 +45,6 @@ export default function CertifiedRunningCoaching() {
           </div>
         </div>
       </HeroGradient>
-
       {/* Main Content */}
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
@@ -149,9 +148,7 @@ export default function CertifiedRunningCoaching() {
                   <Check className="h-8 w-8 text-orange-600" />
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Marathon Training</h3>
-                <p className="text-gray-600">
-                  Comprehensive 16-20 week programs for first-time marathoners or those seeking personal records.
-                </p>
+                <p className="text-gray-600">Insight, guidance or comprehensive 16-20 week programs for first-time marathoners.</p>
               </div>
             </div>
           </div>
