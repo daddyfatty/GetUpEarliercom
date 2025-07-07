@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { CredentialsBand } from "@/components/credentials-band";
 import { ServicesGrid } from "@/components/services-grid";
+import { PermanentClassSchedule } from "@/components/permanent-class-schedule";
 import { ArrowLeft, Award, Calendar, Users, Heart, Target, Dumbbell, Zap, User, ChevronDown, ChevronUp } from "lucide-react";
 
 import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
@@ -174,6 +175,11 @@ export default function About() {
                       <p className="text-lg leading-relaxed">
                         You can find her teaching small group classes in her home studio, private lessons and recorded classes of varying lengths on her YouTube channel.
                       </p>
+                      
+                      {/* Permanent Class Schedule */}
+                      <div className="mt-8">
+                        <PermanentClassSchedule />
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Mail, Phone, Calendar, Clock, MapPin, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
+import { PermanentClassSchedule } from "@/components/permanent-class-schedule";
 import ericaPath from "@assets/678ab3d4caec71062e65470f_erddd_1749497849578.jpg";
 import yogaAlliancePath from "@assets/67916c3970c6de430a570260_67916c07869e9844f99f5710_download%20(19)_1749497839094.png";
 import eryBadge from "@assets/RYTMIKE_1749505314924.png";
@@ -145,32 +146,7 @@ export default function TeamErica() {
 
             {/* Contact & Scheduling */}
             <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Class Schedule</CardTitle>
-                  <CardDescription>
-                    Small group classes in home studio
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between items-center">
-                        <span className="font-medium">Saturdays:</span>
-                        <span className="text-[hsl(var(--navy))]">8:00-9:00am</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="font-medium">Wednesdays:</span>
-                        <span className="text-[hsl(var(--navy))]">9:00-10:00am</span>
-                      </div>
-                      <div className="flex justify-between items-center pt-2 border-t">
-                        <span className="font-medium">Class fee:</span>
-                        <span className="font-bold text-[hsl(var(--orange))]">$25</span>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <PermanentClassSchedule />
 
               <Card>
                 <CardHeader>

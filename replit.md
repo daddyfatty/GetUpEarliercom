@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 7, 2025: Created reusable Permanent Class Schedule component for Erica's yoga classes (Saturdays 8-9am, Wednesdays 9-10am, $25 fee) - implemented across About page, Team Erica page, and Small Group Yoga page
 - July 7, 2025: Updated Michael's profile section to use navy color from header/nav for consistent branding
 - July 7, 2025: Removed "Certified Professionals" team section from About page to streamline presentation
 - July 7, 2025: Moved credentials band below both profile sections and removed blue background for transparent appearance
