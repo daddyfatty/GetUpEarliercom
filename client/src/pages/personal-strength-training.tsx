@@ -19,10 +19,6 @@ export default function PersonalStrengthTraining() {
               </Button>
             </Link>
             
-            <div className="inline-block bg-purple-300/20 text-purple-100 px-3 py-1 rounded-full text-sm font-medium mb-4">
-              1-on-1 Personal Training
-            </div>
-            
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
               Personal Strength<br className="hidden sm:block" />
               <span className="text-purple-300">Training</span>
