@@ -52,7 +52,6 @@ export default function PrivateYoga() {
           
           {/* Philosophy Section */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Erica's Yoga Philosophy</h2>
             <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
               <p>
                 Yoga is more than just physical movement—it's a journey of self-discovery, mindfulness, and inner peace. In our dedicated yoga studio, I create a sacred space where you can disconnect from the outside world and reconnect with your true self through personalized practice.

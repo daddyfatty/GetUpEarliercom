@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 7, 2025: Removed "Erica's Yoga Philosophy" title from Private Yoga page to streamline content presentation
 - July 7, 2025: Added Yoga Alliance certification logo to both Private Yoga and Small Group Yoga service cards
 - July 7, 2025: Added ISSA Running Coach certification logo to Certified Running Coaching service card
 - July 7, 2025: Added IIN certification logo to Accountability Coaching service card, replacing text badge with professional certification imagery
