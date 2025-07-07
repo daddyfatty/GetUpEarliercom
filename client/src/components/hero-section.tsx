@@ -81,7 +81,7 @@ export function HeroSection() {
               <Link href={`/blog/${randomPost.id}`}>
                 <div className="cursor-pointer hover:scale-105 transition-transform duration-300">
                   <img 
-                    src={randomPost.featuredImage || '/api/placeholder/600/400'} 
+                    src={randomPost.imageUrl || '/api/placeholder/600/400'} 
                     alt={randomPost.title}
                     className="rounded-2xl shadow-2xl w-full h-auto object-cover"
                   />
