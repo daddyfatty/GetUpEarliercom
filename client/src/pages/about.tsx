@@ -185,46 +185,10 @@ export default function About() {
         {/* CREDENTIALS BAND */}
         <CredentialsBand />
 
-        {/* TEAM SECTION */}
-        <section id="team" className="bg-white dark:bg-gray-900 py-16 -mx-4 px-4">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                Certified Professionals
-              </h2>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-12 max-w-4xl mx-auto items-center">
-              {/* Michael Baker */}
-              <div className="text-center">
-                <div className="w-64 h-64 mx-auto mb-4 overflow-hidden shadow-lg border-4 border-gray-200 rounded-lg">
-                  <img 
-                    src={michaelHeadshot} 
-                    alt="Michael Baker" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <p className="text-sm text-gray-600 mb-2">Personal Trainer, Nutrition Coach</p>
-                <h3 className="text-xl font-bold text-gray-900">Michael Baker</h3>
-              </div>
-
-              {/* Erica Baker */}
-              <div className="text-center">
-                <div className="w-64 h-64 mx-auto mb-4 overflow-hidden shadow-lg border-4 border-gray-200 rounded-lg">
-                  <img 
-                    src={ericaYogaPose} 
-                    alt="Erica Baker" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <p className="text-sm text-gray-600 mb-2">E-RYT Yoga Teacher</p>
-                <h3 className="text-xl font-bold text-gray-900">Erica Baker</h3>
-              </div>
-            </div>
-
-            {/* In-Home Private Boutique Section */}
-            <div className="mt-20 max-w-6xl mx-auto">
-              <div className="text-left mb-8">
+        {/* In-Home Private Boutique Section */}
+        <section id="studio" className="max-w-6xl mx-auto mb-16">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-left mb-8">
                 <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                   In-Home Private Boutique
                 </h3>

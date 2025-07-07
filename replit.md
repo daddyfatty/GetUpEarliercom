@@ -89,6 +89,8 @@ The database schema includes:
 
 ```
 Changelog:
+- July 7, 2025: Updated Michael's profile section to use navy color from header/nav for consistent branding
+- July 7, 2025: Removed "Certified Professionals" team section from About page to streamline presentation
 - July 7, 2025: Moved credentials band below both profile sections and removed blue background for transparent appearance
 - July 7, 2025: Removed "My Story" titles from both Michael and Erica profile sections to streamline content presentation
 - July 7, 2025: Added dedicated Erica Baker section to About page with custom green (#E1ECE7) gradient background and comprehensive bio content
