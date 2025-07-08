@@ -9,7 +9,7 @@ export default function CertifiedRunningCoaching() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <HeroGradient backgroundImage="/assets/download - 2025-06-20T170430.001_1750453483739.png">
+      <HeroGradient backgroundImage="/assets/running-coaching-bg.png">
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-4xl mx-auto text-center">
             <Link href="/services">
