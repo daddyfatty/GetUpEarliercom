@@ -10,7 +10,7 @@ interface HeroGradientProps {
 export function HeroGradient({ children, className, backgroundImage }: HeroGradientProps) {
   return (
     <div 
-      className={cn("hero-gradient relative", className)}
+      className={cn("relative", backgroundImage ? "" : "hero-gradient", className)}
       style={backgroundImage ? {
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',
