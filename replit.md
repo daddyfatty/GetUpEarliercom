@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 8, 2025: Hidden profile and logout sections in mobile navigation menu for cleaner user experience
 - July 8, 2025: Updated hero section label from "Random Post:" to "From the Blog:" for more welcoming content presentation
 - July 7, 2025: Replaced static hero image with dynamic random blog post system featuring consistent image sizing, subtle vertical divider, and title overlay that changes on each page load - creates fresh content experience
 - July 7, 2025: Moved Facebook Group section to appear directly below the hero buttons (View Services, View Recipes, View Workouts) in the hero section for better visibility and user engagement

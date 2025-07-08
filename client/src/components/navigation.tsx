@@ -317,8 +317,8 @@ export function Navigation() {
                 <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                   <div className="flex flex-col space-y-4 mt-8">
                     
-                    {/* User Profile Section */}
-                    {isAuthenticated && (
+                    {/* User Profile Section - HIDDEN FOR NOW */}
+                    {false && isAuthenticated && (
                       <div className="border-b pb-4 mb-4">
                         <div className="flex items-center space-x-3 px-3 py-2">
                           <div className="w-10 h-10 bg-[hsl(var(--orange))] rounded-full flex items-center justify-center">
@@ -439,7 +439,8 @@ export function Navigation() {
                       </a>
                     </div>
 
-                    {/* Auth Section for Mobile */}
+                    {/* Auth Section for Mobile - HIDDEN FOR NOW */}
+                    {false && (
                     <div className="pt-4 border-t">
                       {isAuthenticated ? (
                         <Button 
@@ -500,6 +501,7 @@ export function Navigation() {
                         </div>
                       )}
                     </div>
+                    )}
                   </div>
                 </SheetContent>
               </Sheet>
