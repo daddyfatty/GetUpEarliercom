@@ -71,6 +71,8 @@ export function HeroSection() {
                         alt={randomPost.title}
                         className="w-full h-full object-cover"
                       />
+                      {/* 50% black overlay */}
+                      <div className="absolute inset-0 bg-black/50 rounded-2xl"></div>
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-2xl">
                       <h3 className="text-white text-xl font-bold leading-tight">
