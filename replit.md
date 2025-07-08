@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 8, 2025: Changed "What You'll Get" section on Virtual Nutrition Coaching page to use 3-column layout instead of 2-column
 - July 8, 2025: Removed "Personalized Nutrition Plan" card from Virtual Nutrition Coaching page "What You'll Get" section  
 - July 8, 2025: Removed "Class Options" section from Small Group Yoga page to streamline content presentation
 - July 8, 2025: Reduced blog post title size by 25% across all screen sizes for better proportions

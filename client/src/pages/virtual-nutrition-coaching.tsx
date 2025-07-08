@@ -68,7 +68,7 @@ export default function VirtualNutritionCoaching() {
           {/* Key Features */}
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">What You'll Get</h2>
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-3 gap-8">
 
 
               <Card className="p-8 shadow-lg">
