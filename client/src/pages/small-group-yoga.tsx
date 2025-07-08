@@ -156,47 +156,7 @@ export default function SmallGroupYoga() {
             </div>
           </div>
 
-          {/* Class Types */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Class Options</h2>
-            <div className="space-y-8">
-              <div className="flex items-start space-x-6">
-                <div className="flex-shrink-0 w-12 h-12 bg-teal-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
-                  1
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Gentle Flow</h3>
-                  <p className="text-gray-600">
-                    Slow, mindful movement perfect for beginners or those seeking a more relaxed practice with breath awareness.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-6">
-                <div className="flex-shrink-0 w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
-                  2
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Vinyasa Flow</h3>
-                  <p className="text-gray-600">
-                    Dynamic sequences that link breath with movement, building strength and flexibility while maintaining mindful awareness.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-6">
-                <div className="flex-shrink-0 w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
-                  3
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Restorative Yoga</h3>
-                  <p className="text-gray-600">
-                    Deep relaxation and stress relief through supported poses and extended holds that promote healing and renewal.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+
 
           {/* How to Join */}
           <div className="mb-16 bg-gray-100 p-8 rounded-lg">

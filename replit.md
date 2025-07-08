@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 8, 2025: Removed "Class Options" section from Small Group Yoga page to streamline content presentation
 - July 8, 2025: Reduced blog post title size by 25% across all screen sizes for better proportions
 - July 8, 2025: Added 50% opacity black overlay to blog featured image for better title readability
 - July 8, 2025: Aligned hero section content according to design guides with consistent top padding and start alignment for both columns
