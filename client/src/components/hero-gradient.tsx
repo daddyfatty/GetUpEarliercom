@@ -19,7 +19,7 @@ export function HeroGradient({ children, className, backgroundImage }: HeroGradi
       } : {}}
     >
       {backgroundImage && (
-        <div className="absolute inset-0 hero-gradient" />
+        <div className="absolute inset-0 hero-gradient opacity-60" />
       )}
       <div className="relative z-10">
         {children}
