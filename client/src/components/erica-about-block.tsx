@@ -1,84 +1,76 @@
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "wouter";
+import { PermanentClassSchedule } from "@/components/permanent-class-schedule";
+import ericaPath from "@assets/678ab3d4caec71062e65470f_erddd_1749497849578.jpg";
 
 export function EricaAboutBlock() {
   return (
-    <div className="bg-gradient-to-r from-green-50 to-green-100 py-16 px-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-3 gap-8 items-center">
-          <div className="md:col-span-1 flex flex-col items-center">
-            <div className="bg-green-200 bg-opacity-70 rounded-lg p-8 w-full max-w-sm text-center">
-              <div className="w-32 h-32 rounded-full overflow-hidden mx-auto mb-6">
+    <section className="max-w-7xl mx-auto mb-16">
+      <Card className="bg-gradient-to-br from-green-50 via-white to-green-50 dark:from-gray-800 dark:to-gray-900 border-0 shadow-2xl overflow-hidden">
+        <CardContent className="p-0">
+          <div className="grid lg:grid-cols-5 gap-0">
+            {/* Left Side - Photo and Basic Info */}
+            <div className="lg:col-span-2 bg-gradient-to-br from-[#E1ECE7] to-[#C4D6CC] dark:from-green-900 dark:to-gray-900 p-8 lg:p-12 text-gray-800 dark:text-white flex flex-col justify-center items-center text-center">
+              <div className="w-48 h-48 rounded-full overflow-hidden mb-8 border-8 border-white/20 shadow-2xl">
                 <img 
-                  src="/attached_assets/download - 2025-06-20T170516.226_1750453530152.png" 
+                  src={ericaPath} 
                   alt="Erica Baker" 
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Erica Baker</h3>
-              <div className="text-gray-700 space-y-1 text-sm mb-6">
-                <p>E-RYT 200 Yoga Instructor</p>
-                <p>2000+ Hours Teaching Experience</p>
-                <p>Former Boutique Studio Owner</p>
-                <p>Wellness Enthusiast</p>
-                <p>YouTube Content Creator</p>
+              
+              <h2 className="text-4xl font-bold mb-4 text-gray-800 dark:text-white">
+                Erica Baker
+              </h2>
+              
+              <div className="space-y-2 mb-6">
+                <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">E-RYT 200 Yoga Instructor</p>
+                <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">2000+ Hours Teaching Experience</p>
+                <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">Former Boutique Studio Owner</p>
+                <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">Wellness Enthusiast</p>
+                <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">YouTube Content Creator</p>
               </div>
-              <Button className="bg-purple-600 hover:bg-purple-700 text-white w-full">
-                Let's Work Together →
-              </Button>
-            </div>
-          </div>
-          <div className="md:col-span-2">
-            <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              Erica is an E-RYT 200 Yoga Instructor with over 2000 hours teaching experience in both large and small group settings. For the last decade, she has taught yoga from a place of authenticity and developed her own unique style and an ability to work well with all levels.
-            </p>
-            <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              As a former boutique yoga studio owner and wellness enthusiast, she brings her health and fitness knowledge and passion to others with her fun energy and physical classes. Every single one of her classes is unique, but you can always count on a consistent experience working on overall strength, mobility, flexibility, balance and stress relief.
-            </p>
-            <div className="bg-white bg-opacity-50 border-l-4 border-green-500 p-4 mb-6">
-              <p className="text-gray-700 italic">
-                Erica believes Yoga is just one facet of nourishing your body to create optimal health and prevent disease. She truly enjoys helping others improve their overall health as well as making them laugh a little too.
-              </p>
-            </div>
-            <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              You can find her teaching small group classes in her home studio, private lessons and recorded classes of varying lengths on her YouTube channel.
-            </p>
-            
-            {/* Permanent Class Schedule */}
-            <div className="bg-white rounded-lg shadow-md p-6 mt-8">
-              <h4 className="text-xl font-bold text-gray-900 mb-4 text-center">Permanent Class Schedule</h4>
-              <p className="text-gray-600 text-center mb-6">
-                Take my Saturday 8am or Wednesday 9am class in my Orange, CT home studio, email me to join the class.
-              </p>
-              <div className="grid grid-cols-2 gap-8 mb-6">
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <span className="text-purple-600 mr-2">🕐</span>
-                    <span className="font-semibold text-gray-900">Saturdays</span>
-                  </div>
-                  <div className="text-2xl font-bold text-gray-900">8-9am</div>
-                </div>
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <span className="text-purple-600 mr-2">🕘</span>
-                    <span className="font-semibold text-gray-900">Wednesdays</span>
-                  </div>
-                  <div className="text-2xl font-bold text-gray-900">9-10am</div>
-                </div>
-              </div>
-              <div className="text-center mb-6">
-                <span className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-medium">
-                  Class fee: $25
-                </span>
-              </div>
-              <div className="text-center">
-                <Button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-md">
-                  Contact me to join!
+              
+              <Link href="/contact">
+                <Button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-gray-800 dark:text-white border-white/30 px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105">
+                  Let's Work Together →
                 </Button>
+              </Link>
+            </div>
+
+            {/* Right Side - Story */}
+            <div className="lg:col-span-3 p-8 lg:p-12">
+              <div className="max-w-none">
+                <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-6">
+                  <p className="text-lg leading-relaxed">
+                    Erica is an E-RYT 200 Yoga Instructor with over 2000 hours teaching experience in both large and small group settings. For the last decade, she has taught yoga from a place of authenticity and developed her own unique style and an ability to work well with all levels.
+                  </p>
+                  
+                  <p className="text-lg leading-relaxed">
+                    As a former boutique yoga studio owner and wellness enthusiast, she brings her health and fitness knowledge and passion to others with her fun energy and physical classes. Every single one of her classes is unique, but you can always count on a consistent experience working on overall strength, mobility, flexibility, balance and stress relief.
+                  </p>
+                  
+                  <div className="bg-green-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-green-600">
+                    <p className="text-lg leading-relaxed mb-0">
+                      Erica believes Yoga is just one facet of nourishing your body to create optimal health and prevent disease. She truly enjoys helping others improve their overall health as well as making them laugh a little too.
+                    </p>
+                  </div>
+                  
+                  <p className="text-lg leading-relaxed">
+                    You can find her teaching small group classes in her home studio, private lessons and recorded classes of varying lengths on her YouTube channel.
+                  </p>
+                  
+                  {/* Permanent Class Schedule */}
+                  <div className="mt-8">
+                    <PermanentClassSchedule />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </CardContent>
+      </Card>
+    </section>
   );
 }
