@@ -52,13 +52,6 @@ export default function CertifiedRunningCoaching() {
           {/* Philosophy Section */}
           <div className="mb-16">
             <div className="grid md:grid-cols-3 gap-8 items-start">
-              <div className="md:col-span-1">
-                <img 
-                  src="/attached_assets/20250702_065601_1751710941826.jpg" 
-                  alt="Running coaching session" 
-                  className="w-full h-auto rounded-lg shadow-lg object-cover"
-                />
-              </div>
               <div className="md:col-span-2">
                 <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
                   <p>
@@ -71,6 +64,13 @@ export default function CertifiedRunningCoaching() {
                     From couch to 5K programs to marathon training, nutrition strategies, and recovery protocols, I provide comprehensive support that goes beyond just running workouts. Together, we'll build your confidence, endurance, and love for the sport while keeping you healthy and injury-free.
                   </p>
                 </div>
+              </div>
+              <div className="md:col-span-1">
+                <img 
+                  src="/attached_assets/download - 2025-06-20T170430.001_1750453483739.png" 
+                  alt="Running coaching featured image" 
+                  className="w-full h-auto rounded-lg shadow-lg object-cover aspect-square"
+                />
               </div>
             </div>
           </div>

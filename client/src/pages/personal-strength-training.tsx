@@ -52,18 +52,29 @@ export default function PersonalStrengthTraining() {
           
           {/* Philosophy Section */}
           <div className="mb-16">
-            <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
-              <p>
-                I believe in "lifting heavy things" with high intensity at least twice per week. I focus on traditional compound exercises, drop sets, body-weight strength training, and physical outdoor work like running, hiking, and basic calisthenics, along with increasing flexibility through customized yoga-style stretches. All supported and built on truly understanding and implementing "clean eating."
-              </p>
-              
-              <p>
-                I'm here to help you break free from inactivity, your gym rut, or advance your fitness. You need a push in the right direction and accountability.
-              </p>
-              
-              <p>
-                One or two 30-minute sessions per week will change your life. You will be amazed by how much we can accomplish in this short time, how quickly your strength improves, and how much you gain as you navigate life. Learn to reframe your time and thoughts about working out, and see how it can all be naturally and intuitively integrated into your life.
-              </p>
+            <div className="grid md:grid-cols-3 gap-8 items-start">
+              <div className="md:col-span-2">
+                <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+                  <p>
+                    I believe in "lifting heavy things" with high intensity at least twice per week. I focus on traditional compound exercises, drop sets, body-weight strength training, and physical outdoor work like running, hiking, and basic calisthenics, along with increasing flexibility through customized yoga-style stretches. All supported and built on truly understanding and implementing "clean eating."
+                  </p>
+                  
+                  <p>
+                    I'm here to help you break free from inactivity, your gym rut, or advance your fitness. You need a push in the right direction and accountability.
+                  </p>
+                  
+                  <p>
+                    One or two 30-minute sessions per week will change your life. You will be amazed by how much we can accomplish in this short time, how quickly your strength improves, and how much you gain as you navigate life. Learn to reframe your time and thoughts about working out, and see how it can all be naturally and intuitively integrated into your life.
+                  </p>
+                </div>
+              </div>
+              <div className="md:col-span-1">
+                <img 
+                  src="/attached_assets/download - 2025-06-20T170430.001_1750453483739.png" 
+                  alt="Personal strength training featured image" 
+                  className="w-full h-auto rounded-lg shadow-lg object-cover aspect-square"
+                />
+              </div>
             </div>
           </div>
 
