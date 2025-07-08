@@ -183,16 +183,7 @@ export default function Services() {
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
               It all starts with a 30 minute session
             </h1>
-            <div className="flex items-center justify-center gap-2 mb-6">
-              <div className="flex items-center gap-1">
-                <span className="text-2xl">⭐</span>
-                <span className="text-2xl">⭐</span>
-                <span className="text-2xl">⭐</span>
-                <span className="text-2xl">⭐</span>
-                <span className="text-2xl">⭐</span>
-              </div>
-              <span className="text-lg font-semibold text-gray-700">5.0</span>
-            </div>
+
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
               Personalized coaching tailored to your individual needs and goals
             </p>
