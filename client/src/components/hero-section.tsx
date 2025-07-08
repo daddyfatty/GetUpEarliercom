@@ -23,7 +23,8 @@ export function HeroSection() {
   return (
     <HeroGradient className="text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="hidden lg:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-px h-64 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
           <div>
             <p className="text-sm text-blue-200 mb-4 tracking-wider uppercase">
               PERSONAL TRAINING, NUTRITION & ACCOUNTABILITY COACHING
