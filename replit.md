@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 8, 2025: Replaced "Comprehensive Coaching & Training" with "It all starts with a 30 minute session" and added 5-star rating graphic on Services page
 - July 8, 2025: Changed "What You'll Get" section on Virtual Nutrition Coaching page to use 3-column layout instead of 2-column
 - July 8, 2025: Removed "Personalized Nutrition Plan" card from Virtual Nutrition Coaching page "What You'll Get" section  
 - July 8, 2025: Removed "Class Options" section from Small Group Yoga page to streamline content presentation
