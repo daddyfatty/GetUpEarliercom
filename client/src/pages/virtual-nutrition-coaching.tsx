@@ -72,6 +72,13 @@ export default function VirtualNutritionCoaching() {
                   alt="Virtual nutrition coaching featured image" 
                   className="w-full h-auto rounded-lg shadow-lg object-cover aspect-square"
                 />
+                <div className="mt-4 flex justify-center">
+                  <img 
+                    src="/assets/iin-cert-logo.png" 
+                    alt="IIN Health Coach Certification" 
+                    className="w-16 h-16 object-contain"
+                  />
+                </div>
               </div>
             </div>
           </div>

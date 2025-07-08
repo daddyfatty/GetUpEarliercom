@@ -74,6 +74,13 @@ export default function PersonalStrengthTraining() {
                   alt="Personal strength training featured image" 
                   className="w-full h-auto rounded-lg shadow-lg object-cover aspect-square"
                 />
+                <div className="mt-4 flex justify-center">
+                  <img 
+                    src="/assets/personal-trainer-cert-logo.png" 
+                    alt="Personal Trainer Certification" 
+                    className="w-16 h-16 object-contain"
+                  />
+                </div>
               </div>
             </div>
           </div>

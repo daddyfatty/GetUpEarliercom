@@ -72,6 +72,13 @@ export default function PrivateYoga() {
                   alt="Private yoga featured image" 
                   className="w-full h-auto rounded-lg shadow-lg object-cover aspect-square"
                 />
+                <div className="mt-4 flex justify-center">
+                  <img 
+                    src="/assets/yoga-alliance-cert-logo.png" 
+                    alt="Yoga Alliance Certification" 
+                    className="w-16 h-16 object-contain"
+                  />
+                </div>
               </div>
             </div>
           </div>
