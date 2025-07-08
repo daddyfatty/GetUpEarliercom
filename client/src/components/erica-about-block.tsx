@@ -46,32 +46,32 @@ export function EricaAboutBlock() {
             {/* Permanent Class Schedule */}
             <div className="bg-white rounded-lg shadow-md p-6 mt-8">
               <h4 className="text-xl font-bold text-gray-900 mb-4 text-center">Permanent Class Schedule</h4>
-              <p className="text-gray-600 text-center mb-4">
+              <p className="text-gray-600 text-center mb-6">
                 Take my Saturday 8am or Wednesday 9am class in my Orange, CT home studio, email me to join the class.
               </p>
-              <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="grid grid-cols-2 gap-8 mb-6">
                 <div className="text-center">
                   <div className="flex items-center justify-center mb-2">
-                    <span className="text-purple-600 mr-2">⏰</span>
-                    <span className="font-semibold">Saturdays</span>
+                    <span className="text-purple-600 mr-2">🕐</span>
+                    <span className="font-semibold text-gray-900">Saturdays</span>
                   </div>
                   <div className="text-2xl font-bold text-gray-900">8-9am</div>
                 </div>
                 <div className="text-center">
                   <div className="flex items-center justify-center mb-2">
-                    <span className="text-purple-600 mr-2">⏰</span>
-                    <span className="font-semibold">Wednesdays</span>
+                    <span className="text-purple-600 mr-2">🕘</span>
+                    <span className="font-semibold text-gray-900">Wednesdays</span>
                   </div>
                   <div className="text-2xl font-bold text-gray-900">9-10am</div>
                 </div>
               </div>
-              <div className="text-center mb-4">
-                <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
+              <div className="text-center mb-6">
+                <span className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-medium">
                   Class fee: $25
                 </span>
               </div>
               <div className="text-center">
-                <Button className="bg-purple-600 hover:bg-purple-700 text-white">
+                <Button className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-md">
                   Contact me to join!
                 </Button>
               </div>

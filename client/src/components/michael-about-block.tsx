@@ -29,15 +29,15 @@ export function MichaelAboutBlock() {
           </div>
           <div className="md:col-span-2">
             <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              Hello, I'm Michael Baker. I am a 50-year-old strength trainer, certified personal trainer, running coach, health coach, and yoga teacher. I'm also a former yoga studio owner and a dedicated health and wellness practitioner with over 30 years of experience. I began <span className="text-blue-600 font-semibold">Get Up Earlier</span> (GetUpEarlier.com) because getting up earlier was step one in transforming my routine and overall well-being, especially after spending years sitting at a computer as a <span className="text-blue-600 font-semibold">digital professional</span>.
+              Hello, I'm Michael Baker. I am a 50-year-old strength trainer, certified personal trainer, running coach, health coach, and yoga teacher. I'm also a former yoga studio owner and a dedicated health and wellness practitioner with over 30 years of experience. I began <a href="#" className="text-blue-600 underline">Get Up Earlier</a> (GetUpEarlier.com) because getting up earlier was step one in transforming my routine and overall well-being, especially after spending years sitting at a computer as a <a href="#" className="text-blue-600 underline">digital professional</a>.
             </p>
             <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
-              <p className="text-gray-700 italic">
+              <p className="text-gray-700">
                 My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus on helping people rely on intuition, providing a personal experience, and introducing them to strength training, alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts.
               </p>
             </div>
             <p className="text-gray-700 text-lg leading-relaxed">
-              While my own marathon training or strength achievements might seem extreme, I'm not trying to turn anyone into a bodybuilder or marathon runner. I'm simply showing that, especially beyond 40, 50, 60, and 70 years old, these things are possible. <span className="text-blue-600 font-semibold">It's about inspiration and helping people make realistic, sustainable changes.</span>
+              While my own marathon training or strength achievements might seem extreme, I'm not trying to turn anyone into a bodybuilder or marathon runner. I'm simply showing that, especially beyond 40, 50, 60, and 70 years old, these things are possible. <a href="#" className="text-blue-600 underline">It's about inspiration and helping people make realistic, sustainable changes.</a>
             </p>
           </div>
         </div>
