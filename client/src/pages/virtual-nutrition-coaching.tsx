@@ -52,16 +52,27 @@ export default function VirtualNutritionCoaching() {
           
           {/* Philosophy Section */}
           <div className="mb-16">
-            <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
-              <p>
-                Nutrition isn't about restriction or perfect eating—it's about creating a sustainable relationship with food that supports your goals and lifestyle. My approach focuses on education, gradual changes, and building habits that last.
-              </p>
-              <p>
-                Through virtual coaching sessions, I'll help you understand your body's needs, decode nutrition labels, and develop practical strategies for meal planning, grocery shopping, and eating out. We'll work together to create a personalized plan that fits your schedule, preferences, and health goals.
-              </p>
-              <p>
-                Whether you're looking to lose weight, gain muscle, improve energy levels, or simply develop healthier eating habits, I'll provide the guidance and accountability you need to succeed—all from the comfort of your home.
-              </p>
+            <div className="grid md:grid-cols-3 gap-8 items-start">
+              <div className="md:col-span-2">
+                <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+                  <p>
+                    Nutrition isn't about restriction or perfect eating—it's about creating a sustainable relationship with food that supports your goals and lifestyle. My approach focuses on education, gradual changes, and building habits that last.
+                  </p>
+                  <p>
+                    Through virtual coaching sessions, I'll help you understand your body's needs, decode nutrition labels, and develop practical strategies for meal planning, grocery shopping, and eating out. We'll work together to create a personalized plan that fits your schedule, preferences, and health goals.
+                  </p>
+                  <p>
+                    Whether you're looking to lose weight, gain muscle, improve energy levels, or simply develop healthier eating habits, I'll provide the guidance and accountability you need to succeed—all from the comfort of your home.
+                  </p>
+                </div>
+              </div>
+              <div className="md:col-span-1">
+                <img 
+                  src="/assets/download - 2025-06-20T170333.649_1750453429860.png" 
+                  alt="Virtual nutrition coaching featured image" 
+                  className="w-full h-auto rounded-lg shadow-lg object-cover aspect-square"
+                />
+              </div>
             </div>
           </div>
 

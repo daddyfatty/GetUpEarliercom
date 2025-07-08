@@ -53,16 +53,27 @@ export default function SmallGroupYoga() {
           
           {/* Philosophy Section */}
           <div className="mb-16">
-            <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
-              <p>
-                Small group yoga combines the personalized attention of private sessions with the inspiring energy and community connection that comes from practicing alongside others. In our intimate studio setting, you'll experience the perfect balance of individual guidance and group synergy.
-              </p>
-              <p>
-                With groups limited to just 3-6 participants, I can provide personalized adjustments, modifications, and guidance while creating a supportive community where everyone feels seen and included. This intimate setting allows for deeper connections, shared growth, and the motivation that comes from practicing with like-minded individuals.
-              </p>
-              <p>
-                Whether you're new to yoga or have an established practice, small group sessions offer a welcoming environment where you can explore poses, learn from others, and develop your practice in a supportive, non-competitive atmosphere that celebrates individual progress and collective growth.
-              </p>
+            <div className="grid md:grid-cols-3 gap-8 items-start">
+              <div className="md:col-span-2">
+                <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+                  <p>
+                    Small group yoga combines the personalized attention of private sessions with the inspiring energy and community connection that comes from practicing alongside others. In our intimate studio setting, you'll experience the perfect balance of individual guidance and group synergy.
+                  </p>
+                  <p>
+                    With groups limited to just 3-6 participants, I can provide personalized adjustments, modifications, and guidance while creating a supportive community where everyone feels seen and included. This intimate setting allows for deeper connections, shared growth, and the motivation that comes from practicing with like-minded individuals.
+                  </p>
+                  <p>
+                    Whether you're new to yoga or have an established practice, small group sessions offer a welcoming environment where you can explore poses, learn from others, and develop your practice in a supportive, non-competitive atmosphere that celebrates individual progress and collective growth.
+                  </p>
+                </div>
+              </div>
+              <div className="md:col-span-1">
+                <img 
+                  src="/assets/download - 2025-06-20T170538.818_1750453554236.png" 
+                  alt="Small group yoga featured image" 
+                  className="w-full h-auto rounded-lg shadow-lg object-cover aspect-square"
+                />
+              </div>
             </div>
           </div>
 

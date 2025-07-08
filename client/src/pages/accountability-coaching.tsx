@@ -52,16 +52,27 @@ export default function AccountabilityCoaching() {
           
           {/* Philosophy Section */}
           <div className="mb-16">
-            <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
-              <p>
-                Real change happens when you have someone in your corner who believes in you and holds you accountable to your goals. Accountability coaching isn't about judgment—it's about creating a supportive partnership that keeps you moving forward, even when motivation wanes.
-              </p>
-              <p>
-                Through regular check-ins, goal tracking, and personalized support, I'll help you build the habits and mindset necessary for lasting transformation. Whether you're working toward fitness goals, career changes, or personal development, accountability coaching provides the structure and encouragement you need to succeed.
-              </p>
-              <p>
-                This isn't just about tracking progress—it's about celebrating victories, learning from setbacks, and maintaining momentum through life's ups and downs. Together, we'll create a system that works for your lifestyle and keeps you consistently moving toward your vision.
-              </p>
+            <div className="grid md:grid-cols-3 gap-8 items-start">
+              <div className="md:col-span-2">
+                <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+                  <p>
+                    Real change happens when you have someone in your corner who believes in you and holds you accountable to your goals. Accountability coaching isn't about judgment—it's about creating a supportive partnership that keeps you moving forward, even when motivation wanes.
+                  </p>
+                  <p>
+                    Through regular check-ins, goal tracking, and personalized support, I'll help you build the habits and mindset necessary for lasting transformation. Whether you're working toward fitness goals, career changes, or personal development, accountability coaching provides the structure and encouragement you need to succeed.
+                  </p>
+                  <p>
+                    This isn't just about tracking progress—it's about celebrating victories, learning from setbacks, and maintaining momentum through life's ups and downs. Together, we'll create a system that works for your lifestyle and keeps you consistently moving toward your vision.
+                  </p>
+                </div>
+              </div>
+              <div className="md:col-span-1">
+                <img 
+                  src="/assets/678aad8cfd0dcde677a14418_hike2-p-800_1750453452584.jpg" 
+                  alt="Accountability coaching featured image" 
+                  className="w-full h-auto rounded-lg shadow-lg object-cover aspect-square"
+                />
+              </div>
             </div>
           </div>
 

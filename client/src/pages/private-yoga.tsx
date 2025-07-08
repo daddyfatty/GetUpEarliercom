@@ -52,16 +52,27 @@ export default function PrivateYoga() {
           
           {/* Philosophy Section */}
           <div className="mb-16">
-            <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
-              <p>
-                Yoga is more than just physical movement—it's a journey of self-discovery, mindfulness, and inner peace. In our dedicated yoga studio, I create a sacred space where you can disconnect from the outside world and reconnect with your true self through personalized practice.
-              </p>
-              <p>
-                Whether you're a complete beginner taking your first steps into yoga or an experienced practitioner looking to deepen your practice, I tailor each session to meet you exactly where you are. My approach emphasizes proper alignment, breath awareness, and mindful movement while honoring your body's unique needs and limitations.
-              </p>
-              <p>
-                In our tranquil studio environment, free from distractions and external pressures, you'll have the space to explore poses at your own pace, ask questions freely, and develop a sustainable practice that serves your physical, mental, and emotional well-being.
-              </p>
+            <div className="grid md:grid-cols-3 gap-8 items-start">
+              <div className="md:col-span-2">
+                <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+                  <p>
+                    Yoga is more than just physical movement—it's a journey of self-discovery, mindfulness, and inner peace. In our dedicated yoga studio, I create a sacred space where you can disconnect from the outside world and reconnect with your true self through personalized practice.
+                  </p>
+                  <p>
+                    Whether you're a complete beginner taking your first steps into yoga or an experienced practitioner looking to deepen your practice, I tailor each session to meet you exactly where you are. My approach emphasizes proper alignment, breath awareness, and mindful movement while honoring your body's unique needs and limitations.
+                  </p>
+                  <p>
+                    In our tranquil studio environment, free from distractions and external pressures, you'll have the space to explore poses at your own pace, ask questions freely, and develop a sustainable practice that serves your physical, mental, and emotional well-being.
+                  </p>
+                </div>
+              </div>
+              <div className="md:col-span-1">
+                <img 
+                  src="/assets/download - 2025-06-20T170516.226_1750453530152.png" 
+                  alt="Private yoga featured image" 
+                  className="w-full h-auto rounded-lg shadow-lg object-cover aspect-square"
+                />
+              </div>
             </div>
           </div>
 
