@@ -70,7 +70,7 @@ export default function PersonalStrengthTraining() {
               </div>
               <div className="md:col-span-1">
                 <img 
-                  src="/attached_assets/download - 2025-06-20T170430.001_1750453483739.png" 
+                  src="/attached_assets/download - 2025-06-20T164725.183_1750453386689.png" 
                   alt="Personal strength training featured image" 
                   className="w-full h-auto rounded-lg shadow-lg object-cover aspect-square"
                 />

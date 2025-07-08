@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 8, 2025: Added service-specific featured images in 1/3 column layout to Certified Running Coaching and Personal Strength Training pages
 - July 8, 2025: Added featured image in 1/3 column layout to Certified Running Coaching page philosophy section
 - July 8, 2025: Removed 5-star rating graphic from Services page, keeping just the "It all starts with a 30 minute session" title
 - July 8, 2025: Replaced "Comprehensive Coaching & Training" with "It all starts with a 30 minute session" and added 5-star rating graphic on Services page
