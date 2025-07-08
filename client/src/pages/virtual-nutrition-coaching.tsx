@@ -69,17 +69,7 @@ export default function VirtualNutritionCoaching() {
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">What You'll Get</h2>
             <div className="grid md:grid-cols-2 gap-8">
-              <Card className="p-8 shadow-lg">
-                <CardContent className="p-0">
-                  <div className="flex items-center mb-4">
-                    <Award className="h-8 w-8 text-green-600 mr-3" />
-                    <h3 className="text-xl font-semibold text-gray-900">Personalized Nutrition Plan</h3>
-                  </div>
-                  <p className="text-gray-600">
-                    Custom meal plans and nutrition guidelines based on your goals, preferences, dietary restrictions, and lifestyle.
-                  </p>
-                </CardContent>
-              </Card>
+
 
               <Card className="p-8 shadow-lg">
                 <CardContent className="p-0">
