@@ -51,16 +51,27 @@ export default function CertifiedRunningCoaching() {
           
           {/* Philosophy Section */}
           <div className="mb-16">
-            <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
-              <p>
-                Running is one of the most accessible and transformative forms of exercise, but it requires the right approach to be safe, enjoyable, and effective. My coaching philosophy centers on gradual progression, injury prevention, and building a sustainable relationship with running that lasts a lifetime.
-              </p>
-              <p>
-                Whether you're taking your first steps as a runner or working toward your next race goal, I'll help you develop proper form, create a training plan that fits your schedule, and provide the motivation and accountability you need to stay consistent. Every runner's journey is unique, and I tailor my coaching to your current fitness level, goals, and lifestyle.
-              </p>
-              <p>
-                From couch to 5K programs to marathon training, nutrition strategies, and recovery protocols, I provide comprehensive support that goes beyond just running workouts. Together, we'll build your confidence, endurance, and love for the sport while keeping you healthy and injury-free.
-              </p>
+            <div className="grid md:grid-cols-3 gap-8 items-start">
+              <div className="md:col-span-1">
+                <img 
+                  src="/attached_assets/20250702_065601_1751710941826.jpg" 
+                  alt="Running coaching session" 
+                  className="w-full h-auto rounded-lg shadow-lg object-cover"
+                />
+              </div>
+              <div className="md:col-span-2">
+                <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+                  <p>
+                    Running is one of the most accessible and transformative forms of exercise, but it requires the right approach to be safe, enjoyable, and effective. My coaching philosophy centers on gradual progression, injury prevention, and building a sustainable relationship with running that lasts a lifetime.
+                  </p>
+                  <p>
+                    Whether you're taking your first steps as a runner or working toward your next race goal, I'll help you develop proper form, create a training plan that fits your schedule, and provide the motivation and accountability you need to stay consistent. Every runner's journey is unique, and I tailor my coaching to your current fitness level, goals, and lifestyle.
+                  </p>
+                  <p>
+                    From couch to 5K programs to marathon training, nutrition strategies, and recovery protocols, I provide comprehensive support that goes beyond just running workouts. Together, we'll build your confidence, endurance, and love for the sport while keeping you healthy and injury-free.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
