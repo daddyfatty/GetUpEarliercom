@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { ArrowLeft, Check, MapPin, Award, Clock, User } from "lucide-react";
 import { HeroGradient } from "@/components/hero-gradient";
+import { MichaelAboutBlock } from "@/components/michael-about-block";
 
 export default function PersonalStrengthTraining() {
   return (
@@ -227,6 +228,9 @@ export default function PersonalStrengthTraining() {
           </div>
         </div>
       </div>
+
+      {/* Michael About Block */}
+      <MichaelAboutBlock />
     </div>
   );
 }

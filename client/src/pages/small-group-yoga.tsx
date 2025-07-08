@@ -5,6 +5,7 @@ import { Link } from "wouter";
 import { ArrowLeft, Check, MapPin, Award, Clock, Users, Heart, Flower, Sparkles, Star } from "lucide-react";
 import { HeroGradient } from "@/components/hero-gradient";
 import { PermanentClassSchedule } from "@/components/permanent-class-schedule";
+import { EricaAboutBlock } from "@/components/erica-about-block";
 
 export default function SmallGroupYoga() {
   return (
@@ -214,6 +215,9 @@ export default function SmallGroupYoga() {
           </div>
         </div>
       </div>
+
+      {/* Erica About Block */}
+      <EricaAboutBlock />
     </div>
   );
 }

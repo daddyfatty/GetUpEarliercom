@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { ArrowLeft, Check, MapPin, Award, Clock, User, MessageSquare, Target, Calendar } from "lucide-react";
 import { HeroGradient } from "@/components/hero-gradient";
+import { MichaelAboutBlock } from "@/components/michael-about-block";
 
 export default function AccountabilityCoaching() {
   return (
@@ -229,6 +230,9 @@ export default function AccountabilityCoaching() {
           </div>
         </div>
       </div>
+
+      {/* Michael About Block */}
+      <MichaelAboutBlock />
     </div>
   );
 }

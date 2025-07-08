@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { ArrowLeft, Check, MapPin, Award, Clock, User, Heart, Flower, Sparkles } from "lucide-react";
 import { HeroGradient } from "@/components/hero-gradient";
+import { EricaAboutBlock } from "@/components/erica-about-block";
 
 export default function PrivateYoga() {
   return (
@@ -291,6 +292,9 @@ export default function PrivateYoga() {
           </div>
         </div>
       </div>
+
+      {/* Erica About Block */}
+      <EricaAboutBlock />
     </div>
   );
 }
