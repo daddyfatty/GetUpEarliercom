@@ -146,59 +146,7 @@ export default function PrivateYoga() {
             </div>
           </div>
 
-          {/* Key Features */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">What Makes It Special</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <Card className="p-8 shadow-lg">
-                <CardContent className="p-0">
-                  <div className="flex items-center mb-4">
-                    <Sparkles className="h-8 w-8 text-purple-600 mr-3" />
-                    <h3 className="text-xl font-semibold text-gray-900">Dedicated Yoga Studio</h3>
-                  </div>
-                  <p className="text-gray-600">
-                    A pristine, purpose-built yoga space designed for tranquility and focus, creating the perfect environment for your practice.
-                  </p>
-                </CardContent>
-              </Card>
 
-              <Card className="p-8 shadow-lg">
-                <CardContent className="p-0">
-                  <div className="flex items-center mb-4">
-                    <User className="h-8 w-8 text-pink-600 mr-3" />
-                    <h3 className="text-xl font-semibold text-gray-900">Personalized Sessions</h3>
-                  </div>
-                  <p className="text-gray-600">
-                    Every session is tailored to your individual needs, goals, and physical capabilities, ensuring safe and effective practice.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="p-8 shadow-lg">
-                <CardContent className="p-0">
-                  <div className="flex items-center mb-4">
-                    <Heart className="h-8 w-8 text-red-600 mr-3" />
-                    <h3 className="text-xl font-semibold text-gray-900">Mindful Approach</h3>
-                  </div>
-                  <p className="text-gray-600">
-                    Focus on breath awareness, proper alignment, and mindful movement to create a holistic yoga experience.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="p-8 shadow-lg">
-                <CardContent className="p-0">
-                  <div className="flex items-center mb-4">
-                    <Flower className="h-8 w-8 text-green-600 mr-3" />
-                    <h3 className="text-xl font-semibold text-gray-900">All Levels Welcome</h3>
-                  </div>
-                  <p className="text-gray-600">
-                    Whether you're beginning your yoga journey or deepening your practice, sessions are adapted to your experience level.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
 
           {/* Benefits Section */}
           <div className="mb-16">
