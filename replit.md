@@ -89,7 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
-- July 8, 2025: Replaced heavy hero-gradient with lighter semi-transparent black gradient (from-black/40 via-black/60 to-black/80) for better background image visibility
+- July 8, 2025: Applied original hero-gradient with 25% opacity on background image pages to maintain brand colors while showing background image
 - July 8, 2025: Added background image support to HeroGradient component and implemented it on Certified Running Coaching page with proper gradient overlay
 - July 8, 2025: Removed 5-star rating graphic from Services page, keeping just the "It all starts with a 30 minute session" title
 - July 8, 2025: Replaced "Comprehensive Coaching & Training" with "It all starts with a 30 minute session" and added 5-star rating graphic on Services page
