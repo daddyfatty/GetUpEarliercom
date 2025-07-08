@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 8, 2025: Balanced hero section layout with equal heights for left and right columns, improved spacing and vertical centering
 - July 8, 2025: Moved Facebook Group button to appear below "From the Blog" area in hero section for better content flow
 - July 8, 2025: Hidden profile and logout sections in mobile navigation menu for cleaner user experience
 - July 8, 2025: Updated hero section label from "Random Post:" to "From the Blog:" for more welcoming content presentation

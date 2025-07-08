@@ -23,9 +23,9 @@ export function HeroSection() {
   return (
     <HeroGradient className="text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="hidden lg:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-px h-64 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
-          <div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch min-h-[600px]">
+          <div className="hidden lg:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-px h-96 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
+          <div className="flex flex-col justify-center space-y-6">
             <p className="text-sm text-blue-200 mb-4 tracking-wider uppercase">
               PERSONAL TRAINING, NUTRITION & ACCOUNTABILITY COACHING
             </p>
@@ -59,13 +59,13 @@ export function HeroSection() {
             </div>
           </div>
           
-          <div className="relative">
+          <div className="flex flex-col justify-center space-y-6">
             {randomPost ? (
               <div>
                 <p className="text-white/80 text-sm font-medium mb-4 uppercase tracking-wider">From the Blog:</p>
                 <Link href={`/blog/${randomPost.id}`}>
                   <div className="cursor-pointer hover:scale-105 transition-transform duration-300 relative">
-                    <div className="w-full h-80 overflow-hidden rounded-2xl shadow-2xl">
+                    <div className="w-full h-72 overflow-hidden rounded-2xl shadow-2xl">
                       <img 
                         src={randomPost.imageUrl || '/api/placeholder/600/400'} 
                         alt={randomPost.title}
@@ -81,7 +81,7 @@ export function HeroSection() {
                 </Link>
               </div>
             ) : (
-              <div className="rounded-2xl shadow-2xl w-full h-64 bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
+              <div className="rounded-2xl shadow-2xl w-full h-72 bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-2"></div>
                   <p className="text-white/70">Loading blog post...</p>
@@ -90,7 +90,7 @@ export function HeroSection() {
             )}
             
             {/* Facebook Group Section */}
-            <div className="mt-6">
+            <div>
               <div 
                 className="bg-white/10 backdrop-blur-sm border border-white/20 p-4 rounded-xl shadow-lg cursor-pointer hover:bg-white/20 hover:scale-105 transition-all duration-300 transform"
                 onClick={() => window.open('https://www.facebook.com/groups/getupearlier', '_blank')}
