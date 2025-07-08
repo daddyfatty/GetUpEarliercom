@@ -5,28 +5,40 @@ export function MichaelAboutBlock() {
     <div className="bg-gray-50 py-16 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8 items-center">
+          <div className="md:col-span-1 flex flex-col items-center">
+            <div className="bg-slate-900 rounded-lg p-8 w-full max-w-sm text-center">
+              <div className="w-32 h-32 rounded-full overflow-hidden mx-auto mb-6">
+                <img 
+                  src="/attached_assets/493414479_10213588193416986_7983427679426833080_n.jpg" 
+                  alt="Michael Baker" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-2">Michael Baker</h3>
+              <div className="text-gray-300 space-y-1 text-sm mb-6">
+                <p>Certified Personal Trainer</p>
+                <p>Integrative Nutrition Health Coach</p>
+                <p>Running Coach & Yoga Teacher</p>
+                <p>25 Year Digital Professional</p>
+                <p>Lifelong Fitness Practitioner</p>
+              </div>
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white w-full">
+                Let's Work Together →
+              </Button>
+            </div>
+          </div>
           <div className="md:col-span-2">
             <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              I believe in "lifting heavy things" with high intensity at least twice per week. I focus on traditional compound exercises, drop sets, bodyweight strength training, and physical outdoor work like running, hiking, and basic calisthenics, along with increasing flexibility through customized yoga-style stretches. All supported and built on truly understanding and implementing "clean eating."
+              Hello, I'm Michael Baker. I am a 50-year-old strength trainer, certified personal trainer, running coach, health coach, and yoga teacher. I'm also a former yoga studio owner and a dedicated health and wellness practitioner with over 30 years of experience. I began <span className="text-blue-600 font-semibold">Get Up Earlier</span> (GetUpEarlier.com) because getting up earlier was step one in transforming my routine and overall well-being, especially after spending years sitting at a computer as a <span className="text-blue-600 font-semibold">digital professional</span>.
             </p>
-            <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              I'm here to help you break free from inactivity, your gym rut, or advance your fitness. You need a push in the right direction and accountability.
-            </p>
+            <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+              <p className="text-gray-700 italic">
+                My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus on helping people rely on intuition, providing a personal experience, and introducing them to strength training, alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts.
+              </p>
+            </div>
             <p className="text-gray-700 text-lg leading-relaxed">
-              One or two 30-minute sessions per week will change your life. You will be amazed by how much we can accomplish in this short time, how quickly your strength improves, and how much you gain as you navigate life. Learn to reframe your time and thoughts about working out, and see how it can all be naturally and intuitively integrated into your life.
+              While my own marathon training or strength achievements might seem extreme, I'm not trying to turn anyone into a bodybuilder or marathon runner. I'm simply showing that, especially beyond 40, 50, 60, and 70 years old, these things are possible. <span className="text-blue-600 font-semibold">It's about inspiration and helping people make realistic, sustainable changes.</span>
             </p>
-          </div>
-          <div className="md:col-span-1 flex flex-col items-center">
-            <img 
-              src="/attached_assets/download - 2025-06-20T164725.183_1750453386689.png" 
-              alt="Michael Baker training setup" 
-              className="w-full max-w-sm rounded-lg shadow-lg mb-4"
-            />
-            <img 
-              src="/assets/personal-trainer-cert-logo.png" 
-              alt="Personal Trainer Certification" 
-              className="w-16 h-16 object-contain"
-            />
           </div>
         </div>
       </div>

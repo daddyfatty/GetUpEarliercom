@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 8, 2025: Updated MichaelAboutBlock and EricaAboutBlock components to use authentic content from About page - Michael's section includes his professional photo, credentials, and Get Up Earlier story; Erica's section includes her photo, teaching experience, and permanent class schedule
 - July 8, 2025: Created reusable MichaelAboutBlock and EricaAboutBlock components - added Michael's about section to top 4 services (Personal Training, Nutrition, Running, Accountability) and Erica's about section to yoga services (Private & Small Group Yoga)
 - July 8, 2025: Added service-specific certification logos positioned directly below featured images in white space on all service pages - no additional text, just clean logo placement
 - July 8, 2025: Added service-specific featured images in 1/3 column layout to all service pages (Running, Strength Training, Nutrition, Accountability, Private Yoga, Small Group Yoga) using the same images defined in services grid component
