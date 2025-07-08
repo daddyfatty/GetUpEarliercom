@@ -4,26 +4,12 @@ import { cn } from '@/lib/utils';
 interface HeroGradientProps {
   children: React.ReactNode;
   className?: string;
-  backgroundImage?: string;
 }
 
-export function HeroGradient({ children, className, backgroundImage }: HeroGradientProps) {
+export function HeroGradient({ children, className }: HeroGradientProps) {
   return (
-    <div 
-      className={cn("relative", backgroundImage ? "" : "hero-gradient", className)}
-      style={backgroundImage ? {
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      } : {}}
-    >
-      {backgroundImage && (
-        <div className="absolute inset-0 hero-gradient opacity-25" />
-      )}
-      <div className="relative z-10">
-        {children}
-      </div>
+    <div className={cn("hero-gradient", className)}>
+      {children}
     </div>
   );
 }
