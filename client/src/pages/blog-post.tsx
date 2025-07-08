@@ -93,7 +93,9 @@ export default function BlogPost() {
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight max-w-4xl mx-auto">
-              {post.title}
+              {post.title === "Why drop sets on incline dumbbell presses (@dr.mike.israetel approved)" 
+                ? "Why Drop Sets on Incline Dumbbell Presses - Dr. Mike Israetel approved? ‪@RenaissancePeriodization"
+                : post.title}
             </h1>
             
             {/* Author Block with Photo - Clickable */}
