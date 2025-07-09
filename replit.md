@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 8, 2025: Updated homepage 1-on-1 Services section title from "Strength, Nutrition, Yoga" to "Strength, Nutrition & Accountability Coaching"
 - July 8, 2025: Removed duplicate "What Makes It Special" block from Private Yoga page for cleaner presentation
 - July 8, 2025: Rebuilt MichaelAboutBlock and EricaAboutBlock components to exactly match About page layout and styling - Michael's section uses proper lg:grid-cols-5 layout with dark navy background; Erica's section uses correct green gradient background (#E1ECE7 to #C4D6CC) with gray text
 - July 8, 2025: Created reusable MichaelAboutBlock and EricaAboutBlock components - added Michael's about section to top 4 services (Personal Training, Nutrition, Running, Accountability) and Erica's about section to yoga services (Private & Small Group Yoga)
