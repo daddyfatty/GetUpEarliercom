@@ -43,9 +43,9 @@ export function Navigation() {
 
   const navItems = [
     { href: "/services", label: "1-on-1 Services" },
+    { href: "/blog", label: "Blog" },
     { href: "/recipes", label: "Recipes", beta: true },
     { href: "/workouts", label: "Workouts", beta: true },
-    { href: "/blog", label: "Blog" },
     ...(isAdmin ? [{ href: "/admin", label: "Admin" }] : []),
   ];
 
@@ -119,24 +119,90 @@ export function Navigation() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center justify-center flex-1">
               <div className="flex items-baseline justify-center space-x-6 lg:space-x-8">
-                {navItems.map((item) => (
-                  <Link key={item.href} href={item.href}>
+                {/* 1-on-1 Services */}
+                <Link href="/services">
+                  <span
+                    className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                      location === "/services"
+                        ? "text-[hsl(var(--orange))] bg-white/10"
+                        : "text-white hover:text-[hsl(var(--orange))]"
+                    }`}
+                  >
+                    1-on-1 Services
+                  </span>
+                </Link>
+                
+                {/* About Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
                     <span
                       className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
-                        location === item.href
+                        aboutItems.some(item => location === item.href)
                           ? "text-[hsl(var(--orange))] bg-white/10"
                           : "text-white hover:text-[hsl(var(--orange))]"
                       }`}
                     >
-                      {item.label}
-                      {item.beta && (
-                        <span className="ml-1 text-xs bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
-                          BETA
-                        </span>
-                      )}
+                      About
+                      <ChevronDown className="ml-1 h-4 w-4" />
                     </span>
-                  </Link>
-                ))}
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="center" className="bg-white border border-gray-200 shadow-lg">
+                    {aboutItems.map((item) => (
+                      <DropdownMenuItem key={item.href} asChild>
+                        <Link href={item.href}>
+                          <span className="font-medium text-gray-900 hover:text-[hsl(var(--orange))] cursor-pointer w-full">
+                            {item.label}
+                          </span>
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                
+                {/* Blog */}
+                <Link href="/blog">
+                  <span
+                    className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                      location === "/blog"
+                        ? "text-[hsl(var(--orange))] bg-white/10"
+                        : "text-white hover:text-[hsl(var(--orange))]"
+                    }`}
+                  >
+                    Blog
+                  </span>
+                </Link>
+                
+                {/* Recipes */}
+                <Link href="/recipes">
+                  <span
+                    className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                      location === "/recipes"
+                        ? "text-[hsl(var(--orange))] bg-white/10"
+                        : "text-white hover:text-[hsl(var(--orange))]"
+                    }`}
+                  >
+                    Recipes
+                    <span className="ml-1 text-xs bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
+                      BETA
+                    </span>
+                  </span>
+                </Link>
+                
+                {/* Workouts */}
+                <Link href="/workouts">
+                  <span
+                    className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                      location === "/workouts"
+                        ? "text-[hsl(var(--orange))] bg-white/10"
+                        : "text-white hover:text-[hsl(var(--orange))]"
+                    }`}
+                  >
+                    Workouts
+                    <span className="ml-1 text-xs bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
+                      BETA
+                    </span>
+                  </span>
+                </Link>
                 
                 {/* Calculators Dropdown */}
                 <DropdownMenu>
@@ -168,32 +234,20 @@ export function Navigation() {
                   </DropdownMenuContent>
                 </DropdownMenu>
                 
-                {/* About Dropdown */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
+                {/* Admin (if applicable) */}
+                {isAdmin && (
+                  <Link href="/admin">
                     <span
                       className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
-                        aboutItems.some(item => location === item.href)
+                        location === "/admin"
                           ? "text-[hsl(var(--orange))] bg-white/10"
                           : "text-white hover:text-[hsl(var(--orange))]"
                       }`}
                     >
-                      About
-                      <ChevronDown className="ml-1 h-4 w-4" />
+                      Admin
                     </span>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="center" className="bg-white border border-gray-200 shadow-lg">
-                    {aboutItems.map((item) => (
-                      <DropdownMenuItem key={item.href} asChild>
-                        <Link href={item.href}>
-                          <span className="font-medium text-gray-900 hover:text-[hsl(var(--orange))] cursor-pointer w-full">
-                            {item.label}
-                          </span>
-                        </Link>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                  </Link>
+                )}
               </div>
             </div>
 
@@ -355,24 +409,103 @@ export function Navigation() {
                     )}
 
                     {/* Main Navigation */}
-                    {navItems.map((item) => (
-                      <Link key={item.href} href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
+                    {/* 1-on-1 Services */}
+                    <Link href="/services" onClick={() => setIsMobileMenuOpen(false)}>
+                      <span
+                        className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading flex items-center ${
+                          location === "/services"
+                            ? "text-[hsl(var(--orange))] bg-orange-50"
+                            : "text-gray-900 hover:text-[hsl(var(--orange))]"
+                        }`}
+                      >
+                        1-on-1 Services
+                      </span>
+                    </Link>
+                    
+                    {/* About Collapsible Section */}
+                    <Collapsible open={isAboutOpen} onOpenChange={setIsAboutOpen}>
+                      <CollapsibleTrigger className="flex items-center justify-between w-full px-3 py-2 text-left">
+                        <span className="text-base font-medium text-gray-900 uppercase font-heading">
+                          About
+                        </span>
+                        <ChevronRight className={`h-4 w-4 transition-transform ${isAboutOpen ? 'rotate-90' : ''}`} />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="space-y-1 mt-2">
+                        {aboutItems.map((item) => (
+                          <Link key={item.href} href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
+                            <span
+                              className={`block px-6 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading ${
+                                location === item.href
+                                  ? "text-[hsl(var(--orange))] bg-orange-50"
+                                  : "text-gray-600 hover:text-[hsl(var(--orange))]"
+                              }`}
+                            >
+                              {item.label}
+                            </span>
+                          </Link>
+                        ))}
+                      </CollapsibleContent>
+                    </Collapsible>
+                    
+                    {/* Blog */}
+                    <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)}>
+                      <span
+                        className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading flex items-center ${
+                          location === "/blog"
+                            ? "text-[hsl(var(--orange))] bg-orange-50"
+                            : "text-gray-900 hover:text-[hsl(var(--orange))]"
+                        }`}
+                      >
+                        Blog
+                      </span>
+                    </Link>
+                    
+                    {/* Recipes */}
+                    <Link href="/recipes" onClick={() => setIsMobileMenuOpen(false)}>
+                      <span
+                        className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading flex items-center ${
+                          location === "/recipes"
+                            ? "text-[hsl(var(--orange))] bg-orange-50"
+                            : "text-gray-900 hover:text-[hsl(var(--orange))]"
+                        }`}
+                      >
+                        Recipes
+                        <span className="ml-2 text-xs bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
+                          BETA
+                        </span>
+                      </span>
+                    </Link>
+                    
+                    {/* Workouts */}
+                    <Link href="/workouts" onClick={() => setIsMobileMenuOpen(false)}>
+                      <span
+                        className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading flex items-center ${
+                          location === "/workouts"
+                            ? "text-[hsl(var(--orange))] bg-orange-50"
+                            : "text-gray-900 hover:text-[hsl(var(--orange))]"
+                        }`}
+                      >
+                        Workouts
+                        <span className="ml-2 text-xs bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
+                          BETA
+                        </span>
+                      </span>
+                    </Link>
+                    
+                    {/* Admin (if applicable) */}
+                    {isAdmin && (
+                      <Link href="/admin" onClick={() => setIsMobileMenuOpen(false)}>
                         <span
                           className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading flex items-center ${
-                            location === item.href
+                            location === "/admin"
                               ? "text-[hsl(var(--orange))] bg-orange-50"
                               : "text-gray-900 hover:text-[hsl(var(--orange))]"
                           }`}
                         >
-                          {item.label}
-                          {item.beta && (
-                            <span className="ml-2 text-xs bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
-                              BETA
-                            </span>
-                          )}
+                          Admin
                         </span>
                       </Link>
-                    ))}
+                    )}
 
                     {/* Calculators Collapsible Section */}
                     <Collapsible open={isCalculatorsOpen} onOpenChange={setIsCalculatorsOpen}>
