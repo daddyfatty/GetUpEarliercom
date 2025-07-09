@@ -10,7 +10,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Menu, Bell, User, LogOut, ChevronDown, ChevronRight } from "lucide-react";
-import { SiFacebook } from "react-icons/si";
+import { SiFacebook, SiYoutube } from "react-icons/si";
 import logoPath from "@assets/logo_1749324568864.png";
 
 export function Navigation() {
@@ -254,6 +254,17 @@ export function Navigation() {
             {/* Desktop Actions */}
             <div className="hidden md:block">
               <div className="ml-4 flex items-center md:ml-6 space-x-4">
+                <a 
+                  href="https://www.youtube.com/@getupearlier" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
+                  title="YouTube Channel"
+                >
+                  <SiYoutube className="h-5 w-5" />
+                  <span className="text-xs font-medium hidden lg:inline">64k</span>
+                </a>
+                
                 <a 
                   href="https://www.facebook.com/groups/getupearlier" 
                   target="_blank" 
@@ -558,8 +569,19 @@ export function Navigation() {
                       </CollapsibleContent>
                     </Collapsible>
 
-                    {/* Facebook Group Link */}
-                    <div className="pt-4 border-t">
+                    {/* Social Media Links */}
+                    <div className="pt-4 border-t space-y-2">
+                      <a 
+                        href="https://www.youtube.com/@getupearlier" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center space-x-2 px-3 py-2 text-gray-900 hover:text-[hsl(var(--orange))] transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <SiYoutube className="h-5 w-5" />
+                        <span className="font-medium">YouTube (64k)</span>
+                      </a>
+                      
                       <a 
                         href="https://www.facebook.com/groups/getupearlier" 
                         target="_blank" 
