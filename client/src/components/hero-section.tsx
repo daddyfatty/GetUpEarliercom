@@ -27,7 +27,7 @@ export function HeroSection() {
           <div className="hidden lg:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-px h-96 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
           <div className="flex flex-col justify-start pt-16">
             <p className="text-sm text-blue-200 mb-4 tracking-wider uppercase">
-              PERSONAL TRAINING, NUTRITION & ACCOUNTABILITY COACHING
+              Strength, Nutrition & Accountability Coaching
             </p>
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-12 font-brand">
               Bridging the gap from inactivity and poor diet to strength and healthy habits
