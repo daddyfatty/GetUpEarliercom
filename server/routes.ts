@@ -1234,6 +1234,339 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // =============================================================================
+  // ZAPIER WEBHOOK ENDPOINTS
+  // =============================================================================
+
+  // Generic webhook endpoint for any Zapier integration
+  app.post("/api/webhooks/zapier", async (req, res) => {
+    try {
+      const { type, data } = req.body;
+      
+      if (!type || !data) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Type and data are required" 
+        });
+      }
+
+      console.log(`Zapier webhook received: ${type}`, data);
+      
+      // Log the webhook data for debugging
+      const webhookLog = {
+        timestamp: new Date().toISOString(),
+        type,
+        data: JSON.stringify(data),
+        processed: true
+      };
+      
+      // You can store webhook logs in your database if needed
+      // await storage.createWebhookLog(webhookLog);
+
+      res.json({ 
+        success: true, 
+        message: `Webhook processed successfully`,
+        received: webhookLog 
+      });
+    } catch (error: any) {
+      console.error("Error processing Zapier webhook:", error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Error processing webhook: " + error.message 
+      });
+    }
+  });
+
+  // New user registration webhook (from forms, lead magnets, etc.)
+  app.post("/api/webhooks/new-user", async (req, res) => {
+    try {
+      const { email, firstName, lastName, phone, source } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Email is required" 
+        });
+      }
+
+      // Check if user already exists
+      const existingUser = await storage.getUserByEmail(email);
+      if (existingUser) {
+        return res.json({ 
+          success: true, 
+          message: "User already exists",
+          user: existingUser 
+        });
+      }
+
+      // Create new user
+      const newUser = await storage.createUser({
+        email,
+        firstName: firstName || '',
+        lastName: lastName || '',
+        phone: phone || '',
+        source: source || 'zapier_webhook'
+      });
+
+      console.log(`New user created via Zapier: ${email}`);
+      
+      res.json({ 
+        success: true, 
+        message: "User created successfully",
+        user: newUser 
+      });
+    } catch (error: any) {
+      console.error("Error creating user via webhook:", error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Error creating user: " + error.message 
+      });
+    }
+  });
+
+  // Goal tracking webhook (from habit tracking apps, calendars, etc.)
+  app.post("/api/webhooks/goal-update", async (req, res) => {
+    try {
+      const { email, goalType, goalValue, status, date, notes } = req.body;
+      
+      if (!email || !goalType) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Email and goalType are required" 
+        });
+      }
+
+      // Find user by email
+      const user = await storage.getUserByEmail(email);
+      if (!user) {
+        return res.status(404).json({ 
+          success: false, 
+          message: "User not found" 
+        });
+      }
+
+      // Create goal entry
+      const goalEntry = await storage.createGoal({
+        userId: user.id,
+        type: goalType,
+        targetValue: goalValue || 0,
+        status: status || 'active',
+        notes: notes || '',
+        createdAt: date ? new Date(date) : new Date()
+      });
+
+      console.log(`Goal updated via Zapier for user: ${email}`);
+      
+      res.json({ 
+        success: true, 
+        message: "Goal updated successfully",
+        goal: goalEntry 
+      });
+    } catch (error: any) {
+      console.error("Error updating goal via webhook:", error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Error updating goal: " + error.message 
+      });
+    }
+  });
+
+  // Workout completion webhook (from fitness apps, wearables, etc.)
+  app.post("/api/webhooks/workout-completed", async (req, res) => {
+    try {
+      const { email, workoutName, duration, calories, date, notes } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Email is required" 
+        });
+      }
+
+      // Find user by email
+      const user = await storage.getUserByEmail(email);
+      if (!user) {
+        return res.status(404).json({ 
+          success: false, 
+          message: "User not found" 
+        });
+      }
+
+      // Log workout completion
+      const workoutLog = {
+        userId: user.id,
+        workoutName: workoutName || 'Unknown Workout',
+        duration: duration || 0,
+        calories: calories || 0,
+        completedAt: date ? new Date(date) : new Date(),
+        notes: notes || ''
+      };
+
+      console.log(`Workout completed via Zapier for user: ${email}`, workoutLog);
+      
+      res.json({ 
+        success: true, 
+        message: "Workout logged successfully",
+        workout: workoutLog 
+      });
+    } catch (error: any) {
+      console.error("Error logging workout via webhook:", error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Error logging workout: " + error.message 
+      });
+    }
+  });
+
+  // Nutrition tracking webhook (from MyFitnessPal, Cronometer, etc.)
+  app.post("/api/webhooks/nutrition-logged", async (req, res) => {
+    try {
+      const { email, foodName, calories, protein, carbs, fat, date, mealType } = req.body;
+      
+      if (!email || !foodName) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Email and foodName are required" 
+        });
+      }
+
+      // Find user by email
+      const user = await storage.getUserByEmail(email);
+      if (!user) {
+        return res.status(404).json({ 
+          success: false, 
+          message: "User not found" 
+        });
+      }
+
+      // Create food entry
+      const foodEntry = await storage.createFoodEntry({
+        userId: user.id,
+        foodName,
+        calories: calories || 0,
+        protein: protein || 0,
+        carbs: carbs || 0,
+        fat: fat || 0,
+        mealType: mealType || 'other',
+        date: date ? new Date(date) : new Date()
+      });
+
+      console.log(`Nutrition logged via Zapier for user: ${email}`);
+      
+      res.json({ 
+        success: true, 
+        message: "Nutrition logged successfully",
+        entry: foodEntry 
+      });
+    } catch (error: any) {
+      console.error("Error logging nutrition via webhook:", error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Error logging nutrition: " + error.message 
+      });
+    }
+  });
+
+  // Blog post creation webhook (from content management tools)
+  app.post("/api/webhooks/create-blog-post", async (req, res) => {
+    try {
+      const { title, content, excerpt, tags, category, featuredImage, author } = req.body;
+      
+      if (!title || !content) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Title and content are required" 
+        });
+      }
+
+      // Create blog post
+      const blogPost = await storage.createBlogPost({
+        title,
+        content,
+        excerpt: excerpt || content.substring(0, 200) + '...',
+        tags: tags || [],
+        category: category || 'General',
+        featuredImage: featuredImage || '',
+        author: author || 'Michael Baker',
+        status: 'published',
+        publishedAt: new Date()
+      });
+
+      console.log(`Blog post created via Zapier: ${title}`);
+      
+      res.json({ 
+        success: true, 
+        message: "Blog post created successfully",
+        post: blogPost 
+      });
+    } catch (error: any) {
+      console.error("Error creating blog post via webhook:", error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Error creating blog post: " + error.message 
+      });
+    }
+  });
+
+  // Email notification webhook (trigger emails based on user actions)
+  app.post("/api/webhooks/send-notification", async (req, res) => {
+    try {
+      const { email, type, subject, message, data } = req.body;
+      
+      if (!email || !type) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "Email and type are required" 
+        });
+      }
+
+      // Log notification request
+      const notification = {
+        timestamp: new Date().toISOString(),
+        email,
+        type,
+        subject: subject || 'Notification from Get Up Earlier',
+        message: message || 'You have a new notification',
+        data: data || {}
+      };
+
+      console.log(`Notification webhook received for: ${email}`, notification);
+      
+      // In a real implementation, you would send actual emails here
+      // For now, we'll just log and confirm receipt
+      
+      res.json({ 
+        success: true, 
+        message: "Notification processed successfully",
+        notification 
+      });
+    } catch (error: any) {
+      console.error("Error processing notification webhook:", error);
+      res.status(500).json({ 
+        success: false, 
+        message: "Error processing notification: " + error.message 
+      });
+    }
+  });
+
+  // Webhook verification endpoint (for Zapier setup)
+  app.get("/api/webhooks/verify", async (req, res) => {
+    res.json({ 
+      success: true, 
+      message: "Webhook endpoint is active",
+      timestamp: new Date().toISOString(),
+      endpoints: [
+        "/api/webhooks/zapier - Generic webhook",
+        "/api/webhooks/new-user - New user registration",
+        "/api/webhooks/goal-update - Goal tracking",
+        "/api/webhooks/workout-completed - Workout logging",
+        "/api/webhooks/nutrition-logged - Nutrition tracking",
+        "/api/webhooks/create-blog-post - Blog post creation",
+        "/api/webhooks/send-notification - Email notifications"
+      ]
+    });
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

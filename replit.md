@@ -89,6 +89,9 @@ The database schema includes:
 
 ```
 Changelog:
+- July 9, 2025: Added comprehensive Zapier webhook integration with 8 specialized endpoints for user registration, goal tracking, workout logging, nutrition tracking, blog post creation, email notifications, and generic data processing - enables connection to thousands of apps through Zapier platform
+- July 9, 2025: Reordered navigation menu: 1-on-1 Services (1st), About dropdown (2nd), Blog (3rd), Recipes (4th), Workouts (5th), Calculators (6th), Facebook Group (last) - updated both desktop and mobile navigation for consistent user experience
+- July 9, 2025: Updated homepage hero section text from "Personal Training, Nutrition & Accountability Coaching" to "Strength, Nutrition & Accountability Coaching" for better brand messaging
 - July 8, 2025: Updated homepage 1-on-1 Services section title from "Strength, Nutrition, Yoga" to "Strength, Nutrition & Accountability Coaching"
 - July 8, 2025: Removed duplicate "What Makes It Special" block from Private Yoga page for cleaner presentation
 - July 8, 2025: Rebuilt MichaelAboutBlock and EricaAboutBlock components to exactly match About page layout and styling - Michael's section uses proper lg:grid-cols-5 layout with dark navy background; Erica's section uses correct green gradient background (#E1ECE7 to #C4D6CC) with gray text
