@@ -317,9 +317,9 @@ export default function Services() {
                               setPrivateYogaModal(true);
                             }
                           }}
-                          className="w-full bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300 font-medium py-3 px-6 rounded-lg"
+                          className="w-full bg-white text-[hsl(var(--navy))] border-2 border-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))] hover:text-white hover:scale-[1.02] transition-all duration-300 font-semibold py-3 px-6 rounded-lg shadow-lg"
                         >
-                          Read More →
+                          Learn More →
                         </Button>
                       </div>
                     )}

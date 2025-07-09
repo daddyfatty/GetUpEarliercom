@@ -189,13 +189,13 @@ export function ServicesGrid({
                 <div className="text-center mt-8">
                   <Button 
                     size="lg" 
-                    className="text-lg px-6 py-3 bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300"
+                    className="text-lg px-6 py-3 bg-white text-[hsl(var(--navy))] border-2 border-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))] hover:text-white hover:scale-[1.02] transition-all duration-300 font-semibold shadow-lg"
                     onClick={(e) => {
                       e.stopPropagation();
                       setLocation("/services/personal-strength-training");
                     }}
                   >
-                    Read More →
+                    Learn More →
                   </Button>
                 </div>
               )}
@@ -203,13 +203,13 @@ export function ServicesGrid({
                 <div className="text-center mt-8">
                   <Button 
                     size="lg" 
-                    className="text-lg px-6 py-3 bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300"
+                    className="text-lg px-6 py-3 bg-white text-[hsl(var(--navy))] border-2 border-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))] hover:text-white hover:scale-[1.02] transition-all duration-300 font-semibold shadow-lg"
                     onClick={(e) => {
                       e.stopPropagation();
                       setLocation("/services/virtual-nutrition-coaching");
                     }}
                   >
-                    Read More →
+                    Learn More →
                   </Button>
                 </div>
               )}
@@ -217,13 +217,13 @@ export function ServicesGrid({
                 <div className="text-center mt-8">
                   <Button 
                     size="lg" 
-                    className="text-lg px-6 py-3 bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300"
+                    className="text-lg px-6 py-3 bg-white text-[hsl(var(--navy))] border-2 border-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))] hover:text-white hover:scale-[1.02] transition-all duration-300 font-semibold shadow-lg"
                     onClick={(e) => {
                       e.stopPropagation();
                       setLocation("/services/certified-running-coaching");
                     }}
                   >
-                    Read More →
+                    Learn More →
                   </Button>
                 </div>
               )}
@@ -231,13 +231,13 @@ export function ServicesGrid({
                 <div className="text-center mt-8">
                   <Button 
                     size="lg" 
-                    className="text-lg px-6 py-3 bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300"
+                    className="text-lg px-6 py-3 bg-white text-[hsl(var(--navy))] border-2 border-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))] hover:text-white hover:scale-[1.02] transition-all duration-300 font-semibold shadow-lg"
                     onClick={(e) => {
                       e.stopPropagation();
                       setLocation("/services/accountability-coaching");
                     }}
                   >
-                    Read More →
+                    Learn More →
                   </Button>
                 </div>
               )}
@@ -245,13 +245,13 @@ export function ServicesGrid({
                 <div className="text-center mt-8">
                   <Button 
                     size="lg" 
-                    className="text-lg px-6 py-3 bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300"
+                    className="text-lg px-6 py-3 bg-white text-[hsl(var(--navy))] border-2 border-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))] hover:text-white hover:scale-[1.02] transition-all duration-300 font-semibold shadow-lg"
                     onClick={(e) => {
                       e.stopPropagation();
                       setLocation("/services/private-yoga");
                     }}
                   >
-                    Read More →
+                    Learn More →
                   </Button>
                 </div>
               )}
@@ -259,13 +259,13 @@ export function ServicesGrid({
                 <div className="text-center mt-8">
                   <Button 
                     size="lg" 
-                    className="text-lg px-6 py-3 bg-[hsl(var(--navy))] text-white hover:bg-[hsl(var(--primary))] hover:scale-[1.02] transition-all duration-300"
+                    className="text-lg px-6 py-3 bg-white text-[hsl(var(--navy))] border-2 border-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))] hover:text-white hover:scale-[1.02] transition-all duration-300 font-semibold shadow-lg"
                     onClick={(e) => {
                       e.stopPropagation();
                       setLocation("/services/small-group-yoga");
                     }}
                   >
-                    Read More →
+                    Learn More →
                   </Button>
                 </div>
               )}

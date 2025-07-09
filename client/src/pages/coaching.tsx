@@ -214,10 +214,10 @@ export default function Coaching() {
                   <CardContent className="flex-1 flex flex-col justify-end">
                     <Button 
                       variant="outline" 
-                      className="w-full group"
+                      className="w-full group border-2 border-[hsl(var(--navy))] text-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))] hover:text-white font-semibold"
                       onClick={() => window.open('https://calendly.com/michaelbakerdigital/30minute', '_blank')}
                     >
-                      Read More
+                      Learn More
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </CardContent>
