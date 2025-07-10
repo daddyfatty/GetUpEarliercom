@@ -262,7 +262,7 @@ export function Navigation() {
                   title="YouTube Channel"
                 >
                   <SiYoutube className="h-5 w-5" />
-                  <span className="text-xs font-medium hidden lg:inline">64k</span>
+                  <span className="text-xs font-medium hidden lg:inline">63k</span>
                 </a>
                 
                 <a 
@@ -579,7 +579,7 @@ export function Navigation() {
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         <SiYoutube className="h-5 w-5" />
-                        <span className="font-medium">YouTube (64k)</span>
+                        <span className="font-medium">YouTube (63k)</span>
                       </a>
                       
                       <a 
