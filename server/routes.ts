@@ -20,6 +20,7 @@ import {
   deleteBlogPost as cmsDeleteBlogPost 
 } from './blog-cms';
 import { getCachedLinkPreview } from './link-preview';
+import { getYouTubeVideoMetadata, generateSlugFromTitle, createEmbedUrl } from './youtube-utils';
 
 // Check if Stripe is configured
 const STRIPE_CONFIGURED = !!process.env.STRIPE_SECRET_KEY;
@@ -1092,6 +1093,96 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // PayPal routes
   app.post("/api/paypal/order", createPaypalOrder);
   app.post("/api/paypal/order/:orderID/capture", capturePaypalOrder);
+
+  // YouTube video blog creation route
+  app.post("/api/blog/create-youtube-video", async (req, res) => {
+    try {
+      const { youtubeUrl, customTitle, customDescription, category } = req.body;
+      
+      if (!youtubeUrl) {
+        return res.status(400).json({ message: "YouTube URL is required" });
+      }
+      
+      console.log(`Fetching YouTube video metadata for: ${youtubeUrl}`);
+      const videoData = await getYouTubeVideoMetadata(youtubeUrl);
+      
+      if (!videoData) {
+        return res.status(400).json({ message: "Could not fetch YouTube video data" });
+      }
+      
+      const title = customTitle || videoData.title;
+      const description = customDescription || videoData.description;
+      const slug = generateSlugFromTitle(title, videoData.videoId);
+      const embedUrl = createEmbedUrl(videoData.videoId);
+      
+      // Determine category based on content or use custom category
+      let videoCategory = category || 'Video';
+      const contentLower = (title + ' ' + description).toLowerCase();
+      if (!category) {
+        if (contentLower.includes('workout') || contentLower.includes('training') || contentLower.includes('strength')) {
+          videoCategory = 'Strength Training';
+        } else if (contentLower.includes('nutrition') || contentLower.includes('food') || contentLower.includes('diet')) {
+          videoCategory = 'Nutrition';
+        } else if (contentLower.includes('running') || contentLower.includes('marathon') || contentLower.includes('cardio')) {
+          videoCategory = 'Running';
+        } else if (contentLower.includes('yoga') || contentLower.includes('mindfulness') || contentLower.includes('meditation')) {
+          videoCategory = 'Mindset';
+        }
+      }
+      
+      // Extract tags from title and description
+      const tags = [];
+      if (contentLower.includes('workout')) tags.push('workout');
+      if (contentLower.includes('training')) tags.push('training');
+      if (contentLower.includes('nutrition')) tags.push('nutrition');
+      if (contentLower.includes('running')) tags.push('running');
+      if (contentLower.includes('strength')) tags.push('strength');
+      if (contentLower.includes('dumbbell')) tags.push('dumbbells');
+      if (contentLower.includes('ironmaster')) tags.push('ironmaster');
+      if (contentLower.includes('50 years') || contentLower.includes('over 40')) tags.push('over-40');
+      tags.push('video', 'youtube');
+      
+      const blogPost = {
+        id: `youtube-${videoData.videoId}`,
+        title: title,
+        slug: slug,
+        excerpt: description.slice(0, 200) + (description.length > 200 ? '...' : ''),
+        content: description,
+        author: 'Michael Baker',
+        publishedDate: new Date().toISOString(),
+        category: videoCategory,
+        tags: JSON.stringify(Array.from(new Set(tags))),
+        imageUrl: videoData.thumbnail,
+        videoUrl: embedUrl,
+        readTime: Math.ceil(description.length / 200) || 3,
+        isVideo: true,
+        originalUrl: youtubeUrl
+      };
+
+      // Check if post already exists
+      const existingPost = await db.select().from(blogPosts).where(eq(blogPosts.id, blogPost.id));
+      
+      if (existingPost.length === 0) {
+        await db.insert(blogPosts).values(blogPost);
+        console.log(`Added new YouTube video blog: "${title}"`);
+        res.json({ 
+          success: true, 
+          message: `Successfully created video blog: "${title}"`,
+          post: blogPost,
+          videoData: videoData
+        });
+      } else {
+        res.json({ 
+          success: false, 
+          message: `Video blog already exists: "${title}"` 
+        });
+      }
+      
+    } catch (error: any) {
+      console.error("Error creating YouTube video blog:", error);
+      res.status(500).json({ message: "Error creating YouTube video blog: " + error.message });
+    }
+  });
 
   // Facebook post creation routes
   app.post("/api/blog/create-facebook-post", async (req, res) => {
