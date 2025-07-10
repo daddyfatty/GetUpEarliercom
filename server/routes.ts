@@ -1116,7 +1116,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const embedUrl = createEmbedUrl(videoData.videoId);
       
       // Determine category based on content or use custom category
-      let videoCategory = category || 'Video';
+      let videoCategory = category || 'General';
       const contentLower = (title + ' ' + description).toLowerCase();
       if (!category) {
         if (contentLower.includes('workout') || contentLower.includes('training') || contentLower.includes('strength')) {
@@ -1127,6 +1127,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           videoCategory = 'Running';
         } else if (contentLower.includes('yoga') || contentLower.includes('mindfulness') || contentLower.includes('meditation')) {
           videoCategory = 'Mindset';
+        } else if (contentLower.includes('nyc marathon')) {
+          videoCategory = 'NYC Marathon';
+        } else if (contentLower.includes('marathon')) {
+          videoCategory = 'Marathon';
         }
       }
       
