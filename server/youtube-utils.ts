@@ -40,9 +40,47 @@ export async function getYouTubeVideoMetadata(url: string): Promise<YouTubeVideo
       if (response.ok) {
         const data = await response.json();
         
+        // Try to get more detailed data by scraping the YouTube page
+        let description = `Video by ${data.author_name || 'Unknown'}`;
+        let enhancedTitle = data.title || 'YouTube Video';
+        
+        try {
+          const pageResponse = await fetch(`https://www.youtube.com/watch?v=${videoId}`, {
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            }
+          });
+          
+          if (pageResponse.ok) {
+            const html = await pageResponse.text();
+            
+            // Extract title from meta tags
+            const titleMatch = html.match(/<meta property="og:title" content="([^"]+)"/);
+            if (titleMatch) {
+              enhancedTitle = titleMatch[1];
+            }
+            
+            // Extract description from meta tags
+            const descMatch = html.match(/<meta property="og:description" content="([^"]+)"/);
+            if (descMatch) {
+              description = descMatch[1];
+            }
+            
+            // If no og:description, try name="description"
+            if (description === `Video by ${data.author_name || 'Unknown'}`) {
+              const descMatch2 = html.match(/<meta name="description" content="([^"]+)"/);
+              if (descMatch2) {
+                description = descMatch2[1];
+              }
+            }
+          }
+        } catch (scrapeError) {
+          console.warn('Page scraping failed, using oEmbed data only');
+        }
+        
         return {
-          title: data.title || 'YouTube Video',
-          description: `Video by ${data.author_name || 'Unknown'}`,
+          title: enhancedTitle,
+          description: description,
           thumbnail: data.thumbnail_url || `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
           videoId: videoId,
           channelName: data.author_name || 'Unknown Channel',
