@@ -13,7 +13,6 @@ import { Search, Filter, Plus, Utensils, Clock, Users } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { BookPromotion } from "@/components/book-promotion";
-import { PageSubscriptionCTA } from "@/components/page-subscription-cta";
 import type { Recipe } from "@shared/schema";
 
 export default function Recipes() {
@@ -246,9 +245,6 @@ export default function Recipes() {
       
       {/* Book Promotion Section */}
       <BookPromotion />
-      
-      {/* Subscription CTA */}
-      <PageSubscriptionCTA />
     </div>
   );
 }
