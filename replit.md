@@ -89,6 +89,9 @@ The database schema includes:
 
 ```
 Changelog:
+- July 11, 2025: Removed "2 min read" tags from all blog pages (blog listing, individual posts, category pages) for cleaner presentation
+- July 11, 2025: Added ChatGPT Running Coach YouTube video to blog with AI, Running, Marathon, 5k, Training categories
+- July 11, 2025: Updated favicon to custom winter runner image with "M" branding
 - July 11, 2025: Enhanced YouTube video blog system with clickable timestamp links - all timestamps now jump to specific YouTube video moments with red styling; fixed URL truncation issues ensuring full product links display properly; removed redundant excerpt display from blog templates; system fully ready for bulk processing of 100+ YouTube videos with authentic content extraction, proper formatting, and professional link handling
 - July 11, 2025: Fixed YouTube video blog system to extract authentic content - now properly extracts real video titles, descriptions, and thumbnails from YouTube URLs; enhanced formatting with HTML rendering, clickable links, styled hashtags, and bold timestamps; implemented clean URL slugs (e.g., /blog/nyc-marathon-2024); system ready for bulk addition of 100+ YouTube videos
 - July 9, 2025: Added comprehensive Zapier webhook integration with 8 specialized endpoints for user registration, goal tracking, workout logging, nutrition tracking, blog post creation, email notifications, and generic data processing - enables connection to thousands of apps through Zapier platform

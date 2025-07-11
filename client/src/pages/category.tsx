@@ -196,10 +196,6 @@ export default function CategoryPage() {
                         <User className="h-4 w-4" />
                         {post.author}
                       </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        {post.readTime} min read
-                      </span>
                     </div>
                     <span>{formatDate(post.publishedDate)}</span>
                   </div>

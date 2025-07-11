@@ -117,8 +117,6 @@ export default function BlogPost() {
             {/* Post Meta */}
             <div className="flex items-center justify-center space-x-4 text-blue-100 mt-6 text-sm">
               <span>{formatDate(post.publishedDate)}</span>
-              <span>•</span>
-              <span>{post.readTime} min read</span>
               {post.isVideo && (
                 <>
                   <span>•</span>

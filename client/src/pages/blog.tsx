@@ -221,10 +221,6 @@ export default function Blog() {
                       <User className="h-3 w-3" />
                       <span>{post.author}</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      <span>{post.readTime} min read</span>
-                    </div>
                   </div>
                   
                   <div className="flex justify-end">
