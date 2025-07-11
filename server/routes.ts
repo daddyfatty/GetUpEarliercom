@@ -1107,7 +1107,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const videoData = await getYouTubeVideoMetadata(youtubeUrl);
       
       if (!videoData) {
-        return res.status(400).json({ message: "Could not fetch YouTube video data" });
+        return res.status(400).json({ 
+          message: "Could not extract YouTube video data. Please ensure the video is public and accessible.",
+          error: "EXTRACTION_FAILED"
+        });
+      }
+      
+      // Validate that we have proper content
+      if (!videoData.description || videoData.description.length < 10) {
+        return res.status(400).json({ 
+          message: "Could not extract video description. The video might be private or have restricted content.",
+          error: "NO_DESCRIPTION"
+        });
       }
       
       const title = customTitle || videoData.title;
@@ -1134,7 +1145,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
       
-      // Extract tags from title and description
+      // Extract meaningful tags from title and description (no generic video/youtube tags)
       const tags = [];
       if (contentLower.includes('workout')) tags.push('workout');
       if (contentLower.includes('training')) tags.push('training');
@@ -1144,7 +1155,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (contentLower.includes('dumbbell')) tags.push('dumbbells');
       if (contentLower.includes('ironmaster')) tags.push('ironmaster');
       if (contentLower.includes('50 years') || contentLower.includes('over 40')) tags.push('over-40');
-      tags.push('video', 'youtube');
+      if (contentLower.includes('marathon')) tags.push('marathon');
+      if (contentLower.includes('nyc')) tags.push('nyc');
+      if (contentLower.includes('2024')) tags.push('2024');
+      // Don't add generic 'video' or 'youtube' tags as per user requirements
       
       const blogPost = {
         id: `youtube-${videoData.videoId}`,

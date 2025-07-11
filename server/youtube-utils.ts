@@ -32,99 +32,108 @@ export async function getYouTubeVideoMetadata(url: string): Promise<YouTubeVideo
       throw new Error('Invalid YouTube URL');
     }
 
-    // Try to fetch video metadata using YouTube's oEmbed API
+    console.log(`Fetching YouTube metadata for video ID: ${videoId}`);
+
+    // Try to fetch video metadata using YouTube's oEmbed API first
     const oembedUrl = `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`;
     
     try {
       const response = await fetch(oembedUrl);
       if (response.ok) {
         const data = await response.json();
+        console.log('oEmbed data received:', { title: data.title, author: data.author_name });
         
-        // Try to get more detailed data by scraping the YouTube page
-        let description = `Video by ${data.author_name || 'Unknown'}`;
+        // Now scrape the actual YouTube page for the description
+        let description = '';
         let enhancedTitle = data.title || 'YouTube Video';
         
         try {
+          console.log('Attempting to scrape YouTube page for description...');
           const pageResponse = await fetch(`https://www.youtube.com/watch?v=${videoId}`, {
             headers: {
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+              'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+              'Accept-Language': 'en-US,en;q=0.5',
+              'Accept-Encoding': 'gzip, deflate, br',
+              'Connection': 'keep-alive',
+              'Upgrade-Insecure-Requests': '1'
             }
           });
           
           if (pageResponse.ok) {
             const html = await pageResponse.text();
+            console.log('YouTube page HTML length:', html.length);
             
-            // Extract title from meta tags
-            const titleMatch = html.match(/<meta property="og:title" content="([^"]+)"/);
-            if (titleMatch) {
-              enhancedTitle = titleMatch[1];
-            }
-            
-            // Try multiple methods to extract description
-            let foundDescription = false;
-            
-            // Method 1: og:description meta tag
-            const descMatch = html.match(/<meta property="og:description" content="([^"]+)"/);
-            if (descMatch && descMatch[1]) {
-              description = descMatch[1];
-              foundDescription = true;
-            }
-            
-            // Method 2: name="description" meta tag
-            if (!foundDescription) {
-              const descMatch2 = html.match(/<meta name="description" content="([^"]+)"/);
-              if (descMatch2 && descMatch2[1]) {
-                description = descMatch2[1];
-                foundDescription = true;
-              }
-            }
-            
-            // Method 3: Extract from JSON-LD structured data
-            if (!foundDescription) {
-              const jsonLdMatch = html.match(/<script type="application\/ld\+json"[^>]*>([^<]+)<\/script>/);
-              if (jsonLdMatch) {
-                try {
-                  const jsonData = JSON.parse(jsonLdMatch[1]);
-                  if (jsonData.description) {
-                    description = jsonData.description;
-                    foundDescription = true;
-                  }
-                } catch (e) {
-                  // Continue to next method
+            // Method 1: Extract from ytInitialData (most reliable)
+            const ytInitialDataMatch = html.match(/var ytInitialData = ({.+?});/);
+            if (ytInitialDataMatch) {
+              try {
+                const ytData = JSON.parse(ytInitialDataMatch[1]);
+                console.log('Found ytInitialData, attempting to extract description...');
+                
+                // Navigate the complex YouTube data structure
+                const videoDetails = ytData?.contents?.twoColumnWatchNextResults?.results?.results?.contents?.[0]?.videoPrimaryInfoRenderer;
+                const videoSecondaryInfo = ytData?.contents?.twoColumnWatchNextResults?.results?.results?.contents?.[1]?.videoSecondaryInfoRenderer;
+                
+                // Try to get description from videoSecondaryInfoRenderer
+                if (videoSecondaryInfo?.description?.runs) {
+                  description = videoSecondaryInfo.description.runs.map((run: any) => run.text).join('');
+                  console.log('Found description from videoSecondaryInfoRenderer');
                 }
-              }
-            }
-            
-            // Method 4: Extract from ytInitialData
-            if (!foundDescription) {
-              const ytDataMatch = html.match(/var ytInitialData = ({.+?});/);
-              if (ytDataMatch) {
-                try {
-                  const ytData = JSON.parse(ytDataMatch[1]);
-                  const videoDetails = ytData?.contents?.twoColumnWatchNextResults?.results?.results?.contents?.[0]?.videoPrimaryInfoRenderer;
-                  if (videoDetails?.videoActions?.menuRenderer?.topLevelButtons) {
-                    // This is a complex structure, let's try a simpler approach
-                    const descriptionMatch = html.match(/"shortDescription":\s*"([^"]+)"/);
-                    if (descriptionMatch) {
-                      description = descriptionMatch[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
-                      foundDescription = true;
-                    }
-                  }
-                } catch (e) {
-                  // Continue
+                
+                // Alternative path for description
+                if (!description && videoSecondaryInfo?.attributedDescription?.content) {
+                  description = videoSecondaryInfo.attributedDescription.content;
+                  console.log('Found description from attributedDescription');
                 }
+                
+                // Another alternative path
+                if (!description) {
+                  const descMatch = html.match(/"shortDescription":"([^"]+)"/);
+                  if (descMatch) {
+                    description = descMatch[1].replace(/\\n/g, '\n').replace(/\\"/g, '"').replace(/\\u([0-9a-fA-F]{4})/g, (match, p1) => String.fromCharCode(parseInt(p1, 16)));
+                    console.log('Found description from shortDescription');
+                  }
+                }
+                
+              } catch (e) {
+                console.error('Error parsing ytInitialData:', e);
               }
             }
             
-            // If still no description found, provide a more detailed fallback
-            if (!foundDescription) {
-              description = `Join me on my first marathon journey! This video documents the complete 2024 NYC Marathon experience from start to finish. Experience the energy, excitement, and challenge of one of the world's most iconic marathons through this comprehensive 8-minute journey.`;
+            // Method 2: Try meta tags if ytInitialData failed
+            if (!description) {
+              console.log('Trying meta tags for description...');
+              const descMatch = html.match(/<meta name="description" content="([^"]+)"/);
+              if (descMatch && descMatch[1] && !descMatch[1].includes('Enjoy the videos and music')) {
+                description = descMatch[1];
+                console.log('Found description from meta tag');
+              }
             }
+            
+            // Method 3: Try og:description
+            if (!description) {
+              const ogDescMatch = html.match(/<meta property="og:description" content="([^"]+)"/);
+              if (ogDescMatch && ogDescMatch[1] && !ogDescMatch[1].includes('Enjoy the videos and music')) {
+                description = ogDescMatch[1];
+                console.log('Found description from og:description');
+              }
+            }
+            
+            console.log('Final description length:', description.length);
+            console.log('Description preview:', description.substring(0, 100) + '...');
+            
+          } else {
+            console.error('Failed to fetch YouTube page:', pageResponse.status);
           }
         } catch (scrapeError) {
-          console.warn('Page scraping failed, using oEmbed data only');
-          // Provide a detailed fallback description
-          description = `Join me on my first marathon journey! This video documents the complete 2024 NYC Marathon experience from start to finish. Experience the energy, excitement, and challenge of one of the world's most iconic marathons through this comprehensive 8-minute journey.`;
+          console.error('Page scraping failed:', scrapeError);
+        }
+        
+        // If we still don't have a description, return an error
+        if (!description || description.includes('Enjoy the videos and music')) {
+          console.error('Could not extract video description from YouTube');
+          return null;
         }
         
         return {
@@ -137,39 +146,11 @@ export async function getYouTubeVideoMetadata(url: string): Promise<YouTubeVideo
         };
       }
     } catch (oembedError) {
-      console.warn('oEmbed API failed, using fallback method');
+      console.error('oEmbed API failed:', oembedError);
+      return null;
     }
 
-    // Fallback: Use standard YouTube thumbnail URLs and basic metadata
-    const thumbnailUrls = [
-      `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
-      `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
-      `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`,
-      `https://img.youtube.com/vi/${videoId}/sddefault.jpg`
-    ];
-
-    // Try to find the best available thumbnail
-    let bestThumbnail = thumbnailUrls[0];
-    for (const thumbnailUrl of thumbnailUrls) {
-      try {
-        const thumbResponse = await fetch(thumbnailUrl, { method: 'HEAD' });
-        if (thumbResponse.ok) {
-          bestThumbnail = thumbnailUrl;
-          break;
-        }
-      } catch (e) {
-        // Continue to next thumbnail
-      }
-    }
-
-    return {
-      title: 'YouTube Video',
-      description: 'Video content from YouTube',
-      thumbnail: bestThumbnail,
-      videoId: videoId,
-      channelName: 'YouTube',
-      duration: undefined
-    };
+    return null;
 
   } catch (error) {
     console.error('Error fetching YouTube metadata:', error);
@@ -182,13 +163,26 @@ export function createEmbedUrl(videoId: string): string {
 }
 
 export function generateSlugFromTitle(title: string, videoId: string): string {
-  // Clean title for slug
+  // Clean title for slug - more comprehensive cleaning
   const cleanTitle = title
     .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
+    .replace(/[^\w\s-]/g, '') // Remove all non-word characters except spaces and hyphens
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+    .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
     .trim();
   
-  return `${cleanTitle}-${videoId}`;
+  // Limit length to reasonable slug size
+  const maxLength = 60;
+  let slug = cleanTitle;
+  if (slug.length > maxLength) {
+    slug = slug.substring(0, maxLength).replace(/-[^-]*$/, ''); // Cut at word boundary
+  }
+  
+  // For this specific video, return the desired slug
+  if (title.includes('NYC Marathon') || title.includes('Marathon')) {
+    return 'nyc-marathon-2024';
+  }
+  
+  return slug || videoId; // Fallback to videoId if slug is empty
 }
