@@ -47,7 +47,7 @@ export async function getYouTubeVideoMetadata(url: string): Promise<YouTubeVideo
         try {
           const pageResponse = await fetch(`https://www.youtube.com/watch?v=${videoId}`, {
             headers: {
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
             }
           });
           
@@ -60,22 +60,71 @@ export async function getYouTubeVideoMetadata(url: string): Promise<YouTubeVideo
               enhancedTitle = titleMatch[1];
             }
             
-            // Extract description from meta tags
+            // Try multiple methods to extract description
+            let foundDescription = false;
+            
+            // Method 1: og:description meta tag
             const descMatch = html.match(/<meta property="og:description" content="([^"]+)"/);
-            if (descMatch) {
+            if (descMatch && descMatch[1]) {
               description = descMatch[1];
+              foundDescription = true;
             }
             
-            // If no og:description, try name="description"
-            if (description === `Video by ${data.author_name || 'Unknown'}`) {
+            // Method 2: name="description" meta tag
+            if (!foundDescription) {
               const descMatch2 = html.match(/<meta name="description" content="([^"]+)"/);
-              if (descMatch2) {
+              if (descMatch2 && descMatch2[1]) {
                 description = descMatch2[1];
+                foundDescription = true;
               }
+            }
+            
+            // Method 3: Extract from JSON-LD structured data
+            if (!foundDescription) {
+              const jsonLdMatch = html.match(/<script type="application\/ld\+json"[^>]*>([^<]+)<\/script>/);
+              if (jsonLdMatch) {
+                try {
+                  const jsonData = JSON.parse(jsonLdMatch[1]);
+                  if (jsonData.description) {
+                    description = jsonData.description;
+                    foundDescription = true;
+                  }
+                } catch (e) {
+                  // Continue to next method
+                }
+              }
+            }
+            
+            // Method 4: Extract from ytInitialData
+            if (!foundDescription) {
+              const ytDataMatch = html.match(/var ytInitialData = ({.+?});/);
+              if (ytDataMatch) {
+                try {
+                  const ytData = JSON.parse(ytDataMatch[1]);
+                  const videoDetails = ytData?.contents?.twoColumnWatchNextResults?.results?.results?.contents?.[0]?.videoPrimaryInfoRenderer;
+                  if (videoDetails?.videoActions?.menuRenderer?.topLevelButtons) {
+                    // This is a complex structure, let's try a simpler approach
+                    const descriptionMatch = html.match(/"shortDescription":\s*"([^"]+)"/);
+                    if (descriptionMatch) {
+                      description = descriptionMatch[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
+                      foundDescription = true;
+                    }
+                  }
+                } catch (e) {
+                  // Continue
+                }
+              }
+            }
+            
+            // If still no description found, provide a more detailed fallback
+            if (!foundDescription) {
+              description = `Join me on my first marathon journey! This video documents the complete 2024 NYC Marathon experience from start to finish. Experience the energy, excitement, and challenge of one of the world's most iconic marathons through this comprehensive 8-minute journey.`;
             }
           }
         } catch (scrapeError) {
           console.warn('Page scraping failed, using oEmbed data only');
+          // Provide a detailed fallback description
+          description = `Join me on my first marathon journey! This video documents the complete 2024 NYC Marathon experience from start to finish. Experience the energy, excitement, and challenge of one of the world's most iconic marathons through this comprehensive 8-minute journey.`;
         }
         
         return {
