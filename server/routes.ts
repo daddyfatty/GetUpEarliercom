@@ -1123,7 +1123,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const title = customTitle || videoData.title;
       const rawDescription = customDescription || videoData.description;
-      const formattedDescription = formatYouTubeDescription(rawDescription);
+      const formattedDescription = formatYouTubeDescription(rawDescription, videoData.videoId);
       const slug = generateSlugFromTitle(title, videoData.videoId);
       const embedUrl = createEmbedUrl(videoData.videoId);
       

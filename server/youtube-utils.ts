@@ -162,7 +162,7 @@ export function createEmbedUrl(videoId: string): string {
   return `https://www.youtube.com/embed/${videoId}`;
 }
 
-export function formatYouTubeDescription(description: string): string {
+export function formatYouTubeDescription(description: string, videoId: string): string {
   // First, preserve line breaks and clean up escaped characters
   let formatted = description
     .replace(/\\n/g, '\n')
@@ -181,10 +181,16 @@ export function formatYouTubeDescription(description: string): string {
     '<span style="color: #1d9bf0;">#$1</span>'
   );
   
-  // Convert timestamps to bold
+  // Convert timestamps to clickable YouTube links
   formatted = formatted.replace(
     /(\d{2}:\d{2}:\d{2})/g, 
-    '<strong>$1</strong>'
+    (match, timestamp) => {
+      // Convert timestamp to seconds
+      const parts = timestamp.split(':');
+      const totalSeconds = parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + parseInt(parts[2]);
+      const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}&t=${totalSeconds}s`;
+      return `<a href="${youtubeUrl}" target="_blank" rel="noopener noreferrer" style="color: #ff0000; font-weight: bold;">${timestamp}</a>`;
+    }
   );
   
   // Convert line breaks to HTML breaks for proper rendering
