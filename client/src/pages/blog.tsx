@@ -244,11 +244,13 @@ export default function Blog() {
                       ))
                     ) : (
                       post.category && (
-                        <Link href={`/category/${encodeURIComponent(post.category)}`}>
-                          <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
-                            {post.category}
-                          </Badge>
-                        </Link>
+                        post.category.split(',').map((category) => (
+                          <Link key={category.trim()} href={`/category/${encodeURIComponent(category.trim())}`}>
+                            <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
+                              {category.trim()}
+                            </Badge>
+                          </Link>
+                        ))
                       )
                     )}
                   </div>

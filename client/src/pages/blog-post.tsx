@@ -88,8 +88,22 @@ export default function BlogPost() {
       <HeroGradient className="text-white">
         <div className="py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="text-sm font-medium text-blue-200 mb-4 uppercase tracking-wide">
-              {post.category}
+            <div className="flex flex-wrap justify-center gap-2 mb-4">
+              {post.categories && post.categories.length > 0 ? (
+                post.categories.map((category) => (
+                  <Badge key={category} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
+                    {category}
+                  </Badge>
+                ))
+              ) : (
+                post.category && (
+                  post.category.split(',').map((category) => (
+                    <Badge key={category.trim()} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
+                      {category.trim()}
+                    </Badge>
+                  ))
+                )
+              )}
             </div>
             
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 leading-tight max-w-4xl mx-auto">

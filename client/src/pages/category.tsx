@@ -166,11 +166,15 @@ export default function CategoryPage() {
                         </Link>
                       ))
                     ) : (
-                      <Link href={`/category/${encodeURIComponent(post.category)}`}>
-                        <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
-                          {post.category}
-                        </Badge>
-                      </Link>
+                      post.category && (
+                        post.category.split(',').map((category) => (
+                          <Link key={category.trim()} href={`/category/${encodeURIComponent(category.trim())}`}>
+                            <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                              {category.trim()}
+                            </Badge>
+                          </Link>
+                        ))
+                      )
                     )}
                   </div>
 

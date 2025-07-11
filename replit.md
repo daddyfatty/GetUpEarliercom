@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 11, 2025: Updated category display system to show comma-separated categories as individual badges across all blog pages (listing, individual posts, category archives) for improved user experience
 - July 11, 2025: Removed "2 min read" tags from all blog pages (blog listing, individual posts, category pages) for cleaner presentation
 - July 11, 2025: Added ChatGPT Running Coach YouTube video to blog with AI, Running, Marathon, 5k, Training categories
 - July 11, 2025: Updated favicon to custom winter runner image with "M" branding
