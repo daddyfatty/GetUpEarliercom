@@ -230,10 +230,6 @@ export default function BlogPost() {
           {/* Article Content */}
           <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg border border-gray-200 dark:border-gray-700">
             <div className="prose prose-lg max-w-none dark:prose-invert">
-              <div className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-8 font-medium border-b border-gray-200 dark:border-gray-600 pb-6">
-                {post.excerpt}
-              </div>
-              
               <BlogContentRenderer content={post.content} />
             </div>
           </div>
