@@ -162,6 +162,37 @@ export function createEmbedUrl(videoId: string): string {
   return `https://www.youtube.com/embed/${videoId}`;
 }
 
+export function formatYouTubeDescription(description: string): string {
+  // First, preserve line breaks and clean up escaped characters
+  let formatted = description
+    .replace(/\\n/g, '\n')
+    .replace(/\\"/g, '"')
+    .replace(/\\u([0-9a-fA-F]{4})/g, (match, p1) => String.fromCharCode(parseInt(p1, 16)));
+  
+  // Convert URLs to clickable links
+  formatted = formatted.replace(
+    /(https?:\/\/[^\s]+)/g, 
+    '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+  );
+  
+  // Convert hashtags to styled spans
+  formatted = formatted.replace(
+    /#([a-zA-Z0-9_]+)/g, 
+    '<span style="color: #1d9bf0;">#$1</span>'
+  );
+  
+  // Convert timestamps to bold
+  formatted = formatted.replace(
+    /(\d{2}:\d{2}:\d{2})/g, 
+    '<strong>$1</strong>'
+  );
+  
+  // Convert line breaks to HTML breaks for proper rendering
+  formatted = formatted.replace(/\n/g, '<br>');
+  
+  return formatted;
+}
+
 export function generateSlugFromTitle(title: string, videoId: string): string {
   // Clean title for slug - more comprehensive cleaning
   const cleanTitle = title

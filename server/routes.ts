@@ -20,7 +20,7 @@ import {
   deleteBlogPost as cmsDeleteBlogPost 
 } from './blog-cms';
 import { getCachedLinkPreview } from './link-preview';
-import { getYouTubeVideoMetadata, generateSlugFromTitle, createEmbedUrl } from './youtube-utils';
+import { getYouTubeVideoMetadata, generateSlugFromTitle, createEmbedUrl, formatYouTubeDescription } from './youtube-utils';
 
 // Check if Stripe is configured
 const STRIPE_CONFIGURED = !!process.env.STRIPE_SECRET_KEY;
@@ -1122,13 +1122,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       const title = customTitle || videoData.title;
-      const description = customDescription || videoData.description;
+      const rawDescription = customDescription || videoData.description;
+      const formattedDescription = formatYouTubeDescription(rawDescription);
       const slug = generateSlugFromTitle(title, videoData.videoId);
       const embedUrl = createEmbedUrl(videoData.videoId);
       
       // Determine category based on content or use custom category
       let videoCategory = category || 'General';
-      const contentLower = (title + ' ' + description).toLowerCase();
+      const contentLower = (title + ' ' + rawDescription).toLowerCase();
       if (!category) {
         if (contentLower.includes('workout') || contentLower.includes('training') || contentLower.includes('strength')) {
           videoCategory = 'Strength Training';
@@ -1164,15 +1165,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         id: `youtube-${videoData.videoId}`,
         title: title,
         slug: slug,
-        excerpt: description.slice(0, 200) + (description.length > 200 ? '...' : ''),
-        content: description,
+        excerpt: rawDescription.slice(0, 200) + (rawDescription.length > 200 ? '...' : ''),
+        content: formattedDescription,
         author: 'Michael Baker',
         publishedDate: new Date().toISOString(),
         category: videoCategory,
         tags: JSON.stringify(Array.from(new Set(tags))),
         imageUrl: videoData.thumbnail,
         videoUrl: embedUrl,
-        readTime: Math.ceil(description.length / 200) || 3,
+        readTime: Math.ceil(rawDescription.length / 200) || 3,
         isVideo: true,
         originalUrl: youtubeUrl
       };
