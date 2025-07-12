@@ -194,9 +194,28 @@ export function SiteFooter() {
               
               {/* WebMBD.com Credit */}
               <div className="flex items-center space-x-2">
-                <div className="w-5 h-5 text-blue-400">
+                <div className="w-6 h-6 text-red-500">
                   <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
-                    <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 3.5C14.8 3.4 14.6 3.3 14.4 3.3C14.1 3.3 13.9 3.4 13.7 3.6L12 5.3L10.3 3.6C10.1 3.4 9.9 3.3 9.6 3.3C9.4 3.3 9.2 3.4 9 3.5L3 7V9H21ZM12 7C13.66 7 15 8.34 15 10C15 11.66 13.66 13 12 13C10.34 13 9 11.66 9 10C9 8.34 10.34 7 12 7ZM17 10C17 11.1 16.1 12 15 12C13.9 12 13 11.1 13 10C13 8.9 13.9 8 15 8C16.1 8 17 8.9 17 10ZM7 10C7 11.1 6.1 12 5 12C3.9 12 3 11.1 3 10C3 8.9 3.9 8 5 8C6.1 8 7 8.9 7 10ZM18 14H6C5.45 14 5 14.45 5 15V17H19V15C19 14.45 18.55 14 18 14ZM12 15.5C12.83 15.5 13.5 16.17 13.5 17H10.5C10.5 16.17 11.17 15.5 12 15.5ZM4 18V20C4 20.55 4.45 21 5 21H19C19.55 21 20 20.55 20 20V18H4Z"/>
+                    {/* Robot head outline */}
+                    <rect x="6" y="4" width="12" height="12" rx="2" fill="currentColor"/>
+                    {/* Robot eyes */}
+                    <circle cx="9" cy="8" r="1.5" fill="white"/>
+                    <circle cx="15" cy="8" r="1.5" fill="white"/>
+                    {/* Robot eye pupils */}
+                    <circle cx="9" cy="8" r="0.5" fill="black"/>
+                    <circle cx="15" cy="8" r="0.5" fill="black"/>
+                    {/* Robot mouth - silly grin */}
+                    <path d="M8 12 Q12 14 16 12" stroke="white" strokeWidth="1" fill="none"/>
+                    {/* Robot antennas */}
+                    <circle cx="9" cy="2" r="1" fill="currentColor"/>
+                    <circle cx="15" cy="2" r="1" fill="currentColor"/>
+                    <line x1="9" y1="3" x2="9" y2="4" stroke="currentColor" strokeWidth="1"/>
+                    <line x1="15" y1="3" x2="15" y2="4" stroke="currentColor" strokeWidth="1"/>
+                    {/* Robot body */}
+                    <rect x="8" y="16" width="8" height="6" rx="1" fill="currentColor"/>
+                    {/* Robot arms */}
+                    <rect x="4" y="17" width="3" height="2" rx="1" fill="currentColor"/>
+                    <rect x="17" y="17" width="3" height="2" rx="1" fill="currentColor"/>
                   </svg>
                 </div>
                 <a 
