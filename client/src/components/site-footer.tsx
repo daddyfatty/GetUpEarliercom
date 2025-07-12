@@ -194,7 +194,7 @@ export function SiteFooter() {
               
               {/* WebMBD.com Credit */}
               <div className="flex items-center space-x-2">
-                <div className="w-6 h-6 text-red-500">
+                <div className="w-6 h-6 text-red-500 animate-pulse hover:animate-bounce">
                   <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
                     {/* Robot head outline */}
                     <rect x="6" y="4" width="12" height="12" rx="2" fill="currentColor"/>
@@ -202,13 +202,21 @@ export function SiteFooter() {
                     <circle cx="9" cy="8" r="1.5" fill="white"/>
                     <circle cx="15" cy="8" r="1.5" fill="white"/>
                     {/* Robot eye pupils */}
-                    <circle cx="9" cy="8" r="0.5" fill="black"/>
-                    <circle cx="15" cy="8" r="0.5" fill="black"/>
+                    <circle cx="9" cy="8" r="0.5" fill="black">
+                      <animate attributeName="cx" values="9;9.5;9" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="15" cy="8" r="0.5" fill="black">
+                      <animate attributeName="cx" values="15;14.5;15" dur="3s" repeatCount="indefinite"/>
+                    </circle>
                     {/* Robot mouth - silly grin */}
                     <path d="M8 12 Q12 14 16 12" stroke="white" strokeWidth="1" fill="none"/>
-                    {/* Robot antennas */}
-                    <circle cx="9" cy="2" r="1" fill="currentColor"/>
-                    <circle cx="15" cy="2" r="1" fill="currentColor"/>
+                    {/* Robot antennas with blinking */}
+                    <circle cx="9" cy="2" r="1" fill="currentColor">
+                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="15" cy="2" r="1" fill="currentColor">
+                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="1s"/>
+                    </circle>
                     <line x1="9" y1="3" x2="9" y2="4" stroke="currentColor" strokeWidth="1"/>
                     <line x1="15" y1="3" x2="15" y2="4" stroke="currentColor" strokeWidth="1"/>
                     {/* Robot body */}

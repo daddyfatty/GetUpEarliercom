@@ -89,7 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
-- July 12, 2025: Added "Built with Agentic AI WebMBD.com" credit with comical red alien robot icon to site footer - features friendly cartoon design with antennas, big eyes, and silly grin for playful attribution
+- July 12, 2025: Added animated "Built with Agentic AI WebMBD.com" credit with comical red alien robot icon to site footer - features friendly cartoon design with moving eyes, blinking antennas, pulse effect, and hover bounce animation for engaging attribution
 - July 12, 2025: Added 301 redirect from non-www to www domain - automatically redirects getupearlier.com to www.getupearlier.com to resolve SSL certificate issues
 - July 11, 2025: Updated blog page header - changed "Health & Fitness Blog" to "Get Up Earlier Blog", replaced "Expert Content" with "Helpful Insight", and removed "Expert Insights" and "Updated Weekly" badges for cleaner presentation
 - July 11, 2025: Updated footer navigation to match header links and removed Instagram/Twitter icons - footer now shows only YouTube and Facebook Group links consistent with header navigation
