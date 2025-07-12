@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { Facebook, Instagram } from "lucide-react";
+import { Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import footerBgPattern from "@assets/678a4459aad73fea7208ff4c_footer-bg-pattern_1751313655156.png";
@@ -63,7 +63,21 @@ export function Footer() {
               <li>
                 <Link href="/services">
                   <span className="hover:text-primary transition-colors cursor-pointer">
+                    1-on-1 Services
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/about">
+                  <span className="hover:text-primary transition-colors cursor-pointer">
                     About
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog">
+                  <span className="hover:text-primary transition-colors cursor-pointer">
+                    Blog
                   </span>
                 </Link>
               </li>
@@ -77,7 +91,14 @@ export function Footer() {
               <li>
                 <Link href="/workouts">
                   <span className="hover:text-primary transition-colors cursor-pointer">
-                    Blog
+                    Workouts
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/calorie-calculator">
+                  <span className="hover:text-primary transition-colors cursor-pointer">
+                    Calculators
                   </span>
                 </Link>
               </li>
@@ -126,16 +147,24 @@ export function Footer() {
             </div>
             <div className="flex items-center space-x-4">
               <a 
-                href="#" 
+                href="https://www.youtube.com/@getupearlier" 
+                target="_blank" 
+                rel="noopener noreferrer"
                 className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors"
+                title="YouTube Channel"
               >
-                <Facebook className="w-4 h-4" />
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
               </a>
               <a 
-                href="#" 
+                href="https://www.facebook.com/groups/getupearlier" 
+                target="_blank" 
+                rel="noopener noreferrer"
                 className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors"
+                title="Join Facebook Group"
               >
-                <Instagram className="w-4 h-4" />
+                <Facebook className="w-4 h-4" />
               </a>
             </div>
           </div>

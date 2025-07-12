@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { Facebook, Youtube } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export function SiteFooter() {
@@ -82,67 +82,78 @@ export function SiteFooter() {
               {/* Social Links */}
               <div className="flex gap-3">
                 <a 
-                  href="https://www.facebook.com/GetUpEarlier" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="p-2 bg-gray-800 rounded-lg hover:bg-blue-600 transition-colors"
-                >
-                  <Facebook className="h-5 w-5" />
-                </a>
-                <a 
-                  href="https://www.instagram.com/getupearlier" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="p-2 bg-gray-800 rounded-lg hover:bg-pink-600 transition-colors"
-                >
-                  <Instagram className="h-5 w-5" />
-                </a>
-                <a 
-                  href="https://twitter.com/GetUpEarlier" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="p-2 bg-gray-800 rounded-lg hover:bg-sky-600 transition-colors"
-                >
-                  <Twitter className="h-5 w-5" />
-                </a>
-                <a 
-                  href="https://www.youtube.com/@GetUpEarlier" 
+                  href="https://www.youtube.com/@getupearlier" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="p-2 bg-gray-800 rounded-lg hover:bg-red-600 transition-colors"
+                  title="YouTube Channel"
                 >
                   <Youtube className="h-5 w-5" />
+                </a>
+                <a 
+                  href="https://www.facebook.com/groups/getupearlier" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="p-2 bg-gray-800 rounded-lg hover:bg-blue-600 transition-colors"
+                  title="Join Facebook Group"
+                >
+                  <Facebook className="h-5 w-5" />
                 </a>
               </div>
             </div>
 
-            {/* App Features */}
+            {/* Site Navigation */}
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-white">App Features</h4>
+              <h4 className="text-lg font-semibold mb-4 text-white">Site</h4>
               <ul className="space-y-2">
+                <li>
+                  <Link href="/">
+                    <span className="text-gray-300 hover:text-white transition-colors cursor-pointer">
+                      Home
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/services">
+                    <span className="text-gray-300 hover:text-white transition-colors cursor-pointer">
+                      1-on-1 Services
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/about">
+                    <span className="text-gray-300 hover:text-white transition-colors cursor-pointer">
+                      About
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/blog">
+                    <span className="text-gray-300 hover:text-white transition-colors cursor-pointer">
+                      Blog
+                    </span>
+                  </Link>
+                </li>
                 <li>
                   <Link href="/recipes">
                     <span className="text-gray-300 hover:text-white transition-colors cursor-pointer">
-                      Recipe Library
+                      Recipes
                     </span>
                   </Link>
                 </li>
                 <li>
                   <Link href="/workouts">
                     <span className="text-gray-300 hover:text-white transition-colors cursor-pointer">
-                      Workout Plans
+                      Workouts
                     </span>
                   </Link>
                 </li>
                 <li>
                   <Link href="/calorie-calculator">
                     <span className="text-gray-300 hover:text-white transition-colors cursor-pointer">
-                      Nutrition Tracker
+                      Calculators
                     </span>
                   </Link>
-                </li>
-                <li>
-                  <span className="text-gray-300">Recipe Book</span>
                 </li>
               </ul>
             </div>
