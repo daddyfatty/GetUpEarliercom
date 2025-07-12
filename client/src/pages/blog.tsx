@@ -106,9 +106,7 @@ export default function Blog() {
             Get Up Earlier<br className="hidden sm:block" />
             <span className="text-indigo-600">Blog</span>
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">
-            Helpful insights on nutrition, fitness, wellness, and achieving your health goals from our certified trainers and coaches.
-          </p>
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">Helpful insights on nutrition, fitness, running, yoga and achieving your health goals from certified trainers and coaches.</p>
         </div>
 
         {/* Search and Filter */}
