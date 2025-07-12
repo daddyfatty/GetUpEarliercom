@@ -186,10 +186,29 @@ export function SiteFooter() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="border-t border-gray-800 mt-12 pt-8 text-center">
-            <p className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} Get Up Earlier. All rights reserved. Built with passion for your health journey.
-            </p>
+          <div className="border-t border-gray-800 mt-12 pt-8">
+            <div className="flex flex-col items-center space-y-4">
+              <p className="text-gray-400 text-sm">
+                © {new Date().getFullYear()} Get Up Earlier. All rights reserved. Built with passion for your health journey.
+              </p>
+              
+              {/* WebMBD.com Credit */}
+              <div className="flex items-center space-x-2">
+                <div className="w-5 h-5 text-blue-400">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+                    <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 3.5C14.8 3.4 14.6 3.3 14.4 3.3C14.1 3.3 13.9 3.4 13.7 3.6L12 5.3L10.3 3.6C10.1 3.4 9.9 3.3 9.6 3.3C9.4 3.3 9.2 3.4 9 3.5L3 7V9H21ZM12 7C13.66 7 15 8.34 15 10C15 11.66 13.66 13 12 13C10.34 13 9 11.66 9 10C9 8.34 10.34 7 12 7ZM17 10C17 11.1 16.1 12 15 12C13.9 12 13 11.1 13 10C13 8.9 13.9 8 15 8C16.1 8 17 8.9 17 10ZM7 10C7 11.1 6.1 12 5 12C3.9 12 3 11.1 3 10C3 8.9 3.9 8 5 8C6.1 8 7 8.9 7 10ZM18 14H6C5.45 14 5 14.45 5 15V17H19V15C19 14.45 18.55 14 18 14ZM12 15.5C12.83 15.5 13.5 16.17 13.5 17H10.5C10.5 16.17 11.17 15.5 12 15.5ZM4 18V20C4 20.55 4.45 21 5 21H19C19.55 21 20 20.55 20 20V18H4Z"/>
+                  </svg>
+                </div>
+                <a 
+                  href="https://webmbd.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-500 hover:text-blue-400 transition-colors text-xs"
+                >
+                  Built with Agentic AI WebMBD.com
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
