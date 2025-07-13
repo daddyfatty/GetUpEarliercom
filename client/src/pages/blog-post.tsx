@@ -91,16 +91,20 @@ export default function BlogPost() {
             <div className="flex flex-wrap justify-center gap-2 mb-4">
               {post.categories && post.categories.length > 0 ? (
                 post.categories.map((category) => (
-                  <Badge key={category} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
-                    {category}
-                  </Badge>
+                  <Link key={category} href={`/category/${encodeURIComponent(category)}`}>
+                    <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
+                      {category}
+                    </Badge>
+                  </Link>
                 ))
               ) : (
                 post.category && (
                   post.category.split(',').map((category) => (
-                    <Badge key={category.trim()} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
-                      {category.trim()}
-                    </Badge>
+                    <Link key={category.trim()} href={`/category/${encodeURIComponent(category.trim())}`}>
+                      <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
+                        {category.trim()}
+                      </Badge>
+                    </Link>
                   ))
                 )
               )}
