@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 13, 2025: Confirmed YouTube blog workflow automatically displays new posts at top of blog page and homepage (sorted by publishedDate descending) - system fully automated for optimal user experience
 - July 13, 2025: Made entire blog cards clickable for better user experience - removed conflicting author links from blog cards while keeping author info displayed; individual blog posts retain author links to about page
 - July 13, 2025: Fixed blog authorship - all blog posts now properly attributed to "Michael Baker" (not "Get Up Earlier") with clickable links to about page across all blog templates (listing, individual posts, category pages)
 - July 13, 2025: Created comprehensive YouTube blog post validation system with YOUTUBE_BLOG_CHECKLIST.md - enforces authentic data extraction (title, description, thumbnail) with automated verification; integrated validation into blog creation process with detailed logging; recreated "Get Up Earlier" blog post with authentic YouTube description including clickable timestamps and preserved links
@@ -172,6 +173,6 @@ Changelog:
 ```
 Preferred communication style: Simple, everyday language.
 Content creation: Use only user's authentic words - never write additional content unless specifically asked.
-YouTube Blog System: Always extract authentic YouTube video data (title, description, thumbnail) with links intact. Never use placeholder or synthetic content.
+YouTube Blog System: Always extract authentic YouTube video data (title, description, thumbnail) with links intact. Never use placeholder or synthetic content. New blog posts automatically appear at top of blog page and homepage (sorted by publishedDate descending).
 Blog Authorship: All blogs and videos are by Michael Baker (not "Get Up Earlier") and all author mentions should link to his profile about page.
 ```
