@@ -4,15 +4,7 @@ import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
 
-// 301 redirect from non-www to www
-app.use((req, res, next) => {
-  const host = req.get('host');
-  if (host === 'getupearlier.com') {
-    // Always redirect to HTTPS www version
-    return res.redirect(301, `https://www.getupearlier.com${req.url}`);
-  }
-  next();
-});
+// Domain redirect now handled by GoDaddy DNS forwarding
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
