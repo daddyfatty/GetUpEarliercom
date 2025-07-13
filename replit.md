@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 13, 2025: Fixed blog authorship - all blog posts now properly attributed to "Michael Baker" (not "Get Up Earlier") with clickable links to about page across all blog templates (listing, individual posts, category pages)
 - July 13, 2025: Created comprehensive YouTube blog post validation system with YOUTUBE_BLOG_CHECKLIST.md - enforces authentic data extraction (title, description, thumbnail) with automated verification; integrated validation into blog creation process with detailed logging; recreated "Get Up Earlier" blog post with authentic YouTube description including clickable timestamps and preserved links
 - July 13, 2025: Removed title truncation from blog cards - titles now display in full without ellipsis on blog listing and category pages for better readability
 - July 13, 2025: Added YouTube video blog post with authentic title "I Don't Have Time to Work Out? Get Up Earlier! #1 Life Hack for Workouts and Self Improvement" with categories inspiration and nutrition - uses only authentic YouTube data (title, thumbnail, author) without custom content modifications
@@ -171,4 +172,5 @@ Changelog:
 Preferred communication style: Simple, everyday language.
 Content creation: Use only user's authentic words - never write additional content unless specifically asked.
 YouTube Blog System: Always extract authentic YouTube video data (title, description, thumbnail) with links intact. Never use placeholder or synthetic content.
+Blog Authorship: All blogs and videos are by Michael Baker (not "Get Up Earlier") and all author mentions should link to his profile about page.
 ```

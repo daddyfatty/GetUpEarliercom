@@ -198,7 +198,9 @@ export default function CategoryPage() {
                     <div className="flex items-center gap-4">
                       <span className="flex items-center gap-1">
                         <User className="h-4 w-4" />
-                        {post.author}
+                        <Link href="/about" className="hover:text-primary transition-colors">
+                          {post.author}
+                        </Link>
                       </span>
                     </div>
                     <span>{formatDate(post.publishedDate)}</span>

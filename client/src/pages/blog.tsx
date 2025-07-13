@@ -146,8 +146,7 @@ export default function Blog() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post: BlogPost) => (
-              <Link key={post.id} href={`/blog/${post.id}`} className="block">
-                <Card className="group hover:shadow-lg transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 flex flex-col h-full cursor-pointer">
+                <Card key={post.id} className="group hover:shadow-lg transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 flex flex-col h-full">
                   <div className="relative overflow-hidden">
                     <div className="aspect-video relative overflow-hidden bg-gray-100 dark:bg-gray-700">
                       {post.imageUrl ? (
@@ -202,7 +201,9 @@ export default function Blog() {
                     <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4">
                       <div className="flex items-center gap-1">
                         <User className="h-3 w-3" />
-                        <span>{post.author}</span>
+                        <Link href="/about" className="hover:text-primary transition-colors">
+                          {post.author}
+                        </Link>
                       </div>
                     </div>
                     
@@ -238,14 +239,15 @@ export default function Blog() {
                     </div>
                     
                     <div className="flex justify-end mt-auto">
-                      <Button size="sm" className="gap-1">
-                        Read More
-                        <ArrowRight className="h-3 w-3" />
-                      </Button>
+                      <Link href={`/blog/${post.id}`}>
+                        <Button size="sm" className="gap-1">
+                          Read More
+                          <ArrowRight className="h-3 w-3" />
+                        </Button>
+                      </Link>
                     </div>
                   </CardContent>
                 </Card>
-              </Link>
             ))}
           </div>
         )}
