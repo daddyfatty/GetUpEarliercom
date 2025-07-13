@@ -154,15 +154,10 @@ export default function Blog() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent 
-              className="w-[600px] max-w-[90vw] p-6" 
+              className="w-[600px] max-w-[90vw] p-4" 
               align="end"
               sideOffset={8}
             >
-              <div className="mb-4">
-                <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-2">Blog Categories</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Choose a category to filter posts</p>
-              </div>
-              
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {organizeCategories(categories).map((column, columnIndex) => (
                   <div key={columnIndex} className="space-y-2">
