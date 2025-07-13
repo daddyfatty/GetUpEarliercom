@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 13, 2025: Added YouTube video blog post "Nutrition and Inspiration: Get Up Earlier Mindset" with categories inspiration and nutrition - includes embedded video player, thumbnail, and comprehensive content about nutrition principles and mindset transformation
 - July 12, 2025: Added animated "Built with Agentic AI WebMBD.com" credit with comical red alien robot icon to site footer - features friendly cartoon design with moving eyes, blinking antennas, pulse effect, and hover bounce animation for engaging attribution
 - July 12, 2025: Added 301 redirect from non-www to www domain - automatically redirects getupearlier.com to www.getupearlier.com to resolve SSL certificate issues
 - July 11, 2025: Updated blog page header - changed "Health & Fitness Blog" to "Get Up Earlier Blog", replaced "Expert Content" with "Helpful Insight", and removed "Expert Insights" and "Updated Weekly" badges for cleaner presentation
