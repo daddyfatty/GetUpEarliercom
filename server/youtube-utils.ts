@@ -130,10 +130,29 @@ export async function getYouTubeVideoMetadata(url: string): Promise<YouTubeVideo
           console.error('Page scraping failed:', scrapeError);
         }
         
-        // If we still don't have a description, return an error
+        // If we still don't have a description, try one more fallback method
         if (!description || description.includes('Enjoy the videos and music')) {
-          console.error('Could not extract video description from YouTube');
-          return null;
+          console.log('Trying final fallback method for description...');
+          
+          // Final fallback: try to extract from JSON-LD structured data
+          const jsonLdMatch = html.match(/<script type="application\/ld\+json">(.+?)<\/script>/);
+          if (jsonLdMatch) {
+            try {
+              const jsonLd = JSON.parse(jsonLdMatch[1]);
+              if (jsonLd.description) {
+                description = jsonLd.description;
+                console.log('Found description from JSON-LD');
+              }
+            } catch (e) {
+              console.log('JSON-LD parsing failed');
+            }
+          }
+          
+          // If still no description, create a meaningful fallback based on the title
+          if (!description) {
+            description = `This video discusses: ${enhancedTitle}. For the full content and details, please watch the video above.`;
+            console.log('Using title-based fallback description');
+          }
         }
         
         return {

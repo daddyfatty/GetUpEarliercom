@@ -1117,7 +1117,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!videoData.description || videoData.description.length < 10) {
         return res.status(400).json({ 
           message: "Could not extract video description. The video might be private or have restricted content.",
-          error: "NO_DESCRIPTION"
+          error: "NO_DESCRIPTION",
+          videoData: videoData
         });
       }
       
