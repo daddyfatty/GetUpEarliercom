@@ -10,7 +10,7 @@ export function MichaelAboutBlock() {
         <CardContent className="p-0">
           <div className="grid lg:grid-cols-5 gap-0">
             {/* Left Side - Photo and Basic Info */}
-            <div className="lg:col-span-2 bg-[hsl(var(--navy))] dark:from-blue-900 dark:to-gray-900 pt-4 px-8 pb-8 lg:pt-4 lg:px-12 lg:pb-12 text-white flex flex-col justify-start items-center text-center">
+            <div className="lg:col-span-2 bg-[hsl(var(--navy))] dark:from-blue-900 dark:to-gray-900 px-8 pb-8 lg:px-12 lg:pb-12 text-white flex flex-col justify-start items-center text-center">
               <div className="w-48 h-48 rounded-full overflow-hidden mb-4 border-8 border-white/20 shadow-2xl">
                 <img 
                   src={headshotPath} 
