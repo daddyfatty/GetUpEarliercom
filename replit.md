@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 13, 2025: Enhanced blog categories with mega menu - transformed simple dropdown into 3-column mega menu with post counts, better visual organization, and improved user experience; categories automatically update from existing blog posts with real-time filtering
 - July 13, 2025: Made blog categories dropdown dynamic - now automatically updates with all categories from existing blog posts in real-time; replaced hardcoded category list with dynamic extraction from posts' category and categories fields, sorted alphabetically for better user experience
 - July 13, 2025: Improved Amazon product preview mobile responsiveness - stacked layout on mobile with full-width images, appropriately sized text, hidden descriptions to prevent cramping; both fallback and real product previews use consistent responsive design
 - July 13, 2025: Enhanced YouTube blog workflow with Amazon link processing - Amazon URLs (amazon.com, amzn.to) now automatically convert to interactive product previews with real data extraction (images, prices, ratings, Prime status) using established visual treatment; updated YOUTUBE_BLOG_CHECKLIST.md with Amazon validation requirements

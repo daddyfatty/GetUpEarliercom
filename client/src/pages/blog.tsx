@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Clock, User, ArrowRight, Play, Edit } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Search, Clock, User, ArrowRight, Play, Edit, ChevronDown, Grid3X3 } from "lucide-react";
 
 interface BlogPost {
   id: string;
@@ -55,6 +56,16 @@ export default function Blog() {
       return allCategories;
     }) || []
   )).sort()];
+
+  // Helper function to organize categories into 3 columns
+  const organizeCategories = (cats: string[]) => {
+    const itemsPerColumn = Math.ceil(cats.length / 3);
+    const columns = [];
+    for (let i = 0; i < 3; i++) {
+      columns.push(cats.slice(i * itemsPerColumn, (i + 1) * itemsPerColumn));
+    }
+    return columns;
+  };
 
   const filteredPosts = posts?.filter((post: BlogPost) => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -132,18 +143,61 @@ export default function Blog() {
               className="pl-10"
             />
           </div>
-          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-full md:w-48">
-              <SelectValue placeholder="All Categories" />
-            </SelectTrigger>
-            <SelectContent>
-              {categories.map((category) => (
-                <SelectItem key={category} value={category}>
-                  {category === "all" ? "All Categories" : category.charAt(0).toUpperCase() + category.slice(1)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="w-full md:w-48 justify-between">
+                <span className="flex items-center gap-2">
+                  <Grid3X3 className="h-4 w-4" />
+                  {selectedCategory === "all" ? "All Categories" : selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)}
+                </span>
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent 
+              className="w-[600px] max-w-[90vw] p-6" 
+              align="end"
+              sideOffset={8}
+            >
+              <div className="mb-4">
+                <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-2">Blog Categories</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Choose a category to filter posts</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {organizeCategories(categories).map((column, columnIndex) => (
+                  <div key={columnIndex} className="space-y-2">
+                    {column.map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => setSelectedCategory(category)}
+                        className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
+                          selectedCategory === category
+                            ? 'bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-900 dark:text-blue-300'
+                            : 'hover:bg-gray-50 text-gray-700 dark:text-gray-300 dark:hover:bg-gray-800'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <Badge 
+                            variant={selectedCategory === category ? "default" : "outline"}
+                            className="text-xs"
+                          >
+                            {posts?.filter(post => 
+                              category === "all" || 
+                              post.category.toLowerCase() === category.toLowerCase() ||
+                              (post.categories && post.categories.some(cat => cat.toLowerCase() === category.toLowerCase()))
+                            ).length || 0}
+                          </Badge>
+                          <span className="font-medium">
+                            {category === "all" ? "All Categories" : category.charAt(0).toUpperCase() + category.slice(1)}
+                          </span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         {/* Blog Posts Grid */}
