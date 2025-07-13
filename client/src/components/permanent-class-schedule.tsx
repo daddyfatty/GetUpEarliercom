@@ -17,9 +17,7 @@ export function PermanentClassSchedule({
       <Card className="bg-white shadow-lg border-0">
         <CardContent className="p-8">
           <div className="text-center space-y-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
-              Permanent Class Schedule
-            </h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Permanent Yoga Class Schedule</h3>
             
             <p className="text-gray-600 text-lg leading-relaxed mb-8">
               Take my Saturday 8am or Wednesday 9am class in my Orange, CT home studio, email me to join the class.
