@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 13, 2025: Made entire blog cards clickable for better user experience - removed conflicting author links from blog cards while keeping author info displayed; individual blog posts retain author links to about page
 - July 13, 2025: Fixed blog authorship - all blog posts now properly attributed to "Michael Baker" (not "Get Up Earlier") with clickable links to about page across all blog templates (listing, individual posts, category pages)
 - July 13, 2025: Created comprehensive YouTube blog post validation system with YOUTUBE_BLOG_CHECKLIST.md - enforces authentic data extraction (title, description, thumbnail) with automated verification; integrated validation into blog creation process with detailed logging; recreated "Get Up Earlier" blog post with authentic YouTube description including clickable timestamps and preserved links
 - July 13, 2025: Removed title truncation from blog cards - titles now display in full without ellipsis on blog listing and category pages for better readability
