@@ -94,12 +94,14 @@ export default function About() {
                         sitting at a computer as a <a href="https://WebMBD.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">digital professional</a>.
                       </p>
                       
-                      <div className="bg-blue-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-blue-600 my-4">
-                        <p className="text-lg leading-relaxed mb-0">
-                          My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus 
-                          on helping people rely on intuition, providing a personal experience, and introducing them to strength training, 
-                          alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts.
-                        </p>
+                      <div className="my-6">
+                        <div className="bg-blue-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-blue-600">
+                          <p className="text-lg leading-relaxed mb-0">
+                            My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus 
+                            on helping people rely on intuition, providing a personal experience, and introducing them to strength training, 
+                            alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts.
+                          </p>
+                        </div>
                       </div>
                       
                     <p className="text-lg leading-relaxed">
@@ -159,10 +161,12 @@ export default function About() {
                         As a former boutique yoga studio owner and wellness enthusiast, she brings her health and fitness knowledge and passion to others with her fun energy and physical classes. Every single one of her classes is unique, but you can always count on a consistent experience working on overall strength, mobility, flexibility, balance and stress relief.
                       </p>
                       
-                      <div className="bg-green-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-green-600 my-4">
-                        <p className="text-lg leading-relaxed mb-0">
-                          Erica believes Yoga is just one facet of nourishing your body to create optimal health and prevent disease. She truly enjoys helping others improve their overall health as well as making them laugh a little too.
-                        </p>
+                      <div className="my-6">
+                        <div className="bg-green-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-green-600">
+                          <p className="text-lg leading-relaxed mb-0">
+                            Erica believes Yoga is just one facet of nourishing your body to create optimal health and prevent disease. She truly enjoys helping others improve their overall health as well as making them laugh a little too.
+                          </p>
+                        </div>
                       </div>
                       
                       <p className="text-lg leading-relaxed mb-4">
