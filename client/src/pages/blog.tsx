@@ -42,7 +42,19 @@ export default function Blog() {
     }
   }, [location]);
 
-  const categories = ["all", "nutrition", "running", "inspiration", "workouts", "yoga / stretching", "iron master dumbbells"];
+  // Dynamically generate categories from posts
+  const categories = ["all", ...Array.from(new Set(
+    posts?.flatMap(post => {
+      const allCategories = [];
+      if (post.category) {
+        allCategories.push(post.category);
+      }
+      if (post.categories) {
+        allCategories.push(...post.categories);
+      }
+      return allCategories;
+    }) || []
+  )).sort()];
 
   const filteredPosts = posts?.filter((post: BlogPost) => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
