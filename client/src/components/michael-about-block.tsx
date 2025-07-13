@@ -40,8 +40,8 @@ export function MichaelAboutBlock() {
 
             {/* Right Side - Story */}
             <div className="lg:col-span-3 p-8 lg:p-12">
-              <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-4">
-                <p className="text-lg leading-relaxed">
+              <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300">
+                <p className="text-lg leading-relaxed mb-4">
                     Hello, I'm Michael Baker. I am a 50-year-old strength trainer, certified personal trainer, running coach, 
                     health coach, and yoga teacher. I'm also a former yoga studio owner and a dedicated health and wellness 
                     practitioner with over 30 years of experience. I began <span className="font-semibold text-blue-600">Get Up Earlier</span> (GetUpEarlier.com) because getting 
@@ -49,7 +49,7 @@ export function MichaelAboutBlock() {
                     sitting at a computer as a <a href="https://WebMBD.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">digital professional</a>.
                   </p>
                   
-                  <div className="bg-blue-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-blue-600">
+                  <div className="bg-blue-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-blue-600 my-4">
                     <p className="text-lg leading-relaxed mb-0">
                       My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus 
                       on helping people rely on intuition, providing a personal experience, and introducing them to strength training, 

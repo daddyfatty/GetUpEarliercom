@@ -41,25 +41,25 @@ export function EricaAboutBlock() {
 
             {/* Right Side - Story */}
             <div className="lg:col-span-3 p-8 lg:p-12">
-              <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-4">
-                  <p className="text-lg leading-relaxed">
-                    Erica is an E-RYT 200 Yoga Instructor with over 2000 hours teaching experience in both large and small group settings. For the last decade, she has taught yoga from a place of authenticity and developed her own unique style and an ability to work well with all levels.
+              <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300">
+                <p className="text-lg leading-relaxed mb-4">
+                  Erica is an E-RYT 200 Yoga Instructor with over 2000 hours teaching experience in both large and small group settings. For the last decade, she has taught yoga from a place of authenticity and developed her own unique style and an ability to work well with all levels.
+                </p>
+                
+                <p className="text-lg leading-relaxed mb-4">
+                  As a former boutique yoga studio owner and wellness enthusiast, she brings her health and fitness knowledge and passion to others with her fun energy and physical classes. Every single one of her classes is unique, but you can always count on a consistent experience working on overall strength, mobility, flexibility, balance and stress relief.
+                </p>
+                
+                <div className="bg-green-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-green-600 my-4">
+                  <p className="text-lg leading-relaxed mb-0">
+                    Erica believes Yoga is just one facet of nourishing your body to create optimal health and prevent disease. She truly enjoys helping others improve their overall health as well as making them laugh a little too.
                   </p>
-                  
-                  <p className="text-lg leading-relaxed">
-                    As a former boutique yoga studio owner and wellness enthusiast, she brings her health and fitness knowledge and passion to others with her fun energy and physical classes. Every single one of her classes is unique, but you can always count on a consistent experience working on overall strength, mobility, flexibility, balance and stress relief.
-                  </p>
-                  
-                  <div className="bg-green-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-green-600">
-                    <p className="text-lg leading-relaxed mb-0">
-                      Erica believes Yoga is just one facet of nourishing your body to create optimal health and prevent disease. She truly enjoys helping others improve their overall health as well as making them laugh a little too.
-                    </p>
-                  </div>
-                  
-                  <p className="text-lg leading-relaxed">
-                    You can find her teaching small group classes in her home studio, private lessons and recorded classes of varying lengths on her YouTube channel.
-                  </p>
-                  
+                </div>
+                
+                <p className="text-lg leading-relaxed mb-4">
+                  You can find her teaching small group classes in her home studio, private lessons and recorded classes of varying lengths on her YouTube channel.
+                </p>
+                
                 {/* Permanent Class Schedule */}
                 <div className="mt-6">
                   <PermanentClassSchedule />
