@@ -55,27 +55,27 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
         onClick={() => window.open(url, '_blank')}
       >
         <div className="p-4">
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             {/* Generic Product Image */}
-            <div className="w-36 h-36 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center p-2">
+            <div className="w-full sm:w-32 h-32 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center p-2">
               <ShoppingCart className="h-12 w-12 text-gray-400" />
             </div>
             
             {/* Product Info */}
-            <div className="flex-1 space-y-2">
-              <h3 className="font-semibold text-lg text-gray-900 dark:text-white">
+            <div className="flex-1 space-y-3">
+              <h3 className="font-semibold text-base sm:text-lg text-gray-900 dark:text-white">
                 {title}
               </h3>
               
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
-                Click to view product details and pricing on Amazon
-              </p>
-
               <div className="flex items-center gap-2 flex-wrap">
                 <Badge variant="outline" className="bg-orange-50 text-orange-600 border-orange-200">
                   Amazon Product
                 </Badge>
               </div>
+              
+              <p className="text-gray-600 dark:text-gray-400 text-sm hidden sm:block">
+                Click to view product details and pricing on Amazon
+              </p>
             </div>
           </div>
 
@@ -102,9 +102,9 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
       onClick={() => window.open(url, '_blank')}
     >
       <div className="p-4">
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           {/* Product Image */}
-          <div className="w-36 h-36 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden flex-shrink-0 p-2">
+          <div className="w-full sm:w-32 h-32 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden flex-shrink-0 p-2">
             {preview.image ? (
               <img 
                 src={preview.image}
@@ -124,34 +124,15 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
           </div>
           
           {/* Product Info */}
-          <div className="flex-1 space-y-2">
-            <h3 className="font-semibold text-lg line-clamp-2 text-gray-900 dark:text-white">
+          <div className="flex-1 space-y-3">
+            <h3 className="font-semibold text-base sm:text-lg line-clamp-2 text-gray-900 dark:text-white">
               {preview.title}
             </h3>
             
-            {/* Rating */}
-            {preview.rating && (
-              <div className="flex items-center gap-2">
-                <div className="flex items-center">
-                  {[...Array(5)].map((_, i) => (
-                    <Star 
-                      key={i} 
-                      className={`h-4 w-4 ${
-                        i < Math.floor(preview.rating!) ? 'text-yellow-400 fill-current' : 'text-gray-300'
-                      }`} 
-                    />
-                  ))}
-                  <span className="text-sm text-gray-600 dark:text-gray-400 ml-2">
-                    {preview.rating} ({preview.reviews?.toLocaleString() || 0} reviews)
-                  </span>
-                </div>
-              </div>
-            )}
-
             {/* Price and Status */}
             <div className="flex items-center gap-2 flex-wrap">
               {preview.price && (
-                <span className="text-2xl font-bold text-orange-600">
+                <span className="text-xl sm:text-2xl font-bold text-orange-600">
                   {preview.price}
                 </span>
               )}
@@ -170,10 +151,29 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
                 </div>
               )}
             </div>
+            
+            {/* Rating */}
+            {preview.rating && (
+              <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center">
+                  {[...Array(5)].map((_, i) => (
+                    <Star 
+                      key={i} 
+                      className={`h-3 w-3 sm:h-4 sm:w-4 ${
+                        i < Math.floor(preview.rating!) ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                      }`} 
+                    />
+                  ))}
+                  <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 ml-2">
+                    {preview.rating} ({preview.reviews?.toLocaleString() || 0} reviews)
+                  </span>
+                </div>
+              </div>
+            )}
 
-            {/* Description */}
+            {/* Description - Hidden on mobile to save space */}
             {preview.description && (
-              <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2">
+              <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2 hidden sm:block">
                 {preview.description}
               </p>
             )}
