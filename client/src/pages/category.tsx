@@ -179,7 +179,7 @@ export default function CategoryPage() {
                   </div>
 
                   {/* Title */}
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3 line-clamp-2">
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
                     <Link
                       href={`/blog/${post.id}`}
                       className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"

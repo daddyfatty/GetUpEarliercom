@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 13, 2025: Removed title truncation from blog cards - titles now display in full without ellipsis on blog listing and category pages for better readability
 - July 13, 2025: Added YouTube video blog post with authentic title "I Don't Have Time to Work Out? Get Up Earlier! #1 Life Hack for Workouts and Self Improvement" with categories inspiration and nutrition - uses only authentic YouTube data (title, thumbnail, author) without custom content modifications
 - July 12, 2025: Added animated "Built with Agentic AI WebMBD.com" credit with comical red alien robot icon to site footer - features friendly cartoon design with moving eyes, blinking antennas, pulse effect, and hover bounce animation for engaging attribution
 - July 12, 2025: Added 301 redirect from non-www to www domain - automatically redirects getupearlier.com to www.getupearlier.com to resolve SSL certificate issues

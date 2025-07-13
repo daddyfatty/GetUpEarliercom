@@ -190,7 +190,7 @@ export default function Blog() {
                     )}
                   </div>
                   
-                  <CardTitle className="text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                  <CardTitle className="text-lg mb-2 group-hover:text-primary transition-colors">
                     {post.title}
                   </CardTitle>
                 </CardHeader>
