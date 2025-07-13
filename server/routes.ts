@@ -21,6 +21,7 @@ import {
 } from './blog-cms';
 import { getCachedLinkPreview } from './link-preview';
 import { getYouTubeVideoMetadata, generateSlugFromTitle, createEmbedUrl, formatYouTubeDescription } from './youtube-utils';
+import { validateYouTubePost, logValidationResult } from './youtube-validation';
 
 // Check if Stripe is configured
 const STRIPE_CONFIGURED = !!process.env.STRIPE_SECRET_KEY;
@@ -1184,12 +1185,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       if (existingPost.length === 0) {
         await db.insert(blogPosts).values(blogPost);
+        
+        // Validate the created post
+        const validation = validateYouTubePost(blogPost, videoData);
+        logValidationResult(validation, videoData.videoId);
+        
         console.log(`Added new YouTube video blog: "${title}"`);
         res.json({ 
           success: true, 
           message: `Successfully created video blog: "${title}"`,
           post: blogPost,
-          videoData: videoData
+          videoData: videoData,
+          validation: validation
         });
       } else {
         res.json({ 
