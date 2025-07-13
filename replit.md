@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 13, 2025: Fixed profile component spacing inconsistency - removed uneven spacing around highlighted quote boxes by eliminating wrapper divs and applying consistent mb-4 spacing to all elements; quote boxes now have perfectly balanced spacing above and below them matching paragraph spacing throughout profile sections
 - July 13, 2025: Enhanced blog URL generation with SEO-friendly slugs - blog posts now use keyword-based URLs (e.g., /blog/relieve-lower-back-pain-fast-2-simple-moves) instead of YouTube IDs; implemented slug generation from video titles, updated routing system, and maintained backward compatibility
 - July 13, 2025: Enhanced blog categories with mega menu - transformed simple dropdown into 3-column mega menu with post counts, better visual organization, and improved user experience; categories automatically update from existing blog posts with real-time filtering
 - July 13, 2025: Made blog categories dropdown dynamic - now automatically updates with all categories from existing blog posts in real-time; replaced hardcoded category list with dynamic extraction from posts' category and categories fields, sorted alphabetically for better user experience

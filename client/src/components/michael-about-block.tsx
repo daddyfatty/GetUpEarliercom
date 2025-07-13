@@ -49,14 +49,12 @@ export function MichaelAboutBlock() {
                     sitting at a computer as a <a href="https://WebMBD.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">digital professional</a>.
                   </p>
                   
-                  <div className="my-6">
-                    <div className="bg-blue-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-blue-600">
-                      <p className="text-lg leading-relaxed mb-0">
-                        My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus 
-                        on helping people rely on intuition, providing a personal experience, and introducing them to strength training, 
-                        alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts.
-                      </p>
-                    </div>
+                  <div className="bg-blue-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-blue-600 mb-4">
+                    <p className="text-lg leading-relaxed mb-0">
+                      My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus 
+                      on helping people rely on intuition, providing a personal experience, and introducing them to strength training, 
+                      alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts.
+                    </p>
                   </div>
                   
                 <p className="text-lg leading-relaxed">
