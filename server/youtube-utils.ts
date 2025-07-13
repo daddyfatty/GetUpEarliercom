@@ -188,10 +188,48 @@ export function formatYouTubeDescription(description: string, videoId: string): 
     .replace(/\\"/g, '"')
     .replace(/\\u([0-9a-fA-F]{4})/g, (match, p1) => String.fromCharCode(parseInt(p1, 16)));
   
-  // Convert URLs to clickable links
+  // Process Amazon links FIRST before general URL processing
+  // Pattern to match Amazon affiliate links and product URLs
+  const amazonLinkPattern = /(https?:\/\/(?:www\.)?(?:amazon\.com|amzn\.to)[^\s]+)/g;
+  
+  // Extract Amazon links and their surrounding context for better titles
+  formatted = formatted.replace(amazonLinkPattern, (match, url) => {
+    // Try to extract a meaningful title from the text around the link
+    const lines = formatted.split('\n');
+    let title = 'Amazon Product';
+    
+    // Look for product name in the line containing the link
+    for (const line of lines) {
+      if (line.includes(url)) {
+        // Extract product name - look for patterns like "Product Name: (price)" or "Product Name ($price)"
+        const productMatch = line.match(/([^:]+?)(?:\s*:\s*\([^)]+\)|\s*\([^)]+\))?$/);
+        if (productMatch && productMatch[1] && !productMatch[1].includes('http')) {
+          title = productMatch[1].trim();
+          break;
+        }
+        // Alternative: look for product name before the link
+        const beforeLink = line.substring(0, line.indexOf(url)).trim();
+        if (beforeLink && beforeLink.length > 5 && !beforeLink.includes('http')) {
+          title = beforeLink.replace(/[:\-\(\)]/g, '').trim();
+          break;
+        }
+      }
+    }
+    
+    // Create special Amazon link span for the BlogContentRenderer
+    return `<span class="amazon-link" data-url="${url}">${title}</span>`;
+  });
+  
+  // Convert other URLs to clickable links (excluding Amazon links which are already processed)
   formatted = formatted.replace(
     /(https?:\/\/[^\s]+)/g, 
-    '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+    (match, url) => {
+      // Skip if this is already an Amazon link span
+      if (formatted.includes(`data-url="${url}"`)) {
+        return match;
+      }
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    }
   );
   
   // Convert hashtags to styled spans

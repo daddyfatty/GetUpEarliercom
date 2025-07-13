@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 13, 2025: Enhanced YouTube blog workflow with Amazon link processing - Amazon URLs (amazon.com, amzn.to) now automatically convert to interactive product previews with real data extraction (images, prices, ratings, Prime status) using established visual treatment; updated YOUTUBE_BLOG_CHECKLIST.md with Amazon validation requirements
 - July 13, 2025: Confirmed YouTube blog workflow automatically displays new posts at top of blog page and homepage (sorted by publishedDate descending) - system fully automated for optimal user experience
 - July 13, 2025: Made entire blog cards clickable for better user experience - removed conflicting author links from blog cards while keeping author info displayed; individual blog posts retain author links to about page
 - July 13, 2025: Fixed blog authorship - all blog posts now properly attributed to "Michael Baker" (not "Get Up Earlier") with clickable links to about page across all blog templates (listing, individual posts, category pages)

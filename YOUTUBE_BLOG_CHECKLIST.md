@@ -10,6 +10,7 @@
 ### ✅ Description Requirements
 - [ ] Extract complete YouTube video description (full text)
 - [ ] Preserve ALL links as clickable HTML links
+- [ ] Convert Amazon links to interactive product previews with authentic data
 - [ ] Convert timestamps to clickable YouTube links (format: https://www.youtube.com/watch?v=VIDEO_ID&t=XXXs)
 - [ ] Style hashtags with blue color (#1d9bf0)
 - [ ] Preserve line breaks and formatting
@@ -30,9 +31,18 @@
 
 ### ✅ Content Formatting
 - [ ] Links: `<a href="URL" target="_blank" rel="noopener noreferrer">URL</a>`
+- [ ] Amazon Links: `<span class="amazon-link" data-url="URL">Product Title</span>`
 - [ ] Timestamps: `<a href="https://www.youtube.com/watch?v=VIDEO_ID&t=XXXs" target="_blank" rel="noopener noreferrer" style="color: #ff0000; font-weight: bold;">XX:XX:XX</a>`
 - [ ] Hashtags: `<span style="color: #1d9bf0;">#hashtag</span>`
 - [ ] Line breaks: `<br>`
+
+### ✅ Amazon Link Processing
+- [ ] Detect Amazon URLs (amazon.com, amzn.to patterns)
+- [ ] Extract product titles from surrounding context
+- [ ] Format as special spans for RealAmazonPreview component
+- [ ] Verify product data loads with authentic information
+- [ ] Confirm pricing, ratings, and availability display correctly
+- [ ] Ensure affiliate tracking links preserved
 
 ### ✅ Extraction Methods (Try in Order)
 1. **Primary**: ytInitialData from YouTube page HTML
@@ -72,9 +82,10 @@
 
 1. **Title Check**: Compare extracted title with YouTube page title
 2. **Description Check**: Verify all links are clickable
-3. **Timestamp Check**: Verify timestamps jump to correct video moments
-4. **Image Check**: Verify thumbnail displays correctly
-5. **Content Check**: Verify no synthetic content was added
+3. **Amazon Check**: Verify Amazon links display as interactive product previews with authentic data
+4. **Timestamp Check**: Verify timestamps jump to correct video moments
+5. **Image Check**: Verify thumbnail displays correctly
+6. **Content Check**: Verify no synthetic content was added
 
 ## CRITICAL RULES
 
