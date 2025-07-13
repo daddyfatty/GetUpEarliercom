@@ -21,7 +21,7 @@ function LatestBlogCard() {
   const latestPost = blogPosts[0];
 
   return (
-    <Link href={latestPost ? `/blog/${latestPost.id}` : "/blog"} className="block h-full">
+    <Link href={latestPost ? `/blog/${latestPost.slug}` : "/blog"} className="block h-full">
       <div className="bg-white border-2 border-green-200 p-6 rounded-2xl shadow-lg h-full flex flex-col hover:shadow-xl hover:border-green-300 transition-all duration-200 cursor-pointer">
         <div className="mb-4">
           <div className="inline-block bg-green-600/10 text-green-600 px-3 py-1 rounded-full text-sm font-medium mb-2">

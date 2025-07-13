@@ -63,7 +63,7 @@ export function HeroSection() {
             {randomPost ? (
               <div>
                 <p className="text-white/80 text-sm font-medium mb-4 uppercase tracking-wider">From the Blog:</p>
-                <Link href={`/blog/${randomPost.id}`}>
+                <Link href={`/blog/${randomPost.slug}`}>
                   <div className="cursor-pointer hover:scale-105 transition-transform duration-300 relative">
                     <div className="w-full h-72 overflow-hidden rounded-2xl shadow-2xl">
                       <img 
