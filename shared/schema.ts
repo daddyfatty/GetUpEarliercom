@@ -250,6 +250,7 @@ export const insertCalculatorResultSchema = createInsertSchema(calculatorResults
 // Blog posts table for Facebook integration
 export const blogPosts = pgTable("blog_posts", {
   id: text("id").primaryKey(),
+  slug: text("slug").notNull().unique(), // SEO-friendly URL slug
   title: text("title").notNull(),
   excerpt: text("excerpt").notNull(),
   content: text("content").notNull(),

@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 13, 2025: Enhanced blog URL generation with SEO-friendly slugs - blog posts now use keyword-based URLs (e.g., /blog/relieve-lower-back-pain-fast-2-simple-moves) instead of YouTube IDs; implemented slug generation from video titles, updated routing system, and maintained backward compatibility
 - July 13, 2025: Enhanced blog categories with mega menu - transformed simple dropdown into 3-column mega menu with post counts, better visual organization, and improved user experience; categories automatically update from existing blog posts with real-time filtering
 - July 13, 2025: Made blog categories dropdown dynamic - now automatically updates with all categories from existing blog posts in real-time; replaced hardcoded category list with dynamic extraction from posts' category and categories fields, sorted alphabetically for better user experience
 - July 13, 2025: Improved Amazon product preview mobile responsiveness - stacked layout on mobile with full-width images, appropriately sized text, hidden descriptions to prevent cramping; both fallback and real product previews use consistent responsive design

@@ -260,23 +260,33 @@ export function generateSlugFromTitle(title: string, videoId: string): string {
   // Clean title for slug - more comprehensive cleaning
   const cleanTitle = title
     .toLowerCase()
-    .replace(/[^\w\s-]/g, '') // Remove all non-word characters except spaces and hyphens
-    .replace(/\s+/g, '-') // Replace spaces with hyphens
-    .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
-    .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
+    // Remove special characters and punctuation, keep only alphanumeric and spaces
+    .replace(/[^a-z0-9\s-]/g, '')
+    // Replace multiple spaces with single space
+    .replace(/\s+/g, ' ')
+    // Replace spaces with hyphens
+    .replace(/\s/g, '-')
+    // Replace multiple hyphens with single hyphen
+    .replace(/-+/g, '-')
+    // Remove leading/trailing hyphens
+    .replace(/^-+|-+$/g, '')
     .trim();
   
-  // Limit length to reasonable slug size
+  // Limit length to reasonable slug size for SEO
   const maxLength = 60;
   let slug = cleanTitle;
   if (slug.length > maxLength) {
-    slug = slug.substring(0, maxLength).replace(/-[^-]*$/, ''); // Cut at word boundary
+    // Cut at word boundary to avoid breaking words
+    slug = slug.substring(0, maxLength).replace(/-[^-]*$/, '');
   }
   
-  // For this specific video, return the desired slug
-  if (title.includes('NYC Marathon') || title.includes('Marathon')) {
-    return 'nyc-marathon-2024';
+  // Ensure the slug is not empty
+  if (!slug || slug.length < 3) {
+    // Create a fallback slug from the first few words of the title
+    const words = title.toLowerCase().split(' ').filter(word => word.length > 2);
+    slug = words.slice(0, 5).join('-').replace(/[^a-z0-9-]/g, '');
   }
   
-  return slug || videoId; // Fallback to videoId if slug is empty
+  // If still empty, use videoId as fallback
+  return slug || videoId;
 }

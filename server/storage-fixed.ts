@@ -82,6 +82,7 @@ export interface IStorage {
   // Blog post methods
   getAllBlogPosts(): Promise<BlogPost[]>;
   getBlogPost(id: string): Promise<BlogPost | undefined>;
+  getBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   updateBlogPost(id: string, updates: Partial<BlogPost>): Promise<BlogPost | undefined>;
   deleteBlogPost(id: string): Promise<boolean>;
@@ -288,6 +289,16 @@ export class DatabaseStorage implements IStorage {
       return post || undefined;
     } catch (error) {
       console.error("Error fetching blog post:", error);
+      return undefined;
+    }
+  }
+
+  async getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
+    try {
+      const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
+      return post || undefined;
+    } catch (error) {
+      console.error("Error fetching blog post by slug:", error);
       return undefined;
     }
   }

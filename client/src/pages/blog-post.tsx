@@ -11,6 +11,7 @@ import { useState } from "react";
 
 interface BlogPost {
   id: string;
+  slug: string;
   title: string;
   excerpt: string;
   content: string;
@@ -27,15 +28,21 @@ interface BlogPost {
 }
 
 export default function BlogPost() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string>("");
 
-  const { data: posts, isLoading, error } = useQuery<BlogPost[]>({
-    queryKey: ["/api/blog"]
+  const { data: post, isLoading, error } = useQuery<BlogPost>({
+    queryKey: ["/api/blog/slug", slug],
+    queryFn: async () => {
+      const response = await fetch(`/api/blog/slug/${slug}`);
+      if (!response.ok) {
+        throw new Error('Blog post not found');
+      }
+      return response.json();
+    },
+    enabled: !!slug
   });
-
-  const post = posts?.find(p => p.id === id);
 
   const formatDate = (dateString: string) => {
     try {

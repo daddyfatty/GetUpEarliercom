@@ -70,8 +70,8 @@ function Router() {
 
           <Route path="/blog" component={Blog} />
           {/* Edit route only available in development */}
-          {import.meta.env.DEV && <Route path="/blog/:id/edit" component={BlogEdit} />}
-          <Route path="/blog/:id" component={BlogPost} />
+          {import.meta.env.DEV && <Route path="/blog/:slug/edit" component={BlogEdit} />}
+          <Route path="/blog/:slug" component={BlogPost} />
           <Route path="/category/:category" component={CategoryPage} />
 
           <Route path="/about" component={About} />

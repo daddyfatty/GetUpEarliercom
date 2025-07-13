@@ -11,6 +11,7 @@ import { Search, Clock, User, ArrowRight, Play, Edit, ChevronDown, Grid3X3 } fro
 
 interface BlogPost {
   id: string;
+  slug: string;
   title: string;
   excerpt: string;
   content: string;
@@ -207,7 +208,7 @@ export default function Blog() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post: BlogPost) => (
-              <Link key={post.id} href={`/blog/${post.id}`} className="block">
+              <Link key={post.id} href={`/blog/${post.slug}`} className="block">
                 <Card className="group hover:shadow-lg transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 flex flex-col h-full cursor-pointer">
                   <div className="relative overflow-hidden">
                     <div className="aspect-video relative overflow-hidden bg-gray-100 dark:bg-gray-700">

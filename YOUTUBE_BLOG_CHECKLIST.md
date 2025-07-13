@@ -25,9 +25,19 @@
 ### ✅ Technical Implementation
 - [ ] Video URL: https://www.youtube.com/embed/VIDEO_ID
 - [ ] Post ID: youtube-VIDEO_ID
+- [ ] URL Slug: Generated from video title using generateSlugFromTitle() function
 - [ ] Excerpt: First 200 characters of description + "..." if longer
 - [ ] isVideo: true
 - [ ] originalUrl: Full YouTube watch URL
+
+### ✅ URL Generation Requirements
+- [ ] Generate SEO-friendly slug from video title
+- [ ] Remove special characters and punctuation
+- [ ] Convert spaces to hyphens
+- [ ] Limit to 60 characters max
+- [ ] Ensure slug is unique and descriptive
+- [ ] Blog post URLs use format: /blog/SLUG (not /blog/youtube-VIDEO_ID)
+- [ ] Use slug for all internal links and navigation
 
 ### ✅ Content Formatting
 - [ ] Links: `<a href="URL" target="_blank" rel="noopener noreferrer">URL</a>`
