@@ -8,9 +8,8 @@ const app = express();
 app.use((req, res, next) => {
   const host = req.get('host');
   if (host === 'getupearlier.com') {
-    // Use the same protocol as the incoming request
-    const protocol = req.get('x-forwarded-proto') || req.protocol || 'https';
-    return res.redirect(301, `${protocol}://www.getupearlier.com${req.url}`);
+    // Always redirect to HTTPS www version
+    return res.redirect(301, `https://www.getupearlier.com${req.url}`);
   }
   next();
 });
