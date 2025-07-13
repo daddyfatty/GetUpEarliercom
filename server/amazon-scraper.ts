@@ -108,7 +108,10 @@ export async function extractAmazonProductData(url: string): Promise<AmazonProdu
     let price = '$--';
     
     if (priceWhole) {
-      price = `$${priceWhole}${priceFraction ? '.' + priceFraction : ''}`;
+      // Clean up the price parts to avoid double periods
+      const cleanWhole = priceWhole.replace(/[^\d]/g, '');
+      const cleanFraction = priceFraction.replace(/[^\d]/g, '');
+      price = `$${cleanWhole}${cleanFraction ? '.' + cleanFraction : ''}`;
     } else {
       const priceText = $('.a-price .a-offscreen').first().text().trim();
       if (priceText) {
