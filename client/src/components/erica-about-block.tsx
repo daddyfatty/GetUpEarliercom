@@ -41,8 +41,7 @@ export function EricaAboutBlock() {
 
             {/* Right Side - Story */}
             <div className="lg:col-span-3 p-8 lg:p-12">
-              <div className="max-w-none">
-                <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-6">
+              <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-4">
                   <p className="text-lg leading-relaxed">
                     Erica is an E-RYT 200 Yoga Instructor with over 2000 hours teaching experience in both large and small group settings. For the last decade, she has taught yoga from a place of authenticity and developed her own unique style and an ability to work well with all levels.
                   </p>
@@ -61,10 +60,9 @@ export function EricaAboutBlock() {
                     You can find her teaching small group classes in her home studio, private lessons and recorded classes of varying lengths on her YouTube channel.
                   </p>
                   
-                  {/* Permanent Class Schedule */}
-                  <div className="mt-8">
-                    <PermanentClassSchedule />
-                  </div>
+                {/* Permanent Class Schedule */}
+                <div className="mt-6">
+                  <PermanentClassSchedule />
                 </div>
               </div>
             </div>

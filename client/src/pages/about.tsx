@@ -85,12 +85,9 @@ export default function About() {
 
                 {/* Right Side - Story */}
                 <div className="lg:col-span-3 p-8 lg:p-12">
-                  <div className="max-w-none">
-
-                    
-                    <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-6">
-                      <p className="text-lg leading-relaxed">
-                        Hello, I'm Michael Baker. I am a 50-year-old strength trainer, certified personal trainer, running coach, 
+                  <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-4">
+                    <p className="text-lg leading-relaxed">
+                      Hello, I'm Michael Baker. I am a 50-year-old strength trainer, certified personal trainer, running coach, 
                         health coach, and yoga teacher. I'm also a former yoga studio owner and a dedicated health and wellness 
                         practitioner with over 30 years of experience. I began <span className="font-semibold text-blue-600">Get Up Earlier</span> (GetUpEarlier.com) because getting 
                         up earlier was step one in transforming my routine and overall well-being, especially after spending years 
@@ -105,12 +102,11 @@ export default function About() {
                         </p>
                       </div>
                       
-                      <p className="text-lg leading-relaxed">
-                        While my own marathon training or strength achievements might seem extreme, I'm not trying to turn anyone into a 
-                        bodybuilder or marathon runner. I'm simply showing that, especially beyond 40, 50, 60, and 70 years old, 
-                        these things are possible. <span className="font-semibold text-blue-600">It's about inspiration and helping people make realistic, sustainable changes.</span>
-                      </p>
-                    </div>
+                    <p className="text-lg leading-relaxed">
+                      While my own marathon training or strength achievements might seem extreme, I'm not trying to turn anyone into a 
+                      bodybuilder or marathon runner. I'm simply showing that, especially beyond 40, 50, 60, and 70 years old, 
+                      these things are possible. <span className="font-semibold text-blue-600">It's about inspiration and helping people make realistic, sustainable changes.</span>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -154,12 +150,9 @@ export default function About() {
 
                 {/* Right Side - Story */}
                 <div className="lg:col-span-3 p-8 lg:p-12">
-                  <div className="max-w-none">
-
-                    
-                    <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-6">
-                      <p className="text-lg leading-relaxed">
-                        Erica is an E-RYT 200 Yoga Instructor with over 2000 hours teaching experience in both large and small group settings. For the last decade, she has taught yoga from a place of authenticity and developed her own unique style and an ability to work well with all levels.
+                  <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-4">
+                    <p className="text-lg leading-relaxed">
+                      Erica is an E-RYT 200 Yoga Instructor with over 2000 hours teaching experience in both large and small group settings. For the last decade, she has taught yoga from a place of authenticity and developed her own unique style and an ability to work well with all levels.
                       </p>
                       
                       <p className="text-lg leading-relaxed">
@@ -176,10 +169,9 @@ export default function About() {
                         You can find her teaching small group classes in her home studio, private lessons and recorded classes of varying lengths on her YouTube channel.
                       </p>
                       
-                      {/* Permanent Class Schedule */}
-                      <div className="mt-8">
-                        <PermanentClassSchedule />
-                      </div>
+                    {/* Permanent Class Schedule */}
+                    <div className="mt-6">
+                      <PermanentClassSchedule />
                     </div>
                   </div>
                 </div>

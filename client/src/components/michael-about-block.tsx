@@ -40,9 +40,8 @@ export function MichaelAboutBlock() {
 
             {/* Right Side - Story */}
             <div className="lg:col-span-3 p-8 lg:p-12">
-              <div className="max-w-none">
-                <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-6">
-                  <p className="text-lg leading-relaxed">
+              <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 space-y-4">
+                <p className="text-lg leading-relaxed">
                     Hello, I'm Michael Baker. I am a 50-year-old strength trainer, certified personal trainer, running coach, 
                     health coach, and yoga teacher. I'm also a former yoga studio owner and a dedicated health and wellness 
                     practitioner with over 30 years of experience. I began <span className="font-semibold text-blue-600">Get Up Earlier</span> (GetUpEarlier.com) because getting 
@@ -58,12 +57,11 @@ export function MichaelAboutBlock() {
                     </p>
                   </div>
                   
-                  <p className="text-lg leading-relaxed">
-                    While my own marathon training or strength achievements might seem extreme, I'm not trying to turn anyone into a 
-                    bodybuilder or marathon runner. I'm simply showing that, especially beyond 40, 50, 60, and 70 years old, 
-                    these things are possible. <span className="font-semibold text-blue-600">It's about inspiration and helping people make realistic, sustainable changes.</span>
-                  </p>
-                </div>
+                <p className="text-lg leading-relaxed">
+                  While my own marathon training or strength achievements might seem extreme, I'm not trying to turn anyone into a 
+                  bodybuilder or marathon runner. I'm simply showing that, especially beyond 40, 50, 60, and 70 years old, 
+                  these things are possible. <span className="font-semibold text-blue-600">It's about inspiration and helping people make realistic, sustainable changes.</span>
+                </p>
               </div>
             </div>
           </div>
