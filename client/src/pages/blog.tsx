@@ -146,7 +146,7 @@ export default function Blog() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post: BlogPost) => (
-              <Card key={post.id} className="group hover:shadow-lg transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700">
+              <Card key={post.id} className="group hover:shadow-lg transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 flex flex-col h-full">
                 <Link href={`/blog/${post.id}`} className="block">
                   <div className="relative overflow-hidden">
                     <div className="aspect-video relative overflow-hidden bg-gray-100 dark:bg-gray-700">
@@ -195,7 +195,7 @@ export default function Blog() {
                   </CardTitle>
                 </CardHeader>
                 
-                <CardContent className="pt-0">
+                <CardContent className="pt-0 flex flex-col flex-grow">
                   <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3 mb-4">
                     {post.excerpt}
                   </p>
@@ -207,17 +207,8 @@ export default function Blog() {
                     </div>
                   </div>
                   
-                  <div className="flex justify-end">
-                    <Link href={`/blog/${post.id}`}>
-                      <Button size="sm" className="gap-1">
-                        Read More
-                        <ArrowRight className="h-3 w-3" />
-                      </Button>
-                    </Link>
-                  </div>
-                  
                   {/* Display all categories as clickable tags */}
-                  <div className="flex flex-wrap gap-2 mt-3">
+                  <div className="flex flex-wrap gap-2 mb-4">
                     {post.categories && post.categories.length > 0 ? (
                       post.categories.map((category) => (
                         <Link key={category} href={`/category/${encodeURIComponent(category)}`}>
@@ -237,6 +228,15 @@ export default function Blog() {
                         ))
                       )
                     )}
+                  </div>
+                  
+                  <div className="flex justify-end mt-auto">
+                    <Link href={`/blog/${post.id}`}>
+                      <Button size="sm" className="gap-1">
+                        Read More
+                        <ArrowRight className="h-3 w-3" />
+                      </Button>
+                    </Link>
                   </div>
                 </CardContent>
               </Card>
