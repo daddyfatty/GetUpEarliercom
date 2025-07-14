@@ -18,9 +18,7 @@ export default function AlcoholCalculatorPage() {
               <Wine className="h-8 w-8 text-white" />
             </div>
           </div>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Analyze how your weekly alcohol consumption affects your weight goals with comprehensive metabolic impact calculations and personalized recommendations
-          </p>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">Analyze how habitual alcohol consumption affects your weight</p>
         </div>
         
         <AlcoholCalculator />
