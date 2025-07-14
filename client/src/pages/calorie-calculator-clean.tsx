@@ -447,7 +447,7 @@ export default function CalorieCalculator() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
-          <Card className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm">
+          <Card className="bg-white/98 dark:bg-gray-800/98 backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <User className="w-5 h-5" />
@@ -596,7 +596,7 @@ export default function CalorieCalculator() {
 
         <div>
           {results && (
-            <Card className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm">
+            <Card className="bg-white/98 dark:bg-gray-800/98 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle className="text-green-600">Your Results</CardTitle>
                 <CardDescription>
