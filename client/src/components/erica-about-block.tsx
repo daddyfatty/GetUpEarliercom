@@ -32,11 +32,7 @@ export function EricaAboutBlock() {
                 <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">YouTube Content Creator</p>
               </div>
               
-              <div className="mb-6">
-                <p className="text-gray-700 dark:text-gray-100 text-lg leading-relaxed">
-                  Erica believes Yoga is just one facet of nourishing your body to create optimal health and prevent disease. She truly enjoys helping others improve their overall health as well as making them laugh a little too.
-                </p>
-              </div>
+
               
               <Link href="/contact">
                 <Button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-gray-800 dark:text-white border-white/30 px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105">
@@ -55,6 +51,17 @@ export function EricaAboutBlock() {
                 <p className="text-lg leading-relaxed mb-4">
                   As a former boutique yoga studio owner and wellness enthusiast, she brings her health and fitness knowledge and passion to others with her fun energy and physical classes. Every single one of her classes is unique, but you can always count on a consistent experience working on overall strength, mobility, flexibility, balance and stress relief.
                 </p>
+                
+                <blockquote className="relative bg-gray-50 dark:bg-gray-900 rounded-xl p-8 my-8 border-0 shadow-sm">
+                  <div className="absolute top-4 left-4 text-green-600 opacity-20">
+                    <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+                    </svg>
+                  </div>
+                  <div className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed italic pl-4">
+                    Erica believes Yoga is just one facet of nourishing your body to create optimal health and prevent disease. She truly enjoys helping others improve their overall health as well as making them laugh a little too.
+                  </div>
+                </blockquote>
                 
                 <p className="text-lg leading-relaxed mb-4">
                   You can find her teaching small group classes in her home studio, private lessons and recorded classes of varying lengths on her YouTube channel.

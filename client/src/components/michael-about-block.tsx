@@ -31,13 +31,7 @@ export function MichaelAboutBlock() {
                 <p className="text-blue-100 text-lg font-medium">Lifelong Fitness Practitioner</p>
               </div>
               
-              <div className="mb-6">
-                <p className="text-blue-100 text-lg leading-relaxed">
-                  My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus 
-                  on helping people rely on intuition, providing a personal experience, and introducing them to strength training, 
-                  alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts.
-                </p>
-              </div>
+
               
               <Link href="/contact">
                 <Button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white border-white/30 px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105">
@@ -56,6 +50,19 @@ export function MichaelAboutBlock() {
                     up earlier was step one in transforming my routine and overall well-being, especially after spending years 
                     sitting at a computer as a <a href="https://WebMBD.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">digital professional</a>.
                   </p>
+                  
+                  <blockquote className="relative bg-gray-50 dark:bg-gray-900 rounded-xl p-8 my-8 border-0 shadow-sm">
+                    <div className="absolute top-4 left-4 text-blue-600 opacity-20">
+                      <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+                      </svg>
+                    </div>
+                    <div className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed italic pl-4">
+                      My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus 
+                      on helping people rely on intuition, providing a personal experience, and introducing them to strength training, 
+                      alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts.
+                    </div>
+                  </blockquote>
                   
                 <p className="text-lg leading-relaxed">
                   While my own marathon training or strength achievements might seem extreme, I'm not trying to turn anyone into a 
