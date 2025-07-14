@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 14, 2025: Added High Carb macro profile (65% carbs/25% protein/10% fat) for marathon carb loading and Endurance Training goal as default - endurance goal provides maintenance calories plus 15% extra for training demands
 - July 14, 2025: Removed Recommendations and Healthy Guidelines sections from alcohol calculator - streamlined interface by removing advisory content to focus purely on calculation and impact analysis
 - July 14, 2025: Updated both calculator pages to use consistent site-wide blue to white gradient background - changed from multi-color gradient to standard bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white matching About, Blog, Services, and Home pages
 - July 14, 2025: Made calculator card backgrounds darker gray for better form field contrast - changed from bg-white to bg-gray-50 then to bg-[#d5dde5] so white form fields stand out more prominently against the card backgrounds

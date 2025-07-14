@@ -70,6 +70,12 @@ const macroProfiles = {
     protein: 25,
     fat: 70,
     description: "Ketogenic diet for rapid fat loss"
+  },
+  'high-carb': {
+    carbs: 65,
+    protein: 25,
+    fat: 10,
+    description: "High carb for marathon carb loading and endurance training"
   }
 };
 
@@ -83,7 +89,7 @@ export default function CalorieCalculator() {
   const [currentWeight, setCurrentWeight] = useState('');
   const [desiredWeight, setDesiredWeight] = useState('');
   const [activityLevel, setActivityLevel] = useState([1.2]);
-  const [goal, setGoal] = useState('loss');  
+  const [goal, setGoal] = useState('endurance');  
   const [unitSystem, setUnitSystem] = useState('imperial');
   const [macroProfile, setMacroProfile] = useState('balanced');
   const [results, setResults] = useState<CalculationResults | null>(null);
@@ -127,7 +133,7 @@ export default function CalorieCalculator() {
       setActivityLevel([activityValue]);
       
       console.log('Setting goal from', profile.goal, 'to state');
-      setGoal(profile.goal || 'loss');
+      setGoal(profile.goal || 'endurance');
       
       console.log('Setting macroProfile from', profile.macroProfile, 'to state');
       setMacroProfile(profile.macroProfile || 'balanced');
@@ -251,6 +257,13 @@ export default function CalorieCalculator() {
       targetCalories = tdee + surplus;
       weeklyChangeRate = weeklyGainRate;
       timeToGoal = Math.ceil(weightToGainLbs / weeklyGainRate);
+    } else if (goal === 'endurance') {
+      // For endurance training, provide maintenance calories plus training buffer
+      // Add 10-20% extra calories for endurance training demands
+      const trainingBuffer = 0.15; // 15% extra for endurance training
+      targetCalories = tdee * (1 + trainingBuffer);
+      weeklyChangeRate = 0; // Maintaining weight during training
+      timeToGoal = 0; // No specific weight goal for endurance training
     }
 
     const profile = macroProfiles[macroProfile];
@@ -544,6 +557,7 @@ export default function CalorieCalculator() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="endurance">Endurance Training</SelectItem>
                     <SelectItem value="loss">Weight Loss</SelectItem>
                     <SelectItem value="maintenance">Maintain Weight</SelectItem>
                     <SelectItem value="gain">Weight Gain</SelectItem>
