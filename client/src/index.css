@@ -41,6 +41,9 @@ html {
   --coaching-accent: 330 81% 60%; /* #ec4899 - Pink 500 */
   --coaching-light: 262 83% 95%; /* Light purple for backgrounds */
   --coaching-text: 262 83% 20%; /* Dark purple for text */
+  
+  /* Custom Calculator Card Background */
+  --calculator-card-bg: 217 26% 86%; /* #d5dde5 - Darker gray for calculator cards */
 }
 
 /* Credentials Band Animation */
