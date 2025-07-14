@@ -31,6 +31,14 @@ export function MichaelAboutBlock() {
                 <p className="text-blue-100 text-lg font-medium">Lifelong Fitness Practitioner</p>
               </div>
               
+              <div className="mb-6">
+                <p className="text-blue-100 text-lg leading-relaxed">
+                  My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus 
+                  on helping people rely on intuition, providing a personal experience, and introducing them to strength training, 
+                  alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts.
+                </p>
+              </div>
+              
               <Link href="/contact">
                 <Button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white border-white/30 px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105">
                   Let's Work Together →
@@ -49,13 +57,7 @@ export function MichaelAboutBlock() {
                     sitting at a computer as a <a href="https://WebMBD.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">digital professional</a>.
                   </p>
                   
-                  <div className="border-l-4 border-blue-600 bg-blue-50 dark:bg-gray-800 p-6 rounded-r-lg mb-4">
-                    <div className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
-                      My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus 
-                      on helping people rely on intuition, providing a personal experience, and introducing them to strength training, 
-                      alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts.
-                    </div>
-                  </div>
+
                   
                 <p className="text-lg leading-relaxed">
                   While my own marathon training or strength achievements might seem extreme, I'm not trying to turn anyone into a 

@@ -32,6 +32,12 @@ export function EricaAboutBlock() {
                 <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">YouTube Content Creator</p>
               </div>
               
+              <div className="mb-6">
+                <p className="text-gray-700 dark:text-gray-100 text-lg leading-relaxed">
+                  Erica believes Yoga is just one facet of nourishing your body to create optimal health and prevent disease. She truly enjoys helping others improve their overall health as well as making them laugh a little too.
+                </p>
+              </div>
+              
               <Link href="/contact">
                 <Button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-gray-800 dark:text-white border-white/30 px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105">
                   Let's Work Together →
@@ -50,11 +56,7 @@ export function EricaAboutBlock() {
                   As a former boutique yoga studio owner and wellness enthusiast, she brings her health and fitness knowledge and passion to others with her fun energy and physical classes. Every single one of her classes is unique, but you can always count on a consistent experience working on overall strength, mobility, flexibility, balance and stress relief.
                 </p>
                 
-                <div className="border-l-4 border-green-600 bg-green-50 dark:bg-gray-800 p-6 rounded-r-lg mb-4">
-                  <div className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
-                    Erica believes Yoga is just one facet of nourishing your body to create optimal health and prevent disease. She truly enjoys helping others improve their overall health as well as making them laugh a little too.
-                  </div>
-                </div>
+
                 
                 <p className="text-lg leading-relaxed mb-4">
                   You can find her teaching small group classes in her home studio, private lessons and recorded classes of varying lengths on her YouTube channel.
