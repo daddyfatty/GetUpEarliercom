@@ -90,7 +90,7 @@ The database schema includes:
 ```
 Changelog:
 - July 14, 2025: Updated both calculator pages to use consistent site-wide blue to white gradient background - changed from multi-color gradient to standard bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white matching About, Blog, Services, and Home pages
-- July 14, 2025: Made card backgrounds darker in both calculators - changed from 80% to 98% opacity (bg-white/98 dark:bg-gray-800/98) for better contrast so white form fields pop out more against the gradient backgrounds
+- July 14, 2025: Made calculator card backgrounds fully opaque instead of transparent - changed from bg-white/98 to bg-white (solid) and removed backdrop-blur-sm for clean, distinct card backgrounds that don't show through to the page gradient
 - July 14, 2025: Updated Alcohol Calculator color scheme to match Daily Calorie Calculator - changed from amber-orange to blue-purple gradient theme throughout (backgrounds, headers, buttons, info boxes) while maintaining all functionality
 - July 14, 2025: Added space before opening parenthesis in macro profile dropdown display for better readability - now shows "Balanced (40% Carbs/30% Protein/30% Fat)" with proper spacing
 - July 14, 2025: Updated macro profile display to show full descriptive words instead of abbreviations - changed from "C P F" to "Carbs, Protein, Fat" for improved user experience

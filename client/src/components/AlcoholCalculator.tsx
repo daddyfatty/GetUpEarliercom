@@ -257,7 +257,7 @@ export default function AlcoholCalculator() {
         {/* Input Form - Spans 2 columns */}
         <div className="xl:col-span-2 space-y-6">
           {/* Alcohol Consumption Card */}
-          <Card className="shadow-lg border-0 bg-white/98 dark:bg-gray-800/98 backdrop-blur-sm">
+          <Card className="shadow-lg border-0 bg-white dark:bg-gray-800">
             <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-t-lg">
               <CardTitle className="flex items-center gap-2">
                 <Beer className="h-5 w-5" />
@@ -464,7 +464,7 @@ export default function AlcoholCalculator() {
 
         {/* Results Panel */}
         <div className="xl:col-span-1">
-          <Card className="shadow-lg border-0 bg-white/98 dark:bg-gray-800/98 backdrop-blur-sm sticky top-8">
+          <Card className="shadow-lg border-0 bg-white dark:bg-gray-800 sticky top-8">
             <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-t-lg">
               <CardTitle className="flex items-center gap-2">
                 <Target className="h-5 w-5" />
