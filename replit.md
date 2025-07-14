@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 14, 2025: Removed Recommendations and Healthy Guidelines sections from alcohol calculator - streamlined interface by removing advisory content to focus purely on calculation and impact analysis
 - July 14, 2025: Updated both calculator pages to use consistent site-wide blue to white gradient background - changed from multi-color gradient to standard bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white matching About, Blog, Services, and Home pages
 - July 14, 2025: Made calculator card backgrounds light gray for better form field contrast - changed from bg-white to bg-gray-50 so white form fields stand out more prominently against the card backgrounds
 - July 14, 2025: Updated Alcohol Calculator color scheme to match Daily Calorie Calculator - changed from amber-orange to blue-purple gradient theme throughout (backgrounds, headers, buttons, info boxes) while maintaining all functionality

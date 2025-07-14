@@ -232,24 +232,7 @@ export default function AlcoholCalculator() {
     }
   };
 
-  const getRecommendations = () => {
-    const recommendations = [];
-    
-    if (totalCalories > 1500) {
-      recommendations.push("Consider reducing overall alcohol intake for better weight management");
-    }
-    if (beerCount > 7) {
-      recommendations.push("Try switching some beers to light beer varieties (103 calories vs 153)");
-    }
-    if (cocktailCount > 3) {
-      recommendations.push("Opt for simple mixed drinks with club soda instead of sugary mixers");
-    }
-    if (totalCalories > 500) {
-      recommendations.push("Add 30 minutes of cardio to offset alcohol calories");
-    }
-    
-    return recommendations;
-  };
+
 
   return (
     <div className="w-full max-w-7xl mx-auto">
@@ -609,37 +592,7 @@ export default function AlcoholCalculator() {
                     </div>
                   )}
 
-                  {/* Recommendations */}
-                  {getRecommendations().length > 0 && (
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                        <Heart className="h-4 w-4" />
-                        Recommendations
-                      </h4>
-                      <ul className="space-y-2">
-                        {getRecommendations().map((recommendation, index) => (
-                          <li key={index} className="text-sm text-gray-600 dark:text-gray-400 flex items-start gap-2">
-                            <span className="text-blue-500 mt-1">•</span>
-                            <span>{recommendation}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
 
-                  {/* Health Tips */}
-                  <div className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 p-4 rounded-lg">
-                    <h4 className="font-semibold text-indigo-900 dark:text-indigo-100 mb-2 flex items-center gap-2">
-                      <Calendar className="h-4 w-4" />
-                      Healthy Guidelines
-                    </h4>
-                    <ul className="text-sm text-indigo-800 dark:text-indigo-200 space-y-1">
-                      <li>• Men: ≤14 drinks per week</li>
-                      <li>• Women: ≤7 drinks per week</li>
-                      <li>• Have 2+ alcohol-free days weekly</li>
-                      <li>• Drink water between alcoholic beverages</li>
-                    </ul>
-                  </div>
                 </div>
               ) : (
                 <div className="text-center py-12">
