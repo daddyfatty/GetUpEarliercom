@@ -673,14 +673,7 @@ export default function CalorieCalculator() {
                   </div>
                 )}
 
-                {results.dailyWaterIntake && (
-                  <div className="bg-cyan-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-cyan-700 mb-1">Daily Water Intake</h3>
-                    <p className="text-cyan-600">
-                      {results.dailyWaterIntake}ml ({Math.round(results.dailyWaterIntake / 240)} cups)
-                    </p>
-                  </div>
-                )}
+
 
                 {results.mealTiming && (
                   <div>
