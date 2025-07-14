@@ -576,8 +576,7 @@ export default function CalorieCalculator() {
                   <SelectContent>
                     {Object.entries(macroProfiles).map(([key, profile]) => (
                       <SelectItem key={key} value={key}>
-                        {key.charAt(0).toUpperCase() + key.slice(1).replace('-', ' ')} 
-                        ({profile.carbs}% Carbs/{profile.protein}% Protein/{profile.fat}% Fat)
+                        {key.charAt(0).toUpperCase() + key.slice(1).replace('-', ' ')} ({profile.carbs}% Carbs/{profile.protein}% Protein/{profile.fat}% Fat)
                       </SelectItem>
                     ))}
                   </SelectContent>
