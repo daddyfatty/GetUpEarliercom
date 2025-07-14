@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 13, 2025: Top-justified Erica's profile photo and credentials - changed from center to top alignment in left column by updating flex justify-start positioning; now matches Michael's layout with content appearing at the very top of the column
 - July 13, 2025: Redesigned profile quotes with elegant blockquote styling - moved quotes back to right side with new visual treatment using subtle gray backgrounds, rounded corners, SVG quote icons, italic text, and proper semantic blockquote elements; eliminated all previous spacing issues with clean, modern design
 - July 13, 2025: Fixed outdated blog URLs in home page and hero section - updated random blog post links to use proper slug-based URLs instead of YouTube ID format; now generates SEO-friendly URLs like /blog/relieve-lower-back-pain-fast-2-simple-moves instead of /blog/youtube-oQu5RBpaM_Y
 - July 13, 2025: Top-justified profile photos and credentials in MichaelAboutBlock and EricaAboutBlock components - removed top padding completely so profile photos appear at the very top of left columns; changes automatically apply to all pages using these components (About, service pages, team pages)
