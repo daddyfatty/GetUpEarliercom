@@ -3,18 +3,18 @@ import { Beer, Wine } from "lucide-react";
 
 export default function AlcoholCalculatorPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="mb-8 text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="p-3 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full">
+            <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full">
               <Beer className="h-8 w-8 text-white" />
             </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Alcohol Weight Impact Calculator
             </h1>
-            <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full">
+            <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full">
               <Wine className="h-8 w-8 text-white" />
             </div>
           </div>

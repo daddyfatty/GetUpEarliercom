@@ -258,12 +258,12 @@ export default function AlcoholCalculator() {
         <div className="xl:col-span-2 space-y-6">
           {/* Alcohol Consumption Card */}
           <Card className="shadow-lg border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
-            <CardHeader className="bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-t-lg">
+            <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-t-lg">
               <CardTitle className="flex items-center gap-2">
                 <Beer className="h-5 w-5" />
                 Weekly Alcohol Consumption
               </CardTitle>
-              <CardDescription className="text-amber-100">
+              <CardDescription className="text-blue-100">
                 Enter your typical weekly alcohol intake for accurate calculations
               </CardDescription>
             </CardHeader>
@@ -272,7 +272,7 @@ export default function AlcoholCalculator() {
                 {/* Beer Input */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
-                    <Beer className="h-5 w-5 text-amber-600" />
+                    <Beer className="h-5 w-5 text-blue-600" />
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Beer</h3>
                   </div>
                   <div className="space-y-2">
@@ -286,8 +286,8 @@ export default function AlcoholCalculator() {
                       placeholder="0"
                       className="text-base"
                     />
-                    <div className="bg-amber-50 dark:bg-amber-900/20 p-3 rounded-lg">
-                      <p className="text-sm text-amber-800 dark:text-amber-200">
+                    <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg">
+                      <p className="text-sm text-blue-800 dark:text-blue-200">
                         Per beer: {BEER_CALORIES} calories, {BEER_CARBS}g carbs, {BEER_PROTEIN}g protein
                       </p>
                     </div>
@@ -450,7 +450,7 @@ export default function AlcoholCalculator() {
                 </Button>
                 <Button 
                   onClick={saveResults}
-                  className="flex-1 bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600"
+                  className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
                   disabled={saveResultMutation.isPending}
                   size="lg"
                 >
@@ -465,12 +465,12 @@ export default function AlcoholCalculator() {
         {/* Results Panel */}
         <div className="xl:col-span-1">
           <Card className="shadow-lg border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm sticky top-8">
-            <CardHeader className="bg-gradient-to-r from-red-500 to-pink-600 text-white rounded-t-lg">
+            <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-t-lg">
               <CardTitle className="flex items-center gap-2">
                 <Target className="h-5 w-5" />
                 Impact Analysis
               </CardTitle>
-              <CardDescription className="text-red-100">
+              <CardDescription className="text-blue-100">
                 Weekly alcohol consumption impact on weight goals
               </CardDescription>
             </CardHeader>
