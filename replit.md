@@ -89,6 +89,8 @@ The database schema includes:
 
 ```
 Changelog:
+- July 14, 2025: Added consistent 35px top padding to both Michael and Erica's profile sections - applied pt-[35px] to both component files and about page for uniform breathing room from top edge while maintaining top-justified alignment; updated Michael's about section to use justify-start for consistency
+- July 14, 2025: Added 50px spacing between credentials band and In-Home Private Boutique section title for improved visual hierarchy and layout breathing room
 - July 13, 2025: Top-justified Erica's profile photo and credentials - changed from center to top alignment in left column by updating flex justify-start positioning; now matches Michael's layout with content appearing at the very top of the column
 - July 13, 2025: Redesigned profile quotes with elegant blockquote styling - moved quotes back to right side with new visual treatment using subtle gray backgrounds, rounded corners, SVG quote icons, italic text, and proper semantic blockquote elements; eliminated all previous spacing issues with clean, modern design
 - July 13, 2025: Fixed outdated blog URLs in home page and hero section - updated random blog post links to use proper slug-based URLs instead of YouTube ID format; now generates SEO-friendly URLs like /blog/relieve-lower-back-pain-fast-2-simple-moves instead of /blog/youtube-oQu5RBpaM_Y

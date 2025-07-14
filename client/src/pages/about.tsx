@@ -55,7 +55,7 @@ export default function About() {
             <CardContent className="p-0">
               <div className="grid lg:grid-cols-5 gap-0">
                 {/* Left Side - Photo and Basic Info */}
-                <div className="lg:col-span-2 bg-[hsl(var(--navy))] dark:from-blue-900 dark:to-gray-900 p-8 lg:p-12 text-white flex flex-col justify-center items-center text-center">
+                <div className="lg:col-span-2 bg-[hsl(var(--navy))] dark:from-blue-900 dark:to-gray-900 p-8 lg:p-12 pt-[35px] text-white flex flex-col justify-start items-center text-center">
                   <div className="w-48 h-48 rounded-full overflow-hidden mb-8 border-8 border-white/20 shadow-2xl">
                     <img 
                       src={headshotPath} 
@@ -195,7 +195,9 @@ export default function About() {
         </section>
 
         {/* CREDENTIALS BAND */}
-        <CredentialsBand />
+        <div className="mb-[50px]">
+          <CredentialsBand />
+        </div>
 
         {/* In-Home Private Boutique Section */}
         <section id="studio" className="max-w-6xl mx-auto mb-16">
