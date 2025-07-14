@@ -89,6 +89,10 @@ The database schema includes:
 
 ```
 Changelog:
+- July 14, 2025: Made card backgrounds darker in both calculators - changed from 80% to 95% opacity (bg-white/95 dark:bg-gray-800/95) for better contrast so white form fields pop out more against the gradient backgrounds
+- July 14, 2025: Updated Alcohol Calculator color scheme to match Daily Calorie Calculator - changed from amber-orange to blue-purple gradient theme throughout (backgrounds, headers, buttons, info boxes) while maintaining all functionality
+- July 14, 2025: Added space before opening parenthesis in macro profile dropdown display for better readability - now shows "Balanced (40% Carbs/30% Protein/30% Fat)" with proper spacing
+- July 14, 2025: Updated macro profile display to show full descriptive words instead of abbreviations - changed from "C P F" to "Carbs, Protein, Fat" for improved user experience
 - July 14, 2025: Added consistent 35px top padding to both Michael and Erica's profile sections - applied pt-[35px] to both component files and about page for uniform breathing room from top edge while maintaining top-justified alignment; updated Michael's about section to use justify-start for consistency
 - July 14, 2025: Added 50px spacing between credentials band and In-Home Private Boutique section title for improved visual hierarchy and layout breathing room
 - July 13, 2025: Top-justified Erica's profile photo and credentials - changed from center to top alignment in left column by updating flex justify-start positioning; now matches Michael's layout with content appearing at the very top of the column
