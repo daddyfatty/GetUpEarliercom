@@ -56,8 +56,6 @@ export function EricaAboutBlock() {
                   As a former boutique yoga studio owner and wellness enthusiast, she brings her health and fitness knowledge and passion to others with her fun energy and physical classes. Every single one of her classes is unique, but you can always count on a consistent experience working on overall strength, mobility, flexibility, balance and stress relief.
                 </p>
                 
-
-                
                 <p className="text-lg leading-relaxed mb-4">
                   You can find her teaching small group classes in her home studio, private lessons and recorded classes of varying lengths on her YouTube channel.
                 </p>

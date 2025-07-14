@@ -57,8 +57,6 @@ export function MichaelAboutBlock() {
                     sitting at a computer as a <a href="https://WebMBD.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">digital professional</a>.
                   </p>
                   
-
-                  
                 <p className="text-lg leading-relaxed">
                   While my own marathon training or strength achievements might seem extreme, I'm not trying to turn anyone into a 
                   bodybuilder or marathon runner. I'm simply showing that, especially beyond 40, 50, 60, and 70 years old, 
