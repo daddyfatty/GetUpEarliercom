@@ -675,40 +675,7 @@ export default function CalorieCalculator() {
 
 
 
-                {results.mealTiming && (
-                  <div>
-                    <h3 className="font-semibold mb-3">Suggested Meal Distribution</h3>
-                    <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span>Breakfast:</span>
-                        <span className="font-medium">{results.mealTiming.breakfast} cal</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Lunch:</span>
-                        <span className="font-medium">{results.mealTiming.lunch} cal</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Dinner:</span>
-                        <span className="font-medium">{results.mealTiming.dinner} cal</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Snacks:</span>
-                        <span className="font-medium">{results.mealTiming.snacks} cal</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
 
-                {results.supplementSuggestions && results.supplementSuggestions.length > 0 && (
-                  <div className="bg-green-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-green-700 mb-2">Recommended Supplements</h3>
-                    <div className="space-y-1">
-                      {results.supplementSuggestions.map((supplement, index) => (
-                        <div key={index} className="text-sm text-green-600">• {supplement}</div>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </CardContent>
             </Card>
           )}
