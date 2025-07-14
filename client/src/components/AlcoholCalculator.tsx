@@ -303,9 +303,9 @@ export default function AlcoholCalculator() {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="quarter">Glass (5 oz) - 154 cal</SelectItem>
-                          <SelectItem value="half">Large pour (10 oz) - 308 cal</SelectItem>
-                          <SelectItem value="full">Bottle (25 oz) - 615 cal</SelectItem>
+                          <SelectItem value="quarter">Glass 5 oz - 154 cal</SelectItem>
+                          <SelectItem value="half">1/2 Bottle - 308 cal</SelectItem>
+                          <SelectItem value="full">Bottle - 615 cal</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
