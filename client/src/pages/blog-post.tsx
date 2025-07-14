@@ -253,7 +253,13 @@ export default function BlogPost() {
           {/* Article Content */}
           <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg border border-gray-200 dark:border-gray-700">
             <div className="prose prose-lg max-w-none dark:prose-invert">
-              <BlogContentRenderer content={post.content} />
+              <BlogContentRenderer 
+                content={post.content} 
+                onImageClick={(imageSrc) => {
+                  setLightboxImage(imageSrc);
+                  setLightboxOpen(true);
+                }} 
+              />
             </div>
           </div>
 

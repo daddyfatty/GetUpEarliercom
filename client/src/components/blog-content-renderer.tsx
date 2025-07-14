@@ -3,20 +3,23 @@ import { Fragment } from "react";
 
 interface BlogContentRendererProps {
   content: string;
+  onImageClick?: (imageSrc: string) => void;
 }
 
-export function BlogContentRenderer({ content }: BlogContentRendererProps) {
+export function BlogContentRenderer({ content, onImageClick }: BlogContentRendererProps) {
   if (!content) return null;
 
-  // Split content by Amazon link spans and render them as components
+  // Split content by different elements and render them as components
   const renderContent = () => {
     const amazonLinkRegex = /<span class="amazon-link" data-url="([^"]+)">([^<]+)<\/span>/g;
+    const galleryRegex = /<div class="gallery-grid">([\s\S]*?)<\/div>/g;
     const parts = [];
     let lastIndex = 0;
     let match;
 
-    while ((match = amazonLinkRegex.exec(content)) !== null) {
-      // Add content before the Amazon link
+    // First handle gallery sections
+    while ((match = galleryRegex.exec(content)) !== null) {
+      // Add content before the gallery
       if (match.index > lastIndex) {
         const beforeContent = content.substring(lastIndex, match.index);
         if (beforeContent.trim()) {
@@ -30,36 +33,108 @@ export function BlogContentRenderer({ content }: BlogContentRendererProps) {
         }
       }
 
-      // Add Real Amazon preview component
-      const url = match[1];
-      const title = match[2];
+      // Process gallery images
+      const galleryContent = match[1];
+      const imageRegex = /<img src="([^"]+)" alt="([^"]*)" class="gallery-image" \/>/g;
+      const images = [];
+      let imageMatch;
       
-      parts.push(
+      while ((imageMatch = imageRegex.exec(galleryContent)) !== null) {
+        images.push({
+          src: imageMatch[1],
+          alt: imageMatch[2]
+        });
+      }
+
+      if (images.length > 0) {
+        parts.push(
+          <div key={`gallery-${match.index}`} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
+            {images.map((image, index) => (
+              <div 
+                key={`gallery-img-${index}`}
+                className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                onClick={() => onImageClick && onImageClick(image.src)}
+              >
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+            ))}
+          </div>
+        );
+      }
+
+      lastIndex = match.index + match[0].length;
+    }
+
+    // Reset regex for Amazon links on remaining content
+    const remainingContent = content.substring(lastIndex);
+    
+    // Process Amazon links in remaining content
+    const amazonParts = [];
+    let amazonLastIndex = 0;
+    let amazonMatch;
+    
+    while ((amazonMatch = amazonLinkRegex.exec(remainingContent)) !== null) {
+      // Add content before the Amazon link
+      if (amazonMatch.index > amazonLastIndex) {
+        const beforeAmazonContent = remainingContent.substring(amazonLastIndex, amazonMatch.index);
+        if (beforeAmazonContent.trim()) {
+          amazonParts.push(
+            <div 
+              key={`amazon-content-${amazonLastIndex}`}
+              dangerouslySetInnerHTML={{ __html: beforeAmazonContent }}
+              className="text-gray-600 dark:text-gray-400"
+            />
+          );
+        }
+      }
+
+      // Add Real Amazon preview component
+      const url = amazonMatch[1];
+      const title = amazonMatch[2];
+      
+      amazonParts.push(
         <RealAmazonPreview
-          key={`amazon-${match.index}`}
+          key={`amazon-${amazonMatch.index}`}
           url={url}
           title={title}
         />
       );
 
-      lastIndex = match.index + match[0].length;
+      amazonLastIndex = amazonMatch.index + amazonMatch[0].length;
     }
 
     // Add remaining content after last Amazon link
-    if (lastIndex < content.length) {
-      const remainingContent = content.substring(lastIndex);
-      if (remainingContent.trim()) {
-        parts.push(
+    if (amazonLastIndex < remainingContent.length) {
+      const finalContent = remainingContent.substring(amazonLastIndex);
+      if (finalContent.trim()) {
+        amazonParts.push(
           <div 
-            key={`content-${lastIndex}`}
-            dangerouslySetInnerHTML={{ __html: remainingContent }}
+            key={`final-content-${amazonLastIndex}`}
+            dangerouslySetInnerHTML={{ __html: finalContent }}
             className="text-gray-600 dark:text-gray-400"
           />
         );
       }
     }
 
-    // If no Amazon links found, render the original content
+    // If no Amazon links found in remaining content, render it as is
+    if (amazonParts.length === 0 && remainingContent.trim()) {
+      parts.push(
+        <div 
+          key={`remaining-content-${lastIndex}`}
+          dangerouslySetInnerHTML={{ __html: remainingContent }}
+          className="text-gray-600 dark:text-gray-400"
+        />
+      );
+    } else {
+      parts.push(...amazonParts);
+    }
+
+    // If no special content found, render the original content
     if (parts.length === 0) {
       return (
         <div 
