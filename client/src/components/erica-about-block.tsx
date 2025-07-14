@@ -51,7 +51,7 @@ export function EricaAboutBlock() {
                 </p>
                 
                 <div className="bg-green-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-green-600 mb-4">
-                  <p className="text-lg leading-relaxed mb-0">
+                  <p className="text-lg leading-relaxed !mb-0 !mt-0">
                     Erica believes Yoga is just one facet of nourishing your body to create optimal health and prevent disease. She truly enjoys helping others improve their overall health as well as making them laugh a little too.
                   </p>
                 </div>

@@ -89,6 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
+- July 13, 2025: Removed unwanted margin gaps in profile quote boxes - added !mb-0 !mt-0 classes to quote paragraphs in both Michael and Erica profile components to eliminate peach-colored spacing gaps; quote boxes now have perfectly flush text without extra margins
 - July 13, 2025: Fixed outdated blog URLs in home page and hero section - updated random blog post links to use proper slug-based URLs instead of YouTube ID format; now generates SEO-friendly URLs like /blog/relieve-lower-back-pain-fast-2-simple-moves instead of /blog/youtube-oQu5RBpaM_Y
 - July 13, 2025: Top-justified profile photos and credentials in MichaelAboutBlock and EricaAboutBlock components - removed top padding completely so profile photos appear at the very top of left columns; changes automatically apply to all pages using these components (About, service pages, team pages)
 - July 13, 2025: Fixed profile component spacing inconsistency - removed uneven spacing around highlighted quote boxes by eliminating wrapper divs and applying consistent mb-4 spacing to all elements; quote boxes now have perfectly balanced spacing above and below them matching paragraph spacing throughout profile sections

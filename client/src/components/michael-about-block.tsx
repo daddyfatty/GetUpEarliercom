@@ -50,7 +50,7 @@ export function MichaelAboutBlock() {
                   </p>
                   
                   <div className="bg-blue-50 dark:bg-gray-800 rounded-lg p-6 border-l-4 border-blue-600 mb-4">
-                    <p className="text-lg leading-relaxed mb-0">
+                    <p className="text-lg leading-relaxed !mb-0 !mt-0">
                       My primary goal is to bridge the gap from inactivity and poor diet to strength and healthy habits. I focus 
                       on helping people rely on intuition, providing a personal experience, and introducing them to strength training, 
                       alternate cardio, and yoga-inspired stretching, along with fundamental nutrition knowledge and concepts.
