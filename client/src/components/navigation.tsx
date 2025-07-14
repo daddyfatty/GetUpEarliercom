@@ -44,6 +44,7 @@ export function Navigation() {
   const navItems = [
     { href: "/services", label: "1-on-1 Services" },
     { href: "/blog", label: "Blog" },
+    { href: "/training-log", label: "Training Log" },
     { href: "/recipes", label: "Recipes", beta: true },
     { href: "/workouts", label: "Workouts", beta: true },
     ...(isAdmin ? [{ href: "/admin", label: "Admin" }] : []),

@@ -43,6 +43,8 @@ import Profile from "@/pages/profile";
 import Favorites from "@/pages/favorites";
 import SavedResults from "@/pages/saved-results";
 import NotFound from "@/pages/not-found";
+import TrainingLog from "@/pages/training-log";
+import TrainingLogEntry from "@/pages/training-log-entry";
 
 function Router() {
   const [location] = useLocation();
@@ -73,6 +75,9 @@ function Router() {
           {import.meta.env.DEV && <Route path="/blog/:slug/edit" component={BlogEdit} />}
           <Route path="/blog/:slug" component={BlogPost} />
           <Route path="/category/:category" component={CategoryPage} />
+
+          <Route path="/training-log" component={TrainingLog} />
+          <Route path="/training-log/:slug" component={TrainingLogEntry} />
 
           <Route path="/about" component={About} />
           <Route path="/services" component={Services} />

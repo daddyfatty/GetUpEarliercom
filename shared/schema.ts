@@ -273,6 +273,34 @@ export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
   updatedAt: true,
 });
 
+// Training log entries table
+export const trainingLogEntries = pgTable("training_log_entries", {
+  id: text("id").primaryKey(),
+  slug: text("slug").notNull().unique(), // SEO-friendly URL slug
+  entryNumber: integer("entry_number").notNull(), // Sequential entry number
+  date: text("date").notNull(), // Training date
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  distance: text("distance"), // e.g., "19.00 mi"
+  pace: text("pace"), // e.g., "8:22 /mi"
+  time: text("time"), // e.g., "2h 38m"
+  images: text("images").array(), // Array of image URLs
+  categories: text("categories").array(), // Array of category strings
+  strava_data: jsonb("strava_data").$type<{
+    splits?: any;
+    route?: any;
+    stats?: any;
+  }>(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertTrainingLogEntrySchema = createInsertSchema(trainingLogEntries).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type Recipe = typeof recipes.$inferSelect;
@@ -299,3 +327,5 @@ export type CalculatorResult = typeof calculatorResults.$inferSelect;
 export type InsertCalculatorResult = z.infer<typeof insertCalculatorResultSchema>;
 export type BlogPost = typeof blogPosts.$inferSelect;
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
+export type TrainingLogEntry = typeof trainingLogEntries.$inferSelect;
+export type InsertTrainingLogEntry = z.infer<typeof insertTrainingLogEntrySchema>;

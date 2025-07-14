@@ -514,6 +514,83 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.put("/api/blog/:id", cmsUpdateBlogPost);
   app.delete("/api/blog/:id", cmsDeleteBlogPost);
 
+  // Training Log API routes
+  app.get("/api/training-log", async (req, res) => {
+    try {
+      const entries = await storage.getAllTrainingLogEntries();
+      res.json(entries);
+    } catch (error) {
+      console.error('Error fetching training log entries:', error);
+      res.status(500).json({ error: 'Failed to fetch training log entries' });
+    }
+  });
+
+  app.get("/api/training-log/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const entry = await storage.getTrainingLogEntry(id);
+      if (!entry) {
+        return res.status(404).json({ error: 'Training log entry not found' });
+      }
+      res.json(entry);
+    } catch (error) {
+      console.error('Error fetching training log entry:', error);
+      res.status(500).json({ error: 'Failed to fetch training log entry' });
+    }
+  });
+
+  app.get("/api/training-log/slug/:slug", async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const entry = await storage.getTrainingLogEntryBySlug(slug);
+      if (!entry) {
+        return res.status(404).json({ error: 'Training log entry not found' });
+      }
+      res.json(entry);
+    } catch (error) {
+      console.error('Error fetching training log entry by slug:', error);
+      res.status(500).json({ error: 'Failed to fetch training log entry' });
+    }
+  });
+
+  app.post("/api/training-log", async (req, res) => {
+    try {
+      const entry = await storage.createTrainingLogEntry(req.body);
+      res.status(201).json(entry);
+    } catch (error) {
+      console.error('Error creating training log entry:', error);
+      res.status(500).json({ error: 'Failed to create training log entry' });
+    }
+  });
+
+  app.put("/api/training-log/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const entry = await storage.updateTrainingLogEntry(id, req.body);
+      if (!entry) {
+        return res.status(404).json({ error: 'Training log entry not found' });
+      }
+      res.json(entry);
+    } catch (error) {
+      console.error('Error updating training log entry:', error);
+      res.status(500).json({ error: 'Failed to update training log entry' });
+    }
+  });
+
+  app.delete("/api/training-log/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deleted = await storage.deleteTrainingLogEntry(id);
+      if (!deleted) {
+        return res.status(404).json({ error: 'Training log entry not found' });
+      }
+      res.json({ success: true });
+    } catch (error) {
+      console.error('Error deleting training log entry:', error);
+      res.status(500).json({ error: 'Failed to delete training log entry' });
+    }
+  });
+
   // Initialize Blog CMS with clean data
   app.post("/api/blog/initialize", async (req, res) => {
     try {

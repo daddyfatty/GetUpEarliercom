@@ -1,7 +1,8 @@
-import type { User, Recipe, Workout, Goal, FoodEntry, Achievement, WaterIntake, FavoriteRecipe, FavoriteWorkout, MealPlan, MealPlanRecipe, CalculatorResult, BlogPost, InsertUser, InsertRecipe, InsertWorkout, InsertGoal, InsertFoodEntry, InsertAchievement, InsertWaterIntake, InsertFavoriteRecipe, InsertFavoriteWorkout, InsertMealPlan, InsertMealPlanRecipe, InsertCalculatorResult, InsertBlogPost } from "../shared/schema";
-import { users, recipes, workouts, goals, foodEntries, achievements, waterIntake, favoriteRecipes, favoriteWorkouts, mealPlans, mealPlanRecipes, calculatorResults, blogPosts } from "../shared/schema";
+import type { User, Recipe, Workout, Goal, FoodEntry, Achievement, WaterIntake, FavoriteRecipe, FavoriteWorkout, MealPlan, MealPlanRecipe, CalculatorResult, BlogPost, TrainingLogEntry, InsertUser, InsertRecipe, InsertWorkout, InsertGoal, InsertFoodEntry, InsertAchievement, InsertWaterIntake, InsertFavoriteRecipe, InsertFavoriteWorkout, InsertMealPlan, InsertMealPlanRecipe, InsertCalculatorResult, InsertBlogPost, InsertTrainingLogEntry } from "../shared/schema";
+import { users, recipes, workouts, goals, foodEntries, achievements, waterIntake, favoriteRecipes, favoriteWorkouts, mealPlans, mealPlanRecipes, calculatorResults, blogPosts, trainingLogEntries } from "../shared/schema";
 import { db } from "./db";
 import { eq, and, desc } from "drizzle-orm";
+import crypto from "crypto";
 
 export interface IStorage {
   // User methods
@@ -86,6 +87,15 @@ export interface IStorage {
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   updateBlogPost(id: string, updates: Partial<BlogPost>): Promise<BlogPost | undefined>;
   deleteBlogPost(id: string): Promise<boolean>;
+
+  // Training log methods
+  getAllTrainingLogEntries(): Promise<TrainingLogEntry[]>;
+  getTrainingLogEntry(id: string): Promise<TrainingLogEntry | undefined>;
+  getTrainingLogEntryBySlug(slug: string): Promise<TrainingLogEntry | undefined>;
+  createTrainingLogEntry(entry: InsertTrainingLogEntry): Promise<TrainingLogEntry>;
+  updateTrainingLogEntry(id: string, updates: Partial<TrainingLogEntry>): Promise<TrainingLogEntry | undefined>;
+  deleteTrainingLogEntry(id: string): Promise<boolean>;
+  getNextEntryNumber(): Promise<number>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -336,6 +346,88 @@ export class DatabaseStorage implements IStorage {
     } catch (error) {
       console.error("Error deleting blog post:", error);
       return false;
+    }
+  }
+
+  // Training log methods
+  async getAllTrainingLogEntries(): Promise<TrainingLogEntry[]> {
+    try {
+      const entries = await db.select().from(trainingLogEntries).orderBy(desc(trainingLogEntries.entryNumber));
+      return entries;
+    } catch (error) {
+      console.error("Error fetching all training log entries:", error);
+      return [];
+    }
+  }
+
+  async getTrainingLogEntry(id: string): Promise<TrainingLogEntry | undefined> {
+    try {
+      const [entry] = await db.select().from(trainingLogEntries).where(eq(trainingLogEntries.id, id));
+      return entry || undefined;
+    } catch (error) {
+      console.error("Error fetching training log entry:", error);
+      return undefined;
+    }
+  }
+
+  async getTrainingLogEntryBySlug(slug: string): Promise<TrainingLogEntry | undefined> {
+    try {
+      const [entry] = await db.select().from(trainingLogEntries).where(eq(trainingLogEntries.slug, slug));
+      return entry || undefined;
+    } catch (error) {
+      console.error("Error fetching training log entry by slug:", error);
+      return undefined;
+    }
+  }
+
+  async createTrainingLogEntry(entry: InsertTrainingLogEntry): Promise<TrainingLogEntry> {
+    try {
+      console.log("Creating training log entry with values:", JSON.stringify(entry, null, 2));
+      const [newEntry] = await db.insert(trainingLogEntries).values({
+        ...entry,
+        id: crypto.randomUUID(),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }).returning();
+      return newEntry;
+    } catch (error) {
+      console.error("Error creating training log entry:", error);
+      console.error("Failed with entry data:", JSON.stringify(entry, null, 2));
+      throw error;
+    }
+  }
+
+  async updateTrainingLogEntry(id: string, updates: Partial<TrainingLogEntry>): Promise<TrainingLogEntry | undefined> {
+    try {
+      const [updatedEntry] = await db
+        .update(trainingLogEntries)
+        .set(updates)
+        .where(eq(trainingLogEntries.id, id))
+        .returning();
+      return updatedEntry || undefined;
+    } catch (error) {
+      console.error("Error updating training log entry:", error);
+      return undefined;
+    }
+  }
+
+  async deleteTrainingLogEntry(id: string): Promise<boolean> {
+    try {
+      const result = await db.delete(trainingLogEntries).where(eq(trainingLogEntries.id, id));
+      return result.rowCount !== null && result.rowCount > 0;
+    } catch (error) {
+      console.error("Error deleting training log entry:", error);
+      return false;
+    }
+  }
+
+  async getNextEntryNumber(): Promise<number> {
+    try {
+      const [maxEntry] = await db.select().from(trainingLogEntries).orderBy(desc(trainingLogEntries.entryNumber)).limit(1);
+      return maxEntry ? maxEntry.entryNumber + 1 : 1;
+    } catch (error) {
+      console.error("Error getting next entry number:", error);
+      return 1;
     }
   }
 }
