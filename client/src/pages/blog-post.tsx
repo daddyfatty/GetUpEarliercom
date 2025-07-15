@@ -228,9 +228,9 @@ export default function BlogPost() {
         </div>
 
         {/* Training Log Content */}
-        <div className="container mx-auto px-4" style={{ paddingTop: '25px' }}>
+        <div className="container mx-auto px-4" style={{ paddingTop: '25px', paddingBottom: '25px' }}>
           <div className="max-w-4xl mx-auto">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl" style={{ padding: '25px' }}>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl" style={{ padding: '25px', marginTop: '0' }}>
               <div className="prose prose-lg max-w-none dark:prose-invert">
                 <BlogContentRenderer 
                   content={trainingLogEntry.content} 
