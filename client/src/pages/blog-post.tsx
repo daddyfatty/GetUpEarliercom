@@ -186,18 +186,21 @@ export default function BlogPost() {
     const getEntryTitle = (entryNumber: number) => {
       if (entryNumber === 1) return '"GO ONE MORE"';
       if (entryNumber === 2) return '"SPEED KILLS"';
+      if (entryNumber === 3) return '"MARATHON TRAINING TIP FOR HOT LONG RUNS"';
       return `"ENTRY ${entryNumber}"`;
     };
 
     const getEntrySubtitle = (entryNumber: number) => {
       if (entryNumber === 1) return '-Nick Bare';
       if (entryNumber === 2) return '-Training Entry #2';
+      if (entryNumber === 3) return '-Training Entry #3';
       return `-Training Entry #${entryNumber}`;
     };
 
     const getWorkoutType = (entryNumber: number) => {
       if (entryNumber === 1) return 'Long Run';
       if (entryNumber === 2) return 'Speed Work';
+      if (entryNumber === 3) return 'Training';
       return 'Training';
     };
 
