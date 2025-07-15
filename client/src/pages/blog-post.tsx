@@ -52,11 +52,37 @@ export default function BlogPost() {
   const { data: post, isLoading, error } = useQuery<BlogPost>({
     queryKey: ["/api/blog/slug", slug],
     queryFn: async () => {
-      const response = await fetch(`/api/blog/slug/${slug}`);
-      if (!response.ok) {
-        throw new Error('Blog post not found');
+      // First try to fetch as a blog post
+      let response = await fetch(`/api/blog/slug/${slug}`);
+      if (response.ok) {
+        return response.json();
       }
-      return response.json();
+      
+      // If not found as blog post, try as training log entry
+      response = await fetch(`/api/training-log/slug/${slug}`);
+      if (response.ok) {
+        const trainingEntry = await response.json();
+        // Convert training log entry to blog post format
+        return {
+          id: trainingEntry.id,
+          slug: trainingEntry.slug,
+          title: trainingEntry.title,
+          excerpt: `Training Log Entry #${trainingEntry.entryNumber} - ${trainingEntry.date}`,
+          content: trainingEntry.content,
+          author: "Michael Baker",
+          publishedDate: trainingEntry.date,
+          category: "Marathon Training Log",
+          categories: trainingEntry.categories || [],
+          tags: trainingEntry.categories || [],
+          imageUrl: trainingEntry.images && trainingEntry.images.length > 0 ? trainingEntry.images[0] : undefined,
+          videoUrl: null,
+          readTime: Math.max(1, Math.ceil((trainingEntry.content?.length || 0) / 200)),
+          isVideo: false,
+          originalUrl: ""
+        };
+      }
+      
+      throw new Error('Blog post not found');
     },
     enabled: !!slug
   });
