@@ -220,7 +220,7 @@ export default function BlogPost() {
                 ))}
               </div>
               
-              <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-12 leading-tight text-[#94D600]">
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 leading-tight text-[#94D600]">
                 Hartford Marathon Training Log 2025
               </h1>
             </div>
@@ -228,12 +228,12 @@ export default function BlogPost() {
         </div>
 
         {/* Training Log Entries */}
-        <div className="container mx-auto px-4" style={{ paddingTop: '25px', paddingBottom: '25px' }}>
+        <div className="container mx-auto px-4" style={{ paddingTop: '0px', paddingBottom: '25px' }}>
           <div className="max-w-4xl mx-auto space-y-12">
             {sortedEntries.map((entry, index) => (
               <div key={entry.id}>
                 {/* Entry Header */}
-                <div className="text-center mb-6">
+                <div className="text-center mb-2">
                   <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
                     {getEntryTitle(entry.entryNumber)}
                   </div>
