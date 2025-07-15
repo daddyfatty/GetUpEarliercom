@@ -196,7 +196,7 @@ export default function BlogPost() {
               </div>
               
               {/* Training Metrics */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-6 mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-6" style={{ marginBottom: '25px' }}>
                 {trainingLogEntry.distance && (
                   <div className="text-center">
                     <div className="text-2xl font-bold text-[#94D600]">{trainingLogEntry.distance}</div>
