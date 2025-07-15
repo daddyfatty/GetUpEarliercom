@@ -181,40 +181,47 @@ export default function BlogPost() {
                 ))}
               </div>
               
-              {/* Training Date - Prominent Display */}
-              <div className="text-2xl md:text-3xl font-bold text-[#94D600] mb-1">
-                {formatTrainingDate(trainingLogEntry.date)}
-              </div>
-              
-              <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-3 leading-tight text-[#94D600]">
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-6 leading-tight text-[#94D600]">
                 {trainingLogEntry.title}
               </h1>
               
+              {/* Entry Title - Large and Prominent */}
+              <div className="text-center mb-6">
+                <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
+                  "GO ONE MORE"
+                </div>
+                <div className="text-lg md:text-xl text-gray-300">
+                  -Nick Bare
+                </div>
+              </div>
+              
               {/* Training Metrics */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-4 mb-3">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-6 mb-6">
                 {trainingLogEntry.distance && (
                   <div className="text-center">
-                    <div className="text-xl font-bold text-[#94D600]">{trainingLogEntry.distance}</div>
+                    <div className="text-2xl font-bold text-[#94D600]">{trainingLogEntry.distance}</div>
                     <div className="text-sm text-gray-300">Distance</div>
                   </div>
                 )}
                 {trainingLogEntry.pace && (
                   <div className="text-center">
-                    <div className="text-xl font-bold text-[#94D600]">{trainingLogEntry.pace}</div>
+                    <div className="text-2xl font-bold text-[#94D600]">{trainingLogEntry.pace}</div>
                     <div className="text-sm text-gray-300">Pace</div>
                   </div>
                 )}
                 {trainingLogEntry.time && (
                   <div className="text-center">
-                    <div className="text-xl font-bold text-[#94D600]">{trainingLogEntry.time}</div>
+                    <div className="text-2xl font-bold text-[#94D600]">{trainingLogEntry.time}</div>
                     <div className="text-sm text-gray-300">Time</div>
                   </div>
                 )}
               </div>
               
-              {/* Entry Number */}
-              <div className="text-base text-gray-300">
-                Training Log Entry #{trainingLogEntry.entryNumber}
+              {/* Entry Info */}
+              <div className="flex justify-between items-center text-sm text-gray-300 mb-4">
+                <div>Training Log Entry #{trainingLogEntry.entryNumber}</div>
+                <div>{formatTrainingDate(trainingLogEntry.date)}</div>
+                <div className="text-[#94D600]">Workout Type: Long Run</div>
               </div>
             </div>
           </div>
