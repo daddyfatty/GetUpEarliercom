@@ -228,7 +228,7 @@ export default function BlogPost() {
         </div>
 
         {/* Training Log Content */}
-        <div className="container mx-auto px-4 py-2">
+        <div className="container mx-auto px-4" style={{ paddingTop: '25px' }}>
           <div className="max-w-4xl mx-auto">
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-xl">
               <div className="prose prose-lg max-w-none dark:prose-invert">
