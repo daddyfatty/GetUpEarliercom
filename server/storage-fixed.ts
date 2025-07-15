@@ -413,13 +413,46 @@ export class DatabaseStorage implements IStorage {
   async createTrainingLogEntry(entry: InsertTrainingLogEntry): Promise<TrainingLogEntry> {
     try {
       console.log("Creating training log entry with values:", JSON.stringify(entry, null, 2));
-      const [newEntry] = await db.insert(trainingLogEntries).values({
-        ...entry,
-        id: crypto.randomUUID(),
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }).returning();
-      return newEntry;
+      
+      // Check if Hartford Marathon Training Log 2025 already exists
+      const existingEntry = await db.select().from(trainingLogEntries)
+        .where(eq(trainingLogEntries.title, 'Hartford Marathon Training Log 2025'))
+        .limit(1);
+      
+      if (existingEntry.length > 0) {
+        // Update the existing entry by appending new content and updating timestamp
+        const existing = existingEntry[0];
+        const newContent = `${existing.content}\n\n---\n\n## Training Log Entry #${entry.entryNumber} - ${entry.date}\n\n${entry.content}`;
+        
+        // Combine images from existing and new entry
+        const combinedImages = [
+          ...(existing.images || []),
+          ...(entry.images || [])
+        ];
+        
+        const [updatedEntry] = await db
+          .update(trainingLogEntries)
+          .set({
+            content: newContent,
+            images: combinedImages,
+            updatedAt: new Date(), // This will bump it to the top
+            createdAt: new Date()  // Update this too to ensure it's the newest
+          })
+          .where(eq(trainingLogEntries.id, existing.id))
+          .returning();
+        
+        console.log("Updated existing Hartford Marathon Training Log 2025");
+        return updatedEntry;
+      } else {
+        // Create new entry if Hartford Marathon Training Log 2025 doesn't exist
+        const [newEntry] = await db.insert(trainingLogEntries).values({
+          ...entry,
+          id: crypto.randomUUID(),
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }).returning();
+        return newEntry;
+      }
     } catch (error) {
       console.error("Error creating training log entry:", error);
       console.error("Failed with entry data:", JSON.stringify(entry, null, 2));
