@@ -85,6 +85,54 @@ The database schema includes:
 - `PAYPAL_CLIENT_ID` and `PAYPAL_CLIENT_SECRET` (optional): For PayPal payments
 - `SENDGRID_API_KEY` (optional): For email notifications
 
+## Hartford Marathon Training Log Workflow
+
+### Adding New Training Log Entries
+
+**IMPORTANT**: The Hartford Marathon Training Log is a single continuous page where new entries are added to the TOP, pushing older entries down. Each entry is a complete block with these exact characteristics:
+
+#### Entry Structure Template
+1. **Entry Header** (Blue background with white text):
+   - Large title in quotes (e.g., "GO ONE MORE", "SPEED KILLS")
+   - Subtitle with attribution (e.g., "-Nick Bare", "-Training Entry #2")
+
+2. **Training Metrics Section** (Dark semi-transparent background):
+   - Distance (e.g., "19.00 miles")
+   - Pace (e.g., "8:22/mile") 
+   - Time (e.g., "2h 38m")
+   - All values displayed in green (#94D600) with white labels
+
+3. **Entry Info Bar** (Gray text on blue background):
+   - "Training Log Entry #X" (left side)
+   - Full date in green (center - e.g., "Wednesday, July 9, 2025")
+   - "Workout Type: [Type]" with type in green (right side)
+
+4. **Entry Content** (White background box):
+   - User's authentic training log text (never rewrite)
+   - Gallery images in masonry layout with lightbox functionality
+   - Amazon product links with rich previews
+
+#### Database Update Process
+- Use SQL to update the existing training_log_entries record
+- Content must preserve authentic user text exactly as provided
+- Images stored in images array field as JSON
+- Entry numbers increment for each new entry
+- New entries automatically appear at top due to date sorting
+
+#### Visual Specifications
+- Hartford Marathon blue (#0039A6) for headers and backgrounds
+- Green accent color (#94D600) for highlights and key information
+- Proper spacing and typography matching established design
+- Lightbox functionality for all images
+- Amazon product link integration with rich previews
+
+#### Technical Implementation
+- Single database record updated via SQL, not separate posts
+- Frontend renders all entries from single training log query
+- Newest entries appear first (sorted by date descending)
+- Each entry maintains complete template structure
+- Seamless integration with existing blog system under training log categories
+
 ## Changelog
 
 ```
