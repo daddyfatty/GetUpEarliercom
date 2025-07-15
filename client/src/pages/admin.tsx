@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, Download, CheckCircle, AlertCircle, ImageIcon } from "lucide-react";
+import { Loader2, Download, CheckCircle, AlertCircle, ImageIcon, TrendingUp } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
+import { Link } from "wouter";
 
 export default function Admin() {
   const [scraping, setScraping] = useState(false);
@@ -75,6 +76,36 @@ export default function Admin() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Panel</h1>
           <p className="text-gray-600">Manage content and system operations</p>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          <Link href="/admin/training-log">
+            <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <TrendingUp className="h-5 w-5" />
+                  Training Log
+                </CardTitle>
+                <CardDescription>
+                  Add new training log entries
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
+          <Link href="/blog">
+            <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <ImageIcon className="h-5 w-5" />
+                  Blog
+                </CardTitle>
+                <CardDescription>
+                  View blog posts and training logs
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
         </div>
 
         {/* Webflow Blog Scraper */}

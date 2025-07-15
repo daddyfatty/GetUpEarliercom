@@ -89,7 +89,7 @@ The database schema includes:
 
 ```
 Changelog:
-- July 14, 2025: Completed Hartford Marathon Training Log integration into blog system - training log entries now display as unique blog posts under categories "Marathon Training Log", "Marathon Training", and "Running"; implemented specialized gallery image display with lightbox functionality for training photos; removed separate training log navigation in favor of seamless blog integration
+- July 14, 2025: Created unique training log template with distinctive dark navy/orange theme that prominently displays training date, metrics (distance, pace, time), and entry number; implemented specialized gallery image display with lightbox functionality; added admin workflow at /admin/training-log for creating new training log entries; training log entries seamlessly integrate into blog system under categories "Marathon Training Log", "Marathon Training", and "Running"
 - July 14, 2025: Renamed Alcohol Weight Impact Calculator to "Buzzkill Calculator" and updated wine serving options to "Glass 5 oz", "1/2 Bottle", and "Bottle" for cleaner labeling
 - July 14, 2025: Added High Carb macro profile (65% carbs/25% protein/10% fat) for marathon carb loading and Endurance Training goal as default - endurance goal provides maintenance calories plus 15% extra for training demands
 - July 14, 2025: Removed Recommendations and Healthy Guidelines sections from alcohol calculator - streamlined interface by removing advisory content to focus purely on calculation and impact analysis

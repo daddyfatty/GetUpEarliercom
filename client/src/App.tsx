@@ -45,6 +45,7 @@ import SavedResults from "@/pages/saved-results";
 import NotFound from "@/pages/not-found";
 import TrainingLog from "@/pages/training-log";
 import TrainingLogEntry from "@/pages/training-log-entry";
+import TrainingLogAdmin from "@/pages/admin/training-log";
 
 function Router() {
   const [location] = useLocation();
@@ -97,6 +98,7 @@ function Router() {
           <Route path="/admin" component={Admin} />
           <Route path="/admin/facebook" component={AdminFacebook} />
           <Route path="/admin/dashboard" component={AdminDashboard} />
+          <Route path="/admin/training-log" component={TrainingLogAdmin} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/subscribe" component={Subscribe} />
           <Route component={NotFound} />

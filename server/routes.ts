@@ -684,6 +684,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Training log entries API
+  app.get("/api/training-log", async (req, res) => {
+    try {
+      const entries = await storage.getAllTrainingLogEntries();
+      res.json(entries);
+    } catch (error: any) {
+      console.error("Error fetching training log entries:", error);
+      res.status(500).json({ message: "Error fetching training log entries: " + error.message });
+    }
+  });
+
+  app.get("/api/training-log/:id", async (req, res) => {
+    try {
+      const entry = await storage.getTrainingLogEntry(req.params.id);
+      if (!entry) {
+        return res.status(404).json({ message: "Training log entry not found" });
+      }
+      res.json(entry);
+    } catch (error: any) {
+      console.error("Error fetching training log entry:", error);
+      res.status(500).json({ message: "Error fetching training log entry: " + error.message });
+    }
+  });
+
+  app.get("/api/training-log/slug/:slug", async (req, res) => {
+    try {
+      const entry = await storage.getTrainingLogEntryBySlug(req.params.slug);
+      if (!entry) {
+        return res.status(404).json({ message: "Training log entry not found" });
+      }
+      res.json(entry);
+    } catch (error: any) {
+      console.error("Error fetching training log entry by slug:", error);
+      res.status(500).json({ message: "Error fetching training log entry by slug: " + error.message });
+    }
+  });
+
+  app.post("/api/training-log", async (req, res) => {
+    try {
+      const entry = await storage.createTrainingLogEntry(req.body);
+      res.json(entry);
+    } catch (error: any) {
+      console.error("Error creating training log entry:", error);
+      res.status(500).json({ message: "Error creating training log entry: " + error.message });
+    }
+  });
+
   // Webflow blog scraper endpoint
   app.post("/api/scrape-webflow-blog", async (req, res) => {
     try {

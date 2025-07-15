@@ -27,6 +27,23 @@ interface BlogPost {
   originalUrl: string;
 }
 
+interface TrainingLogEntry {
+  id: string;
+  slug: string;
+  entryNumber: number;
+  date: string;
+  title: string;
+  content: string;
+  distance?: string;
+  pace?: string;
+  time?: string;
+  images?: string[];
+  categories?: string[];
+  strava_data?: any;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export default function BlogPost() {
   const { slug } = useParams();
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -44,9 +61,40 @@ export default function BlogPost() {
     enabled: !!slug
   });
 
+  // Check if this is a training log entry by looking for training log categories
+  const isTrainingLogEntry = post?.categories?.some(cat => 
+    cat.includes('Marathon Training Log') || cat.includes('Training Log')
+  );
+
+  // Try to fetch training log data if this is a training log entry
+  const { data: trainingLogEntry } = useQuery<TrainingLogEntry>({
+    queryKey: ["/api/training-log/slug", slug],
+    queryFn: async () => {
+      const response = await fetch(`/api/training-log/slug/${slug}`);
+      if (!response.ok) {
+        throw new Error('Training log entry not found');
+      }
+      return response.json();
+    },
+    enabled: !!slug && isTrainingLogEntry
+  });
+
   const formatDate = (dateString: string) => {
     try {
       return new Date(dateString).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    } catch {
+      return dateString;
+    }
+  };
+
+  const formatTrainingDate = (dateString: string) => {
+    try {
+      return new Date(dateString).toLocaleDateString('en-US', {
+        weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric'
@@ -89,6 +137,107 @@ export default function BlogPost() {
 
 
 
+  // Training Log Template
+  if (isTrainingLogEntry && trainingLogEntry) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#1a2332] via-[#2d3748] to-[#1a202c] text-white">
+        {/* Training Log Header */}
+        <div className="py-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-8">
+              <div className="flex flex-wrap justify-center gap-2 mb-6">
+                {trainingLogEntry.categories?.map((category) => (
+                  <Link key={category} href={`/category/${encodeURIComponent(category)}`}>
+                    <Badge variant="outline" className="text-xs bg-orange-50 text-orange-700 border-orange-200 hover:bg-orange-100 hover:border-orange-300 cursor-pointer transition-colors">
+                      {category}
+                    </Badge>
+                  </Link>
+                ))}
+              </div>
+              
+              {/* Training Date - Prominent Display */}
+              <div className="text-3xl md:text-4xl font-bold text-orange-300 mb-2">
+                {formatTrainingDate(trainingLogEntry.date)}
+              </div>
+              
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 leading-tight">
+                {trainingLogEntry.title}
+              </h1>
+              
+              {/* Training Metrics */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-black bg-opacity-30 rounded-lg p-6 mb-8">
+                {trainingLogEntry.distance && (
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-orange-300">{trainingLogEntry.distance}</div>
+                    <div className="text-sm text-gray-300">Distance</div>
+                  </div>
+                )}
+                {trainingLogEntry.pace && (
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-orange-300">{trainingLogEntry.pace}</div>
+                    <div className="text-sm text-gray-300">Pace</div>
+                  </div>
+                )}
+                {trainingLogEntry.time && (
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-orange-300">{trainingLogEntry.time}</div>
+                    <div className="text-sm text-gray-300">Time</div>
+                  </div>
+                )}
+              </div>
+              
+              {/* Entry Number */}
+              <div className="text-lg text-gray-300">
+                Training Log Entry #{trainingLogEntry.entryNumber}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Training Log Content */}
+        <div className="container mx-auto px-4 py-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-xl">
+              <div className="prose prose-lg max-w-none dark:prose-invert">
+                <BlogContentRenderer 
+                  content={trainingLogEntry.content} 
+                  onImageClick={(imageSrc) => {
+                    setLightboxImage(imageSrc);
+                    setLightboxOpen(true);
+                  }} 
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Lightbox Modal */}
+        {lightboxOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4" onClick={() => setLightboxOpen(false)}>
+            <div className="relative max-w-4xl max-h-full" onClick={(e) => e.stopPropagation()}>
+              <img
+                src={lightboxImage}
+                alt="Training log photo"
+                className="max-w-full max-h-full object-contain rounded-lg"
+              />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute top-2 right-2 text-white hover:bg-black hover:bg-opacity-50"
+                onClick={() => setLightboxOpen(false)}
+              >
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Regular Blog Post Template
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Full-width Hero Gradient Header Section - No gaps */}
