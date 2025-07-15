@@ -186,14 +186,14 @@ export default function BlogPost() {
     const getEntryTitle = (entryNumber: number) => {
       if (entryNumber === 1) return '"GO ONE MORE"';
       if (entryNumber === 2) return '"SPEED KILLS"';
-      if (entryNumber === 3) return '"MARATHON TRAINING TIP FOR HOT LONG RUNS"';
+      if (entryNumber === 3) return '"GO ONE MORE"';
       return `"ENTRY ${entryNumber}"`;
     };
 
     const getEntrySubtitle = (entryNumber: number) => {
       if (entryNumber === 1) return '-Nick Bare';
       if (entryNumber === 2) return '-Training Entry #2';
-      if (entryNumber === 3) return '-Training Entry #3';
+      if (entryNumber === 3) return '-Nick Bare';
       return `-Training Entry #${entryNumber}`;
     };
 
@@ -266,12 +266,7 @@ export default function BlogPost() {
                   </div>
                 )}
                 
-                {/* Entry Info */}
-                <div className="flex justify-between items-center text-sm text-gray-300 mb-6">
-                  <div>Training Log Entry #1</div>
-                  <div>{formatTrainingDate(entry.date)}</div>
-                  <div className="text-[#94D600]">Workout Type: {getWorkoutType(entry.entryNumber)}</div>
-                </div>
+                
 
                 {/* Entry Content */}
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl" style={{ padding: '25px' }}>
