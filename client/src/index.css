@@ -195,7 +195,7 @@ html {
 }
 
 .training-entry-header {
-  @apply bg-gradient-to-r from-[#0039A6] to-[#94D600] text-white p-6;
+  @apply bg-[#0039A6] text-white p-6;
 }
 
 .training-entry-title {
