@@ -52,13 +52,13 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
             {images.map((image, index) => (
               <div 
                 key={`gallery-img-${index}`}
-                className="break-inside-avoid mb-4 rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                className="break-inside-avoid mb-4 rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative"
                 onClick={() => onImageClick && onImageClick(image.src)}
               >
                 <img
                   src={image.src}
                   alt={image.alt}
-                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg"
                 />
               </div>
             ))}
