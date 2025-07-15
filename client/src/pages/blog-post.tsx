@@ -166,7 +166,7 @@ export default function BlogPost() {
   // Training Log Template
   if (isTrainingLogEntry && trainingLogEntry) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#1a2332] via-[#2d3748] to-[#1a202c] text-white">
+      <div className="min-h-screen bg-gradient-to-b from-[#0039A6] via-[#0039A6] to-[#0039A6] text-white">
         {/* Training Log Header */}
         <div className="py-4 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
@@ -182,11 +182,11 @@ export default function BlogPost() {
               </div>
               
               {/* Training Date - Prominent Display */}
-              <div className="text-2xl md:text-3xl font-bold text-orange-300 mb-1">
+              <div className="text-2xl md:text-3xl font-bold text-[#94D600] mb-1">
                 {formatTrainingDate(trainingLogEntry.date)}
               </div>
               
-              <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-3 leading-tight">
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-3 leading-tight text-[#94D600]">
                 {trainingLogEntry.title}
               </h1>
               
@@ -194,19 +194,19 @@ export default function BlogPost() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-4 mb-3">
                 {trainingLogEntry.distance && (
                   <div className="text-center">
-                    <div className="text-xl font-bold text-orange-300">{trainingLogEntry.distance}</div>
+                    <div className="text-xl font-bold text-[#94D600]">{trainingLogEntry.distance}</div>
                     <div className="text-sm text-gray-300">Distance</div>
                   </div>
                 )}
                 {trainingLogEntry.pace && (
                   <div className="text-center">
-                    <div className="text-xl font-bold text-orange-300">{trainingLogEntry.pace}</div>
+                    <div className="text-xl font-bold text-[#94D600]">{trainingLogEntry.pace}</div>
                     <div className="text-sm text-gray-300">Pace</div>
                   </div>
                 )}
                 {trainingLogEntry.time && (
                   <div className="text-center">
-                    <div className="text-xl font-bold text-orange-300">{trainingLogEntry.time}</div>
+                    <div className="text-xl font-bold text-[#94D600]">{trainingLogEntry.time}</div>
                     <div className="text-sm text-gray-300">Time</div>
                   </div>
                 )}
@@ -224,7 +224,7 @@ export default function BlogPost() {
         <div className="container mx-auto px-4 py-4">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-xl">
-              <div className="prose prose-base max-w-none dark:prose-invert">
+              <div className="prose prose-lg max-w-none dark:prose-invert">
                 <BlogContentRenderer 
                   content={trainingLogEntry.content} 
                   onImageClick={(imageSrc) => {
