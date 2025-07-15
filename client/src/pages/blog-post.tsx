@@ -105,6 +105,19 @@ export default function BlogPost() {
     enabled: !!slug && isTrainingLogEntry
   });
 
+  // Fetch all training log entries for the main training log page
+  const { data: allTrainingLogEntries } = useQuery<TrainingLogEntry[]>({
+    queryKey: ["/api/training-log"],
+    queryFn: async () => {
+      const response = await fetch(`/api/training-log`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch training log entries');
+      }
+      return response.json();
+    },
+    enabled: isTrainingLogEntry
+  });
+
   const formatDate = (dateString: string) => {
     try {
       return new Date(dateString).toLocaleDateString('en-US', {
@@ -164,7 +177,30 @@ export default function BlogPost() {
 
 
   // Training Log Template
-  if (isTrainingLogEntry && trainingLogEntry) {
+  if (isTrainingLogEntry && allTrainingLogEntries) {
+    // Sort entries by date (newest first)
+    const sortedEntries = [...allTrainingLogEntries].sort((a, b) => 
+      new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+
+    const getEntryTitle = (entryNumber: number) => {
+      if (entryNumber === 1) return '"GO ONE MORE"';
+      if (entryNumber === 2) return '"SPEED KILLS"';
+      return `"ENTRY ${entryNumber}"`;
+    };
+
+    const getEntrySubtitle = (entryNumber: number) => {
+      if (entryNumber === 1) return '-Nick Bare';
+      if (entryNumber === 2) return '-Training Entry #2';
+      return `-Training Entry #${entryNumber}`;
+    };
+
+    const getWorkoutType = (entryNumber: number) => {
+      if (entryNumber === 1) return 'Long Run';
+      if (entryNumber === 2) return 'Speed Work';
+      return 'Training';
+    };
+
     return (
       <div className="min-h-screen bg-gradient-to-b from-[#0039A6] via-[#0039A6] to-[#0039A6] text-white">
         {/* Training Log Header */}
@@ -172,7 +208,7 @@ export default function BlogPost() {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-4">
               <div className="flex flex-wrap justify-center gap-2 mb-6">
-                {trainingLogEntry.categories?.map((category) => (
+                {sortedEntries[0]?.categories?.map((category) => (
                   <Link key={category} href={`/category/${encodeURIComponent(category)}`}>
                     <Badge variant="outline" className="text-xs bg-[#94D600] text-[#0039A6] border-[#94D600] hover:bg-[#94D600]/80 hover:border-[#94D600]/80 cursor-pointer transition-colors font-semibold">
                       {category}
@@ -182,65 +218,77 @@ export default function BlogPost() {
               </div>
               
               <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-12 leading-tight text-[#94D600]">
-                {trainingLogEntry.title}
+                Hartford Marathon Training Log 2025
               </h1>
-              
-              {/* Entry Title - Large and Prominent */}
-              <div className="text-center mb-3">
-                <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
-                  "GO ONE MORE"
-                </div>
-                <div className="text-lg md:text-xl text-gray-300">
-                  -Nick Bare
-                </div>
-              </div>
-              
-              {/* Training Metrics */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-6" style={{ marginBottom: '25px' }}>
-                {trainingLogEntry.distance && (
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-[#94D600]">{trainingLogEntry.distance}</div>
-                    <div className="text-sm text-gray-300">Distance</div>
-                  </div>
-                )}
-                {trainingLogEntry.pace && (
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-[#94D600]">{trainingLogEntry.pace}</div>
-                    <div className="text-sm text-gray-300">Pace</div>
-                  </div>
-                )}
-                {trainingLogEntry.time && (
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-[#94D600]">{trainingLogEntry.time}</div>
-                    <div className="text-sm text-gray-300">Time</div>
-                  </div>
-                )}
-              </div>
-              
-              {/* Entry Info */}
-              <div className="flex justify-between items-center text-sm text-gray-300 mb-1">
-                <div>Training Log Entry #{trainingLogEntry.entryNumber}</div>
-                <div>{formatTrainingDate(trainingLogEntry.date)}</div>
-                <div className="text-[#94D600]">Workout Type: Long Run</div>
-              </div>
             </div>
           </div>
         </div>
 
-        {/* Training Log Content */}
+        {/* Training Log Entries */}
         <div className="container mx-auto px-4" style={{ paddingTop: '25px', paddingBottom: '25px' }}>
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl" style={{ padding: '25px', marginTop: '0' }}>
-              <div className="prose prose-lg max-w-none dark:prose-invert">
-                <BlogContentRenderer 
-                  content={trainingLogEntry.content} 
-                  onImageClick={(imageSrc) => {
-                    setLightboxImage(imageSrc);
-                    setLightboxOpen(true);
-                  }} 
-                />
+          <div className="max-w-4xl mx-auto space-y-12">
+            {sortedEntries.map((entry, index) => (
+              <div key={entry.id}>
+                {/* Entry Header */}
+                <div className="text-center mb-6">
+                  <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
+                    {getEntryTitle(entry.entryNumber)}
+                  </div>
+                  <div className="text-lg md:text-xl text-gray-300">
+                    {getEntrySubtitle(entry.entryNumber)}
+                  </div>
+                </div>
+                
+                {/* Training Metrics */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-6" style={{ marginBottom: '25px' }}>
+                  {entry.distance && (
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#94D600]">{entry.distance}</div>
+                      <div className="text-sm text-gray-300">Distance</div>
+                    </div>
+                  )}
+                  {entry.pace && (
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#94D600]">{entry.pace}</div>
+                      <div className="text-sm text-gray-300">Pace</div>
+                    </div>
+                  )}
+                  {entry.time && (
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#94D600]">{entry.time}</div>
+                      <div className="text-sm text-gray-300">Time</div>
+                    </div>
+                  )}
+                </div>
+                
+                {/* Entry Info */}
+                <div className="flex justify-between items-center text-sm text-gray-300 mb-6">
+                  <div>Training Log Entry #{entry.entryNumber}</div>
+                  <div>{formatTrainingDate(entry.date)}</div>
+                  <div className="text-[#94D600]">Workout Type: {getWorkoutType(entry.entryNumber)}</div>
+                </div>
+
+                {/* Entry Content */}
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl" style={{ padding: '25px' }}>
+                  <div className="prose prose-lg max-w-none dark:prose-invert">
+                    <BlogContentRenderer 
+                      content={entry.content} 
+                      onImageClick={(imageSrc) => {
+                        setLightboxImage(imageSrc);
+                        setLightboxOpen(true);
+                      }} 
+                    />
+                  </div>
+                </div>
+
+                {/* Separator between entries (not after the last one) */}
+                {index < sortedEntries.length - 1 && (
+                  <div className="my-12">
+                    <hr className="border-[#94D600] border-2" />
+                  </div>
+                )}
               </div>
-            </div>
+            ))}
           </div>
         </div>
 
