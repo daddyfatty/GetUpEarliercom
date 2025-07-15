@@ -185,7 +185,7 @@ export default function BlogPost() {
 
     const getEntryTitle = (entryNumber: number) => {
       if (entryNumber === 1) return '"GO ONE MORE"';
-      if (entryNumber === 2) return '"SPEED KILLS"';
+      if (entryNumber === 2) return '"Marathon Training Tip for HOT long runs"';
       if (entryNumber === 3) return '"GO ONE MORE"';
       return `"ENTRY ${entryNumber}"`;
     };
@@ -199,7 +199,7 @@ export default function BlogPost() {
 
     const getWorkoutType = (entryNumber: number) => {
       if (entryNumber === 1) return 'Long Run';
-      if (entryNumber === 2) return 'Speed Work';
+      if (entryNumber === 2) return 'Training';
       if (entryNumber === 3) return 'Training';
       return 'Training';
     };
@@ -244,15 +244,15 @@ export default function BlogPost() {
                 {/* Training Metrics - Always show with default values */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-6" style={{ marginBottom: '25px' }}>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-[#94D600]">{entry.distance || '19.00 miles'}</div>
+                    <div className="text-2xl font-bold text-[#94D600]">{entry.distance || (entry.entryNumber === 2 ? '15.0 miles' : '19.00 miles')}</div>
                     <div className="text-sm text-gray-300">Distance</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-[#94D600]">{entry.pace || '8:22/mile'}</div>
+                    <div className="text-2xl font-bold text-[#94D600]">{entry.pace || (entry.entryNumber === 2 ? '7:45/mile' : '8:22/mile')}</div>
                     <div className="text-sm text-gray-300">Pace</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-[#94D600]">{entry.time || '2h 38m'}</div>
+                    <div className="text-2xl font-bold text-[#94D600]">{entry.time || (entry.entryNumber === 2 ? '1h 56m' : '2h 38m')}</div>
                     <div className="text-sm text-gray-300">Time</div>
                   </div>
                 </div>
