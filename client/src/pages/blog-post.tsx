@@ -242,27 +242,29 @@ export default function BlogPost() {
                   </div>
                 </div>
                 
-                {/* Training Metrics */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-6" style={{ marginBottom: '25px' }}>
-                  {entry.distance && (
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-[#94D600]">{entry.distance}</div>
-                      <div className="text-sm text-gray-300">Distance</div>
-                    </div>
-                  )}
-                  {entry.pace && (
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-[#94D600]">{entry.pace}</div>
-                      <div className="text-sm text-gray-300">Pace</div>
-                    </div>
-                  )}
-                  {entry.time && (
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-[#94D600]">{entry.time}</div>
-                      <div className="text-sm text-gray-300">Time</div>
-                    </div>
-                  )}
-                </div>
+                {/* Training Metrics - Only show if there are any metrics */}
+                {(entry.distance || entry.pace || entry.time) && (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-6" style={{ marginBottom: '25px' }}>
+                    {entry.distance && (
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-[#94D600]">{entry.distance}</div>
+                        <div className="text-sm text-gray-300">Distance</div>
+                      </div>
+                    )}
+                    {entry.pace && (
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-[#94D600]">{entry.pace}</div>
+                        <div className="text-sm text-gray-300">Pace</div>
+                      </div>
+                    )}
+                    {entry.time && (
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-[#94D600]">{entry.time}</div>
+                        <div className="text-sm text-gray-300">Time</div>
+                      </div>
+                    )}
+                  </div>
+                )}
                 
                 {/* Entry Info */}
                 <div className="flex justify-between items-center text-sm text-gray-300 mb-6">
