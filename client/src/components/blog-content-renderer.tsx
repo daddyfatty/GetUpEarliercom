@@ -11,7 +11,7 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
 
   // Split content by different elements and render them as components
   const renderContent = () => {
-    const amazonLinkRegex = /<span class="amazon-link" data-url="([^"]+)">([^<]+)<\/span>/g;
+    const amazonLinkRegex = /<span class=""amazon-link"" data-url=""([^"]+)"">([^<]+)<\/span>/g;
     const galleryRegex = /<div class="gallery-grid">([\s\S]*?)<\/div>/g;
     const parts = [];
     let lastIndex = 0;
