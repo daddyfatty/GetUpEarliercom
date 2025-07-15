@@ -121,98 +121,94 @@ export default function CategoryPage() {
           </div>
         ) : (
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {filteredPosts.map((post) => (
-              <article
-                key={post.id}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden"
-              >
-                {/* Featured Image */}
-                {post.imageUrl && (
-                  <div className="relative aspect-video overflow-hidden">
-                    <img
-                      src={post.imageUrl}
-                      alt={post.title}
-                      className="w-full h-full object-cover"
-                      onLoad={() => console.log("Image loaded successfully:", post.imageUrl)}
-                      onError={(e) => {
-                        console.error("Failed to load image:", post.imageUrl);
-                        (e.target as HTMLImageElement).style.display = 'none';
-                      }}
-                    />
-                    {post.isVideo && (
-                      <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-                        <Play className="h-16 w-16 text-white opacity-80" />
+            {filteredPosts.map((post) => {
+              // Determine the correct link based on post type
+              const postLink = post.slug ? `/blog/${post.slug}` : `/blog/${post.id}`;
+              
+              return (
+                <Link key={post.id} href={postLink} className="block">
+                  <article className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden cursor-pointer">
+                    {/* Featured Image */}
+                    {post.imageUrl && (
+                      <div className="relative aspect-video overflow-hidden">
+                        <img
+                          src={post.imageUrl}
+                          alt={post.title}
+                          className="w-full h-full object-cover"
+                          onLoad={() => console.log("Image loaded successfully:", post.imageUrl)}
+                          onError={(e) => {
+                            console.error("Failed to load image:", post.imageUrl);
+                            (e.target as HTMLImageElement).style.display = 'none';
+                          }}
+                        />
+                        {post.isVideo && (
+                          <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                            <Play className="h-16 w-16 text-white opacity-80" />
+                          </div>
+                        )}
                       </div>
                     )}
-                  </div>
-                )}
 
-                <div className="p-6">
-                  {/* Categories */}
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {post.categories && post.categories.length > 0 ? (
-                      post.categories.map((category, index) => (
-                        <Link key={category} href={`/category/${encodeURIComponent(category)}`}>
-                          <Badge 
-                            variant="outline" 
-                            className={`text-xs cursor-pointer transition-colors ${
-                              category === categoryName
-                                ? 'bg-blue-50 text-blue-700 border-blue-200'
-                                : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
-                            }`}
-                          >
-                            {category}
-                          </Badge>
-                        </Link>
-                      ))
-                    ) : (
-                      post.category && (
-                        post.category.split(',').map((category) => (
-                          <Link key={category.trim()} href={`/category/${encodeURIComponent(category.trim())}`}>
-                            <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
-                              {category.trim()}
+                    <div className="p-6">
+                      {/* Categories */}
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        {post.categories && post.categories.length > 0 ? (
+                          post.categories.map((category, index) => (
+                            <Badge 
+                              key={category}
+                              variant="outline" 
+                              className={`text-xs transition-colors ${
+                                category === categoryName
+                                  ? 'bg-blue-50 text-blue-700 border-blue-200'
+                                  : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
+                              }`}
+                            >
+                              {category}
                             </Badge>
-                          </Link>
-                        ))
-                      )
-                    )}
-                  </div>
+                          ))
+                        ) : (
+                          post.category && (
+                            post.category.split(',').map((category) => (
+                              <Badge key={category.trim()} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                                {category.trim()}
+                              </Badge>
+                            ))
+                          )
+                        )}
+                      </div>
 
-                  {/* Title */}
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                    <Link
-                      href={`/blog/${post.id}`}
-                      className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                    >
-                      {post.title}
-                    </Link>
-                  </h2>
+                      {/* Title */}
+                      <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+                        {post.title}
+                      </h2>
 
-                  {/* Excerpt */}
-                  <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
+                      {/* Excerpt */}
+                      <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                        {post.excerpt}
+                      </p>
 
-                  {/* Meta Info */}
-                  <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
-                    <div className="flex items-center gap-4">
-                      <span className="flex items-center gap-1">
-                        <User className="h-4 w-4" />
-                        <span>{post.author}</span>
-                      </span>
+                      {/* Meta Info */}
+                      <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
+                        <div className="flex items-center gap-4">
+                          <span className="flex items-center gap-1">
+                            <User className="h-4 w-4" />
+                            <span>{post.author}</span>
+                          </span>
+                        </div>
+                        <span>{formatDate(post.publishedDate)}</span>
+                      </div>
+
+                      {/* Read More Button */}
+                      <div className="w-full">
+                        <Button className="w-full">
+                          Read More
+                        </Button>
+                      </div>
                     </div>
-                    <span>{formatDate(post.publishedDate)}</span>
-                  </div>
-
-                  {/* Read More Button */}
-                  <Link href={`/blog/${post.id}`}>
-                    <Button className="w-full">
-                      Read More
-                    </Button>
-                  </Link>
-                </div>
-              </article>
-            ))}
+                  </article>
+                </Link>
+              );
+            })}
           </div>
         )}
       </div>
