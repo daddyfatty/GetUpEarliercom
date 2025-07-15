@@ -218,7 +218,7 @@ export default function BlogPost() {
               </div>
               
               {/* Entry Info */}
-              <div className="flex justify-between items-center text-sm text-gray-300 mb-4">
+              <div className="flex justify-between items-center text-sm text-gray-300 mb-1">
                 <div>Training Log Entry #{trainingLogEntry.entryNumber}</div>
                 <div>{formatTrainingDate(trainingLogEntry.date)}</div>
                 <div className="text-[#94D600]">Workout Type: Long Run</div>
