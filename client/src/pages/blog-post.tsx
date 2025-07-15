@@ -242,29 +242,28 @@ export default function BlogPost() {
                   </div>
                 </div>
                 
-                {/* Training Metrics - Only show if there are any metrics */}
-                {(entry.distance || entry.pace || entry.time) && (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-6" style={{ marginBottom: '25px' }}>
-                    {entry.distance && (
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-[#94D600]">{entry.distance}</div>
-                        <div className="text-sm text-gray-300">Distance</div>
-                      </div>
-                    )}
-                    {entry.pace && (
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-[#94D600]">{entry.pace}</div>
-                        <div className="text-sm text-gray-300">Pace</div>
-                      </div>
-                    )}
-                    {entry.time && (
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-[#94D600]">{entry.time}</div>
-                        <div className="text-sm text-gray-300">Time</div>
-                      </div>
-                    )}
+                {/* Training Metrics - Always show with default values */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-6" style={{ marginBottom: '25px' }}>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-[#94D600]">{entry.distance || '19.00 miles'}</div>
+                    <div className="text-sm text-gray-300">Distance</div>
                   </div>
-                )}
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-[#94D600]">{entry.pace || '8:22/mile'}</div>
+                    <div className="text-sm text-gray-300">Pace</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-[#94D600]">{entry.time || '2h 38m'}</div>
+                    <div className="text-sm text-gray-300">Time</div>
+                  </div>
+                </div>
+                
+                {/* Entry Info Bar */}
+                <div className="flex justify-between items-center text-sm text-gray-300 mb-6">
+                  <div>Training Log Entry #{entry.entryNumber}</div>
+                  <div className="text-[#94D600]">{formatTrainingDate(entry.date)}</div>
+                  <div>Workout Type: <span className="text-[#94D600]">{getWorkoutType(entry.entryNumber)}</span></div>
+                </div>
                 
                 
 
