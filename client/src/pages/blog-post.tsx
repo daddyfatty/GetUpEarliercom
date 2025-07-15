@@ -168,10 +168,10 @@ export default function BlogPost() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-[#1a2332] via-[#2d3748] to-[#1a202c] text-white">
         {/* Training Log Header */}
-        <div className="py-12 px-4 sm:px-6 lg:px-8">
+        <div className="py-4 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <div className="flex flex-wrap justify-center gap-2 mb-6">
+            <div className="text-center mb-4">
+              <div className="flex flex-wrap justify-center gap-2 mb-2">
                 {trainingLogEntry.categories?.map((category) => (
                   <Link key={category} href={`/category/${encodeURIComponent(category)}`}>
                     <Badge variant="outline" className="text-xs bg-orange-50 text-orange-700 border-orange-200 hover:bg-orange-100 hover:border-orange-300 cursor-pointer transition-colors">
@@ -182,38 +182,38 @@ export default function BlogPost() {
               </div>
               
               {/* Training Date - Prominent Display */}
-              <div className="text-3xl md:text-4xl font-bold text-orange-300 mb-2">
+              <div className="text-2xl md:text-3xl font-bold text-orange-300 mb-1">
                 {formatTrainingDate(trainingLogEntry.date)}
               </div>
               
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 leading-tight">
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-bold mb-3 leading-tight">
                 {trainingLogEntry.title}
               </h1>
               
               {/* Training Metrics */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-black bg-opacity-30 rounded-lg p-6 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-4 mb-3">
                 {trainingLogEntry.distance && (
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-orange-300">{trainingLogEntry.distance}</div>
+                    <div className="text-xl font-bold text-orange-300">{trainingLogEntry.distance}</div>
                     <div className="text-sm text-gray-300">Distance</div>
                   </div>
                 )}
                 {trainingLogEntry.pace && (
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-orange-300">{trainingLogEntry.pace}</div>
+                    <div className="text-xl font-bold text-orange-300">{trainingLogEntry.pace}</div>
                     <div className="text-sm text-gray-300">Pace</div>
                   </div>
                 )}
                 {trainingLogEntry.time && (
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-orange-300">{trainingLogEntry.time}</div>
+                    <div className="text-xl font-bold text-orange-300">{trainingLogEntry.time}</div>
                     <div className="text-sm text-gray-300">Time</div>
                   </div>
                 )}
               </div>
               
               {/* Entry Number */}
-              <div className="text-lg text-gray-300">
+              <div className="text-base text-gray-300">
                 Training Log Entry #{trainingLogEntry.entryNumber}
               </div>
             </div>
@@ -221,10 +221,10 @@ export default function BlogPost() {
         </div>
 
         {/* Training Log Content */}
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-4">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-xl">
-              <div className="prose prose-lg max-w-none dark:prose-invert">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-xl">
+              <div className="prose prose-base max-w-none dark:prose-invert">
                 <BlogContentRenderer 
                   content={trainingLogEntry.content} 
                   onImageClick={(imageSrc) => {
