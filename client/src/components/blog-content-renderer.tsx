@@ -48,17 +48,17 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
 
       if (images.length > 0) {
         parts.push(
-          <div key={`gallery-${match.index}`} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
+          <div key={`gallery-${match.index}`} className="columns-1 md:columns-2 lg:columns-3 gap-4 my-8">
             {images.map((image, index) => (
               <div 
                 key={`gallery-img-${index}`}
-                className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                className="break-inside-avoid mb-4 rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
                 onClick={() => onImageClick && onImageClick(image.src)}
               >
                 <img
                   src={image.src}
                   alt={image.alt}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
             ))}
