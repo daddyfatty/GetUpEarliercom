@@ -204,6 +204,11 @@ export default function BlogPost() {
       return 'Training';
     };
 
+    const isRunEntry = (entryNumber: number) => {
+      // Only Entry #1 and #3 are actual runs with metrics
+      return entryNumber === 1 || entryNumber === 3;
+    };
+
     return (
       <div className="min-h-screen bg-gradient-to-b from-[#0039A6] via-[#0039A6] to-[#0039A6] text-white">
         {/* Training Log Header */}
@@ -241,21 +246,23 @@ export default function BlogPost() {
                   </div>
                 </div>
                 
-                {/* Training Metrics - Always show with default values */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-6" style={{ marginBottom: '25px' }}>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-[#94D600]">{entry.distance || (entry.entryNumber === 2 ? '15.0 miles' : '19.00 miles')}</div>
-                    <div className="text-sm text-gray-300">Distance</div>
+                {/* Training Metrics - Only show for actual run entries */}
+                {isRunEntry(entry.entryNumber) && (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-6" style={{ marginBottom: '25px' }}>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#94D600]">{entry.distance || (entry.entryNumber === 2 ? '15.0 miles' : '19.00 miles')}</div>
+                      <div className="text-sm text-gray-300">Distance</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#94D600]">{entry.pace || (entry.entryNumber === 2 ? '7:45/mile' : '8:22/mile')}</div>
+                      <div className="text-sm text-gray-300">Pace</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#94D600]">{entry.time || (entry.entryNumber === 2 ? '1h 56m' : '2h 38m')}</div>
+                      <div className="text-sm text-gray-300">Time</div>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-[#94D600]">{entry.pace || (entry.entryNumber === 2 ? '7:45/mile' : '8:22/mile')}</div>
-                    <div className="text-sm text-gray-300">Pace</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-[#94D600]">{entry.time || (entry.entryNumber === 2 ? '1h 56m' : '2h 38m')}</div>
-                    <div className="text-sm text-gray-300">Time</div>
-                  </div>
-                </div>
+                )}
                 
                 {/* Entry Info Bar */}
                 <div className="flex justify-between items-center text-sm text-gray-300 mb-6">
