@@ -226,7 +226,6 @@ export default function BlogPost() {
             </div>
           </div>
         </div>
-
         {/* Training Log Entries */}
         <div className="container mx-auto px-4" style={{ paddingTop: '0px', paddingBottom: '25px' }}>
           <div className="max-w-4xl mx-auto space-y-12">
@@ -268,7 +267,7 @@ export default function BlogPost() {
                 
 
                 {/* Entry Content */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl" style={{ padding: '25px' }}>
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl pt-[0px] pb-[0px]" style={{ padding: '25px' }}>
                   <div className="prose prose-lg max-w-none dark:prose-invert">
                     <BlogContentRenderer 
                       content={entry.content} 
@@ -290,7 +289,6 @@ export default function BlogPost() {
             ))}
           </div>
         </div>
-
         {/* Lightbox Modal */}
         {lightboxOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4" onClick={() => setLightboxOpen(false)}>
@@ -381,7 +379,6 @@ export default function BlogPost() {
           </div>
         </div>
       </HeroGradient>
-
       <div className="container mx-auto px-4 py-8">
         {/* Edit Button - Only show in development */}
         {import.meta.env.DEV && (
@@ -503,7 +500,7 @@ export default function BlogPost() {
               {/* Show all categories from the categories array if it exists, otherwise show the primary category */}
               {post.categories && post.categories.length > 0 ? (
                 // Show all categories
-                post.categories.map((category, index) => (
+                (post.categories.map((category, index) => (
                   <Link key={category} href={`/category/${encodeURIComponent(category)}`}>
                     <Badge 
                       variant="outline" 
@@ -516,16 +513,14 @@ export default function BlogPost() {
                       {category}
                     </Badge>
                   </Link>
-                ))
+                )))
               ) : (
                 // Fallback to primary category only
-                post.category && (
-                  <Link href={`/category/${encodeURIComponent(post.category)}`}>
-                    <Badge variant="outline" className="text-sm bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
-                      {post.category}
-                    </Badge>
-                  </Link>
-                )
+                (post.category && (<Link href={`/category/${encodeURIComponent(post.category)}`}>
+                  <Badge variant="outline" className="text-sm bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 cursor-pointer transition-colors">
+                    {post.category}
+                  </Badge>
+                </Link>))
               )}
             </div>
           </div>
@@ -550,7 +545,6 @@ export default function BlogPost() {
           </div>
         </article>
       </div>
-
       {/* Lightbox Modal */}
       {lightboxOpen && (
         <div 
