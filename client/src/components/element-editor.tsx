@@ -1,378 +1,243 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Edit3, Eye, Palette, Move, Square, X } from "lucide-react";
+import { Edit3, Eye, Palette, Move, Square } from "lucide-react";
 
 interface ElementEditorProps {
-  enabled?: boolean;
+  isEnabled: boolean;
+  onToggle: (enabled: boolean) => void;
 }
 
-export function ElementEditor({ enabled = false }: ElementEditorProps) {
+export function ElementEditor({ isEnabled, onToggle }: ElementEditorProps) {
   const [selectedElement, setSelectedElement] = useState<HTMLElement | null>(null);
   const [editorPosition, setEditorPosition] = useState({ x: 0, y: 0 });
-  const [isEditingText, setIsEditingText] = useState(false);
-  const [originalText, setOriginalText] = useState('');
 
   useEffect(() => {
-    // Only enable when explicitly requested
-    if (enabled) {
+    if (isEnabled) {
       document.body.classList.add('element-editor-mode');
       
       const handleClick = (e: MouseEvent) => {
-        const target = e.target as HTMLElement;
-        
-        // Don't interfere with editor toolbar clicks or buttons
-        if (target.closest('.element-editor-toolbar') || 
-            target.closest('button') || 
-            target.closest('[role="button"]')) {
-          return;
-        }
-        
-        // Find the closest editable element (any element that can be styled)
-        let targetElement = target;
-        
-        // If it's a text node, get its parent element
-        if (target.nodeType === Node.TEXT_NODE) {
-          targetElement = target.parentElement as HTMLElement;
-        }
-        
-        // Skip if it's a script, style, or other non-visual element
-        const skipElements = ['script', 'style', 'meta', 'link', 'head', 'title'];
-        if (skipElements.includes(targetElement.tagName.toLowerCase())) {
-          return;
-        }
-        
         e.preventDefault();
         e.stopPropagation();
         
-        console.log('Selected element:', targetElement);
-        console.log('Element position:', { x: e.clientX, y: e.clientY });
-        console.log('Window dimensions:', { width: window.innerWidth, height: window.innerHeight });
+        const target = e.target as HTMLElement;
+        if (target.closest('.element-editor-toolbar')) return;
         
-        // Clear previous selection styling
-        document.querySelectorAll('.element-selected').forEach(el => {
-          el.classList.remove('element-selected');
-        });
-        
-        // Add selection styling to new element
-        targetElement.classList.add('element-selected');
-        
-        setSelectedElement(targetElement);
-        
-        // Better positioning logic
-        const toolbarWidth = 320;
-        const toolbarHeight = 400;
-        const x = Math.min(e.clientX + 10, window.innerWidth - toolbarWidth - 10);
-        const y = Math.max(e.clientY - toolbarHeight/2, 10);
-        
-        console.log('Toolbar position:', { x, y });
-        setEditorPosition({ x, y });
-        
-        // Store original text for editing
-        setOriginalText(targetElement.textContent || '');
-        setIsEditingText(false);
+        setSelectedElement(target);
+        setEditorPosition({ x: e.clientX, y: e.clientY });
       };
       
       document.addEventListener('click', handleClick, true);
       
       return () => {
         document.removeEventListener('click', handleClick, true);
-        document.body.classList.remove('element-editor-mode');
       };
     } else {
       document.body.classList.remove('element-editor-mode');
       setSelectedElement(null);
     }
-  }, [enabled]);
+  }, [isEnabled]);
 
   const updateElementStyle = (property: string, value: string) => {
     if (selectedElement) {
-      console.log(`Applying ${property}: ${value} to element:`, selectedElement);
-      selectedElement.style.setProperty(property, value, 'important');
-      // Force a repaint to ensure the style sticks
-      selectedElement.offsetHeight;
-      
-      // Also update any existing inline styles
-      if (selectedElement.hasAttribute('style')) {
-        const currentStyle = selectedElement.getAttribute('style') || '';
-        if (!currentStyle.includes(property)) {
-          selectedElement.setAttribute('style', currentStyle + `; ${property}: ${value} !important`);
-        }
-      }
+      selectedElement.style.setProperty(property, value);
     }
   };
 
   const addPadding = (amount: string) => {
-    console.log('Adding padding:', amount);
     updateElementStyle('padding', amount);
   };
 
   const addMargin = (amount: string) => {
-    console.log('Adding margin:', amount);
     updateElementStyle('margin', amount);
   };
 
   const setBackgroundColor = (color: string) => {
-    console.log('Setting background color:', color);
     updateElementStyle('background-color', color);
   };
 
   const setBorderRadius = (radius: string) => {
-    console.log('Setting border radius:', radius);
     updateElementStyle('border-radius', radius);
   };
 
   const setBorder = (border: string) => {
-    console.log('Setting border:', border);
     updateElementStyle('border', border);
   };
 
-  const setTextColor = (color: string) => {
-    console.log('Setting text color:', color);
-    updateElementStyle('color', color);
-  };
-
-  const setFontSize = (size: string) => {
-    console.log('Setting font size:', size);
-    updateElementStyle('font-size', size);
-  };
-
-  const setFontWeight = (weight: string) => {
-    console.log('Setting font weight:', weight);
-    updateElementStyle('font-weight', weight);
-  };
-
-  const startTextEdit = () => {
-    if (selectedElement) {
-      setIsEditingText(true);
-      setOriginalText(selectedElement.textContent || '');
-    }
-  };
-
-  const saveTextEdit = (newText: string) => {
-    if (selectedElement) {
-      selectedElement.textContent = newText;
-      setIsEditingText(false);
-    }
-  };
-
-  const cancelTextEdit = () => {
-    if (selectedElement) {
-      selectedElement.textContent = originalText;
-      setIsEditingText(false);
-    }
-  };
-
-  // Show the editing toolbar when an element is selected
-  if (selectedElement) {
-    console.log('Rendering toolbar for element:', selectedElement);
-    console.log('Toolbar position:', editorPosition);
+  if (!isEnabled) {
     return (
-      <div
-        className="element-editor-toolbar fixed z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-xl p-4 min-w-[300px]"
-        style={{
-          left: editorPosition.x,
-          top: editorPosition.y,
-          pointerEvents: 'auto',
-        }}
-        onMouseDown={(e) => e.stopPropagation()}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between mb-4">
-          <Badge variant="outline" className="text-xs">
-            <Edit3 className="h-3 w-3 mr-1" />
-            Editing: {selectedElement.tagName.toLowerCase()}
-          </Badge>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setSelectedElement(null)}
-            className="h-6 w-6 p-0"
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        </div>
-        <div className="space-y-3">
-          {/* Text Editing */}
-          {selectedElement && selectedElement.textContent && (
-            <div>
-              <label className="text-sm font-medium mb-2 block">Text Content</label>
-              {isEditingText ? (
-                <div className="space-y-2">
-                  <textarea
-                    className="w-full p-2 border border-gray-300 rounded text-sm"
-                    value={selectedElement.textContent}
-                    onChange={(e) => {
-                      selectedElement.textContent = e.target.value;
-                    }}
-                    rows={3}
-                  />
-                  <div className="flex gap-2">
-                    <Button size="sm" variant="outline" onClick={() => setIsEditingText(false)}>
-                      Save
-                    </Button>
-                    <Button size="sm" variant="outline" onClick={cancelTextEdit}>
-                      Cancel
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <Button size="sm" variant="outline" onClick={startTextEdit}>
-                  Edit Text
-                </Button>
-              )}
-            </div>
-          )}
-
-          {/* Font Controls */}
-          <div>
-            <label className="text-sm font-medium mb-2 block">Font Size</label>
-            <div className="flex gap-2">
-              <Button size="sm" variant="outline" onClick={() => setFontSize('12px')}>
-                12px
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setFontSize('16px')}>
-                16px
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setFontSize('18px')}>
-                18px
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setFontSize('24px')}>
-                24px
-              </Button>
-            </div>
-          </div>
-
-          {/* Font Weight */}
-          <div>
-            <label className="text-sm font-medium mb-2 block">Font Weight</label>
-            <div className="flex gap-2">
-              <Button size="sm" variant="outline" onClick={() => setFontWeight('normal')}>
-                Normal
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setFontWeight('bold')}>
-                Bold
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setFontWeight('600')}>
-                Semi-Bold
-              </Button>
-            </div>
-          </div>
-
-          {/* Text Color */}
-          <div>
-            <label className="text-sm font-medium mb-2 block">Text Color</label>
-            <div className="flex gap-2">
-              <Button size="sm" variant="outline" onClick={() => setTextColor('#000000')}>
-                Black
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setTextColor('#3b82f6')}>
-                Blue
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setTextColor('#dc2626')}>
-                Red
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setTextColor('#16a34a')}>
-                Green
-              </Button>
-            </div>
-          </div>
-
-          {/* Padding Controls */}
-          <div>
-            <label className="text-sm font-medium mb-2 block">Padding</label>
-            <div className="flex gap-2">
-              <Button size="sm" variant="outline" onClick={() => addPadding('10px')}>
-                10px
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => addPadding('20px')}>
-                20px
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => addPadding('30px')}>
-                30px
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => addPadding('0px')}>
-                None
-              </Button>
-            </div>
-          </div>
-
-          {/* Margin Controls */}
-          <div>
-            <label className="text-sm font-medium mb-2 block">Margin</label>
-            <div className="flex gap-2">
-              <Button size="sm" variant="outline" onClick={() => addMargin('10px')}>
-                10px
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => addMargin('20px')}>
-                20px
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => addMargin('30px')}>
-                30px
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => addMargin('0px')}>
-                None
-              </Button>
-            </div>
-          </div>
-
-          {/* Background Color */}
-          <div>
-            <label className="text-sm font-medium mb-2 block">Background</label>
-            <div className="flex gap-2">
-              <Button size="sm" variant="outline" onClick={() => setBackgroundColor('white')}>
-                White
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setBackgroundColor('#f3f4f6')}>
-                Gray
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setBackgroundColor('#dbeafe')}>
-                Blue
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setBackgroundColor('transparent')}>
-                None
-              </Button>
-            </div>
-          </div>
-
-          {/* Border Radius */}
-          <div>
-            <label className="text-sm font-medium mb-2 block">Border Radius</label>
-            <div className="flex gap-2">
-              <Button size="sm" variant="outline" onClick={() => setBorderRadius('4px')}>
-                4px
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setBorderRadius('8px')}>
-                8px
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setBorderRadius('12px')}>
-                12px
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setBorderRadius('0px')}>
-                None
-              </Button>
-            </div>
-          </div>
-
-          {/* Border */}
-          <div>
-            <label className="text-sm font-medium mb-2 block">Border</label>
-            <div className="flex gap-2">
-              <Button size="sm" variant="outline" onClick={() => setBorder('1px solid #e5e7eb')}>
-                Light
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setBorder('2px solid #3b82f6')}>
-                Blue
-              </Button>
-              <Button size="sm" variant="outline" onClick={() => setBorder('none')}>
-                None
-              </Button>
-            </div>
-          </div>
-        </div>
+      <div className="fixed bottom-4 right-4 z-50">
+        <Button
+          onClick={() => onToggle(true)}
+          className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg"
+          size="lg"
+        >
+          <Edit3 className="h-4 w-4 mr-2" />
+          Enable Element Editor
+        </Button>
       </div>
     );
   }
 
-  return null;
+  return (
+    <>
+      {/* Main Toggle Button */}
+      <div className="fixed bottom-4 right-4 z-50">
+        <Button
+          onClick={() => onToggle(false)}
+          className="bg-red-600 hover:bg-red-700 text-white shadow-lg"
+          size="lg"
+        >
+          <Eye className="h-4 w-4 mr-2" />
+          Disable Element Editor
+        </Button>
+      </div>
+
+      {/* Element Editor Toolbar */}
+      {selectedElement && (
+        <div 
+          className="element-editor-toolbar fixed z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl p-4 min-w-80"
+          style={{ 
+            left: Math.min(editorPosition.x, window.innerWidth - 320),
+            top: Math.max(editorPosition.y - 200, 10)
+          }}
+        >
+          <div className="mb-3">
+            <Badge variant="outline" className="text-xs">
+              {selectedElement.tagName.toLowerCase()}
+            </Badge>
+            {selectedElement.className && (
+              <Badge variant="secondary" className="text-xs ml-2">
+                .{selectedElement.className.split(' ')[0]}
+              </Badge>
+            )}
+          </div>
+
+          <div className="space-y-3">
+            {/* Padding Controls */}
+            <div>
+              <label className="text-sm font-medium flex items-center gap-2 mb-2">
+                <Square className="h-3 w-3" />
+                Padding
+              </label>
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline" onClick={() => addPadding('0px')}>
+                  None
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => addPadding('8px')}>
+                  Small
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => addPadding('16px')}>
+                  Medium
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => addPadding('24px')}>
+                  Large
+                </Button>
+              </div>
+            </div>
+
+            {/* Margin Controls */}
+            <div>
+              <label className="text-sm font-medium flex items-center gap-2 mb-2">
+                <Move className="h-3 w-3" />
+                Margin
+              </label>
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline" onClick={() => addMargin('0px')}>
+                  None
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => addMargin('8px')}>
+                  Small
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => addMargin('16px')}>
+                  Medium
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => addMargin('24px')}>
+                  Large
+                </Button>
+              </div>
+            </div>
+
+            {/* Background Color */}
+            <div>
+              <label className="text-sm font-medium flex items-center gap-2 mb-2">
+                <Palette className="h-3 w-3" />
+                Background
+              </label>
+              <div className="flex gap-2 flex-wrap">
+                <Button size="sm" variant="outline" onClick={() => setBackgroundColor('transparent')}>
+                  None
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => setBackgroundColor('#f3f4f6')}>
+                  Gray
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => setBackgroundColor('#dbeafe')}>
+                  Blue
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => setBackgroundColor('#dcfce7')}>
+                  Green
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => setBackgroundColor('#fef3c7')}>
+                  Yellow
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => setBackgroundColor('#fecaca')}>
+                  Red
+                </Button>
+              </div>
+            </div>
+
+            {/* Border Radius */}
+            <div>
+              <label className="text-sm font-medium mb-2 block">Border Radius</label>
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline" onClick={() => setBorderRadius('0px')}>
+                  None
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => setBorderRadius('4px')}>
+                  Small
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => setBorderRadius('8px')}>
+                  Medium
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => setBorderRadius('16px')}>
+                  Large
+                </Button>
+              </div>
+            </div>
+
+            {/* Border */}
+            <div>
+              <label className="text-sm font-medium mb-2 block">Border</label>
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline" onClick={() => setBorder('none')}>
+                  None
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => setBorder('1px solid #e5e7eb')}>
+                  Light
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => setBorder('2px solid #3b82f6')}>
+                  Blue
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => setBorder('2px dashed #6b7280')}>
+                  Dashed
+                </Button>
+              </div>
+            </div>
+
+            {/* Close Button */}
+            <div className="pt-2 border-t">
+              <Button 
+                size="sm" 
+                variant="ghost" 
+                onClick={() => setSelectedElement(null)}
+                className="w-full"
+              >
+                Close Editor
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }

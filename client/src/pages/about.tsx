@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { CredentialsBand } from "@/components/credentials-band";
 import { ServicesGrid } from "@/components/services-grid";
 import { PermanentClassSchedule } from "@/components/permanent-class-schedule";
-import { MetaTags } from "@/components/meta-tags";
 import { ArrowLeft, Award, Calendar, Users, Heart, Target, Dumbbell, Zap, User, ChevronDown, ChevronUp } from "lucide-react";
 
 import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
@@ -35,14 +34,6 @@ export default function About() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <MetaTags
-        title="About Michael Baker & Erica Baker - Certified Health & Fitness Professionals"
-        description="Meet Michael Baker, certified personal trainer and nutrition coach, and Erica Baker, certified yoga instructor. Expert health and fitness professionals dedicated to helping you achieve your wellness goals."
-        url="/about"
-        type="website"
-        author="Michael Baker"
-        section="About"
-      />
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12">

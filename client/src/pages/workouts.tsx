@@ -7,7 +7,6 @@ import { Clock, Flame, Play, Star, Dumbbell, Eye } from "lucide-react";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { PageSubscriptionCTA } from "@/components/page-subscription-cta";
 import { Link } from "wouter";
-import { MetaTags } from "@/components/meta-tags";
 import type { Workout } from "@shared/schema";
 
 export default function Workouts() {
@@ -92,14 +91,6 @@ export default function Workouts() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <MetaTags
-        title="Workout Library - Strength, Yoga & Cardio Sessions"
-        description="Discover effective workout routines for strength training, yoga, cardio, and HIIT. Professional video guidance with 15-45 minute sessions for all fitness levels."
-        url="/workouts"
-        type="website"
-        author="Michael Baker"
-        section="Workouts"
-      />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">

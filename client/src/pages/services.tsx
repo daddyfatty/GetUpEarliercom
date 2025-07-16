@@ -6,7 +6,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { ServicesGrid } from "@/components/services-grid";
 import { Link } from "wouter";
 import CheckoutModal from "@/components/checkout-modal";
-import { MetaTags } from "@/components/meta-tags";
 import { MapPin, Award } from "lucide-react";
 
 export default function Services() {
@@ -173,14 +172,6 @@ export default function Services() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <MetaTags
-        title="1-on-1 Strength Training, Nutrition & Yoga Coaching Services"
-        description="Professional personal training, nutrition coaching, and yoga services in Orange, CT and virtual sessions worldwide. Certified trainers offering customized fitness and wellness programs."
-        url="/services"
-        type="website"
-        author="Michael Baker"
-        section="Services"
-      />
       {/* Hero Section + Services Grid with Gradient Background */}
       <section className="bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white">
         {/* Hero Section */}

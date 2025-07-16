@@ -13,7 +13,6 @@ import { Search, Filter, Plus, Utensils, Clock, Users } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { BookPromotion } from "@/components/book-promotion";
-import { MetaTags } from "@/components/meta-tags";
 import type { Recipe } from "@shared/schema";
 
 export default function Recipes() {
@@ -88,14 +87,6 @@ export default function Recipes() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:bg-gray-900 py-8">
-      <MetaTags
-        title="Healthy Recipes - Clean & Lean High-Protein Meals"
-        description="Discover delicious, healthy recipes perfect for strength training and weight management. Clean eating made simple with high-protein, nutrient-dense meals."
-        url="/recipes"
-        type="website"
-        author="Michael Baker"
-        section="Recipes"
-      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <div className="inline-block bg-red-500/10 text-red-600 px-3 py-1 rounded-full text-sm font-medium mb-4">

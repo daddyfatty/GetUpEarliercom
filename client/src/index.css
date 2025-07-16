@@ -8,19 +8,35 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Basic text selection for all elements */
-div, p, h1, h2, h3, h4, h5, h6, span, a, li, td, th, section, article, aside, nav, header, footer, main {
+/* Element Editor Mode - Only active when .element-editor-mode is applied */
+.element-editor-mode div, 
+.element-editor-mode p, 
+.element-editor-mode h1, 
+.element-editor-mode h2, 
+.element-editor-mode h3, 
+.element-editor-mode h4, 
+.element-editor-mode h5, 
+.element-editor-mode h6, 
+.element-editor-mode span, 
+.element-editor-mode a, 
+.element-editor-mode li, 
+.element-editor-mode td, 
+.element-editor-mode th, 
+.element-editor-mode section, 
+.element-editor-mode article, 
+.element-editor-mode aside, 
+.element-editor-mode nav, 
+.element-editor-mode header, 
+.element-editor-mode footer, 
+.element-editor-mode main {
   user-select: text !important;
   -webkit-user-select: text !important;
   -moz-user-select: text !important;
   -ms-user-select: text !important;
+  cursor: text !important;
 }
 
-/* Element Editor Mode - Only active when .element-editor-mode is applied */
-.element-editor-mode * {
-  cursor: crosshair !important;
-}
-
+/* Make all elements have visible borders on hover for editing - only in editor mode */
 .element-editor-mode div:hover, 
 .element-editor-mode p:hover, 
 .element-editor-mode h1:hover, 
@@ -30,6 +46,7 @@ div, p, h1, h2, h3, h4, h5, h6, span, a, li, td, th, section, article, aside, na
 .element-editor-mode h5:hover, 
 .element-editor-mode h6:hover, 
 .element-editor-mode span:hover, 
+.element-editor-mode a:hover, 
 .element-editor-mode li:hover, 
 .element-editor-mode td:hover, 
 .element-editor-mode th:hover, 
@@ -42,40 +59,95 @@ div, p, h1, h2, h3, h4, h5, h6, span, a, li, td, th, section, article, aside, na
 .element-editor-mode main:hover {
   outline: 2px dashed #3b82f6 !important;
   outline-offset: 2px !important;
+}
+
+/* Make all elements focusable and editable - only in editor mode */
+.element-editor-mode div, 
+.element-editor-mode p, 
+.element-editor-mode h1, 
+.element-editor-mode h2, 
+.element-editor-mode h3, 
+.element-editor-mode h4, 
+.element-editor-mode h5, 
+.element-editor-mode h6, 
+.element-editor-mode span, 
+.element-editor-mode li, 
+.element-editor-mode td, 
+.element-editor-mode th {
+  -webkit-user-modify: read-write !important;
+  -moz-user-modify: read-write !important;
+  contenteditable: true !important;
+  min-height: 1em !important;
+}
+
+/* Add padding visualization - only in editor mode */
+.element-editor-mode div, 
+.element-editor-mode p, 
+.element-editor-mode h1, 
+.element-editor-mode h2, 
+.element-editor-mode h3, 
+.element-editor-mode h4, 
+.element-editor-mode h5, 
+.element-editor-mode h6, 
+.element-editor-mode span, 
+.element-editor-mode li, 
+.element-editor-mode td, 
+.element-editor-mode th, 
+.element-editor-mode section, 
+.element-editor-mode article, 
+.element-editor-mode aside, 
+.element-editor-mode nav, 
+.element-editor-mode header, 
+.element-editor-mode footer, 
+.element-editor-mode main {
   position: relative !important;
 }
 
-.element-editor-mode div:hover::before, 
-.element-editor-mode p:hover::before, 
-.element-editor-mode h1:hover::before, 
-.element-editor-mode h2:hover::before, 
-.element-editor-mode h3:hover::before, 
-.element-editor-mode h4:hover::before, 
-.element-editor-mode h5:hover::before, 
-.element-editor-mode h6:hover::before, 
-.element-editor-mode span:hover::before, 
-.element-editor-mode li:hover::before, 
-.element-editor-mode td:hover::before, 
-.element-editor-mode th:hover::before, 
-.element-editor-mode section:hover::before, 
-.element-editor-mode article:hover::before, 
-.element-editor-mode aside:hover::before, 
-.element-editor-mode nav:hover::before, 
-.element-editor-mode header:hover::before, 
-.element-editor-mode footer:hover::before, 
-.element-editor-mode main:hover::before {
+/* Show padding on focus - only in editor mode */
+.element-editor-mode div:focus, 
+.element-editor-mode p:focus, 
+.element-editor-mode h1:focus, 
+.element-editor-mode h2:focus, 
+.element-editor-mode h3:focus, 
+.element-editor-mode h4:focus, 
+.element-editor-mode h5:focus, 
+.element-editor-mode h6:focus, 
+.element-editor-mode span:focus, 
+.element-editor-mode li:focus, 
+.element-editor-mode td:focus, 
+.element-editor-mode th:focus, 
+.element-editor-mode section:focus, 
+.element-editor-mode article:focus, 
+.element-editor-mode aside:focus, 
+.element-editor-mode nav:focus, 
+.element-editor-mode header:focus, 
+.element-editor-mode footer:focus, 
+.element-editor-mode main:focus {
+  outline: 2px solid #10b981 !important;
+  outline-offset: 2px !important;
+  box-shadow: inset 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Add visual indicators for element boundaries - only in editor mode */
+.element-editor-mode div::before,
+.element-editor-mode p::before,
+.element-editor-mode h1::before,
+.element-editor-mode h2::before,
+.element-editor-mode h3::before,
+.element-editor-mode h4::before,
+.element-editor-mode h5::before,
+.element-editor-mode h6::before {
   content: attr(class) !important;
   position: absolute !important;
   top: -20px !important;
   left: 0 !important;
   font-size: 10px !important;
-  color: #fff !important;
-  background: #3b82f6 !important;
-  padding: 2px 6px !important;
-  border-radius: 3px !important;
+  color: #6b7280 !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  padding: 2px 4px !important;
+  border-radius: 2px !important;
   z-index: 1000 !important;
   pointer-events: none !important;
-  white-space: nowrap !important;
 }
 
 :root {
@@ -294,32 +366,4 @@ div, p, h1, h2, h3, h4, h5, h6, span, a, li, td, th, section, article, aside, na
 
 .training-entry-content a {
   @apply text-[#0039A6] hover:text-[#94D600] transition-colors;
-}
-
-/* Element Editor Selection Styles */
-.element-selected {
-  outline: 3px solid #ef4444 !important;
-  outline-offset: 2px !important;
-  background-color: rgba(239, 68, 68, 0.1) !important;
-}
-
-.simple-selected {
-  outline: 3px solid #22c55e !important;
-  outline-offset: 2px !important;
-  background-color: rgba(34, 197, 94, 0.1) !important;
-}
-
-.element-editor-toolbar {
-  max-height: 80vh;
-  overflow-y: auto;
-  background: white !important;
-  border: 2px solid #ccc !important;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
-}
-
-.simple-editor-toolbar {
-  background: white !important;
-  border: 2px solid #ccc !important;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
-  z-index: 9999 !important;
 }

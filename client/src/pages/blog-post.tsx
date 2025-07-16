@@ -5,9 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Clock, User, Calendar, Edit, Play, Expand } from "lucide-react";
 import { HeroGradient } from "@/components/hero-gradient";
 import { BlogContentRenderer } from "@/components/blog-content-renderer";
-import { SimpleElementEditor } from "@/components/simple-element-editor";
-import { MetaTags } from "@/components/meta-tags";
-import { useState, useEffect } from "react";
+import { ElementEditor } from "@/components/element-editor";
+import { useState } from "react";
 
 
 
@@ -121,14 +120,6 @@ export default function BlogPost() {
     enabled: isTrainingLogEntry
   });
 
-  // Generate featured image URL for the post
-  const getFeaturedImageUrl = (post: BlogPost) => {
-    if (post.slug === 'hartford-marathon-training-log-2025') {
-      return '/hartford-marathon-2024-start_1752664876322.jpg';
-    }
-    return post.imageUrl || '/hartford-marathon-2024-start_1752664876322.jpg';
-  };
-
   const formatDate = (dateString: string) => {
     try {
       return new Date(dateString).toLocaleDateString('en-US', {
@@ -188,34 +179,40 @@ export default function BlogPost() {
 
 
   // Training Log Template
-  if (isTrainingLogEntry && trainingLogEntry?.entries) {
-    // Use the parsed entries from the training log entry
-    const sortedEntries = [...trainingLogEntry.entries].sort((a, b) => 
+  if (isTrainingLogEntry && allTrainingLogEntries) {
+    // Sort entries by date (newest first)
+    const sortedEntries = [...allTrainingLogEntries].sort((a, b) => 
       new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
+    const getEntryTitle = (entryNumber: number) => {
+      if (entryNumber === 1) return '"GO ONE MORE"';
+      if (entryNumber === 2) return 'Marathon Training Tip for HOT long runs';
+      if (entryNumber === 3) return '"GO ONE MORE"';
+      return `"ENTRY ${entryNumber}"`;
+    };
 
+    const getEntrySubtitle = (entryNumber: number) => {
+      if (entryNumber === 1) return '-Nick Bare';
+      if (entryNumber === 2) return '-Training Entry #2';
+      if (entryNumber === 3) return '-Nick Bare';
+      return `-Training Entry #${entryNumber}`;
+    };
+
+    const getWorkoutType = (entryNumber: number) => {
+      if (entryNumber === 1) return 'Long Run';
+      if (entryNumber === 2) return 'Training';
+      if (entryNumber === 3) return 'Training';
+      return 'Training';
+    };
 
     const isRunEntry = (entryNumber: number) => {
-      // Only Entry #1 is an actual run with metrics
-      return entryNumber === 1;
+      // Only Entry #1 and #3 are actual runs with metrics
+      return entryNumber === 1 || entryNumber === 3;
     };
 
     return (
       <div className="min-h-screen bg-gradient-to-b from-[#0039A6] via-[#0039A6] to-[#0039A6] text-white">
-        {/* Meta Tags for Social Sharing */}
-        <MetaTags
-          title={post.title}
-          description={post.excerpt}
-          image={getFeaturedImageUrl(post)}
-          url={`/blog/${post.slug}`}
-          type="article"
-          author={post.author}
-          publishedTime={post.publishedDate}
-          section="Marathon Training"
-          tags={post.tags}
-        />
-        
         {/* Training Log Header */}
         <div className="py-4 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
@@ -240,30 +237,30 @@ export default function BlogPost() {
         <div className="container mx-auto px-4" style={{ paddingTop: '0px', paddingBottom: '25px' }}>
           <div className="max-w-4xl mx-auto space-y-12">
             {sortedEntries.map((entry, index) => (
-              <div key={entry.entryNumber || index}>
+              <div key={entry.id}>
                 {/* Entry Header */}
                 <div className="text-center mb-2">
                   <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
-                    {entry.title}
+                    {getEntryTitle(entry.entryNumber)}
                   </div>
                   <div className="text-lg md:text-xl text-gray-300">
-                    {entry.subtitle}
+                    {getEntrySubtitle(entry.entryNumber)}
                   </div>
                 </div>
                 
                 {/* Training Metrics - Only show for actual run entries */}
-                {isRunEntry(entry.entryNumber) && entry.metrics && (
+                {isRunEntry(entry.entryNumber) && (
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-6" style={{ marginBottom: '25px' }}>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#94D600]">{entry.metrics.distance}</div>
+                      <div className="text-2xl font-bold text-[#94D600]">{entry.distance || (entry.entryNumber === 2 ? '15.0 miles' : '19.00 miles')}</div>
                       <div className="text-sm text-gray-300">Distance</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#94D600]">{entry.metrics.pace}</div>
+                      <div className="text-2xl font-bold text-[#94D600]">{entry.pace || (entry.entryNumber === 2 ? '7:45/mile' : '8:22/mile')}</div>
                       <div className="text-sm text-gray-300">Pace</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#94D600]">{entry.metrics.time}</div>
+                      <div className="text-2xl font-bold text-[#94D600]">{entry.time || (entry.entryNumber === 2 ? '1h 56m' : '2h 38m')}</div>
                       <div className="text-sm text-gray-300">Time</div>
                     </div>
                   </div>
@@ -271,15 +268,15 @@ export default function BlogPost() {
                 
                 {/* Entry Info Bar */}
                 <div className="flex justify-between items-center text-sm text-gray-300 mb-6">
-                  <div>Training Log Entry #{entry.entryNumber}</div>
+                  <div>Training Log Entry #2</div>
                   <div className="text-[#94D600]">{formatTrainingDate(entry.date)}</div>
-                  <div>Workout Type: <span className="text-[#94D600]">{entry.workoutType}</span></div>
+                  <div>Workout Type: <span className="text-[#94D600]">{getWorkoutType(entry.entryNumber)}</span></div>
                 </div>
                 
                 
 
                 {/* Entry Content */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl pt-[12px] pb-[12px]" style={{ padding: '25px' }}>
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl pt-[0px] pb-[0px]" style={{ padding: '25px' }}>
                   <div className="prose prose-lg max-w-none dark:prose-invert">
                     <BlogContentRenderer 
                       content={entry.content} 
@@ -289,43 +286,6 @@ export default function BlogPost() {
                       }} 
                     />
                   </div>
-                  
-                  {/* YouTube Video Embed */}
-                  {entry.videoUrl && (
-                    <div className="mt-6">
-                      <div className="relative w-full aspect-video rounded-lg overflow-hidden">
-                        <iframe
-                          src={entry.videoUrl.replace('youtu.be/', 'youtube.com/embed/').replace('watch?v=', 'embed/')}
-                          title="Training Video"
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          className="absolute inset-0 w-full h-full"
-                        ></iframe>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Gallery Images */}
-                  {entry.images && entry.images.length > 0 && (
-                    <div className="mt-6">
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {entry.images.map((image, imageIndex) => (
-                          <div key={imageIndex} className="relative group cursor-pointer">
-                            <img
-                              src={image}
-                              alt={`Training log image ${imageIndex + 1}`}
-                              className="w-full h-64 object-cover rounded-lg transition-transform duration-300 hover:scale-105"
-                              onClick={() => {
-                                setLightboxImage(image);
-                                setLightboxOpen(true);
-                              }}
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
                 </div>
 
                 {/* Separator between entries (not after the last one) */}
@@ -360,8 +320,14 @@ export default function BlogPost() {
             </div>
           </div>
         )}
-        {/* Simple Element Editor - Only show in development */}
-        {import.meta.env.DEV && <SimpleElementEditor enabled={elementEditorEnabled} />}
+        
+        {/* Element Editor - Only show in development */}
+        {import.meta.env.DEV && (
+          <ElementEditor 
+            isEnabled={elementEditorEnabled}
+            onToggle={setElementEditorEnabled}
+          />
+        )}
       </div>
     );
   }
@@ -369,19 +335,6 @@ export default function BlogPost() {
   // Regular Blog Post Template
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
-      {/* Meta Tags for Social Sharing */}
-      <MetaTags
-        title={post.title}
-        description={post.excerpt}
-        image={getFeaturedImageUrl(post)}
-        url={`/blog/${post.slug}`}
-        type="article"
-        author={post.author}
-        publishedTime={post.publishedDate}
-        section={post.category}
-        tags={post.tags}
-      />
-      
       {/* Full-width Hero Gradient Header Section - No gaps */}
       <HeroGradient className="text-white">
         <div className="py-20 px-4 sm:px-6 lg:px-8">
@@ -456,7 +409,7 @@ export default function BlogPost() {
               </Link>
             )}
             <Button 
-              variant={elementEditorEnabled ? "default" : "outline"}
+              variant="outline" 
               className="gap-2"
               onClick={() => setElementEditorEnabled(!elementEditorEnabled)}
             >
@@ -642,8 +595,13 @@ export default function BlogPost() {
         </div>
       )}
       
-      {/* Simple Element Editor - Only show in development */}
-      {import.meta.env.DEV && <SimpleElementEditor enabled={elementEditorEnabled} />}
+      {/* Element Editor - Only show in development */}
+      {import.meta.env.DEV && (
+        <ElementEditor 
+          isEnabled={elementEditorEnabled}
+          onToggle={setElementEditorEnabled}
+        />
+      )}
     </div>
   );
 }
