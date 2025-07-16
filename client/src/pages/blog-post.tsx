@@ -281,15 +281,8 @@ export default function BlogPost() {
                 {/* Entry Content */}
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl pt-[0px] pb-[0px]" style={{ padding: '25px' }}>
                   <div className="prose prose-lg max-w-none dark:prose-invert">
-                    {/* Create content with embedded Amazon links for Entry #2 */}
                     <BlogContentRenderer 
-                      content={entry.entryNumber === 2 ? 
-                        entry.content + '\n\n' + 
-                        'Soft Water Bottle:\n<span class="amazon-link" data-url="https://amzn.to/40xLe8D">Premium Soft Flask - Shrink As You Drink Soft Water Bottle for Hydration Pack - Folding Water Bottle</span>\n\n' +
-                        'Double Electrolyte Gels:\n<span class="amazon-link" data-url="https://amzn.to/4lFpikh">Huma Plus (Double Electrolytes) - Chia Energy Gel, BlackBerry Banana, 12 Gels</span>\n\n' +
-                        'NUUN Tablets:\n<span class="amazon-link" data-url="https://amzn.to/4l5ZjT8">Nuun Sport Electrolyte Tablets with Magnesium, Calcium, Potassium, Chloride & Sodium</span>'
-                        : entry.content
-                      } 
+                      content={entry.content} 
                       onImageClick={(imageSrc) => {
                         setLightboxImage(imageSrc);
                         setLightboxOpen(true);
