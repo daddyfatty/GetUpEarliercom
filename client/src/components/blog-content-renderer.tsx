@@ -16,12 +16,8 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
     
     // Function to convert URLs to clickable links (only for plain text content)
     const convertUrlsToLinks = (text: string) => {
-      // Only process if the text doesn't contain HTML tags (simple check)
-      if (text.includes('<') && text.includes('>')) {
-        return text; // Return unchanged if it contains HTML
-      }
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
-      return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">$1</a>');
+      // Temporarily disabled to fix content display issues
+      return text;
     };
     
     // Find all Amazon links
