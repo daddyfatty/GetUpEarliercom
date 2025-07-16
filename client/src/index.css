@@ -8,6 +8,14 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Make all DIVs selectable */
+div {
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+}
+
 :root {
   /* GetUpEarlier.com Brand Colors */
   --background: 0 0% 100%; /* #ffffff */
