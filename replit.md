@@ -166,6 +166,8 @@ WHERE slug = 'hartford-marathon-training-log-2025';
 
 ```
 Changelog:
+- July 16, 2025: Created Training Log Entry #4 "Recovery Run" (July 13, 2025) - 7.50 mile recovery run through Orange, CT with Strava data screenshots and route map; entry displays at top of training log with proper metrics, content formatting, and image gallery integration
+- July 16, 2025: Fixed URL conversion in BlogContentRenderer - URLs now properly convert to clickable links by processing before HTML conversion; fixed order of operations to prevent HTML interference with URL regex matching
 - July 16, 2025: Fixed Amazon product link processing globally across all content types - completely rebuilt BlogContentRenderer to properly handle Amazon links and galleries in correct order; Amazon links now display as rich preview cards with images, prices, and ratings consistently across blog posts, training log entries, and all other content throughout the site
 - July 16, 2025: Successfully implemented global Amazon link functionality in Hartford Marathon Training Log Entry #2 - all three Amazon products (Soft Water Bottle, Double Electrolyte Gels, NUUN tablets) now display with full rich previews including product images, prices, ratings, and Prime status using the same system as blog posts
 - July 15, 2025: Fixed Amazon product preview display in Hartford Marathon Training Log entries - updated BlogContentRenderer regex to properly match data-url span format enabling full rich product previews with images, prices, ratings, and Prime status; Entry #2 now displays complete Amazon product cards for soft water bottle, electrolyte gels, and NUUN tablets
