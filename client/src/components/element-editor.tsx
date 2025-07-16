@@ -46,11 +46,27 @@ export function ElementEditor({ enabled = false }: ElementEditorProps) {
         e.stopPropagation();
         
         console.log('Selected element:', targetElement);
-        setSelectedElement(targetElement);
-        setEditorPosition({ 
-          x: Math.min(e.clientX, window.innerWidth - 320), 
-          y: Math.max(e.clientY - 200, 10) 
+        console.log('Element position:', { x: e.clientX, y: e.clientY });
+        console.log('Window dimensions:', { width: window.innerWidth, height: window.innerHeight });
+        
+        // Clear previous selection styling
+        document.querySelectorAll('.element-selected').forEach(el => {
+          el.classList.remove('element-selected');
         });
+        
+        // Add selection styling to new element
+        targetElement.classList.add('element-selected');
+        
+        setSelectedElement(targetElement);
+        
+        // Better positioning logic
+        const toolbarWidth = 320;
+        const toolbarHeight = 400;
+        const x = Math.min(e.clientX + 10, window.innerWidth - toolbarWidth - 10);
+        const y = Math.max(e.clientY - toolbarHeight/2, 10);
+        
+        console.log('Toolbar position:', { x, y });
+        setEditorPosition({ x, y });
         
         // Store original text for editing
         setOriginalText(targetElement.textContent || '');
@@ -149,6 +165,8 @@ export function ElementEditor({ enabled = false }: ElementEditorProps) {
 
   // Show the editing toolbar when an element is selected
   if (selectedElement) {
+    console.log('Rendering toolbar for element:', selectedElement);
+    console.log('Toolbar position:', editorPosition);
     return (
       <div
         className="element-editor-toolbar fixed z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-xl p-4 min-w-[300px]"

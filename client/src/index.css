@@ -295,3 +295,18 @@ div, p, h1, h2, h3, h4, h5, h6, span, a, li, td, th, section, article, aside, na
 .training-entry-content a {
   @apply text-[#0039A6] hover:text-[#94D600] transition-colors;
 }
+
+/* Element Editor Selection Styles */
+.element-selected {
+  outline: 3px solid #ef4444 !important;
+  outline-offset: 2px !important;
+  background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+.element-editor-toolbar {
+  max-height: 80vh;
+  overflow-y: auto;
+  background: white !important;
+  border: 2px solid #ccc !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+}
