@@ -3,13 +3,17 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Edit3, Eye, Palette, Move, Square, X } from "lucide-react";
 
-export function ElementEditor() {
+interface ElementEditorProps {
+  enabled?: boolean;
+}
+
+export function ElementEditor({ enabled = false }: ElementEditorProps) {
   const [selectedElement, setSelectedElement] = useState<HTMLElement | null>(null);
   const [editorPosition, setEditorPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    // Auto-enable in development mode
-    if (import.meta.env.DEV) {
+    // Only enable when explicitly requested
+    if (enabled) {
       document.body.classList.add('element-editor-mode');
       
       const handleClick = (e: MouseEvent) => {
@@ -44,8 +48,11 @@ export function ElementEditor() {
         document.removeEventListener('click', handleClick, true);
         document.body.classList.remove('element-editor-mode');
       };
+    } else {
+      document.body.classList.remove('element-editor-mode');
+      setSelectedElement(null);
     }
-  }, []);
+  }, [enabled]);
 
   const updateElementStyle = (property: string, value: string) => {
     if (selectedElement) {
