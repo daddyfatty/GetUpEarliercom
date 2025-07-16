@@ -305,7 +305,7 @@ export default function BlogPost() {
                     {/* Render images if any */}
                     {entry.images && entry.images.length > 0 && (
                       <div className="mt-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 masonry">
+                        <div className="space-y-4">
                           {entry.images.map((imageSrc, imgIndex) => (
                             <div 
                               key={imgIndex}
@@ -318,7 +318,8 @@ export default function BlogPost() {
                               <img
                                 src={imageSrc}
                                 alt={`Training log photo ${imgIndex + 1}`}
-                                className="w-full h-auto object-cover rounded-lg"
+                                className="w-full h-auto object-cover rounded-lg max-w-full"
+                                style={{ maxHeight: '80vh' }}
                               />
                               <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center rounded-lg">
                                 <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
