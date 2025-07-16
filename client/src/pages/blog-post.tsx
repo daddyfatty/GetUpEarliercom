@@ -277,7 +277,7 @@ export default function BlogPost() {
                 
 
                 {/* Entry Content */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl pt-[0px] pb-[0px]" style={{ padding: '25px' }}>
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl pt-[12px] pb-[12px]" style={{ padding: '25px' }}>
                   <div className="prose prose-lg max-w-none dark:prose-invert">
                     <BlogContentRenderer 
                       content={entry.content} 
@@ -321,7 +321,6 @@ export default function BlogPost() {
             </div>
           </div>
         )}
-        
         {/* Simple Element Editor - Only show in development */}
         {import.meta.env.DEV && <SimpleElementEditor enabled={elementEditorEnabled} />}
       </div>
