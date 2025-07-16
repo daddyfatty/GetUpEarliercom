@@ -16,8 +16,13 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
     
     // Function to convert URLs to clickable links (only for plain text content)
     const convertUrlsToLinks = (text: string) => {
-      // Temporarily disabled to fix content display issues
-      return text;
+      // Only process if the text doesn't contain any HTML tags at all
+      if (text.includes('<') || text.includes('>')) {
+        return text; // Return unchanged if it contains HTML
+      }
+      // Very conservative URL replacement - only match standalone URLs
+      const urlRegex = /^(https?:\/\/[^\s]+)$/gm;
+      return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">$1</a>');
     };
     
     // Find all Amazon links
