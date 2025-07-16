@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Clock, User, Calendar, Edit, Play, Expand } from "lucide-react";
 import { HeroGradient } from "@/components/hero-gradient";
 import { BlogContentRenderer } from "@/components/blog-content-renderer";
-import { ElementEditor } from "@/components/element-editor";
+import { SimpleElementEditor } from "@/components/simple-element-editor";
 import { useState } from "react";
 
 
@@ -322,8 +322,8 @@ export default function BlogPost() {
           </div>
         )}
         
-        {/* Element Editor - Only show in development */}
-        {import.meta.env.DEV && <ElementEditor enabled={elementEditorEnabled} />}
+        {/* Simple Element Editor - Only show in development */}
+        {import.meta.env.DEV && <SimpleElementEditor enabled={elementEditorEnabled} />}
       </div>
     );
   }
@@ -591,8 +591,8 @@ export default function BlogPost() {
         </div>
       )}
       
-      {/* Element Editor - Only show in development */}
-      {import.meta.env.DEV && <ElementEditor enabled={elementEditorEnabled} />}
+      {/* Simple Element Editor - Only show in development */}
+      {import.meta.env.DEV && <SimpleElementEditor enabled={elementEditorEnabled} />}
     </div>
   );
 }
