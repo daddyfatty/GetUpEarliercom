@@ -24,14 +24,21 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
   const { data: preview, isLoading, error } = useQuery<LinkPreviewData>({
     queryKey: ['/api/link-preview', url],
     queryFn: async () => {
-      const response = await fetch(`/api/link-preview?url=${encodeURIComponent(url)}`);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch preview: ${response.status}`);
+      try {
+        const response = await fetch(`/api/link-preview?url=${encodeURIComponent(url)}`);
+        if (!response.ok) {
+          console.warn(`Failed to fetch preview for ${url}: ${response.status}`);
+          return null;
+        }
+        return response.json();
+      } catch (error) {
+        console.warn(`Network error fetching preview for ${url}:`, error);
+        return null;
       }
-      return response.json();
     },
     staleTime: 1000 * 60 * 30, // Cache for 30 minutes
-    retry: 2
+    retry: 1,
+    throwOnError: false
   });
 
   if (isLoading) {
@@ -47,7 +54,7 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
     );
   }
 
-  if (error || !preview || preview.title === 'Amazon Product') {
+  if (error || !preview || (preview && preview.title === 'Amazon Product')) {
     // Enhanced fallback with better product display
     return (
       <div 
