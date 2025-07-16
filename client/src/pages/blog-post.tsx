@@ -289,6 +289,22 @@ export default function BlogPost() {
                       }} 
                     />
                     
+                    {/* Render YouTube video if available */}
+                    {entry.videoUrl && (
+                      <div className="mt-6">
+                        <div className="aspect-video">
+                          <iframe
+                            src={entry.videoUrl.replace('https://youtu.be/', 'https://www.youtube.com/embed/').split('?')[0]}
+                            title="Training Video"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            className="w-full h-full rounded-lg"
+                          />
+                        </div>
+                      </div>
+                    )}
+                    
                     {/* Render images if any */}
                     {entry.images && entry.images.length > 0 && (
                       <div className="mt-6">
