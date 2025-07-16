@@ -9,41 +9,30 @@ interface BlogContentRendererProps {
 export function BlogContentRenderer({ content, onImageClick }: BlogContentRendererProps) {
   if (!content) return null;
 
-  // Process content and convert Amazon links to previews
-  const processedContent = content.replace(
-    /<span(?:\s+class="amazon-link")?\s*data-url="([^"]+)">([^<]+)<\/span>/g,
-    (match, url, title) => {
-      return `<div class="amazon-preview" data-url="${url}" data-title="${title}"></div>`;
-    }
-  );
-
   const renderContent = () => {
     const parts = [];
-    const amazonPreviewRegex = /<div class="amazon-preview" data-url="([^"]+)" data-title="([^"]+)"><\/div>/g;
+    const amazonLinkRegex = /<span(?:\s+class="amazon-link")?\s*data-url="([^"]+)">([^<]+)<\/span>/g;
     const galleryRegex = /<div class="gallery-grid">([\s\S]*?)<\/div>/g;
     
-    let lastIndex = 0;
-    let currentContent = processedContent;
+    // Find all Amazon links
+    const amazonMatches = [];
+    let match;
+    amazonLinkRegex.lastIndex = 0;
+    while ((match = amazonLinkRegex.exec(content)) !== null) {
+      amazonMatches.push({
+        start: match.index,
+        end: match.index + match[0].length,
+        url: match[1],
+        title: match[2],
+        type: 'amazon'
+      });
+    }
     
-    // First handle galleries
-    let galleryMatch;
-    while ((galleryMatch = galleryRegex.exec(currentContent)) !== null) {
-      // Add content before gallery
-      if (galleryMatch.index > lastIndex) {
-        const beforeContent = currentContent.substring(lastIndex, galleryMatch.index);
-        if (beforeContent.trim()) {
-          parts.push(
-            <div 
-              key={`content-${lastIndex}`}
-              dangerouslySetInnerHTML={{ __html: beforeContent }}
-              className="text-gray-600 dark:text-gray-400"
-            />
-          );
-        }
-      }
-      
-      // Process gallery
-      const galleryContent = galleryMatch[1];
+    // Find all galleries
+    const galleryMatches = [];
+    galleryRegex.lastIndex = 0;
+    while ((match = galleryRegex.exec(content)) !== null) {
+      const galleryContent = match[1];
       const imageRegex = /<img src="([^"]+)" alt="([^"]*)" class="gallery-image" \/>/g;
       const images = [];
       let imageMatch;
@@ -56,11 +45,51 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
       }
       
       if (images.length > 0) {
+        galleryMatches.push({
+          start: match.index,
+          end: match.index + match[0].length,
+          images,
+          type: 'gallery'
+        });
+      }
+    }
+    
+    // Combine and sort all matches
+    const allMatches = [...amazonMatches, ...galleryMatches].sort((a, b) => a.start - b.start);
+    
+    let lastIndex = 0;
+    
+    // Process each match
+    allMatches.forEach((match, index) => {
+      // Add content before this match
+      if (match.start > lastIndex) {
+        const beforeContent = content.substring(lastIndex, match.start);
+        if (beforeContent.trim()) {
+          parts.push(
+            <div 
+              key={`content-${lastIndex}`}
+              dangerouslySetInnerHTML={{ __html: beforeContent }}
+              className="text-gray-600 dark:text-gray-400"
+            />
+          );
+        }
+      }
+      
+      // Add the match component
+      if (match.type === 'amazon') {
         parts.push(
-          <div key={`gallery-${galleryMatch.index}`} className="columns-1 md:columns-2 lg:columns-3 gap-4 my-8">
-            {images.map((image, index) => (
+          <RealAmazonPreview
+            key={`amazon-${match.start}`}
+            url={match.url}
+            title={match.title}
+          />
+        );
+      } else if (match.type === 'gallery') {
+        parts.push(
+          <div key={`gallery-${match.start}`} className="columns-1 md:columns-2 lg:columns-3 gap-4 my-8">
+            {match.images.map((image, imgIndex) => (
               <div 
-                key={`gallery-img-${index}`}
+                key={`gallery-img-${imgIndex}`}
                 className="break-inside-avoid mb-4 rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative"
                 onClick={() => onImageClick && onImageClick(image.src)}
               >
@@ -75,61 +104,13 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
         );
       }
       
-      lastIndex = galleryMatch.index + galleryMatch[0].length;
-    }
+      lastIndex = match.end;
+    });
     
-    // Add remaining content and process Amazon previews
-    const remainingContent = currentContent.substring(lastIndex);
-    if (remainingContent.trim()) {
-      // Check for Amazon previews in remaining content
-      const amazonParts = [];
-      let amazonLastIndex = 0;
-      let amazonMatch;
-      
-      amazonPreviewRegex.lastIndex = 0;
-      while ((amazonMatch = amazonPreviewRegex.exec(remainingContent)) !== null) {
-        // Add content before Amazon preview
-        if (amazonMatch.index > amazonLastIndex) {
-          const beforeAmazon = remainingContent.substring(amazonLastIndex, amazonMatch.index);
-          if (beforeAmazon.trim()) {
-            amazonParts.push(
-              <div 
-                key={`before-amazon-${amazonLastIndex}`}
-                dangerouslySetInnerHTML={{ __html: beforeAmazon }}
-                className="text-gray-600 dark:text-gray-400"
-              />
-            );
-          }
-        }
-        
-        // Add Amazon preview
-        amazonParts.push(
-          <RealAmazonPreview
-            key={`amazon-${amazonMatch.index}`}
-            url={amazonMatch[1]}
-            title={amazonMatch[2]}
-          />
-        );
-        
-        amazonLastIndex = amazonMatch.index + amazonMatch[0].length;
-      }
-      
-      // Add remaining content after last Amazon preview
-      if (amazonLastIndex < remainingContent.length) {
-        const finalContent = remainingContent.substring(amazonLastIndex);
-        if (finalContent.trim()) {
-          amazonParts.push(
-            <div 
-              key={`final-${amazonLastIndex}`}
-              dangerouslySetInnerHTML={{ __html: finalContent }}
-              className="text-gray-600 dark:text-gray-400"
-            />
-          );
-        }
-      }
-      
-      // If no Amazon links found, render remaining content as is
-      if (amazonParts.length === 0) {
+    // Add remaining content
+    if (lastIndex < content.length) {
+      const remainingContent = content.substring(lastIndex);
+      if (remainingContent.trim()) {
         parts.push(
           <div 
             key={`remaining-${lastIndex}`}
@@ -137,15 +118,14 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
             className="text-gray-600 dark:text-gray-400"
           />
         );
-      } else {
-        parts.push(...amazonParts);
       }
     }
     
+    // If no special content found, render the original content
     if (parts.length === 0) {
       return (
         <div 
-          dangerouslySetInnerHTML={{ __html: processedContent }}
+          dangerouslySetInnerHTML={{ __html: content }}
           className="text-gray-600 dark:text-gray-400"
         />
       );
