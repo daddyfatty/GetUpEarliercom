@@ -242,8 +242,8 @@ export default function BlogPost() {
             {sortedEntries.map((entry, index) => (
               <div key={entry.entryNumber}>
                 {/* Entry Header */}
-                <div className="text-center mb-2">
-                  <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
+                <div className="text-left mb-2">
+                  <div className="text-[35px] font-bold text-white mb-2">
                     {getEntryTitle(entry)}
                   </div>
                 </div>
