@@ -194,26 +194,7 @@ export default function BlogPost() {
       new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
-    const getEntryTitle = (entryNumber: number) => {
-      if (entryNumber === 1) return '"GO ONE MORE"';
-      if (entryNumber === 2) return 'Marathon Training Tip for HOT long runs';
-      if (entryNumber === 3) return 'Equipmentless Leg Strength Training Day with basic Calisthenics';
-      return `"ENTRY ${entryNumber}"`;
-    };
 
-    const getEntrySubtitle = (entryNumber: number) => {
-      if (entryNumber === 1) return '-Nick Bare';
-      if (entryNumber === 2) return '-Training Entry #2';
-      if (entryNumber === 3) return '-Training Entry #3';
-      return `-Training Entry #${entryNumber}`;
-    };
-
-    const getWorkoutType = (entryNumber: number) => {
-      if (entryNumber === 1) return 'Long Run';
-      if (entryNumber === 2) return 'Training';
-      if (entryNumber === 3) return 'Strength';
-      return 'Training';
-    };
 
     const isRunEntry = (entryNumber: number) => {
       // Only Entry #1 is an actual run with metrics
@@ -259,30 +240,30 @@ export default function BlogPost() {
         <div className="container mx-auto px-4" style={{ paddingTop: '0px', paddingBottom: '25px' }}>
           <div className="max-w-4xl mx-auto space-y-12">
             {sortedEntries.map((entry, index) => (
-              <div key={entry.id}>
+              <div key={entry.entryNumber || index}>
                 {/* Entry Header */}
                 <div className="text-center mb-2">
                   <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
-                    {getEntryTitle(entry.entryNumber)}
+                    {entry.title}
                   </div>
                   <div className="text-lg md:text-xl text-gray-300">
-                    {getEntrySubtitle(entry.entryNumber)}
+                    {entry.subtitle}
                   </div>
                 </div>
                 
                 {/* Training Metrics - Only show for actual run entries */}
-                {isRunEntry(entry.entryNumber) && (
+                {isRunEntry(entry.entryNumber) && entry.metrics && (
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-6" style={{ marginBottom: '25px' }}>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#94D600]">{entry.distance || (entry.entryNumber === 2 ? '15.0 miles' : '19.00 miles')}</div>
+                      <div className="text-2xl font-bold text-[#94D600]">{entry.metrics.distance}</div>
                       <div className="text-sm text-gray-300">Distance</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#94D600]">{entry.pace || (entry.entryNumber === 2 ? '7:45/mile' : '8:22/mile')}</div>
+                      <div className="text-2xl font-bold text-[#94D600]">{entry.metrics.pace}</div>
                       <div className="text-sm text-gray-300">Pace</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#94D600]">{entry.time || (entry.entryNumber === 2 ? '1h 56m' : '2h 38m')}</div>
+                      <div className="text-2xl font-bold text-[#94D600]">{entry.metrics.time}</div>
                       <div className="text-sm text-gray-300">Time</div>
                     </div>
                   </div>
@@ -292,7 +273,7 @@ export default function BlogPost() {
                 <div className="flex justify-between items-center text-sm text-gray-300 mb-6">
                   <div>Training Log Entry #{entry.entryNumber}</div>
                   <div className="text-[#94D600]">{formatTrainingDate(entry.date)}</div>
-                  <div>Workout Type: <span className="text-[#94D600]">{getWorkoutType(entry.entryNumber)}</span></div>
+                  <div>Workout Type: <span className="text-[#94D600]">{entry.workoutType}</span></div>
                 </div>
                 
                 
@@ -308,6 +289,43 @@ export default function BlogPost() {
                       }} 
                     />
                   </div>
+                  
+                  {/* YouTube Video Embed */}
+                  {entry.videoUrl && (
+                    <div className="mt-6">
+                      <div className="relative w-full aspect-video rounded-lg overflow-hidden">
+                        <iframe
+                          src={entry.videoUrl.replace('youtu.be/', 'youtube.com/embed/').replace('watch?v=', 'embed/')}
+                          title="Training Video"
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          className="absolute inset-0 w-full h-full"
+                        ></iframe>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Gallery Images */}
+                  {entry.images && entry.images.length > 0 && (
+                    <div className="mt-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {entry.images.map((image, imageIndex) => (
+                          <div key={imageIndex} className="relative group cursor-pointer">
+                            <img
+                              src={image}
+                              alt={`Training log image ${imageIndex + 1}`}
+                              className="w-full h-64 object-cover rounded-lg transition-transform duration-300 hover:scale-105"
+                              onClick={() => {
+                                setLightboxImage(image);
+                                setLightboxOpen(true);
+                              }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Separator between entries (not after the last one) */}
