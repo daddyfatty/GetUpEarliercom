@@ -26,19 +26,18 @@ export function ElementEditor({ enabled = false }: ElementEditorProps) {
           return;
         }
         
-        // Only target div elements
-        if (target.tagName.toLowerCase() === 'div') {
+        // Find the nearest div element (could be the clicked element or its parent)
+        const nearestDiv = target.closest('div');
+        if (nearestDiv) {
           e.preventDefault();
           e.stopPropagation();
           
-          // Add a small delay to prevent flickering
-          setTimeout(() => {
-            setSelectedElement(target);
-            setEditorPosition({ 
-              x: Math.min(e.clientX, window.innerWidth - 320), 
-              y: Math.max(e.clientY - 200, 10) 
-            });
-          }, 50);
+          console.log('Selected element:', nearestDiv);
+          setSelectedElement(nearestDiv);
+          setEditorPosition({ 
+            x: Math.min(e.clientX, window.innerWidth - 320), 
+            y: Math.max(e.clientY - 200, 10) 
+          });
         }
       };
       
@@ -56,29 +55,43 @@ export function ElementEditor({ enabled = false }: ElementEditorProps) {
 
   const updateElementStyle = (property: string, value: string) => {
     if (selectedElement) {
+      console.log(`Applying ${property}: ${value} to element:`, selectedElement);
       selectedElement.style.setProperty(property, value, 'important');
       // Force a repaint to ensure the style sticks
       selectedElement.offsetHeight;
+      
+      // Also update any existing inline styles
+      if (selectedElement.hasAttribute('style')) {
+        const currentStyle = selectedElement.getAttribute('style') || '';
+        if (!currentStyle.includes(property)) {
+          selectedElement.setAttribute('style', currentStyle + `; ${property}: ${value} !important`);
+        }
+      }
     }
   };
 
   const addPadding = (amount: string) => {
+    console.log('Adding padding:', amount);
     updateElementStyle('padding', amount);
   };
 
   const addMargin = (amount: string) => {
+    console.log('Adding margin:', amount);
     updateElementStyle('margin', amount);
   };
 
   const setBackgroundColor = (color: string) => {
+    console.log('Setting background color:', color);
     updateElementStyle('background-color', color);
   };
 
   const setBorderRadius = (radius: string) => {
+    console.log('Setting border radius:', radius);
     updateElementStyle('border-radius', radius);
   };
 
   const setBorder = (border: string) => {
+    console.log('Setting border:', border);
     updateElementStyle('border', border);
   };
 
