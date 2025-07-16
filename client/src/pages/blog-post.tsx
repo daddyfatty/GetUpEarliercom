@@ -305,7 +305,7 @@ export default function BlogPost() {
                     {/* Render images if any */}
                     {entry.images && entry.images.length > 0 && (
                       <div className="mt-6">
-                        <div className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 masonry">
                           {entry.images.map((imageSrc, imgIndex) => (
                             <div 
                               key={imgIndex}
@@ -318,8 +318,7 @@ export default function BlogPost() {
                               <img
                                 src={imageSrc}
                                 alt={`Training log photo ${imgIndex + 1}`}
-                                className="w-full h-auto object-cover rounded-lg max-w-full"
-                                style={{ maxHeight: '80vh' }}
+                                className="w-full h-auto object-cover rounded-lg"
                               />
                               <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center rounded-lg">
                                 <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
@@ -344,17 +343,18 @@ export default function BlogPost() {
         </div>
         {/* Lightbox Modal */}
         {lightboxOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4" onClick={() => setLightboxOpen(false)}>
-            <div className="relative max-w-4xl max-h-full" onClick={(e) => e.stopPropagation()}>
+          <div className="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center z-50 p-2" onClick={() => setLightboxOpen(false)}>
+            <div className="relative w-full h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
               <img
                 src={lightboxImage}
                 alt="Training log photo"
-                className="max-w-full max-h-full object-contain rounded-lg"
+                className="max-w-full max-h-full object-contain"
+                style={{ maxWidth: '95vw', maxHeight: '95vh' }}
               />
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute top-2 right-2 text-white hover:bg-black hover:bg-opacity-50"
+                className="absolute top-4 right-4 text-white hover:bg-black hover:bg-opacity-50"
                 onClick={() => setLightboxOpen(false)}
               >
                 <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
