@@ -14,9 +14,13 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
     const amazonLinkRegex = /<span(?:\s+class="amazon-link")?\s*data-url="([^"]+)">([^<]+)<\/span>/g;
     const galleryRegex = /<div class="gallery-grid">([\s\S]*?)<\/div>/g;
     
-    // Function to convert URLs to clickable links
+    // Function to convert URLs to clickable links (only for plain text content)
     const convertUrlsToLinks = (text: string) => {
-      const urlRegex = /(https?:\/\/[^\s<>"]+)/g;
+      // Only process if the text doesn't contain HTML tags (simple check)
+      if (text.includes('<') && text.includes('>')) {
+        return text; // Return unchanged if it contains HTML
+      }
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
       return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">$1</a>');
     };
     
