@@ -20,8 +20,8 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
       if (text.includes('<') || text.includes('>')) {
         return text; // Return unchanged if it contains HTML
       }
-      // Very conservative URL replacement - only match standalone URLs
-      const urlRegex = /^(https?:\/\/[^\s]+)$/gm;
+      // Match URLs that appear after text or on their own lines
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
       return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">$1</a>');
     };
     
