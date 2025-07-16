@@ -6,7 +6,7 @@ import { ArrowLeft, Clock, User, Calendar, Edit, Play, Expand } from "lucide-rea
 import { HeroGradient } from "@/components/hero-gradient";
 import { BlogContentRenderer } from "@/components/blog-content-renderer";
 import { SimpleElementEditor } from "@/components/simple-element-editor";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 
@@ -50,7 +50,6 @@ export default function BlogPost() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string>("");
   const [elementEditorEnabled, setElementEditorEnabled] = useState(false);
-
 
   const { data: post, isLoading, error } = useQuery<BlogPost>({
     queryKey: ["/api/blog/slug", slug],
@@ -120,6 +119,79 @@ export default function BlogPost() {
     },
     enabled: isTrainingLogEntry
   });
+
+  // Function to update meta tags for social sharing
+  const updateMetaTags = (post: BlogPost) => {
+    const baseUrl = window.location.origin;
+    const pageUrl = `${baseUrl}/blog/${post.slug}`;
+    
+    // Define the featured image URL - use Hartford Marathon image for training log
+    let featuredImageUrl = '';
+    if (post.slug === 'hartford-marathon-training-log-2025') {
+      featuredImageUrl = `${baseUrl}/hartford-marathon-2024-start_1752664876322.jpg`;
+    } else if (post.imageUrl) {
+      featuredImageUrl = post.imageUrl.startsWith('http') ? post.imageUrl : `${baseUrl}${post.imageUrl}`;
+    }
+
+    // Update or create meta tags
+    const updateMetaTag = (property: string, content: string) => {
+      let meta = document.querySelector(`meta[property="${property}"]`) || 
+                 document.querySelector(`meta[name="${property}"]`);
+      if (!meta) {
+        meta = document.createElement('meta');
+        if (property.startsWith('og:') || property.startsWith('twitter:')) {
+          meta.setAttribute('property', property);
+        } else {
+          meta.setAttribute('name', property);
+        }
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', content);
+    };
+
+    // Basic meta tags
+    updateMetaTag('description', post.excerpt);
+    updateMetaTag('author', post.author);
+    
+    // Open Graph tags
+    updateMetaTag('og:title', post.title);
+    updateMetaTag('og:description', post.excerpt);
+    updateMetaTag('og:url', pageUrl);
+    updateMetaTag('og:type', 'article');
+    updateMetaTag('og:site_name', 'Get Up Earlier');
+    
+    if (featuredImageUrl) {
+      updateMetaTag('og:image', featuredImageUrl);
+      updateMetaTag('og:image:width', '1200');
+      updateMetaTag('og:image:height', '630');
+      updateMetaTag('og:image:alt', post.title);
+    }
+    
+    // Twitter Card tags
+    updateMetaTag('twitter:card', 'summary_large_image');
+    updateMetaTag('twitter:title', post.title);
+    updateMetaTag('twitter:description', post.excerpt);
+    if (featuredImageUrl) {
+      updateMetaTag('twitter:image', featuredImageUrl);
+    }
+    
+    // LinkedIn specific
+    updateMetaTag('linkedin:title', post.title);
+    updateMetaTag('linkedin:description', post.excerpt);
+    if (featuredImageUrl) {
+      updateMetaTag('linkedin:image', featuredImageUrl);
+    }
+    
+    // Update page title
+    document.title = `${post.title} | Get Up Earlier`;
+  };
+
+  // Update meta tags when post data changes
+  useEffect(() => {
+    if (post) {
+      updateMetaTags(post);
+    }
+  }, [post]);
 
   const formatDate = (dateString: string) => {
     try {
