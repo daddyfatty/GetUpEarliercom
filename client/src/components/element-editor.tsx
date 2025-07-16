@@ -15,19 +15,26 @@ export function ElementEditor() {
       const handleClick = (e: MouseEvent) => {
         const target = e.target as HTMLElement;
         
-        // Don't interfere with editor toolbar clicks
-        if (target.closest('.element-editor-toolbar')) return;
+        // Don't interfere with editor toolbar clicks or buttons
+        if (target.closest('.element-editor-toolbar') || 
+            target.closest('button') || 
+            target.closest('[role="button"]')) {
+          return;
+        }
         
         // Only target div elements
         if (target.tagName.toLowerCase() === 'div') {
           e.preventDefault();
           e.stopPropagation();
           
-          setSelectedElement(target);
-          setEditorPosition({ 
-            x: Math.min(e.clientX, window.innerWidth - 320), 
-            y: Math.max(e.clientY - 200, 10) 
-          });
+          // Add a small delay to prevent flickering
+          setTimeout(() => {
+            setSelectedElement(target);
+            setEditorPosition({ 
+              x: Math.min(e.clientX, window.innerWidth - 320), 
+              y: Math.max(e.clientY - 200, 10) 
+            });
+          }, 50);
         }
       };
       
@@ -35,13 +42,16 @@ export function ElementEditor() {
       
       return () => {
         document.removeEventListener('click', handleClick, true);
+        document.body.classList.remove('element-editor-mode');
       };
     }
   }, []);
 
   const updateElementStyle = (property: string, value: string) => {
     if (selectedElement) {
-      selectedElement.style.setProperty(property, value);
+      selectedElement.style.setProperty(property, value, 'important');
+      // Force a repaint to ensure the style sticks
+      selectedElement.offsetHeight;
     }
   };
 
@@ -69,11 +79,14 @@ export function ElementEditor() {
   if (selectedElement) {
     return (
       <div
-        className="element-editor-toolbar fixed z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg p-4 min-w-[300px] pt-[0px] pb-[0px]"
+        className="element-editor-toolbar fixed z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-xl p-4 min-w-[300px]"
         style={{
           left: editorPosition.x,
           top: editorPosition.y,
+          pointerEvents: 'auto',
         }}
+        onMouseDown={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
           <Badge variant="outline" className="text-xs">
