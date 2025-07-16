@@ -14,6 +14,12 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
     const amazonLinkRegex = /<span(?:\s+class="amazon-link")?\s*data-url="([^"]+)">([^<]+)<\/span>/g;
     const galleryRegex = /<div class="gallery-grid">([\s\S]*?)<\/div>/g;
     
+    // Function to convert URLs to clickable links
+    const convertUrlsToLinks = (text: string) => {
+      const urlRegex = /(https?:\/\/[^\s<>"]+)/g;
+      return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">$1</a>');
+    };
+    
     // Find all Amazon links
     const amazonMatches = [];
     let match;
@@ -69,7 +75,7 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
             <div 
               key={`content-${lastIndex}`}
               className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
-              dangerouslySetInnerHTML={{ __html: beforeContent.replace(/\n/g, '<br>') }}
+              dangerouslySetInnerHTML={{ __html: convertUrlsToLinks(beforeContent.replace(/\n/g, '<br>')) }}
             />
           );
         }
@@ -115,7 +121,7 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
           <div 
             key={`remaining-${lastIndex}`}
             className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
-            dangerouslySetInnerHTML={{ __html: remainingContent.replace(/\n/g, '<br>') }}
+            dangerouslySetInnerHTML={{ __html: convertUrlsToLinks(remainingContent.replace(/\n/g, '<br>')) }}
           />
         );
       }
@@ -126,7 +132,7 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
       return (
         <div 
           className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
-          dangerouslySetInnerHTML={{ __html: content.replace(/\n/g, '<br>') }}
+          dangerouslySetInnerHTML={{ __html: convertUrlsToLinks(content.replace(/\n/g, '<br>')) }}
         />
       );
     }
