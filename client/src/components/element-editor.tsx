@@ -69,7 +69,7 @@ export function ElementEditor() {
   if (selectedElement) {
     return (
       <div
-        className="element-editor-toolbar fixed z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg p-4 min-w-[300px]"
+        className="element-editor-toolbar fixed z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg p-4 min-w-[300px] pt-[0px] pb-[0px]"
         style={{
           left: editorPosition.x,
           top: editorPosition.y,
@@ -89,7 +89,6 @@ export function ElementEditor() {
             <X className="h-4 w-4" />
           </Button>
         </div>
-
         <div className="space-y-3">
           {/* Padding Controls */}
           <div>
