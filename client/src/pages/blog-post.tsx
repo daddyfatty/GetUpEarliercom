@@ -266,7 +266,7 @@ export default function BlogPost() {
                 
                 {/* Entry Info Bar */}
                 <div className="flex justify-between items-center text-sm text-gray-300 mb-6">
-                  <div>Training Log Entry #1</div>
+                  <div>Training Log Entry #2</div>
                   <div className="text-[#94D600]">{formatTrainingDate(entry.date)}</div>
                   <div>Workout Type: <span className="text-[#94D600]">{getWorkoutType(entry.entryNumber)}</span></div>
                 </div>
