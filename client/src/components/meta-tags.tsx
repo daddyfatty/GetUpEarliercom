@@ -10,7 +10,7 @@ interface MetaTagsProps {
   publishedTime?: string;
   modifiedTime?: string;
   section?: string;
-  tags?: string[];
+  tags?: string[] | string;
 }
 
 export function MetaTags({

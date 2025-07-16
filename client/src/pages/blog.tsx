@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { MetaTags } from "@/components/meta-tags";
 import { Search, Clock, User, ArrowRight, Play, Edit, ChevronDown, Grid3X3 } from "lucide-react";
 
 interface BlogPost {
@@ -120,6 +121,14 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <MetaTags
+        title="Get Up Earlier Blog - Health & Fitness Insights"
+        description="Discover expert health and fitness insights from certified trainers and coaches. Learn about nutrition, strength training, running, yoga, and achieving your wellness goals."
+        url="/blog"
+        type="website"
+        author="Michael Baker"
+        section="Blog"
+      />
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12">

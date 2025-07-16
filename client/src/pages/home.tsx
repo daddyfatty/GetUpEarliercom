@@ -6,6 +6,7 @@ import { CredentialsBand } from "@/components/credentials-band";
 import { ClientReviews } from "@/components/client-reviews";
 import { GoogleReviews } from "@/components/google-reviews";
 import { Button } from "@/components/ui/button";
+import { MetaTags } from "@/components/meta-tags";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Clock, TrendingUp, Users, Star, ChefHat, Dumbbell, ArrowRight, Calendar, Target, MapPin, BookOpen, ExternalLink } from "lucide-react";
@@ -103,6 +104,14 @@ export default function Home() {
 
   return (
     <div className="w-full">
+      <MetaTags
+        title="Get Up Earlier - Strength, Nutrition & Accountability Coaching"
+        description="Transform your lifestyle with expert personal training, nutrition coaching, and accountability services. Get stronger, healthier, and more confident with Michael Baker's proven coaching methods."
+        url="/"
+        type="website"
+        author="Michael Baker"
+        section="Home"
+      />
       <HeroSection />
       {/* Four-Card Two-Column Section */}
       <section className="py-12 bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white">
