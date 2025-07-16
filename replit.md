@@ -87,7 +87,7 @@ The database schema includes:
 
 ## Hartford Marathon Training Log Workflow
 
-### Adding New Training Log Entries
+### Complete Training Log Entry Process
 
 **IMPORTANT**: The Hartford Marathon Training Log is a single continuous page where new entries are added to the TOP, pushing older entries down. Each entry is a complete block with these exact characteristics:
 
@@ -101,6 +101,7 @@ The database schema includes:
    - Pace (e.g., "8:22/mile") 
    - Time (e.g., "2h 38m")
    - All values displayed in green (#94D600) with white labels
+   - Only shows for actual run entries (not training tips)
 
 3. **Entry Info Bar** (Gray text on blue background):
    - "Training Log Entry #X" (left side)
@@ -111,20 +112,46 @@ The database schema includes:
    - User's authentic training log text (never rewrite)
    - Gallery images in masonry layout with lightbox functionality
    - Amazon product links with rich previews
+   - YouTube and website URLs automatically converted to clickable links
 
 #### Database Update Process
-- Use SQL to update the existing training_log_entries record
-- Content must preserve authentic user text exactly as provided
-- Images stored in images array field as JSON
-- Entry numbers increment for each new entry
-- New entries automatically appear at top due to date sorting
+```sql
+-- Update existing training log entry by adding new entry to top of entries array
+UPDATE training_log_entries 
+SET content = jsonb_set(
+  content,
+  '{entries}',
+  jsonb_build_array(
+    jsonb_build_object(
+      'entryNumber', [NEW_ENTRY_NUMBER],
+      'title', '[BIG_TITLE_IN_QUOTES]',
+      'subtitle', '[SUBTITLE_WITH_ATTRIBUTION]',
+      'date', '[FULL_DATE_STRING]',
+      'workoutType', '[WORKOUT_TYPE]',
+      'metrics', [METRICS_OBJECT_OR_NULL],
+      'content', '[AUTHENTIC_USER_TEXT]',
+      'videoUrl', '[YOUTUBE_URL_OR_NULL]',
+      'images', '[ARRAY_OF_IMAGE_PATHS]'
+    )
+  ) || (content->'entries')
+)
+WHERE slug = 'hartford-marathon-training-log-2025';
+```
+
+#### Content Formatting Guidelines
+- **Plain Text**: Preserve exactly as provided by user
+- **URLs**: Format as plain text - system auto-converts to clickable links
+- **Amazon Links**: Format as `<span class="amazon-link" data-url="[URL]">[PRODUCT_NAME]</span>`
+- **Images**: Store as array of paths in `images` field
+- **Line Breaks**: Use `\n` - system converts to `<br>` tags
 
 #### Visual Specifications
 - Hartford Marathon blue (#0039A6) for headers and backgrounds
 - Green accent color (#94D600) for highlights and key information
 - Proper spacing and typography matching established design
-- Lightbox functionality for all images
+- Lightbox functionality for all images (95vh/95vw for fullscreen viewing)
 - Amazon product link integration with rich previews
+- Masonry gallery layout (1/2/3 columns) maintaining aspect ratios
 
 #### Technical Implementation
 - Single database record updated via SQL, not separate posts
@@ -132,6 +159,8 @@ The database schema includes:
 - Newest entries appear first (sorted by date descending)
 - Each entry maintains complete template structure
 - Seamless integration with existing blog system under training log categories
+- BlogContentRenderer handles URL conversion, Amazon links, and image galleries
+- Lightbox system for fullscreen image viewing
 
 ## Changelog
 
