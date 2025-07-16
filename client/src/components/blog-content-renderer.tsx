@@ -103,13 +103,13 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
         let gridClass = "";
         
         if (imageCount === 1) {
-          gridClass = "grid grid-cols-1 gap-4";
+          gridClass = "grid grid-cols-1 gap-4 w-full";
         } else if (imageCount === 2) {
-          gridClass = "grid grid-cols-2 gap-4";
+          gridClass = "grid grid-cols-2 gap-4 w-full";
         } else if (imageCount === 3) {
-          gridClass = "grid grid-cols-3 gap-4";
+          gridClass = "grid grid-cols-3 gap-4 w-full";
         } else if (imageCount >= 4) {
-          gridClass = "grid grid-cols-2 gap-4";
+          gridClass = "grid grid-cols-2 gap-4 w-full";
         }
         
         parts.push(
@@ -117,7 +117,7 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
             {match.images.map((image, imgIndex) => (
               <div 
                 key={`gallery-img-${imgIndex}`}
-                className="rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative"
+                className="rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative w-full"
                 onClick={() => onImageClick && onImageClick(image.src)}
               >
                 <img
