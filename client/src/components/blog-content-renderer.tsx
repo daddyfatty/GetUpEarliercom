@@ -76,11 +76,13 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
       if (match.start > lastIndex) {
         const beforeContent = content.substring(lastIndex, match.start);
         if (beforeContent.trim()) {
+          // Convert URLs first, then handle line breaks
+          const processedContent = convertUrlsToLinks(beforeContent).replace(/\n/g, '<br>');
           parts.push(
             <div 
               key={`content-${lastIndex}`}
               className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
-              dangerouslySetInnerHTML={{ __html: convertUrlsToLinks(beforeContent.replace(/\n/g, '<br>')) }}
+              dangerouslySetInnerHTML={{ __html: processedContent }}
             />
           );
         }
@@ -122,11 +124,13 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
     if (lastIndex < content.length) {
       const remainingContent = content.substring(lastIndex);
       if (remainingContent.trim()) {
+        // Convert URLs first, then handle line breaks
+        const processedContent = convertUrlsToLinks(remainingContent).replace(/\n/g, '<br>');
         parts.push(
           <div 
             key={`remaining-${lastIndex}`}
             className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
-            dangerouslySetInnerHTML={{ __html: convertUrlsToLinks(remainingContent.replace(/\n/g, '<br>')) }}
+            dangerouslySetInnerHTML={{ __html: processedContent }}
           />
         );
       }
@@ -134,10 +138,12 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
     
     // If no special content found, render the original content
     if (parts.length === 0) {
+      // Convert URLs first, then handle line breaks
+      const processedContent = convertUrlsToLinks(content).replace(/\n/g, '<br>');
       return (
         <div 
           className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
-          dangerouslySetInnerHTML={{ __html: convertUrlsToLinks(content.replace(/\n/g, '<br>')) }}
+          dangerouslySetInnerHTML={{ __html: processedContent }}
         />
       );
     }
