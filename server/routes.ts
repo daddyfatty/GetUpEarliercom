@@ -518,7 +518,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/training-log", async (req, res) => {
     try {
       const entries = await storage.getAllTrainingLogEntries();
-      res.json(entries);
+      
+      // Parse JSON content for Hartford Marathon Training Log entries
+      const processedEntries = entries.map(entry => {
+        if (entry.title === 'Hartford Marathon Training Log 2025' && entry.content) {
+          try {
+            const parsedContent = JSON.parse(entry.content);
+            if (parsedContent.entries && Array.isArray(parsedContent.entries)) {
+              // Return individual entries from the JSON structure
+              return parsedContent.entries.map((subEntry: any) => ({
+                ...entry,
+                ...subEntry,
+                id: `${entry.id}-entry-${subEntry.entryNumber}`,
+                originalId: entry.id
+              }));
+            }
+          } catch (parseError) {
+            console.error('Error parsing training log JSON content:', parseError);
+          }
+        }
+        return entry;
+      }).flat();
+      
+      res.json(processedEntries);
     } catch (error) {
       console.error('Error fetching training log entries:', error);
       res.status(500).json({ error: 'Failed to fetch training log entries' });
@@ -546,6 +568,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!entry) {
         return res.status(404).json({ error: 'Training log entry not found' });
       }
+      
+      // Parse JSON content for Hartford Marathon Training Log entries
+      if (entry.title === 'Hartford Marathon Training Log 2025' && entry.content) {
+        try {
+          const parsedContent = JSON.parse(entry.content);
+          if (parsedContent.entries && Array.isArray(parsedContent.entries)) {
+            // Return the entry with parsed entries structure
+            res.json({
+              ...entry,
+              entries: parsedContent.entries
+            });
+            return;
+          }
+        } catch (parseError) {
+          console.error('Error parsing training log JSON content:', parseError);
+        }
+      }
+      
       res.json(entry);
     } catch (error) {
       console.error('Error fetching training log entry by slug:', error);

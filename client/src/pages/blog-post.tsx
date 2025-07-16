@@ -188,36 +188,36 @@ export default function BlogPost() {
 
 
   // Training Log Template
-  if (isTrainingLogEntry && allTrainingLogEntries) {
-    // Sort entries by date (newest first)
-    const sortedEntries = [...allTrainingLogEntries].sort((a, b) => 
+  if (isTrainingLogEntry && trainingLogEntry?.entries) {
+    // Use the parsed entries from the training log entry
+    const sortedEntries = [...trainingLogEntry.entries].sort((a, b) => 
       new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
     const getEntryTitle = (entryNumber: number) => {
       if (entryNumber === 1) return '"GO ONE MORE"';
       if (entryNumber === 2) return 'Marathon Training Tip for HOT long runs';
-      if (entryNumber === 3) return '"GO ONE MORE"';
+      if (entryNumber === 3) return 'Equipmentless Leg Strength Training Day with basic Calisthenics';
       return `"ENTRY ${entryNumber}"`;
     };
 
     const getEntrySubtitle = (entryNumber: number) => {
       if (entryNumber === 1) return '-Nick Bare';
       if (entryNumber === 2) return '-Training Entry #2';
-      if (entryNumber === 3) return '-Nick Bare';
+      if (entryNumber === 3) return '-Training Entry #3';
       return `-Training Entry #${entryNumber}`;
     };
 
     const getWorkoutType = (entryNumber: number) => {
       if (entryNumber === 1) return 'Long Run';
       if (entryNumber === 2) return 'Training';
-      if (entryNumber === 3) return 'Training';
+      if (entryNumber === 3) return 'Strength';
       return 'Training';
     };
 
     const isRunEntry = (entryNumber: number) => {
-      // Only Entry #1 and #3 are actual runs with metrics
-      return entryNumber === 1 || entryNumber === 3;
+      // Only Entry #1 is an actual run with metrics
+      return entryNumber === 1;
     };
 
     return (
@@ -290,7 +290,7 @@ export default function BlogPost() {
                 
                 {/* Entry Info Bar */}
                 <div className="flex justify-between items-center text-sm text-gray-300 mb-6">
-                  <div>Training Log Entry #2</div>
+                  <div>Training Log Entry #{entry.entryNumber}</div>
                   <div className="text-[#94D600]">{formatTrainingDate(entry.date)}</div>
                   <div>Workout Type: <span className="text-[#94D600]">{getWorkoutType(entry.entryNumber)}</span></div>
                 </div>
