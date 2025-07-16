@@ -151,7 +151,11 @@ WHERE slug = 'hartford-marathon-training-log-2025';
 - Proper spacing and typography matching established design
 - Lightbox functionality for all images (95vh/95vw for fullscreen viewing)
 - Amazon product link integration with rich previews
-- Masonry gallery layout (1/2/3 columns) maintaining aspect ratios
+- Intelligent image gallery layout based on count:
+  - 1 image: Single column (full width)
+  - 2 images: Two columns (side by side)
+  - 3 images: Three columns (equal width)
+  - 4+ images: Two columns, two rows (grid layout)
 
 #### Technical Implementation
 - Single database record updated via SQL, not separate posts
@@ -162,10 +166,21 @@ WHERE slug = 'hartford-marathon-training-log-2025';
 - BlogContentRenderer handles URL conversion, Amazon links, and image galleries
 - Lightbox system for fullscreen image viewing
 
+#### Image Handling for Training Log & Blog Posts
+**Gallery Layout Rules (applies to both training log entries and blog posts):**
+- 1 image: Single column layout (full width)
+- 2 images: Two columns side by side (equal width)
+- 3 images: Three columns (equal width)
+- 4+ images: Two columns, two rows (grid layout)
+
+**Implementation:** BlogContentRenderer automatically detects image count and applies appropriate CSS grid classes for optimal space utilization and visual balance.
+
 ## Changelog
 
 ```
 Changelog:
+- July 16, 2025: Implemented intelligent image gallery layout system - 1 image uses single column, 2 images use two columns side by side, 3 images use three columns, 4+ images use two columns two rows grid; updated BlogContentRenderer and documented image handling rules for both training log entries and blog posts
+- July 16, 2025: Updated training log entry titles to left-justified 35px font size for consistent, structured appearance across all entries
 - July 16, 2025: Created Training Log Entry #4 "Recovery Run" (July 13, 2025) - 7.50 mile recovery run through Orange, CT with Strava data screenshots and route map; entry displays at top of training log with proper metrics, content formatting, and image gallery integration
 - July 16, 2025: Fixed URL conversion in BlogContentRenderer - URLs now properly convert to clickable links by processing before HTML conversion; fixed order of operations to prevent HTML interference with URL regex matching
 - July 16, 2025: Fixed Amazon product link processing globally across all content types - completely rebuilt BlogContentRenderer to properly handle Amazon links and galleries in correct order; Amazon links now display as rich preview cards with images, prices, and ratings consistently across blog posts, training log entries, and all other content throughout the site

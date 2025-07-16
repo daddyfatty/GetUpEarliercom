@@ -98,12 +98,26 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
           />
         );
       } else if (match.type === 'gallery') {
+        // Determine grid layout based on image count
+        const imageCount = match.images.length;
+        let gridClass = "";
+        
+        if (imageCount === 1) {
+          gridClass = "grid grid-cols-1 gap-4";
+        } else if (imageCount === 2) {
+          gridClass = "grid grid-cols-2 gap-4";
+        } else if (imageCount === 3) {
+          gridClass = "grid grid-cols-3 gap-4";
+        } else if (imageCount >= 4) {
+          gridClass = "grid grid-cols-2 gap-4";
+        }
+        
         parts.push(
-          <div key={`gallery-${match.start}`} className="columns-1 md:columns-2 lg:columns-3 gap-4 my-8">
+          <div key={`gallery-${match.start}`} className={`${gridClass} my-8`}>
             {match.images.map((image, imgIndex) => (
               <div 
                 key={`gallery-img-${imgIndex}`}
-                className="break-inside-avoid mb-4 rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative"
+                className="rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative"
                 onClick={() => onImageClick && onImageClick(image.src)}
               >
                 <img
