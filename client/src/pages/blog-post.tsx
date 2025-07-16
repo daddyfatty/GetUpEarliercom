@@ -49,7 +49,7 @@ export default function BlogPost() {
   const { slug } = useParams();
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string>("");
-  const [elementEditorEnabled, setElementEditorEnabled] = useState(false);
+
 
   const { data: post, isLoading, error } = useQuery<BlogPost>({
     queryKey: ["/api/blog/slug", slug],
@@ -322,12 +322,7 @@ export default function BlogPost() {
         )}
         
         {/* Element Editor - Only show in development */}
-        {import.meta.env.DEV && (
-          <ElementEditor 
-            isEnabled={elementEditorEnabled}
-            onToggle={setElementEditorEnabled}
-          />
-        )}
+        {import.meta.env.DEV && <ElementEditor />}
       </div>
     );
   }
@@ -408,14 +403,6 @@ export default function BlogPost() {
                 </Button>
               </Link>
             )}
-            <Button 
-              variant="outline" 
-              className="gap-2"
-              onClick={() => setElementEditorEnabled(!elementEditorEnabled)}
-            >
-              <Edit className="h-4 w-4" />
-              {elementEditorEnabled ? 'Disable' : 'Enable'} Element Editor
-            </Button>
           </div>
         )}
 
@@ -596,12 +583,7 @@ export default function BlogPost() {
       )}
       
       {/* Element Editor - Only show in development */}
-      {import.meta.env.DEV && (
-        <ElementEditor 
-          isEnabled={elementEditorEnabled}
-          onToggle={setElementEditorEnabled}
-        />
-      )}
+      {import.meta.env.DEV && <ElementEditor />}
     </div>
   );
 }
