@@ -68,8 +68,8 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
           parts.push(
             <div 
               key={`content-${lastIndex}`}
-              dangerouslySetInnerHTML={{ __html: beforeContent }}
-              className="text-gray-600 dark:text-gray-400"
+              className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
+              dangerouslySetInnerHTML={{ __html: beforeContent.replace(/\n/g, '<br>') }}
             />
           );
         }
@@ -114,8 +114,8 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
         parts.push(
           <div 
             key={`remaining-${lastIndex}`}
-            dangerouslySetInnerHTML={{ __html: remainingContent }}
-            className="text-gray-600 dark:text-gray-400"
+            className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
+            dangerouslySetInnerHTML={{ __html: remainingContent.replace(/\n/g, '<br>') }}
           />
         );
       }
@@ -125,8 +125,8 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
     if (parts.length === 0) {
       return (
         <div 
-          dangerouslySetInnerHTML={{ __html: content }}
-          className="text-gray-600 dark:text-gray-400"
+          className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
+          dangerouslySetInnerHTML={{ __html: content.replace(/\n/g, '<br>') }}
         />
       );
     }
