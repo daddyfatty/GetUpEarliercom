@@ -137,6 +137,8 @@ The database schema includes:
 
 ```
 Changelog:
+- July 16, 2025: Fixed Amazon product link processing globally across all content types - completely rebuilt BlogContentRenderer to properly handle Amazon links and galleries in correct order; Amazon links now display as rich preview cards with images, prices, and ratings consistently across blog posts, training log entries, and all other content throughout the site
+- July 16, 2025: Successfully implemented global Amazon link functionality in Hartford Marathon Training Log Entry #2 - all three Amazon products (Soft Water Bottle, Double Electrolyte Gels, NUUN tablets) now display with full rich previews including product images, prices, ratings, and Prime status using the same system as blog posts
 - July 15, 2025: Fixed Amazon product preview display in Hartford Marathon Training Log entries - updated BlogContentRenderer regex to properly match data-url span format enabling full rich product previews with images, prices, ratings, and Prime status; Entry #2 now displays complete Amazon product cards for soft water bottle, electrolyte gels, and NUUN tablets
 - July 15, 2025: Implemented conditional training metrics display - blue training metrics bar (distance, pace, time) only shows for actual run entries; Entry #2 "Marathon Training Tip for HOT long runs" displays without metrics bar since it's training advice rather than actual run data
 - July 15, 2025: Added Hartford Marathon Training Log Entry #2 "Marathon Training Tip for HOT long runs" (July 12, 2025) - features frozen water bottle technique with NUUN tablets, displays above Entry #1 in chronological order with proper Hartford Marathon branding and gallery images
