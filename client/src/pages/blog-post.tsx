@@ -246,9 +246,6 @@ export default function BlogPost() {
                   <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
                     {getEntryTitle(entry)}
                   </div>
-                  <div className="text-lg md:text-xl text-gray-300">
-                    {getEntrySubtitle(entry)}
-                  </div>
                 </div>
                 
                 {/* Training Metrics - Only show for actual run entries */}
