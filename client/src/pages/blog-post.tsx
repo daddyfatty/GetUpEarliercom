@@ -185,7 +185,7 @@ export default function BlogPost() {
 
     const getEntryTitle = (entryNumber: number) => {
       if (entryNumber === 1) return '"GO ONE MORE"';
-      if (entryNumber === 2) return '"Marathon Training Tip for HOT long runs"';
+      if (entryNumber === 2) return 'Marathon Training Tip for HOT long runs';
       if (entryNumber === 3) return '"GO ONE MORE"';
       return `"ENTRY ${entryNumber}"`;
     };
