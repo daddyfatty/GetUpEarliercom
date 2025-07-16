@@ -180,35 +180,38 @@ export default function BlogPost() {
 
   // Training Log Template
   if (isTrainingLogEntry && allTrainingLogEntries) {
-    // Sort entries by date (newest first)
-    const sortedEntries = [...allTrainingLogEntries].sort((a, b) => 
-      new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
+    // Parse the JSON content to get individual entries
+    const mainTrainingLog = allTrainingLogEntries.find(entry => entry.slug === 'hartford-marathon-training-log-2025');
+    let parsedEntries = [];
+    
+    if (mainTrainingLog && mainTrainingLog.content) {
+      try {
+        const contentData = JSON.parse(mainTrainingLog.content);
+        parsedEntries = contentData.entries || [];
+      } catch (error) {
+        console.error('Error parsing training log content:', error);
+        parsedEntries = [];
+      }
+    }
+    
+    // Sort entries by entry number (newest first)
+    const sortedEntries = [...parsedEntries].sort((a, b) => b.entryNumber - a.entryNumber);
 
-    const getEntryTitle = (entryNumber: number) => {
-      if (entryNumber === 1) return '"GO ONE MORE"';
-      if (entryNumber === 2) return 'Marathon Training Tip for HOT long runs';
-      if (entryNumber === 3) return '"GO ONE MORE"';
-      return `"ENTRY ${entryNumber}"`;
+    const getEntryTitle = (entry: any) => {
+      return entry.title || `"ENTRY ${entry.entryNumber}"`;
     };
 
-    const getEntrySubtitle = (entryNumber: number) => {
-      if (entryNumber === 1) return '-Nick Bare';
-      if (entryNumber === 2) return '-Training Entry #2';
-      if (entryNumber === 3) return '-Nick Bare';
-      return `-Training Entry #${entryNumber}`;
+    const getEntrySubtitle = (entry: any) => {
+      return entry.subtitle || `-Training Entry #${entry.entryNumber}`;
     };
 
-    const getWorkoutType = (entryNumber: number) => {
-      if (entryNumber === 1) return 'Long Run';
-      if (entryNumber === 2) return 'Training';
-      if (entryNumber === 3) return 'Training';
-      return 'Training';
+    const getWorkoutType = (entry: any) => {
+      return entry.workoutType || 'Training';
     };
 
-    const isRunEntry = (entryNumber: number) => {
-      // Only Entry #1 and #3 are actual runs with metrics
-      return entryNumber === 1 || entryNumber === 3;
+    const isRunEntry = (entry: any) => {
+      // Check if the entry has metrics (distance, pace, time)
+      return entry.metrics && (entry.metrics.distance || entry.metrics.pace || entry.metrics.time);
     };
 
     return (
@@ -237,30 +240,30 @@ export default function BlogPost() {
         <div className="container mx-auto px-4" style={{ paddingTop: '0px', paddingBottom: '25px' }}>
           <div className="max-w-4xl mx-auto space-y-12">
             {sortedEntries.map((entry, index) => (
-              <div key={entry.id}>
+              <div key={entry.entryNumber}>
                 {/* Entry Header */}
                 <div className="text-center mb-2">
                   <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
-                    {getEntryTitle(entry.entryNumber)}
+                    {getEntryTitle(entry)}
                   </div>
                   <div className="text-lg md:text-xl text-gray-300">
-                    {getEntrySubtitle(entry.entryNumber)}
+                    {getEntrySubtitle(entry)}
                   </div>
                 </div>
                 
                 {/* Training Metrics - Only show for actual run entries */}
-                {isRunEntry(entry.entryNumber) && (
+                {isRunEntry(entry) && (
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black bg-opacity-30 rounded-lg p-6" style={{ marginBottom: '25px' }}>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#94D600]">{entry.distance || (entry.entryNumber === 2 ? '15.0 miles' : '19.00 miles')}</div>
+                      <div className="text-2xl font-bold text-[#94D600]">{entry.metrics?.distance || 'N/A'}</div>
                       <div className="text-sm text-gray-300">Distance</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#94D600]">{entry.pace || (entry.entryNumber === 2 ? '7:45/mile' : '8:22/mile')}</div>
+                      <div className="text-2xl font-bold text-[#94D600]">{entry.metrics?.pace || 'N/A'}</div>
                       <div className="text-sm text-gray-300">Pace</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#94D600]">{entry.time || (entry.entryNumber === 2 ? '1h 56m' : '2h 38m')}</div>
+                      <div className="text-2xl font-bold text-[#94D600]">{entry.metrics?.time || 'N/A'}</div>
                       <div className="text-sm text-gray-300">Time</div>
                     </div>
                   </div>
@@ -268,9 +271,9 @@ export default function BlogPost() {
                 
                 {/* Entry Info Bar */}
                 <div className="flex justify-between items-center text-sm text-gray-300 mb-6">
-                  <div>Training Log Entry #2</div>
-                  <div className="text-[#94D600]">{formatTrainingDate(entry.date)}</div>
-                  <div>Workout Type: <span className="text-[#94D600]">{getWorkoutType(entry.entryNumber)}</span></div>
+                  <div>Training Log Entry #{entry.entryNumber}</div>
+                  <div className="text-[#94D600]">{entry.date}</div>
+                  <div>Workout Type: <span className="text-[#94D600]">{getWorkoutType(entry)}</span></div>
                 </div>
                 
                 
@@ -278,13 +281,47 @@ export default function BlogPost() {
                 {/* Entry Content */}
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl pt-[0px] pb-[0px]" style={{ padding: '25px' }}>
                   <div className="prose prose-lg max-w-none dark:prose-invert">
+                    {/* Create content with embedded Amazon links for Entry #2 */}
                     <BlogContentRenderer 
-                      content={entry.content} 
+                      content={entry.entryNumber === 2 ? 
+                        entry.content + '\n\n' + 
+                        'Soft Water Bottle:\n<span class="amazon-link" data-url="https://amzn.to/40xLe8D">Premium Soft Flask - Shrink As You Drink Soft Water Bottle for Hydration Pack - Folding Water Bottle</span>\n\n' +
+                        'Double Electrolyte Gels:\n<span class="amazon-link" data-url="https://amzn.to/4lFpikh">Huma Plus (Double Electrolytes) - Chia Energy Gel, BlackBerry Banana, 12 Gels</span>\n\n' +
+                        'NUUN Tablets:\n<span class="amazon-link" data-url="https://amzn.to/4l5ZjT8">Nuun Sport Electrolyte Tablets with Magnesium, Calcium, Potassium, Chloride & Sodium</span>'
+                        : entry.content
+                      } 
                       onImageClick={(imageSrc) => {
                         setLightboxImage(imageSrc);
                         setLightboxOpen(true);
                       }} 
                     />
+                    
+                    {/* Render images if any */}
+                    {entry.images && entry.images.length > 0 && (
+                      <div className="mt-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 masonry">
+                          {entry.images.map((imageSrc, imgIndex) => (
+                            <div 
+                              key={imgIndex}
+                              className="cursor-pointer hover:shadow-xl transition-shadow group relative"
+                              onClick={() => {
+                                setLightboxImage(imageSrc);
+                                setLightboxOpen(true);
+                              }}
+                            >
+                              <img
+                                src={imageSrc}
+                                alt={`Training log photo ${imgIndex + 1}`}
+                                className="w-full h-auto object-cover rounded-lg"
+                              />
+                              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center rounded-lg">
+                                <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
