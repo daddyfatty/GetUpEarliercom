@@ -10,6 +10,8 @@ interface ElementEditorProps {
 export function ElementEditor({ enabled = false }: ElementEditorProps) {
   const [selectedElement, setSelectedElement] = useState<HTMLElement | null>(null);
   const [editorPosition, setEditorPosition] = useState({ x: 0, y: 0 });
+  const [isEditingText, setIsEditingText] = useState(false);
+  const [originalText, setOriginalText] = useState('');
 
   useEffect(() => {
     // Only enable when explicitly requested
@@ -26,19 +28,33 @@ export function ElementEditor({ enabled = false }: ElementEditorProps) {
           return;
         }
         
-        // Find the nearest div element (could be the clicked element or its parent)
-        const nearestDiv = target.closest('div');
-        if (nearestDiv) {
-          e.preventDefault();
-          e.stopPropagation();
-          
-          console.log('Selected element:', nearestDiv);
-          setSelectedElement(nearestDiv);
-          setEditorPosition({ 
-            x: Math.min(e.clientX, window.innerWidth - 320), 
-            y: Math.max(e.clientY - 200, 10) 
-          });
+        // Find the closest editable element (any element that can be styled)
+        let targetElement = target;
+        
+        // If it's a text node, get its parent element
+        if (target.nodeType === Node.TEXT_NODE) {
+          targetElement = target.parentElement as HTMLElement;
         }
+        
+        // Skip if it's a script, style, or other non-visual element
+        const skipElements = ['script', 'style', 'meta', 'link', 'head', 'title'];
+        if (skipElements.includes(targetElement.tagName.toLowerCase())) {
+          return;
+        }
+        
+        e.preventDefault();
+        e.stopPropagation();
+        
+        console.log('Selected element:', targetElement);
+        setSelectedElement(targetElement);
+        setEditorPosition({ 
+          x: Math.min(e.clientX, window.innerWidth - 320), 
+          y: Math.max(e.clientY - 200, 10) 
+        });
+        
+        // Store original text for editing
+        setOriginalText(targetElement.textContent || '');
+        setIsEditingText(false);
       };
       
       document.addEventListener('click', handleClick, true);
@@ -95,6 +111,42 @@ export function ElementEditor({ enabled = false }: ElementEditorProps) {
     updateElementStyle('border', border);
   };
 
+  const setTextColor = (color: string) => {
+    console.log('Setting text color:', color);
+    updateElementStyle('color', color);
+  };
+
+  const setFontSize = (size: string) => {
+    console.log('Setting font size:', size);
+    updateElementStyle('font-size', size);
+  };
+
+  const setFontWeight = (weight: string) => {
+    console.log('Setting font weight:', weight);
+    updateElementStyle('font-weight', weight);
+  };
+
+  const startTextEdit = () => {
+    if (selectedElement) {
+      setIsEditingText(true);
+      setOriginalText(selectedElement.textContent || '');
+    }
+  };
+
+  const saveTextEdit = (newText: string) => {
+    if (selectedElement) {
+      selectedElement.textContent = newText;
+      setIsEditingText(false);
+    }
+  };
+
+  const cancelTextEdit = () => {
+    if (selectedElement) {
+      selectedElement.textContent = originalText;
+      setIsEditingText(false);
+    }
+  };
+
   // Show the editing toolbar when an element is selected
   if (selectedElement) {
     return (
@@ -123,6 +175,91 @@ export function ElementEditor({ enabled = false }: ElementEditorProps) {
           </Button>
         </div>
         <div className="space-y-3">
+          {/* Text Editing */}
+          {selectedElement && selectedElement.textContent && (
+            <div>
+              <label className="text-sm font-medium mb-2 block">Text Content</label>
+              {isEditingText ? (
+                <div className="space-y-2">
+                  <textarea
+                    className="w-full p-2 border border-gray-300 rounded text-sm"
+                    value={selectedElement.textContent}
+                    onChange={(e) => {
+                      selectedElement.textContent = e.target.value;
+                    }}
+                    rows={3}
+                  />
+                  <div className="flex gap-2">
+                    <Button size="sm" variant="outline" onClick={() => setIsEditingText(false)}>
+                      Save
+                    </Button>
+                    <Button size="sm" variant="outline" onClick={cancelTextEdit}>
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Button size="sm" variant="outline" onClick={startTextEdit}>
+                  Edit Text
+                </Button>
+              )}
+            </div>
+          )}
+
+          {/* Font Controls */}
+          <div>
+            <label className="text-sm font-medium mb-2 block">Font Size</label>
+            <div className="flex gap-2">
+              <Button size="sm" variant="outline" onClick={() => setFontSize('12px')}>
+                12px
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => setFontSize('16px')}>
+                16px
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => setFontSize('18px')}>
+                18px
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => setFontSize('24px')}>
+                24px
+              </Button>
+            </div>
+          </div>
+
+          {/* Font Weight */}
+          <div>
+            <label className="text-sm font-medium mb-2 block">Font Weight</label>
+            <div className="flex gap-2">
+              <Button size="sm" variant="outline" onClick={() => setFontWeight('normal')}>
+                Normal
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => setFontWeight('bold')}>
+                Bold
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => setFontWeight('600')}>
+                Semi-Bold
+              </Button>
+            </div>
+          </div>
+
+          {/* Text Color */}
+          <div>
+            <label className="text-sm font-medium mb-2 block">Text Color</label>
+            <div className="flex gap-2">
+              <Button size="sm" variant="outline" onClick={() => setTextColor('#000000')}>
+                Black
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => setTextColor('#3b82f6')}>
+                Blue
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => setTextColor('#dc2626')}>
+                Red
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => setTextColor('#16a34a')}>
+                Green
+              </Button>
+            </div>
+          </div>
+
           {/* Padding Controls */}
           <div>
             <label className="text-sm font-medium mb-2 block">Padding</label>
