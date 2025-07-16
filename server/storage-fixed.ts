@@ -285,38 +285,10 @@ export class DatabaseStorage implements IStorage {
   // Blog CMS methods
   async getAllBlogPosts(): Promise<BlogPost[]> {
     try {
-      // Fetch regular blog posts
-      const posts = await db.select().from(blogPosts).orderBy(desc(blogPosts.createdAt));
+      // Only fetch regular blog posts - training log entries should NOT appear in blog feed
+      const posts = await db.select().from(blogPosts).orderBy(desc(blogPosts.publishedDate));
       
-      // Fetch training log entries
-      const trainingEntries = await db.select().from(trainingLogEntries).orderBy(desc(trainingLogEntries.createdAt));
-      
-      // Convert training log entries to blog post format
-      const trainingLogAsBlogPosts = trainingEntries.map(entry => ({
-        id: entry.id,
-        slug: entry.slug,
-        title: entry.title,
-        excerpt: `Training Log Entry #${entry.entryNumber} - ${entry.date}`,
-        content: entry.content,
-        author: "Michael Baker",
-        publishedDate: entry.date,
-        category: "Marathon Training Log",
-        categories: entry.categories,
-        tags: JSON.stringify(entry.categories || []),
-        imageUrl: entry.images && entry.images.length > 0 ? entry.images[0] : undefined,
-        videoUrl: null,
-        readTime: Math.max(1, Math.ceil((entry.content?.length || 0) / 200)),
-        isVideo: false,
-        originalUrl: "",
-        createdAt: entry.createdAt,
-        updatedAt: entry.updatedAt
-      }));
-      
-      // Combine and sort by creation date (newest first)
-      const allPosts = [...posts, ...trainingLogAsBlogPosts];
-      allPosts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-      
-      return allPosts;
+      return posts;
     } catch (error) {
       console.error("Error fetching all blog posts:", error);
       return [];
