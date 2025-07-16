@@ -121,24 +121,13 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
     if (lastIndex < content.length) {
       const remainingContent = content.substring(lastIndex);
       if (remainingContent.trim()) {
-        parts.push(
-          <div 
-            key={`remaining-${lastIndex}`}
-            className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
-            dangerouslySetInnerHTML={{ __html: convertUrlsToLinks(remainingContent.replace(/\n/g, '<br>')) }}
-          />
-        );
+        // Remaining content processing removed
       }
     }
     
     // If no special content found, render the original content
     if (parts.length === 0) {
-      return (
-        <div 
-          className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
-          dangerouslySetInnerHTML={{ __html: convertUrlsToLinks(content.replace(/\n/g, '<br>')) }}
-        />
-      );
+      return null;
     }
 
     return parts;
