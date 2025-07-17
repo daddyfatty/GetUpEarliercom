@@ -24,6 +24,14 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
       const urlRegex = /(https?:\/\/[^\s]+)/g;
       return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">$1</a>');
     };
+
+    // Function to process markdown images
+    const processMarkdownImages = (text: string) => {
+      const markdownImageRegex = /!\[([^\]]*)\]\(([^)]+)\)/g;
+      return text.replace(markdownImageRegex, (match, alt, src) => {
+        return `<img src="${src}" alt="${alt}" class="markdown-image w-full h-auto object-cover rounded-lg my-6 shadow-lg cursor-pointer hover:shadow-xl transition-shadow" />`;
+      });
+    };
     
     // Find all Amazon links
     const amazonMatches = [];
@@ -76,13 +84,20 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
       if (match.start > lastIndex) {
         const beforeContent = content.substring(lastIndex, match.start);
         if (beforeContent.trim()) {
-          // Convert URLs first, then handle line breaks
-          const processedContent = convertUrlsToLinks(beforeContent).replace(/\n/g, '<br>');
+          // Process markdown images first, then URLs, then line breaks
+          const processedContent = processMarkdownImages(convertUrlsToLinks(beforeContent)).replace(/\n/g, '<br>');
           parts.push(
             <div 
               key={`content-${lastIndex}`}
               className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
               dangerouslySetInnerHTML={{ __html: processedContent }}
+              onClick={(e) => {
+                // Handle clicks on markdown images
+                const target = e.target as HTMLImageElement;
+                if (target.tagName === 'IMG' && target.classList.contains('markdown-image')) {
+                  onImageClick && onImageClick(target.src);
+                }
+              }}
             />
           );
         }
@@ -138,13 +153,20 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
     if (lastIndex < content.length) {
       const remainingContent = content.substring(lastIndex);
       if (remainingContent.trim()) {
-        // Convert URLs first, then handle line breaks
-        const processedContent = convertUrlsToLinks(remainingContent).replace(/\n/g, '<br>');
+        // Process markdown images first, then URLs, then line breaks
+        const processedContent = processMarkdownImages(convertUrlsToLinks(remainingContent)).replace(/\n/g, '<br>');
         parts.push(
           <div 
             key={`remaining-${lastIndex}`}
             className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
             dangerouslySetInnerHTML={{ __html: processedContent }}
+            onClick={(e) => {
+              // Handle clicks on markdown images
+              const target = e.target as HTMLImageElement;
+              if (target.tagName === 'IMG' && target.classList.contains('markdown-image')) {
+                onImageClick && onImageClick(target.src);
+              }
+            }}
           />
         );
       }
@@ -152,12 +174,19 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
     
     // If no special content found, render the original content
     if (parts.length === 0) {
-      // Convert URLs first, then handle line breaks
-      const processedContent = convertUrlsToLinks(content).replace(/\n/g, '<br>');
+      // Process markdown images first, then URLs, then line breaks
+      const processedContent = processMarkdownImages(convertUrlsToLinks(content)).replace(/\n/g, '<br>');
       return (
         <div 
           className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
           dangerouslySetInnerHTML={{ __html: processedContent }}
+          onClick={(e) => {
+            // Handle clicks on markdown images
+            const target = e.target as HTMLImageElement;
+            if (target.tagName === 'IMG' && target.classList.contains('markdown-image')) {
+              onImageClick && onImageClick(target.src);
+            }
+          }}
         />
       );
     }

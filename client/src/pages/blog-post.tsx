@@ -608,6 +608,29 @@ export default function BlogPost() {
             </div>
           )}
 
+          {/* Featured Image Section - Show for non-video posts */}
+          {!post.isVideo && post.imageUrl && (
+            <div className="mb-8">
+              <div 
+                className="w-full bg-black rounded-lg overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition-shadow group relative"
+                onClick={() => {
+                  setLightboxImage(post.imageUrl!);
+                  setLightboxOpen(true);
+                }}
+              >
+                <img
+                  src={post.imageUrl}
+                  alt={post.title}
+                  className="w-full h-auto object-cover"
+                  style={{ maxHeight: '600px' }}
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center">
+                  <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Article Content */}
           <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg border border-gray-200 dark:border-gray-700">
             <div className="prose prose-lg max-w-none dark:prose-invert">
