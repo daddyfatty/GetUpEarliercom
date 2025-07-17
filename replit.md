@@ -179,6 +179,7 @@ WHERE slug = 'hartford-marathon-training-log-2025';
 
 ```
 Changelog:
+- July 16, 2025: Fixed training log image display - restored proper image rendering with intelligent grid layout system (1 image=single column, 2 images=two columns full width, 3 images=three columns, 4+ images=two columns two rows); removed conflicting prose constraints and ensured full-width image display in training log entries
 - July 16, 2025: Implemented intelligent image gallery layout system - 1 image uses single column, 2 images use two columns side by side, 3 images use three columns, 4+ images use two columns two rows grid; updated BlogContentRenderer and documented image handling rules for both training log entries and blog posts
 - July 16, 2025: Updated training log entry titles to left-justified 35px font size for consistent, structured appearance across all entries
 - July 16, 2025: Created Training Log Entry #4 "Recovery Run" (July 13, 2025) - 7.50 mile recovery run through Orange, CT with Strava data screenshots and route map; entry displays at top of training log with proper metrics, content formatting, and image gallery integration
