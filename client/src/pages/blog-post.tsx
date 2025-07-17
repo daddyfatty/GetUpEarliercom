@@ -221,7 +221,7 @@ export default function BlogPost() {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-4">
               <div className="flex flex-wrap justify-center gap-2 mb-6">
-                {sortedEntries[0]?.categories?.map((category) => (
+                {post.categories?.map((category) => (
                   <Link key={category} href={`/category/${encodeURIComponent(category)}`}>
                     <Badge variant="outline" className="text-xs bg-[#94D600] text-[#0039A6] border-[#94D600] hover:bg-[#94D600]/80 hover:border-[#94D600]/80 cursor-pointer transition-colors font-semibold">
                       {category}
