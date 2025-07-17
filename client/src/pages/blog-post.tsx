@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Clock, User, Calendar, Edit, Play, Expand } from "lucide-react";
 import { HeroGradient } from "@/components/hero-gradient";
 import { BlogContentRenderer } from "@/components/blog-content-renderer";
-import { ElementEditor } from "@/components/element-editor";
+
 import MarathonCountdown from "@/components/marathon-countdown";
 import { useState, useEffect } from "react";
 
@@ -50,7 +50,7 @@ export default function BlogPost() {
   const { slug } = useParams();
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string>("");
-  const [elementEditorEnabled, setElementEditorEnabled] = useState(false);
+
 
   const { data: post, isLoading, error } = useQuery<BlogPost>({
     queryKey: ["/api/blog/slug", slug],
@@ -428,13 +428,7 @@ export default function BlogPost() {
           </div>
         )}
         
-        {/* Element Editor - Only show in development */}
-        {import.meta.env.DEV && (
-          <ElementEditor 
-            isEnabled={elementEditorEnabled}
-            onToggle={setElementEditorEnabled}
-          />
-        )}
+
       </div>
     );
   }
@@ -504,27 +498,7 @@ export default function BlogPost() {
         </div>
       </HeroGradient>
       <div className="container mx-auto px-4 py-8">
-        {/* Edit Button - Only show in development */}
-        {import.meta.env.DEV && (
-          <div className="mb-8 flex justify-end gap-2">
-            {post && (
-              <Link href={`/blog/${post.id}/edit`}>
-                <Button variant="outline" className="gap-2">
-                  <Edit className="h-4 w-4" />
-                  Edit Post
-                </Button>
-              </Link>
-            )}
-            <Button 
-              variant="outline" 
-              className="gap-2"
-              onClick={() => setElementEditorEnabled(!elementEditorEnabled)}
-            >
-              <Edit className="h-4 w-4" />
-              {elementEditorEnabled ? 'Disable' : 'Enable'} Element Editor
-            </Button>
-          </div>
-        )}
+
 
         {/* Article Content Container */}
         <article className="max-w-4xl mx-auto">
