@@ -76,7 +76,7 @@ export default function CertifiedRunningCoaching() {
                   <img 
                     src="/assets/running-coach-cert-logo.png" 
                     alt="Running Coach Certification" 
-                    className="w-16 h-16 object-contain"
+                    className="w-48 h-48 object-contain"
                   />
                 </div>
               </div>

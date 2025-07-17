@@ -77,7 +77,7 @@ export default function AccountabilityCoaching() {
                   <img 
                     src="/assets/iin-cert-logo.png" 
                     alt="IIN Health Coach Certification" 
-                    className="w-16 h-16 object-contain"
+                    className="w-48 h-48 object-contain"
                   />
                 </div>
               </div>

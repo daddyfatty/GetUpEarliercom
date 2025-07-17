@@ -166,7 +166,7 @@ export function ServicesGrid({
                       <img 
                         src={service.certificationLogo} 
                         alt="Certification"
-                        className={`${service.title === "Virtual Nutrition Coaching" || service.title === "Accountability Coaching" || service.title === "Private Yoga" || service.title === "Small Group Yoga" ? "h-20 w-20" : "h-16 w-auto"} shadow-lg rounded-md bg-white p-1`}
+                        className={`${service.title === "Virtual Nutrition Coaching" || service.title === "Accountability Coaching" || service.title === "Private Yoga" || service.title === "Small Group Yoga" ? "h-60 w-60" : "h-48 w-auto"} shadow-lg rounded-md bg-white p-1`}
                       />
                     </div>
                   ) : (

@@ -79,7 +79,7 @@ export default function PersonalStrengthTraining() {
                   <img 
                     src="/assets/personal-trainer-cert-logo.png" 
                     alt="Personal Trainer Certification" 
-                    className="w-16 h-16 object-contain"
+                    className="w-48 h-48 object-contain"
                   />
                 </div>
               </div>

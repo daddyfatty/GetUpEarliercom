@@ -8,7 +8,7 @@ interface HeroGradientProps {
 
 export function HeroGradient({ children, className }: HeroGradientProps) {
   return (
-    <div className={cn("bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900", className)}>
+    <div className={cn("hero-gradient", className)}>
       {children}
     </div>
   );

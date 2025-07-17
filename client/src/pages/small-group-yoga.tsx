@@ -78,7 +78,7 @@ export default function SmallGroupYoga() {
                   <img 
                     src="/assets/yoga-alliance-cert-logo.png" 
                     alt="Yoga Alliance Certification" 
-                    className="w-16 h-16 object-contain"
+                    className="w-48 h-48 object-contain"
                   />
                 </div>
               </div>

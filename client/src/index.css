@@ -276,8 +276,8 @@ html {
 /* Custom health and fitness theme styles matching GetUpEarlier.com */
 .hero-gradient {
   background: 
-    radial-gradient(ellipse at center bottom, rgba(255, 99, 71, 0.4) 0%, rgba(255, 20, 147, 0.3) 20%, rgba(138, 43, 226, 0.25) 40%, rgba(75, 0, 130, 0.15) 60%, transparent 80%),
-    linear-gradient(-45deg, #020617, #0c1021, #1e1b4b, #030712);
+    radial-gradient(ellipse at center bottom, rgba(255, 140, 0, 0.3) 0%, rgba(255, 165, 0, 0.2) 20%, rgba(255, 215, 0, 0.15) 40%, rgba(255, 255, 0, 0.1) 60%, transparent 80%),
+    linear-gradient(-45deg, #0f172a, #1e293b, #334155, #0f172a);
   background-size: 100% 100%, 400% 400%;
   animation: gradientShift 15s ease-in-out infinite;
 }
