@@ -1,6 +1,12 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -14,6 +20,58 @@ app.use('/attached_assets', express.static('attached_assets'));
 
 // Serve public assets statically  
 app.use('/assets', express.static('public/assets'));
+
+// Serve root-level public files (like featured images)
+app.use(express.static('public'));
+
+// Middleware to inject meta tags for training log page (only for social media crawlers)
+app.get('/blog/hartford-marathon-training-log-2025', (req, res, next) => {
+  const userAgent = req.get('User-Agent') || '';
+  
+  // Check if this is a social media crawler/bot
+  const isCrawler = /bot|crawler|spider|scraper|facebook|twitter|linkedin|whatsapp|telegram|discord|slack/i.test(userAgent);
+  
+  if (isCrawler) {
+    const title = "Hartford Marathon Training Log 2025 - Get Up Earlier";
+    const description = "Follow Michael Baker's comprehensive Hartford Marathon training journey with detailed workout logs, nutrition insights, and race preparation strategies.";
+    const image = `${req.protocol}://${req.get('host')}/hartford-marathon-featured-image.jpg`;
+    const url = `${req.protocol}://${req.get('host')}/blog/hartford-marathon-training-log-2025`;
+    
+    // Read the default HTML and inject meta tags
+    let htmlPath;
+    if (app.get("env") === "development") {
+      htmlPath = path.join(__dirname, '../client/index.html');
+    } else {
+      htmlPath = path.join(__dirname, '../dist/public/index.html');
+    }
+    
+    if (fs.existsSync(htmlPath)) {
+      let html = fs.readFileSync(htmlPath, 'utf8');
+      
+      // Inject meta tags into the head
+      const metaTags = `
+        <title>${title}</title>
+        <meta name="description" content="${description}">
+        <meta property="og:title" content="${title}">
+        <meta property="og:description" content="${description}">
+        <meta property="og:image" content="${image}">
+        <meta property="og:url" content="${url}">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name" content="Get Up Earlier">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="${title}">
+        <meta name="twitter:description" content="${description}">
+        <meta name="twitter:image" content="${image}">
+      `;
+      
+      html = html.replace('<title>Get Up Earlier - Health & Fitness App</title>', metaTags);
+      res.send(html);
+      return;
+    }
+  }
+  
+  next();
+});
 
 app.use((req, res, next) => {
   const start = Date.now();

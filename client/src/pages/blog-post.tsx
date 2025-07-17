@@ -99,7 +99,7 @@ export default function BlogPost() {
     if (isTrainingLogEntry && post) {
       const title = "Hartford Marathon Training Log 2025 - Get Up Earlier";
       const description = "Follow Michael Baker's comprehensive Hartford Marathon training journey with detailed workout logs, nutrition insights, and race preparation strategies.";
-      const image = window.location.origin + "/attached_assets/hartford-marathon-featured-image.jpg";
+      const image = window.location.origin + "/hartford-marathon-featured-image.jpg";
       const url = window.location.href;
 
       // Update document title
@@ -261,7 +261,7 @@ export default function BlogPost() {
         {/* Featured Image */}
         <div className="w-full mb-6">
           <img 
-            src="/attached_assets/hartford-marathon-featured-image.jpg" 
+            src="/hartford-marathon-featured-image.jpg" 
             alt="Hartford Marathon 2024 Start Line" 
             className="w-full h-auto object-cover"
             style={{ maxHeight: '400px' }}
