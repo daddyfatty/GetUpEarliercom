@@ -33,10 +33,10 @@ export function RecipeCard({ recipe, disableLink = false }: RecipeCardProps) {
         <img 
           src={recipe.imageUrl} 
           alt={recipe.title}
-          className="w-full h-48 object-cover"
+          className="w-full h-72 object-cover"
         />
       ) : (
-        <div className="w-full h-48 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+        <div className="w-full h-72 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
           <div className="text-gray-500 dark:text-gray-400 text-center">
             <div className="text-sm font-medium">No Image Available</div>
             <div className="text-xs mt-1">Authentic photo needed</div>

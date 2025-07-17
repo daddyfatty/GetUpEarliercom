@@ -74,7 +74,7 @@ export function WorkoutCard({ workout, disableLink = false }: WorkoutCardProps) 
           <img 
             src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
             alt={workout.title}
-            className="w-full h-48 object-cover"
+            className="w-full h-72 object-cover"
           />
           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
             <div className="bg-white/90 dark:bg-gray-800/90 rounded-full p-3 group-hover:scale-110 transition-transform duration-300">
@@ -86,7 +86,7 @@ export function WorkoutCard({ workout, disableLink = false }: WorkoutCardProps) 
         <img 
           src={workout.imageUrl} 
           alt={workout.title}
-          className="w-full h-48 object-cover"
+          className="w-full h-72 object-cover"
         />
       )}
       <CardContent className="p-6">
