@@ -277,7 +277,7 @@ html {
 .hero-gradient {
   background: 
     radial-gradient(ellipse at center bottom, rgba(255, 140, 0, 0.3) 0%, rgba(255, 165, 0, 0.2) 20%, rgba(255, 215, 0, 0.15) 40%, rgba(255, 255, 0, 0.1) 60%, transparent 80%),
-    linear-gradient(-45deg, #0f172a, #1e293b, #334155, #0f172a);
+    linear-gradient(-45deg, #0a0b1e, #1a1b3a, #2d1b69, #0a0b1e);
   background-size: 100% 100%, 400% 400%;
   animation: gradientShift 15s ease-in-out infinite;
 }
