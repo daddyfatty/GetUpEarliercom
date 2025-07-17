@@ -166,7 +166,7 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
   };
 
   return (
-    <div className="leading-relaxed space-y-4">
+    <div className="leading-relaxed space-y-4 w-full">
       {renderContent()}
     </div>
   );
