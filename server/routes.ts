@@ -774,6 +774,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // SEO routes
+  app.get("/sitemap.xml", (req, res) => {
+    res.header('Content-Type', 'application/xml');
+    res.header('Cache-Control', 'public, max-age=3600'); // Cache for 1 hour
+    res.sendFile(path.join(process.cwd(), 'public/sitemap.xml'));
+  });
+
+  app.get("/robots.txt", (req, res) => {
+    res.header('Content-Type', 'text/plain');
+    res.header('Cache-Control', 'public, max-age=86400'); // Cache for 24 hours
+    res.sendFile(path.join(process.cwd(), 'public/robots.txt'));
+  });
+
   // PayPal routes
   app.get("/setup", async (req, res) => {
     await loadPaypalDefault(req, res);

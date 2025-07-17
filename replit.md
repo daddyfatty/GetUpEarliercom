@@ -175,10 +175,40 @@ WHERE slug = 'hartford-marathon-training-log-2025';
 
 **Implementation:** BlogContentRenderer automatically detects image count and applies appropriate CSS grid classes for optimal space utilization and visual balance.
 
+## SEO and Site Management
+
+### Sitemap.xml Maintenance
+**Location**: `/public/sitemap.xml`
+**Server Route**: `/sitemap.xml` (served with proper XML headers and 1-hour cache)
+**Update Policy**: Must be updated whenever:
+- New blog posts are created
+- New recipes are added
+- New workout content is published
+- Service pages are modified
+- Training log entries are added
+- Category pages change
+
+**Current Structure**:
+- Homepage (priority 1.0)
+- Service pages (priority 0.8-0.9)
+- Blog and content pages (priority 0.7-0.9)
+- Calculator tools (priority 0.8)
+- Category pages (priority 0.6-0.7)
+- User pages (priority 0.6)
+
+### Robots.txt Configuration
+**Location**: `/public/robots.txt`
+**Server Route**: `/robots.txt` (served with 24-hour cache)
+**Policy**: 
+- Allow all public content
+- Disallow admin pages and user-specific content
+- Reference sitemap.xml location
+
 ## Changelog
 
 ```
 Changelog:
+- July 17, 2025: Created comprehensive sitemap.xml with all site routes and robots.txt for SEO optimization; added server routes to serve both files with proper headers and caching; established maintenance policy to update sitemap when content changes
 - July 17, 2025: Documented comprehensive calculator mathematics and logic - Alcohol Calculator ("Buzzkill Calculator") uses 3,500 calories = 1 pound formula for weight gain projections with authentic drink nutritional data; Calorie Calculator uses Mifflin-St Jeor BMR equation with TDEE calculations, goal-based adjustments, macro distribution, and advanced metabolic metrics including body fat estimation and meal timing
 - July 17, 2025: Successfully created "Digital tip to know when it's time to get new running shoes" blog post with sneaker featured image and Strava screenshot; standardized homepage image thumbnail heights - all four homepage cards (Services, Latest Blog, Recipe, Workout) now use consistent h-72 height for uniform visual appearance and better featured image display
 - July 17, 2025: Successfully implemented and verified social media sharing functionality - Hartford Marathon 2024 start line image now displays perfectly when shared on Facebook, Twitter, LinkedIn with proper "Hartford Marathon Training Log 2025 - Get Up Earlier" title and comprehensive description; server-side meta tag injection works flawlessly for social media crawlers while preserving normal React app experience for regular users
