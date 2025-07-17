@@ -41,28 +41,28 @@ const MarathonCountdown: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-r from-[#0039A6] to-[#0052D4] text-white p-6 rounded-lg shadow-lg mb-8">
+    <div className="bg-gradient-to-r from-[#0039A6]/90 to-[#0052D4]/90 text-white p-6 rounded-lg shadow-lg backdrop-blur-sm">
       <div className="text-center">
         <h2 className="text-2xl font-bold mb-4">Hartford Marathon 2025 Countdown</h2>
-        <div className="flex justify-center space-x-8">
+        <div className="flex justify-center space-x-4 sm:space-x-8">
           <div className="text-center">
-            <div className="text-4xl font-bold text-[#94D600]">{timeRemaining.days}</div>
-            <div className="text-sm uppercase tracking-wide">Days</div>
+            <div className="text-3xl sm:text-4xl font-bold text-[#94D600]">{timeRemaining.days}</div>
+            <div className="text-xs sm:text-sm uppercase tracking-wide">Days</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-[#94D600]">{timeRemaining.hours}</div>
-            <div className="text-sm uppercase tracking-wide">Hours</div>
+            <div className="text-3xl sm:text-4xl font-bold text-[#94D600]">{timeRemaining.hours}</div>
+            <div className="text-xs sm:text-sm uppercase tracking-wide">Hours</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-[#94D600]">{timeRemaining.minutes}</div>
-            <div className="text-sm uppercase tracking-wide">Minutes</div>
+            <div className="text-3xl sm:text-4xl font-bold text-[#94D600]">{timeRemaining.minutes}</div>
+            <div className="text-xs sm:text-sm uppercase tracking-wide">Minutes</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold text-[#94D600]">{timeRemaining.seconds}</div>
-            <div className="text-sm uppercase tracking-wide">Seconds</div>
+            <div className="text-3xl sm:text-4xl font-bold text-[#94D600]">{timeRemaining.seconds}</div>
+            <div className="text-xs sm:text-sm uppercase tracking-wide">Seconds</div>
           </div>
         </div>
-        <p className="mt-4 text-lg">Race Day: October 11, 2025 at 7:55 AM</p>
+        <p className="mt-4 text-sm sm:text-lg">Race Day: October 11, 2025 at 7:55 AM</p>
       </div>
     </div>
   );

@@ -259,22 +259,28 @@ export default function BlogPost() {
 
     return (
       <div className="min-h-screen bg-gradient-to-b from-[#0039A6] via-[#0039A6] to-[#0039A6] text-white">
-        {/* Featured Image */}
-        <div className="w-full mb-6">
+        {/* Featured Image with Countdown Overlay */}
+        <div className="w-full mb-6 relative">
           <img 
             src="/hartford-marathon-featured-image.jpg" 
             alt="Hartford Marathon 2024 Start Line" 
             className="w-full h-auto object-cover"
             style={{ maxHeight: '400px' }}
           />
+          {/* Black Overlay */}
+          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+          
+          {/* Marathon Countdown Overlay */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-full max-w-4xl px-4">
+              <MarathonCountdown />
+            </div>
+          </div>
         </div>
         
         {/* Training Log Header */}
         <div className="py-4 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            {/* Marathon Countdown */}
-            <MarathonCountdown />
-            
             <div className="text-center mb-4">
               <div className="flex flex-wrap justify-center gap-2 mb-6">
                 {post.categories?.map((category) => (
