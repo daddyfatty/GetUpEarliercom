@@ -6,6 +6,7 @@ import { ArrowLeft, Clock, User, Calendar, Edit, Play, Expand } from "lucide-rea
 import { HeroGradient } from "@/components/hero-gradient";
 import { BlogContentRenderer } from "@/components/blog-content-renderer";
 import { ElementEditor } from "@/components/element-editor";
+import MarathonCountdown from "@/components/marathon-countdown";
 import { useState, useEffect } from "react";
 
 
@@ -271,6 +272,9 @@ export default function BlogPost() {
         {/* Training Log Header */}
         <div className="py-4 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
+            {/* Marathon Countdown */}
+            <MarathonCountdown />
+            
             <div className="text-center mb-4">
               <div className="flex flex-wrap justify-center gap-2 mb-6">
                 {post.categories?.map((category) => (
