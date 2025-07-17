@@ -42,7 +42,7 @@ function LatestBlogCard() {
                 <img 
                   src={latestPost.imageUrl}
                   alt={latestPost.title}
-                  className="w-full h-48 object-cover rounded-lg mb-4 border border-green-200"
+                  className="w-full h-72 object-cover rounded-lg mb-4 border border-green-200"
                 />
               )}
               <h3 className="font-bold text-gray-900 mb-2 text-lg leading-tight">
@@ -131,7 +131,7 @@ export default function Home() {
                       <img 
                         src={gymImagePath}
                         alt="Professional strength training gym with squat racks and free weights"
-                        className="w-full h-48 object-cover rounded-lg mb-4 border border-purple-200"
+                        className="w-full h-72 object-cover rounded-lg mb-4 border border-purple-200"
                       />
                       <p className="text-gray-600 text-sm leading-relaxed">
                         Get personalized training and coaching from a certified trainer, yoga teacher, running coach, and integrative nutrition coach. 

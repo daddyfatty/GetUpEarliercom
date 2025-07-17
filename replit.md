@@ -179,6 +179,7 @@ WHERE slug = 'hartford-marathon-training-log-2025';
 
 ```
 Changelog:
+- July 17, 2025: Successfully created "Digital tip to know when it's time to get new running shoes" blog post with sneaker featured image and Strava screenshot; standardized homepage image thumbnail heights - all four homepage cards (Services, Latest Blog, Recipe, Workout) now use consistent h-72 height for uniform visual appearance and better featured image display
 - July 17, 2025: Successfully implemented and verified social media sharing functionality - Hartford Marathon 2024 start line image now displays perfectly when shared on Facebook, Twitter, LinkedIn with proper "Hartford Marathon Training Log 2025 - Get Up Earlier" title and comprehensive description; server-side meta tag injection works flawlessly for social media crawlers while preserving normal React app experience for regular users
 - July 16, 2025: Successfully created Training Log Entry #5 "FN GROSS OUT" (July 17, 2025) - 13.10 mile long run with authentic Strava data, 4 images in 2x2 grid layout, and restored category tags to top of training log page; entry displays at top with proper Hartford Marathon branding and metrics
 - July 16, 2025: Fixed training log image display - restored proper image rendering with intelligent grid layout system (1 image=single column, 2 images=two columns full width, 3 images=three columns, 4+ images=two columns two rows); removed conflicting prose constraints and ensured full-width image display in training log entries
