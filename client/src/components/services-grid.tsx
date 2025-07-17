@@ -136,7 +136,7 @@ export function ServicesGrid({
                 <img 
                   src={service.image} 
                   alt={service.title}
-                  className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-96 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute top-6 right-6">
                   {service.certificationLogo ? (

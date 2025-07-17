@@ -65,7 +65,7 @@ export function HeroSection() {
                 <p className="text-white/80 text-sm font-medium mb-4 uppercase tracking-wider">From the Blog:</p>
                 <Link href={`/blog/${randomPost.slug}`}>
                   <div className="cursor-pointer hover:scale-105 transition-transform duration-300 relative">
-                    <div className="w-full h-72 overflow-hidden rounded-2xl shadow-2xl">
+                    <div className="w-full h-96 overflow-hidden rounded-2xl shadow-2xl">
                       <img 
                         src={randomPost.imageUrl || '/api/placeholder/600/400'} 
                         alt={randomPost.title}
@@ -83,7 +83,7 @@ export function HeroSection() {
                 </Link>
               </div>
             ) : (
-              <div className="rounded-2xl shadow-2xl w-full h-72 bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
+              <div className="rounded-2xl shadow-2xl w-full h-96 bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-2"></div>
                   <p className="text-white/70">Loading blog post...</p>
