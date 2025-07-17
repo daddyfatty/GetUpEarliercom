@@ -8,6 +8,7 @@ import { FavoriteButton } from "@/components/FavoriteButton";
 import { PageSubscriptionCTA } from "@/components/page-subscription-cta";
 import { Link } from "wouter";
 import type { Workout } from "@shared/schema";
+import { SEO } from "@/components/seo";
 
 export default function Workouts() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);

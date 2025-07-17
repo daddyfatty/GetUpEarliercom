@@ -230,7 +230,7 @@ export function SiteFooter() {
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-gray-500 hover:text-blue-400 transition-colors text-xs"
-                >Built with Replit AI WebMBD.com</a>
+                >Built with Replit AI Michael Baker Digital</a>
               </div>
             </div>
           </div>

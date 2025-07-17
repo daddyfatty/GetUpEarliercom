@@ -7,6 +7,7 @@ import { ServicesGrid } from "@/components/services-grid";
 import { Link } from "wouter";
 import CheckoutModal from "@/components/checkout-modal";
 import { MapPin, Award } from "lucide-react";
+import { SEO } from "@/components/seo";
 
 export default function Services() {
   const [checkoutModal, setCheckoutModal] = useState<{

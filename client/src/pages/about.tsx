@@ -7,6 +7,7 @@ import { CredentialsBand } from "@/components/credentials-band";
 import { ServicesGrid } from "@/components/services-grid";
 import { PermanentClassSchedule } from "@/components/permanent-class-schedule";
 import { ArrowLeft, Award, Calendar, Users, Heart, Target, Dumbbell, Zap, User, ChevronDown, ChevronUp } from "lucide-react";
+import { SEO } from "@/components/seo";
 
 import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
 import ericaPath from "@assets/678ab3d4caec71062e65470f_erddd_1749497849578.jpg";

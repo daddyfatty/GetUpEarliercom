@@ -96,48 +96,6 @@ export default function BlogPost() {
     cat.includes('Marathon Training Log') || cat.includes('Training Log')
   );
 
-  // Update social media meta tags for training log
-  useEffect(() => {
-    if (isTrainingLogEntry && post) {
-      const title = "Hartford Marathon Training Log 2025 - Get Up Earlier";
-      const description = "Follow Michael Baker's comprehensive Hartford Marathon training journey with detailed workout logs, nutrition insights, and race preparation strategies.";
-      const image = window.location.origin + "/hartford-marathon-featured-image.jpg";
-      const url = window.location.href;
-
-      // Update document title
-      document.title = title;
-
-      // Update or create meta tags
-      const updateMetaTag = (property: string, content: string) => {
-        let meta = document.querySelector(`meta[property="${property}"]`) || 
-                   document.querySelector(`meta[name="${property}"]`);
-        if (!meta) {
-          meta = document.createElement('meta');
-          meta.setAttribute(property.startsWith('og:') ? 'property' : 'name', property);
-          document.head.appendChild(meta);
-        }
-        meta.setAttribute('content', content);
-      };
-
-      // Open Graph meta tags
-      updateMetaTag('og:title', title);
-      updateMetaTag('og:description', description);
-      updateMetaTag('og:image', image);
-      updateMetaTag('og:url', url);
-      updateMetaTag('og:type', 'article');
-      updateMetaTag('og:site_name', 'Get Up Earlier');
-
-      // Twitter Card meta tags
-      updateMetaTag('twitter:card', 'summary_large_image');
-      updateMetaTag('twitter:title', title);
-      updateMetaTag('twitter:description', description);
-      updateMetaTag('twitter:image', image);
-
-      // Standard meta tags
-      updateMetaTag('description', description);
-    }
-  }, [isTrainingLogEntry, post]);
-
   // Try to fetch training log data if this is a training log entry
   const { data: trainingLogEntry } = useQuery<TrainingLogEntry>({
     queryKey: ["/api/training-log/slug", slug],
@@ -260,6 +218,15 @@ export default function BlogPost() {
 
     return (
       <div className="min-h-screen bg-gradient-to-b from-[#0039A6] via-[#0039A6] to-[#0039A6] text-white">
+        <SEO 
+          title="Hartford Marathon Training Log 2025 - Get Up Earlier"
+          description="Follow Michael Baker's comprehensive Hartford Marathon training journey with detailed workout logs, nutrition insights, and race preparation strategies."
+          keywords="Hartford Marathon training, marathon training log, running, Michael Baker, training diary, race preparation"
+          url={`/blog/${slug}`}
+          image="/hartford-marathon-featured-image.jpg"
+          type="article"
+          canonical={`https://www.getupearlier.com/blog/${slug}`}
+        />
         {/* Featured Image with Countdown Overlay */}
         <div className="w-full mb-6 relative">
           <img 
@@ -437,6 +404,15 @@ export default function BlogPost() {
   // Regular Blog Post Template
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
+      <SEO 
+        title={`${post.title} - Get Up Earlier Blog`}
+        description={post.excerpt || post.content.substring(0, 160)}
+        keywords={`${post.categories?.join(', ')}, ${post.category}, fitness, nutrition, training, Michael Baker`}
+        url={`/blog/${slug}`}
+        image={post.imageUrl || "/og-image.jpg"}
+        type="article"
+        canonical={`https://www.getupearlier.com/blog/${slug}`}
+      />
       {/* Full-width Hero Gradient Header Section - No gaps */}
       <HeroGradient className="text-white">
         <div className="py-20 px-4 sm:px-6 lg:px-8">

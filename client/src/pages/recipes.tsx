@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { BookPromotion } from "@/components/book-promotion";
 import type { Recipe } from "@shared/schema";
+import { SEO } from "@/components/seo";
 
 export default function Recipes() {
   const [location] = useLocation();
