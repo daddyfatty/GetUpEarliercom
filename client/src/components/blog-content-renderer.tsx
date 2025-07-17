@@ -32,6 +32,12 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
         return `<img src="${src}" alt="${alt}" class="markdown-image w-full h-auto object-cover rounded-lg my-6 shadow-lg cursor-pointer hover:shadow-xl transition-shadow" />`;
       });
     };
+
+    // Function to process markdown bold formatting
+    const processMarkdownBold = (text: string) => {
+      const markdownBoldRegex = /\*\*([^*]+)\*\*/g;
+      return text.replace(markdownBoldRegex, '<strong class="font-bold text-gray-800 dark:text-gray-200">$1</strong>');
+    };
     
     // Find all Amazon links
     const amazonMatches = [];
@@ -84,8 +90,8 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
       if (match.start > lastIndex) {
         const beforeContent = content.substring(lastIndex, match.start);
         if (beforeContent.trim()) {
-          // Process markdown images first, then URLs, then line breaks
-          const processedContent = processMarkdownImages(convertUrlsToLinks(beforeContent)).replace(/\n/g, '<br>');
+          // Process markdown formatting: bold first, then images, then URLs, then line breaks
+          const processedContent = processMarkdownImages(processMarkdownBold(convertUrlsToLinks(beforeContent))).replace(/\n/g, '<br>');
           parts.push(
             <div 
               key={`content-${lastIndex}`}
@@ -153,8 +159,8 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
     if (lastIndex < content.length) {
       const remainingContent = content.substring(lastIndex);
       if (remainingContent.trim()) {
-        // Process markdown images first, then URLs, then line breaks
-        const processedContent = processMarkdownImages(convertUrlsToLinks(remainingContent)).replace(/\n/g, '<br>');
+        // Process markdown formatting: bold first, then images, then URLs, then line breaks
+        const processedContent = processMarkdownImages(processMarkdownBold(convertUrlsToLinks(remainingContent))).replace(/\n/g, '<br>');
         parts.push(
           <div 
             key={`remaining-${lastIndex}`}
@@ -174,8 +180,8 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
     
     // If no special content found, render the original content
     if (parts.length === 0) {
-      // Process markdown images first, then URLs, then line breaks
-      const processedContent = processMarkdownImages(convertUrlsToLinks(content)).replace(/\n/g, '<br>');
+      // Process markdown formatting: bold first, then images, then URLs, then line breaks
+      const processedContent = processMarkdownImages(processMarkdownBold(convertUrlsToLinks(content))).replace(/\n/g, '<br>');
       return (
         <div 
           className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
