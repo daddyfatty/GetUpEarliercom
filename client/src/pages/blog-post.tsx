@@ -6,7 +6,7 @@ import { ArrowLeft, Clock, User, Calendar, Edit, Play, Expand } from "lucide-rea
 import { HeroGradient } from "@/components/hero-gradient";
 import { BlogContentRenderer } from "@/components/blog-content-renderer";
 import { ElementEditor } from "@/components/element-editor";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 
@@ -93,6 +93,48 @@ export default function BlogPost() {
   const isTrainingLogEntry = post?.categories?.some(cat => 
     cat.includes('Marathon Training Log') || cat.includes('Training Log')
   );
+
+  // Update social media meta tags for training log
+  useEffect(() => {
+    if (isTrainingLogEntry && post) {
+      const title = "Hartford Marathon Training Log 2025 - Get Up Earlier";
+      const description = "Follow Michael Baker's comprehensive Hartford Marathon training journey with detailed workout logs, nutrition insights, and race preparation strategies.";
+      const image = window.location.origin + "/attached_assets/hartford-marathon-featured-image.jpg";
+      const url = window.location.href;
+
+      // Update document title
+      document.title = title;
+
+      // Update or create meta tags
+      const updateMetaTag = (property: string, content: string) => {
+        let meta = document.querySelector(`meta[property="${property}"]`) || 
+                   document.querySelector(`meta[name="${property}"]`);
+        if (!meta) {
+          meta = document.createElement('meta');
+          meta.setAttribute(property.startsWith('og:') ? 'property' : 'name', property);
+          document.head.appendChild(meta);
+        }
+        meta.setAttribute('content', content);
+      };
+
+      // Open Graph meta tags
+      updateMetaTag('og:title', title);
+      updateMetaTag('og:description', description);
+      updateMetaTag('og:image', image);
+      updateMetaTag('og:url', url);
+      updateMetaTag('og:type', 'article');
+      updateMetaTag('og:site_name', 'Get Up Earlier');
+
+      // Twitter Card meta tags
+      updateMetaTag('twitter:card', 'summary_large_image');
+      updateMetaTag('twitter:title', title);
+      updateMetaTag('twitter:description', description);
+      updateMetaTag('twitter:image', image);
+
+      // Standard meta tags
+      updateMetaTag('description', description);
+    }
+  }, [isTrainingLogEntry, post]);
 
   // Try to fetch training log data if this is a training log entry
   const { data: trainingLogEntry } = useQuery<TrainingLogEntry>({
@@ -216,6 +258,16 @@ export default function BlogPost() {
 
     return (
       <div className="min-h-screen bg-gradient-to-b from-[#0039A6] via-[#0039A6] to-[#0039A6] text-white">
+        {/* Featured Image */}
+        <div className="w-full mb-6">
+          <img 
+            src="/attached_assets/hartford-marathon-featured-image.jpg" 
+            alt="Hartford Marathon 2024 Start Line" 
+            className="w-full h-auto object-cover"
+            style={{ maxHeight: '400px' }}
+          />
+        </div>
+        
         {/* Training Log Header */}
         <div className="py-4 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
