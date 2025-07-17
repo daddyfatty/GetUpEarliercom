@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Clock, User, Calendar, Edit, Play, Expand } from "lucide-react";
 import { HeroGradient } from "@/components/hero-gradient";
 import { BlogContentRenderer } from "@/components/blog-content-renderer";
+import { SEO } from "@/components/seo";
 
 import MarathonCountdown from "@/components/marathon-countdown";
 import { useState, useEffect } from "react";

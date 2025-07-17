@@ -12,6 +12,7 @@ import { Clock, TrendingUp, Users, Star, ChefHat, Dumbbell, ArrowRight, Calendar
 import type { Recipe, Workout, BlogPost } from "@shared/schema";
 import gymImagePath from "@assets/download - 2025-06-20T164725.183_1750452478509.png";
 import { useEffect, useState } from "react";
+import { SEO } from "@/components/seo";
 
 function LatestBlogCard() {
   const { data: blogPosts = [] } = useQuery<BlogPost[]>({
@@ -103,6 +104,13 @@ export default function Home() {
 
   return (
     <div className="w-full">
+      <SEO 
+        title="Get Up Earlier - Strength, Nutrition & Accountability Coaching"
+        description="Personal training, nutrition coaching, and accountability services to help you build strength, healthy habits, and achieve your fitness goals. Expert guidance for lasting transformation."
+        keywords="personal training, nutrition coaching, accountability coaching, fitness, strength training, healthy habits, marathon training, yoga, wellness, Michael Baker"
+        url="/"
+        canonical="https://www.getupearlier.com/"
+      />
       <HeroSection />
       {/* Four-Card Two-Column Section */}
       <section className="py-12 bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white">

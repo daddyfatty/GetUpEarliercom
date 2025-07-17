@@ -65,7 +65,6 @@ export function SiteFooter() {
           </div>
         </div>
       </section>
-
       {/* Main Footer */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -231,9 +230,7 @@ export function SiteFooter() {
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-gray-500 hover:text-blue-400 transition-colors text-xs"
-                >
-                  Built with Agentic AI WebMBD.com
-                </a>
+                >Built with Replit AI WebMBD.com</a>
               </div>
             </div>
           </div>

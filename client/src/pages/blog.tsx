@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Search, Clock, User, ArrowRight, Play, Edit, ChevronDown, Grid3X3 } from "lucide-react";
+import { SEO } from "@/components/seo";
 
 interface BlogPost {
   id: string;
@@ -120,6 +121,13 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <SEO 
+        title="Get Up Earlier Blog - Health, Fitness & Nutrition Insights"
+        description="Helpful insights on nutrition, fitness, running, yoga and achieving your health goals from certified trainers and coaches Michael Baker and Erica Baker."
+        keywords="fitness blog, nutrition tips, running advice, marathon training, yoga, health goals, certified trainers, personal training blog"
+        url="/blog"
+        canonical="https://www.getupearlier.com/blog"
+      />
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12">
