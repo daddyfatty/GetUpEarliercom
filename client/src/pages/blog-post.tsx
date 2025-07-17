@@ -699,13 +699,7 @@ export default function BlogPost() {
         </div>
       )}
       
-      {/* Element Editor - Only show in development */}
-      {import.meta.env.DEV && (
-        <ElementEditor 
-          isEnabled={elementEditorEnabled}
-          onToggle={setElementEditorEnabled}
-        />
-      )}
+
     </div>
   );
 }
