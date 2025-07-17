@@ -301,6 +301,33 @@ export default function BlogPost() {
                         </div>
                       </div>
                     )}
+                    
+                    {/* Render images if any */}
+                    {entry.images && entry.images.length > 0 && (
+                      <div className="mt-6 w-full">
+                        <div className={`${entry.images.length === 1 ? 'grid grid-cols-1' : entry.images.length === 2 ? 'grid grid-cols-2' : entry.images.length === 3 ? 'grid grid-cols-3' : 'grid grid-cols-2'} gap-4 w-full`}>
+                          {entry.images.map((imageSrc, imgIndex) => (
+                            <div 
+                              key={imgIndex}
+                              className="cursor-pointer hover:shadow-xl transition-shadow group relative w-full"
+                              onClick={() => {
+                                setLightboxImage(imageSrc);
+                                setLightboxOpen(true);
+                              }}
+                            >
+                              <img
+                                src={imageSrc}
+                                alt={`Training log photo ${imgIndex + 1}`}
+                                className="w-full h-auto object-cover rounded-lg"
+                              />
+                              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center rounded-lg">
+                                <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                   </div>
                 </div>
