@@ -25,11 +25,11 @@ export function EricaAboutBlock() {
               </h2>
               
               <div className="space-y-2 mb-6">
-                <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">E-RYT 200 Yoga Instructor</p>
-                <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">2000+ Hours Teaching Experience</p>
-                <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">Former Boutique Studio Owner</p>
-                <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">Wellness Enthusiast</p>
-                <p className="text-gray-700 dark:text-gray-100 text-lg font-medium">YouTube Content Creator</p>
+                <p className="text-gray-700 dark:text-gray-100 text-3xl font-medium">E-RYT 200 Yoga Instructor</p>
+                <p className="text-gray-700 dark:text-gray-100 text-3xl font-medium">2000+ Hours Teaching Experience</p>
+                <p className="text-gray-700 dark:text-gray-100 text-3xl font-medium">Former Boutique Studio Owner</p>
+                <p className="text-gray-700 dark:text-gray-100 text-3xl font-medium">Wellness Enthusiast</p>
+                <p className="text-gray-700 dark:text-gray-100 text-3xl font-medium">YouTube Content Creator</p>
               </div>
               
 
