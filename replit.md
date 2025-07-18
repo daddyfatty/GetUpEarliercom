@@ -208,6 +208,10 @@ WHERE slug = 'hartford-marathon-training-log-2025';
 
 ```
 Changelog:
+- July 17, 2025: Perfected hero gradient with stunning vibrant sunrise effect - implemented four-layer gradient system with deep night blue base (#01020c), rich purple/magenta bands (deep purple #8A2BE2, indigo #4B0082), royal blues, and bright orange horizon; enhanced with 40% saturation boost and subtle breathing animation creating authentic dawn atmosphere
+- July 17, 2025: Increased certification logos 3x bigger across all 6 service pages for better visibility - changed from w-16 h-16 to w-48 h-48 on individual service pages
+- July 17, 2025: Updated footer branding from "WebMBD.com" to "Michael Baker Digital" for proper attribution
+- July 17, 2025: Completed comprehensive SEO implementation with react-helmet-async across all major pages - proper meta titles, descriptions, and Open Graph tags for social media sharing
 - July 17, 2025: Created comprehensive sitemap.xml with all site routes and robots.txt for SEO optimization; added server routes to serve both files with proper headers and caching; established maintenance policy to update sitemap when content changes
 - July 17, 2025: Documented comprehensive calculator mathematics and logic - Alcohol Calculator ("Buzzkill Calculator") uses 3,500 calories = 1 pound formula for weight gain projections with authentic drink nutritional data; Calorie Calculator uses Mifflin-St Jeor BMR equation with TDEE calculations, goal-based adjustments, macro distribution, and advanced metabolic metrics including body fat estimation and meal timing
 - July 17, 2025: Successfully created "Digital tip to know when it's time to get new running shoes" blog post with sneaker featured image and Strava screenshot; standardized homepage image thumbnail heights - all four homepage cards (Services, Latest Blog, Recipe, Workout) now use consistent h-72 height for uniform visual appearance and better featured image display
