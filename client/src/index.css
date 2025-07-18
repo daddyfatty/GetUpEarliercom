@@ -276,21 +276,22 @@ html {
 /* Custom health and fitness theme styles matching GetUpEarlier.com */
 .hero-gradient {
   background: 
-    radial-gradient(ellipse 400px 200px at 50% 100%, rgba(255, 140, 0, 0.3) 0%, rgba(255, 100, 0, 0.15) 40%, transparent 80%),
-    radial-gradient(ellipse 600px 300px at 50% 85%, rgba(65, 105, 225, 0.15) 0%, rgba(65, 105, 225, 0.08) 50%, transparent 100%),
-    linear-gradient(to bottom, #01020c 0%, #0a0b1a 70%, #1a1b2e 100%);
-  background-size: 100% 100%, 100% 100%, 100% 100%;
+    radial-gradient(ellipse 400px 200px at 50% 100%, rgba(255, 140, 0, 0.35) 0%, rgba(255, 100, 0, 0.2) 30%, rgba(255, 69, 0, 0.1) 60%, transparent 80%),
+    radial-gradient(ellipse 500px 250px at 50% 95%, rgba(138, 43, 226, 0.2) 0%, rgba(75, 0, 130, 0.15) 40%, transparent 70%),
+    radial-gradient(ellipse 700px 350px at 50% 85%, rgba(65, 105, 225, 0.18) 0%, rgba(30, 144, 255, 0.12) 50%, transparent 100%),
+    linear-gradient(to bottom, #01020c 0%, #0a0b1a 60%, #1a1b2e 85%, #2a1b3e 100%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
   animation: gradientShift 30s ease-in-out infinite;
 }
 
 @keyframes gradientShift {
   0%, 100% {
-    background-position: 0% 50%, 0% 50%, 0% 0%;
+    background-position: 0% 50%, 0% 50%, 0% 50%, 0% 0%;
     filter: brightness(1) hue-rotate(0deg);
   }
   50% {
-    background-position: 100% 50%, 100% 50%, 0% 0%;
-    filter: brightness(1.03) hue-rotate(3deg);
+    background-position: 100% 50%, 100% 50%, 100% 50%, 0% 0%;
+    filter: brightness(1.05) hue-rotate(5deg);
   }
 }
 
