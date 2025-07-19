@@ -205,7 +205,7 @@ export default function RecipeDetail() {
     <div class="header">
         <div class="brand">Get Up Earlier</div>
         <h1 class="recipe-title">${recipe.title}</h1>
-        <div class="badges">${categoryBadges}${recipe.dietType ? `<span class="badge">${recipe.dietType}</span>` : ''}</div>
+        <div class="badges">${categoryBadges}${recipe.diet_type ? `<span class="badge">${recipe.diet_type}</span>` : ''}</div>
         <div class="recipe-meta">
             <div class="meta-item"><div class="meta-value">${recipe.prepTime || 0}</div><div class="meta-label">Minutes</div></div>
             <div class="meta-item"><div class="meta-value">${recipe.servings || 0}</div><div class="meta-label">Servings</div></div>
@@ -370,26 +370,64 @@ export default function RecipeDetail() {
     );
   }
 
-  const getDietIcon = (dietType: string | null) => {
-    switch (dietType) {
-      case 'vegetarian': return '🥬';
-      case 'vegan': return '🌱';
-      case 'keto': return '🥑';
-      case 'paleo': return '🍖';
-      case 'carnivore': return '🥩';
-      case 'high-carb-low-fat': return '🍝';
-      case 'high-protein': return '💪';
-      default: return null;
+  const formatTagName = (tag: string) => {
+    // Convert kebab-case to Title Case and handle special cases
+    const specialCases: Record<string, string> = {
+      'high-carb-endurance': 'High Carb Endurance',
+      'high-protein': 'High Protein',
+      'vitamix-smoothie-bowls': 'Vitamix Smoothie Bowls'
+    };
+    
+    if (specialCases[tag]) {
+      return specialCases[tag];
+    }
+    
+    return tag
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+
+  const getDietTypeColor = (dietType: string | null) => {
+    if (!dietType) return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
+    
+    switch (dietType.toLowerCase()) {
+      case "vegetarian":
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+      case "vegan":
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+      case "keto":
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
+      case "paleo":
+        return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200";
+      case "carnivore":
+        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+      case "high-carb-endurance":
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
+      case "high-protein":
+        return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200";
+      default:
+        return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
     }
   };
 
-  const getCategoryEmoji = (category: string) => {
-    switch (category) {
-      case 'breakfast': return '🌅';
-      case 'lunch': return '☀️';
-      case 'dinner': return '🌙';
-      case 'snack': return '🥜';
-      default: return '🍽️';
+  const getCategoryColor = (category: string | null) => {
+    if (!category) return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
+    
+    switch (category.toLowerCase()) {
+      case "breakfast":
+        return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200";
+      case "lunch":
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
+      case "dinner":
+        return "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200";
+      case "snack":
+        return "bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200";
+      case "vitamix smoothie bowls":
+      case "vitamix-smoothie-bowls":
+        return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200";
+      default:
+        return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
     }
   };
 
@@ -441,36 +479,41 @@ export default function RecipeDetail() {
             {/* Recipe Header */}
             <div>
               <div className="flex flex-wrap gap-2 mb-4">
+                {/* Category Tags */}
                 {Array.isArray(recipe.category) ? recipe.category.map((cat, index) => (
-                  <Link key={index} href={`/recipes/archive?category=${encodeURIComponent(cat)}`}>
-                    <Badge className="bg-[#ef4444]/10 text-[#ef4444] hover:bg-[#ef4444]/20 cursor-pointer transition-colors">
-                      {getCategoryEmoji(cat)} {cat}
+                  <Link key={`cat-${index}`} href={`/recipes/archive?category=${encodeURIComponent(cat)}`}>
+                    <Badge className={`${getCategoryColor(cat)} cursor-pointer transition-colors hover:opacity-80`}>
+                      {formatTagName(cat)}
                     </Badge>
                   </Link>
                 )) : (
                   <Link href={`/recipes/archive?category=${encodeURIComponent(recipe.category)}`}>
-                    <Badge className="bg-[#ef4444]/10 text-[#ef4444] hover:bg-[#ef4444]/20 cursor-pointer transition-colors">
-                      {getCategoryEmoji(recipe.category)} {recipe.category}
+                    <Badge className={`${getCategoryColor(recipe.category)} cursor-pointer transition-colors hover:opacity-80`}>
+                      {formatTagName(recipe.category)}
                     </Badge>
                   </Link>
                 )}
-                {recipe.dietType && Array.isArray(recipe.dietType) ? recipe.dietType.map((diet, index) => (
-                  <Link key={index} href={`/recipes/archive?diet=${encodeURIComponent(diet)}`}>
-                    <Badge variant="outline" className="cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
-                      {getDietIcon(diet)} {diet}
+                {/* Diet Type Tags */}
+                {recipe.diet_type && Array.isArray(recipe.diet_type) && recipe.diet_type.map((diet, index) => (
+                  <Link key={`diet-${index}`} href={`/recipes/archive?diet=${encodeURIComponent(diet)}`}>
+                    <Badge className={`${getDietTypeColor(diet)} cursor-pointer transition-colors hover:opacity-80`}>
+                      {formatTagName(diet)}
                     </Badge>
                   </Link>
-                )) : recipe.dietType && (
-                  <Link href={`/recipes/archive?diet=${encodeURIComponent(recipe.dietType)}`}>
-                    <Badge variant="outline" className="cursor-pointer transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
-                      {getDietIcon(recipe.dietType)} {recipe.dietType}
+                ))}
+                {/* Legacy dietType support */}
+                {(recipe as any).dietType && !recipe.diet_type && (
+                  <Link href={`/recipes/archive?diet=${encodeURIComponent((recipe as any).dietType)}`}>
+                    <Badge className={`${getDietTypeColor((recipe as any).dietType)} cursor-pointer transition-colors hover:opacity-80`}>
+                      {formatTagName((recipe as any).dietType)}
                     </Badge>
                   </Link>
                 )}
+                {/* Additional Tags */}
                 {recipe.tags && recipe.tags.map((tag, index) => (
-                  <Link key={index} href={`/recipes/archive?tag=${encodeURIComponent(tag)}`}>
+                  <Link key={`tag-${index}`} href={`/recipes/archive?tag=${encodeURIComponent(tag)}`}>
                     <Badge variant="secondary" className="cursor-pointer transition-colors hover:bg-gray-200 dark:hover:bg-gray-700">
-                      {tag}
+                      {formatTagName(tag)}
                     </Badge>
                   </Link>
                 ))}

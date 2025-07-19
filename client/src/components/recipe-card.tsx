@@ -12,8 +12,28 @@ interface RecipeCardProps {
 }
 
 export function RecipeCard({ recipe, disableLink = false }: RecipeCardProps) {
-  const getCategoryColor = (category: string) => {
-    switch (category) {
+  const formatTagName = (tag: string) => {
+    // Convert kebab-case to Title Case and handle special cases
+    const specialCases: Record<string, string> = {
+      'high-carb-endurance': 'High Carb Endurance',
+      'high-protein': 'High Protein',
+      'vitamix-smoothie-bowls': 'Vitamix Smoothie Bowls'
+    };
+    
+    if (specialCases[tag]) {
+      return specialCases[tag];
+    }
+    
+    return tag
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+
+  const getCategoryColor = (category: string | null) => {
+    if (!category) return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
+    
+    switch (category.toLowerCase()) {
       case "breakfast":
         return "recipe-category-breakfast";
       case "lunch":
@@ -22,6 +42,32 @@ export function RecipeCard({ recipe, disableLink = false }: RecipeCardProps) {
         return "recipe-category-dinner";
       case "snack":
         return "recipe-category-snack";
+      case "vitamix smoothie bowls":
+      case "vitamix-smoothie-bowls":
+        return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200";
+      default:
+        return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
+    }
+  };
+
+  const getDietTypeColor = (dietType: string | null) => {
+    if (!dietType) return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
+    
+    switch (dietType.toLowerCase()) {
+      case "vegetarian":
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+      case "vegan":
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+      case "keto":
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
+      case "paleo":
+        return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200";
+      case "carnivore":
+        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+      case "high-carb-endurance":
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
+      case "high-protein":
+        return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200";
       default:
         return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
     }
@@ -46,15 +92,22 @@ export function RecipeCard({ recipe, disableLink = false }: RecipeCardProps) {
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-2">
           <div className="flex flex-wrap gap-1">
+            {/* Category Tags */}
             {Array.isArray(recipe.category) ? recipe.category.map((cat, index) => (
-              <Badge key={index} className={getCategoryColor(cat)}>
-                {cat}
+              <Badge key={`cat-${index}`} className={getCategoryColor(cat)}>
+                {formatTagName(cat)}
               </Badge>
             )) : (
               <Badge className={getCategoryColor(recipe.category)}>
-                {recipe.category}
+                {formatTagName(recipe.category)}
               </Badge>
             )}
+            {/* Diet Type Tags */}
+            {recipe.diet_type && Array.isArray(recipe.diet_type) && recipe.diet_type.map((diet, index) => (
+              <Badge key={`diet-${index}`} className={getDietTypeColor(diet)}>
+                {formatTagName(diet)}
+              </Badge>
+            ))}
           </div>
           <div className="flex items-center gap-2">
             <FavoriteButton 
