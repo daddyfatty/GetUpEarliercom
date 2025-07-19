@@ -119,16 +119,16 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
 
   if (loading) {
     return (
-      <div className={`p-6 bg-white rounded-lg shadow-lg ${className}`}>
+      <div className={`p-6 ${className}`}>
         <div className="animate-pulse">
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-8 h-8 bg-gray-200 rounded"></div>
-            <div className="h-6 bg-gray-200 rounded flex-1"></div>
+            <div className="w-8 h-8 bg-white/20 rounded"></div>
+            <div className="h-6 bg-white/20 rounded flex-1"></div>
           </div>
           <div className="space-y-4">
-            <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-            <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-            <div className="h-20 bg-gray-200 rounded"></div>
+            <div className="h-4 bg-white/20 rounded w-3/4"></div>
+            <div className="h-4 bg-white/20 rounded w-1/2"></div>
+            <div className="h-20 bg-white/20 rounded"></div>
           </div>
         </div>
       </div>
@@ -137,10 +137,10 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
 
   if (error) {
     return (
-      <div className={`p-6 bg-white rounded-lg shadow-lg ${className}`}>
-        <div className="text-center text-red-600">
+      <div className={`p-6 ${className}`}>
+        <div className="text-center text-red-400">
           <p>Unable to load reviews at this time</p>
-          <p className="text-sm text-gray-500 mt-2">{error}</p>
+          <p className="text-sm text-white/70 mt-2">{error}</p>
         </div>
       </div>
     );
@@ -148,8 +148,8 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
 
   if (!placeDetails || !placeDetails.reviews || placeDetails.reviews.length === 0) {
     return (
-      <div className={`p-6 bg-white rounded-lg shadow-lg ${className}`}>
-        <div className="text-center text-gray-600">
+      <div className={`p-6 ${className}`}>
+        <div className="text-center text-white/70">
           <p>No reviews available</p>
         </div>
       </div>
@@ -159,7 +159,7 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
   const currentReviewData = placeDetails.reviews[currentReview];
 
   return (
-    <div className={`bg-white rounded-lg shadow-lg p-6 ${className}`}>
+    <div className={`p-6 ${className}`}>
       {/* Google Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
@@ -170,13 +170,13 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
               <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
               <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
             </svg>
-            <span className="font-semibold text-gray-800">Google</span>
+            <span className="font-semibold text-white">Google</span>
           </div>
-          <span className="text-green-600 font-medium">Excellent</span>
+          <span className="text-green-400 font-medium">Excellent</span>
           <div className="flex items-center gap-1">
             {renderStars(Math.floor(placeDetails.rating), 16)}
-            <span className="font-semibold ml-1">{placeDetails.rating}</span>
-            <span className="text-gray-600">| {placeDetails.user_ratings_total} reviews</span>
+            <span className="font-semibold ml-1 text-white">{placeDetails.rating}</span>
+            <span className="text-white/70">| {placeDetails.user_ratings_total} reviews</span>
           </div>
         </div>
         <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
@@ -188,7 +188,7 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
       <div className="relative">
         <div className="flex gap-4 overflow-hidden">
           {placeDetails.reviews.slice(currentReview, currentReview + 3).map((review, index) => (
-            <div key={index} className="flex-1 min-w-0 bg-gray-50 rounded-lg p-4 border">
+            <div key={index} className="flex-1 min-w-0 rounded-lg p-4">
               {/* Review Header */}
               <div className="flex items-start gap-3 mb-3">
                 <img
@@ -201,7 +201,7 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
                 />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <h4 className="font-semibold text-gray-800 truncate">{review.author_name}</h4>
+                    <h4 className="font-semibold text-white truncate">{review.author_name}</h4>
                     <div className="flex-shrink-0">
                       <svg viewBox="0 0 24 24" className="w-4 h-4 text-blue-600">
                         <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -211,7 +211,7 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
                       </svg>
                     </div>
                   </div>
-                  <div className="text-sm text-gray-600 mb-2">{review.relative_time_description}</div>
+                  <div className="text-sm text-white/70 mb-2">{review.relative_time_description}</div>
                   <div className="flex items-center gap-1">
                     {renderStars(review.rating, 14)}
                   </div>
@@ -219,12 +219,12 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
               </div>
 
               {/* Review Text */}
-              <p className="text-gray-700 text-sm leading-relaxed line-clamp-4">
+              <p className="text-white/90 text-sm leading-relaxed line-clamp-4">
                 {review.text}
               </p>
 
               {/* Read More Link */}
-              <button className="text-blue-600 text-sm hover:underline mt-2">
+              <button className="text-blue-400 text-sm hover:underline mt-2">
                 Read more
               </button>
             </div>
@@ -236,17 +236,17 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
           <>
             <button
               onClick={prevReview}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 bg-white/20 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
               aria-label="Previous reviews"
             >
-              <ChevronLeft size={20} className="text-gray-600" />
+              <ChevronLeft size={20} className="text-white" />
             </button>
             <button
               onClick={nextReview}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 bg-white/20 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
               aria-label="Next reviews"
             >
-              <ChevronRight size={20} className="text-gray-600" />
+              <ChevronRight size={20} className="text-white" />
             </button>
           </>
         )}
@@ -260,7 +260,7 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
               key={i}
               onClick={() => setCurrentReview(i * 3)}
               className={`w-2 h-2 rounded-full transition-colors ${
-                Math.floor(currentReview / 3) === i ? 'bg-blue-600' : 'bg-gray-300'
+                Math.floor(currentReview / 3) === i ? 'bg-blue-400' : 'bg-white/30'
               }`}
               aria-label={`Go to review set ${i + 1}`}
             />
