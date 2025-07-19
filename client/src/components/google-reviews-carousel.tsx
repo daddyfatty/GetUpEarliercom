@@ -29,6 +29,7 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
   const [currentReview, setCurrentReview] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     fetchGoogleReviews();
@@ -94,14 +95,22 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
   };
 
   const nextReview = () => {
-    if (placeDetails?.reviews) {
-      setCurrentReview((prev) => (prev + 1) % placeDetails.reviews.length);
+    if (placeDetails?.reviews && !isTransitioning) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setCurrentReview((prev) => (prev + 3) % placeDetails.reviews.length);
+        setTimeout(() => setIsTransitioning(false), 150);
+      }, 150);
     }
   };
 
   const prevReview = () => {
-    if (placeDetails?.reviews) {
-      setCurrentReview((prev) => (prev - 1 + placeDetails.reviews.length) % placeDetails.reviews.length);
+    if (placeDetails?.reviews && !isTransitioning) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setCurrentReview((prev) => (prev - 3 + placeDetails.reviews.length) % placeDetails.reviews.length);
+        setTimeout(() => setIsTransitioning(false), 150);
+      }, 150);
     }
   };
 
@@ -186,9 +195,9 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
 
       {/* Reviews Carousel */}
       <div className="relative">
-        <div className="flex gap-4 overflow-hidden mx-12">
+        <div className={`flex gap-4 overflow-hidden mx-12 transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
           {placeDetails.reviews.slice(currentReview, currentReview + 3).map((review, index) => (
-            <div key={index} className="flex-1 min-w-0 rounded-lg p-4">
+            <div key={`${currentReview}-${index}`} className="flex-1 min-w-0 rounded-lg p-4">
               {/* Review Header */}
               <div className="flex items-start gap-3 mb-3">
                 <img
@@ -258,7 +267,15 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
           {Array.from({ length: Math.ceil(placeDetails.reviews.length / 3) }, (_, i) => (
             <button
               key={i}
-              onClick={() => setCurrentReview(i * 3)}
+              onClick={() => {
+                if (!isTransitioning) {
+                  setIsTransitioning(true);
+                  setTimeout(() => {
+                    setCurrentReview(i * 3);
+                    setTimeout(() => setIsTransitioning(false), 150);
+                  }, 150);
+                }
+              }}
               className={`w-2 h-2 rounded-full transition-colors ${
                 Math.floor(currentReview / 3) === i ? 'bg-blue-400' : 'bg-white/30'
               }`}
