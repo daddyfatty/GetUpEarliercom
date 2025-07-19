@@ -188,9 +188,7 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
             <span className="text-white/70">| {placeDetails.user_ratings_total} reviews</span>
           </div>
         </div>
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-          Write a review
-        </button>
+
       </div>
 
       {/* Reviews Carousel */}
@@ -232,10 +230,7 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
                 {review.text}
               </p>
 
-              {/* Read More Link */}
-              <button className="text-blue-400 text-sm hover:underline mt-2">
-                Read more
-              </button>
+
             </div>
           ))}
         </div>
