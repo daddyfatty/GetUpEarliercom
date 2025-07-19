@@ -186,7 +186,7 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
 
       {/* Reviews Carousel */}
       <div className="relative">
-        <div className="flex gap-4 overflow-hidden">
+        <div className="flex gap-4 overflow-hidden mx-12">
           {placeDetails.reviews.slice(currentReview, currentReview + 3).map((review, index) => (
             <div key={index} className="flex-1 min-w-0 rounded-lg p-4">
               {/* Review Header */}
