@@ -30,9 +30,7 @@ export function RecipeCard({ recipe, disableLink = false }: RecipeCardProps) {
       .join(' ');
   };
 
-  const getCategoryColor = (category: string | null) => {
-    if (!category) return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
-    
+  const getCategoryColor = (category: string) => {
     switch (category.toLowerCase()) {
       case "breakfast":
         return "recipe-category-breakfast";
@@ -50,9 +48,7 @@ export function RecipeCard({ recipe, disableLink = false }: RecipeCardProps) {
     }
   };
 
-  const getDietTypeColor = (dietType: string | null) => {
-    if (!dietType) return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
-    
+  const getDietTypeColor = (dietType: string) => {
     switch (dietType.toLowerCase()) {
       case "vegetarian":
         return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";

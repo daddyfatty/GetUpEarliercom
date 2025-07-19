@@ -388,9 +388,7 @@ export default function RecipeDetail() {
       .join(' ');
   };
 
-  const getDietTypeColor = (dietType: string | null) => {
-    if (!dietType) return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
-    
+  const getDietTypeColor = (dietType: string) => {
     switch (dietType.toLowerCase()) {
       case "vegetarian":
         return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
@@ -411,9 +409,7 @@ export default function RecipeDetail() {
     }
   };
 
-  const getCategoryColor = (category: string | null) => {
-    if (!category) return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
-    
+  const getCategoryColor = (category: string) => {
     switch (category.toLowerCase()) {
       case "breakfast":
         return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200";
@@ -502,7 +498,15 @@ export default function RecipeDetail() {
                   </Link>
                 ))}
                 {/* Legacy dietType support */}
-                {(recipe as any).dietType && !recipe.diet_type && (
+                {(recipe as any).dietType && !recipe.diet_type && Array.isArray((recipe as any).dietType) && (recipe as any).dietType.map((diet: string, index: number) => (
+                  <Link key={`legacy-diet-${index}`} href={`/recipes/archive?diet=${encodeURIComponent(diet)}`}>
+                    <Badge className={`${getDietTypeColor(diet)} cursor-pointer transition-colors hover:opacity-80`}>
+                      {formatTagName(diet)}
+                    </Badge>
+                  </Link>
+                ))}
+                {/* Single legacy dietType */}
+                {(recipe as any).dietType && !recipe.diet_type && !Array.isArray((recipe as any).dietType) && (
                   <Link href={`/recipes/archive?diet=${encodeURIComponent((recipe as any).dietType)}`}>
                     <Badge className={`${getDietTypeColor((recipe as any).dietType)} cursor-pointer transition-colors hover:opacity-80`}>
                       {formatTagName((recipe as any).dietType)}
