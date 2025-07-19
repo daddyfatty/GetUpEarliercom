@@ -305,9 +305,6 @@ export default function Home() {
             </div>
             <GoogleReviewsCarousel placeId="ChIJLQqz6P516IkRwqYD22g-_m8" />
           </div>
-          <div className="mt-16">
-            <ClientReviews />
-          </div>
         </div>
       </section>
       {/* Credentials Band */}
