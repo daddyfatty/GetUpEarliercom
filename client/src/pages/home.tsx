@@ -114,7 +114,7 @@ export default function Home() {
       />
       <HeroSection />
       {/* Four-Card Two-Column Section */}
-      <section className="py-12 bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white">
+      <section className="py-4 sm:py-8 bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             

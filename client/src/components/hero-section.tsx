@@ -22,15 +22,15 @@ export function HeroSection() {
   }, [blogPosts]);
   return (
     <HeroGradient className="text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch min-h-[600px]">
-          <div className="hidden lg:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-px h-96 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
-          <div className="flex flex-col justify-between pt-16 h-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch min-h-[400px] sm:min-h-[500px]">
+          <div className="hidden lg:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-px h-80 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
+          <div className="flex flex-col justify-between pt-4 sm:pt-8 h-full">
             <div className="flex-1 flex flex-col justify-center">
-              <p className="text-sm text-blue-200 mb-4 tracking-wider uppercase">
+              <p className="text-sm text-blue-200 mb-2 sm:mb-3 tracking-wider uppercase">
                 Strength, Nutrition & Accountability Coaching
               </p>
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-12 font-brand">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight mb-6 sm:mb-8 font-brand">
                 Bridging the gap from inactivity and poor diet to strength and healthy habits
               </h1>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -61,7 +61,7 @@ export function HeroSection() {
             </div>
           </div>
           
-          <div className="flex flex-col justify-start pt-16 space-y-6 h-full">
+          <div className="flex flex-col justify-start pt-4 sm:pt-8 space-y-3 sm:space-y-4 h-full">
             {randomPost ? (
               <div>
                 <p className="text-white/80 text-sm font-medium mb-4 uppercase tracking-wider">From the Blog:</p>
