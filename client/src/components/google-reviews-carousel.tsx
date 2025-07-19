@@ -40,28 +40,28 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
       author_name: "David Salinas",
       text: "Needed a kick start back to life and got that from Michael. He's knowledgeable, adapts to your preferences and optimized. Highly recommended. 10/10",
       rating: 5,
-      profile_photo_url: "/default-avatar.svg",
-      relative_time_description: "recent client",
+      profile_photo_url: "/attached_assets/678ae0317069e15526c3487a_download (23)_1751313478409_1752942860704.png",
+      relative_time_description: "a year ago",
       language: "en",
-      time: Date.now() - 30 * 24 * 60 * 60 * 1000 // 30 days ago
+      time: Date.now() - 365 * 24 * 60 * 60 * 1000 // 1 year ago
     },
     {
       author_name: "Mike Richetelli", 
       text: "Mike is very dedicated to health and wellness, including having a strong knowledge base about nutrition. I have trained with him for several months and have attained my fitness goals. He's taught me many alternative ways to workout, deviating from traditional exercises.",
       rating: 5,
-      profile_photo_url: "/default-avatar.svg",
-      relative_time_description: "long-term client",
+      profile_photo_url: "/attached_assets/image_1752942639890.png",
+      relative_time_description: "a year ago",
       language: "en",
-      time: Date.now() - 60 * 24 * 60 * 60 * 1000 // 60 days ago
+      time: Date.now() - 365 * 24 * 60 * 60 * 1000 // 1 year ago
     },
     {
       author_name: "Erica Baker",
       text: "Mike has inspired me to do so many things over the years including yoga, weight lifting, running and overall guidance on food. I am pretty sure I was his first client and he really knows how to motivate and get great results!",
       rating: 5,
-      profile_photo_url: "/default-avatar.svg", 
-      relative_time_description: "first client",
+      profile_photo_url: "/attached_assets/image_1752942667734.png", 
+      relative_time_description: "a year ago",
       language: "en",
-      time: Date.now() - 90 * 24 * 60 * 60 * 1000 // 90 days ago
+      time: Date.now() - 365 * 24 * 60 * 60 * 1000 // 1 year ago
     }
   ];
 
@@ -214,11 +214,6 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
                   <div className="text-sm text-gray-600 mb-2">{review.relative_time_description}</div>
                   <div className="flex items-center gap-1">
                     {renderStars(review.rating, 14)}
-                    <span className="text-blue-600 text-sm ml-1">
-                      <svg viewBox="0 0 24 24" className="w-3 h-3 inline">
-                        <path fill="currentColor" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                      </svg>
-                    </span>
                   </div>
                 </div>
               </div>
