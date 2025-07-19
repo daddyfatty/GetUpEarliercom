@@ -5,6 +5,7 @@ import { WorkoutCard } from "@/components/workout-card";
 import { CredentialsBand } from "@/components/credentials-band";
 import { ClientReviews } from "@/components/client-reviews";
 import { GoogleReviews } from "@/components/google-reviews";
+import GoogleReviewsCarousel from "@/components/google-reviews-carousel";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
@@ -297,8 +298,16 @@ export default function Home() {
         </div>
         
         <div className="relative z-10 py-16">
-          <GoogleReviews />
-          <ClientReviews />
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-white mb-4">What Our Clients Say</h2>
+              <p className="text-xl text-blue-100">Real Google reviews from real transformations</p>
+            </div>
+            <GoogleReviewsCarousel placeId="ChIJLQqz6P516IkRwqYD22g-_m8" />
+          </div>
+          <div className="mt-16">
+            <ClientReviews />
+          </div>
         </div>
       </section>
       {/* Credentials Band */}
