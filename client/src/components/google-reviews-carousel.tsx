@@ -49,7 +49,7 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
       author_name: "Mike Richetelli", 
       text: "Mike is very dedicated to health and wellness, including having a strong knowledge base about nutrition. I have trained with him for several months and have attained my fitness goals. He's taught me many alternative ways to workout, deviating from traditional exercises.",
       rating: 5,
-      profile_photo_url: "/attached_assets/image_1752942639890.png",
+      profile_photo_url: "/attached_assets/download - 2025-07-19T123326.220_1752942872285.png",
       relative_time_description: "a year ago",
       language: "en",
       time: Date.now() - 365 * 24 * 60 * 60 * 1000 // 1 year ago
@@ -58,7 +58,7 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
       author_name: "Erica Baker",
       text: "Mike has inspired me to do so many things over the years including yoga, weight lifting, running and overall guidance on food. I am pretty sure I was his first client and he really knows how to motivate and get great results!",
       rating: 5,
-      profile_photo_url: "/attached_assets/image_1752942667734.png", 
+      profile_photo_url: "/attached_assets/download - 2025-07-19T123321.490_1752942881598.png", 
       relative_time_description: "a year ago",
       language: "en",
       time: Date.now() - 365 * 24 * 60 * 60 * 1000 // 1 year ago
@@ -76,8 +76,8 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
       
       const data = await response.json();
       
-      // Combine Google reviews with additional testimonials
-      const combinedReviews = [...data.reviews, ...additionalTestimonials];
+      // Combine additional testimonials first, then Google reviews
+      const combinedReviews = [...additionalTestimonials, ...data.reviews];
       
       const enhancedData = {
         ...data,

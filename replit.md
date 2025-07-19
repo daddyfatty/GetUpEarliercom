@@ -208,7 +208,7 @@ WHERE slug = 'hartford-marathon-training-log-2025';
 
 ```
 Changelog:
-- July 19, 2025: Implemented comprehensive Google Reviews integration with authentic review carousel - created professional Google Reviews carousel component matching WorldCare design, added dedicated /reviews page, integrated Google Places API with real-time review fetching, and embedded carousel on homepage hero section; system displays authentic 5-star Google reviews with professional styling, author profiles, and "Write a review" call-to-action
+- July 19, 2025: Implemented comprehensive Google Reviews integration with authentic review carousel - created professional Google Reviews carousel component matching WorldCare design, added dedicated /reviews page, integrated Google Places API with real-time review fetching, and embedded carousel on homepage hero section; enhanced with 8 total testimonials (5 Google + 3 additional client reviews from David Salinas, Mike Richetelli, and Erica Baker) using authentic profile photos and "a year ago" timing; system displays authentic 5-star reviews with professional styling and proper star ratings
 - July 17, 2025: Perfected hero gradient with stunning vibrant sunrise effect - implemented four-layer gradient system with deep night blue base (#01020c), rich purple/magenta bands (deep purple #8A2BE2, indigo #4B0082), royal blues, and bright orange horizon; enhanced with 40% saturation boost and subtle breathing animation creating authentic dawn atmosphere
 - July 17, 2025: Increased certification logos 3x bigger across all 6 service pages for better visibility - changed from w-16 h-16 to w-48 h-48 on individual service pages
 - July 17, 2025: Updated footer branding from "WebMBD.com" to "Michael Baker Digital" for proper attribution
