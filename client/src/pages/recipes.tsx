@@ -143,6 +143,7 @@ export default function Recipes() {
                     <SelectItem value="dinner">🌙 Dinner</SelectItem>
                     <SelectItem value="snack">🥜 Snacks</SelectItem>
                     <SelectItem value="dessert">🍰 Dessert</SelectItem>
+                    <SelectItem value="Vitamix Smoothie Bowls">🥤 Vitamix Smoothie Bowls</SelectItem>
                     <SelectItem value="finicky-kid-friendly">👶 Finicky Kid Friendly</SelectItem>
                   </SelectContent>
                 </Select>
