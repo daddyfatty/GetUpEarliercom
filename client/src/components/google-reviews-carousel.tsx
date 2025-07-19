@@ -34,6 +34,37 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
     fetchGoogleReviews();
   }, [placeId]);
 
+  // Additional testimonials to supplement Google reviews
+  const additionalTestimonials: GoogleReview[] = [
+    {
+      author_name: "David Salinas",
+      text: "Needed a kick start back to life and got that from Michael. He's knowledgeable, adapts to your preferences and optimized. Highly recommended. 10/10",
+      rating: 5,
+      profile_photo_url: "/default-avatar.svg",
+      relative_time_description: "recent client",
+      language: "en",
+      time: Date.now() - 30 * 24 * 60 * 60 * 1000 // 30 days ago
+    },
+    {
+      author_name: "Mike Richetelli", 
+      text: "Mike is very dedicated to health and wellness, including having a strong knowledge base about nutrition. I have trained with him for several months and have attained my fitness goals. He's taught me many alternative ways to workout, deviating from traditional exercises.",
+      rating: 5,
+      profile_photo_url: "/default-avatar.svg",
+      relative_time_description: "long-term client",
+      language: "en",
+      time: Date.now() - 60 * 24 * 60 * 60 * 1000 // 60 days ago
+    },
+    {
+      author_name: "Erica Baker",
+      text: "Mike has inspired me to do so many things over the years including yoga, weight lifting, running and overall guidance on food. I am pretty sure I was his first client and he really knows how to motivate and get great results!",
+      rating: 5,
+      profile_photo_url: "/default-avatar.svg", 
+      relative_time_description: "first client",
+      language: "en",
+      time: Date.now() - 90 * 24 * 60 * 60 * 1000 // 90 days ago
+    }
+  ];
+
   const fetchGoogleReviews = async () => {
     try {
       setLoading(true);
@@ -44,7 +75,17 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
       }
       
       const data = await response.json();
-      setPlaceDetails(data);
+      
+      // Combine Google reviews with additional testimonials
+      const combinedReviews = [...data.reviews, ...additionalTestimonials];
+      
+      const enhancedData = {
+        ...data,
+        reviews: combinedReviews,
+        user_ratings_total: combinedReviews.length
+      };
+      
+      setPlaceDetails(enhancedData);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load reviews');
     } finally {
