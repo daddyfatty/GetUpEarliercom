@@ -22,6 +22,7 @@ import {
 import { getCachedLinkPreview } from './link-preview';
 import { getYouTubeVideoMetadata, generateSlugFromTitle, createEmbedUrl, formatYouTubeDescription } from './youtube-utils';
 import { validateYouTubePost, logValidationResult } from './youtube-validation';
+import { getCachedGooglePlaceDetails } from './google-places';
 
 // Check if Stripe is configured
 const STRIPE_CONFIGURED = !!process.env.STRIPE_SECRET_KEY;
@@ -785,6 +786,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.header('Content-Type', 'text/plain');
     res.header('Cache-Control', 'public, max-age=86400'); // Cache for 24 hours
     res.sendFile(path.join(process.cwd(), 'public/robots.txt'));
+  });
+
+  // Google Reviews endpoint
+  app.get("/api/google-reviews/:placeId", async (req, res) => {
+    try {
+      const placeId = req.params.placeId;
+      
+      if (!placeId) {
+        return res.status(400).json({ message: "Place ID is required" });
+      }
+
+      console.log('API: Fetching Google reviews for place ID:', placeId);
+      const placeDetails = await getCachedGooglePlaceDetails(placeId);
+      
+      res.json(placeDetails);
+    } catch (error: any) {
+      console.error("Error fetching Google reviews:", error);
+      res.status(500).json({ 
+        message: "Failed to fetch Google reviews", 
+        error: error.message 
+      });
+    }
   });
 
   // PayPal routes
