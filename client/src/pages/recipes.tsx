@@ -159,7 +159,7 @@ export default function Recipes() {
                     <SelectItem value="keto">🥑 Keto</SelectItem>
                     <SelectItem value="paleo">🍖 Paleo</SelectItem>
                     <SelectItem value="carnivore">🥩 Carnivore</SelectItem>
-                    <SelectItem value="high-carb-low-fat">🍝 High Carb Low Fat</SelectItem>
+                    <SelectItem value="high-carb-endurance">🏃 High Carb Endurance</SelectItem>
                     <SelectItem value="high-protein">💪 High Protein</SelectItem>
                   </SelectContent>
                 </Select>
