@@ -332,6 +332,14 @@ html {
   @apply bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200;
 }
 
+/* Google Reviews Carousel Styling */
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* Hartford Marathon Training Log Entry Styling */
 .training-entry {
   @apply mb-8 bg-white dark:bg-gray-800 shadow-lg rounded-lg border-0 overflow-hidden;

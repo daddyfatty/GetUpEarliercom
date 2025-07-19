@@ -1,9 +1,8 @@
 import { Helmet } from "react-helmet-async";
 import GoogleReviewsCarousel from "@/components/google-reviews-carousel";
 
-// You'll need to replace this with your actual Google My Business Place ID
-// To find your Place ID: https://developers.google.com/maps/documentation/places/web-service/place-id
-const PLACE_ID = "ChIJN1t_tDeuEmsRUsoyG83frY4"; // This is a sample Place ID
+// Your actual Google My Business Place ID for Get Up Earlier
+const PLACE_ID = "ChIJLQqz6P516IkRwqYD22g-_m8";
 
 export default function ReviewsPage() {
   return (
