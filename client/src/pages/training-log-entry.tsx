@@ -162,8 +162,8 @@ export default function TrainingLogEntryPage() {
                     </div>
                   </div>
                 ) : (
-                  // Multiple images - single column full width
-                  <div className="flex flex-col gap-6 w-full">
+                  // Multiple images - 2 column layout
+                  <div className="grid grid-cols-2 gap-6 w-full">
                     {entry.images.map((image, index) => (
                       <div 
                         key={index} 
