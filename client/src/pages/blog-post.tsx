@@ -306,8 +306,8 @@ export default function BlogPost() {
                 
 
                 {/* Entry Content */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl pt-[0px] pb-[0px]" style={{ padding: '25px' }}>
-                  <div className="w-full">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden">
+                  <div className="p-6">
                     <BlogContentRenderer 
                       content={entry.content} 
                       onImageClick={(imageSrc) => {
@@ -332,56 +332,56 @@ export default function BlogPost() {
                       </div>
                     )}
                   </div>
-                </div>
-
-                {/* Images - Full Width Outside Container */}
-                {entry.images && entry.images.length > 0 && (
-                  <div className="mt-6 w-full">
-                    {entry.images.length === 1 ? (
-                      // Single image - full width
-                      <div 
-                        className="cursor-pointer hover:shadow-xl transition-shadow group relative w-full"
-                        onClick={() => {
-                          setLightboxImage(entry.images[0]);
-                          setLightboxOpen(true);
-                        }}
-                      >
-                        <img
-                          src={entry.images[0]}
-                          alt="Training log photo"
-                          className="w-full h-auto object-cover rounded-lg"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center rounded-lg">
-                          <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                        </div>
-                      </div>
-                    ) : (
-                      // Multiple images - masonry layout full width
-                      <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4 w-full">
-                        {entry.images.map((imageSrc: string, imgIndex: number) => (
-                          <div 
-                            key={imgIndex}
-                            className="cursor-pointer hover:shadow-xl transition-all duration-300 group relative break-inside-avoid mb-4"
-                            onClick={() => {
-                              setLightboxImage(imageSrc);
-                              setLightboxOpen(true);
-                            }}
-                          >
-                            <img
-                              src={imageSrc}
-                              alt={`Training log photo ${imgIndex + 1}`}
-                              className="w-full h-auto object-cover rounded-lg group-hover:scale-[1.02] transition-transform duration-300"
-                              loading="lazy"
-                            />
-                            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center rounded-lg">
-                              <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                            </div>
+                  
+                  {/* Images - Break out of padding to span full card width */}
+                  {entry.images && entry.images.length > 0 && (
+                    <div className="w-full px-6 pb-6">
+                      {entry.images.length === 1 ? (
+                        // Single image - full width
+                        <div 
+                          className="cursor-pointer hover:shadow-xl transition-shadow group relative w-full -mx-6"
+                          onClick={() => {
+                            setLightboxImage(entry.images[0]);
+                            setLightboxOpen(true);
+                          }}
+                        >
+                          <img
+                            src={entry.images[0]}
+                            alt="Training log photo"
+                            className="w-full h-auto object-cover"
+                          />
+                          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center">
+                            <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                           </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
+                        </div>
+                      ) : (
+                        // Multiple images - masonry layout spanning full card width
+                        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4 w-full -mx-6 px-6">
+                          {entry.images.map((imageSrc: string, imgIndex: number) => (
+                            <div 
+                              key={imgIndex}
+                              className="cursor-pointer hover:shadow-xl transition-all duration-300 group relative break-inside-avoid mb-4"
+                              onClick={() => {
+                                setLightboxImage(imageSrc);
+                                setLightboxOpen(true);
+                              }}
+                            >
+                              <img
+                                src={imageSrc}
+                                alt={`Training log photo ${imgIndex + 1}`}
+                                className="w-full h-auto object-cover rounded-lg group-hover:scale-[1.02] transition-transform duration-300"
+                                loading="lazy"
+                              />
+                              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center rounded-lg">
+                                <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
 
                 {/* Separator between entries (not after the last one) */}
                 {index < sortedEntries.length - 1 && (
