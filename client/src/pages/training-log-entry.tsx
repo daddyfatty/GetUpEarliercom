@@ -140,9 +140,9 @@ export default function TrainingLogEntryPage() {
               {renderEntryContent(entry.content)}
             </div>
             
-            {/* Images - Full stretch to fill space */}
+            {/* Images - Full stretch with 15px padding */}
             {entry.images && entry.images.length > 0 && (
-              <div className="mt-8 -mx-8 -mb-8 px-0 pb-8">
+              <div className="mt-8 -mx-8 -mb-8 px-[15px] pb-8">
                 {entry.images.length === 1 ? (
                   // Single image - full bleed width with left padding
                   <div 
@@ -163,7 +163,7 @@ export default function TrainingLogEntryPage() {
                   </div>
                 ) : (
                   // Multiple images - 2 column layout
-                  <div className="grid grid-cols-2 gap-6 w-full">
+                  <div className="grid grid-cols-2 gap-6 w-full px-0">
                     {entry.images.map((image, index) => (
                       <div 
                         key={index} 

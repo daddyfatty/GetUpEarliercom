@@ -333,9 +333,9 @@ export default function BlogPost() {
                     )}
                   </div>
                   
-                  {/* Images - Full stretch to fill space */}
+                  {/* Images - Full stretch with 15px padding */}
                   {entry.images && entry.images.length > 0 && (
-                    <div className="mt-6 -mx-6 -mb-6 px-0 pb-6">
+                    <div className="mt-6 -mx-6 -mb-6 px-[15px] pb-6">
                       {entry.images.length === 1 ? (
                         // Single image - full bleed width with left padding
                         <div 
@@ -356,7 +356,7 @@ export default function BlogPost() {
                         </div>
                       ) : (
                         // Multiple images - 2 column layout
-                        <div className="grid grid-cols-2 gap-4 w-full">
+                        <div className="grid grid-cols-2 gap-4 w-full px-0">
                           {entry.images.map((imageSrc: string, imgIndex: number) => (
                             <div 
                               key={imgIndex}
