@@ -333,11 +333,11 @@ export default function BlogPost() {
                     )}
                   </div>
                   
-                  {/* Images - Full width within card */}
+                  {/* Images - Break out to fill post width with left padding */}
                   {entry.images && entry.images.length > 0 && (
-                    <div className="mt-6">
+                    <div className="mt-6 -mx-6 pl-6 pr-0">
                       {entry.images.length === 1 ? (
-                        // Single image - full width within container
+                        // Single image - full post width with left padding
                         <div 
                           className="cursor-pointer hover:shadow-xl transition-shadow group relative w-full"
                           onClick={() => {
@@ -348,15 +348,15 @@ export default function BlogPost() {
                           <img
                             src={entry.images[0]}
                             alt="Training log photo"
-                            className="w-full h-auto object-cover rounded-lg"
+                            className="w-full h-auto object-cover rounded-l-lg"
                           />
-                          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center rounded-lg">
+                          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center rounded-l-lg">
                             <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                           </div>
                         </div>
                       ) : (
-                        // Multiple images - masonry layout
-                        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4 w-full">
+                        // Multiple images - masonry layout with left padding
+                        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4 w-full pr-6">
                           {entry.images.map((imageSrc: string, imgIndex: number) => (
                             <div 
                               key={imgIndex}
