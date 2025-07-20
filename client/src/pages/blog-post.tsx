@@ -335,11 +335,11 @@ export default function BlogPost() {
                   
                   {/* Images - Break out of padding to span full card width */}
                   {entry.images && entry.images.length > 0 && (
-                    <div className="w-full px-6 pb-6">
+                    <div className="mt-6 -mx-6 px-0 pb-6">
                       {entry.images.length === 1 ? (
                         // Single image - full width
                         <div 
-                          className="cursor-pointer hover:shadow-xl transition-shadow group relative w-full -mx-6"
+                          className="cursor-pointer hover:shadow-xl transition-shadow group relative w-full"
                           onClick={() => {
                             setLightboxImage(entry.images[0]);
                             setLightboxOpen(true);
@@ -356,7 +356,7 @@ export default function BlogPost() {
                         </div>
                       ) : (
                         // Multiple images - masonry layout spanning full card width
-                        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4 w-full -mx-6 px-6">
+                        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4 w-full px-6">
                           {entry.images.map((imageSrc: string, imgIndex: number) => (
                             <div 
                               key={imgIndex}
