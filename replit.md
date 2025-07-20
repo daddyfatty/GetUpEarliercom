@@ -266,6 +266,7 @@ Changelog:
 - July 12, 2025: Added 301 redirect from non-www to www domain - automatically redirects getupearlier.com to www.getupearlier.com to resolve SSL certificate issues
 - July 11, 2025: Updated blog page header - changed "Health & Fitness Blog" to "Get Up Earlier Blog", replaced "Expert Content" with "Helpful Insight", and removed "Expert Insights" and "Updated Weekly" badges for cleaner presentation
 - July 11, 2025: Updated footer navigation to match header links and removed Instagram/Twitter icons - footer now shows only YouTube and Facebook Group links consistent with header navigation
+- July 20, 2025: Removed pricing table from workouts page for cleaner, content-focused presentation
 - July 11, 2025: Removed pricing table from recipes page for cleaner, content-focused presentation
 - July 11, 2025: Updated category display system to show comma-separated categories as individual badges across all blog pages (listing, individual posts, category archives) for improved user experience
 - July 11, 2025: Removed "2 min read" tags from all blog pages (blog listing, individual posts, category pages) for cleaner presentation
