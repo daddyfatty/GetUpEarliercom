@@ -139,56 +139,56 @@ export default function TrainingLogEntryPage() {
             <div className="prose prose-lg max-w-none">
               {renderEntryContent(entry.content)}
             </div>
-            
-            {/* Images */}
-            {entry.images && entry.images.length > 0 && (
-              <div className="mt-8">
-                {entry.images.length === 1 ? (
-                  // Single image - full width
-                  <div 
-                    className="cursor-pointer hover:shadow-xl transition-shadow group relative w-full"
-                    onClick={() => {
-                      setLightboxImage(entry.images![0]);
-                      setLightboxOpen(true);
-                    }}
-                  >
-                    <img
-                      src={entry.images![0]}
-                      alt="Training log photo"
-                      className="w-full h-auto object-cover rounded-lg"
-                    />
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center rounded-lg">
-                      <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                    </div>
-                  </div>
-                ) : (
-                  // Multiple images - masonry layout full width
-                  <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6 w-full">
-                    {entry.images.map((image, index) => (
-                      <div 
-                        key={index} 
-                        className="cursor-pointer hover:shadow-xl transition-all duration-300 group relative break-inside-avoid mb-6"
-                        onClick={() => {
-                          setLightboxImage(image);
-                          setLightboxOpen(true);
-                        }}
-                      >
-                        <img 
-                          src={image} 
-                          alt={`Training log entry ${entry.entryNumber} image ${index + 1}`}
-                          className="w-full h-auto object-cover rounded-lg group-hover:scale-[1.02] transition-transform duration-300"
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center rounded-lg">
-                          <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
           </CardContent>
+
+          {/* Images - Full Width Outside Card Content */}
+          {entry.images && entry.images.length > 0 && (
+            <div className="px-8 pb-8">
+              {entry.images.length === 1 ? (
+                // Single image - full width
+                <div 
+                  className="cursor-pointer hover:shadow-xl transition-shadow group relative w-full"
+                  onClick={() => {
+                    setLightboxImage(entry.images![0]);
+                    setLightboxOpen(true);
+                  }}
+                >
+                  <img
+                    src={entry.images![0]}
+                    alt="Training log photo"
+                    className="w-full h-auto object-cover rounded-lg"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center rounded-lg">
+                    <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                  </div>
+                </div>
+              ) : (
+                // Multiple images - masonry layout full width
+                <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6 w-full">
+                  {entry.images.map((image, index) => (
+                    <div 
+                      key={index} 
+                      className="cursor-pointer hover:shadow-xl transition-all duration-300 group relative break-inside-avoid mb-6"
+                      onClick={() => {
+                        setLightboxImage(image);
+                        setLightboxOpen(true);
+                      }}
+                    >
+                      <img 
+                        src={image} 
+                        alt={`Training log entry ${entry.entryNumber} image ${index + 1}`}
+                        className="w-full h-auto object-cover rounded-lg group-hover:scale-[1.02] transition-transform duration-300"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center rounded-lg">
+                        <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </Card>
 
         {/* Lightbox */}
