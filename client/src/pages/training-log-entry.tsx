@@ -140,11 +140,11 @@ export default function TrainingLogEntryPage() {
               {renderEntryContent(entry.content)}
             </div>
             
-            {/* Images - Break out of content padding to span card width */}
+            {/* Images - Full width within content area */}
             {entry.images && entry.images.length > 0 && (
-              <div className="mt-8 -mx-8 px-0 pb-8">
+              <div className="mt-8">
                 {entry.images.length === 1 ? (
-                  // Single image - full card width
+                  // Single image - full content width
                   <div 
                     className="cursor-pointer hover:shadow-xl transition-shadow group relative w-full"
                     onClick={() => {
@@ -155,15 +155,15 @@ export default function TrainingLogEntryPage() {
                     <img
                       src={entry.images![0]}
                       alt="Training log photo"
-                      className="w-full h-auto object-cover"
+                      className="w-full h-auto object-cover rounded-lg"
                     />
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center rounded-lg">
                       <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                     </div>
                   </div>
                 ) : (
-                  // Multiple images - masonry layout spanning card width
-                  <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6 w-full px-8">
+                  // Multiple images - masonry layout
+                  <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6 w-full">
                     {entry.images.map((image, index) => (
                       <div 
                         key={index} 
