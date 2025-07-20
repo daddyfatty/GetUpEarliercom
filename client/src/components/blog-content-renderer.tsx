@@ -119,35 +119,56 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
           />
         );
       } else if (match.type === 'gallery') {
-        // Determine grid layout based on image count
+        // Determine layout based on image count
         const imageCount = match.images.length;
-        let gridClass = "";
-        
-        if (imageCount === 1) {
-          gridClass = "grid grid-cols-1 gap-4 w-full";
-        } else if (imageCount === 2) {
-          gridClass = "grid grid-cols-2 gap-4 w-full";
-        } else if (imageCount === 3) {
-          gridClass = "grid grid-cols-3 gap-4 w-full";
-        } else if (imageCount >= 4) {
-          gridClass = "grid grid-cols-2 gap-4 w-full";
-        }
         
         parts.push(
-          <div key={`gallery-${match.start}`} className={`${gridClass} my-8`}>
-            {match.images.map((image, imgIndex) => (
+          <div key={`gallery-${match.start}`} className="my-8 w-full">
+            {imageCount === 1 ? (
+              // Single image - full width
               <div 
-                key={`gallery-img-${imgIndex}`}
-                className="rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative w-full"
-                onClick={() => onImageClick && onImageClick(image.src)}
+                className="cursor-pointer hover:shadow-xl transition-shadow group relative w-full"
+                onClick={() => onImageClick && onImageClick(match.images[0].src)}
               >
                 <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg"
+                  src={match.images[0].src}
+                  alt={match.images[0].alt}
+                  className="w-full h-auto object-cover rounded-lg"
                 />
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center rounded-lg">
+                  <div className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4m-4 0l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                    </svg>
+                  </div>
+                </div>
               </div>
-            ))}
+            ) : (
+              // Multiple images - masonry layout full width
+              <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4 w-full">
+                {match.images.map((image, imgIndex) => (
+                  <div 
+                    key={`gallery-img-${imgIndex}`}
+                    className="cursor-pointer hover:shadow-xl transition-all duration-300 group relative break-inside-avoid mb-4"
+                    onClick={() => onImageClick && onImageClick(image.src)}
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-auto object-cover rounded-lg group-hover:scale-[1.02] transition-transform duration-300"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center rounded-lg">
+                      <div className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4m-4 0l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         );
       }

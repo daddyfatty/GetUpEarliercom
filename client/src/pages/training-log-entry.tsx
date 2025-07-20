@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, MapPin, Clock, Timer, Route, ArrowLeft, ExternalLink } from "lucide-react";
+import { Calendar, MapPin, Clock, Timer, Route, ArrowLeft, ExternalLink, Expand } from "lucide-react";
 import { TrainingLogEntry } from "@shared/schema";
 
 export default function TrainingLogEntryPage() {
@@ -142,20 +142,50 @@ export default function TrainingLogEntryPage() {
             
             {/* Images */}
             {entry.images && entry.images.length > 0 && (
-              <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {entry.images.map((image, index) => (
-                  <div key={index} className="aspect-square overflow-hidden rounded-lg cursor-pointer group">
-                    <img 
-                      src={image} 
-                      alt={`Training log entry ${entry.entryNumber} image ${index + 1}`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      onClick={() => {
-                        setLightboxImage(image);
-                        setLightboxOpen(true);
-                      }}
+              <div className="mt-8">
+                {entry.images.length === 1 ? (
+                  // Single image - full width
+                  <div 
+                    className="cursor-pointer hover:shadow-xl transition-shadow group relative w-full"
+                    onClick={() => {
+                      setLightboxImage(entry.images![0]);
+                      setLightboxOpen(true);
+                    }}
+                  >
+                    <img
+                      src={entry.images![0]}
+                      alt="Training log photo"
+                      className="w-full h-auto object-cover rounded-lg"
                     />
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center rounded-lg">
+                      <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                    </div>
                   </div>
-                ))}
+                ) : (
+                  // Multiple images - masonry layout full width
+                  <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6 w-full">
+                    {entry.images.map((image, index) => (
+                      <div 
+                        key={index} 
+                        className="cursor-pointer hover:shadow-xl transition-all duration-300 group relative break-inside-avoid mb-6"
+                        onClick={() => {
+                          setLightboxImage(image);
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img 
+                          src={image} 
+                          alt={`Training log entry ${entry.entryNumber} image ${index + 1}`}
+                          className="w-full h-auto object-cover rounded-lg group-hover:scale-[1.02] transition-transform duration-300"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center rounded-lg">
+                          <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </CardContent>
@@ -164,14 +194,23 @@ export default function TrainingLogEntryPage() {
         {/* Lightbox */}
         {lightboxOpen && (
           <div 
-            className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4"
             onClick={() => setLightboxOpen(false)}
           >
-            <div className="max-w-4xl max-h-full p-4">
+            <div className="relative w-full h-full max-w-7xl max-h-full flex items-center justify-center">
+              <button
+                onClick={() => setLightboxOpen(false)}
+                className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10 bg-black bg-opacity-50 rounded-full p-2"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
               <img 
                 src={lightboxImage} 
                 alt="Training log entry image"
-                className="max-w-full max-h-full object-contain"
+                className="max-w-[95vw] max-h-[95vh] w-auto h-auto object-contain rounded-lg shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
               />
             </div>
           </div>
