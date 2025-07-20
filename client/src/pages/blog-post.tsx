@@ -355,8 +355,8 @@ export default function BlogPost() {
                           </div>
                         </div>
                       ) : (
-                        // Multiple images - masonry layout full stretch
-                        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4 w-full px-6">
+                        // Multiple images - single column full width
+                        <div className="flex flex-col gap-4 w-full">
                           {entry.images.map((imageSrc: string, imgIndex: number) => (
                             <div 
                               key={imgIndex}
