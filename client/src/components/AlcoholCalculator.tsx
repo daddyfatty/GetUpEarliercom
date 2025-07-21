@@ -43,9 +43,8 @@ export default function AlcoholCalculator() {
   // Like mutation
   const likeMutation = useMutation({
     mutationFn: async () => {
-      const response = await apiRequest('/api/calculator-like', {
-        method: 'POST',
-        body: { calculatorType: 'alcohol' }
+      const response = await apiRequest('POST', '/api/calculator-like', {
+        calculatorType: 'alcohol'
       });
       return response;
     },
@@ -73,9 +72,9 @@ export default function AlcoholCalculator() {
   // Share mutation
   const shareMutation = useMutation({
     mutationFn: async (platform: string) => {
-      const response = await apiRequest('/api/calculator-share', {
-        method: 'POST',
-        body: { calculatorType: 'alcohol', platform }
+      const response = await apiRequest('POST', '/api/calculator-share', {
+        calculatorType: 'alcohol', 
+        platform
       });
       return response;
     },
@@ -337,7 +336,8 @@ Calculate yours: ${window.location.href}
               size="sm"
               onClick={() => {
                 // Facebook doesn't support pre-filled text in shares, so copy to clipboard for manual posting
-                navigator.clipboard?.writeText(shareText + "\n\nCalculate your own: " + window.location.origin + "/alcohol-calculator");
+                navigator.clipboard?.writeText(shareText);
+                shareMutation.mutate('facebook');
                 toast({
                   title: "Copied for Facebook!",
                   description: "Your results are copied to clipboard. Paste into your Facebook post.",
@@ -351,9 +351,9 @@ Calculate yours: ${window.location.href}
               size="sm"
               onClick={() => {
                 // LinkedIn sharing with personal data in post content
-                const linkedInText = shareText.replace(/\n/g, '%0A');
-                const linkedInUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(shareText + "\n\nCalculate your own: " + window.location.origin + "/alcohol-calculator")}`;
+                const linkedInUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(shareText)}`;
                 window.open(linkedInUrl, '_blank');
+                shareMutation.mutate('linkedin');
               }}
             >
               LinkedIn
@@ -364,9 +364,10 @@ Calculate yours: ${window.location.href}
               variant="outline"
               size="sm"
               onClick={() => {
-                const smsBody = shareText + "\n\nTry it: " + window.location.origin + "/alcohol-calculator";
+                const smsBody = shareText;
                 const smsUrl = `sms:?body=${encodeURIComponent(smsBody)}`;
                 window.location.href = smsUrl;
+                shareMutation.mutate('sms');
               }}
             >
               SMS Text
@@ -376,9 +377,10 @@ Calculate yours: ${window.location.href}
               size="sm"
               onClick={() => {
                 const emailSubject = "My Buzzkill Calculator Results - Eye Opening!";
-                const emailBody = shareText + "\n\nTry the calculator yourself: " + window.location.origin + "/alcohol-calculator";
+                const emailBody = shareText;
                 const emailUrl = `mailto:?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
                 window.location.href = emailUrl;
+                shareMutation.mutate('email');
               }}
             >
               Email
