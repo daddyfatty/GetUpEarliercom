@@ -34,7 +34,7 @@ app.get('/alcohol-calculator', (req, res, next) => {
   if (isCrawler) {
     const title = "Buzzkill | Beer and Wine Weight Gain Calculator | Get Up Earlier";
     const description = "Calculate how daily beer and wine consumption affects your weight gain. Interactive alcohol calorie calculator shows the impact of habitual drinking on your fitness goals.";
-    const image = `${req.protocol}://${req.get('host')}/buzzkill-calculator-og-image.png`;
+    const image = `${req.protocol}://${req.get('host')}/buzzkill-social.png`;
     const url = `${req.protocol}://${req.get('host')}/alcohol-calculator`;
     
     // Read the default HTML and inject meta tags
