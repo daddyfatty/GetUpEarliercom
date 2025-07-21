@@ -140,9 +140,9 @@ export default function TrainingLogEntryPage() {
               {renderEntryContent(entry.content)}
             </div>
             
-            {/* Images - Full stretch with 15px padding */}
+            {/* Images - Full stretch with 24px padding */}
             {entry.images && entry.images.length > 0 && (
-              <div className="mt-8 -mx-8 -mb-8 px-[15px] pb-8">
+              <div className="mt-8 -mx-8 -mb-8 px-6 pb-8">
                 {entry.images.length === 1 ? (
                   // Single image - full bleed width with left padding
                   <div 
