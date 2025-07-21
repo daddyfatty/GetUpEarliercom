@@ -625,7 +625,7 @@ Calculate yours: ${window.location.href}
                     className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-lg font-semibold py-4 h-auto min-h-[60px]"
                     size="lg"
                   >
-                    <img src="/buzzkill.png" alt="Buzzkill" className="mr-0.5 flex-shrink-0 h-20 relative z-10" />
+                    <img src="/buzzkill.png" alt="Buzzkill" className="flex-shrink-0 h-20 relative z-10" />
                     <span className="flex-1">Share The Buzzkill Calculator</span>
                   </Button>
 
