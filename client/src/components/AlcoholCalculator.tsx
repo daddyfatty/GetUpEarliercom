@@ -849,7 +849,11 @@ Calculate yours: ${window.location.href}
                     }}
                     className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-lg shadow-lg relative flex items-center overflow-visible"
                   >
-                    <Share2 className="h-5 w-5 mr-2 -ml-1" />
+                    <img 
+                      src="/debbie-downer.png" 
+                      alt="Debbie Downer" 
+                      className="h-5 w-5 mr-2 -ml-1 rounded-full object-cover"
+                    />
                     <span>Share The Buzzkill Calculator</span>
                   </Button>
 
