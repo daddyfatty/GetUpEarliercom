@@ -334,8 +334,8 @@ Calculate yours: ${window.location.href}
     }
   };
 
-  const fallbackShare = (passedShareText: string) => {
-    // Recalculate shareText with current form values to ensure accuracy
+  const generateShareText = () => {
+    // Build share text with current form values
     const currentWeightDisplay = currentWeight ? ` (weight: ${currentWeight} lbs)` : "";
     
     // Build consumption breakdown
@@ -348,7 +348,7 @@ Calculate yours: ${window.location.href}
     if (spiritsCount > 0) consumptionBreakdown += `🥃 Spirits: ${spiritsCount} shots\n`;
     if (cocktailCount > 0) consumptionBreakdown += `🍸 Cocktails: ${cocktailCount} drinks\n`;
     
-    const shareText = `🍺🍷 BUZZKILL REALITY CHECK!
+    return `🍺🍷 BUZZKILL REALITY CHECK!
 
 ${consumptionBreakdown}
 💥 Total Weekly Impact: ${totalCalories.toLocaleString()} calories
@@ -364,8 +364,9 @@ ${consumptionBreakdown}
 Calculate yours: ${window.location.href}
 
 #BuzzkillReality #AlcoholCalories #WeightLoss #FitnessReality #GetUpEarlier`;
+  };
 
-    console.log("Fallback share - calculated shareText:", shareText);
+  const fallbackShare = (passedShareText: string) => {
 
     // Show sharing options with direct platform links
     toast({
@@ -378,17 +379,18 @@ Calculate yours: ${window.location.href}
               variant="outline"
               size="sm"
               onClick={() => {
-                // Copy results to clipboard for manual pasting
-                console.log("Facebook sharing - shareText content:", shareText);
-                navigator.clipboard?.writeText(shareText).then(() => {
+                // Generate fresh shareText and copy to clipboard
+                const currentShareText = generateShareText();
+                console.log("Facebook sharing - generated shareText:", currentShareText);
+                navigator.clipboard?.writeText(currentShareText).then(() => {
                   // Open Facebook's main feed where users can create a new post
                   window.open('https://www.facebook.com/', '_blank');
                   
                   shareMutation.mutate('facebook');
                   
                   toast({
-                    title: "✓ Results Copied & Facebook Opened!",
-                    description: "Your complete BUZZKILL REALITY CHECK (with consumption breakdown, weight gain projections, and exercise requirements) is copied to clipboard. Go to Facebook, click 'What's on your mind?' and paste with Ctrl+V (or Cmd+V on Mac).",
+                    title: "✓ Complete Results Copied & Facebook Opened!",
+                    description: "Your full BUZZKILL REALITY CHECK is copied to clipboard. Go to Facebook, click 'What's on your mind?' and paste with Ctrl+V (or Cmd+V on Mac).",
                     duration: 15000,
                   });
                 }).catch(() => {
@@ -434,10 +436,12 @@ Calculate yours: ${window.location.href}
               variant="outline"
               size="sm"
               onClick={() => {
+                // Generate fresh shareText for email
+                const currentShareText = generateShareText();
                 const emailSubject = "My Buzzkill Calculator Results - Eye Opening!";
-                const emailBody = shareText + "\n\nTry the calculator yourself: " + window.location.origin + "/alcohol-calculator";
+                const emailBody = currentShareText + "\n\nTry the calculator yourself: " + window.location.origin + "/alcohol-calculator";
                 const emailUrl = `mailto:?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-                console.log("Email sharing - shareText content:", shareText);
+                console.log("Email sharing - generated shareText:", currentShareText);
                 console.log("Email sharing - complete emailBody:", emailBody);
                 window.location.href = emailUrl;
                 shareMutation.mutate('email');
