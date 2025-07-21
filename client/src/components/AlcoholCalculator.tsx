@@ -541,7 +541,9 @@ ${metabolicImpact.description}
                     className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-base py-4 h-auto min-h-[60px]"
                     size="lg"
                   >
-                    <img src="/buzzkill.png" alt="Buzzkill" className="h-8 w-8 mr-3 rounded-full flex-shrink-0" />
+                    <div className="h-8 w-8 mr-3 rounded-full overflow-hidden flex-shrink-0 bg-white">
+                      <img src="/buzzkill.png" alt="Buzzkill" className="h-full w-full object-cover" />
+                    </div>
                     <span className="flex-1">Share my Buzzkill Results</span>
                   </Button>
                   
