@@ -8,6 +8,7 @@ import { Link } from "wouter";
 import CheckoutModal from "@/components/checkout-modal";
 import { MapPin, Award } from "lucide-react";
 import { SEO } from "@/components/seo";
+import { Schema } from "@/components/schema";
 
 export default function Services() {
   const [checkoutModal, setCheckoutModal] = useState<{
@@ -178,6 +179,15 @@ export default function Services() {
         description="Professional personal training, nutrition coaching, running coaching, and yoga services. In-person Orange CT or virtual anywhere. Expert guidance for strength, nutrition and accountability."
         keywords="personal training, nutrition coaching, running coach, yoga instructor, virtual coaching, Orange CT, strength training"
         url="/services"
+      />
+      <Schema 
+        type="service"
+        data={{
+          name: "Personal Training & Coaching Services",
+          description: "Professional personal training, nutrition coaching, running coaching, and yoga services. In-person Orange CT or virtual anywhere.",
+          serviceType: "Fitness and Wellness Coaching",
+          url: "https://www.getupearlier.com/services"
+        }}
       />
       <div className="min-h-screen bg-gray-50">
       {/* Hero Section + Services Grid with Gradient Background */}
