@@ -4,6 +4,7 @@ import { SEO } from "@/components/seo";
 import { Schema } from "@/components/schema";
 
 export default function AlcoholCalculatorPage() {
+  // Force deployment refresh for updated social image
   return (
     <>
       <SEO 
