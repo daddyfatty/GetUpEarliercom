@@ -622,11 +622,11 @@ Calculate yours: ${window.location.href}
                   {/* Share Button - Full Width */}
                   <Button 
                     onClick={shareResults}
-                    className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-lg font-semibold py-4 h-auto min-h-[60px]"
+                    className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-lg font-semibold py-4 h-auto min-h-[60px] relative overflow-visible pl-12"
                     size="lg"
                   >
-                    <img src="/buzzkill.png" alt="Buzzkill" className="flex-shrink-0 h-20 relative z-10" />
-                    <span className="flex-1">Share The Buzzkill Calculator</span>
+                    <img src="/buzzkill.png" alt="Buzzkill" className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-6 flex-shrink-0 h-20 z-10" />
+                    <span className="flex-1 text-center">Share The Buzzkill Calculator</span>
                   </Button>
 
                   {/* Copy and Share Results Button */}
