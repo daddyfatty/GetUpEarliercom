@@ -381,11 +381,10 @@ Calculate yours: ${window.location.href}
   };
 
   const fallbackShare = (passedShareText: string) => {
-
-    // Show sharing options with direct platform links
+    // Show simplified sharing options
     toast({
       title: "Share Your Buzzkill Results",
-      description: "Choose how to share your alcohol consumption reality check:",
+      description: "Choose how to share:",
       action: (
         <div className="flex flex-col gap-2 w-full">
           <div className="grid grid-cols-2 gap-2">
@@ -393,27 +392,14 @@ Calculate yours: ${window.location.href}
               variant="outline"
               size="sm"
               onClick={() => {
-                // Generate fresh shareText and copy to clipboard
                 const currentShareText = generateShareText();
-                console.log("Facebook sharing - generated shareText:", currentShareText);
                 navigator.clipboard?.writeText(currentShareText).then(() => {
-                  // Open Facebook's main feed where users can create a new post
                   window.open('https://www.facebook.com/', '_blank');
-                  
                   shareMutation.mutate('facebook');
-                  
                   toast({
-                    title: "✓ Complete Results Copied & Facebook Opened!",
-                    description: "Your full BUZZKILL REALITY CHECK is copied to clipboard. Go to Facebook, click 'What's on your mind?' and paste with Ctrl+V (or Cmd+V on Mac).",
-                    duration: 15000,
-                  });
-                }).catch(() => {
-                  // Fallback if clipboard fails
-                  window.open('https://www.facebook.com/', '_blank');
-                  toast({
-                    title: "Facebook Opened",
-                    description: "Please manually copy your results and post them on Facebook.",
-                    duration: 6000,
+                    title: "✓ Results Copied!",
+                    description: "Paste in Facebook to share your results.",
+                    duration: 5000,
                   });
                 });
               }}
@@ -424,51 +410,55 @@ Calculate yours: ${window.location.href}
               variant="outline"
               size="sm"
               onClick={() => {
-                // LinkedIn sharing with personal data in post content
                 const currentShareText = generateShareText();
                 const linkedInUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(currentShareText)}`;
-                console.log("LinkedIn sharing - generated shareText:", currentShareText);
                 window.open(linkedInUrl, '_blank');
                 shareMutation.mutate('linkedin');
               }}
             >
               LinkedIn
             </Button>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
             <Button
               variant="outline"
               size="sm"
               onClick={() => {
                 const currentShareText = generateShareText();
-                const smsUrl = `sms:?body=${encodeURIComponent(currentShareText)}`;
-                console.log("SMS sharing - generated shareText:", currentShareText);
-                window.location.href = smsUrl;
-                shareMutation.mutate('sms');
+                const emailUrl = `mailto:?subject=${encodeURIComponent('My Buzzkill Calculator Results')}&body=${encodeURIComponent(currentShareText)}`;
+                window.location.href = emailUrl;
+                shareMutation.mutate('email');
               }}
             >
-              SMS Text
+              Gmail
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={() => {
-                // Generate fresh shareText for email
                 const currentShareText = generateShareText();
-                const emailSubject = "My Buzzkill Calculator Results - Eye Opening!";
-                const emailBody = currentShareText + "\n\nTry the calculator yourself: " + window.location.origin + "/alcohol-calculator";
-                const emailUrl = `mailto:?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-                console.log("Email sharing - generated shareText:", currentShareText);
-                console.log("Email sharing - complete emailBody:", emailBody);
+                const emailUrl = `mailto:?subject=${encodeURIComponent('My Buzzkill Calculator Results')}&body=${encodeURIComponent(currentShareText)}`;
                 window.location.href = emailUrl;
                 shareMutation.mutate('email');
               }}
             >
               Email
             </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const currentShareText = generateShareText();
+                const smsUrl = `sms:?body=${encodeURIComponent(currentShareText)}`;
+                window.location.href = smsUrl;
+                shareMutation.mutate('sms');
+              }}
+              className="col-span-2"
+            >
+              Text
+            </Button>
           </div>
         </div>
       ),
+      duration: 8000,
     });
   };
 
