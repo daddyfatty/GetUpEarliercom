@@ -8,7 +8,7 @@ export default function AlcoholCalculatorPage() {
       <SEO 
         title="Buzzkill | Beer and Wine Weight Gain Calculator | Get Up Earlier"
         description="Calculate how daily beer and wine consumption affects your weight gain. Interactive alcohol calorie calculator shows the impact of habitual drinking on your fitness goals."
-        image="/attached_assets/download (30)_1753089337957.png"
+        image="https://www.getupearlier.com/attached_assets/download%20(30)_1753089337957.png"
         url="/alcohol-calculator"
       />
       <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
