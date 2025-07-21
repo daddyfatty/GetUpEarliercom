@@ -52,14 +52,22 @@ export default function AlcoholCalculator() {
       return response;
     },
     onSuccess: (data) => {
-      setStats({ totalLikes: data.totalLikes, totalShares: data.totalShares });
+      console.log("Like success data:", data);
+      if (data && typeof data === 'object' && 'totalLikes' in data && 'totalShares' in data) {
+        setStats({ totalLikes: data.totalLikes, totalShares: data.totalShares });
+      } else {
+        // Refresh stats if response format is different
+        queryClient.invalidateQueries({ queryKey: ['/api/calculator-stats'] });
+      }
       setHasLiked(true);
       toast({
         description: "Thanks for the like! 👍"
       });
     },
     onError: (error: any) => {
-      if (error.message.includes('Already liked')) {
+      console.log("Like error:", error);
+      if (error.message && error.message.includes('Already liked')) {
+        setHasLiked(true);
         toast({
           description: "You've already liked this calculator!"
         });
@@ -618,8 +626,11 @@ Calculate yours: ${window.location.href}
                       Reset
                     </Button>
                     <Button 
-                      onClick={() => likeMutation.mutate()}
-                      disabled={hasLiked || likeMutation.isPending}
+                      onClick={() => {
+                        console.log("Like button clicked, current stats:", stats);
+                        likeMutation.mutate();
+                      }}
+                      disabled={likeMutation.isPending}
                       className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50"
                       size="lg"
                     >
