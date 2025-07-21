@@ -338,18 +338,21 @@ Calculate yours: ${window.location.href}
               variant="outline"
               size="sm"
               onClick={() => {
-                // Facebook doesn't support pre-filled text in shares, so copy to clipboard for manual posting
-                console.log("Facebook sharing - copying to clipboard:", shareText);
+                // Facebook approach: Try opening Facebook with quote parameter and also copy to clipboard as backup
+                const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(shareText)}`;
+                
+                // Also copy to clipboard as backup
                 navigator.clipboard?.writeText(shareText);
+                
+                // Open Facebook sharing dialog
+                window.open(facebookUrl, '_blank', 'width=600,height=400');
+                
                 shareMutation.mutate('facebook');
                 
-                // Show a preview of what was copied
-                const previewText = shareText.substring(0, 200) + "...";
-                
                 toast({
-                  title: "✓ Results Copied to Clipboard!",
-                  description: `Copied: "${previewText}" - Now paste this into your Facebook post text area (above the URL preview card).`,
-                  duration: 10000,
+                  title: "✓ Facebook Share Opened!",
+                  description: "Facebook sharing window opened with your complete calculation results included.",
+                  duration: 6000,
                 });
               }}
             >
