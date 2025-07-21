@@ -223,7 +223,19 @@ export default function AlcoholCalculator() {
     const yearlyGainText = `${yearlyWeightGain.toFixed(1)} lbs/year`;
     const monthlyGainText = `${monthlyWeightGain.toFixed(1)} lbs/month`;
     
-    const shareText = `💡 Eye-opening results from the Buzzkill Calculator!\n\n🍺 My weekly alcohol intake: ${weeklyImpact}\n📈 Potential weight gain: ${monthlyGainText}/month, ${yearlyGainText}/year\n\n🏃‍♂️ Exercise needed to burn off these calories:\n• Walk ${milesToBurnCalories.toFixed(1)} miles\n• Run ${milesToRunCalories.toFixed(1)} miles\n• Lift weights ${hoursWeightLifting.toFixed(1)} hours\n\n${metabolicImpact.description}\n\nCheck your habits: ${window.location.origin}/alcohol-calculator\n\n#BuzzkillCalculator #HealthAwareness #FitnessGoals #ExerciseChallenge`;
+    const shareText = `💡 Eye-opening results from the Buzzkill Calculator!
+
+🍺 My weekly alcohol intake: ${weeklyImpact}
+📈 Potential weight gain: ${monthlyGainText}/month, ${yearlyGainText}/year
+
+⚡ Buzzkill Reality - Exercise needed to burn off these calories:
+🚶‍♂️ Walk ${milesToBurnCalories.toFixed(1)} miles
+🏃‍♂️ Run ${milesToRunCalories.toFixed(1)} miles  
+🏋️‍♂️ Lift weights ${hoursWeightLifting.toFixed(1)} hours
+
+${metabolicImpact.description}
+
+#BuzzkillCalculator #HealthAwareness #FitnessGoals #ExerciseChallenge`;
     
     // Try native sharing first (mobile)
     if (navigator.share) {
@@ -253,8 +265,12 @@ export default function AlcoholCalculator() {
               variant="outline"
               size="sm"
               onClick={() => {
-                const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin + '/alcohol-calculator')}&quote=${encodeURIComponent(shareText)}`;
-                window.open(facebookUrl, '_blank');
+                // Facebook doesn't support pre-filled text in shares, so copy to clipboard for manual posting
+                navigator.clipboard?.writeText(shareText + "\n\nCalculate your own: " + window.location.origin + "/alcohol-calculator");
+                toast({
+                  title: "Copied for Facebook!",
+                  description: "Your results are copied to clipboard. Paste into your Facebook post.",
+                });
               }}
             >
               Facebook
@@ -263,7 +279,9 @@ export default function AlcoholCalculator() {
               variant="outline"
               size="sm"
               onClick={() => {
-                const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.origin + '/alcohol-calculator')}&summary=${encodeURIComponent(shareText)}`;
+                // LinkedIn sharing with personal data in post content
+                const linkedInText = shareText.replace(/\n/g, '%0A');
+                const linkedInUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(shareText + "\n\nCalculate your own: " + window.location.origin + "/alcohol-calculator")}`;
                 window.open(linkedInUrl, '_blank');
               }}
             >
