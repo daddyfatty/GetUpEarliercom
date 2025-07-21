@@ -35,8 +35,11 @@ export default function AlcoholCalculator() {
   });
 
   useEffect(() => {
-    if (calculatorStats && calculatorStats.totalLikes !== undefined && calculatorStats.totalShares !== undefined) {
-      setStats({ totalLikes: calculatorStats.totalLikes, totalShares: calculatorStats.totalShares });
+    if (calculatorStats && typeof calculatorStats === 'object' && 'totalLikes' in calculatorStats && 'totalShares' in calculatorStats) {
+      setStats({ 
+        totalLikes: calculatorStats.totalLikes as number, 
+        totalShares: calculatorStats.totalShares as number 
+      });
     }
   }, [calculatorStats]);
 
@@ -339,9 +342,14 @@ Calculate yours: ${window.location.href}
                 console.log("Facebook sharing - copying to clipboard:", shareText);
                 navigator.clipboard?.writeText(shareText);
                 shareMutation.mutate('facebook');
+                
+                // Show a preview of what was copied
+                const previewText = shareText.substring(0, 200) + "...";
+                
                 toast({
-                  title: "Copied for Facebook!",
-                  description: "Your complete results are copied to clipboard. Paste into your Facebook post.",
+                  title: "✓ Results Copied to Clipboard!",
+                  description: `Copied: "${previewText}" - Now paste this into your Facebook post text area (above the URL preview card).`,
+                  duration: 10000,
                 });
               }}
             >
