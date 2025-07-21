@@ -30,7 +30,7 @@ export default function AlcoholCalculator() {
 
   // Load calculator stats on mount
   const { data: calculatorStats } = useQuery({
-    queryKey: ['/api/calculator-stats', 'alcohol'],
+    queryKey: ['/api/calculator-stats/alcohol'],
     refetchInterval: 10000 // Refresh every 10 seconds
   });
 
@@ -57,7 +57,7 @@ export default function AlcoholCalculator() {
         setStats({ totalLikes: data.totalLikes, totalShares: data.totalShares });
       } else {
         // Refresh stats if response format is different
-        queryClient.invalidateQueries({ queryKey: ['/api/calculator-stats'] });
+        queryClient.invalidateQueries({ queryKey: ['/api/calculator-stats/alcohol'] });
       }
       setHasLiked(true);
       toast({
