@@ -338,21 +338,26 @@ Calculate yours: ${window.location.href}
               variant="outline"
               size="sm"
               onClick={() => {
-                // Facebook approach: Try opening Facebook with quote parameter and also copy to clipboard as backup
-                const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(shareText)}`;
-                
-                // Also copy to clipboard as backup
-                navigator.clipboard?.writeText(shareText);
-                
-                // Open Facebook sharing dialog
-                window.open(facebookUrl, '_blank', 'width=600,height=400');
-                
-                shareMutation.mutate('facebook');
-                
-                toast({
-                  title: "✓ Facebook Share Opened!",
-                  description: "Facebook sharing window opened with your complete calculation results included.",
-                  duration: 6000,
+                // Copy results to clipboard for manual pasting
+                navigator.clipboard?.writeText(shareText).then(() => {
+                  // Open Facebook's main feed where users can create a new post
+                  window.open('https://www.facebook.com/', '_blank');
+                  
+                  shareMutation.mutate('facebook');
+                  
+                  toast({
+                    title: "✓ Results Copied & Facebook Opened!",
+                    description: "Your complete BUZZKILL REALITY CHECK (with consumption breakdown, weight gain projections, and exercise requirements) is copied to clipboard. Go to Facebook, click 'What's on your mind?' and paste with Ctrl+V (or Cmd+V on Mac).",
+                    duration: 15000,
+                  });
+                }).catch(() => {
+                  // Fallback if clipboard fails
+                  window.open('https://www.facebook.com/', '_blank');
+                  toast({
+                    title: "Facebook Opened",
+                    description: "Please manually copy your results and post them on Facebook.",
+                    duration: 6000,
+                  });
                 });
               }}
             >
