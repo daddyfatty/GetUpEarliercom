@@ -326,7 +326,39 @@ Calculate yours: ${window.location.href}
     }
   };
 
-  const fallbackShare = (shareText: string) => {
+  const fallbackShare = (passedShareText: string) => {
+    // Recalculate shareText with current form values to ensure accuracy
+    const currentWeightDisplay = currentWeight ? ` (weight: ${currentWeight} lbs)` : "";
+    
+    // Build consumption breakdown
+    let consumptionBreakdown = "📊 MY WEEKLY ALCOHOL CONSUMPTION:" + currentWeightDisplay + "\n";
+    if (beerCount > 0) consumptionBreakdown += `🍺 Beer: ${beerCount} bottles\n`;
+    if (wineCount > 0) {
+      const servingText = wineServing === "quarter" ? "Glass 5 oz" : wineServing === "half" ? "1/2 Bottle" : "Bottle";
+      consumptionBreakdown += `🍷 Wine: ${wineCount} ${servingText}\n`;
+    }
+    if (spiritsCount > 0) consumptionBreakdown += `🥃 Spirits: ${spiritsCount} shots\n`;
+    if (cocktailCount > 0) consumptionBreakdown += `🍸 Cocktails: ${cocktailCount} drinks\n`;
+    
+    const shareText = `🍺🍷 BUZZKILL REALITY CHECK!
+
+${consumptionBreakdown}
+💥 Total Weekly Impact: ${totalCalories.toLocaleString()} calories
+📈 Potential Weight Gain: +${weeklyWeightGain.toFixed(2)} lbs/week (+${monthlyWeightGain.toFixed(1)} lbs/month, +${yearlyWeightGain.toFixed(1)} lbs/year)
+
+🚶‍♀️ EXERCISE NEEDED TO BURN IT OFF:
+• Walking: ${milesToBurnCalories.toFixed(1)} miles
+• Running: ${milesToRunCalories.toFixed(1)} miles  
+• Weightlifting: ${hoursWeightLifting.toFixed(1)} hours
+
+💡 ${metabolicImpact.description}
+
+Calculate yours: ${window.location.href}
+
+#BuzzkillReality #AlcoholCalories #WeightLoss #FitnessReality #GetUpEarlier`;
+
+    console.log("Fallback share - calculated shareText:", shareText);
+
     // Show sharing options with direct platform links
     toast({
       title: "Share Your Buzzkill Results",
