@@ -379,6 +379,7 @@ Calculate yours: ${window.location.href}
               size="sm"
               onClick={() => {
                 // Copy results to clipboard for manual pasting
+                console.log("Facebook sharing - shareText content:", shareText);
                 navigator.clipboard?.writeText(shareText).then(() => {
                   // Open Facebook's main feed where users can create a new post
                   window.open('https://www.facebook.com/', '_blank');
@@ -436,7 +437,8 @@ Calculate yours: ${window.location.href}
                 const emailSubject = "My Buzzkill Calculator Results - Eye Opening!";
                 const emailBody = shareText + "\n\nTry the calculator yourself: " + window.location.origin + "/alcohol-calculator";
                 const emailUrl = `mailto:?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-                console.log("Email sharing with body:", emailBody);
+                console.log("Email sharing - shareText content:", shareText);
+                console.log("Email sharing - complete emailBody:", emailBody);
                 window.location.href = emailUrl;
                 shareMutation.mutate('email');
               }}
