@@ -446,7 +446,7 @@ export default function CalorieCalculator() {
     <>
       <SEO 
         title="Daily Calorie Calculator & Macro Tracker"
-        description="Calculate your daily calorie needs, BMR, TDEE, and macronutrient breakdown. Professional calorie calculator with personalized recommendations based on your fitness goals."
+        description="Get precise daily calorie and macro targets tailored to your body and goals. Calculate BMR, TDEE, and optimal protein, carbs, and fat ratios for weight loss, muscle gain, or performance enhancement."
         keywords="calorie calculator, BMR calculator, TDEE, macros, nutrition calculator, fitness goals, weight loss, muscle gain"
         image="/calorie-calculator-og-image.png"
         url="/calorie-calculator-clean"

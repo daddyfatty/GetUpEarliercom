@@ -123,7 +123,7 @@ export default function Blog() {
     <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <SEO 
         title="Get Up Earlier Blog - Health, Fitness & Nutrition Insights"
-        description="Helpful insights on nutrition, fitness, running, yoga and achieving your health goals from certified trainers and coaches Michael Baker and Erica Baker."
+        description="Get inspired with practical health and fitness advice from certified trainers. Discover nutrition tips, running strategies, workout techniques, and wellness guidance to transform your daily habits and achieve lasting results."
         keywords="fitness blog, nutrition tips, running advice, marathon training, yoga, health goals, certified trainers, personal training blog"
         url="/blog"
         canonical="https://www.getupearlier.com/blog"

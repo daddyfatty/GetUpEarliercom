@@ -8,7 +8,7 @@ export default function AlcoholCalculatorPage() {
     <>
       <SEO 
         title="Buzzkill | Beer and Wine Weight Gain Calculator"
-        description="Calculate how daily beer and wine consumption affects your weight gain. Interactive alcohol calorie calculator shows the impact of habitual drinking on your fitness goals."
+        description="Discover the hidden weight gain impact of your daily beer and wine habits. This eye-opening calculator reveals how alcohol calories accumulate over time and affect your fitness progress."
         keywords="alcohol calculator, beer calories, wine calories, weight gain calculator, alcohol weight gain, fitness calculator, drinking habits, calorie tracking"
         image="/buzzkill-calculator-og-image.png"
         url="/alcohol-calculator"

@@ -94,7 +94,7 @@ export default function Workouts() {
     <>
       <SEO 
         title="Workout Videos & Training Programs"
-        description="Access strength training workouts, calisthenics, yoga sessions, and guided running videos. Professional workout programs for all fitness levels with detailed instructions."
+        description="Master effective 15-45 minute workout sessions with professional guidance. From strength training and calisthenics to yoga flows and guided runs, find the perfect routine for your fitness level and schedule."
         keywords="workout videos, strength training, calisthenics, yoga, running, fitness programs, exercise routines"
         url="/workouts"
       />

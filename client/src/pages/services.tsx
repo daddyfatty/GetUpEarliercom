@@ -176,7 +176,7 @@ export default function Services() {
     <>
       <SEO 
         title="1-on-1 Personal Training & Coaching Services"
-        description="Professional personal training, nutrition coaching, running coaching, and yoga services. In-person Orange CT or virtual anywhere. Expert guidance for strength, nutrition and accountability."
+        description="Experience personalized 1-on-1 coaching with expert trainers. From strength training and nutrition guidance to running coaching and yoga instruction, we offer comprehensive wellness services both in-person in Orange, CT and virtually worldwide."
         keywords="personal training, nutrition coaching, running coach, yoga instructor, virtual coaching, Orange CT, strength training"
         url="/services"
       />

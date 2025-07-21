@@ -38,7 +38,7 @@ export default function About() {
     <>
       <SEO 
         title="About Get Up Earlier - Meet Michael Baker & Erica Baker"
-        description="Meet Michael Baker, certified personal trainer and nutrition coach, and Erica Baker, yoga instructor. Learn about our approach to strength training, nutrition coaching, and wellness."
+        description="Meet the team behind Get Up Earlier. Michael Baker brings years of experience in personal training and nutrition coaching, while Erica Baker specializes in yoga instruction. Discover our proven approach to helping clients achieve lasting health and fitness transformation."
         keywords="Michael Baker, Erica Baker, personal trainer, nutrition coach, yoga instructor, Orange CT, about us"
         url="/about"
       />

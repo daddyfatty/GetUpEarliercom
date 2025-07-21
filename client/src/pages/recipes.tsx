@@ -90,7 +90,7 @@ export default function Recipes() {
     <>
       <SEO 
         title="Healthy Recipes & Nutrition Guides"
-        description="Discover clean eating recipes with complete nutrition information. High-protein, low-carb, and balanced meal ideas for strength training and healthy living."
+        description="Transform your nutrition with clean, protein-rich recipes designed for active lifestyles. Complete macro breakdowns, 15-30 minute prep times, and family-friendly options that support your strength training and health goals."
         keywords="healthy recipes, nutrition, clean eating, high protein, low carb, meal prep, healthy cooking"
         url="/recipes"
       />

@@ -107,7 +107,7 @@ export default function Home() {
     <div className="w-full">
       <SEO 
         title="Get Up Earlier Strength & Nutrition Coaching"
-        description="Personal training, nutrition coaching, and accountability services to help you build strength, healthy habits, and achieve your fitness goals. Expert guidance for lasting transformation."
+        description="Transform your health with personalized strength training, nutrition coaching, and accountability support. Michael Baker helps you build lasting healthy habits and achieve real fitness results in Orange, CT or virtually anywhere."
         keywords="personal training, nutrition coaching, accountability coaching, fitness, strength training, healthy habits, marathon training, yoga, wellness, Michael Baker"
         url="/"
         canonical="https://www.getupearlier.com/"
