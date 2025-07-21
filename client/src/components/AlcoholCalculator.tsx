@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Beer, Wine, Scale, TrendingUp, Save, AlertTriangle, Activity, Target, Calendar, Heart, BarChart3, Flame, Calculator } from "lucide-react";
+import { Beer, Wine, Scale, TrendingUp, Save, AlertTriangle, Activity, Target, Calendar, Heart, BarChart3, Flame, Calculator, Share2, MapPin } from "lucide-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -69,6 +69,9 @@ export default function AlcoholCalculator() {
   const weeklyWeightGain = totalCalories / 3500;
   const monthlyWeightGain = weeklyWeightGain * 4.33;
   const yearlyWeightGain = weeklyWeightGain * 52;
+
+  // Walking calculation (average person burns ~100 calories per mile walking)
+  const milesToBurnCalories = totalCalories / 100;
 
   // Calculate metabolic impact
   const getMetabolicImpact = () => {
@@ -203,33 +206,93 @@ export default function AlcoholCalculator() {
     setCocktailCount(0);
   };
 
-  const saveResults = () => {
-    if (!isAuthenticated) {
+  const shareResults = () => {
+    if (totalCalories <= 0) {
       toast({
-        title: "Sign Up Required",
-        description: "Create an account to save your calculation results and track your progress.",
-        action: (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => window.location.href = "/api/login"}
-          >
-            Sign Up
-          </Button>
-        ),
+        title: "No Data to Share",
+        description: "Please enter some alcohol consumption data first.",
+        variant: "destructive",
       });
       return;
     }
 
-    if (totalCalories > 0) {
-      saveResultMutation.mutate();
-    } else {
-      toast({
-        title: "No Data to Save",
-        description: "Please enter some alcohol consumption data first.",
-        variant: "destructive",
+    // Create shareable content
+    const weeklyImpact = `${totalCalories.toLocaleString()} calories`;
+    const yearlyGainText = `${yearlyWeightGain.toFixed(1)} lbs/year`;
+    const monthlyGainText = `${monthlyWeightGain.toFixed(1)} lbs/month`;
+    
+    const shareText = `💡 Eye-opening results from the Buzzkill Calculator!\n\n🍺 My weekly alcohol intake: ${weeklyImpact}\n📈 Potential weight gain: ${monthlyGainText}/month, ${yearlyGainText}/year\n🚶‍♂️ I'd need to walk ${milesToBurnCalories.toFixed(1)} miles to burn off these calories!\n\n${metabolicImpact.description}\n\nCheck your habits: ${window.location.origin}/alcohol-calculator\n\n#BuzzkillCalculator #HealthAwareness #FitnessGoals #WalkingChallenge`;
+    
+    // Try native sharing first (mobile)
+    if (navigator.share) {
+      navigator.share({
+        title: 'My Buzzkill Calculator Results',
+        text: shareText,
+        url: `${window.location.origin}/alcohol-calculator`
+      }).catch(() => {
+        // Fallback to manual sharing
+        fallbackShare(shareText);
       });
+    } else {
+      // Desktop fallback - show share options
+      fallbackShare(shareText);
     }
+  };
+
+  const fallbackShare = (shareText: string) => {
+    // Copy to clipboard and show social media options
+    navigator.clipboard?.writeText(shareText).then(() => {
+      toast({
+        title: "Results Copied!",
+        description: "Your results have been copied to clipboard. Share them on your favorite social platform!",
+        action: (
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+                window.open(twitterUrl, '_blank');
+              }}
+            >
+              Twitter
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin + '/alcohol-calculator')}&quote=${encodeURIComponent(shareText)}`;
+                window.open(facebookUrl, '_blank');
+              }}
+            >
+              Facebook
+            </Button>
+          </div>
+        ),
+      });
+    }).catch(() => {
+      // If clipboard fails, show the share text in a modal or alert
+      toast({
+        title: "Share Your Results",
+        description: "Copy this text to share your results on social media:",
+        action: (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              const textarea = document.createElement('textarea');
+              textarea.value = shareText;
+              document.body.appendChild(textarea);
+              textarea.select();
+              document.execCommand('copy');
+              document.body.removeChild(textarea);
+            }}
+          >
+            Copy Text
+          </Button>
+        ),
+      });
+    });
   };
 
 
@@ -381,13 +444,12 @@ export default function AlcoholCalculator() {
                   Reset
                 </Button>
                 <Button 
-                  onClick={saveResults}
+                  onClick={shareResults}
                   className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
-                  disabled={saveResultMutation.isPending}
                   size="lg"
                 >
-                  <Save className="h-4 w-4 mr-2" />
-                  {isAuthenticated ? "Save Results" : "Sign Up to Save"}
+                  <Share2 className="h-4 w-4 mr-2" />
+                  Share Results
                 </Button>
               </div>
             </CardContent>
@@ -541,6 +603,16 @@ export default function AlcoholCalculator() {
                     </div>
                   )}
 
+                  {/* Walking Miles to Burn Off Calories */}
+                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
+                    <div className="flex items-center gap-3 mb-2">
+                      <MapPin className="h-5 w-5 text-green-600 dark:text-green-400" />
+                      <span className="font-semibold text-green-900 dark:text-green-100">Walking Challenge</span>
+                    </div>
+                    <p className="text-green-800 dark:text-green-200 text-sm leading-relaxed">
+                      I'd need to walk <span className="font-bold text-green-900 dark:text-green-100">{milesToBurnCalories.toFixed(1)} miles</span> to burn off the <span className="font-bold">{totalCalories.toLocaleString()} calories</span> from my weekly alcohol consumption.
+                    </p>
+                  </div>
 
                 </div>
               ) : (
