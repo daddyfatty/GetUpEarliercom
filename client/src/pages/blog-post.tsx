@@ -245,7 +245,6 @@ export default function BlogPost() {
             </div>
           </div>
         </div>
-        
         {/* Training Log Header */}
         <div className="py-4 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
@@ -338,7 +337,7 @@ export default function BlogPost() {
                     <div className="mt-6 -mx-6 -mb-6 px-6 pb-6">
                       {entry.images.length === 1 ? (
                         // Single image - full bleed width with left padding
-                        <div 
+                        (<div 
                           className="cursor-pointer hover:shadow-xl transition-shadow group relative w-full"
                           onClick={() => {
                             setLightboxImage(entry.images[0]);
@@ -353,10 +352,10 @@ export default function BlogPost() {
                           <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center">
                             <Expand className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                           </div>
-                        </div>
+                        </div>)
                       ) : (
                         // Multiple images - 2 column layout
-                        <div className="grid grid-cols-2 gap-4 w-full px-0">
+                        (<div className="grid grid-cols-2 gap-4 w-full px-0 pl-[20px] pr-[20px] pt-[20px] pb-[20px]">
                           {entry.images.map((imageSrc: string, imgIndex: number) => (
                             <div 
                               key={imgIndex}
@@ -377,7 +376,7 @@ export default function BlogPost() {
                               </div>
                             </div>
                           ))}
-                        </div>
+                        </div>)
                       )}
                     </div>
                   )}
@@ -416,8 +415,6 @@ export default function BlogPost() {
             </div>
           </div>
         )}
-        
-
       </div>
     );
   }
