@@ -242,23 +242,13 @@ export default function AlcoholCalculator() {
   };
 
   const fallbackShare = (shareText: string) => {
-    // Copy to clipboard and show social media options
-    navigator.clipboard?.writeText(shareText).then(() => {
-      toast({
-        title: "Results Copied!",
-        description: "Your results have been copied to clipboard. Share them on your favorite social platform!",
-        action: (
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
-                window.open(twitterUrl, '_blank');
-              }}
-            >
-              Twitter
-            </Button>
+    // Show sharing options with direct platform links
+    toast({
+      title: "Share Your Buzzkill Results",
+      description: "Choose how to share your alcohol consumption reality check:",
+      action: (
+        <div className="flex flex-col gap-2 w-full">
+          <div className="grid grid-cols-2 gap-2">
             <Button
               variant="outline"
               size="sm"
@@ -269,31 +259,44 @@ export default function AlcoholCalculator() {
             >
               Facebook
             </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.origin + '/alcohol-calculator')}&summary=${encodeURIComponent(shareText)}`;
+                window.open(linkedInUrl, '_blank');
+              }}
+            >
+              LinkedIn
+            </Button>
           </div>
-        ),
-      });
-    }).catch(() => {
-      // If clipboard fails, show the share text in a modal or alert
-      toast({
-        title: "Share Your Results",
-        description: "Copy this text to share your results on social media:",
-        action: (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              const textarea = document.createElement('textarea');
-              textarea.value = shareText;
-              document.body.appendChild(textarea);
-              textarea.select();
-              document.execCommand('copy');
-              document.body.removeChild(textarea);
-            }}
-          >
-            Copy Text
-          </Button>
-        ),
-      });
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const emailSubject = "My Buzzkill Calculator Results - Eye Opening!";
+                const emailBody = shareText + "\n\nTry the calculator yourself: " + window.location.origin + "/alcohol-calculator";
+                const emailUrl = `mailto:?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+                window.location.href = emailUrl;
+              }}
+            >
+              Email
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const smsBody = shareText + "\n\nTry it: " + window.location.origin + "/alcohol-calculator";
+                const smsUrl = `sms:?body=${encodeURIComponent(smsBody)}`;
+                window.location.href = smsUrl;
+              }}
+            >
+              Text
+            </Button>
+          </div>
+        </div>
+      ),
     });
   };
 
