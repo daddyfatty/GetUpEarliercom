@@ -636,7 +636,7 @@ Calculate yours: ${window.location.href}
                     size="lg"
                   >
                     <img src="/buzzkill.png" alt="Buzzkill" className="mr-0.5 flex-shrink-0 h-20 relative z-10" />
-                    <span className="flex-1">Share my Buzzkill Results</span>
+                    <span className="flex-1">Share The Buzzkill Calculator</span>
                   </Button>
                   
                   {/* Reset and Like Buttons - Two Column Layout */}
