@@ -377,7 +377,7 @@ Calculate yours: ${window.location.href}
               size="sm"
               onClick={() => {
                 const emailSubject = "My Buzzkill Calculator Results - Eye Opening!";
-                const emailBody = shareText;
+                const emailBody = shareText + "\n\nTry the calculator yourself: " + window.location.origin + "/alcohol-calculator";
                 const emailUrl = `mailto:?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
                 window.location.href = emailUrl;
                 shareMutation.mutate('email');
