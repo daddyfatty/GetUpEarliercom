@@ -854,7 +854,7 @@ Calculate yours: ${window.location.href}
                       alt="Debbie Downer" 
                       className="h-5 w-5 mr-2 -ml-1 rounded-full object-cover"
                     />
-                    <span>Share The Buzzkill Calculator</span>
+                    <span>COPY and SHARE My Buzzkill Results</span>
                   </Button>
 
                 </div>
