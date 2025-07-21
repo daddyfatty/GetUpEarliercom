@@ -336,11 +336,12 @@ Calculate yours: ${window.location.href}
               size="sm"
               onClick={() => {
                 // Facebook doesn't support pre-filled text in shares, so copy to clipboard for manual posting
+                console.log("Facebook sharing - copying to clipboard:", shareText);
                 navigator.clipboard?.writeText(shareText);
                 shareMutation.mutate('facebook');
                 toast({
                   title: "Copied for Facebook!",
-                  description: "Your results are copied to clipboard. Paste into your Facebook post.",
+                  description: "Your complete results are copied to clipboard. Paste into your Facebook post.",
                 });
               }}
             >
