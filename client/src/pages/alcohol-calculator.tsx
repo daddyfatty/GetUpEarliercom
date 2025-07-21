@@ -1,9 +1,17 @@
 import AlcoholCalculator from "@/components/AlcoholCalculator";
 import { Beer, Wine } from "lucide-react";
+import { SEO } from "@/components/seo";
 
 export default function AlcoholCalculatorPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
+    <>
+      <SEO 
+        title="Buzzkill | Beer and Wine Weight Gain Calculator | Get Up Earlier"
+        description="Calculate how daily beer and wine consumption affects your weight gain. Interactive alcohol calorie calculator shows the impact of habitual drinking on your fitness goals."
+        image="/attached_assets/download (30)_1753089337957.png"
+        url="/alcohol-calculator"
+      />
+      <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="mb-8 text-center">
@@ -24,5 +32,6 @@ export default function AlcoholCalculatorPage() {
         <AlcoholCalculator />
       </div>
     </div>
+    </>
   );
 }
