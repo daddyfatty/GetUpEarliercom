@@ -35,8 +35,8 @@ export default function AlcoholCalculator() {
   });
 
   useEffect(() => {
-    if (calculatorStats) {
-      setStats(calculatorStats);
+    if (calculatorStats && calculatorStats.totalLikes !== undefined && calculatorStats.totalShares !== undefined) {
+      setStats({ totalLikes: calculatorStats.totalLikes, totalShares: calculatorStats.totalShares });
     }
   }, [calculatorStats]);
 
@@ -379,6 +379,7 @@ Calculate yours: ${window.location.href}
                 const emailSubject = "My Buzzkill Calculator Results - Eye Opening!";
                 const emailBody = shareText + "\n\nTry the calculator yourself: " + window.location.origin + "/alcohol-calculator";
                 const emailUrl = `mailto:?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+                console.log("Email sharing with body:", emailBody);
                 window.location.href = emailUrl;
                 shareMutation.mutate('email');
               }}
