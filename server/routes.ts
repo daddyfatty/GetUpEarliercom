@@ -1869,13 +1869,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const result = await db.select().from(calculatorStats).where(eq(calculatorStats.calculatorType, type));
       
       if (result.length === 0) {
-        // Initialize stats if not exists
+        // Initialize stats if not exists with starting values
+        const initialLikes = type === 'alcohol' ? 12 : 0;
+        const initialShares = type === 'alcohol' ? 22 : 0;
+        
         await db.insert(calculatorStats).values({
           calculatorType: type,
-          totalLikes: 0,
-          totalShares: 0
+          totalLikes: initialLikes,
+          totalShares: initialShares
         });
-        res.json({ totalLikes: 0, totalShares: 0 });
+        res.json({ totalLikes: initialLikes, totalShares: initialShares });
       } else {
         res.json({
           totalLikes: result[0].totalLikes,
@@ -1921,11 +1924,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userAgent
       });
       
-      // Update stats
+      // Update stats - ensure we have proper starting values
+      const initialLikes = calculatorType === 'alcohol' ? 12 : 0;
+      const initialShares = calculatorType === 'alcohol' ? 22 : 0;
+      
       await db.insert(calculatorStats).values({
         calculatorType,
-        totalLikes: 1,
-        totalShares: 0
+        totalLikes: initialLikes + 1,
+        totalShares: initialShares
       }).onConflictDoUpdate({
         target: calculatorStats.calculatorType,
         set: {
@@ -1963,11 +1969,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userAgent
       });
       
-      // Update stats
+      // Update stats - ensure we have proper starting values
+      const initialLikes = calculatorType === 'alcohol' ? 12 : 0;
+      const initialShares = calculatorType === 'alcohol' ? 22 : 0;
+      
       await db.insert(calculatorStats).values({
         calculatorType,
-        totalLikes: 0,
-        totalShares: 1
+        totalLikes: initialLikes,
+        totalShares: initialShares + 1
       }).onConflictDoUpdate({
         target: calculatorStats.calculatorType,
         set: {
