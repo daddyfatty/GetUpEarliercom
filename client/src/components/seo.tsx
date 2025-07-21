@@ -45,9 +45,12 @@ export function SEO({
       <meta property="og:title" content={formattedTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={fullImageUrl} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:url" content={fullUrl} />
       <meta property="og:type" content={type} />
       <meta property="og:site_name" content="Get Up Earlier Strength & Nutrition Coaching" />
+      <meta property="fb:app_id" content="1234567890123456" />
       
       {/* Twitter Card Tags */}
       <meta name="twitter:card" content="summary_large_image" />
