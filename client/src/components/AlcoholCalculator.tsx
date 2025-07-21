@@ -534,32 +534,36 @@ ${metabolicImpact.description}
                 </div>
 
                 {/* Action Buttons */}
-                <div className="grid grid-cols-3 gap-3">
-                  <Button 
-                    onClick={resetCalculator} 
-                    variant="outline" 
-                    size="lg"
-                    className="flex-1"
-                  >
-                    Reset
-                  </Button>
-                  <Button 
-                    onClick={() => likeMutation.mutate()}
-                    disabled={hasLiked || likeMutation.isPending}
-                    className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50"
-                    size="lg"
-                  >
-                    <ThumbsUp className={`h-4 w-4 mr-2 ${hasLiked ? 'fill-current' : ''}`} />
-                    {hasLiked ? 'Liked!' : 'Like'}
-                  </Button>
+                <div className="space-y-3">
+                  {/* Share Button - Full Width */}
                   <Button 
                     onClick={shareResults}
-                    className="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-sm"
+                    className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-base py-4 h-auto min-h-[60px]"
                     size="lg"
                   >
-                    <img src="/buzzkill.png" alt="Buzzkill" className="h-4 w-4 mr-2 rounded-full" />
-                    Share my Buzzkill Results
+                    <img src="/buzzkill.png" alt="Buzzkill" className="h-8 w-8 mr-3 rounded-full flex-shrink-0" />
+                    <span className="flex-1">Share my Buzzkill Results</span>
                   </Button>
+                  
+                  {/* Reset and Like Buttons - Two Column Layout */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button 
+                      onClick={resetCalculator} 
+                      variant="outline" 
+                      size="lg"
+                    >
+                      Reset
+                    </Button>
+                    <Button 
+                      onClick={() => likeMutation.mutate()}
+                      disabled={hasLiked || likeMutation.isPending}
+                      className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50"
+                      size="lg"
+                    >
+                      <ThumbsUp className={`h-4 w-4 mr-2 ${hasLiked ? 'fill-current' : ''}`} />
+                      {hasLiked ? 'Liked!' : 'Like'}
+                    </Button>
+                  </div>
                 </div>
               </div>
 
