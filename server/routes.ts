@@ -7,7 +7,8 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage-fixed";
 import { insertUserSchema, insertRecipeSchema, insertWorkoutSchema, insertGoalSchema, insertFoodEntrySchema, blogPosts } from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
+import { calculatorLikes, calculatorShares, calculatorStats } from "@shared/schema";
 import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal";
 import { workoutService } from "./workoutService";
 import { recipeService } from "./recipeService";
@@ -1856,6 +1857,127 @@ export async function registerRoutes(app: Express): Promise<Server> {
         "/api/webhooks/send-notification - Email notifications"
       ]
     });
+  });
+
+  // Calculator Like and Share API endpoints
+  
+  // Get stats for a calculator
+  app.get("/api/calculator-stats/:type", async (req, res) => {
+    try {
+      const { type } = req.params; // 'alcohol' or 'calorie'
+      
+      const result = await db.select().from(calculatorStats).where(eq(calculatorStats.calculatorType, type));
+      
+      if (result.length === 0) {
+        // Initialize stats if not exists
+        await db.insert(calculatorStats).values({
+          calculatorType: type,
+          totalLikes: 0,
+          totalShares: 0
+        });
+        res.json({ totalLikes: 0, totalShares: 0 });
+      } else {
+        res.json({
+          totalLikes: result[0].totalLikes,
+          totalShares: result[0].totalShares
+        });
+      }
+    } catch (error) {
+      console.error('Error getting calculator stats:', error);
+      res.status(500).json({ error: 'Failed to get stats' });
+    }
+  });
+
+  // Like a calculator
+  app.post("/api/calculator-like", async (req, res) => {
+    try {
+      const { calculatorType } = req.body;
+      const ipAddress = req.ip || req.connection.remoteAddress || 'unknown';
+      const userAgent = req.get('User-Agent') || 'unknown';
+      
+      // Check if user already liked (prevent spam)
+      const existingLike = await db.select().from(calculatorLikes)
+        .where(eq(calculatorLikes.ipAddress, ipAddress))
+        .where(eq(calculatorLikes.calculatorType, calculatorType));
+      
+      if (existingLike.length > 0) {
+        return res.status(400).json({ error: 'Already liked' });
+      }
+      
+      // Add the like
+      await db.insert(calculatorLikes).values({
+        calculatorType,
+        ipAddress,
+        userAgent
+      });
+      
+      // Update stats
+      await db.insert(calculatorStats).values({
+        calculatorType,
+        totalLikes: 1,
+        totalShares: 0
+      }).onConflictDoUpdate({
+        target: calculatorStats.calculatorType,
+        set: {
+          totalLikes: sql`${calculatorStats.totalLikes} + 1`,
+          updatedAt: new Date()
+        }
+      });
+      
+      // Get updated stats
+      const stats = await db.select().from(calculatorStats).where(eq(calculatorStats.calculatorType, calculatorType));
+      
+      res.json({ 
+        success: true, 
+        totalLikes: stats[0]?.totalLikes || 1,
+        totalShares: stats[0]?.totalShares || 0
+      });
+    } catch (error) {
+      console.error('Error liking calculator:', error);
+      res.status(500).json({ error: 'Failed to like' });
+    }
+  });
+
+  // Share a calculator
+  app.post("/api/calculator-share", async (req, res) => {
+    try {
+      const { calculatorType, platform } = req.body; // platform: 'facebook', 'linkedin', 'sms', 'email'
+      const ipAddress = req.ip || req.connection.remoteAddress || 'unknown';
+      const userAgent = req.get('User-Agent') || 'unknown';
+      
+      // Add the share
+      await db.insert(calculatorShares).values({
+        calculatorType,
+        platform,
+        ipAddress,
+        userAgent
+      });
+      
+      // Update stats
+      await db.insert(calculatorStats).values({
+        calculatorType,
+        totalLikes: 0,
+        totalShares: 1
+      }).onConflictDoUpdate({
+        target: calculatorStats.calculatorType,
+        set: {
+          totalShares: sql`${calculatorStats.totalShares} + 1`,
+          updatedAt: new Date()
+        }
+      });
+      
+      // Get updated stats
+      const stats = await db.select().from(calculatorStats).where(eq(calculatorStats.calculatorType, calculatorType));
+      
+      res.json({ 
+        success: true, 
+        totalLikes: stats[0]?.totalLikes || 0,
+        totalShares: stats[0]?.totalShares || 1
+      });
+    } catch (error) {
+      console.error('Error sharing calculator:', error);
+      res.status(500).json({ error: 'Failed to share' });
+    }
   });
 
   const httpServer = createServer(app);

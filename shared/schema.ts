@@ -325,6 +325,46 @@ export type MealPlanRecipe = typeof mealPlanRecipes.$inferSelect;
 export type InsertMealPlanRecipe = z.infer<typeof insertMealPlanRecipeSchema>;
 export type CalculatorResult = typeof calculatorResults.$inferSelect;
 export type InsertCalculatorResult = z.infer<typeof insertCalculatorResultSchema>;
+
+// Like and Share tracking tables
+export const calculatorLikes = pgTable("calculator_likes", {
+  id: serial("id").primaryKey(),
+  calculatorType: text("calculator_type").notNull(), // 'alcohol', 'calorie'
+  userId: text("user_id"), // Optional - can track anonymous likes by IP
+  ipAddress: text("ip_address"), // For anonymous tracking
+  userAgent: text("user_agent"), // Browser fingerprinting
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const calculatorShares = pgTable("calculator_shares", {
+  id: serial("id").primaryKey(),
+  calculatorType: text("calculator_type").notNull(), // 'alcohol', 'calorie'
+  platform: text("platform").notNull(), // 'facebook', 'linkedin', 'sms', 'email'
+  userId: text("user_id"), // Optional - can track anonymous shares
+  ipAddress: text("ip_address"), // For anonymous tracking
+  userAgent: text("user_agent"), // Browser fingerprinting
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Calculator stats aggregation table for performance
+export const calculatorStats = pgTable("calculator_stats", {
+  id: serial("id").primaryKey(),
+  calculatorType: text("calculator_type").notNull().unique(), // 'alcohol', 'calorie'
+  totalLikes: integer("total_likes").default(0),
+  totalShares: integer("total_shares").default(0),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertCalculatorLikeSchema = createInsertSchema(calculatorLikes).omit({ id: true, createdAt: true });
+export const insertCalculatorShareSchema = createInsertSchema(calculatorShares).omit({ id: true, createdAt: true });
+export const insertCalculatorStatsSchema = createInsertSchema(calculatorStats).omit({ id: true, updatedAt: true });
+
+export type CalculatorLike = typeof calculatorLikes.$inferSelect;
+export type CalculatorShare = typeof calculatorShares.$inferSelect;
+export type CalculatorStats = typeof calculatorStats.$inferSelect;
+export type InsertCalculatorLike = z.infer<typeof insertCalculatorLikeSchema>;
+export type InsertCalculatorShare = z.infer<typeof insertCalculatorShareSchema>;
+export type InsertCalculatorStats = z.infer<typeof insertCalculatorStatsSchema>;
 export type BlogPost = typeof blogPosts.$inferSelect;
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
 export type TrainingLogEntry = typeof trainingLogEntries.$inferSelect;

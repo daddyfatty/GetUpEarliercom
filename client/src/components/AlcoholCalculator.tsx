@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Beer, Wine, Scale, TrendingUp, Save, AlertTriangle, Activity, Target, Calendar, Heart, BarChart3, Flame, Calculator, Share2, MapPin, Eye, Zap } from "lucide-react";
+import { Beer, Wine, Scale, TrendingUp, Save, AlertTriangle, Activity, Target, Calendar, Heart, BarChart3, Flame, Calculator, Share2, MapPin, Eye, Zap, ThumbsUp } from "lucide-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -23,6 +23,66 @@ export default function AlcoholCalculator() {
   const [dataLoaded, setDataLoaded] = useState(false);
   const { toast } = useToast();
   const { isAuthenticated } = useAuth();
+
+  // Like and Share state
+  const [stats, setStats] = useState({ totalLikes: 0, totalShares: 0 });
+  const [hasLiked, setHasLiked] = useState(false);
+
+  // Load calculator stats on mount
+  const { data: calculatorStats } = useQuery({
+    queryKey: ['/api/calculator-stats', 'alcohol'],
+    refetchInterval: 10000 // Refresh every 10 seconds
+  });
+
+  useEffect(() => {
+    if (calculatorStats) {
+      setStats(calculatorStats);
+    }
+  }, [calculatorStats]);
+
+  // Like mutation
+  const likeMutation = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest('/api/calculator-like', {
+        method: 'POST',
+        body: { calculatorType: 'alcohol' }
+      });
+      return response;
+    },
+    onSuccess: (data) => {
+      setStats({ totalLikes: data.totalLikes, totalShares: data.totalShares });
+      setHasLiked(true);
+      toast({
+        description: "Thanks for the like! 👍"
+      });
+    },
+    onError: (error: any) => {
+      if (error.message.includes('Already liked')) {
+        toast({
+          description: "You've already liked this calculator!"
+        });
+      } else {
+        toast({
+          description: "Failed to like. Please try again.",
+          variant: "destructive"
+        });
+      }
+    }
+  });
+
+  // Share mutation
+  const shareMutation = useMutation({
+    mutationFn: async (platform: string) => {
+      const response = await apiRequest('/api/calculator-share', {
+        method: 'POST',
+        body: { calculatorType: 'alcohol', platform }
+      });
+      return response;
+    },
+    onSuccess: (data) => {
+      setStats({ totalLikes: data.totalLikes, totalShares: data.totalShares });
+    }
+  });
 
   // Load existing calculator results
   const { data: calculatorResults } = useQuery({
@@ -293,6 +353,17 @@ ${metabolicImpact.description}
               variant="outline"
               size="sm"
               onClick={() => {
+                const smsBody = shareText + "\n\nTry it: " + window.location.origin + "/alcohol-calculator";
+                const smsUrl = `sms:?body=${encodeURIComponent(smsBody)}`;
+                window.location.href = smsUrl;
+              }}
+            >
+              SMS Text
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
                 const emailSubject = "My Buzzkill Calculator Results - Eye Opening!";
                 const emailBody = shareText + "\n\nTry the calculator yourself: " + window.location.origin + "/alcohol-calculator";
                 const emailUrl = `mailto:?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
@@ -300,17 +371,6 @@ ${metabolicImpact.description}
               }}
             >
               Email
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                const smsBody = shareText + "\n\nTry it: " + window.location.origin + "/alcohol-calculator";
-                const smsUrl = `sms:?body=${encodeURIComponent(smsBody)}`;
-                window.location.href = smsUrl;
-              }}
-            >
-              Text
             </Button>
           </div>
         </div>
@@ -457,23 +517,50 @@ ${metabolicImpact.description}
 
 
               {/* Action Buttons */}
-              <div className="flex gap-3 pt-6">
-                <Button 
-                  onClick={resetCalculator} 
-                  variant="outline" 
-                  className="flex-1"
-                  size="lg"
-                >
-                  Reset
-                </Button>
-                <Button 
-                  onClick={shareResults}
-                  className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
-                  size="lg"
-                >
-                  <Share2 className="h-4 w-4 mr-2" />
-                  Share Results
-                </Button>
+              <div className="space-y-4 pt-6">
+                {/* Like and Share Counters */}
+                <div className="flex items-center justify-center gap-6 py-4 bg-white dark:bg-gray-900 rounded-lg border">
+                  <div className="flex items-center gap-2">
+                    <ThumbsUp className="h-5 w-5 text-blue-600" />
+                    <span className="font-semibold text-lg">{stats.totalLikes.toLocaleString()}</span>
+                    <span className="text-gray-600 dark:text-gray-400">Likes</span>
+                  </div>
+                  <div className="w-px h-6 bg-gray-300 dark:bg-gray-600"></div>
+                  <div className="flex items-center gap-2">
+                    <Share2 className="h-5 w-5 text-green-600" />
+                    <span className="font-semibold text-lg">{stats.totalShares.toLocaleString()}</span>
+                    <span className="text-gray-600 dark:text-gray-400">Shares</span>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="grid grid-cols-3 gap-3">
+                  <Button 
+                    onClick={resetCalculator} 
+                    variant="outline" 
+                    size="lg"
+                    className="flex-1"
+                  >
+                    Reset
+                  </Button>
+                  <Button 
+                    onClick={() => likeMutation.mutate()}
+                    disabled={hasLiked || likeMutation.isPending}
+                    className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50"
+                    size="lg"
+                  >
+                    <ThumbsUp className={`h-4 w-4 mr-2 ${hasLiked ? 'fill-current' : ''}`} />
+                    {hasLiked ? 'Liked!' : 'Like'}
+                  </Button>
+                  <Button 
+                    onClick={shareResults}
+                    className="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-sm"
+                    size="lg"
+                  >
+                    <img src="/buzzkill.png" alt="Buzzkill" className="h-4 w-4 mr-2 rounded-full" />
+                    Share my Buzzkill Results
+                  </Button>
+                </div>
               </div>
 
               {/* Walking Miles to Burn Off Calories - Fill the space below buttons */}
