@@ -348,7 +348,7 @@ Calculate yours: ${window.location.href}
     if (spiritsCount > 0) consumptionBreakdown += `🥃 Spirits: ${spiritsCount} shots\n`;
     if (cocktailCount > 0) consumptionBreakdown += `🍸 Cocktails: ${cocktailCount} drinks\n`;
     
-    return `🍺🍷 BUZZKILL REALITY CHECK!
+    const shareText = `🍺🍷 BUZZKILL REALITY CHECK!
 
 ${consumptionBreakdown}
 💥 Total Weekly Impact: ${totalCalories.toLocaleString()} calories
@@ -364,6 +364,20 @@ ${consumptionBreakdown}
 Calculate yours: ${window.location.href}
 
 #BuzzkillReality #AlcoholCalories #WeightLoss #FitnessReality #GetUpEarlier`;
+
+    // Debug logging
+    console.log("=== GENERATE SHARE TEXT DEBUG ===");
+    console.log("beerCount:", beerCount);
+    console.log("wineCount:", wineCount);
+    console.log("totalCalories:", totalCalories);
+    console.log("weeklyWeightGain:", weeklyWeightGain);
+    console.log("milesToBurnCalories:", milesToBurnCalories);
+    console.log("metabolicImpact.description:", metabolicImpact.description);
+    console.log("Generated shareText length:", shareText.length);
+    console.log("Generated shareText:", shareText);
+    console.log("=== END DEBUG ===");
+    
+    return shareText;
   };
 
   const fallbackShare = (passedShareText: string) => {
@@ -821,7 +835,22 @@ Calculate yours: ${window.location.href}
                     </div>
                   )}
 
-
+                  {/* Debug Share Test Button */}
+                  <Button
+                    onClick={() => {
+                      const testShareText = generateShareText();
+                      navigator.clipboard?.writeText(testShareText).then(() => {
+                        toast({
+                          title: "✓ Debug Test - Complete Text Copied!",
+                          description: "Your complete calculation results are copied to clipboard. Check console for debug logs.",
+                          duration: 8000,
+                        });
+                      });
+                    }}
+                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg"
+                  >
+                    🐛 TEST: Copy Complete Results
+                  </Button>
 
                 </div>
               ) : (
