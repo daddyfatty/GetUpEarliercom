@@ -847,10 +847,10 @@ Calculate yours: ${window.location.href}
                         });
                       });
                     }}
-                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg"
+                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg relative flex items-center justify-center"
                   >
-                    <Share2 className="mr-2 h-5 w-5" />
-                    Share The Buzzkill Calculator
+                    <Share2 className="absolute left-4 h-5 w-5" />
+                    <span className="ml-2">Share The Buzzkill Calculator</span>
                   </Button>
 
                 </div>
