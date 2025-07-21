@@ -172,7 +172,14 @@ export default function Services() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <SEO 
+        title="1-on-1 Personal Training & Coaching Services"
+        description="Professional personal training, nutrition coaching, running coaching, and yoga services. In-person Orange CT or virtual anywhere. Expert guidance for strength, nutrition and accountability."
+        keywords="personal training, nutrition coaching, running coach, yoga instructor, virtual coaching, Orange CT, strength training"
+        url="/services"
+      />
+      <div className="min-h-screen bg-gray-50">
       {/* Hero Section + Services Grid with Gradient Background */}
       <section className="bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white">
         {/* Hero Section */}
@@ -784,5 +791,6 @@ export default function Services() {
         </DialogContent>
       </Dialog>
     </div>
+    </>
   );
 }

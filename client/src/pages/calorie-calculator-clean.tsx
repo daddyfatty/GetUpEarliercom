@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Calculator, User, Save, LoaderCircle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import { SEO } from "@/components/seo";
 
 interface CalculationResults {
   bmr: number;
@@ -441,8 +442,15 @@ export default function CalorieCalculator() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <>
+      <SEO 
+        title="Daily Calorie Calculator & Macro Tracker"
+        description="Calculate your daily calorie needs, BMR, TDEE, and macronutrient breakdown. Professional calorie calculator with personalized recommendations based on your fitness goals."
+        keywords="calorie calculator, BMR calculator, TDEE, macros, nutrition calculator, fitness goals, weight loss, muscle gain"
+        url="/calorie-calculator-clean"
+      />
+      <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="mb-8 text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -693,8 +701,9 @@ export default function CalorieCalculator() {
             </Card>
           )}
         </div>
+        </div>
+        </div>
       </div>
-    </div>
-    </div>
+    </>
   );
 }

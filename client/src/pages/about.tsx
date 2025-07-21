@@ -34,7 +34,14 @@ export default function About() {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <>
+      <SEO 
+        title="About Get Up Earlier - Meet Michael Baker & Erica Baker"
+        description="Meet Michael Baker, certified personal trainer and nutrition coach, and Erica Baker, yoga instructor. Learn about our approach to strength training, nutrition coaching, and wellness."
+        keywords="Michael Baker, Erica Baker, personal trainer, nutrition coach, yoga instructor, Orange CT, about us"
+        url="/about"
+      />
+      <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="container mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12">
@@ -320,5 +327,6 @@ export default function About() {
         </section>
       </div>
     </div>
+    </>
   );
 }

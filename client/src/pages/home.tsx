@@ -106,7 +106,7 @@ export default function Home() {
   return (
     <div className="w-full">
       <SEO 
-        title="Get Up Earlier - Strength, Nutrition & Accountability Coaching"
+        title="Get Up Earlier Strength & Nutrition Coaching"
         description="Personal training, nutrition coaching, and accountability services to help you build strength, healthy habits, and achieve your fitness goals. Expert guidance for lasting transformation."
         keywords="personal training, nutrition coaching, accountability coaching, fitness, strength training, healthy habits, marathon training, yoga, wellness, Michael Baker"
         url="/"

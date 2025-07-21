@@ -91,7 +91,14 @@ export default function Workouts() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <>
+      <SEO 
+        title="Workout Videos & Training Programs"
+        description="Access strength training workouts, calisthenics, yoga sessions, and guided running videos. Professional workout programs for all fitness levels with detailed instructions."
+        keywords="workout videos, strength training, calisthenics, yoga, running, fitness programs, exercise routines"
+        url="/workouts"
+      />
+      <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -308,5 +315,6 @@ export default function Workouts() {
       </div>
 
     </div>
+    </>
   );
 }
