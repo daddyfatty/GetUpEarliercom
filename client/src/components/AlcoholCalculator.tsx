@@ -638,6 +638,28 @@ Calculate yours: ${window.location.href}
                     <img src="/buzzkill.png" alt="Buzzkill" className="mr-0.5 flex-shrink-0 h-20 relative z-10" />
                     <span className="flex-1">Share The Buzzkill Calculator</span>
                   </Button>
+
+                  {/* Copy and Share Results Button */}
+                  <Button
+                    onClick={() => {
+                      const testShareText = generateShareText();
+                      navigator.clipboard?.writeText(testShareText).then(() => {
+                        toast({
+                          title: "✓ Results Copied!",
+                          description: "Your complete Buzzkill Calculator results are copied to clipboard.",
+                          duration: 5000,
+                        });
+                      });
+                    }}
+                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-lg shadow-lg relative flex items-center overflow-visible"
+                  >
+                    <img 
+                      src="/debbie-downer.png" 
+                      alt="Debbie Downer" 
+                      className="h-5 w-5 mr-2 -ml-1 rounded-full object-cover"
+                    />
+                    <span>COPY and SHARE My Buzzkill Results</span>
+                  </Button>
                   
                   {/* Reset and Like Buttons - Two Column Layout */}
                   <div className="grid grid-cols-2 gap-3">
@@ -835,27 +857,7 @@ Calculate yours: ${window.location.href}
                     </div>
                   )}
 
-                  {/* Share Button */}
-                  <Button
-                    onClick={() => {
-                      const testShareText = generateShareText();
-                      navigator.clipboard?.writeText(testShareText).then(() => {
-                        toast({
-                          title: "✓ Results Copied!",
-                          description: "Your complete Buzzkill Calculator results are copied to clipboard.",
-                          duration: 5000,
-                        });
-                      });
-                    }}
-                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-lg shadow-lg relative flex items-center overflow-visible"
-                  >
-                    <img 
-                      src="/debbie-downer.png" 
-                      alt="Debbie Downer" 
-                      className="h-5 w-5 mr-2 -ml-1 rounded-full object-cover"
-                    />
-                    <span>COPY and SHARE My Buzzkill Results</span>
-                  </Button>
+
 
                 </div>
               ) : (
