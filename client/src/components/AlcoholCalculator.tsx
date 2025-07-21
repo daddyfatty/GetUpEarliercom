@@ -835,21 +835,22 @@ Calculate yours: ${window.location.href}
                     </div>
                   )}
 
-                  {/* Debug Share Test Button */}
+                  {/* Share Button */}
                   <Button
                     onClick={() => {
                       const testShareText = generateShareText();
                       navigator.clipboard?.writeText(testShareText).then(() => {
                         toast({
-                          title: "✓ Debug Test - Complete Text Copied!",
-                          description: "Your complete calculation results are copied to clipboard. Check console for debug logs.",
-                          duration: 8000,
+                          title: "✓ Results Copied!",
+                          description: "Your complete Buzzkill Calculator results are copied to clipboard.",
+                          duration: 5000,
                         });
                       });
                     }}
-                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg"
+                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg"
                   >
-                    🐛 TEST: Copy Complete Results
+                    <Share2 className="mr-2 h-5 w-5" />
+                    Share The Buzzkill Calculator
                   </Button>
 
                 </div>
