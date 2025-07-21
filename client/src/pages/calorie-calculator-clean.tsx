@@ -447,6 +447,7 @@ export default function CalorieCalculator() {
         title="Daily Calorie Calculator & Macro Tracker"
         description="Calculate your daily calorie needs, BMR, TDEE, and macronutrient breakdown. Professional calorie calculator with personalized recommendations based on your fitness goals."
         keywords="calorie calculator, BMR calculator, TDEE, macros, nutrition calculator, fitness goals, weight loss, muscle gain"
+        image="/calorie-calculator-og-image.png"
         url="/calorie-calculator-clean"
       />
       <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
