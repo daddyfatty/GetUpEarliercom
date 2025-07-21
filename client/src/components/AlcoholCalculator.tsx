@@ -383,8 +383,8 @@ Calculate yours: ${window.location.href}
   const fallbackShare = (passedShareText: string) => {
     // Show simplified sharing options
     toast({
-      title: "Share Your Buzzkill Results",
-      description: "Choose how to share:",
+      title: "Share Your Results",
+      description: "Choose platform:",
       action: (
         <div className="flex flex-col gap-2 w-full">
           <div className="grid grid-cols-2 gap-2">
