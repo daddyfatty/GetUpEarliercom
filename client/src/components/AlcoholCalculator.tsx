@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Beer, Wine, Scale, TrendingUp, Save, AlertTriangle, Activity, Target, Calendar, Heart, BarChart3, Flame, Calculator, Share2, MapPin } from "lucide-react";
+import { Beer, Wine, Scale, TrendingUp, Save, AlertTriangle, Activity, Target, Calendar, Heart, BarChart3, Flame, Calculator, Share2, MapPin, Eye, Zap } from "lucide-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -459,8 +459,8 @@ export default function AlcoholCalculator() {
               {totalCalories > 0 && (
                 <div className="mt-6 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-lg border border-green-200 dark:border-green-800">
                   <div className="flex items-center gap-3 mb-3">
-                    <MapPin className="h-6 w-6 text-green-600 dark:text-green-400" />
-                    <span className="font-semibold text-lg text-green-900 dark:text-green-100">Walking Challenge</span>
+                    <Zap className="h-6 w-6 text-green-600 dark:text-green-400" />
+                    <span className="font-semibold text-lg text-green-900 dark:text-green-100">Buzzkill Reality:</span>
                   </div>
                   <div className="space-y-2 text-green-800 dark:text-green-200 leading-relaxed">
                     <p>
