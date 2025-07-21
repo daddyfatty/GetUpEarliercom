@@ -70,8 +70,10 @@ export default function AlcoholCalculator() {
   const monthlyWeightGain = weeklyWeightGain * 4.33;
   const yearlyWeightGain = weeklyWeightGain * 52;
 
-  // Walking calculation (average person burns ~100 calories per mile walking)
-  const milesToBurnCalories = totalCalories / 100;
+  // Exercise calculations to burn off calories
+  const milesToBurnCalories = totalCalories / 100;  // Walking: ~100 calories per mile
+  const milesToRunCalories = totalCalories / 150;   // Running: ~150 calories per mile
+  const hoursWeightLifting = totalCalories / 300;   // Weight lifting: ~300 calories per hour
 
   // Calculate metabolic impact
   const getMetabolicImpact = () => {
@@ -221,7 +223,7 @@ export default function AlcoholCalculator() {
     const yearlyGainText = `${yearlyWeightGain.toFixed(1)} lbs/year`;
     const monthlyGainText = `${monthlyWeightGain.toFixed(1)} lbs/month`;
     
-    const shareText = `💡 Eye-opening results from the Buzzkill Calculator!\n\n🍺 My weekly alcohol intake: ${weeklyImpact}\n📈 Potential weight gain: ${monthlyGainText}/month, ${yearlyGainText}/year\n🚶‍♂️ I'd need to walk ${milesToBurnCalories.toFixed(1)} miles to burn off these calories!\n\n${metabolicImpact.description}\n\nCheck your habits: ${window.location.origin}/alcohol-calculator\n\n#BuzzkillCalculator #HealthAwareness #FitnessGoals #WalkingChallenge`;
+    const shareText = `💡 Eye-opening results from the Buzzkill Calculator!\n\n🍺 My weekly alcohol intake: ${weeklyImpact}\n📈 Potential weight gain: ${monthlyGainText}/month, ${yearlyGainText}/year\n\n🏃‍♂️ Exercise needed to burn off these calories:\n• Walk ${milesToBurnCalories.toFixed(1)} miles\n• Run ${milesToRunCalories.toFixed(1)} miles\n• Lift weights ${hoursWeightLifting.toFixed(1)} hours\n\n${metabolicImpact.description}\n\nCheck your habits: ${window.location.origin}/alcohol-calculator\n\n#BuzzkillCalculator #HealthAwareness #FitnessGoals #ExerciseChallenge`;
     
     // Try native sharing first (mobile)
     if (navigator.share) {
@@ -460,9 +462,17 @@ export default function AlcoholCalculator() {
                     <MapPin className="h-6 w-6 text-green-600 dark:text-green-400" />
                     <span className="font-semibold text-lg text-green-900 dark:text-green-100">Walking Challenge</span>
                   </div>
-                  <p className="text-green-800 dark:text-green-200 leading-relaxed">
-                    I'd need to walk <span className="font-bold text-xl text-green-900 dark:text-green-100">{milesToBurnCalories.toFixed(1)} miles</span> to burn off the <span className="font-bold">{totalCalories.toLocaleString()} calories</span> from my weekly alcohol consumption.
-                  </p>
+                  <div className="space-y-2 text-green-800 dark:text-green-200 leading-relaxed">
+                    <p>
+                      I'd need to walk <span className="font-bold text-xl text-green-900 dark:text-green-100">{milesToBurnCalories.toFixed(1)} miles</span> to burn off the <span className="font-bold">{totalCalories.toLocaleString()} calories</span> from my weekly alcohol consumption.
+                    </p>
+                    <p>
+                      I'd need to run <span className="font-bold text-lg text-green-900 dark:text-green-100">{milesToRunCalories.toFixed(1)} miles</span> to burn off these calories.
+                    </p>
+                    <p>
+                      I'd need to lift weights for <span className="font-bold text-lg text-green-900 dark:text-green-100">{hoursWeightLifting.toFixed(1)} hours</span> to burn off these calories.
+                    </p>
+                  </div>
                 </div>
               )}
             </CardContent>
