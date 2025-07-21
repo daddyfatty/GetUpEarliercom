@@ -24,6 +24,106 @@ app.use('/assets', express.static('public/assets'));
 // Serve root-level public files (like featured images)
 app.use(express.static('public'));
 
+// Middleware to inject meta tags for alcohol calculator page (only for social media crawlers)
+app.get('/alcohol-calculator', (req, res, next) => {
+  const userAgent = req.get('User-Agent') || '';
+  
+  // Check if this is a social media crawler/bot
+  const isCrawler = /bot|crawler|spider|scraper|facebook|twitter|linkedin|whatsapp|telegram|discord|slack/i.test(userAgent);
+  
+  if (isCrawler) {
+    const title = "Buzzkill | Beer and Wine Weight Gain Calculator | Get Up Earlier";
+    const description = "Calculate how daily beer and wine consumption affects your weight gain. Interactive alcohol calorie calculator shows the impact of habitual drinking on your fitness goals.";
+    const image = `${req.protocol}://${req.get('host')}/buzzkill-calculator-og-image.png`;
+    const url = `${req.protocol}://${req.get('host')}/alcohol-calculator`;
+    
+    // Read the default HTML and inject meta tags
+    let htmlPath;
+    if (app.get("env") === "development") {
+      htmlPath = path.join(__dirname, '../client/index.html');
+    } else {
+      htmlPath = path.join(__dirname, '../dist/public/index.html');
+    }
+    
+    if (fs.existsSync(htmlPath)) {
+      let html = fs.readFileSync(htmlPath, 'utf8');
+      
+      // Inject meta tags into the head
+      const metaTags = `
+        <title>${title}</title>
+        <meta name="description" content="${description}">
+        <meta name="keywords" content="alcohol calculator, beer calories, wine calories, weight gain calculator, alcohol weight gain, fitness calculator, drinking habits, calorie tracking">
+        <meta property="og:title" content="${title}">
+        <meta property="og:description" content="${description}">
+        <meta property="og:image" content="${image}">
+        <meta property="og:url" content="${url}">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="Get Up Earlier Strength & Nutrition Coaching">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="${title}">
+        <meta name="twitter:description" content="${description}">
+        <meta name="twitter:image" content="${image}">
+      `;
+      
+      html = html.replace('<title>Get Up Earlier - Health & Fitness App</title>', metaTags);
+      res.send(html);
+      return;
+    }
+  }
+  
+  next();
+});
+
+// Middleware to inject meta tags for calorie calculator page (only for social media crawlers)
+app.get('/calorie-calculator-clean', (req, res, next) => {
+  const userAgent = req.get('User-Agent') || '';
+  
+  // Check if this is a social media crawler/bot
+  const isCrawler = /bot|crawler|spider|scraper|facebook|twitter|linkedin|whatsapp|telegram|discord|slack/i.test(userAgent);
+  
+  if (isCrawler) {
+    const title = "Daily Calorie Calculator & Macro Tracker | Get Up Earlier";
+    const description = "Calculate your daily calorie needs, BMR, TDEE, and macronutrient breakdown. Professional calorie calculator with personalized recommendations based on your fitness goals.";
+    const image = `${req.protocol}://${req.get('host')}/calorie-calculator-og-image.png`;
+    const url = `${req.protocol}://${req.get('host')}/calorie-calculator-clean`;
+    
+    // Read the default HTML and inject meta tags
+    let htmlPath;
+    if (app.get("env") === "development") {
+      htmlPath = path.join(__dirname, '../client/index.html');
+    } else {
+      htmlPath = path.join(__dirname, '../dist/public/index.html');
+    }
+    
+    if (fs.existsSync(htmlPath)) {
+      let html = fs.readFileSync(htmlPath, 'utf8');
+      
+      // Inject meta tags into the head
+      const metaTags = `
+        <title>${title}</title>
+        <meta name="description" content="${description}">
+        <meta name="keywords" content="calorie calculator, BMR calculator, TDEE, macros, nutrition calculator, fitness goals, weight loss, muscle gain">
+        <meta property="og:title" content="${title}">
+        <meta property="og:description" content="${description}">
+        <meta property="og:image" content="${image}">
+        <meta property="og:url" content="${url}">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="Get Up Earlier Strength & Nutrition Coaching">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="${title}">
+        <meta name="twitter:description" content="${description}">
+        <meta name="twitter:image" content="${image}">
+      `;
+      
+      html = html.replace('<title>Get Up Earlier - Health & Fitness App</title>', metaTags);
+      res.send(html);
+      return;
+    }
+  }
+  
+  next();
+});
+
 // Middleware to inject meta tags for training log page (only for social media crawlers)
 app.get('/blog/hartford-marathon-training-log-2025', (req, res, next) => {
   const userAgent = req.get('User-Agent') || '';
