@@ -411,7 +411,9 @@ Calculate yours: ${window.location.href}
               size="sm"
               onClick={() => {
                 // LinkedIn sharing with personal data in post content
-                const linkedInUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(shareText)}`;
+                const currentShareText = generateShareText();
+                const linkedInUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(currentShareText)}`;
+                console.log("LinkedIn sharing - generated shareText:", currentShareText);
                 window.open(linkedInUrl, '_blank');
                 shareMutation.mutate('linkedin');
               }}
@@ -424,8 +426,9 @@ Calculate yours: ${window.location.href}
               variant="outline"
               size="sm"
               onClick={() => {
-                const smsBody = shareText;
-                const smsUrl = `sms:?body=${encodeURIComponent(smsBody)}`;
+                const currentShareText = generateShareText();
+                const smsUrl = `sms:?body=${encodeURIComponent(currentShareText)}`;
+                console.log("SMS sharing - generated shareText:", currentShareText);
                 window.location.href = smsUrl;
                 shareMutation.mutate('sms');
               }}
