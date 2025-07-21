@@ -278,24 +278,35 @@ export default function AlcoholCalculator() {
       return;
     }
 
-    // Create shareable content
-    const weeklyImpact = `${totalCalories.toLocaleString()} calories`;
-    const yearlyGainText = `${yearlyWeightGain.toFixed(1)} lbs/year`;
-    const monthlyGainText = `${monthlyWeightGain.toFixed(1)} lbs/month`;
+    // Create detailed shareable content with actual results
+    const currentWeightDisplay = currentWeight ? ` (weight: ${currentWeight} lbs)` : "";
     
-    const shareText = `💡 Eye-opening results from the Buzzkill Calculator!
+    // Build consumption breakdown
+    let consumptionBreakdown = "📊 MY WEEKLY ALCOHOL CONSUMPTION:" + currentWeightDisplay + "\n";
+    if (beerCount > 0) consumptionBreakdown += `🍺 Beer: ${beerCount} bottles\n`;
+    if (wineCount > 0) {
+      const servingText = wineServing === "quarter" ? "Glass 5 oz" : wineServing === "half" ? "1/2 Bottle" : "Bottle";
+      consumptionBreakdown += `🍷 Wine: ${wineCount} ${servingText}\n`;
+    }
+    if (spiritsCount > 0) consumptionBreakdown += `🥃 Spirits: ${spiritsCount} shots\n`;
+    if (cocktailCount > 0) consumptionBreakdown += `🍸 Cocktails: ${cocktailCount} drinks\n`;
+    
+    const shareText = `🍺🍷 BUZZKILL REALITY CHECK!
 
-🍺 My weekly alcohol intake: ${weeklyImpact}
-📈 Potential weight gain: ${monthlyGainText}/month, ${yearlyGainText}/year
+${consumptionBreakdown}
+💥 Total Weekly Impact: ${totalCalories.toLocaleString()} calories
+📈 Potential Weight Gain: +${weeklyWeightGain.toFixed(2)} lbs/week (+${monthlyWeightGain.toFixed(1)} lbs/month, +${yearlyWeightGain.toFixed(1)} lbs/year)
 
-⚡ Buzzkill Reality - Exercise needed to burn off these calories:
-🚶‍♂️ Walk ${milesToBurnCalories.toFixed(1)} miles
-🏃‍♂️ Run ${milesToRunCalories.toFixed(1)} miles  
-🏋️‍♂️ Lift weights ${hoursWeightLifting.toFixed(1)} hours
+🚶‍♀️ EXERCISE NEEDED TO BURN IT OFF:
+• Walking: ${milesToBurnCalories.toFixed(1)} miles
+• Running: ${milesToRunCalories.toFixed(1)} miles  
+• Weightlifting: ${hoursWeightLifting.toFixed(1)} hours
 
-${metabolicImpact.description}
+💡 ${metabolicImpact.description}
 
-#BuzzkillCalculator #HealthAwareness #FitnessGoals #ExerciseChallenge`;
+Calculate yours: ${window.location.href}
+
+#BuzzkillReality #AlcoholCalories #WeightLoss #FitnessReality #GetUpEarlier`;
     
     // Try native sharing first (mobile)
     if (navigator.share) {
