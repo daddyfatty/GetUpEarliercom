@@ -19,7 +19,7 @@ export default function AlcoholCalculator() {
   const [currentWeight, setCurrentWeight] = useState("");
   const [unitSystem, setUnitSystem] = useState<'metric' | 'imperial'>('imperial');
   const [activityLevel, setActivityLevel] = useState("moderate");
-  const [showAdvanced, setShowAdvanced] = useState(false);
+
   const [dataLoaded, setDataLoaded] = useState(false);
   const { toast } = useToast();
   const { isAuthenticated } = useAuth();
@@ -368,58 +368,7 @@ export default function AlcoholCalculator() {
                 </div>
               </div>
 
-              {/* Advanced Options Toggle */}
-              <div className="pt-4 border-t">
-                <Button
-                  variant="outline"
-                  onClick={() => setShowAdvanced(!showAdvanced)}
-                  className="w-full"
-                >
-                  {showAdvanced ? 'Hide' : 'Show'} Personal Factors
-                </Button>
-              </div>
 
-              {/* Advanced Options */}
-              {showAdvanced && (
-                <div className="space-y-4 pt-4 border-t">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-base font-medium">Current Weight</Label>
-                      <Input
-                        type="number"
-                        value={currentWeight}
-                        onChange={(e) => setCurrentWeight(e.target.value)}
-                        placeholder={unitSystem === 'metric' ? 'kg' : 'lbs'}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-base font-medium">Unit System</Label>
-                      <Select value={unitSystem} onValueChange={(value) => setUnitSystem(value as 'metric' | 'imperial')}>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="imperial">Imperial (lbs)</SelectItem>
-                          <SelectItem value="metric">Metric (kg)</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-base font-medium">Activity Level</Label>
-                      <Select value={activityLevel} onValueChange={setActivityLevel}>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="low">Low</SelectItem>
-                          <SelectItem value="moderate">Moderate</SelectItem>
-                          <SelectItem value="high">High</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </div>
-              )}
 
               {/* Action Buttons */}
               <div className="flex gap-3 pt-6">

@@ -38,7 +38,7 @@ export function Navigation() {
 
   const calculatorItems = [
     { href: "/calorie-calculator", label: "Calorie Calculator" },
-    { href: "/alcohol-calculator", label: "Buzzkill Calculator" },
+    { href: "/alcohol-calculator", label: "Alcohol Weight Gain Calculator" },
   ];
 
   const navItems = [

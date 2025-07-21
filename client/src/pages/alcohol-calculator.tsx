@@ -7,7 +7,7 @@ export default function AlcoholCalculatorPage() {
   return (
     <>
       <SEO 
-        title="Buzzkill | Beer and Wine Weight Gain Calculator"
+        title="Alcohol Weight Gain Calculator"
         description="Discover the hidden weight gain impact of your daily beer and wine habits. This eye-opening calculator reveals how alcohol calories accumulate over time and affect your fitness progress."
         keywords="alcohol calculator, beer calories, wine calories, weight gain calculator, alcohol weight gain, fitness calculator, drinking habits, calorie tracking"
         image="/buzzkill-calculator-og-image.png"
@@ -16,7 +16,7 @@ export default function AlcoholCalculatorPage() {
       <Schema 
         type="calculator"
         data={{
-          name: "Buzzkill - Beer and Wine Weight Gain Calculator",
+          name: "Alcohol Weight Gain Calculator - Beer and Wine Impact",
           description: "Calculate how daily beer and wine consumption affects your weight gain. Interactive alcohol calorie calculator shows the impact of habitual drinking on your fitness goals.",
           url: "https://www.getupearlier.com/alcohol-calculator"
         }}
@@ -30,7 +30,7 @@ export default function AlcoholCalculatorPage() {
               <Beer className="h-8 w-8 text-white" />
             </div>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Buzzkill Calculator
+              Alcohol Weight Gain Calculator
             </h1>
             <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full">
               <Wine className="h-8 w-8 text-white" />
