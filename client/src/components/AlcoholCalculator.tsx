@@ -602,6 +602,27 @@ Calculate yours: ${window.location.href}
 
               {/* Action Buttons */}
               <div className="space-y-4 pt-6">
+                {/* Walking Miles to Burn Off Calories - Above Likes/Shares */}
+                {totalCalories > 0 && (
+                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-lg border border-green-200 dark:border-green-800">
+                    <div className="flex items-center gap-3 mb-3">
+                      <Zap className="h-6 w-6 text-green-600 dark:text-green-400" />
+                      <span className="font-semibold text-lg text-green-900 dark:text-green-100">Buzzkill Reality:</span>
+                    </div>
+                    <div className="space-y-2 text-green-800 dark:text-green-200 leading-relaxed">
+                      <p>
+                        I'd need to walk <span className="font-bold text-xl text-green-900 dark:text-green-100">{milesToBurnCalories.toFixed(1)} miles</span> to burn off the <span className="font-bold">{totalCalories.toLocaleString()} calories</span> from my weekly alcohol consumption.
+                      </p>
+                      <p>
+                        I'd need to run <span className="font-bold text-lg text-green-900 dark:text-green-100">{milesToRunCalories.toFixed(1)} miles</span> to burn off these calories.
+                      </p>
+                      <p>
+                        I'd need to lift weights for <span className="font-bold text-lg text-green-900 dark:text-green-100">{hoursWeightLifting.toFixed(1)} hours</span> to burn off these calories.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
                 {/* Like and Share Counters */}
                 <div className="flex items-center justify-center gap-6 py-4 bg-white dark:bg-gray-900 rounded-lg border">
                   <div className="flex items-center gap-2">
@@ -676,26 +697,7 @@ Calculate yours: ${window.location.href}
                 </div>
               </div>
 
-              {/* Walking Miles to Burn Off Calories - Fill the space below buttons */}
-              {totalCalories > 0 && (
-                <div className="mt-6 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-lg border border-green-200 dark:border-green-800">
-                  <div className="flex items-center gap-3 mb-3">
-                    <Zap className="h-6 w-6 text-green-600 dark:text-green-400" />
-                    <span className="font-semibold text-lg text-green-900 dark:text-green-100">Buzzkill Reality:</span>
-                  </div>
-                  <div className="space-y-2 text-green-800 dark:text-green-200 leading-relaxed">
-                    <p>
-                      I'd need to walk <span className="font-bold text-xl text-green-900 dark:text-green-100">{milesToBurnCalories.toFixed(1)} miles</span> to burn off the <span className="font-bold">{totalCalories.toLocaleString()} calories</span> from my weekly alcohol consumption.
-                    </p>
-                    <p>
-                      I'd need to run <span className="font-bold text-lg text-green-900 dark:text-green-100">{milesToRunCalories.toFixed(1)} miles</span> to burn off these calories.
-                    </p>
-                    <p>
-                      I'd need to lift weights for <span className="font-bold text-lg text-green-900 dark:text-green-100">{hoursWeightLifting.toFixed(1)} hours</span> to burn off these calories.
-                    </p>
-                  </div>
-                </div>
-              )}
+
             </CardContent>
           </Card>
         </div>
