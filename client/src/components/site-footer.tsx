@@ -17,7 +17,7 @@ export function SiteFooter() {
               Join 1000+ adults over 40 years old for weekly actionable tips on strength & muscle, health, work-from-home optimization, and healthy habits for your busy schedule.
             </p>
             
-            <div className="klaviyo-form-ULBmqZ" style={{minHeight: '80px'}}></div>
+            <div className="klaviyo-form-ULBmqZ w-full" style={{minHeight: '120px'}}></div>
           </div>
           
           <p className="text-purple-200 text-sm">
