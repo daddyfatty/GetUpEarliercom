@@ -827,25 +827,7 @@ Calculate yours: ${window.location.href}
                   </div>
 
                   {/* Macronutrient Breakdown */}
-                  {(totalCarbs > 0 || totalProtein > 0) && (
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-gray-900 dark:text-gray-100">Weekly Macros from Alcohol</h4>
-                      <div className="space-y-2">
-                        {totalCarbs > 0 && (
-                          <div className="flex justify-between text-sm">
-                            <span>Carbs</span>
-                            <span className="font-medium">{totalCarbs.toFixed(1)}g</span>
-                          </div>
-                        )}
-                        {totalProtein > 0 && (
-                          <div className="flex justify-between text-sm">
-                            <span>Protein</span>
-                            <span className="font-medium">{totalProtein.toFixed(1)}g</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
+
 
 
 
