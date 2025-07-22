@@ -12,7 +12,10 @@ export function SiteFooter() {
             <h2 className="text-3xl font-bold text-white mb-4">
               Get Up Earlier Newsletter
             </h2>
-
+            <p className="text-purple-100 mb-8 max-w-2xl mx-auto leading-relaxed">
+              Weekly clean eating tips, accountability coaching insights, and new recipe updates. 
+              Join the community bridging the gap from poor habits to healthy living.
+            </p>
             
             <div className="max-w-md mx-auto bg-white rounded-lg p-6">
               <div 
