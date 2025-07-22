@@ -1,28 +1,8 @@
-import { useState } from "react";
 import { Link } from "wouter";
 import { Facebook } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import footerBgPattern from "@assets/678a4459aad73fea7208ff4c_footer-bg-pattern_1751313655156.png";
 
 export function Footer() {
-  const [email, setEmail] = useState("");
-  const [isSubscribed, setIsSubscribed] = useState(false);
-
-  const handleNewsletterSignup = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email.trim()) {
-      // TODO: Integrate with Mailchimp or email service
-      console.log("Newsletter signup:", email);
-      setIsSubscribed(true);
-      setEmail("");
-      
-      // Reset the success state after 3 seconds
-      setTimeout(() => {
-        setIsSubscribed(false);
-      }, 3000);
-    }
-  };
 
   return (
     <footer 
@@ -105,35 +85,14 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Newsletter Signup */}
+          {/* Klaviyo Email Collection */}
           <div>
             <h4 className="font-semibold mb-4 text-white">Subscribe to our Newsletter</h4>
             <p className="text-gray-300 text-sm mb-4">
               Infrequent and informative emails. No junk or spam.
             </p>
             
-            {!isSubscribed ? (
-              <form onSubmit={handleNewsletterSignup} className="flex gap-2">
-                <Input
-                  type="email"
-                  placeholder="Email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 bg-white/10 border-white/20 text-white placeholder:text-gray-400"
-                  required
-                />
-                <Button
-                  type="submit"
-                  className="bg-primary hover:bg-primary/80 text-white px-4"
-                >
-                  Subscribe Now
-                </Button>
-              </form>
-            ) : (
-              <div className="text-green-400 text-sm">
-                Thanks for subscribing!
-              </div>
-            )}
+            <div className="klaviyo-form-ULBmqZ"></div>
           </div>
         </div>
 
