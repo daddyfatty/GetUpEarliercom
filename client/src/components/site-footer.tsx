@@ -1,31 +1,7 @@
-import { useState } from "react";
 import { Link } from "wouter";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Facebook, Youtube } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 
 export function SiteFooter() {
-  const [email, setEmail] = useState("");
-  const [isSubscribing, setIsSubscribing] = useState(false);
-  const { toast } = useToast();
-
-  const handleNewsletterSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-
-    setIsSubscribing(true);
-    
-    // Simulate newsletter subscription
-    setTimeout(() => {
-      toast({
-        title: "Subscribed!",
-        description: "Welcome to the Get Up Earlier community. Check your email for confirmation.",
-      });
-      setEmail("");
-      setIsSubscribing(false);
-    }, 1000);
-  };
 
   return (
     <>
@@ -41,23 +17,9 @@ export function SiteFooter() {
               Join the community bridging the gap from poor habits to healthy living.
             </p>
             
-            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <Input
-                type="email"
-                placeholder="Enter your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-white/90 border-white/30 text-gray-900 placeholder:text-gray-600"
-                required
-              />
-              <Button 
-                type="submit" 
-                disabled={isSubscribing}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8"
-              >
-                {isSubscribing ? "Subscribing..." : "Subscribe"}
-              </Button>
-            </form>
+            <div className="max-w-md mx-auto">
+              <div className="klaviyo-form-ULBmqZ"></div>
+            </div>
             
             <p className="text-purple-200 text-sm mt-4">
               No spam, unsubscribe anytime. Join 1,000+ people transforming their health!
