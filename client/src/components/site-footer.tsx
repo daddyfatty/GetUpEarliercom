@@ -9,16 +9,12 @@ export function SiteFooter() {
       <section className="bg-gradient-to-r from-purple-900 via-blue-900 to-purple-900 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="bg-gradient-to-r from-purple-800/80 to-blue-800/80 backdrop-blur-sm rounded-2xl p-8 border border-purple-600/30">
-            <h2 className="text-3xl font-bold text-white mb-8">
+            <h2 className="text-3xl font-bold text-white mb-4">
               Get Up Earlier Newsletter
             </h2>
             
-            <div className="max-w-lg mx-auto bg-white rounded-lg p-6">
-              <div 
-                dangerouslySetInnerHTML={{
-                  __html: '<div class="klaviyo-form-T2dWUC"></div>'
-                }}
-              ></div>
+            <div className="max-w-lg mx-auto bg-white rounded-lg p-6 mt-8">
+              <div className="klaviyo-form-T2dWUC"></div>
             </div>
             
             <p className="text-purple-200 text-sm mt-4">
