@@ -471,7 +471,7 @@ Calculate yours: ${window.location.href}
         <div className="xl:col-span-2 space-y-6">
           {/* Alcohol Consumption Card */}
           <Card className="shadow-lg border-0 bg-[#d5dde5] dark:bg-gray-800">
-            <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-t-lg">
+            <CardHeader className="bg-[hsl(var(--coaching-primary))] text-white rounded-t-lg">
               <CardTitle className="flex items-center gap-2">
                 <Beer className="h-5 w-5" />
                 Weekly Alcohol Consumption
@@ -705,7 +705,7 @@ Calculate yours: ${window.location.href}
         {/* Results Panel */}
         <div className="xl:col-span-1">
           <Card className="shadow-lg border-0 bg-[#d5dde5] dark:bg-gray-800 sticky top-8">
-            <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-t-lg">
+            <CardHeader className="bg-[hsl(var(--coaching-primary))] text-white rounded-t-lg">
               <CardTitle className="flex items-center gap-2">
                 <Target className="h-5 w-5" />
                 Impact Analysis
