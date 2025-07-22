@@ -18,35 +18,67 @@ export function SiteFooter() {
             </p>
             
             <div className="max-w-md mx-auto">
-              {/* Direct Klaviyo form embed */}
+              {/* Klaviyo Form Embed - Replace with actual embed code from Klaviyo dashboard */}
               <div 
-                className="klaviyo-form-ULBmqZ" 
-                data-form-id="ULBmqZ"
-                style={{minHeight: '80px'}}
+                className="klaviyo-form-ULBmqZ"
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    <script async type="text/javascript" data-form-id="ULBmqZ" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=ULBmqZ"></script>
+                    <div class="klaviyo-form-ULBmqZ"></div>
+                  `
+                }}
               ></div>
               
-              {/* Manual form as immediate fallback */}
-              <form 
-                action="https://manage.kmail-lists.com/subscriptions/subscribe" 
-                method="POST" 
-                className="flex flex-col sm:flex-row gap-4"
-                target="_blank"
-              >
-                <input type="hidden" name="g" value="ULBmqZ" />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Enter your email address"
-                  className="flex-1 bg-white/90 border-white/30 text-gray-900 placeholder:text-gray-600 px-4 py-2 rounded"
-                  required
-                />
-                <button 
-                  type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded transition-colors"
-                >
-                  Subscribe
-                </button>
-              </form>
+              {/* Fallback: Direct Klaviyo subscription form */}
+              <script 
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    setTimeout(function() {
+                      if (!document.querySelector('.klaviyo-form-ULBmqZ form')) {
+                        document.querySelector('.klaviyo-form-ULBmqZ').innerHTML = \`
+                          <form class="flex flex-col sm:flex-row gap-4" onsubmit="
+                            event.preventDefault();
+                            var email = this.email.value;
+                            if (email) {
+                              fetch('https://a.klaviyo.com/api/v2/list/ULBmqZ/subscribe', {
+                                method: 'POST',
+                                headers: {
+                                  'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                  api_key: 'YOUR_API_KEY',
+                                  email: email
+                                })
+                              }).then(() => {
+                                alert('Thanks for subscribing!');
+                                this.reset();
+                              }).catch(() => {
+                                window.open('mailto:michael@getupearlier.com?subject=Newsletter Signup&body=Please add ' + email + ' to the newsletter');
+                              });
+                            }
+                          ">
+                            <input
+                              type="email"
+                              name="email"
+                              placeholder="Enter your email address"
+                              style="flex: 1; background: rgba(255,255,255,0.9); border: 1px solid rgba(255,255,255,0.3); color: #111827; padding: 8px 16px; border-radius: 4px;"
+                              required
+                            />
+                            <button 
+                              type="submit"
+                              style="background: #2563eb; color: white; padding: 8px 32px; border-radius: 4px; border: none; cursor: pointer; transition: background-color 0.2s;"
+                              onmouseover="this.style.background='#1d4ed8'"
+                              onmouseout="this.style.background='#2563eb'"
+                            >
+                              Subscribe
+                            </button>
+                          </form>
+                        \`;
+                      }
+                    }, 2000);
+                  `
+                }}
+              />
             </div>
             
             <p className="text-purple-200 text-sm mt-4">
