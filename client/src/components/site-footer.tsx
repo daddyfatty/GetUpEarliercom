@@ -17,68 +17,8 @@ export function SiteFooter() {
               Join the community bridging the gap from poor habits to healthy living.
             </p>
             
-            <div className="max-w-md mx-auto">
-              {/* Klaviyo Form Embed - Replace with actual embed code from Klaviyo dashboard */}
-              <div 
-                className="klaviyo-form-ULBmqZ"
-                dangerouslySetInnerHTML={{
-                  __html: `
-                    <script async type="text/javascript" data-form-id="ULBmqZ" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=ULBmqZ"></script>
-                    <div class="klaviyo-form-ULBmqZ"></div>
-                  `
-                }}
-              ></div>
-              
-              {/* Fallback: Direct Klaviyo subscription form */}
-              <script 
-                dangerouslySetInnerHTML={{
-                  __html: `
-                    setTimeout(function() {
-                      if (!document.querySelector('.klaviyo-form-ULBmqZ form')) {
-                        document.querySelector('.klaviyo-form-ULBmqZ').innerHTML = \`
-                          <form class="flex flex-col sm:flex-row gap-4" onsubmit="
-                            event.preventDefault();
-                            var email = this.email.value;
-                            if (email) {
-                              fetch('https://a.klaviyo.com/api/v2/list/ULBmqZ/subscribe', {
-                                method: 'POST',
-                                headers: {
-                                  'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                  api_key: 'YOUR_API_KEY',
-                                  email: email
-                                })
-                              }).then(() => {
-                                alert('Thanks for subscribing!');
-                                this.reset();
-                              }).catch(() => {
-                                window.open('mailto:michael@getupearlier.com?subject=Newsletter Signup&body=Please add ' + email + ' to the newsletter');
-                              });
-                            }
-                          ">
-                            <input
-                              type="email"
-                              name="email"
-                              placeholder="Enter your email address"
-                              style="flex: 1; background: rgba(255,255,255,0.9); border: 1px solid rgba(255,255,255,0.3); color: #111827; padding: 8px 16px; border-radius: 4px;"
-                              required
-                            />
-                            <button 
-                              type="submit"
-                              style="background: #2563eb; color: white; padding: 8px 32px; border-radius: 4px; border: none; cursor: pointer; transition: background-color 0.2s;"
-                              onmouseover="this.style.background='#1d4ed8'"
-                              onmouseout="this.style.background='#2563eb'"
-                            >
-                              Subscribe
-                            </button>
-                          </form>
-                        \`;
-                      }
-                    }, 2000);
-                  `
-                }}
-              />
+            <div className="max-w-md mx-auto bg-white rounded-lg p-6">
+              <div className="klaviyo-form-T2dWUC"></div>
             </div>
             
             <p className="text-purple-200 text-sm mt-4">
