@@ -7,7 +7,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage-fixed";
 import { insertUserSchema, insertRecipeSchema, insertWorkoutSchema, insertGoalSchema, insertFoodEntrySchema, blogPosts } from "@shared/schema";
 import { db } from "./db";
-import { eq, sql } from "drizzle-orm";
+import { eq, sql, and } from "drizzle-orm";
 import { calculatorLikes, calculatorShares, calculatorStats } from "@shared/schema";
 import { createPaypalOrder, capturePaypalOrder, loadPaypalDefault } from "./paypal";
 import { workoutService } from "./workoutService";
@@ -1902,8 +1902,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Check if user already liked (prevent spam)
       const existingLike = await db.select().from(calculatorLikes)
-        .where(eq(calculatorLikes.ipAddress, ipAddress))
-        .where(eq(calculatorLikes.calculatorType, calculatorType));
+        .where(and(
+          eq(calculatorLikes.ipAddress, ipAddress),
+          eq(calculatorLikes.calculatorType, calculatorType)
+        ));
       
       if (existingLike.length > 0) {
         console.log("User already liked, returning current stats");
