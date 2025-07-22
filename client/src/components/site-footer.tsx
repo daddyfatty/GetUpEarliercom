@@ -18,7 +18,11 @@ export function SiteFooter() {
             </p>
             
             <div className="max-w-md mx-auto bg-white rounded-lg p-6">
-              <div className="klaviyo-form-T2dWUC"></div>
+              <div 
+                dangerouslySetInnerHTML={{
+                  __html: '<div class="klaviyo-form-T2dWUC"></div>'
+                }}
+              ></div>
             </div>
             
             <p className="text-purple-200 text-sm mt-4">
