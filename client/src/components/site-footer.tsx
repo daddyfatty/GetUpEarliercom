@@ -18,7 +18,35 @@ export function SiteFooter() {
             </p>
             
             <div className="max-w-md mx-auto">
-              <div className="klaviyo-form-ULBmqZ"></div>
+              {/* Direct Klaviyo form embed */}
+              <div 
+                className="klaviyo-form-ULBmqZ" 
+                data-form-id="ULBmqZ"
+                style={{minHeight: '80px'}}
+              ></div>
+              
+              {/* Manual form as immediate fallback */}
+              <form 
+                action="https://manage.kmail-lists.com/subscriptions/subscribe" 
+                method="POST" 
+                className="flex flex-col sm:flex-row gap-4"
+                target="_blank"
+              >
+                <input type="hidden" name="g" value="ULBmqZ" />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email address"
+                  className="flex-1 bg-white/90 border-white/30 text-gray-900 placeholder:text-gray-600 px-4 py-2 rounded"
+                  required
+                />
+                <button 
+                  type="submit"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded transition-colors"
+                >
+                  Subscribe
+                </button>
+              </form>
             </div>
             
             <p className="text-purple-200 text-sm mt-4">

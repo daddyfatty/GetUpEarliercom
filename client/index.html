@@ -11,6 +11,35 @@
     
     <!-- Klaviyo Forms Script -->
     <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=ULBmqZ"></script>
+    
+    <!-- Initialize Klaviyo Forms -->
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        console.log('Attempting to load Klaviyo forms...');
+        if (window.klaviyo) {
+          console.log('Klaviyo is available, initializing forms');
+          window.klaviyo.enable("onsite", { 
+            forms: {
+              'ULBmqZ': true
+            }
+          });
+        } else {
+          console.log('Klaviyo not yet loaded, waiting...');
+          setTimeout(function() {
+            if (window.klaviyo) {
+              console.log('Klaviyo loaded after delay, initializing forms');
+              window.klaviyo.enable("onsite", { 
+                forms: {
+                  'ULBmqZ': true
+                }
+              });
+            } else {
+              console.error('Klaviyo failed to load');
+            }
+          }, 2000);
+        }
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>
