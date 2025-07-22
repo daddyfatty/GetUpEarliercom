@@ -9,13 +9,9 @@ export function SiteFooter() {
       <section className="bg-gradient-to-r from-purple-900 via-blue-900 to-purple-900 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="bg-gradient-to-r from-purple-800/80 to-blue-800/80 backdrop-blur-sm rounded-2xl p-8 border border-purple-600/30">
-            <h2 className="text-3xl font-bold text-white mb-4">
+            <h2 className="text-3xl font-bold text-white mb-8">
               Get Up Earlier Newsletter
             </h2>
-            <p className="text-purple-100 mb-8 max-w-2xl mx-auto leading-relaxed">
-              Weekly clean eating tips, accountability coaching insights, and new recipe updates. 
-              Join the community bridging the gap from poor habits to healthy living.
-            </p>
             
             <div className="max-w-lg mx-auto bg-white rounded-lg p-6">
               <div 
