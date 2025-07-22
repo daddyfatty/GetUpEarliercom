@@ -17,27 +17,7 @@ export function SiteFooter() {
               Join 1000+ adults over 40 years old for weekly actionable tips on strength & muscle, health, work-from-home optimization, and healthy habits for your busy schedule.
             </p>
             
-            <div className="klaviyo-form-T2dWUC bg-white rounded-lg p-6" style={{minHeight: '120px'}}>
-              <div id="klaviyo-form-fallback" className="flex flex-col space-y-4">
-                <input 
-                  type="email" 
-                  placeholder="Email" 
-                  className="px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
-                />
-                <button 
-                  className="bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-6 rounded-md transition-colors"
-                  onClick={() => {
-                    console.log('Attempting to load Klaviyo forms...');
-                    if ((window as any).klaviyo) {
-                      console.log('Klaviyo is available, initializing forms');
-                      (window as any).klaviyo.push(['embed', 'T2dWUC']);
-                    }
-                  }}
-                >
-                  Subscribe
-                </button>
-              </div>
-            </div>
+            <div className="klaviyo-form-ULBmqZ bg-white rounded-lg p-4" style={{minHeight: '80px'}}></div>
           </div>
           
           <p className="text-purple-200 text-sm">
