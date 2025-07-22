@@ -13,7 +13,6 @@ export function SiteFooter() {
           </h2>
           
           <div className="max-w-md mx-auto mb-6">
-            <h3 className="text-xl font-semibold text-white mb-4">Get healthy & gain strength</h3>
             <p className="text-purple-200 text-sm mb-6">
               Join 1000+ adults over 40 years old for weekly actionable tips on strength & muscle, health, work-from-home optimization, and healthy habits for your busy schedule.
             </p>
