@@ -348,4 +348,5 @@ Preferred communication style: Simple, everyday language.
 Content creation: Use only user's authentic words - never write additional content unless specifically asked.
 YouTube Blog System: Always extract authentic YouTube video data (title, description, thumbnail) with links intact. Never use placeholder or synthetic content. New blog posts automatically appear at top of blog page and homepage (sorted by publishedDate descending).
 Blog Authorship: All blogs and videos are by Michael Baker (not "Get Up Earlier") and all author mentions should link to his profile about page.
+Design Preference: When user requests "Dark Gradient" styling, use the hero-gradient class which creates the stunning multi-layered gradient effect with dark navy/blue base, purple/magenta bands, royal blues, and bright orange horizon with breathing animation - this is the preferred gradient for all headers and special sections.
 ```
