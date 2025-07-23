@@ -638,10 +638,10 @@ Calculate yours: ${window.location.href}
                   </div>
                 </div>
 
-                {/* Action Buttons */}
+                {/* Action Buttons - Simplified */}
                 <div className="space-y-3">
-                  {/* Share Button with Debbie Downer - Full Width */}
-                  <Button 
+                  {/* Share Results Button */}
+                  <Button
                     onClick={() => {
                       const testShareText = generateShareText();
                       navigator.clipboard?.writeText(testShareText).then(() => {
@@ -652,11 +652,11 @@ Calculate yours: ${window.location.href}
                         });
                       });
                     }}
-                    className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-lg font-semibold py-4 h-auto min-h-[60px] relative overflow-visible pl-12"
+                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg"
                     size="lg"
                   >
-                    <img src="/buzzkill.png" alt="Debbie Downer" className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-6 flex-shrink-0 h-20 z-10" />
-                    <span className="flex-1 text-center">Share The Buzzkill Calculator</span>
+                    <Share2 className="h-5 w-5 mr-2" />
+                    <span>Share My Buzzkill Results</span>
                   </Button>
                   
                   {/* Like and Reset Buttons - Two Column Layout */}
