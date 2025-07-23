@@ -224,42 +224,42 @@ export default function TrainingLog() {
               {/* Entry Content */}
               <div className="bg-white p-6">
                 <BlogContentRenderer content={entry.content} />
-                
-                {/* Images Gallery */}
-                {entry.images && entry.images.length > 0 && (
-                  <div className="mt-6">
-                    <div className={`grid gap-4 ${
-                      entry.images.length === 1 ? 'grid-cols-1' :
-                      entry.images.length === 2 ? 'grid-cols-2' :
-                      entry.images.length === 3 ? 'grid-cols-3' :
-                      'grid-cols-2'
-                    }`}>
-                      {entry.images.map((image, index) => (
-                        <div key={index} className="aspect-auto overflow-hidden rounded-lg shadow-lg">
-                          <img 
-                            src={image} 
-                            alt={`Training log entry ${entry.entryNumber} image ${index + 1}`}
-                            className="w-full h-auto object-contain cursor-pointer hover:opacity-90 transition-opacity"
-                            onClick={() => {
-                              // Create lightbox functionality
-                              const lightbox = document.createElement('div');
-                              lightbox.className = 'fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4';
-                              lightbox.onclick = () => document.body.removeChild(lightbox);
-                              
-                              const img = document.createElement('img');
-                              img.src = image;
-                              img.className = 'max-w-[95vw] max-h-[95vh] object-contain';
-                              
-                              lightbox.appendChild(img);
-                              document.body.appendChild(lightbox);
-                            }}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
+              
+              {/* Images Gallery - Full Width */}
+              {entry.images && entry.images.length > 0 && (
+                <div className="bg-white">
+                  <div className={`grid gap-0 ${
+                    entry.images.length === 1 ? 'grid-cols-1' :
+                    entry.images.length === 2 ? 'grid-cols-2' :
+                    entry.images.length === 3 ? 'grid-cols-3' :
+                    'grid-cols-2'
+                  }`}>
+                    {entry.images.map((image, index) => (
+                      <div key={index} className="aspect-auto overflow-hidden">
+                        <img 
+                          src={image} 
+                          alt={`Training log entry ${entry.entryNumber} image ${index + 1}`}
+                          className="w-full h-auto object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                          onClick={() => {
+                            // Create lightbox functionality
+                            const lightbox = document.createElement('div');
+                            lightbox.className = 'fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4';
+                            lightbox.onclick = () => document.body.removeChild(lightbox);
+                            
+                            const img = document.createElement('img');
+                            img.src = image;
+                            img.className = 'max-w-[95vw] max-h-[95vh] object-contain';
+                            
+                            lightbox.appendChild(img);
+                            document.body.appendChild(lightbox);
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
             )) : (
               <div className="text-center py-12">
