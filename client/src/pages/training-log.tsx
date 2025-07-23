@@ -159,6 +159,9 @@ export default function TrainingLog() {
             </h1>
           </div>
 
+          {/* 200px spacing before training entries */}
+          <div style={{ height: '200px' }}></div>
+
           {/* Training Log Entries */}
           <div className="space-y-8">
             {parsedEntries.map((entry) => (
