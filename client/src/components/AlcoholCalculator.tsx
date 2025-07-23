@@ -638,19 +638,9 @@ Calculate yours: ${window.location.href}
                   </div>
                 </div>
 
-                {/* Action Buttons */}
+                {/* Action Buttons - Simplified */}
                 <div className="space-y-3">
-                  {/* Share Button - Full Width */}
-                  <Button 
-                    onClick={shareResults}
-                    className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-lg font-semibold py-4 h-auto min-h-[60px] relative overflow-visible pl-12"
-                    size="lg"
-                  >
-                    <img src="/buzzkill.png" alt="Buzzkill" className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-6 flex-shrink-0 h-20 z-10" />
-                    <span className="flex-1 text-center">Share The Buzzkill Calculator</span>
-                  </Button>
-
-                  {/* Copy and Share Results Button */}
+                  {/* Share Results Button */}
                   <Button
                     onClick={() => {
                       const testShareText = generateShareText();
@@ -662,21 +652,15 @@ Calculate yours: ${window.location.href}
                         });
                       });
                     }}
-                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-lg shadow-lg relative flex items-center overflow-visible"
+                    className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg"
+                    size="lg"
                   >
-                    <Share2 className="h-5 w-5 mr-2 -ml-1" />
-                    <span>COPY and SHARE My Buzzkill Results</span>
+                    <Share2 className="h-5 w-5 mr-2" />
+                    <span>Share My Buzzkill Results</span>
                   </Button>
                   
-                  {/* Reset and Like Buttons - Two Column Layout */}
+                  {/* Like and Reset Buttons - Two Column Layout */}
                   <div className="grid grid-cols-2 gap-3">
-                    <Button 
-                      onClick={resetCalculator} 
-                      variant="outline" 
-                      size="lg"
-                    >
-                      Reset
-                    </Button>
                     <Button 
                       onClick={() => {
                         console.log("Like button clicked, current stats:", stats);
@@ -687,7 +671,14 @@ Calculate yours: ${window.location.href}
                       size="lg"
                     >
                       <ThumbsUp className={`h-4 w-4 mr-2 ${hasLiked ? 'fill-current' : ''}`} />
-                      {hasLiked ? 'Liked!' : 'Like'}
+                      {likeMutation.isPending ? 'Liking...' : hasLiked ? 'Liked!' : 'Like'}
+                    </Button>
+                    <Button 
+                      onClick={resetCalculator} 
+                      variant="outline" 
+                      size="lg"
+                    >
+                      Reset
                     </Button>
                   </div>
                 </div>
