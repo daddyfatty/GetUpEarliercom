@@ -272,7 +272,7 @@ export default function BlogPost() {
               <div key={entry.entryNumber}>
                 {/* Entry Header */}
                 <div className="text-left mb-2">
-                  <div className="text-[35px] font-bold text-black mb-2">
+                  <div className="text-[35px] font-bold text-[#0039A6] mb-2">
                     {getEntryTitle(entry)}
                   </div>
                 </div>
@@ -296,7 +296,7 @@ export default function BlogPost() {
                 )}
                 
                 {/* Entry Info Bar */}
-                <div className="flex justify-between items-center text-sm text-black mb-6">
+                <div className="flex justify-between items-center text-sm text-[#0039A6] mb-6">
                   <div>Training Log Entry #{entry.entryNumber}</div>
                   <div className="text-[#94D600]">{entry.date}</div>
                   <div>Workout Type: <span className="text-[#94D600]">{getWorkoutType(entry)}</span></div>
@@ -354,8 +354,8 @@ export default function BlogPost() {
                           </div>
                         </div>)
                       ) : (
-                        // Multiple images - 2 column layout
-                        (<div className="grid grid-cols-2 gap-4 w-full px-0 pl-[20px] pr-[20px] pt-[20px] pb-[20px]">
+                        // Multiple images - 4 column layout
+                        (<div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full px-0 pl-[20px] pr-[20px] pt-[20px] pb-[20px]">
                           {entry.images.map((imageSrc: string, imgIndex: number) => (
                             <div 
                               key={imgIndex}
