@@ -95,7 +95,7 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
           parts.push(
             <div 
               key={`content-${lastIndex}`}
-              className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
+              className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
               dangerouslySetInnerHTML={{ __html: processedContent }}
               onClick={(e) => {
                 // Handle clicks on markdown images
@@ -185,7 +185,7 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
         parts.push(
           <span 
             key={`remaining-${lastIndex}`}
-            className="whitespace-pre-wrap"
+            className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
             dangerouslySetInnerHTML={{ __html: processedContent }}
             onClick={(e) => {
               // Handle clicks on markdown images
@@ -205,7 +205,7 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
       const processedContent = processMarkdownImages(processMarkdownBold(convertUrlsToLinks(content))).replace(/\n/g, '<br>');
       return (
         <div 
-          className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
+          className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
           dangerouslySetInnerHTML={{ __html: processedContent }}
           onClick={(e) => {
             // Handle clicks on markdown images
