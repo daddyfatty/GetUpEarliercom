@@ -183,9 +183,9 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
         // Process markdown formatting: bold first, then images, then URLs, then line breaks
         const processedContent = processMarkdownImages(processMarkdownBold(convertUrlsToLinks(remainingContent))).replace(/\n/g, '<br>');
         parts.push(
-          <div 
+          <span 
             key={`remaining-${lastIndex}`}
-            className="text-gray-600 dark:text-gray-400 whitespace-pre-wrap"
+            className="whitespace-pre-wrap"
             dangerouslySetInnerHTML={{ __html: processedContent }}
             onClick={(e) => {
               // Handle clicks on markdown images
