@@ -101,26 +101,67 @@ export default function TrainingLog() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full">
-              <Route className="h-8 w-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="max-w-6xl mx-auto">
+        {/* Featured Image Header */}
+        <div className="relative h-64 bg-cover bg-center" style={{
+          backgroundImage: "url('/attached_assets/hartford-marathon-2024-start_1752664876322.jpg')"
+        }}>
+          <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+          
+          {/* Countdown Timer */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="bg-[#0039A6] bg-opacity-90 text-white px-8 py-6 rounded-lg text-center">
+              <h2 className="text-2xl font-bold mb-4">Hartford Marathon 2025 Countdown</h2>
+              <div className="flex gap-6">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-[#94D600]">{countdown.days}</div>
+                  <div className="text-sm uppercase tracking-wide">DAYS</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-[#94D600]">{countdown.hours}</div>
+                  <div className="text-sm uppercase tracking-wide">HOURS</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-[#94D600]">{countdown.minutes}</div>
+                  <div className="text-sm uppercase tracking-wide">MINUTES</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-[#94D600]">{countdown.seconds}</div>
+                  <div className="text-sm uppercase tracking-wide">SECONDS</div>
+                </div>
+              </div>
+              <div className="mt-3 text-sm">
+                Race Day: October 11, 2025 at 7:55 AM
+              </div>
             </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Hartford Marathon Training Log
-            </h1>
           </div>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Follow my journey training for the Hartford Marathon with detailed logs, insights, and lessons learned along the way.
-          </p>
         </div>
 
-        {/* Training Log Entries */}
-        <div className="space-y-8">
-          {parsedEntries.map((entry) => (
+        <div className="px-4 sm:px-6 lg:px-8 py-8">
+          {/* Category Tags */}
+          <div className="flex flex-wrap gap-2 mb-6 justify-center">
+            <Badge className="bg-[#94D600] text-black hover:bg-[#7CB800] px-3 py-1">
+              Marathon Training Log
+            </Badge>
+            <Badge className="bg-[#94D600] text-black hover:bg-[#7CB800] px-3 py-1">
+              Marathon Training
+            </Badge>
+            <Badge className="bg-[#94D600] text-black hover:bg-[#7CB800] px-3 py-1">
+              Running
+            </Badge>
+          </div>
+
+          {/* Main Title */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-[#0039A6] mb-2">
+              Hartford Marathon Training Log 2025
+            </h1>
+          </div>
+
+          {/* Training Log Entries */}
+          <div className="space-y-8">
+            {parsedEntries.map((entry) => (
             <div key={entry.entryNumber} className="bg-white rounded-lg shadow-lg overflow-hidden">
               {/* Entry Header */}
               <div className="bg-[#0039A6] text-white px-6 py-4">
@@ -205,21 +246,22 @@ export default function TrainingLog() {
                 )}
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* Empty State */}
-        {!parsedEntries || parsedEntries.length === 0 ? (
-          <div className="text-center py-12">
-            <Route className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              No Training Entries Yet
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Training log entries will appear here as they are added.
-            </p>
+            ))}
           </div>
-        ) : null}
+
+          {/* Empty State */}
+          {!parsedEntries || parsedEntries.length === 0 ? (
+            <div className="text-center py-12">
+              <Route className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                No Training Entries Yet
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Training log entries will appear here as they are added.
+              </p>
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>
   );
