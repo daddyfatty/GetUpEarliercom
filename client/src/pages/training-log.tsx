@@ -42,6 +42,7 @@ export default function TrainingLog() {
         const contentObj = JSON.parse(hartfordLog.content);
         if (contentObj.entries && Array.isArray(contentObj.entries)) {
           parsedEntries = contentObj.entries;
+          console.log('First entry structure:', parsedEntries[0]);
         }
       } catch (error) {
         console.error('Error parsing training log content:', error);
