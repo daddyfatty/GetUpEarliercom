@@ -144,18 +144,18 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
                 </div>
               </div>
             ) : (
-              // Multiple images - masonry layout full width
-              <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4 w-full">
-                {match.images.map((image, imgIndex) => (
+              // Multiple images - 4 column grid layout
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+                {match.images?.map((image, imgIndex) => (
                   <div 
                     key={`gallery-img-${imgIndex}`}
-                    className="cursor-pointer hover:shadow-xl transition-all duration-300 group relative break-inside-avoid mb-4"
+                    className="cursor-pointer hover:shadow-xl transition-all duration-300 group relative aspect-auto overflow-hidden rounded-lg shadow-lg"
                     onClick={() => onImageClick && onImageClick(image.src)}
                   >
                     <img
                       src={image.src}
                       alt={image.alt}
-                      className="w-full h-auto object-cover rounded-lg group-hover:scale-[1.02] transition-transform duration-300"
+                      className="w-full h-auto object-contain group-hover:opacity-90 transition-opacity"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center rounded-lg">
