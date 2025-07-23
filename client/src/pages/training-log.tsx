@@ -42,19 +42,11 @@ export default function TrainingLog() {
         const contentObj = JSON.parse(hartfordLog.content);
         if (contentObj.entries && Array.isArray(contentObj.entries)) {
           parsedEntries = contentObj.entries;
-          console.log('Parsed entries:', parsedEntries.length, 'entries found');
-        } else {
-          console.log('No entries array found in content:', contentObj);
         }
       } catch (error) {
         console.error('Error parsing training log content:', error);
-        console.log('Raw content:', hartfordLog.content);
       }
-    } else {
-      console.log('Hartford log not found or no content');
     }
-  } else {
-    console.log('No raw entries found');
   }
 
   // Hartford Marathon countdown
@@ -122,9 +114,9 @@ export default function TrainingLog() {
           
           {/* Countdown Timer */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="bg-[#0039A6] bg-opacity-90 text-white px-8 py-6 rounded-lg text-center">
-              <h2 className="text-2xl font-bold mb-4">Hartford Marathon 2025 Countdown</h2>
-              <div className="flex gap-6">
+            <div className="bg-[#0039A6] bg-opacity-90 text-white px-8 py-6 rounded-lg text-center w-full max-w-2xl mx-4">
+              <h2 className="text-2xl font-bold mb-4 text-center">Hartford Marathon 2025 Countdown</h2>
+              <div className="flex gap-6 justify-center">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-[#94D600]">{countdown.days}</div>
                   <div className="text-sm uppercase tracking-wide">DAYS</div>
@@ -142,7 +134,7 @@ export default function TrainingLog() {
                   <div className="text-sm uppercase tracking-wide">SECONDS</div>
                 </div>
               </div>
-              <div className="mt-3 text-sm">
+              <div className="mt-3 text-sm text-center">
                 Race Day: October 11, 2025 at 7:55 AM
               </div>
             </div>
@@ -175,7 +167,7 @@ export default function TrainingLog() {
 
           {/* Training Log Entries */}
           <div className="space-y-8">
-            {parsedEntries.map((entry) => (
+            {parsedEntries && parsedEntries.length > 0 ? parsedEntries.map((entry) => (
             <div key={entry.entryNumber} className="bg-white rounded-lg shadow-lg overflow-hidden">
               {/* Entry Header */}
               <div className="bg-[#0039A6] text-white px-6 py-4">
@@ -268,11 +260,17 @@ export default function TrainingLog() {
                 )}
               </div>
             </div>
-            ))}
+            )) : (
+              <div className="text-center py-12">
+                <p className="text-gray-600">
+                  {isLoading ? 'Loading training entries...' : 'No training entries found'}
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Empty State */}
-          {!parsedEntries || parsedEntries.length === 0 ? (
+          {(!parsedEntries || parsedEntries.length === 0) && !isLoading ? (
             <div className="text-center py-12">
               <Route className="h-16 w-16 text-gray-400 mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
