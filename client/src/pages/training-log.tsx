@@ -103,6 +103,9 @@ export default function TrainingLog() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="max-w-6xl mx-auto">
+        {/* Top anchor for navigation */}
+        <div id="top"></div>
+        
         {/* Featured Image Header */}
         <div className="relative h-64 bg-cover bg-center" style={{
           backgroundImage: "url('/attached_assets/hartford-marathon-2024-start_1752664876322.jpg')"
@@ -205,7 +208,15 @@ export default function TrainingLog() {
                 <div className="flex justify-between items-center">
                   <span>Training Log Entry #{entry.entryNumber}</span>
                   <span className="text-[#94D600] font-semibold">{entry.date}</span>
-                  <span>Workout Type: <span className="text-[#94D600]">{entry.workoutType}</span></span>
+                  <div className="flex items-center gap-4">
+                    <span>Workout Type: <span className="text-[#94D600]">{entry.workoutType}</span></span>
+                    <a 
+                      href="#top" 
+                      className="text-white hover:text-[#94D600] text-xs underline transition-colors"
+                    >
+                      Top
+                    </a>
+                  </div>
                 </div>
               </div>
 
