@@ -81,7 +81,13 @@ export default function AlcoholCalculator() {
       return response;
     },
     onSuccess: (data) => {
-      setStats({ totalLikes: data.totalLikes, totalShares: data.totalShares });
+      console.log("Share success data:", data);
+      if (data && typeof data === 'object' && 'totalLikes' in data && 'totalShares' in data) {
+        setStats({ totalLikes: data.totalLikes, totalShares: data.totalShares });
+      } else {
+        // Refresh stats if response format is different
+        queryClient.invalidateQueries({ queryKey: ['/api/calculator-stats/alcohol'] });
+      }
     }
   });
 
@@ -633,7 +639,10 @@ Calculate yours: ${window.location.href}
                 <div className="space-y-3">
                   {/* Share Button - Full Width */}
                   <Button 
-                    onClick={shareResults}
+                    onClick={() => {
+                      shareMutation.mutate('social');
+                      shareResults();
+                    }}
                     className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-lg font-semibold py-4 h-auto min-h-[60px] relative overflow-visible pl-12"
                     size="lg"
                   >
@@ -644,6 +653,7 @@ Calculate yours: ${window.location.href}
                   {/* Copy and Share Results Button */}
                   <Button
                     onClick={() => {
+                      shareMutation.mutate('clipboard');
                       const testShareText = generateShareText();
                       navigator.clipboard?.writeText(testShareText).then(() => {
                         toast({
