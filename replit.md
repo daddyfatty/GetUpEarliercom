@@ -208,6 +208,7 @@ WHERE slug = 'hartford-marathon-training-log-2025';
 
 ```
 Changelog:
+- July 23, 2025: Modified like button to increment counter with each click - removed duplicate prevention logic from server and frontend to allow unlimited likes; like button now increases number every time it's clicked for better user engagement and social proof building
 - July 22, 2025: Fixed calculator like/share functionality and improved share button icon - resolved database syntax error by adding 'and' import to drizzle-orm in routes.ts; tested and confirmed both like and share APIs working correctly with proper duplicate prevention and counter increments; replaced Debbie Downer image in share button with professional Share2 icon from Lucide React for cleaner, more appropriate visual design
 - July 22, 2025: Confirmed Klaviyo email collection integration using correct form ID - verified all forms across site (footer, newsletter popup) use correct Klaviyo form class "klaviyo-form-ULBmqZ"; Klaviyo JavaScript library integrated in HTML head; fallback email collection system in place for reliable email signup functionality across all pages
 - July 21, 2025: Successfully fixed Facebook social sharing image for alcohol calculator - directly replaced buzzkill-calculator-og-image.png file with correct Debbie Downer image to resolve Facebook's cached image issue; added missing fb:app_id property and proper image dimensions (1200x630) to resolve sharing debugger warnings; confirmed Facebook now displays correct buzzkill image with Debbie Downer's head when sharing alcohol calculator

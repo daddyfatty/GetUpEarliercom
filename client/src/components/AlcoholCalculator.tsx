@@ -26,7 +26,6 @@ export default function AlcoholCalculator() {
 
   // Like and Share state
   const [stats, setStats] = useState({ totalLikes: 0, totalShares: 0 });
-  const [hasLiked, setHasLiked] = useState(false);
 
   // Load calculator stats on mount
   const { data: calculatorStats } = useQuery({
@@ -59,24 +58,16 @@ export default function AlcoholCalculator() {
         // Refresh stats if response format is different
         queryClient.invalidateQueries({ queryKey: ['/api/calculator-stats/alcohol'] });
       }
-      setHasLiked(true);
       toast({
         description: "Thanks for the like! 👍"
       });
     },
     onError: (error: any) => {
       console.log("Like error:", error);
-      if (error.message && error.message.includes('Already liked')) {
-        setHasLiked(true);
-        toast({
-          description: "You've already liked this calculator!"
-        });
-      } else {
-        toast({
-          description: "Failed to like. Please try again.",
-          variant: "destructive"
-        });
-      }
+      toast({
+        description: "Failed to like. Please try again.",
+        variant: "destructive"
+      });
     }
   });
 
@@ -686,8 +677,8 @@ Calculate yours: ${window.location.href}
                       className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50"
                       size="lg"
                     >
-                      <ThumbsUp className={`h-4 w-4 mr-2 ${hasLiked ? 'fill-current' : ''}`} />
-                      {hasLiked ? 'Liked!' : 'Like'}
+                      <ThumbsUp className="h-4 w-4 mr-2" />
+                      {likeMutation.isPending ? 'Liking...' : 'Like'}
                     </Button>
                   </div>
                 </div>

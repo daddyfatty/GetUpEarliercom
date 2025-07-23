@@ -1900,26 +1900,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log(`Like request: calculatorType=${calculatorType}, ip=${ipAddress}`);
       
-      // Check if user already liked (prevent spam)
-      const existingLike = await db.select().from(calculatorLikes)
-        .where(and(
-          eq(calculatorLikes.ipAddress, ipAddress),
-          eq(calculatorLikes.calculatorType, calculatorType)
-        ));
-      
-      if (existingLike.length > 0) {
-        console.log("User already liked, returning current stats");
-        // Return current stats instead of error for better UX
-        const stats = await db.select().from(calculatorStats).where(eq(calculatorStats.calculatorType, calculatorType));
-        return res.json({
-          success: true,
-          message: 'Already liked',
-          totalLikes: stats[0]?.totalLikes || 0,
-          totalShares: stats[0]?.totalShares || 0
-        });
-      }
-      
-      // Add the like
+      // Add the like (no duplicate prevention - increment every time)
       await db.insert(calculatorLikes).values({
         calculatorType,
         ipAddress,
