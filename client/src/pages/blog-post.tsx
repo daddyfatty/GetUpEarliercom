@@ -272,7 +272,7 @@ export default function BlogPost() {
               <div key={entry.entryNumber}>
                 {/* Entry Header */}
                 <div className="text-left mb-2">
-                  <div className="text-[35px] font-bold text-[#0039A6] mb-2">
+                  <div className="text-[35px] font-bold text-white mb-2">
                     {getEntryTitle(entry)}
                   </div>
                 </div>
@@ -296,7 +296,7 @@ export default function BlogPost() {
                 )}
                 
                 {/* Entry Info Bar */}
-                <div className="flex justify-between items-center text-sm text-[#0039A6] mb-6">
+                <div className="flex justify-between items-center text-sm text-white mb-6">
                   <div>Training Log Entry #{entry.entryNumber}</div>
                   <div className="text-[#94D600]">{entry.date}</div>
                   <div>Workout Type: <span className="text-[#94D600]">{getWorkoutType(entry)}</span></div>
