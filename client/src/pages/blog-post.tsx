@@ -230,7 +230,7 @@ export default function BlogPost() {
         {/* Featured Image with Countdown Overlay */}
         <div className="w-full mb-6 relative">
           <img 
-            src="/hartford-marathon-featured-image.jpg" 
+            src="/attached_assets/hartford-marathon-2024-start_1752664876322.jpg" 
             alt="Hartford Marathon 2024 Start Line" 
             className="w-full h-auto object-cover"
             style={{ maxHeight: '400px' }}
