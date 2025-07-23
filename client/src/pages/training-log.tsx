@@ -103,45 +103,45 @@ export default function TrainingLog() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <div className="max-w-6xl mx-auto">
-        {/* Top anchor for navigation */}
-        <div id="top"></div>
+      {/* Top anchor for navigation */}
+      <div id="top"></div>
+      
+      {/* Featured Image Header - Full Width */}
+      <div className="relative h-64 bg-cover bg-center w-full" style={{
+        backgroundImage: "url('/attached_assets/hartford-marathon-2024-start_1752664876322.jpg')"
+      }}>
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         
-        {/* Featured Image Header */}
-        <div className="relative h-64 bg-cover bg-center" style={{
-          backgroundImage: "url('/attached_assets/hartford-marathon-2024-start_1752664876322.jpg')"
-        }}>
-          <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-          
-          {/* Countdown Timer */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="bg-[#0039A6] bg-opacity-90 text-white px-8 py-6 rounded-lg text-center w-full max-w-2xl mx-4">
-              <h2 className="text-2xl font-bold mb-4 text-center">Hartford Marathon 2025 Countdown</h2>
-              <div className="flex gap-6 justify-center">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-[#94D600]">{countdown.days}</div>
-                  <div className="text-sm uppercase tracking-wide">DAYS</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-[#94D600]">{countdown.hours}</div>
-                  <div className="text-sm uppercase tracking-wide">HOURS</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-[#94D600]">{countdown.minutes}</div>
-                  <div className="text-sm uppercase tracking-wide">MINUTES</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-[#94D600]">{countdown.seconds}</div>
-                  <div className="text-sm uppercase tracking-wide">SECONDS</div>
-                </div>
+        {/* Countdown Timer */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="bg-[#0039A6] bg-opacity-90 text-white px-8 py-6 rounded-lg text-center w-full max-w-2xl mx-4">
+            <h2 className="text-2xl font-bold mb-4 text-center">Hartford Marathon 2025 Countdown</h2>
+            <div className="flex gap-6 justify-center">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-[#94D600]">{countdown.days}</div>
+                <div className="text-sm uppercase tracking-wide">DAYS</div>
               </div>
-              <div className="mt-3 text-sm text-center">
-                Race Day: October 11, 2025 at 7:55 AM
+              <div className="text-center">
+                <div className="text-3xl font-bold text-[#94D600]">{countdown.hours}</div>
+                <div className="text-sm uppercase tracking-wide">HOURS</div>
               </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-[#94D600]">{countdown.minutes}</div>
+                <div className="text-sm uppercase tracking-wide">MINUTES</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-[#94D600]">{countdown.seconds}</div>
+                <div className="text-sm uppercase tracking-wide">SECONDS</div>
+              </div>
+            </div>
+            <div className="mt-3 text-sm text-center">
+              Race Day: October 11, 2025 at 7:55 AM
             </div>
           </div>
         </div>
+      </div>
 
+      <div className="max-w-6xl mx-auto">
         <div className="px-4 sm:px-6 lg:px-8 py-8">
           {/* Category Tags */}
           <div className="flex flex-wrap gap-2 mb-6 justify-center">
@@ -224,42 +224,42 @@ export default function TrainingLog() {
               {/* Entry Content */}
               <div className="bg-white p-6">
                 <BlogContentRenderer content={entry.content} />
-              </div>
-              
-              {/* Images Gallery - Full Width */}
-              {entry.images && entry.images.length > 0 && (
-                <div className="bg-white">
-                  <div className={`grid gap-0 ${
-                    entry.images.length === 1 ? 'grid-cols-1' :
-                    entry.images.length === 2 ? 'grid-cols-2' :
-                    entry.images.length === 3 ? 'grid-cols-3' :
-                    'grid-cols-2'
-                  }`}>
-                    {entry.images.map((image, index) => (
-                      <div key={index} className="aspect-auto overflow-hidden">
-                        <img 
-                          src={image} 
-                          alt={`Training log entry ${entry.entryNumber} image ${index + 1}`}
-                          className="w-full h-auto object-cover cursor-pointer hover:opacity-90 transition-opacity"
-                          onClick={() => {
-                            // Create lightbox functionality
-                            const lightbox = document.createElement('div');
-                            lightbox.className = 'fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4';
-                            lightbox.onclick = () => document.body.removeChild(lightbox);
-                            
-                            const img = document.createElement('img');
-                            img.src = image;
-                            img.className = 'max-w-[95vw] max-h-[95vh] object-contain';
-                            
-                            lightbox.appendChild(img);
-                            document.body.appendChild(lightbox);
-                          }}
-                        />
-                      </div>
-                    ))}
+                
+                {/* Images Gallery */}
+                {entry.images && entry.images.length > 0 && (
+                  <div className="mt-6">
+                    <div className={`grid gap-4 ${
+                      entry.images.length === 1 ? 'grid-cols-1' :
+                      entry.images.length === 2 ? 'grid-cols-2' :
+                      entry.images.length === 3 ? 'grid-cols-3' :
+                      'grid-cols-2'
+                    }`}>
+                      {entry.images.map((image, index) => (
+                        <div key={index} className="aspect-auto overflow-hidden rounded-lg shadow-lg">
+                          <img 
+                            src={image} 
+                            alt={`Training log entry ${entry.entryNumber} image ${index + 1}`}
+                            className="w-full h-auto object-contain cursor-pointer hover:opacity-90 transition-opacity"
+                            onClick={() => {
+                              // Create lightbox functionality
+                              const lightbox = document.createElement('div');
+                              lightbox.className = 'fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4';
+                              lightbox.onclick = () => document.body.removeChild(lightbox);
+                              
+                              const img = document.createElement('img');
+                              img.src = image;
+                              img.className = 'max-w-[95vw] max-h-[95vh] object-contain';
+                              
+                              lightbox.appendChild(img);
+                              document.body.appendChild(lightbox);
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
             )) : (
               <div className="text-center py-12">
