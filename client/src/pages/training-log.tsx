@@ -7,11 +7,45 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, Clock, TrendingUp, Timer, Route } from "lucide-react";
 import { TrainingLogEntry } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
+import { BlogContentRenderer } from "@/components/blog-content-renderer";
+
+interface ParsedTrainingEntry {
+  entryNumber: number;
+  title: string;
+  subtitle: string;
+  date: string;
+  workoutType: string;
+  metrics?: {
+    distance?: string;
+    pace?: string;
+    time?: string;
+  };
+  content: string;
+  images?: string[];
+  videoUrl?: string;
+}
 
 export default function TrainingLog() {
-  const { data: entries, isLoading } = useQuery<TrainingLogEntry[]>({
+  const { data: rawEntries, isLoading } = useQuery<TrainingLogEntry[]>({
     queryKey: ['/api/training-log'],
   });
+
+  // Parse the Hartford Marathon Training Log entries from JSON content
+  const parsedEntries: ParsedTrainingEntry[] = [];
+  
+  if (rawEntries && rawEntries.length > 0) {
+    const hartfordLog = rawEntries.find(entry => entry.title === 'Hartford Marathon Training Log 2025');
+    if (hartfordLog && hartfordLog.content) {
+      try {
+        const contentObj = JSON.parse(hartfordLog.content);
+        if (contentObj.entries && Array.isArray(contentObj.entries)) {
+          parsedEntries.push(...contentObj.entries);
+        }
+      } catch (error) {
+        console.error('Error parsing training log content:', error);
+      }
+    }
+  }
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -62,75 +96,61 @@ export default function TrainingLog() {
 
         {/* Training Log Entries */}
         <div className="space-y-8">
-          {entries?.map((entry) => (
-            <Card key={entry.id} className="bg-white dark:bg-gray-800 shadow-lg border-0">
-              <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-t-lg">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-2xl font-bold flex items-center gap-2">
-                      <Badge variant="secondary" className="bg-white/20 text-white">
-                        Entry #{entry.entryNumber}
-                      </Badge>
-                      {entry.title}
-                    </CardTitle>
-                    <div className="flex items-center gap-4 mt-2 text-blue-100">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        <span>{formatDate(entry.date)}</span>
+          {parsedEntries.map((entry) => (
+            <div key={entry.entryNumber} className="bg-white rounded-lg shadow-lg overflow-hidden">
+              {/* Entry Header */}
+              <div className="bg-[#0039A6] text-white px-6 py-4">
+                <h2 className="text-3xl font-bold text-left" style={{ fontSize: '35px' }}>
+                  {entry.title}
+                </h2>
+                <p className="text-xl text-gray-200 mt-1">{entry.subtitle}</p>
+              </div>
+
+              {/* Training Metrics */}
+              {entry.metrics && (
+                <div className="bg-gray-900 bg-opacity-70 text-white px-6 py-4">
+                  <div className="flex flex-wrap gap-8">
+                    {entry.metrics.distance && (
+                      <div className="text-center">
+                        <div className="text-white text-sm uppercase tracking-wide">Distance</div>
+                        <div className="text-[#94D600] text-2xl font-bold">{entry.metrics.distance}</div>
                       </div>
-                      {entry.distance && (
-                        <div className="flex items-center gap-1">
-                          <MapPin className="h-4 w-4" />
-                          <span>{entry.distance}</span>
-                        </div>
-                      )}
-                      {entry.time && (
-                        <div className="flex items-center gap-1">
-                          <Clock className="h-4 w-4" />
-                          <span>{entry.time}</span>
-                        </div>
-                      )}
-                      {entry.pace && (
-                        <div className="flex items-center gap-1">
-                          <Timer className="h-4 w-4" />
-                          <span>{entry.pace}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <Link href={`/training-log/${entry.slug}`}>
-                    <Button variant="secondary" className="bg-white/20 hover:bg-white/30 text-white">
-                      View Details
-                    </Button>
-                  </Link>
-                </div>
-              </CardHeader>
-              <CardContent className="p-6">
-                <div className="prose prose-lg max-w-none">
-                  {renderEntryContent(entry.content)}
-                </div>
-                
-                {/* Images */}
-                {entry.images && entry.images.length > 0 && (
-                  <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {entry.images.map((image, index) => (
-                      <div key={index} className="aspect-square overflow-hidden rounded-lg">
-                        <img 
-                          src={image} 
-                          alt={`Training log entry ${entry.entryNumber} image ${index + 1}`}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                        />
+                    )}
+                    {entry.metrics.pace && (
+                      <div className="text-center">
+                        <div className="text-white text-sm uppercase tracking-wide">Pace</div>
+                        <div className="text-[#94D600] text-2xl font-bold">{entry.metrics.pace}</div>
                       </div>
-                    ))}
+                    )}
+                    {entry.metrics.time && (
+                      <div className="text-center">
+                        <div className="text-white text-sm uppercase tracking-wide">Time</div>
+                        <div className="text-[#94D600] text-2xl font-bold">{entry.metrics.time}</div>
+                      </div>
+                    )}
                   </div>
-                )}
-              </CardContent>
-            </Card>
+                </div>
+              )}
+
+              {/* Entry Info Bar */}
+              <div className="bg-[#0039A6] bg-opacity-80 text-white px-6 py-2 text-sm">
+                <div className="flex justify-between items-center">
+                  <span>Training Log Entry #{entry.entryNumber}</span>
+                  <span className="text-[#94D600] font-semibold">{entry.date}</span>
+                  <span>Workout Type: <span className="text-[#94D600]">{entry.workoutType}</span></span>
+                </div>
+              </div>
+
+              {/* Entry Content */}
+              <div className="bg-white p-6">
+                <BlogContentRenderer content={entry.content} images={entry.images || []} />
+              </div>
+            </div>
           ))}
         </div>
 
         {/* Empty State */}
-        {!entries || entries.length === 0 ? (
+        {!parsedEntries || parsedEntries.length === 0 ? (
           <div className="text-center py-12">
             <Route className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
