@@ -225,15 +225,10 @@ export default function TrainingLog() {
               <div className="bg-white p-6">
                 <BlogContentRenderer content={entry.content} />
                 
-                {/* Images Gallery */}
+                {/* Images Gallery - 4 Column Layout */}
                 {entry.images && entry.images.length > 0 && (
                   <div className="mt-6">
-                    <div className={`grid gap-4 ${
-                      entry.images.length === 1 ? 'grid-cols-1' :
-                      entry.images.length === 2 ? 'grid-cols-2' :
-                      entry.images.length === 3 ? 'grid-cols-3' :
-                      'grid-cols-2'
-                    }`}>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       {entry.images.map((image, index) => (
                         <div key={index} className="aspect-auto overflow-hidden rounded-lg shadow-lg">
                           <img 
