@@ -45,7 +45,6 @@ import Favorites from "@/pages/favorites";
 import SavedResults from "@/pages/saved-results";
 import NotFound from "@/pages/not-found";
 import TrainingLog from "@/pages/training-log";
-import TrainingLogEntry from "@/pages/training-log-entry";
 import TrainingLogAdmin from "@/pages/admin/training-log";
 import ReviewsPage from "@/pages/reviews";
 
@@ -80,7 +79,6 @@ function Router() {
           <Route path="/category/:category" component={CategoryPage} />
 
           <Route path="/training-log" component={TrainingLog} />
-          <Route path="/training-log/:slug" component={TrainingLogEntry} />
 
           <Route path="/about" component={About} />
           <Route path="/reviews" component={ReviewsPage} />
