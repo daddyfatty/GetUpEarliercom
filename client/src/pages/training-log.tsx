@@ -4,7 +4,7 @@ import { Link } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Clock, TrendingUp, Timer, Route } from "lucide-react";
+import { Calendar, MapPin, Clock, Target, Route } from "lucide-react";
 import { TrainingLogEntry } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { BlogContentRenderer } from "@/components/blog-content-renderer";
@@ -26,6 +26,8 @@ interface ParsedTrainingEntry {
 }
 
 export default function TrainingLog() {
+  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  
   const { data: rawEntries, isLoading } = useQuery<TrainingLogEntry[]>({
     queryKey: ['/api/training-log'],
   });
@@ -46,6 +48,28 @@ export default function TrainingLog() {
       }
     }
   }
+
+  // Hartford Marathon countdown
+  useEffect(() => {
+    const calculateCountdown = () => {
+      const raceDate = new Date('2025-10-11T07:55:00-04:00');
+      const now = new Date();
+      const difference = raceDate.getTime() - now.getTime();
+      
+      if (difference > 0) {
+        setCountdown({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000)
+        });
+      }
+    };
+
+    calculateCountdown();
+    const timer = setInterval(calculateCountdown, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
