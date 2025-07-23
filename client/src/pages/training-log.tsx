@@ -205,14 +205,14 @@ export default function TrainingLog() {
 
               {/* Entry Info Bar */}
               <div className="bg-[#0039A6] bg-opacity-80 text-white px-6 py-2 text-sm">
-                <div className="flex justify-between items-center">
+                <div className="flex flex-wrap justify-between items-center gap-2">
                   <span>Training Log Entry #{entry.entryNumber}</span>
                   <span className="text-[#94D600] font-semibold">{entry.date}</span>
                   <div className="flex items-center gap-4">
                     <span>Workout Type: <span className="text-[#94D600]">{entry.workoutType}</span></span>
                     <a 
                       href="#top" 
-                      className="text-white hover:text-[#94D600] text-xs underline transition-colors"
+                      className="text-white hover:text-[#94D600] text-xs underline transition-colors border border-white/30 px-2 py-1 rounded"
                     >
                       Top
                     </a>
