@@ -248,7 +248,7 @@ export default function WorkoutDetail() {
               <CardContent>
                 <div className="flex flex-wrap gap-2">
                   {workout.equipment.map((item: string, index: number) => (
-                    <Badge key={index} className="bg-accent/20 text-accent hover:bg-accent/30 font-medium">
+                    <Badge key={index} variant="secondary" className="bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium">
                       {item}
                     </Badge>
                   ))}
