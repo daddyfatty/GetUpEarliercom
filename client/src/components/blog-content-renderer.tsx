@@ -4,9 +4,10 @@ import { Fragment } from "react";
 interface BlogContentRendererProps {
   content: string;
   onImageClick?: (imageSrc: string) => void;
+  videoUrl?: string;
 }
 
-export function BlogContentRenderer({ content, onImageClick }: BlogContentRendererProps) {
+export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogContentRendererProps) {
   if (!content) return null;
 
   const renderContent = () => {
@@ -23,6 +24,33 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
       // Match URLs that appear after text or on their own lines
       const urlRegex = /(https?:\/\/[^\s]+)/g;
       return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">$1</a>');
+    };
+
+    // Function to process timecodes and make them clickable
+    const processTimecodes = (text: string) => {
+      if (!videoUrl) return text;
+      
+      // Extract YouTube video ID from URL
+      const videoIdMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/);
+      const videoId = videoIdMatch ? videoIdMatch[1] : null;
+      
+      if (!videoId) return text;
+      
+      // Match timecodes in formats like 0:00:06 or 00:42
+      const timecodeRegex = /(\d{1,2}:\d{2}(?::\d{2})?)/g;
+      
+      return text.replace(timecodeRegex, (match) => {
+        // Convert timecode to seconds
+        const parts = match.split(':').reverse();
+        let seconds = parseInt(parts[0]);
+        if (parts[1]) seconds += parseInt(parts[1]) * 60;
+        if (parts[2]) seconds += parseInt(parts[2]) * 3600;
+        
+        // Create YouTube link with timestamp
+        const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}&t=${seconds}s`;
+        
+        return `<a href="${youtubeUrl}" target="_blank" rel="noopener noreferrer" class="text-red-600 hover:text-red-800 underline font-semibold">${match}</a>`;
+      });
     };
 
     // Function to process markdown images
@@ -180,8 +208,8 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
     if (lastIndex < content.length) {
       const remainingContent = content.substring(lastIndex);
       if (remainingContent.trim()) {
-        // Process markdown formatting: bold first, then images, then URLs, then line breaks
-        const processedContent = processMarkdownImages(processMarkdownBold(convertUrlsToLinks(remainingContent))).replace(/\n/g, '<br>');
+        // Process markdown formatting: bold first, then images, then URLs, then timecodes, then line breaks
+        const processedContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(remainingContent)))).replace(/\n/g, '<br>');
         parts.push(
           <span 
             key={`remaining-${lastIndex}`}
@@ -201,8 +229,8 @@ export function BlogContentRenderer({ content, onImageClick }: BlogContentRender
     
     // If no special content found, render the original content
     if (parts.length === 0) {
-      // Process markdown formatting: bold first, then images, then URLs, then line breaks
-      const processedContent = processMarkdownImages(processMarkdownBold(convertUrlsToLinks(content))).replace(/\n/g, '<br>');
+      // Process markdown formatting: bold first, then images, then URLs, then timecodes, then line breaks
+      const processedContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(content)))).replace(/\n/g, '<br>');
       return (
         <div 
           className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
