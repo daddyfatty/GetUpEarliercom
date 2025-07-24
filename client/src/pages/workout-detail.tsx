@@ -259,6 +259,17 @@ export default function WorkoutDetail() {
 
 
 
+          {/* YouTube Content Section */}
+          {(workout as any).content && (
+            <Card className="mb-8 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80">
+              <CardContent className="pt-6">
+                <div className="prose prose-gray dark:prose-invert max-w-none">
+                  <BlogContentRenderer content={(workout as any).content} />
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Quick Exercise Reference (if available) */}
           {workout.exercises && workout.exercises.length > 0 && (
             <Card className="mb-8 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80">
