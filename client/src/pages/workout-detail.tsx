@@ -257,14 +257,7 @@ export default function WorkoutDetail() {
             </Card>
           )}
 
-          {/* Blog-Style Content Section */}
-          {(workout as any).content && (
-            <Card className="mb-8 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80">
-              <CardContent className="pt-6">
-                <BlogContentRenderer content={(workout as any).content} />
-              </CardContent>
-            </Card>
-          )}
+
 
           {/* Quick Exercise Reference (if available) */}
           {workout.exercises && workout.exercises.length > 0 && (
