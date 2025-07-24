@@ -308,7 +308,7 @@ export default function WorkoutDetail() {
                   <Button 
                     size="lg"
                     onClick={() => window.open(`https://www.youtube.com/watch?v=${youtubeId}`, '_blank')}
-                    className="flex-1"
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white border-0"
                   >
                     <Play className="w-5 h-5 mr-2" />
                     Watch on YouTube
@@ -317,7 +317,7 @@ export default function WorkoutDetail() {
                 <Button 
                   variant="outline" 
                   size="lg"
-                  className="flex-1"
+                  className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
                 >
                   <CheckCircle className="w-5 h-5 mr-2" />
                   Mark as Complete
