@@ -35,7 +35,7 @@ export default function Contact() {
                     <Phone className="h-6 w-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-gray-900 mb-1">Call or Text</h3>
+                    <h3 className="font-medium text-gray-900 mb-1">Text</h3>
                     <p className="text-gray-600">203.907.8902</p>
                   </div>
                 </div>
@@ -104,10 +104,10 @@ export default function Contact() {
                 <Button 
                   variant="outline" 
                   className="w-full"
-                  onClick={() => window.location.href = 'tel:2039078902'}
+                  onClick={() => window.location.href = 'sms:2039078902'}
                 >
                   <Phone className="h-4 w-4 mr-2" />
-                  Call or Text: 203.907.8902
+                  Text: 203.907.8902
                 </Button>
 
                 <Button 
