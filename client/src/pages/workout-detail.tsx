@@ -195,17 +195,17 @@ export default function WorkoutDetail() {
               {(workout as any).authorId && (workout as any).authorName && (workout as any).authorPhoto && (
                 <div className="flex items-center justify-between mb-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-100 dark:border-blue-800">
                   <div className="flex items-center space-x-3">
-                    <Link href={`/team/${(workout as any).authorId}`} className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+                    <Link href="/about" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
                       <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-blue-200 dark:border-blue-600">
                         <img 
-                          src={(workout as any).authorPhoto} 
-                          alt={`${(workout as any).authorName} - Workout Creator`}
+                          src="/attached_assets/493414479_10213588193416986_7983427679426833080_n.jpg" 
+                          alt="Michael Baker - Workout Creator"
                           className="w-full h-full object-cover"
                         />
                       </div>
                       <div>
                         <p className="text-sm font-medium text-gray-900 dark:text-white">
-                          Created by {(workout as any).authorName}
+                          Created by Michael Baker
                         </p>
                         <p className="text-xs text-gray-600 dark:text-gray-400">
                           Certified Personal Trainer
