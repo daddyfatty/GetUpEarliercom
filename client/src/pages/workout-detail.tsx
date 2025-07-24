@@ -159,7 +159,7 @@ export default function WorkoutDetail() {
           )}
 
           {/* Workout Header */}
-          <Card className="mb-8 bg-white dark:bg-gray-900 border-0 shadow-xl">
+          <Card className="mb-8 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
             <CardHeader>
               <div className="flex items-center justify-between mb-4">
                 <Badge className={getCategoryColor(workout.category)}>
@@ -238,17 +238,17 @@ export default function WorkoutDetail() {
 
           {/* Equipment Section */}
           {workout.equipment && workout.equipment.length > 0 && (
-            <Card className="mb-8 bg-white dark:bg-gray-900 border-0 shadow-xl">
+            <Card className="mb-8 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
               <CardHeader>
                 <CardTitle className="text-xl text-gray-900 dark:text-white flex items-center">
-                  <Dumbbell className="w-5 h-5 mr-2 text-[#94D600]" />
+                  <Dumbbell className="w-5 h-5 mr-2" />
                   Equipment Needed
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
                   {workout.equipment.map((item: string, index: number) => (
-                    <Badge key={index} className="bg-[#94D600] text-[#0039A6] hover:bg-[#b4f000] font-semibold">
+                    <Badge key={index} className="bg-accent/20 text-accent hover:bg-accent/30 font-medium">
                       {item}
                     </Badge>
                   ))}
@@ -261,13 +261,12 @@ export default function WorkoutDetail() {
 
           {/* YouTube Content Section */}
           {(workout as any).content && (
-            <Card className="mb-8 bg-[#0039A6] dark:bg-gray-900 border-0 shadow-xl">
+            <Card className="mb-8 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
               <CardContent className="pt-6">
-                <div className="prose prose-lg dark:prose-invert max-w-none 
-                  prose-p:text-white prose-p:leading-relaxed
-                  prose-strong:text-[#94D600] prose-strong:font-bold
-                  prose-a:text-[#94D600] prose-a:underline prose-a:font-semibold
-                  hover:prose-a:text-[#b4f000] prose-a:transition-colors">
+                <div className="prose prose-lg dark:prose-invert max-w-none
+                  prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed
+                  prose-strong:text-gray-900 dark:prose-strong:text-white
+                  prose-a:text-blue-600 hover:prose-a:text-blue-800 prose-a:underline">
                   <BlogContentRenderer content={(workout as any).content} videoUrl={workout.videoUrl} />
                 </div>
               </CardContent>
@@ -276,7 +275,7 @@ export default function WorkoutDetail() {
 
           {/* Quick Exercise Reference (if available) */}
           {workout.exercises && workout.exercises.length > 0 && (
-            <Card className="mb-8 bg-white dark:bg-gray-900 border-0 shadow-xl">
+            <Card className="mb-8 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
               <CardHeader>
                 <CardTitle className="text-xl text-gray-900 dark:text-white">
                   Quick Exercise Reference ({workout.exercises.length})
@@ -285,13 +284,13 @@ export default function WorkoutDetail() {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {workout.exercises.map((exercise: any, index: number) => (
-                    <div key={index} className="border-2 border-[#94D600] rounded-lg p-4 hover:bg-[#94D600]/10 transition-colors">
+                    <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                       <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-semibold text-gray-900 dark:text-white text-base">
+                        <h4 className="font-semibold text-gray-900 dark:text-white">
                           {index + 1}. {exercise.name}
                         </h4>
                         {exercise.sets && exercise.reps && (
-                          <Badge className="bg-[#0039A6] text-white">
+                          <Badge variant="outline" className="text-xs">
                             {exercise.sets} × {exercise.reps}
                           </Badge>
                         )}
@@ -309,14 +308,14 @@ export default function WorkoutDetail() {
           )}
 
           {/* Action Buttons */}
-          <Card className="bg-white dark:bg-gray-900 border-0 shadow-xl">
+          <Card className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
             <CardContent className="pt-6">
               <div className="flex gap-4">
                 {youtubeId && (
                   <Button 
                     size="lg"
                     onClick={() => window.open(`https://www.youtube.com/watch?v=${youtubeId}`, '_blank')}
-                    className="flex-1 bg-[#0039A6] hover:bg-[#002a7a] text-white border-0 font-semibold transition-all duration-200"
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
                   >
                     <Play className="w-5 h-5 mr-2" />
                     Watch on YouTube
@@ -325,7 +324,7 @@ export default function WorkoutDetail() {
                 <Button 
                   variant="outline" 
                   size="lg"
-                  className="flex-1 border-[#94D600] text-[#94D600] hover:bg-[#94D600] hover:text-[#0039A6] font-semibold transition-all duration-200"
+                  className="flex-1"
                 >
                   <CheckCircle className="w-5 h-5 mr-2" />
                   Mark as Complete

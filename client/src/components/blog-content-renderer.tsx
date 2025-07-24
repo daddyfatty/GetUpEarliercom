@@ -49,7 +49,7 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
         // Create YouTube link with timestamp
         const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}&t=${seconds}s`;
         
-        return `<a href="${youtubeUrl}" target="_blank" rel="noopener noreferrer" class="text-[#94D600] hover:text-[#b4f000] underline font-bold transition-colors duration-200">${match}</a>`;
+        return `<a href="${youtubeUrl}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline font-semibold">${match}</a>`;
       });
     };
 
