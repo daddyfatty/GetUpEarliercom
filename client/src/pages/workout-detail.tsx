@@ -120,7 +120,7 @@ export default function WorkoutDetail() {
                 {!showVideo ? (
                   <>
                     <img 
-                      src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+                      src={workout.imageUrl || `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`}
                       alt={workout.title}
                       className="w-full h-full object-cover"
                     />
