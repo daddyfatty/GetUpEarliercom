@@ -4,7 +4,6 @@ import { Phone, Mail, MapPin, Clock, Calendar } from "lucide-react";
 import { SiFacebook } from "react-icons/si";
 
 export default function Contact() {
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -23,8 +22,9 @@ export default function Contact() {
         </div>
       </section>
 
+      {/* Contact Content */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid md:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div className="space-y-8">
             <div>
@@ -46,7 +46,12 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-900 mb-1">Email</h3>
-                    <p className="text-gray-600">Please use the form below</p>
+                    <p className="text-gray-600">
+                      Mike: <a href="mailto:mike@webmbd.com" className="text-blue-600 hover:underline">mike@webmbd.com</a>
+                    </p>
+                    <p className="text-gray-600">
+                      Erica: <a href="mailto:ejelormine@gmail.com" className="text-blue-600 hover:underline">ejelormine@gmail.com</a>
+                    </p>
                   </div>
                 </div>
 
@@ -73,8 +78,10 @@ export default function Contact() {
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Quick Actions */}
+          {/* Quick Actions */}
+          <div>
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -82,7 +89,7 @@ export default function Contact() {
                   Quick Actions
                 </CardTitle>
                 <CardDescription>
-                  Skip the form and take direct action
+                  Take direct action to get started
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -114,8 +121,6 @@ export default function Contact() {
               </CardContent>
             </Card>
           </div>
-
-
         </div>
 
         {/* FAQ Section */}
@@ -144,12 +149,12 @@ export default function Contact() {
                 <div>
                   <h3 className="font-medium text-gray-900 mb-2">What if I'm a complete beginner?</h3>
                   <p className="text-gray-600 mb-4">
-                    Perfect! My approach is designed to bridge the gap from inactivity to healthy habits, with programs tailored to any fitness level.
+                    Perfect! We specialize in helping beginners build sustainable habits. Every program is customized to your current fitness level.
                   </p>
 
-                  <h3 className="font-medium text-gray-900 mb-2">How often should we meet?</h3>
+                  <h3 className="font-medium text-gray-900 mb-2">How much does coaching cost?</h3>
                   <p className="text-gray-600">
-                    This depends on your goals and preferences. Options range from single sessions to weekly meetings as part of ongoing coaching packages.
+                    Pricing varies based on your specific needs and goals. Book a free consultation to discuss options that fit your budget.
                   </p>
                 </div>
               </div>
