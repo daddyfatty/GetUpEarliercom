@@ -72,8 +72,10 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-900 mb-1">Hours</h3>
-                    <p className="text-gray-600">7 days a week</p>
-                    <p className="text-gray-600">4:45am-2pm EST</p>
+                    <p className="text-gray-600">Coaching and Training: M-F 4:45am-10am</p>
+                    <p className="text-gray-600">
+                      Yoga: <a href="https://www.ericaleebaker.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Click here for schedule</a>
+                    </p>
                   </div>
                 </div>
               </div>
