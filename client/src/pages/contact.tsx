@@ -61,7 +61,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-900 mb-1">Our Location</h3>
-                    <p className="text-gray-600">455 Ridgeview Road</p>
+                    <p className="text-gray-600">455 Ridgeview Road or Virtual Anywhere</p>
                     <p className="text-gray-600">Orange, CT</p>
                   </div>
                 </div>
@@ -78,6 +78,23 @@ export default function Contact() {
                     </p>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Map */}
+            <div className="mt-8">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">Find Us</h3>
+              <div className="rounded-lg overflow-hidden shadow-md">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2998.7426847646!2d-73.02577068403!3d41.29127977925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e7d8b5b8b5b5b5%3A0x1234!2s455%20Ridgeview%20Rd%2C%20Orange%2C%20CT%2006477!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+                  width="100%"
+                  height="300"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="455 Ridgeview Road, Orange, CT"
+                />
               </div>
             </div>
           </div>
