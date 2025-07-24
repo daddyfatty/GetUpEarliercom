@@ -61,8 +61,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-900 mb-1">Our Location</h3>
-                    <p className="text-gray-600">455 Ridgeview Road or Virtual Anywhere</p>
-                    <p className="text-gray-600">Orange, CT</p>
+                    <p className="text-gray-600">Virtual Anywhere</p>
                   </div>
                 </div>
 
@@ -139,6 +138,18 @@ export default function Contact() {
                 </Button>
               </CardContent>
             </Card>
+
+            {/* Address */}
+            <div className="mt-6">
+              <div className="text-center p-4 bg-gray-50 rounded-lg">
+                <div className="flex items-center justify-center mb-2">
+                  <MapPin className="h-5 w-5 text-purple-600 mr-2" />
+                  <h3 className="font-medium text-gray-900">Physical Location</h3>
+                </div>
+                <p className="text-gray-600">455 Ridgeview Road</p>
+                <p className="text-gray-600">Orange, CT</p>
+              </div>
+            </div>
           </div>
         </div>
 
