@@ -91,6 +91,7 @@ export const workouts = pgTable("workouts", {
     rest?: string;
     description?: string;
   }[]>().notNull(),
+  content: text("content"), // Rich text content for workout story/detailed instructions
   imageUrl: text("image_url"),
   videoUrl: text("video_url"), // YouTube video URL
   authorId: text("author_id"), // Team member ID (michael or erica)

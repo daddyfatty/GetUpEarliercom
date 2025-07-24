@@ -599,6 +599,7 @@ export class DatabaseStorage implements IStorage {
         caloriesBurned: row.calories_burned,
         equipment: row.equipment || null,
         exercises: row.exercises || [],
+        content: row.content || null,
         imageUrl: row.image_url || null,
         videoUrl: row.video_url || null,
         authorId: row.author_id || null,

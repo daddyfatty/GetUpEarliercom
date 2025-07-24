@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Clock, Flame, Star, Dumbbell, Play, ArrowLeft, CheckCircle, X } from "lucide-react";
 import { Link } from "wouter";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { BlogContentRenderer } from "@/components/blog-content-renderer";
 import type { Workout } from "@shared/schema";
 
 export default function WorkoutDetail() {
@@ -256,36 +257,42 @@ export default function WorkoutDetail() {
             </Card>
           )}
 
-          {/* Exercises Section */}
+          {/* Blog-Style Content Section */}
+          {(workout as any).content && (
+            <Card className="mb-8 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80">
+              <CardContent className="pt-6">
+                <BlogContentRenderer content={(workout as any).content} />
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Quick Exercise Reference (if available) */}
           {workout.exercises && workout.exercises.length > 0 && (
             <Card className="mb-8 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80">
               <CardHeader>
                 <CardTitle className="text-xl text-gray-900 dark:text-white">
-                  Exercises ({workout.exercises.length})
+                  Quick Exercise Reference ({workout.exercises.length})
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {workout.exercises.map((exercise: any, index: number) => (
-                    <div key={index} className="border-l-4 border-accent pl-4 py-2">
+                    <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
                       <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-semibold text-gray-900 dark:text-white">
+                        <h4 className="font-semibold text-gray-900 dark:text-white text-sm">
                           {index + 1}. {exercise.name}
                         </h4>
                         {exercise.sets && exercise.reps && (
-                          <Badge variant="outline">
-                            {exercise.sets} sets × {exercise.reps}
-                          </Badge>
-                        )}
-                        {exercise.duration && (
-                          <Badge variant="outline">
-                            {exercise.duration} seconds
+                          <Badge variant="outline" className="text-xs">
+                            {exercise.sets} × {exercise.reps}
                           </Badge>
                         )}
                       </div>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        {exercise.description}
-                      </p>
+                      {exercise.description && (
+                        <p className="text-gray-600 dark:text-gray-300 text-sm">
+                          {exercise.description}
+                        </p>
+                      )}
                     </div>
                   ))}
                 </div>

@@ -10,6 +10,7 @@ export interface WorkoutData {
   caloriesBurned: number;
   equipment: string[] | null;
   exercises: any[];
+  content: string | null;
   imageUrl: string | null;
   videoUrl: string | null;
   authorId: string | null;
@@ -36,6 +37,7 @@ export class WorkoutService {
         caloriesBurned: row.calories_burned,
         equipment: row.equipment || null,
         exercises: row.exercises || [],
+        content: row.content || null,
         imageUrl: row.image_url || null,
         videoUrl: row.video_url || null,
         authorId: row.author_id || null,
@@ -80,6 +82,7 @@ export class WorkoutService {
         caloriesBurned: row.calories_burned,
         equipment: row.equipment || null,
         exercises: row.exercises || [],
+        content: row.content || null,
         imageUrl: row.image_url || null,
         videoUrl: row.video_url || null,
         authorId: row.author_id || null,
@@ -108,6 +111,7 @@ export class WorkoutService {
         caloriesBurned: row.calories_burned,
         equipment: row.equipment || null,
         exercises: row.exercises || [],
+        content: row.content || null,
         imageUrl: row.image_url || null,
         videoUrl: row.video_url || null,
         authorId: row.author_id || null,
