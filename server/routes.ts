@@ -278,6 +278,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const workout = await storage.createWorkout(workoutData);
       res.status(201).json(workout);
     } catch (error) {
+      console.error('Error creating workout:', error);
+      res.status(400).json({ message: "Invalid workout data" });
+    }
+  });
+
+  app.patch("/api/workouts/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updates = req.body;
+      const workout = await storage.updateWorkout(id, updates);
+      
+      if (!workout) {
+        return res.status(404).json({ message: "Workout not found" });
+      }
+      
+      res.json(workout);
+    } catch (error) {
+      console.error('Error updating workout:', error);
+      res.status(500).json({ message: "Failed to update workout" });
+    }
+  });
+
+  app.delete("/api/workouts/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const deleted = await storage.deleteWorkout(id);
+      
+      if (!deleted) {
+        return res.status(404).json({ message: "Workout not found" });
+      }
+      
+      res.json({ message: "Workout deleted successfully" });
+    } catch (error) {
+      console.error('Error deleting workout:', error);
+      res.status(500).json({ message: "Failed to delete workout" });
+    }
+  });
+
+  app.post("/api/workouts", async (req, res) => {
+    try {
+      const workoutData = insertWorkoutSchema.parse(req.body);
+      const workout = await storage.createWorkout(workoutData);
+      res.status(201).json(workout);
+    } catch (error) {
       res.status(400).json({ message: "Invalid workout data" });
     }
   });

@@ -246,7 +246,7 @@ export default function WorkoutDetail() {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
-                  {workout.equipment.map((item, index) => (
+                  {workout.equipment.map((item: string, index: number) => (
                     <Badge key={index} variant="secondary" className="text-sm">
                       {item}
                     </Badge>
@@ -266,7 +266,7 @@ export default function WorkoutDetail() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {workout.exercises.map((exercise, index) => (
+                  {workout.exercises.map((exercise: any, index: number) => (
                     <div key={index} className="border-l-4 border-accent pl-4 py-2">
                       <div className="flex items-center justify-between mb-2">
                         <h4 className="font-semibold text-gray-900 dark:text-white">

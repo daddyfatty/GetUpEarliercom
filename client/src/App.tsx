@@ -46,6 +46,7 @@ import SavedResults from "@/pages/saved-results";
 import NotFound from "@/pages/not-found";
 
 import TrainingLogAdmin from "@/pages/admin/training-log";
+import AdminWorkouts from "@/pages/admin-workouts";
 import ReviewsPage from "@/pages/reviews";
 
 function Router() {
@@ -100,6 +101,7 @@ function Router() {
           <Route path="/admin/facebook" component={AdminFacebook} />
           <Route path="/admin/dashboard" component={AdminDashboard} />
           <Route path="/admin/training-log" component={TrainingLogAdmin} />
+          <Route path="/admin/workouts" component={AdminWorkouts} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/subscribe" component={Subscribe} />
           <Route component={NotFound} />
