@@ -13,20 +13,22 @@ export default function Workouts() {
     queryKey: ["/api/blog"],
   });
   
-  // Filter blog posts by "workouts & challenges" tag
-  const workoutPosts = allPosts.filter(post => {
-    // Check primary category
-    if (post.category && post.category.toLowerCase() === 'workouts & challenges') {
-      return true;
-    }
-    // Check categories array
-    if (post.categories && post.categories.some(cat => cat.toLowerCase() === 'workouts & challenges')) {
-      return true;
-    }
-    // Check tags field if it exists
-    const tags = post.tags ? post.tags.toLowerCase() : '';
-    return tags.includes('workouts & challenges') || tags.includes('workouts-challenges');
-  });
+  // Filter blog posts by "workouts & challenges" tag and sort by date (latest first)
+  const workoutPosts = allPosts
+    .filter(post => {
+      // Check primary category
+      if (post.category && post.category.toLowerCase() === 'workouts & challenges') {
+        return true;
+      }
+      // Check categories array
+      if (post.categories && post.categories.some(cat => cat.toLowerCase() === 'workouts & challenges')) {
+        return true;
+      }
+      // Check tags field if it exists
+      const tags = post.tags ? post.tags.toLowerCase() : '';
+      return tags.includes('workouts & challenges') || tags.includes('workouts-challenges');
+    })
+    .sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
 
   const extractYouTubeId = (url: string) => {
     const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/);

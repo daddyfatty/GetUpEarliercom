@@ -78,7 +78,11 @@ export default function Blog() {
                          post.author.toLowerCase().includes(searchTerm.toLowerCase());
     
     // Check if post matches selected category (in primary category or additional categories)
-    const normalizedSelectedCategory = selectedCategory === "Workouts & Challenges" ? "workouts" : selectedCategory;
+    let normalizedSelectedCategory = selectedCategory;
+    if (selectedCategory === "Workouts & Challenges" || selectedCategory === "workouts-challenges") {
+      normalizedSelectedCategory = "workouts & challenges";
+    }
+    
     const matchesCategory = selectedCategory === "all" || 
                            post.category.toLowerCase() === normalizedSelectedCategory.toLowerCase() ||
                            (post.categories && post.categories.some(cat => cat.toLowerCase() === normalizedSelectedCategory.toLowerCase()));
@@ -96,6 +100,14 @@ export default function Blog() {
     } catch {
       return dateString;
     }
+  };
+
+  // Helper function to create clean category URLs
+  const createCategoryUrl = (category: string) => {
+    if (category.toLowerCase() === 'workouts & challenges') {
+      return '/category/workouts-challenges';
+    }
+    return `/category/${category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
   };
 
   if (isLoading) {
@@ -288,7 +300,7 @@ export default function Blog() {
                             onClick={(e) => {
                               e.preventDefault();
                               e.stopPropagation();
-                              window.location.href = `/category/${encodeURIComponent(category)}`;
+                              window.location.href = createCategoryUrl(category);
                             }}
                           >
                             {category}
@@ -301,7 +313,7 @@ export default function Blog() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                window.location.href = `/category/${encodeURIComponent(category.trim())}`;
+                                window.location.href = createCategoryUrl(category.trim());
                               }}
                             >
                               {category.trim()}
