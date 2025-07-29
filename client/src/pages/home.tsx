@@ -215,9 +215,9 @@ export default function Home() {
                 <div className="bg-white border-2 border-blue-200 p-6 rounded-2xl shadow-lg h-full flex flex-col hover:shadow-xl hover:border-blue-300 transition-all duration-200 cursor-pointer">
                   <div className="mb-4">
                     <div className="inline-block bg-blue-600/10 text-blue-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
-                      Workout Collection
+                      Workout & Challenge Collection
                     </div>
-                    <h2 className="text-2xl font-bold text-blue-600 mb-2">Latest Workout</h2>
+                    <h2 className="text-2xl font-bold text-blue-600 mb-2">Latest Workout & Challenge</h2>
                     <p className="text-gray-600 mb-2 text-[14px]">Simple, effective workouts for every fitness level</p>
                     <div className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
                       <Dumbbell className="inline w-4 h-4 mr-1" />
@@ -239,7 +239,7 @@ export default function Home() {
                       className="w-full font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-lg transform hover:scale-105 transition-all duration-200"
                     >
                       <Dumbbell className="h-5 w-5 mr-2" />
-                      View All Workouts
+                      View All Workouts & Challenges
                     </Button>
                   </div>
                 </div>
@@ -277,7 +277,7 @@ export default function Home() {
                 <Dumbbell className="w-8 h-8 text-blue-600" />
               </div>
               <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">100+</div>
-              <div className="text-gray-600 dark:text-gray-300">Workout Plans</div>
+              <div className="text-gray-600 dark:text-gray-300">Workouts & Challenges</div>
               <div className="text-xs text-orange-500 font-medium mt-1">BETA COMING SOON</div>
             </div>
           </div>

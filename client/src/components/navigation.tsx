@@ -45,7 +45,7 @@ export function Navigation() {
     { href: "/services", label: "1-on-1 Services" },
     { href: "/blog", label: "Blog" },
     { href: "/recipes", label: "Recipes", beta: true },
-    { href: "/workouts", label: "Workouts", beta: true },
+    { href: "/workouts", label: "Workouts & Challenges", beta: true },
     ...(isAdmin ? [{ href: "/admin", label: "Admin" }] : []),
   ];
 
@@ -188,7 +188,7 @@ export function Navigation() {
                   </span>
                 </Link>
                 
-                {/* Workouts */}
+                {/* Workouts & Challenges */}
                 <Link href="/workouts">
                   <span
                     className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
@@ -197,7 +197,7 @@ export function Navigation() {
                         : "text-white hover:text-[hsl(var(--orange))]"
                     }`}
                   >
-                    Workouts
+                    Workouts & Challenges
                     <span className="ml-1 text-xs bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
                       BETA
                     </span>
@@ -496,7 +496,7 @@ export function Navigation() {
                             : "text-gray-900 hover:text-[hsl(var(--orange))]"
                         }`}
                       >
-                        Workouts
+                        Workouts & Challenges
                         <span className="ml-2 text-xs bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
                           BETA
                         </span>

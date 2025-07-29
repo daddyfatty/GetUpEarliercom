@@ -103,14 +103,14 @@ export default function Workouts() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <div className="inline-block bg-blue-600/10 text-blue-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
-              Workout Collection
+              Workout & Challenge Collection
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
               Powerful Short<br className="hidden sm:block" />
               <span className="text-blue-600">Sessions</span>
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-              Strength, Calisthenics, Yoga, Guided Runs, and Tutorials to Keep You Moving
+              Strength, Calisthenics, Yoga, Guided Runs, Challenges and Tutorials to Keep You Moving
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">

@@ -103,7 +103,7 @@ export function SiteFooter() {
                 <li>
                   <Link href="/workouts">
                     <span className="text-gray-300 hover:text-white transition-colors cursor-pointer">
-                      Workouts
+                      Workouts & Challenges
                     </span>
                   </Link>
                 </li>

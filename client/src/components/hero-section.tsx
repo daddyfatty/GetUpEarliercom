@@ -54,7 +54,7 @@ export function HeroSection() {
                     className="w-full font-semibold text-black hover:opacity-90 px-8 py-4 text-lg"
                     style={{ backgroundColor: '#B3D7E9' }}
                   >
-                    View Workouts
+                    View Workouts & Challenges
                   </Button>
                 </Link>
               </div>
