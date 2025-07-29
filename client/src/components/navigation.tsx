@@ -83,7 +83,7 @@ export function Navigation() {
       {/* Desktop Header with Centered Logo */}
       <div className="hidden md:block bg-[hsl(var(--navy))]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center">
+          <div className="flex justify-center items-center">
             <Link href="/">
               <img 
                 src={logoPath} 
@@ -91,6 +91,31 @@ export function Navigation() {
                 className="h-24 w-auto max-w-[700px] object-contain"
               />
             </Link>
+            
+            {/* Social Links */}
+            <div className="flex items-center space-x-4 ml-8">
+              <a 
+                href="https://www.youtube.com/@getupearlier" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
+                title="YouTube Channel"
+              >
+                <SiYoutube className="h-5 w-5" />
+                <span className="text-sm font-medium">63k</span>
+              </a>
+              
+              <a 
+                href="https://www.facebook.com/groups/getupearlier" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
+                title="Join Facebook Group"
+              >
+                <SiFacebook className="h-5 w-5" />
+                <span className="text-sm font-medium">Group</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -112,6 +137,31 @@ export function Navigation() {
                   className="h-24 w-auto max-w-[600px] object-contain"
                 />
               </Link>
+              
+              {/* Social Links for Mobile */}
+              <div className="flex items-center space-x-3 ml-4">
+                <a 
+                  href="https://www.youtube.com/@getupearlier" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
+                  title="YouTube Channel"
+                >
+                  <SiYoutube className="h-4 w-4" />
+                  <span className="text-xs font-medium">63k</span>
+                </a>
+                
+                <a 
+                  href="https://www.facebook.com/groups/getupearlier" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
+                  title="Join Facebook Group"
+                >
+                  <SiFacebook className="h-4 w-4" />
+                  <span className="text-xs font-medium">Group</span>
+                </a>
+              </div>
             </div>
 
 
@@ -254,28 +304,6 @@ export function Navigation() {
             {/* Desktop Actions */}
             <div className="hidden md:block">
               <div className="ml-4 flex items-center md:ml-6 space-x-4">
-                <a 
-                  href="https://www.youtube.com/@getupearlier" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
-                  title="YouTube Channel"
-                >
-                  <SiYoutube className="h-5 w-5" />
-                  <span className="text-xs font-medium hidden lg:inline">63k</span>
-                </a>
-                
-                <a 
-                  href="https://www.facebook.com/groups/getupearlier" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
-                  title="Join Facebook Group"
-                >
-                  <SiFacebook className="h-5 w-5" />
-                  <span className="text-xs font-medium hidden lg:inline">Group</span>
-                </a>
-                
                 {/* TEMPORARILY HIDDEN - Bell notification and user profile section */}
                 {/* {isAuthenticated && (
                   <Button variant="ghost" size="sm" className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10">
@@ -569,30 +597,7 @@ export function Navigation() {
                       </CollapsibleContent>
                     </Collapsible>
 
-                    {/* Social Media Links */}
-                    <div className="pt-4 border-t space-y-2">
-                      <a 
-                        href="https://www.youtube.com/@getupearlier" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-2 px-3 py-2 text-gray-900 hover:text-[hsl(var(--orange))] transition-colors"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        <SiYoutube className="h-5 w-5" />
-                        <span className="font-medium">YouTube (63k)</span>
-                      </a>
-                      
-                      <a 
-                        href="https://www.facebook.com/groups/getupearlier" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-2 px-3 py-2 text-gray-900 hover:text-[hsl(var(--orange))] transition-colors"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        <SiFacebook className="h-5 w-5" />
-                        <span className="font-medium">Join Facebook Group</span>
-                      </a>
-                    </div>
+
 
                     {/* Auth Section for Mobile - HIDDEN FOR NOW */}
                     {false && (
