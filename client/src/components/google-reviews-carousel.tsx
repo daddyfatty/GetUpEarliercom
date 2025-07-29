@@ -38,6 +38,15 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
   // Additional testimonials to supplement Google reviews
   const additionalTestimonials: GoogleReview[] = [
     {
+      author_name: "Facebook Review",
+      text: "Peep the upper body strength on my sunrise snorkel on this first day of being 54! Managed to pull my ass in and out of this boat with no problems! Thanks Coach ❣️That's Saudi Arabia Mountains behind me 🙏🏾 I'm in the Gulf of Aqaba.",
+      rating: 5,
+      profile_photo_url: "/attached_assets/download---2025-07-29T171024_1753823450486.jpg",
+      relative_time_description: "a week ago",
+      language: "en",
+      time: Date.now() - 7 * 24 * 60 * 60 * 1000 // 1 week ago
+    },
+    {
       author_name: "David Salinas",
       text: "Needed a kick start back to life and got that from Michael. He's knowledgeable, adapts to your preferences and optimized. Highly recommended. 10/10",
       rating: 5,
