@@ -57,7 +57,10 @@ export default function Blog() {
       }
       return allCategories;
     }) || []
-  )).sort()];
+  ))
+  .filter(cat => cat.toLowerCase() !== "training") // Remove Training category
+  .map(cat => cat.toLowerCase() === "workouts" ? "Workouts & Challenges" : cat) // Replace Workouts with Workouts & Challenges
+  .sort()];
 
   // Helper function to organize categories into 3 columns
   const organizeCategories = (cats: string[]) => {
@@ -75,9 +78,10 @@ export default function Blog() {
                          post.author.toLowerCase().includes(searchTerm.toLowerCase());
     
     // Check if post matches selected category (in primary category or additional categories)
+    const normalizedSelectedCategory = selectedCategory === "Workouts & Challenges" ? "workouts" : selectedCategory;
     const matchesCategory = selectedCategory === "all" || 
-                           post.category.toLowerCase() === selectedCategory.toLowerCase() ||
-                           (post.categories && post.categories.some(cat => cat.toLowerCase() === selectedCategory.toLowerCase()));
+                           post.category.toLowerCase() === normalizedSelectedCategory.toLowerCase() ||
+                           (post.categories && post.categories.some(cat => cat.toLowerCase() === normalizedSelectedCategory.toLowerCase()));
     
     return matchesSearch && matchesCategory;
   }) || [];
