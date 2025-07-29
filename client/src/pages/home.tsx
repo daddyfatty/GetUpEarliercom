@@ -248,15 +248,57 @@ export default function Home() {
                           <img 
                             src={workoutPosts[0].imageUrl}
                             alt={workoutPosts[0].title}
-                            className="w-full h-72 object-cover rounded-lg mb-4 border border-blue-200"
+                            className="w-full h-72 object-cover rounded-lg mb-4"
                           />
                         )}
-                        <h3 className="font-bold text-gray-900 mb-2 text-lg leading-tight">
+                        <h3 className="text-xl font-semibold text-gray-900 mb-2">
                           {workoutPosts[0].title}
                         </h3>
-                        <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                        <p className="text-gray-600 mb-4 line-clamp-2">
                           {workoutPosts[0].excerpt}
                         </p>
+                        
+                        {/* Author Attribution */}
+                        <div className="flex items-center mb-4">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-200">
+                              <img 
+                                src="/attached_assets/493414479_10213588193416986_7983427679426833080_n.jpg" 
+                                alt="Michael Baker - Author"
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <span className="text-sm font-medium text-gray-700">
+                              by Michael Baker
+                            </span>
+                          </div>
+                        </div>
+                        
+                        {/* Workout Details */}
+                        <div className="space-y-3">
+                          <div className="flex items-center space-x-4 text-sm text-gray-500">
+                            <span className="flex items-center">
+                              <Dumbbell className="w-4 h-4 text-blue-600 mr-1" />
+                              {workoutPosts[0].categories?.includes('Push-up') ? 'Body Weight' : 'Mixed Equipment'}
+                            </span>
+                            <span className="text-gray-400">•</span>
+                            <span>{workoutPosts[0].readTime || 5} min read</span>
+                            <span className="text-gray-400">•</span>
+                            <span>Upper Body</span>
+                          </div>
+                          
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-gray-500">1 workout</span>
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
+                              className="text-blue-600 hover:text-blue-600/80 font-medium"
+                            >
+                              View Workout
+                              <ArrowRight className="w-4 h-4 ml-1" />
+                            </Button>
+                          </div>
+                        </div>
                       </div>
                     ) : (
                       <div className="mb-4 text-center text-gray-500">
@@ -266,16 +308,7 @@ export default function Home() {
                     )}
                   </div>
                   
-                  <div className="mt-auto">
-                    <Button 
-                      size="lg" 
-                      className="w-full font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-lg transform hover:scale-105 transition-all duration-200"
-                    >
-                      <BookOpen className="h-5 w-5 mr-2" />
-                      Read Full Post
-                      <ArrowRight className="h-4 w-4 ml-2" />
-                    </Button>
-                  </div>
+
                 </div>
               </Link>
             </div>
