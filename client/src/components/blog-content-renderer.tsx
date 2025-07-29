@@ -172,8 +172,12 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
                 </div>
               </div>
             ) : (
-              // Multiple images - 4 column grid layout
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+              // Multiple images - Dynamic column layout based on image count
+              <div className={`grid gap-4 w-full ${
+                imageCount === 2 ? 'grid-cols-2' : 
+                imageCount === 3 ? 'grid-cols-3' : 
+                'grid-cols-2 md:grid-cols-4'
+              }`}>
                 {match.images?.map((image, imgIndex) => (
                   <div 
                     key={`gallery-img-${imgIndex}`}
