@@ -15,6 +15,15 @@ export default function Workouts() {
   
   // Filter blog posts by "workouts & challenges" tag
   const workoutPosts = allPosts.filter(post => {
+    // Check primary category
+    if (post.category && post.category.toLowerCase() === 'workouts & challenges') {
+      return true;
+    }
+    // Check categories array
+    if (post.categories && post.categories.some(cat => cat.toLowerCase() === 'workouts & challenges')) {
+      return true;
+    }
+    // Check tags field if it exists
     const tags = post.tags ? post.tags.toLowerCase() : '';
     return tags.includes('workouts & challenges') || tags.includes('workouts-challenges');
   });
