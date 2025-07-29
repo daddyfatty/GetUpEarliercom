@@ -67,8 +67,10 @@ function Router() {
           <Route path="/recipes/archive" component={RecipeArchive} />
           <Route path="/recipes/:id" component={RecipeDetail} />
           <Route path="/workouts" component={Workouts} />
+          {/* Individual workout routes disabled - using blog posts now
           <Route path="/workouts/:id" component={WorkoutDetail} />
           <Route path="/workouts/:id/video" component={WorkoutVideo} />
+          */}
 
           <Route path="/calorie-calculator" component={CalorieCalculator} />
           <Route path="/alcohol-calculator" component={AlcoholCalculatorPage} />

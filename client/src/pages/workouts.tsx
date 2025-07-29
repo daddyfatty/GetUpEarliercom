@@ -3,70 +3,21 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Clock, Flame, Play, Star, Dumbbell, Eye } from "lucide-react";
-import { FavoriteButton } from "@/components/FavoriteButton";
-
+import { Play, Calendar } from "lucide-react";
 import { Link } from "wouter";
-import type { Workout } from "@shared/schema";
+import type { BlogPost } from "@shared/schema";
 import { SEO } from "@/components/seo";
 
 export default function Workouts() {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  
-  const { data: workouts = [], isLoading } = useQuery({
-    queryKey: ["/api/workouts", selectedCategory],
-    queryFn: () => {
-      const params = selectedCategory ? `?category=${selectedCategory}` : "";
-      return fetch(`/api/workouts${params}`).then(res => res.json());
-    }
+  const { data: allPosts = [], isLoading } = useQuery<BlogPost[]>({
+    queryKey: ["/api/blog"],
   });
-
-
-
-  const categories = ["strength", "cardio", "hiit", "flexibility", "yoga", "calisthenics", "tutorial"];
-
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case "beginner":
-        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
-      case "intermediate":
-        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
-      case "advanced":
-        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
-    }
-  };
-
-  const getDifficultyStars = (difficulty: string) => {
-    const stars = {
-      beginner: 1,
-      intermediate: 2,
-      advanced: 3,
-    };
-    return stars[difficulty as keyof typeof stars] || 1;
-  };
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case "strength":
-        return "bg-primary/10 text-primary";
-      case "cardio":
-        return "bg-accent/10 text-accent";
-      case "hiit":
-        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
-      case "flexibility":
-        return "bg-secondary/10 text-secondary";
-      case "yoga":
-        return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200";
-      case "calisthenics":
-        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
-      case "tutorial":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
-    }
-  };
+  
+  // Filter blog posts by "workouts & challenges" tag
+  const workoutPosts = allPosts.filter(post => {
+    const tags = post.tags ? post.tags.toLowerCase() : '';
+    return tags.includes('workouts & challenges') || tags.includes('workouts-challenges');
+  });
 
   const extractYouTubeId = (url: string) => {
     const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})/);
@@ -128,128 +79,70 @@ export default function Workouts() {
             </div>
           </div>
 
-          {/* Category Filters */}
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <Button
-              variant={selectedCategory === null ? "default" : "outline"}
-              onClick={() => setSelectedCategory(null)}
-              className="capitalize"
-            >
-              All Workouts
-            </Button>
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                onClick={() => setSelectedCategory(category)}
-                className="capitalize"
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
-
-          {/* Workouts Grid */}
+          {/* Blog Posts Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {workouts.map((workout: Workout) => {
-              const difficultyStars = getDifficultyStars(workout.difficulty);
-              const youtubeId = workout.videoUrl ? extractYouTubeId(workout.videoUrl) : null;
+            {workoutPosts.map((post: BlogPost) => {
+              const youtubeId = post.videoUrl ? extractYouTubeId(post.videoUrl) : null;
               
               return (
-                <div key={workout.id} className="group">
+                <div key={post.id} className="group">
                   <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 cursor-pointer h-full">
-                    {/* YouTube Video Thumbnail */}
-                    {youtubeId && (
-                      <Link href={`/workouts/${workout.id}`}>
+                    {/* YouTube Video Thumbnail or Featured Image */}
+                    {(youtubeId || post.imageUrl) && (
+                      <Link href={`/blog/${post.slug}`}>
                         <div className="relative group/video">
                           <img 
-                            src={workout.imageUrl || `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`}
-                            alt={workout.title}
+                            src={post.imageUrl || (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : '')}
+                            alt={post.title}
                             className="w-full h-48 object-cover"
                             onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.src = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
+                              if (youtubeId) {
+                                const target = e.target as HTMLImageElement;
+                                target.src = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
+                              }
                             }}
                           />
-                          <div className="absolute inset-0 bg-black/20 group-hover/video:bg-black/40 transition-colors duration-300 flex items-center justify-center">
-                            <div className="bg-white/90 dark:bg-gray-800/90 rounded-full p-3 group-hover/video:scale-110 transition-transform duration-300">
-                              <Play className="w-8 h-8 text-primary" />
+                          {youtubeId && (
+                            <div className="absolute inset-0 bg-black/20 group-hover/video:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+                              <div className="bg-white/90 dark:bg-gray-800/90 rounded-full p-3 group-hover/video:scale-110 transition-transform duration-300">
+                                <Play className="w-8 h-8 text-primary" />
+                              </div>
                             </div>
-                          </div>
+                          )}
                         </div>
                       </Link>
                     )}
                   
                     <CardHeader>
                       <div className="flex items-center justify-between mb-2">
-                        <Badge className={getCategoryColor(workout.category)}>
-                          {workout.category}
+                        <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                          {post.category}
                         </Badge>
-                        <div className="flex items-center space-x-2">
-                          <FavoriteButton type="workout" id={workout.id} size="sm" />
-                          <Badge variant="outline" className={getDifficultyColor(workout.difficulty)}>
-                            {workout.difficulty}
-                          </Badge>
+                        <div className="flex items-center space-x-2 text-sm text-gray-500">
+                          <Calendar className="w-4 h-4" />
+                          {new Date(post.publishedDate).toLocaleDateString()}
                         </div>
                       </div>
                       <CardTitle className="text-xl text-gray-900 dark:text-white">
-                        <Link href={`/workouts/${workout.id}`} className="hover:text-accent transition-colors">
-                          {workout.title}
+                        <Link href={`/blog/${post.slug}`} className="hover:text-accent transition-colors">
+                          {post.title}
                         </Link>
                       </CardTitle>
                     </CardHeader>
                   
                     <CardContent className="pt-0">
                       <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-                        {workout.description}
+                        {post.excerpt}
                       </p>
-                    
 
-                    
-                      {/* Workout Stats */}
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
-                          <span className="flex items-center">
-                            <Clock className="w-4 h-4 text-accent mr-1" />
-                            {workout.duration} min
-                          </span>
-                          <span className="flex items-center">
-                            <Flame className="w-4 h-4 text-accent mr-1" />
-                            {workout.caloriesBurned} cal
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Equipment Tags */}
-                      {workout.equipment && workout.equipment.length > 0 && (
+                      {/* Tags */}
+                      {post.tags && (
                         <div className="flex flex-wrap gap-2 mb-4">
-                          {workout.equipment.map((item, index) => (
+                          {post.tags.split(',').slice(0, 3).map((tag, index) => (
                             <Badge key={index} variant="secondary" className="text-xs">
-                              <Dumbbell className="w-3 h-3 mr-1" />
-                              {item}
+                              {tag.trim()}
                             </Badge>
                           ))}
-                        </div>
-                      )}
-
-                      {/* Exercise List Preview */}
-                      {workout.exercises && workout.exercises.length > 0 && (
-                        <div className="mb-4">
-                          <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
-                            Exercises ({workout.exercises.length})
-                          </h4>
-                          <div className="space-y-1">
-                            {workout.exercises.slice(0, 3).map((exercise, index) => (
-                              <div key={index} className="text-sm text-gray-600 dark:text-gray-400">
-                                • {exercise.name} {exercise.sets && exercise.reps && `(${exercise.sets} sets × ${exercise.reps})`}
-                              </div>
-                            ))}
-                            {workout.exercises.length > 3 && (
-                              <div className="text-sm text-gray-500 dark:text-gray-500">
-                                +{workout.exercises.length - 3} more exercises
-                              </div>
-                            )}
-                          </div>
                         </div>
                       )}
 
@@ -261,9 +154,8 @@ export default function Workouts() {
                           className="flex-1"
                           asChild
                         >
-                          <Link href={`/workouts/${workout.id}`}>
-                            <Eye className="w-4 h-4 mr-2" />
-                            View Details
+                          <Link href={`/blog/${post.slug}`}>
+                            Read More
                           </Link>
                         </Button>
                         {youtubeId && (
@@ -285,17 +177,13 @@ export default function Workouts() {
             })}
           </div>
 
-          {workouts.length === 0 && (
+          {workoutPosts.length === 0 && (
             <div className="text-center py-12">
-              <Dumbbell className="w-16 h-16 text-gray-400 mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                No workouts found
+                No workout posts found
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                {selectedCategory 
-                  ? `No workouts available in the ${selectedCategory} category.`
-                  : "No workouts available at the moment."
-                }
+                No workout and challenge posts available at the moment. Check back soon!
               </p>
             </div>
           )}
