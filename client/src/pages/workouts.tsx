@@ -57,8 +57,8 @@ export default function Workouts() {
               Workout & Challenge Collection
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-              Powerful Short<br className="hidden sm:block" />
-              <span className="text-blue-600">Sessions</span>
+              Workouts &<br className="hidden sm:block" />
+              <span className="text-blue-600">Challenges</span>
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
               Strength, Calisthenics, Yoga, Guided Runs, Challenges and Tutorials to Keep You Moving
