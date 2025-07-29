@@ -1,7 +1,7 @@
 import { HeroSection } from "@/components/hero-section";
 import { BookPromotion } from "@/components/book-promotion";
 import { RecipeCard } from "@/components/recipe-card";
-import { WorkoutCard } from "@/components/workout-card";
+
 import { CredentialsBand } from "@/components/credentials-band";
 import { ClientReviews } from "@/components/client-reviews";
 import { GoogleReviews } from "@/components/google-reviews";
@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Clock, TrendingUp, Users, Star, ChefHat, Dumbbell, ArrowRight, Calendar, Target, MapPin, BookOpen, ExternalLink } from "lucide-react";
-import type { Recipe, Workout, BlogPost } from "@shared/schema";
+import type { Recipe, BlogPost } from "@shared/schema";
 import gymImagePath from "@assets/download - 2025-06-20T164725.183_1750452478509.png";
 import { useEffect, useState } from "react";
 import { SEO } from "@/components/seo";
@@ -82,8 +82,8 @@ export default function Home() {
     queryKey: ["/api/recipes"],
   });
 
-  const { data: workouts = [] } = useQuery<Workout[]>({
-    queryKey: ["/api/workouts"],
+  const { data: allPosts = [] } = useQuery<BlogPost[]>({
+    queryKey: ["/api/blog"],
   });
 
   const [scrollY, setScrollY] = useState(0);
@@ -101,7 +101,23 @@ export default function Home() {
   const starRotation = (scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 72;
 
   const featuredRecipes = recipes.slice(0, 3);
-  const featuredWorkouts = workouts.slice(0, 3);
+  
+  // Filter blog posts by "workouts & challenges" tag and get latest
+  const workoutPosts = allPosts
+    .filter(post => {
+      // Check primary category
+      if (post.category && post.category.toLowerCase() === 'workouts & challenges') {
+        return true;
+      }
+      // Check categories array
+      if (post.categories && post.categories.some(cat => cat.toLowerCase() === 'workouts & challenges')) {
+        return true;
+      }
+      // Check tags field if it exists
+      const tags = post.tags ? post.tags.toLowerCase() : '';
+      return tags.includes('workouts & challenges') || tags.includes('workouts-challenges');
+    })
+    .sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
 
   return (
     <div className="w-full">
@@ -226,9 +242,26 @@ export default function Home() {
                   </div>
                   
                   <div className="flex-1 flex flex-col">
-                    {featuredWorkouts.length > 0 && (
+                    {workoutPosts.length > 0 ? (
                       <div className="mb-4">
-                        <WorkoutCard workout={featuredWorkouts[0]} disableLink={true} />
+                        {workoutPosts[0].imageUrl && (
+                          <img 
+                            src={workoutPosts[0].imageUrl}
+                            alt={workoutPosts[0].title}
+                            className="w-full h-72 object-cover rounded-lg mb-4 border border-blue-200"
+                          />
+                        )}
+                        <h3 className="font-bold text-gray-900 mb-2 text-lg leading-tight">
+                          {workoutPosts[0].title}
+                        </h3>
+                        <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                          {workoutPosts[0].excerpt}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="mb-4 text-center text-gray-500">
+                        <Dumbbell className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+                        <p>Loading latest workout...</p>
                       </div>
                     )}
                   </div>
