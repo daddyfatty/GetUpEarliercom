@@ -48,6 +48,7 @@ import NotFound from "@/pages/not-found";
 import TrainingLogAdmin from "@/pages/admin/training-log";
 import AdminWorkouts from "@/pages/admin-workouts";
 import ReviewsPage from "@/pages/reviews";
+import AmazonProductsPage from "@/pages/amazon";
 
 function Router() {
   const [location] = useLocation();
@@ -80,6 +81,7 @@ function Router() {
           {import.meta.env.DEV && <Route path="/blog/:slug/edit" component={BlogEdit} />}
           <Route path="/blog/:slug" component={BlogPost} />
           <Route path="/category/:category" component={CategoryPage} />
+          <Route path="/amazon" component={AmazonProductsPage} />
 
 
 
