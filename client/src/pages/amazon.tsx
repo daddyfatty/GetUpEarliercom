@@ -154,36 +154,37 @@ export default function AmazonProductsPage() {
           ) : (
             <div className="space-y-8">
               {products.map((product, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden">
+                <a
+                  key={index}
+                  href={product.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
+                >
                   <div className="p-6">
-                    <div className="flex flex-col md:flex-row gap-6">
+                    <div className="flex gap-6">
                       {/* Product Image */}
                       <div className="flex-shrink-0">
-                        <div className="w-32 h-32 md:w-40 md:h-40 bg-gray-100 rounded-lg overflow-hidden">
+                        <div className="w-24 h-24 bg-gray-50 flex items-center justify-center overflow-hidden">
                           <img
                             src={product.image}
                             alt={product.title}
-                            className="w-full h-full object-contain"
+                            className="max-w-full max-h-full object-contain"
                           />
                         </div>
                       </div>
 
                       {/* Product Details */}
                       <div className="flex-grow">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+                        <h3 className="text-lg font-medium text-gray-900 mb-2 leading-snug">
                           {product.title}
                         </h3>
                         
-                        <div className="flex items-center gap-4 mb-3">
-                          <span className="text-2xl font-bold text-orange-600">
+                        <div className="flex items-center gap-3 mb-2">
+                          <span className="text-xl font-semibold text-[#B12704]">
                             {product.price}
                           </span>
-                          {product.isPrime && (
-                            <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
-                              Prime
-                            </Badge>
-                          )}
-                          <span className="text-sm text-green-600">
+                          <span className="text-sm text-green-600 font-medium">
                             {product.availability}
                           </span>
                         </div>
@@ -196,9 +197,9 @@ export default function AmazonProductsPage() {
                                 key={i}
                                 className={`w-4 h-4 ${
                                   i < Math.floor(product.rating) 
-                                    ? 'text-yellow-400' 
+                                    ? 'text-[#FFA41C]' 
                                     : i < product.rating 
-                                      ? 'text-yellow-400' 
+                                      ? 'text-[#FFA41C]' 
                                       : 'text-gray-300'
                                 }`}
                                 fill="currentColor"
@@ -214,33 +215,27 @@ export default function AmazonProductsPage() {
                         </div>
 
                         {/* Description */}
-                        <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
                           {product.description}
                         </p>
+                      </div>
+                    </div>
 
-                        {/* Amazon Button */}
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center text-orange-500 text-sm">
-                            <svg viewBox="0 0 48 48" className="w-4 h-4 mr-1" fill="currentColor">
-                              <path d="M35.93 34.82c-5.46 4.05-13.38 6.18-20.2 6.18-9.55 0-18.15-3.53-24.65-9.4-.51-.46-.05-1.09.56-.73 7.03 4.09 15.73 6.56 24.71 6.56 6.06 0 12.72-1.26 18.85-3.87.92-.39 1.7.61.73 1.26z"/>
-                              <path d="M37.74 32.57c-.7-.9-4.64-.42-6.41-.21-.54.06-.62-.4-.14-.74 3.14-2.21 8.29-1.57 8.89-.83.6.74-.16 5.89-3.09 8.35-.45.38-.88.18-.68-.32.66-1.66 2.13-5.38 1.43-6.25z"/>
-                            </svg>
-                            amazon
-                          </div>
-                          <a
-                            href={product.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-colors"
-                          >
-                            Click to view on Amazon
-                            <ExternalLink className="w-4 h-4 ml-2" />
-                          </a>
-                        </div>
+                    {/* Bottom Bar */}
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                      <div className="flex items-center text-[#FF9900] text-sm font-medium">
+                        <svg viewBox="0 0 24 24" className="w-4 h-4 mr-2" fill="currentColor">
+                          <path d="M7 4V2C7 1.45 7.45 1 8 1H16C16.55 1 17 1.45 17 2V4H20C20.55 4 21 4.45 21 5S20.55 6 20 6H19V19C19 20.1 18.1 21 17 21H7C5.9 21 5 20.1 5 19V6H4C3.45 6 3 5.55 3 5S3.45 4 4 4H7ZM9 3V4H15V3H9ZM7 6V19H17V6H7Z"/>
+                          <path d="M9 8V17H11V8H9ZM13 8V17H15V8H13Z"/>
+                        </svg>
+                        amazon
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        Click to view on Amazon
                       </div>
                     </div>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           )}
