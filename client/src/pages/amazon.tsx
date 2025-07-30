@@ -64,14 +64,6 @@ export default function AmazonProductsPage() {
 
         // Collect all Amazon URLs from all sources
         const amazonUrls = new Set<string>();
-        
-        // Add the specific Training Log Entry #2 URLs that aren't being extracted
-        amazonUrls.add('https://amzn.to/40xLe8D'); // Premium Soft Flask
-        amazonUrls.add('https://amzn.to/4lFpikh'); // Huma Plus Double Electrolyte Gels  
-        amazonUrls.add('https://amzn.to/4l5ZjT8'); // Nuun Sport Electrolyte Tablets
-        amazonUrls.add('https://amzn.to/3UCdmUN'); // Additional URL from user
-        amazonUrls.add('https://amzn.to/4fedEuL'); // Additional URL from user
-        amazonUrls.add('https://amzn.to/3JbCj6Y'); // Additional URL from user
 
         // 1. Get all blog posts
         const blogResponse = await fetch('/api/blog');
@@ -88,7 +80,12 @@ export default function AmazonProductsPage() {
         
         if (trainingLogData?.content?.entries) {
           trainingLogData.content.entries.forEach((entry: any) => {
+            console.log(`Processing training entry #${entry.entryNumber}`);
+            console.log('Entry content preview:', entry.content?.substring(0, 200));
+            
             const urls = extractAmazonLinks(entry.content || '', `training-entry-${entry.entryNumber}`);
+            console.log(`Found ${urls.length} Amazon URLs in entry #${entry.entryNumber}:`, urls);
+            
             urls.forEach(url => amazonUrls.add(url));
           });
         }
