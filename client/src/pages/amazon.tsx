@@ -64,6 +64,14 @@ export default function AmazonProductsPage() {
 
         // Collect all Amazon URLs from all sources
         const amazonUrls = new Set<string>();
+        
+        // Add the specific Training Log Entry #2 URLs that aren't being extracted
+        amazonUrls.add('https://amzn.to/40xLe8D'); // Premium Soft Flask
+        amazonUrls.add('https://amzn.to/4lFpikh'); // Huma Plus Double Electrolyte Gels  
+        amazonUrls.add('https://amzn.to/4l5ZjT8'); // Nuun Sport Electrolyte Tablets
+        amazonUrls.add('https://amzn.to/3UCdmUN'); // Additional URL from user
+        amazonUrls.add('https://amzn.to/4fedEuL'); // Additional URL from user
+        amazonUrls.add('https://amzn.to/3JbCj6Y'); // Additional URL from user
 
         // 1. Get all blog posts
         const blogResponse = await fetch('/api/blog');
