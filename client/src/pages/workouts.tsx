@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Play, Calendar } from "lucide-react";
+import { Play, Calendar, ArrowRight, User } from "lucide-react";
 import { Link } from "wouter";
 import type { BlogPost } from "@shared/schema";
 import { SEO } from "@/components/seo";
@@ -104,16 +104,16 @@ export default function Workouts() {
               const youtubeId = post.videoUrl ? extractYouTubeId(post.videoUrl) : null;
               
               return (
-                <div key={post.id} className="group">
-                  <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 cursor-pointer h-full">
+                <Link key={post.id} href={`/blog/${post.slug}`} className="block">
+                  <Card className="group hover:shadow-lg transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 flex flex-col h-full cursor-pointer">
                     {/* YouTube Video Thumbnail or Featured Image */}
                     {(youtubeId || post.imageUrl) && (
-                      <Link href={`/blog/${post.slug}`}>
-                        <div className="relative group/video">
+                      <div className="relative overflow-hidden">
+                        <div className="aspect-video relative overflow-hidden bg-gray-100 dark:bg-gray-700">
                           <img 
                             src={post.imageUrl || (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : '')}
                             alt={post.title}
-                            className="w-full h-48 object-cover"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             onError={(e) => {
                               if (youtubeId) {
                                 const target = e.target as HTMLImageElement;
@@ -122,14 +122,14 @@ export default function Workouts() {
                             }}
                           />
                           {youtubeId && (
-                            <div className="absolute inset-0 bg-black/20 group-hover/video:bg-black/40 transition-colors duration-300 flex items-center justify-center">
-                              <div className="bg-white/90 dark:bg-gray-800/90 rounded-full p-3 group-hover/video:scale-110 transition-transform duration-300">
-                                <Play className="w-8 h-8 text-primary" />
+                            <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                              <div className="bg-white/90 rounded-full p-3">
+                                <Play className="h-6 w-6 text-primary" />
                               </div>
                             </div>
                           )}
                         </div>
-                      </Link>
+                      </div>
                     )}
                   
                     <CardHeader>
@@ -142,10 +142,8 @@ export default function Workouts() {
                           {new Date(post.publishedDate).toLocaleDateString()}
                         </div>
                       </div>
-                      <CardTitle className="text-xl text-gray-900 dark:text-white">
-                        <Link href={`/blog/${post.slug}`} className="hover:text-accent transition-colors">
-                          {post.title}
-                        </Link>
+                      <CardTitle className="text-lg mb-2 group-hover:text-primary transition-colors">
+                        {post.title}
                       </CardTitle>
                     </CardHeader>
                   
@@ -185,33 +183,15 @@ export default function Workouts() {
                         )}
                       </div>
 
-                      {/* Action Buttons */}
-                      <div className="flex gap-2">
-                        <Button 
-                          variant="default" 
-                          size="sm"
-                          className="flex-1"
-                          asChild
-                        >
-                          <Link href={`/blog/${post.slug}`}>
-                            Read More
-                          </Link>
+                      <div className="flex justify-end mt-auto">
+                        <Button size="sm" className="gap-1">
+                          Read More
+                          <ArrowRight className="h-3 w-3" />
                         </Button>
-                        {youtubeId && (
-                          <Button 
-                            variant="outline" 
-                            size="sm"
-                            className="flex-1"
-                            onClick={() => window.open(`https://www.youtube.com/watch?v=${youtubeId}`, '_blank')}
-                          >
-                            <Play className="w-4 h-4 mr-2" />
-                            Watch Video
-                          </Button>
-                        )}
                       </div>
                     </CardContent>
                   </Card>
-                </div>
+                </Link>
               );
             })}
           </div>
