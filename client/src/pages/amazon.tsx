@@ -105,9 +105,9 @@ export default function AmazonProductsPage() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex items-center justify-center mb-6">
               <img 
-                src="/attached_assets/amaozn_1753876272929.png" 
+                src="/attached_assets/download - 2025-07-30T075447.321_1753876500380.png" 
                 alt="Amazon Our Picks"
-                className="h-16 md:h-20 lg:h-24 w-auto object-contain"
+                className="h-32 md:h-40 lg:h-48 w-auto object-contain"
               />
             </div>
             <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">Vetted fitness and wellness products from Amazon. Tested and highly recommended!</p>
