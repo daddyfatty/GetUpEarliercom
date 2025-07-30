@@ -103,12 +103,13 @@ export default function AmazonProductsPage() {
       <HeroGradient className="text-white">
         <div className="py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="flex items-center justify-center mb-6">
+            <div className="flex flex-col items-center justify-center mb-6">
               <img 
-                src="/attached_assets/download - 2025-07-30T075447.321_1753876500380.png" 
-                alt="Amazon Our Picks"
-                className="h-32 md:h-40 lg:h-48 w-auto object-contain"
+                src="/attached_assets/Daco_4533095_1753878634621.png" 
+                alt="Amazon"
+                className="h-32 md:h-40 lg:h-48 w-auto object-contain mb-4"
               />
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white">Picks</h1>
             </div>
             <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">Vetted fitness and wellness products from Amazon. Tested and highly recommended!</p>
           </div>
