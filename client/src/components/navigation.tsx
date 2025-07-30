@@ -119,7 +119,7 @@ export function Navigation() {
               
               <Link 
                 href="/amazon"
-                className="text-[hsl(var(--orange))] hover:text-orange-300 transition-colors flex items-center space-x-1"
+                className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
                 title="Our Picks"
               >
                 <img 
@@ -182,7 +182,7 @@ export function Navigation() {
                   href="https://www.facebook.com/groups/getupearlier" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
+                  className="text-[hsl(var(--orange))] hover:text-orange-300 transition-colors flex items-center space-x-1"
                   title="Join Facebook Group"
                 >
                   <SiFacebook className="h-4 w-4" />
@@ -191,7 +191,7 @@ export function Navigation() {
                 
                 <Link 
                   href="/amazon"
-                  className="text-[hsl(var(--orange))] hover:text-orange-300 transition-colors flex items-center space-x-1"
+                  className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
                   title="Our Picks"
                 >
                   <img 
