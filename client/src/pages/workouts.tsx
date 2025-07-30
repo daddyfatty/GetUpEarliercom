@@ -151,7 +151,8 @@ export default function Workouts() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                window.location.href = `/category/${category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+                                const slug = category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/[^a-z0-9-]/g, '');
+                                window.location.href = `/category/${slug}`;
                               }}
                             >
                               {category}
@@ -167,7 +168,8 @@ export default function Workouts() {
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
-                                  window.location.href = `/category/${category.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+                                  const slug = category.trim().toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/[^a-z0-9-]/g, '');
+                                  window.location.href = `/category/${slug}`;
                                 }}
                               >
                                 {category.trim()}

@@ -44,11 +44,25 @@ export default function CategoryPage() {
     }
   };
 
-  // Filter posts by category (handle exact match with original category names)
+  // Filter posts by category (handle both exact match and slug-based matching)
   const filteredPosts = posts?.filter((post: BlogPost) => {
-    // For exact match, compare original category name with URL-decoded category
-    const matchesCategory = post.category === categoryName ||
-                           (post.categories && post.categories.some(cat => cat === categoryName));
+    // Convert category name from URL slug back to original format
+    // Handle special case for "workouts-challenges" -> "Workouts & Challenges"
+    let originalCategoryName;
+    if (categoryName === 'workouts-challenges') {
+      originalCategoryName = 'Workouts & Challenges';
+    } else {
+      originalCategoryName = categoryName.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    }
+    
+    // Check exact match with original category name
+    const matchesCategory = post.category === originalCategoryName ||
+                           post.category?.toLowerCase() === categoryName ||
+                           (post.categories && post.categories.some(cat => 
+                             cat === originalCategoryName || 
+                             cat.toLowerCase() === categoryName ||
+                             cat.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/[^a-z0-9-]/g, '') === categoryName
+                           ));
     return matchesCategory;
   }) || [];
 
@@ -252,27 +266,40 @@ export default function CategoryPage() {
                       <div className="flex flex-wrap gap-2 mb-3">
                         {post.categories && post.categories.length > 0 ? (
                           post.categories.map((category, index) => (
-                            <Link key={`${category}-${index}`} href={`/category/${category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}>
-                              <Badge 
-                                variant="outline" 
-                                className={`text-xs transition-colors cursor-pointer ${
-                                  category === categoryName
-                                    ? 'bg-blue-50 text-blue-700 border-blue-200'
-                                    : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
-                                }`}
-                              >
-                                {category}
-                              </Badge>
-                            </Link>
+                            <Badge 
+                              key={`${category}-${index}`}
+                              variant="outline" 
+                              className={`text-xs transition-colors cursor-pointer ${
+                                category === categoryName
+                                  ? 'bg-blue-50 text-blue-700 border-blue-200'
+                                  : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
+                              }`}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                const slug = category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/[^a-z0-9-]/g, '');
+                                window.location.href = `/category/${slug}`;
+                              }}
+                            >
+                              {category}
+                            </Badge>
                           ))
                         ) : (
                           post.category && (
                             post.category.split(',').map((category, index) => (
-                              <Link key={`${category.trim()}-${index}`} href={`/category/${category.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}>
-                                <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 cursor-pointer">
-                                  {category.trim()}
-                                </Badge>
-                              </Link>
+                              <Badge 
+                                key={`${category.trim()}-${index}`} 
+                                variant="outline" 
+                                className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 cursor-pointer"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  const slug = category.trim().toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/[^a-z0-9-]/g, '');
+                                  window.location.href = `/category/${slug}`;
+                                }}
+                              >
+                                {category.trim()}
+                              </Badge>
                             ))
                           )
                         )}
