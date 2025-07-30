@@ -27,47 +27,108 @@ export default function AmazonProductsPage() {
   useEffect(() => {
     const fetchAmazonProducts = async () => {
       try {
-        // Get all blog posts
+        // Universal Amazon link extraction function
+        const extractAmazonLinks = (content: string, source: string) => {
+          if (!content) return [];
+          
+          const urls = new Set<string>();
+          
+          // Pattern 1: <span class="amazon-link" data-url="URL">
+          const pattern1 = /<span[^>]*class="amazon-link"[^>]*data-url="([^"]*)"/g;
+          // Pattern 2: <span class=\"amazon-link\" data-url=\"URL\"> (escaped quotes)
+          const pattern2 = /<span class=\\"amazon-link\\" data-url=\\"([^\\"]*)\\"/g;
+          // Pattern 3: Direct Amazon URLs in text
+          const pattern3 = /https?:\/\/(amzn\.to\/[^\s<>"]*|amazon\.com\/[^\s<>"]*)/g;
+          
+          let match;
+          
+          // Extract from all patterns
+          while ((match = pattern1.exec(content)) !== null) {
+            if (match[1] && (match[1].includes('amzn.to') || match[1].includes('amazon.com'))) {
+              urls.add(match[1]);
+            }
+          }
+          
+          while ((match = pattern2.exec(content)) !== null) {
+            if (match[1] && (match[1].includes('amzn.to') || match[1].includes('amazon.com'))) {
+              urls.add(match[1]);
+            }
+          }
+          
+          while ((match = pattern3.exec(content)) !== null) {
+            urls.add(match[0]);
+          }
+          
+          return Array.from(urls);
+        };
+
+        // Collect all Amazon URLs from all sources
+        const amazonUrls = new Set<string>();
+
+        // 1. Get all blog posts
         const blogResponse = await fetch('/api/blog');
         const posts = await blogResponse.json();
         
-        // Get training log entries
+        posts.forEach((post: any) => {
+          const urls = extractAmazonLinks(post.content || '', `blog-${post.id}`);
+          urls.forEach(url => amazonUrls.add(url));
+        });
+
+        // 2. Get training log entries  
         const trainingLogResponse = await fetch('/api/training-log/slug/hartford-marathon-training-log-2025');
         const trainingLogData = await trainingLogResponse.json();
         
-        // Extract Amazon links from content
-        const amazonUrls = new Set<string>();
-        
-        // Process blog posts
-        posts.forEach((post: any) => {
-          // Look for Amazon links in content using regex (handle both escaped and unescaped quotes)
-          const amazonLinkRegex = /<span[^>]*class=[\\"]*amazon-link[\\"]*[^>]*data-url=[\\"]*([^\\"]*)[\\"]*[^>]*>/g;
-          const directAmazonRegex = /https?:\/\/(amzn\.to|amazon\.com)[^\s<>"]*/g;
-          
-          let match;
-          while ((match = amazonLinkRegex.exec(post.content)) !== null) {
-            amazonUrls.add(match[1]);
-          }
-          
-          while ((match = directAmazonRegex.exec(post.content)) !== null) {
-            amazonUrls.add(match[0]);
-          }
-        });
-
-        // Process training log entries - handle escaped quotes from JSON storage
-        if (trainingLogData && trainingLogData.content && trainingLogData.content.entries) {
+        if (trainingLogData?.content?.entries) {
           trainingLogData.content.entries.forEach((entry: any) => {
-            // Match: <span class=\"amazon-link\" data-url=\"https://amzn.to/...\"
-            const matches = entry.content.match(/<span class=\\"amazon-link\\" data-url=\\"(https:\/\/amzn\.to\/[^\\"]*)\\"/g);
-            if (matches) {
-              matches.forEach((match: string) => {
-                const urlMatch = match.match(/data-url=\\"(https:\/\/amzn\.to\/[^\\"]*)\\"/);
-                if (urlMatch) {
-                  amazonUrls.add(urlMatch[1]);
-                }
+            const urls = extractAmazonLinks(entry.content || '', `training-entry-${entry.entryNumber}`);
+            urls.forEach(url => amazonUrls.add(url));
+          });
+        }
+
+        // 3. Get all recipes
+        try {
+          const recipesResponse = await fetch('/api/recipes');
+          const recipes = await recipesResponse.json();
+          
+          recipes.forEach((recipe: any) => {
+            const descUrls = extractAmazonLinks(recipe.description || '', `recipe-${recipe.id}-desc`);
+            const instrUrls = extractAmazonLinks(recipe.instructions || '', `recipe-${recipe.id}-instr`);
+            
+            descUrls.forEach(url => amazonUrls.add(url));
+            instrUrls.forEach(url => amazonUrls.add(url));
+            
+            if (recipe.ingredients && Array.isArray(recipe.ingredients)) {
+              recipe.ingredients.forEach((ingredient: string, idx: number) => {
+                const ingredUrls = extractAmazonLinks(ingredient, `recipe-${recipe.id}-ingredient-${idx}`);
+                ingredUrls.forEach(url => amazonUrls.add(url));
               });
             }
           });
+        } catch (error) {
+          console.log('Recipes endpoint not available, skipping...');
+        }
+
+        // 4. Get all workouts
+        try {
+          const workoutsResponse = await fetch('/api/workouts'); 
+          const workouts = await workoutsResponse.json();
+          
+          workouts.forEach((workout: any) => {
+            const descUrls = extractAmazonLinks(workout.description || '', `workout-${workout.id}-desc`);
+            const instrUrls = extractAmazonLinks(workout.instructions || '', `workout-${workout.id}-instr`);
+            
+            descUrls.forEach(url => amazonUrls.add(url));
+            instrUrls.forEach(url => amazonUrls.add(url));
+            
+            if (workout.equipment && Array.isArray(workout.equipment)) {
+              workout.equipment.forEach((item: string, idx: number) => {
+                const equipUrls = extractAmazonLinks(item, `workout-${workout.id}-equip-${idx}`);
+                equipUrls.forEach(url => amazonUrls.add(url));
+              });
+            }
+          });
+        } catch (error) {
+          console.log('Workouts endpoint not available, skipping...');
         }
 
         // Fetch product data for each URL
