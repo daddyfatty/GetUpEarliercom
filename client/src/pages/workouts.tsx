@@ -69,41 +69,42 @@ export default function Workouts() {
         url="/workouts"
       />
       <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white">
-        {/* Hero Header */}
-        <div className="bg-gradient-to-br from-blue-50 via-white to-orange-50 py-16">
-          <div className="container mx-auto px-4">
-            <div className="text-center max-w-4xl mx-auto">
-              <Badge variant="outline" className="mb-4 text-blue-600 border-blue-200 bg-blue-50">
+        <div className="container mx-auto px-4 py-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-block bg-blue-600/10 text-blue-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
                 Workout & Challenge Collection
-              </Badge>
-              
-              <h1 className="text-5xl md:text-6xl font-bold mb-6">
-                <span className="text-gray-900">Workouts &</span>
-                <br />
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                Workouts &<br className="hidden sm:block" />
                 <span className="text-blue-600">Challenges</span>
               </h1>
-              
-              <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
                 Strength, Calisthenics, Yoga, Guided Runs, Challenges and Tutorials to Keep You Moving
               </p>
-              
-              <div className="flex flex-wrap justify-center gap-4 mb-6">
-                <Badge variant="secondary" className="text-sm px-4 py-2">
-                  ● New Workouts Weekly
-                </Badge>
-                <Badge variant="secondary" className="text-sm px-4 py-2">
-                  ● 15-45 Min Sessions
-                </Badge>
-                <Badge variant="secondary" className="text-sm px-4 py-2 bg-green-100 text-green-700">
-                  {workoutPosts.length} {workoutPosts.length === 1 ? 'workout' : 'workouts'}
-                </Badge>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <div className="bg-white px-6 py-3 rounded-xl shadow-sm border border-gray-200">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                    <span className="text-sm font-medium text-gray-700">New Workouts Weekly</span>
+                  </div>
+                </div>
+                <div className="bg-white px-6 py-3 rounded-xl shadow-sm border border-gray-200">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                    <span className="text-sm font-medium text-gray-700">15-45 Min Sessions</span>
+                  </div>
+                </div>
+                <div className="bg-green-100 px-6 py-3 rounded-xl shadow-sm border border-green-200">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+                    <span className="text-sm font-medium text-green-700">{workoutPosts.length} workouts</span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Workouts Grid */}
-        <div className="container mx-auto px-4 py-12">
+            {/* Blog Posts Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {workoutPosts.map((post) => {
               const youtubeId = post.videoUrl ? extractYouTubeId(post.videoUrl) : null;
@@ -143,20 +144,23 @@ export default function Workouts() {
                       <div className="flex flex-wrap gap-2 mb-3">
                         {post.categories && post.categories.length > 0 ? (
                           post.categories.map((category, index) => (
-                            <Badge 
-                              key={`${category}-${index}`}
-                              variant="outline" 
-                              className="text-xs bg-blue-50 text-blue-700 border-blue-200"
-                            >
-                              {category}
-                            </Badge>
+                            <Link key={`${category}-${index}`} href={`/category/${category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}>
+                              <Badge 
+                                variant="outline" 
+                                className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 cursor-pointer"
+                              >
+                                {category}
+                              </Badge>
+                            </Link>
                           ))
                         ) : (
                           post.category && (
                             post.category.split(',').map((category, index) => (
-                              <Badge key={`${category.trim()}-${index}`} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
-                                {category.trim()}
-                              </Badge>
+                              <Link key={`${category.trim()}-${index}`} href={`/category/${category.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}>
+                                <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 cursor-pointer">
+                                  {category.trim()}
+                                </Badge>
+                              </Link>
                             ))
                           )
                         )}
@@ -205,6 +209,7 @@ export default function Workouts() {
               </p>
             </div>
           )}
+          </div>
         </div>
       </div>
     </>

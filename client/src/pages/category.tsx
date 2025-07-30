@@ -163,9 +163,8 @@ export default function CategoryPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white">
-      {/* Hero Header */}
-      <div className="bg-gradient-to-br from-blue-50 via-white to-orange-50 py-16">
-        <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto">
           <Link href="/blog">
             <Button variant="ghost" className="mb-8">
               <ArrowLeft className="h-4 w-4 mr-2" />
@@ -173,51 +172,53 @@ export default function CategoryPage() {
             </Button>
           </Link>
           
-          <div className="text-center max-w-4xl mx-auto">
-            <Badge variant="outline" className="mb-4 text-blue-600 border-blue-200 bg-blue-50">
+          <div className="text-center mb-12">
+            <div className="inline-block bg-blue-600/10 text-blue-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
               {categoryInfo.subtitle}
-            </Badge>
+            </div>
             
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              <span className="text-gray-900">{categoryInfo.title.split(' ').slice(0, -1).join(' ')}</span>
-              {categoryInfo.title.split(' ').length > 1 && (
-                <><br /><span className="text-blue-600">{categoryInfo.title.split(' ').slice(-1)[0]}</span></>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+              {categoryInfo.title.split(' ').slice(0, -1).join(' ')} {categoryInfo.title.split(' ').length > 1 && (
+                <><br className="hidden sm:block" /><span className="text-blue-600">{categoryInfo.title.split(' ').slice(-1)[0]}</span></>
               )}
             </h1>
             
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
               {categoryInfo.description}
             </p>
             
-            <div className="flex flex-wrap justify-center gap-4 mb-6">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               {categoryInfo.badges.map((badge, index) => (
-                <Badge key={index} variant="secondary" className="text-sm px-4 py-2">
-                  {index === 0 ? "●" : "●"} {badge}
-                </Badge>
+                <div key={index} className="bg-white px-6 py-3 rounded-xl shadow-sm border border-gray-200">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                    <span className="text-sm font-medium text-gray-700">{badge}</span>
+                  </div>
+                </div>
               ))}
-              <Badge variant="secondary" className="text-sm px-4 py-2 bg-green-100 text-green-700">
-                {filteredPosts.length} {filteredPosts.length === 1 ? 'post' : 'posts'}
-              </Badge>
+              <div className="bg-green-100 px-6 py-3 rounded-xl shadow-sm border border-green-200">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+                  <span className="text-sm font-medium text-green-700">{filteredPosts.length} {filteredPosts.length === 1 ? 'post' : 'posts'}</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Posts Grid */}
-      <div className="container mx-auto px-4 py-12">
-        {filteredPosts.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-600 dark:text-gray-400 text-lg mb-4">
-              No posts found in this category.
-            </p>
-            <Link href="/blog">
-              <Button>
-                View All Posts
-              </Button>
-            </Link>
-          </div>
-        ) : (
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {/* Posts Grid */}
+          {filteredPosts.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600 dark:text-gray-400 text-lg mb-4">
+                No posts found in this category.
+              </p>
+              <Link href="/blog">
+                <Button>
+                  View All Posts
+                </Button>
+              </Link>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post) => {
               // Determine the correct link based on post type
               const postLink = post.slug ? `/blog/${post.slug}` : `/blog/${post.id}`;
@@ -251,24 +252,27 @@ export default function CategoryPage() {
                       <div className="flex flex-wrap gap-2 mb-3">
                         {post.categories && post.categories.length > 0 ? (
                           post.categories.map((category, index) => (
-                            <Badge 
-                              key={category}
-                              variant="outline" 
-                              className={`text-xs transition-colors ${
-                                category === categoryName
-                                  ? 'bg-blue-50 text-blue-700 border-blue-200'
-                                  : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
-                              }`}
-                            >
-                              {category}
-                            </Badge>
+                            <Link key={`${category}-${index}`} href={`/category/${category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}>
+                              <Badge 
+                                variant="outline" 
+                                className={`text-xs transition-colors cursor-pointer ${
+                                  category === categoryName
+                                    ? 'bg-blue-50 text-blue-700 border-blue-200'
+                                    : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
+                                }`}
+                              >
+                                {category}
+                              </Badge>
+                            </Link>
                           ))
                         ) : (
                           post.category && (
-                            post.category.split(',').map((category) => (
-                              <Badge key={category.trim()} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
-                                {category.trim()}
-                              </Badge>
+                            post.category.split(',').map((category, index) => (
+                              <Link key={`${category.trim()}-${index}`} href={`/category/${category.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}>
+                                <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 cursor-pointer">
+                                  {category.trim()}
+                                </Badge>
+                              </Link>
                             ))
                           )
                         )}
@@ -306,8 +310,9 @@ export default function CategoryPage() {
                 </Link>
               );
             })}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
