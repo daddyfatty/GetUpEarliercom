@@ -40,8 +40,8 @@ export default function AmazonProductsPage() {
         
         // Process blog posts
         posts.forEach((post: any) => {
-          // Look for Amazon links in content using regex
-          const amazonLinkRegex = /<span[^>]*class="amazon-link"[^>]*data-url="([^"]*)"[^>]*>/g;
+          // Look for Amazon links in content using regex (handle both escaped and unescaped quotes)
+          const amazonLinkRegex = /<span[^>]*class=[\\"]*amazon-link[\\"]*[^>]*data-url=[\\"]*([^\\"]*)[\\"]*[^>]*>/g;
           const directAmazonRegex = /https?:\/\/(amzn\.to|amazon\.com)[^\s<>"]*/g;
           
           let match;
@@ -58,17 +58,27 @@ export default function AmazonProductsPage() {
         if (trainingLogData && trainingLogData.content && trainingLogData.content.entries) {
           trainingLogData.content.entries.forEach((entry: any) => {
             console.log('Processing training log entry:', entry.entryNumber, entry.title);
-            console.log('Entry content snippet:', entry.content.substring(0, 200));
+            console.log('Entry content snippet:', entry.content.substring(0, 500));
             
-            const amazonLinkRegex = /<span[^>]*class="amazon-link"[^>]*data-url="([^"]*)"[^>]*>/g;
+            // Look for the specific pattern from the database: <span class=\"amazon-link\" data-url=\"
+            const amazonLinkRegex1 = /<span\s+class=\\"amazon-link\\"\s+data-url=\\"([^\\"]*)\\"/g;
+            const amazonLinkRegex2 = /<span[^>]*class="amazon-link"[^>]*data-url="([^"]*)"/g;
             const directAmazonRegex = /https?:\/\/(amzn\.to|amazon\.com)[^\s<>"]*/g;
             
             let match;
-            while ((match = amazonLinkRegex.exec(entry.content)) !== null) {
-              console.log('Found amazon-link URL:', match[1]);
+            // Try first pattern (escaped quotes)
+            while ((match = amazonLinkRegex1.exec(entry.content)) !== null) {
+              console.log('Found amazon-link URL (escaped):', match[1]);
               amazonUrls.add(match[1]);
             }
             
+            // Try second pattern (regular quotes)
+            while ((match = amazonLinkRegex2.exec(entry.content)) !== null) {
+              console.log('Found amazon-link URL (regular):', match[1]);
+              amazonUrls.add(match[1]);
+            }
+            
+            // Try direct Amazon URLs
             while ((match = directAmazonRegex.exec(entry.content)) !== null) {
               console.log('Found direct Amazon URL:', match[0]);
               amazonUrls.add(match[0]);
