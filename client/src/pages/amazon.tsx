@@ -23,17 +23,22 @@ export default function AmazonProductsPage() {
   const [products, setProducts] = useState<AmazonProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Extract Amazon links from all blog content
+  // Extract Amazon links from all blog content and training log
   useEffect(() => {
     const fetchAmazonProducts = async () => {
       try {
         // Get all blog posts
-        const response = await fetch('/api/blog');
-        const posts = await response.json();
+        const blogResponse = await fetch('/api/blog');
+        const posts = await blogResponse.json();
+        
+        // Get training log entries
+        const trainingLogResponse = await fetch('/api/training-log/slug/hartford-marathon-training-log-2025');
+        const trainingLogData = await trainingLogResponse.json();
         
         // Extract Amazon links from content
         const amazonUrls = new Set<string>();
         
+        // Process blog posts
         posts.forEach((post: any) => {
           // Look for Amazon links in content using regex
           const amazonLinkRegex = /<span[^>]*class="amazon-link"[^>]*data-url="([^"]*)"[^>]*>/g;
@@ -48,6 +53,23 @@ export default function AmazonProductsPage() {
             amazonUrls.add(match[0]);
           }
         });
+
+        // Process training log entries
+        if (trainingLogData && trainingLogData.content && trainingLogData.content.entries) {
+          trainingLogData.content.entries.forEach((entry: any) => {
+            const amazonLinkRegex = /<span[^>]*class="amazon-link"[^>]*data-url="([^"]*)"[^>]*>/g;
+            const directAmazonRegex = /https?:\/\/(amzn\.to|amazon\.com)[^\s<>"]*/g;
+            
+            let match;
+            while ((match = amazonLinkRegex.exec(entry.content)) !== null) {
+              amazonUrls.add(match[1]);
+            }
+            
+            while ((match = directAmazonRegex.exec(entry.content)) !== null) {
+              amazonUrls.add(match[0]);
+            }
+          });
+        }
 
         // Fetch product data for each URL
         const productPromises = Array.from(amazonUrls).map(async (url) => {
