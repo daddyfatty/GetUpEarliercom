@@ -308,6 +308,15 @@ export default function Home() {
                     )}
                   </div>
                   
+                  <div className="mt-auto">
+                    <Button 
+                      size="lg" 
+                      className="w-full font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-lg transform hover:scale-105 transition-all duration-200"
+                    >
+                      <Dumbbell className="h-5 w-5 mr-2" />
+                      View All Workouts
+                    </Button>
+                  </div>
 
                 </div>
               </Link>
