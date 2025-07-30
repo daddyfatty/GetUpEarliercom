@@ -46,6 +46,7 @@ export function Navigation() {
     { href: "/blog", label: "Blog" },
     { href: "/recipes", label: "Recipes", beta: true },
     { href: "/workouts", label: "Workouts & Challenges", beta: true },
+    { href: "/amazon", label: "Our Picks", icon: "amazon" },
     ...(isAdmin ? [{ href: "/admin", label: "Admin" }] : []),
   ];
 
@@ -251,6 +252,23 @@ export function Navigation() {
                     <span className="ml-1 text-[10px] bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
                       BETA
                     </span>
+                  </span>
+                </Link>
+                
+                {/* Amazon Our Picks */}
+                <Link href="/amazon">
+                  <span
+                    className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                      location === "/amazon"
+                        ? "text-[hsl(var(--orange))] bg-white/10"
+                        : "text-white hover:text-[hsl(var(--orange))]"
+                    }`}
+                  >
+                    <svg viewBox="0 0 603 182" className="w-4 h-2 mr-2" fill="currentColor">
+                      <path d="M374.456 140.598c-31.705 23.406-77.6 35.892-117.145 35.892C205.049 176.49 157.228 155.35 111.052 127.048c-2.996-1.846-.326-4.367 3.284-2.924 40.786 23.734 91.18 38.019 143.295 38.019 35.11 0 73.736-7.279 109.321-22.364 5.344-2.269 9.828 3.51 4.504 7.819z"/>
+                      <path d="M387.276 125.525c-4.063-5.208-26.916-2.456-37.199-1.234-3.127.372-3.595-2.344-.784-4.304 18.211-12.825 48.117-9.119 51.606-4.826 3.489 4.293-.913 34.145-17.937 48.407-2.612 2.201-5.098 1.029-3.942-1.885 3.815-9.605 12.363-31.146 8.256-36.158z"/>
+                    </svg>
+                    Our Picks
                   </span>
                 </Link>
                 
@@ -528,6 +546,23 @@ export function Navigation() {
                         <span className="ml-2 text-[10px] bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
                           BETA
                         </span>
+                      </span>
+                    </Link>
+                    
+                    {/* Amazon Our Picks */}
+                    <Link href="/amazon" onClick={() => setIsMobileMenuOpen(false)}>
+                      <span
+                        className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading flex items-center ${
+                          location === "/amazon"
+                            ? "text-[hsl(var(--orange))] bg-orange-50"
+                            : "text-gray-900 hover:text-[hsl(var(--orange))]"
+                        }`}
+                      >
+                        <svg viewBox="0 0 603 182" className="w-4 h-2 mr-2" fill="currentColor">
+                          <path d="M374.456 140.598c-31.705 23.406-77.6 35.892-117.145 35.892C205.049 176.49 157.228 155.35 111.052 127.048c-2.996-1.846-.326-4.367 3.284-2.924 40.786 23.734 91.18 38.019 143.295 38.019 35.11 0 73.736-7.279 109.321-22.364 5.344-2.269 9.828 3.51 4.504 7.819z"/>
+                          <path d="M387.276 125.525c-4.063-5.208-26.916-2.456-37.199-1.234-3.127.372-3.595-2.344-.784-4.304 18.211-12.825 48.117-9.119 51.606-4.826 3.489 4.293-.913 34.145-17.937 48.407-2.612 2.201-5.098 1.029-3.942-1.885 3.815-9.605 12.363-31.146 8.256-36.158z"/>
+                        </svg>
+                        Our Picks
                       </span>
                     </Link>
                     
