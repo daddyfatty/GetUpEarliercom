@@ -54,39 +54,21 @@ export default function AmazonProductsPage() {
           }
         });
 
-        // Process training log entries
+        // Process training log entries - handle escaped quotes from JSON storage
         if (trainingLogData && trainingLogData.content && trainingLogData.content.entries) {
           trainingLogData.content.entries.forEach((entry: any) => {
-            console.log('Processing training log entry:', entry.entryNumber, entry.title);
-            console.log('Entry content snippet:', entry.content.substring(0, 500));
-            
-            // Look for the exact pattern from database: <span class=\"amazon-link\" data-url=\"URL\">
-            const escapedQuotesRegex = /<span class=\\"amazon-link\\" data-url=\\"([^\\"]*)\\"/g;
-            const regularQuotesRegex = /<span[^>]*class="amazon-link"[^>]*data-url="([^"]*)"/g;
-            const directAmazonRegex = /https?:\/\/(amzn\.to|amazon\.com)[^\s<>"]*/g;
-            
-            let match;
-            // Check escaped quotes pattern (from database JSON)
-            while ((match = escapedQuotesRegex.exec(entry.content)) !== null) {
-              console.log('Found amazon-link URL (escaped):', match[1]);
-              amazonUrls.add(match[1]);
-            }
-            
-            // Check regular quotes pattern  
-            while ((match = regularQuotesRegex.exec(entry.content)) !== null) {
-              console.log('Found amazon-link URL (regular):', match[1]);
-              amazonUrls.add(match[1]);
-            }
-            
-            // Check direct Amazon URLs
-            while ((match = directAmazonRegex.exec(entry.content)) !== null) {
-              console.log('Found direct Amazon URL:', match[0]);
-              amazonUrls.add(match[0]);
+            // Match: <span class=\"amazon-link\" data-url=\"https://amzn.to/...\"
+            const matches = entry.content.match(/<span class=\\"amazon-link\\" data-url=\\"(https:\/\/amzn\.to\/[^\\"]*)\\"/g);
+            if (matches) {
+              matches.forEach((match: string) => {
+                const urlMatch = match.match(/data-url=\\"(https:\/\/amzn\.to\/[^\\"]*)\\"/);
+                if (urlMatch) {
+                  amazonUrls.add(urlMatch[1]);
+                }
+              });
             }
           });
         }
-
-        console.log('Total Amazon URLs found:', Array.from(amazonUrls));
 
         // Fetch product data for each URL
         const productPromises = Array.from(amazonUrls).map(async (url) => {
