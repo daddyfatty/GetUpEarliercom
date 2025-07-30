@@ -227,7 +227,7 @@ export default function Home() {
 
             {/* Column 2: Latest Workout */}
             <div className="text-center flex flex-col h-full">
-              <Link href={workoutPosts.length > 0 ? `/blog/${workoutPosts[0].slug}` : "/workouts"} className="block h-full">
+              <Link href={workoutPosts.length > 0 ? `/blog/${workoutPosts[0].slug}` : "/category/workouts-challenges"} className="block h-full">
                 <div className="bg-white border-2 border-blue-200 p-6 rounded-2xl shadow-lg h-full flex flex-col hover:shadow-xl hover:border-blue-300 transition-all duration-200 cursor-pointer">
                   <div className="mb-4">
                     <div className="inline-block bg-blue-600/10 text-blue-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
@@ -309,13 +309,15 @@ export default function Home() {
                   </div>
                   
                   <div className="mt-auto">
-                    <Button 
-                      size="lg" 
-                      className="w-full font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-lg transform hover:scale-105 transition-all duration-200"
-                    >
-                      <Dumbbell className="h-5 w-5 mr-2" />
-                      View All Workouts
-                    </Button>
+                    <Link href="/category/workouts-challenges">
+                      <Button 
+                        size="lg" 
+                        className="w-full font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-lg transform hover:scale-105 transition-all duration-200"
+                      >
+                        <Dumbbell className="h-5 w-5 mr-2" />
+                        View All Workouts
+                      </Button>
+                    </Link>
                   </div>
 
                 </div>
