@@ -74,15 +74,10 @@ export default function Blog() {
                          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          post.author.toLowerCase().includes(searchTerm.toLowerCase());
     
-    // Check if post matches selected category (in primary category or additional categories)
-    let normalizedSelectedCategory = selectedCategory;
-    if (selectedCategory === "Workouts & Challenges" || selectedCategory === "workouts-challenges") {
-      normalizedSelectedCategory = "workouts & challenges";
-    }
-    
+    // Check if post matches selected category using exact match
     const matchesCategory = selectedCategory === "all" || 
-                           post.category.toLowerCase() === normalizedSelectedCategory.toLowerCase() ||
-                           (post.categories && post.categories.some(cat => cat.toLowerCase() === normalizedSelectedCategory.toLowerCase()));
+                           post.category === selectedCategory ||
+                           (post.categories && post.categories.some(cat => cat === selectedCategory));
     
     return matchesSearch && matchesCategory;
   }) || [];
@@ -99,12 +94,9 @@ export default function Blog() {
     }
   };
 
-  // Helper function to create clean category URLs
+  // Helper function to create consistent category URLs - use encodeURIComponent to preserve exact category names
   const createCategoryUrl = (category: string) => {
-    if (category.toLowerCase() === 'workouts & challenges') {
-      return '/category/workouts-challenges';
-    }
-    return `/category/${category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+    return `/category/${encodeURIComponent(category)}`;
   };
 
   if (isLoading) {

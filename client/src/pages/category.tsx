@@ -43,17 +43,11 @@ export default function CategoryPage() {
     }
   };
 
-  // Filter posts by category (handle clean URLs)
+  // Filter posts by category (handle exact match with original category names)
   const filteredPosts = posts?.filter((post: BlogPost) => {
-    let normalizedCategoryName = categoryName.toLowerCase();
-    
-    // Handle clean URL format for "workouts-challenges"
-    if (normalizedCategoryName === "workouts-challenges") {
-      normalizedCategoryName = "workouts & challenges";
-    }
-    
-    const matchesCategory = post.category.toLowerCase() === normalizedCategoryName ||
-                           (post.categories && post.categories.some(cat => cat.toLowerCase() === normalizedCategoryName));
+    // For exact match, compare original category name with URL-decoded category
+    const matchesCategory = post.category === categoryName ||
+                           (post.categories && post.categories.some(cat => cat === categoryName));
     return matchesCategory;
   }) || [];
 
@@ -102,7 +96,7 @@ export default function CategoryPage() {
           
           <div className="flex items-center gap-4 mb-4">
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
-              Category: {categoryName === "workouts-challenges" ? "Workouts & Challenges" : categoryName}
+              Category: {categoryName}
             </h1>
             <Badge variant="secondary" className="text-lg px-3 py-1">
               {filteredPosts.length} {filteredPosts.length === 1 ? 'post' : 'posts'}
