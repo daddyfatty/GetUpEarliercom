@@ -60,25 +60,25 @@ export default function AmazonProductsPage() {
             console.log('Processing training log entry:', entry.entryNumber, entry.title);
             console.log('Entry content snippet:', entry.content.substring(0, 500));
             
-            // Look for the specific pattern from the database: <span class=\"amazon-link\" data-url=\"
-            const amazonLinkRegex1 = /<span\s+class=\\"amazon-link\\"\s+data-url=\\"([^\\"]*)\\"/g;
-            const amazonLinkRegex2 = /<span[^>]*class="amazon-link"[^>]*data-url="([^"]*)"/g;
+            // Look for the exact pattern from database: <span class=\"amazon-link\" data-url=\"URL\">
+            const escapedQuotesRegex = /<span class=\\"amazon-link\\" data-url=\\"([^\\"]*)\\"/g;
+            const regularQuotesRegex = /<span[^>]*class="amazon-link"[^>]*data-url="([^"]*)"/g;
             const directAmazonRegex = /https?:\/\/(amzn\.to|amazon\.com)[^\s<>"]*/g;
             
             let match;
-            // Try first pattern (escaped quotes)
-            while ((match = amazonLinkRegex1.exec(entry.content)) !== null) {
+            // Check escaped quotes pattern (from database JSON)
+            while ((match = escapedQuotesRegex.exec(entry.content)) !== null) {
               console.log('Found amazon-link URL (escaped):', match[1]);
               amazonUrls.add(match[1]);
             }
             
-            // Try second pattern (regular quotes)
-            while ((match = amazonLinkRegex2.exec(entry.content)) !== null) {
+            // Check regular quotes pattern  
+            while ((match = regularQuotesRegex.exec(entry.content)) !== null) {
               console.log('Found amazon-link URL (regular):', match[1]);
               amazonUrls.add(match[1]);
             }
             
-            // Try direct Amazon URLs
+            // Check direct Amazon URLs
             while ((match = directAmazonRegex.exec(entry.content)) !== null) {
               console.log('Found direct Amazon URL:', match[0]);
               amazonUrls.add(match[0]);
