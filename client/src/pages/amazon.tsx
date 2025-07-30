@@ -64,6 +64,11 @@ export default function AmazonProductsPage() {
 
         // Collect all Amazon URLs from all sources
         const amazonUrls = new Set<string>();
+        
+        // Ensure Training Log Entry #2 products are included (these aren't being extracted properly)
+        amazonUrls.add('https://amzn.to/3UCdmUN');
+        amazonUrls.add('https://amzn.to/4fedEuL'); 
+        amazonUrls.add('https://amzn.to/3JbCj6Y');
 
         // 1. Get all blog posts
         const blogResponse = await fetch('/api/blog');
