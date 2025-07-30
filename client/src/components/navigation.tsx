@@ -127,7 +127,7 @@ export function Navigation() {
                   alt="Amazon" 
                   className="h-5 w-auto object-contain"
                 />
-                <span className="text-sm font-medium">picks</span>
+                <span className="text-sm font-medium">Picks</span>
               </Link>
             </div>
           </div>
@@ -186,7 +186,7 @@ export function Navigation() {
                     alt="Amazon" 
                     className="h-4 w-auto object-contain"
                   />
-                  <span className="text-xs font-medium">picks</span>
+                  <span className="text-xs font-medium">Picks</span>
                 </Link>
               </div>
             </div>
