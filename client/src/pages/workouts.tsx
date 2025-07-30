@@ -35,6 +35,14 @@ export default function Workouts() {
     return match ? match[1] : null;
   };
 
+  // Helper function to create clean category URLs
+  const createCategoryUrl = (category: string) => {
+    if (category.toLowerCase() === 'workouts & challenges') {
+      return '/category/workouts-challenges';
+    }
+    return `/category/${category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -146,16 +154,36 @@ export default function Workouts() {
                         {post.excerpt}
                       </p>
 
-                      {/* Tags */}
-                      {post.tags && (
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {post.tags.split(',').slice(0, 3).map((tag, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
-                              {tag.trim()}
+                      {/* Display all categories as clickable tags */}
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {post.categories && post.categories.length > 0 ? (
+                          post.categories.map((category) => (
+                            <Badge key={category} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 transition-colors cursor-pointer"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                window.location.href = createCategoryUrl(category);
+                              }}
+                            >
+                              {category}
                             </Badge>
-                          ))}
-                        </div>
-                      )}
+                          ))
+                        ) : (
+                          post.category && (
+                            post.category.split(',').map((category) => (
+                              <Badge key={category.trim()} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 transition-colors cursor-pointer"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  window.location.href = createCategoryUrl(category.trim());
+                                }}
+                              >
+                                {category.trim()}
+                              </Badge>
+                            ))
+                          )
+                        )}
+                      </div>
 
                       {/* Action Buttons */}
                       <div className="flex gap-2">
