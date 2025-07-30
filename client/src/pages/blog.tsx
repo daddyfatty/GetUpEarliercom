@@ -60,8 +60,11 @@ export default function Blog() {
   ))
   .filter(cat => {
     const lowerCat = cat.toLowerCase();
-    return lowerCat !== "training" && !lowerCat.includes("marathon");
-  }) // Remove Training and Marathon categories
+    return lowerCat !== "training" && 
+           !lowerCat.includes("marathon") && 
+           !lowerCat.includes("iron master") && 
+           !lowerCat.includes("ironmaster");
+  }) // Remove Training, Marathon, and Iron Master categories
   .map(cat => {
     const lowerCat = cat.toLowerCase();
     if (lowerCat === "workouts" || lowerCat === "workouts & challenges") {
