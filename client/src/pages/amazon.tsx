@@ -129,7 +129,7 @@ export default function AmazonProductsPage() {
               <img 
                 src="/attached_assets/Daco_4533095_1753878634621.png" 
                 alt="Amazon"
-                className="h-32 md:h-40 lg:h-48 w-auto object-contain mb-4"
+                className="h-16 md:h-20 lg:h-24 w-auto object-contain mb-4"
               />
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white">Picks</h1>
             </div>
