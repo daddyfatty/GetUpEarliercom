@@ -105,13 +105,11 @@ export default function AmazonProductsPage() {
         <div className="py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex items-center justify-center mb-6">
-              <div className="flex items-center bg-white text-black px-4 py-2 rounded-lg mr-4">
-                <span className="text-4xl font-bold">a</span>
-                <div className="w-8 h-1 bg-orange-400 rounded ml-2"></div>
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
-                Our Picks
-              </h1>
+              <img 
+                src="/attached_assets/amaozn_1753876272929.png" 
+                alt="Amazon Our Picks"
+                className="h-16 md:h-20 lg:h-24 w-auto object-contain"
+              />
             </div>
             <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
               Quality fitness and wellness products tested and recommended by Michael Baker

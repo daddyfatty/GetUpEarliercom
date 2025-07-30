@@ -119,7 +119,7 @@ export function Navigation() {
               
               <Link 
                 href="/amazon"
-                className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center"
+                className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
                 title="Our Picks"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -127,6 +127,7 @@ export function Navigation() {
                   <path d="M16.87 16.13c-.35-.45-2.32-.21-3.21-.11-.27.03-.31-.2-.07-.37 1.57-1.1 4.15-.84 4.45-.45.3.39-.08 3.11-1.64 4.41-.24.2-.47.09-.36-.17.35-.84 1.13-2.72.83-3.31z"/>
                   <path d="M9.5 5.5c-.8 0-1.31.62-1.31 1.56 0 .84.26 1.42.92 1.86.62.42 1.48.5 2.39.5.8 0 1.31-.62 1.31-1.56 0-.84-.26-1.42-.92-1.86-.62-.42-1.48-.5-2.39-.5zm.4 6.5c-2.2 0-4.15-.84-4.15-2.5 0-1.32 1.02-2.24 2.53-2.24 2.2 0 4.15.84 4.15 2.5 0 1.32-1.02 2.24-2.53 2.24z"/>
                 </svg>
+                <span className="text-sm font-medium">picks</span>
               </Link>
             </div>
           </div>
@@ -177,7 +178,7 @@ export function Navigation() {
                 
                 <Link 
                   href="/amazon"
-                  className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center"
+                  className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
                   title="Our Picks"
                 >
                   <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
@@ -185,6 +186,7 @@ export function Navigation() {
                     <path d="M16.87 16.13c-.35-.45-2.32-.21-3.21-.11-.27.03-.31-.2-.07-.37 1.57-1.1 4.15-.84 4.45-.45.3.39-.08 3.11-1.64 4.41-.24.2-.47.09-.36-.17.35-.84 1.13-2.72.83-3.31z"/>
                     <path d="M9.5 5.5c-.8 0-1.31.62-1.31 1.56 0 .84.26 1.42.92 1.86.62.42 1.48.5 2.39.5.8 0 1.31-.62 1.31-1.56 0-.84-.26-1.42-.92-1.86-.62-.42-1.48-.5-2.39-.5zm.4 6.5c-2.2 0-4.15-.84-4.15-2.5 0-1.32 1.02-2.24 2.53-2.24 2.2 0 4.15.84 4.15 2.5 0 1.32-1.02 2.24-2.53 2.24z"/>
                   </svg>
+                  <span className="text-xs font-medium">picks</span>
                 </Link>
               </div>
             </div>
