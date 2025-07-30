@@ -57,19 +57,26 @@ export default function AmazonProductsPage() {
         // Process training log entries
         if (trainingLogData && trainingLogData.content && trainingLogData.content.entries) {
           trainingLogData.content.entries.forEach((entry: any) => {
+            console.log('Processing training log entry:', entry.entryNumber, entry.title);
+            console.log('Entry content snippet:', entry.content.substring(0, 200));
+            
             const amazonLinkRegex = /<span[^>]*class="amazon-link"[^>]*data-url="([^"]*)"[^>]*>/g;
             const directAmazonRegex = /https?:\/\/(amzn\.to|amazon\.com)[^\s<>"]*/g;
             
             let match;
             while ((match = amazonLinkRegex.exec(entry.content)) !== null) {
+              console.log('Found amazon-link URL:', match[1]);
               amazonUrls.add(match[1]);
             }
             
             while ((match = directAmazonRegex.exec(entry.content)) !== null) {
+              console.log('Found direct Amazon URL:', match[0]);
               amazonUrls.add(match[0]);
             }
           });
         }
+
+        console.log('Total Amazon URLs found:', Array.from(amazonUrls));
 
         // Fetch product data for each URL
         const productPromises = Array.from(amazonUrls).map(async (url) => {
