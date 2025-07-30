@@ -277,7 +277,7 @@ export default function CategoryPage() {
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                const slug = category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/[^a-z0-9-]/g, '');
+                                const slug = category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-');
                                 window.location.href = `/category/${slug}`;
                               }}
                             >
@@ -294,7 +294,7 @@ export default function CategoryPage() {
                                 onClick={(e) => {
                                   e.preventDefault();
                                   e.stopPropagation();
-                                  const slug = category.trim().toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/[^a-z0-9-]/g, '');
+                                  const slug = category.trim().toLowerCase().replace(/\s+/g, '-').replace(/&/g, '').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-');
                                   window.location.href = `/category/${slug}`;
                                 }}
                               >
