@@ -6,6 +6,7 @@ import { ArrowLeft, Clock, User, Play } from "lucide-react";
 
 interface BlogPost {
   id: string;
+  slug?: string;
   title: string;
   excerpt: string;
   content: string;
@@ -202,7 +203,8 @@ export default function CategoryPage() {
         </div>
       </div>
 
-        {/* Posts Grid */}
+      {/* Posts Grid */}
+      <div className="container mx-auto px-4 py-12">
         {filteredPosts.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-600 dark:text-gray-400 text-lg mb-4">

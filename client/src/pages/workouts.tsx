@@ -35,17 +35,17 @@ export default function Workouts() {
     return match ? match[1] : null;
   };
 
-  // Helper function to create clean category URLs
-  const createCategoryUrl = (category: string) => {
-    if (category.toLowerCase() === 'workouts & challenges') {
-      return '/category/workouts-challenges';
-    }
-    return `/category/${category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white">
         <div className="container mx-auto px-4 py-8">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded w-64 mb-8"></div>
@@ -68,48 +68,54 @@ export default function Workouts() {
         keywords="workout videos, strength training, calisthenics, yoga, running, fitness programs, exercise routines"
         url="/workouts"
       />
-      <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-block bg-blue-600/10 text-blue-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
-              Workout & Challenge Collection
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-              Workouts &<br className="hidden sm:block" />
-              <span className="text-blue-600">Challenges</span>
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-              Strength, Calisthenics, Yoga, Guided Runs, Challenges and Tutorials to Keep You Moving
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">New Workouts Weekly</span>
-                </div>
-              </div>
-              <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">15-45 Min Sessions</span>
-                </div>
+      <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white">
+        {/* Hero Header */}
+        <div className="bg-gradient-to-br from-blue-50 via-white to-orange-50 py-16">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-4xl mx-auto">
+              <Badge variant="outline" className="mb-4 text-blue-600 border-blue-200 bg-blue-50">
+                Workout & Challenge Collection
+              </Badge>
+              
+              <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                <span className="text-gray-900">Workouts &</span>
+                <br />
+                <span className="text-blue-600">Challenges</span>
+              </h1>
+              
+              <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                Strength, Calisthenics, Yoga, Guided Runs, Challenges and Tutorials to Keep You Moving
+              </p>
+              
+              <div className="flex flex-wrap justify-center gap-4 mb-6">
+                <Badge variant="secondary" className="text-sm px-4 py-2">
+                  ● New Workouts Weekly
+                </Badge>
+                <Badge variant="secondary" className="text-sm px-4 py-2">
+                  ● 15-45 Min Sessions
+                </Badge>
+                <Badge variant="secondary" className="text-sm px-4 py-2 bg-green-100 text-green-700">
+                  {workoutPosts.length} {workoutPosts.length === 1 ? 'workout' : 'workouts'}
+                </Badge>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Blog Posts Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {workoutPosts.map((post: BlogPost) => {
+        {/* Workouts Grid */}
+        <div className="container mx-auto px-4 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {workoutPosts.map((post) => {
               const youtubeId = post.videoUrl ? extractYouTubeId(post.videoUrl) : null;
+              const postLink = post.slug ? `/blog/${post.slug}` : `/blog/${post.id}`;
               
               return (
-                <Link key={post.id} href={`/blog/${post.slug}`} className="block">
-                  <Card className="group hover:shadow-lg transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 flex flex-col h-full cursor-pointer">
-                    {/* YouTube Video Thumbnail or Featured Image */}
+                <Link key={post.id} href={postLink} className="block">
+                  <Card className="group hover:shadow-lg transition-all duration-300 bg-white/80 backdrop-blur-sm border-gray-200 flex flex-col h-full cursor-pointer">
+                    {/* Featured Image or YouTube Thumbnail */}
                     {(youtubeId || post.imageUrl) && (
-                      <div className="relative overflow-hidden">
-                        <div className="aspect-video relative overflow-hidden bg-gray-100 dark:bg-gray-700">
+                      <div className="relative overflow-hidden rounded-t-lg">
+                        <div className="aspect-video relative overflow-hidden bg-gray-100">
                           <img 
                             src={post.imageUrl || (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : '')}
                             alt={post.title}
@@ -121,61 +127,34 @@ export default function Workouts() {
                               }
                             }}
                           />
-                          {youtubeId && (
-                            <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                              <div className="bg-white/90 rounded-full p-3">
-                                <Play className="h-6 w-6 text-primary" />
+                          {post.videoUrl && (
+                            <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                              <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                                <Play className="h-8 w-8 text-white" />
                               </div>
                             </div>
                           )}
                         </div>
                       </div>
                     )}
-                  
-                    <CardHeader>
-                      <div className="flex items-center justify-between mb-2">
-                        <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                          {post.category}
-                        </Badge>
-                        <div className="flex items-center space-x-2 text-sm text-gray-500">
-                          <Calendar className="w-4 h-4" />
-                          {new Date(post.publishedDate).toLocaleDateString()}
-                        </div>
-                      </div>
-                      <CardTitle className="text-lg mb-2 group-hover:text-primary transition-colors">
-                        {post.title}
-                      </CardTitle>
-                    </CardHeader>
-                  
-                    <CardContent className="pt-0">
-                      <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-                        {post.excerpt}
-                      </p>
 
-                      {/* Display all categories as clickable tags */}
-                      <div className="flex flex-wrap gap-2 mb-4">
+                    <CardContent className="p-6 flex-1 flex flex-col">
+                      {/* Categories */}
+                      <div className="flex flex-wrap gap-2 mb-3">
                         {post.categories && post.categories.length > 0 ? (
-                          post.categories.map((category) => (
-                            <Badge key={category} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 transition-colors cursor-pointer"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                window.location.href = createCategoryUrl(category);
-                              }}
+                          post.categories.map((category, index) => (
+                            <Badge 
+                              key={`${category}-${index}`}
+                              variant="outline" 
+                              className="text-xs bg-blue-50 text-blue-700 border-blue-200"
                             >
                               {category}
                             </Badge>
                           ))
                         ) : (
                           post.category && (
-                            post.category.split(',').map((category) => (
-                              <Badge key={category.trim()} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300 transition-colors cursor-pointer"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  window.location.href = createCategoryUrl(category.trim());
-                                }}
-                              >
+                            post.category.split(',').map((category, index) => (
+                              <Badge key={`${category.trim()}-${index}`} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
                                 {category.trim()}
                               </Badge>
                             ))
@@ -183,6 +162,26 @@ export default function Workouts() {
                         )}
                       </div>
 
+                      {/* Title */}
+                      <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                        {post.title}
+                      </h3>
+
+                      {/* Excerpt */}
+                      <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-1">
+                        {post.excerpt}
+                      </p>
+
+                      {/* Meta Info */}
+                      <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                        <div className="flex items-center gap-1">
+                          <User className="h-4 w-4" />
+                          <span>{post.author}</span>
+                        </div>
+                        <span>{formatDate(post.publishedDate)}</span>
+                      </div>
+
+                      {/* Read More Button */}
                       <div className="flex justify-end mt-auto">
                         <Button size="sm" className="gap-1">
                           Read More
@@ -198,18 +197,16 @@ export default function Workouts() {
 
           {workoutPosts.length === 0 && (
             <div className="text-center py-12">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
                 No workout posts found
               </h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-gray-600">
                 No workout and challenge posts available at the moment. Check back soon!
               </p>
             </div>
           )}
         </div>
       </div>
-
-    </div>
     </>
   );
 }
