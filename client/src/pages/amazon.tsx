@@ -99,7 +99,6 @@ export default function AmazonProductsPage() {
         type="website"
         canonical="https://www.getupearlier.com/amazon"
       />
-
       {/* Hero Section */}
       <HeroGradient className="text-white">
         <div className="py-20 px-4 sm:px-6 lg:px-8">
@@ -111,13 +110,10 @@ export default function AmazonProductsPage() {
                 className="h-16 md:h-20 lg:h-24 w-auto object-contain"
               />
             </div>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
-              Quality fitness and wellness products tested and recommended by Michael Baker
-            </p>
+            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">Vetted fitness and wellness products from Amazon. Tested and highly recommended!</p>
           </div>
         </div>
       </HeroGradient>
-
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
