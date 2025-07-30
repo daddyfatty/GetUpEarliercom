@@ -144,23 +144,34 @@ export default function Workouts() {
                       <div className="flex flex-wrap gap-2 mb-3">
                         {post.categories && post.categories.length > 0 ? (
                           post.categories.map((category, index) => (
-                            <Link key={`${category}-${index}`} href={`/category/${category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}>
-                              <Badge 
-                                variant="outline" 
-                                className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 cursor-pointer"
-                              >
-                                {category}
-                              </Badge>
-                            </Link>
+                            <Badge 
+                              key={`${category}-${index}`}
+                              variant="outline" 
+                              className="text-xs bg-blue-50 text-blue-700 border-blue-200 cursor-pointer"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                window.location.href = `/category/${category.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+                              }}
+                            >
+                              {category}
+                            </Badge>
                           ))
                         ) : (
                           post.category && (
                             post.category.split(',').map((category, index) => (
-                              <Link key={`${category.trim()}-${index}`} href={`/category/${category.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}>
-                                <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 cursor-pointer">
-                                  {category.trim()}
-                                </Badge>
-                              </Link>
+                              <Badge 
+                                key={`${category.trim()}-${index}`} 
+                                variant="outline" 
+                                className="text-xs bg-blue-50 text-blue-700 border-blue-200 cursor-pointer"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  window.location.href = `/category/${category.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`;
+                                }}
+                              >
+                                {category.trim()}
+                              </Badge>
                             ))
                           )
                         )}
