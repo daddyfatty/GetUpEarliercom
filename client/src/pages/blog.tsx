@@ -58,8 +58,18 @@ export default function Blog() {
       return allCategories;
     }) || []
   ))
-  .filter(cat => cat.toLowerCase() !== "training") // Remove Training category
-  .map(cat => cat.toLowerCase() === "workouts" ? "Workouts & Challenges" : cat) // Replace Workouts with Workouts & Challenges
+  .filter(cat => {
+    const lowerCat = cat.toLowerCase();
+    return lowerCat !== "training" && !lowerCat.includes("marathon");
+  }) // Remove Training and Marathon categories
+  .map(cat => {
+    const lowerCat = cat.toLowerCase();
+    if (lowerCat === "workouts" || lowerCat === "workouts & challenges") {
+      return "Workouts & Challenges";
+    }
+    return cat;
+  }) // Replace Workouts with Workouts & Challenges
+  .filter((cat, index, arr) => arr.indexOf(cat) === index) // Remove duplicates
   .sort()];
 
   // Helper function to organize categories into 3 columns
