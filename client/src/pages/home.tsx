@@ -263,7 +263,7 @@ export default function Home() {
                           <div className="flex items-center space-x-2">
                             <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-gray-200">
                               <img 
-                                src="/attached_assets/493414479_10213588193416986_7983427679426833080_n.jpg" 
+                                src="/attached_assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg" 
                                 alt="Michael Baker - Author"
                                 className="w-full h-full object-cover"
                               />
