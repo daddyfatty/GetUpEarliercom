@@ -57,16 +57,7 @@ export default function Blog() {
       }
       return allCategories;
     }) || []
-  ))
-  .map(cat => {
-    const lowerCat = cat.toLowerCase();
-    if (lowerCat === "workouts" || lowerCat === "workouts & challenges") {
-      return "Workouts & Challenges";
-    }
-    return cat;
-  }) // Replace Workouts with Workouts & Challenges
-  .filter((cat, index, arr) => arr.indexOf(cat) === index) // Remove duplicates
-  .sort()];
+  )).sort()];
 
   // Helper function to organize categories into 3 columns
   const organizeCategories = (cats: string[]) => {
