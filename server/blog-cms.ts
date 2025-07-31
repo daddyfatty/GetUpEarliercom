@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { storage } from './storage';
+import { storage } from './storage-fixed';
 import { insertBlogPostSchema } from '@shared/schema';
 import { z } from 'zod';
 
