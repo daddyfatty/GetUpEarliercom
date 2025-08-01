@@ -27,7 +27,7 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
     };
 
     // Check if content contains Amazon product markers
-    const amazonProductRegex = /\[AMAZON_PRODUCT:([^:]+):([^\]]+)\]/g;
+    const amazonProductRegex = /\[AMAZON_PRODUCT:(https?:\/\/[^:]+):([^\]]+)\]/g;
 
     // Function to process timecodes and make them clickable
     const processTimecodes = (text: string) => {
