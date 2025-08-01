@@ -72,12 +72,12 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
   'B07XYYBHFT': {
     title: 'Gaiam Yoga Block - Supportive Latex-Free EVA Foam Soft Non-Slip Surface for Yoga, Pilates, Meditation',
     description: 'YOGA ESSENTIAL: This yoga block provides the stability and support needed to maintain poses and increase strength, flexibility, and balance. Made from supportive latex-free EVA foam.',
-    image: 'https://m.media-amazon.com/images/I/61P9XY6VJXL._AC_SL1200_.jpg',
-    price: '$12.98',
-    rating: 4.6,
-    reviews: 24847,
+    image: 'https://m.media-amazon.com/images/I/71kELlKWHFL._AC_SX300_SY300_.jpg',
+    price: '$9.99',
+    rating: 4.8,
+    reviews: 51576,
     availability: 'In Stock',
-    isPrime: true,
+    isPrime: false,
     asin: 'B07XYYBHFT'
   },
   'B0848PNH1J': {
