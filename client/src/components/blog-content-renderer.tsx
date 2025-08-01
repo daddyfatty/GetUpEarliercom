@@ -27,7 +27,7 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
     };
 
     // Check if content contains HTML (like Amazon product previews)
-    const containsHTML = content.includes('<div class="amazon-product-preview">');
+    const containsHTML = content.includes('<div class="amazon-product-preview');
 
     // Function to process timecodes and make them clickable
     const processTimecodes = (text: string) => {
@@ -240,7 +240,18 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
       if (containsHTML) {
         return (
           <div 
-            className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap [&>.amazon-product-preview]:my-6"
+            className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap prose prose-lg max-w-none
+              [&_.amazon-product-preview]:border [&_.amazon-product-preview]:rounded-lg [&_.amazon-product-preview]:p-4 
+              [&_.amazon-product-preview]:my-4 [&_.amazon-product-preview]:bg-gray-50 dark:[&_.amazon-product-preview]:bg-gray-800
+              [&_.amazon-product-preview_img]:w-20 [&_.amazon-product-preview_img]:h-20 [&_.amazon-product-preview_img]:object-cover 
+              [&_.amazon-product-preview_img]:rounded [&_.amazon-product-preview_h4]:font-semibold [&_.amazon-product-preview_h4]:text-lg 
+              [&_.amazon-product-preview_h4]:mb-1 [&_.amazon-product-preview_p]:text-sm [&_.amazon-product-preview_p]:text-gray-600 
+              dark:[&_.amazon-product-preview_p]:text-gray-400 [&_.amazon-product-preview_p]:mb-2
+              [&_.amazon-product-preview_a]:inline-block [&_.amazon-product-preview_a]:mt-2 [&_.amazon-product-preview_a]:bg-orange-500 
+              [&_.amazon-product-preview_a]:hover:bg-orange-600 [&_.amazon-product-preview_a]:text-white [&_.amazon-product-preview_a]:px-4 
+              [&_.amazon-product-preview_a]:py-2 [&_.amazon-product-preview_a]:rounded [&_.amazon-product-preview_a]:transition-colors
+              [&_.amazon-product-preview_.font-bold]:text-xl [&_.amazon-product-preview_.font-bold]:text-orange-600
+              [&_.amazon-product-preview_.text-yellow-400]:text-yellow-400"
             dangerouslySetInnerHTML={{ __html: content.replace(/\n/g, '<br>') }}
             onClick={(e) => {
               // Handle clicks on markdown images
