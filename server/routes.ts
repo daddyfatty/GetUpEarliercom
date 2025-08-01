@@ -24,6 +24,7 @@ import { getCachedLinkPreview, clearLinkPreviewCache } from './link-preview';
 import { getYouTubeVideoMetadata, generateSlugFromTitle, createEmbedUrl, formatYouTubeDescription } from './youtube-utils';
 import { validateYouTubePost, logValidationResult } from './youtube-validation';
 import { getCachedGooglePlaceDetails } from './google-places';
+import { processBlogPostAmazonLinks } from './amazon-auto-detection';
 
 // Check if Stripe is configured
 const STRIPE_CONFIGURED = !!process.env.STRIPE_SECRET_KEY;
@@ -1615,6 +1616,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error('Error clearing cache:', error);
       res.status(500).json({ message: 'Failed to clear cache: ' + error.message });
+    }
+  });
+
+  // Amazon products API endpoint
+  app.get("/api/amazon-products", async (req, res) => {
+    try {
+      const { amazonProducts } = await import('../shared/schema');
+      const { db } = await import('./db');
+      const { desc } = await import('drizzle-orm');
+      
+      const products = await db.select().from(amazonProducts).orderBy(desc(amazonProducts.createdAt));
+      res.json(products);
+    } catch (error: any) {
+      console.error('Error fetching Amazon products:', error);
+      res.status(500).json({ message: 'Failed to fetch Amazon products: ' + error.message });
+    }
+  });
+
+  // Process Amazon links in blog post manually
+  app.post("/api/process-amazon-links/:blogId", async (req, res) => {
+    try {
+      const { blogId } = req.params;
+      
+      // Get the blog post
+      const post = await storage.getBlogPost(blogId);
+      if (!post) {
+        return res.status(404).json({ message: "Blog post not found" });
+      }
+      
+      // Process Amazon links
+      const processedContent = await processBlogPostAmazonLinks(blogId, post.content);
+      
+      // Update the blog post with processed content
+      const updatedPost = await storage.updateBlogPost(blogId, { content: processedContent });
+      
+      res.json({ 
+        message: "Amazon links processed successfully",
+        post: updatedPost
+      });
+    } catch (error: any) {
+      console.error('Error processing Amazon links:', error);
+      res.status(500).json({ message: 'Failed to process Amazon links: ' + error.message });
     }
   });
 

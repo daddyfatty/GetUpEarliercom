@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, timestamp, jsonb, varchar, index } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, jsonb, varchar, index, real } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -370,3 +370,30 @@ export type BlogPost = typeof blogPosts.$inferSelect;
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
 export type TrainingLogEntry = typeof trainingLogEntries.$inferSelect;
 export type InsertTrainingLogEntry = z.infer<typeof insertTrainingLogEntrySchema>;
+
+// Amazon products table for auto-detected products
+export const amazonProducts = pgTable("amazon_products", {
+  id: serial("id").primaryKey(),
+  asin: text("asin").notNull().unique(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  price: text("price").notNull(),
+  rating: real("rating"),
+  reviews: integer("reviews"),
+  image: text("image"),
+  url: text("url").notNull(),
+  category: text("category").default("General"),
+  tags: text("tags"), // JSON string
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertAmazonProductSchema = createInsertSchema(amazonProducts).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type AmazonProductRecord = typeof amazonProducts.$inferSelect;
+export type InsertAmazonProduct = z.infer<typeof insertAmazonProductSchema>;

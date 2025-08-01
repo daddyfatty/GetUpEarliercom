@@ -165,6 +165,12 @@ export async function createBlogPost(req: Request, res: Response) {
       tags: normalizeTags(validatedData.tags) || '[]'
     };
     
+    // Process Amazon links in content
+    if (normalizedData.content) {
+      const { processBlogPostAmazonLinks } = await import('./amazon-auto-detection');
+      normalizedData.content = await processBlogPostAmazonLinks(validatedData.id || 'new-post', normalizedData.content);
+    }
+    
     const post = await storage.createBlogPost(normalizedData);
     res.status(201).json(post);
   } catch (error) {
@@ -194,6 +200,12 @@ export async function updateBlogPost(req: Request, res: Response) {
     // Handle categories - convert array to database format if present
     if (validatedData.categories !== undefined) {
       normalizedData.categories = validatedData.categories;
+    }
+    
+    // Process Amazon links in content if content is being updated
+    if (normalizedData.content) {
+      const { processBlogPostAmazonLinks } = await import('./amazon-auto-detection');
+      normalizedData.content = await processBlogPostAmazonLinks(id, normalizedData.content);
     }
     
     const post = await storage.updateBlogPost(id, normalizedData);
