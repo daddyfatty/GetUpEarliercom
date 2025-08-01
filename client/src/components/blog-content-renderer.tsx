@@ -13,7 +13,6 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
   const renderContent = () => {
     const parts = [];
     const amazonLinkRegex = /<span(?:\s+class="amazon-link")?\s*data-url="([^"]+)">([^<]+)<\/span>/g;
-    const amazonPreviewRegex = /<div class="amazon-product-preview[^>]*>([\s\S]*?)<\/div>/g;
     const galleryRegex = /<div class="gallery-grid">([\s\S]*?)<\/div>/g;
     
     // Function to convert URLs to clickable links (only for plain text content)
@@ -71,11 +70,9 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
       return text.replace(markdownBoldRegex, '<strong class="font-bold text-gray-800 dark:text-gray-200">$1</strong>');
     };
     
-    // Find all Amazon links and previews
+    // Find all Amazon links
     const amazonMatches = [];
     let match;
-    
-    // First look for regular Amazon links
     amazonLinkRegex.lastIndex = 0;
     while ((match = amazonLinkRegex.exec(content)) !== null) {
       amazonMatches.push({
@@ -85,26 +82,6 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
         title: match[2],
         type: 'amazon'
       });
-    }
-    
-    // Also look for Amazon HTML previews and extract URLs from them
-    amazonPreviewRegex.lastIndex = 0;
-    while ((match = amazonPreviewRegex.exec(content)) !== null) {
-      const htmlContent = match[1];
-      // Extract URL from the "View on Amazon" link
-      const urlMatch = htmlContent.match(/href="([^"]+)"/);
-      // Extract title from h4 tag
-      const titleMatch = htmlContent.match(/<h4[^>]*>([^<]+)</);
-      
-      if (urlMatch && titleMatch) {
-        amazonMatches.push({
-          start: match.index,
-          end: match.index + match[0].length,
-          url: urlMatch[1],
-          title: titleMatch[1],
-          type: 'amazon'
-        });
-      }
     }
     
     // Find all galleries
