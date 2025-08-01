@@ -208,18 +208,7 @@ export function Navigation() {
           <div className={`hidden md:flex justify-between items-center h-28 transition-all duration-300 ${
             isScrolled ? 'md:h-20' : 'md:h-12'
           }`}>
-            {/* Desktop Logo */}
-            <div className="flex items-center">
-              <Link href="/">
-                <img 
-                  src={logoPath} 
-                  alt="Get Up Earlier" 
-                  className={`w-auto object-contain transition-all duration-300 ${
-                    isScrolled ? 'h-12' : 'h-16'
-                  }`}
-                />
-              </Link>
-            </div>
+
 
             {/* Desktop Navigation Menu */}
             <div className="flex items-center justify-center flex-1">
