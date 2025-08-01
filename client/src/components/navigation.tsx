@@ -11,7 +11,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Menu, Bell, User, LogOut, ChevronDown, ChevronRight } from "lucide-react";
 import { SiFacebook, SiYoutube } from "react-icons/si";
-import logoPath from "@assets/logo_1749324568864.png";
+import logoPath from "@assets/AI-Wintrer-Runner5_1754078126180.png";
 
 export function Navigation() {
   const [location] = useLocation();
