@@ -69,6 +69,17 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
     isPrime: true,
     asin: 'B0789V9Q39'
   },
+  'B07XYYBHFT': {
+    title: 'Gaiam Yoga Block - Supportive Latex-Free EVA Foam Soft Non-Slip Surface for Yoga, Pilates, Meditation',
+    description: 'YOGA ESSENTIAL: This yoga block provides the stability and support needed to maintain poses and increase strength, flexibility, and balance. Made from supportive latex-free EVA foam.',
+    image: 'https://m.media-amazon.com/images/I/61P9XY6VJXL._AC_SL1200_.jpg',
+    price: '$12.98',
+    rating: 4.6,
+    reviews: 24847,
+    availability: 'In Stock',
+    isPrime: true,
+    asin: 'B07XYYBHFT'
+  },
   'B0848PNH1J': {
     title: 'CHIRP Wheel+ Back Roller - Deep Tissue Trigger Point Massage - 12" Foam Roller for Back Pain Relief',
     description: 'THE ORIGINAL CHIRP WHEEL: The patented spinal canal design puts 4x less pressure on your spine than traditional foam rollers while still providing the same massage and pressure to the surrounding muscles.',
