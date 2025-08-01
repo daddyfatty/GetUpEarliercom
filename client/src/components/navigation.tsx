@@ -36,6 +36,10 @@ export function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   const calculatorItems = [
     { href: "/calorie-calculator", label: "Calorie Calculator" },
     { href: "/alcohol-calculator", label: "Alcohol Weight Gain Calculator" },
@@ -139,62 +143,86 @@ export function Navigation() {
         isScrolled ? 'shadow-lg' : ''
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex justify-between items-center h-28 transition-all duration-300 ${
-            isScrolled ? 'md:h-20' : 'md:h-12'
-          }`}>
-            {/* Mobile Logo */}
-            <div className="flex items-center md:hidden">
+          {/* Mobile Navigation Container */}
+          <div className="md:hidden">
+            {/* Top row: Logo and Hamburger */}
+            <div className="flex justify-between items-center h-20">
               <Link href="/">
                 <img 
                   src={logoPath} 
                   alt="Get Up Earlier" 
-                  className="h-24 w-auto max-w-[600px] object-contain"
+                  className="h-16 w-auto max-w-[280px] object-contain"
                 />
               </Link>
               
-              {/* Social Links for Mobile */}
-              <div className="flex items-center space-x-3 ml-4">
-                <a 
-                  href="https://www.youtube.com/@getupearlier" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
-                  title="YouTube Channel"
-                >
-                  <SiYoutube className="h-4 w-4" />
-                  <span className="text-xs font-medium">63k</span>
-                </a>
-                
-                <a 
-                  href="https://www.facebook.com/groups/getupearlier" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
-                  title="Join Facebook Group"
-                >
-                  <SiFacebook className="h-4 w-4" />
-                  <span className="text-xs font-medium">Group</span>
-                </a>
-                
-                <Link 
-                  href="/amazon"
-                  className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
-                  title="Our Picks"
-                >
-                  <img 
-                    src="/attached_assets/aonly_1753878383025.png" 
-                    alt="Amazon" 
-                    className="h-4 w-auto object-contain"
-                  />
-                  <span className="text-xs font-medium">Picks</span>
-                </Link>
-              </div>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-white hover:text-[hsl(var(--orange))] hover:bg-white/10"
+                onClick={toggleMobileMenu}
+              >
+                <Menu className="h-6 w-6" />
+              </Button>
+            </div>
+            
+            {/* Bottom row: Social Icons */}
+            <div className="flex justify-center items-center space-x-6 pb-3">
+              <a 
+                href="https://www.youtube.com/@getupearlier" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
+                title="YouTube Channel"
+              >
+                <SiYoutube className="h-4 w-4" />
+                <span className="text-xs font-medium">63k</span>
+              </a>
+              
+              <a 
+                href="https://www.facebook.com/groups/getupearlier" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
+                title="Join Facebook Group"
+              >
+                <SiFacebook className="h-4 w-4" />
+                <span className="text-xs font-medium">Group</span>
+              </a>
+              
+              <Link 
+                href="/amazon"
+                className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
+                title="Our Picks"
+              >
+                <img 
+                  src="/attached_assets/aonly_1753878383025.png" 
+                  alt="Amazon" 
+                  className="h-4 w-auto object-contain"
+                />
+                <span className="text-xs font-medium">Picks</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className={`hidden md:flex justify-between items-center h-28 transition-all duration-300 ${
+            isScrolled ? 'md:h-20' : 'md:h-12'
+          }`}>
+            {/* Desktop Logo */}
+            <div className="flex items-center">
+              <Link href="/">
+                <img 
+                  src={logoPath} 
+                  alt="Get Up Earlier" 
+                  className={`w-auto object-contain transition-all duration-300 ${
+                    isScrolled ? 'h-12' : 'h-16'
+                  }`}
+                />
+              </Link>
             </div>
 
-
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center justify-center flex-1">
+            {/* Desktop Navigation Menu */}
+            <div className="flex items-center justify-center flex-1">
               <div className="flex items-baseline justify-center space-x-6 lg:space-x-8">
                 {/* 1-on-1 Services */}
                 <Link href="/services">
