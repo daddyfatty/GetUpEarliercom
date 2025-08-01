@@ -20,7 +20,7 @@ import {
   updateBlogPost as cmsUpdateBlogPost, 
   deleteBlogPost as cmsDeleteBlogPost 
 } from './blog-cms';
-import { getCachedLinkPreview } from './link-preview';
+import { getCachedLinkPreview, clearLinkPreviewCache } from './link-preview';
 import { getYouTubeVideoMetadata, generateSlugFromTitle, createEmbedUrl, formatYouTubeDescription } from './youtube-utils';
 import { validateYouTubePost, logValidationResult } from './youtube-validation';
 import { getCachedGooglePlaceDetails } from './google-places';
@@ -1603,6 +1603,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error("Error fetching link preview:", error);
       res.status(500).json({ message: "Error fetching link preview: " + error.message });
+    }
+  });
+
+  // Clear cache endpoint for debugging
+  app.post("/api/clear-cache", async (req, res) => {
+    try {
+      const { url } = req.body;
+      clearLinkPreviewCache(url);
+      res.json({ message: url ? `Cache cleared for ${url}` : 'All cache cleared' });
+    } catch (error: any) {
+      console.error('Error clearing cache:', error);
+      res.status(500).json({ message: 'Failed to clear cache: ' + error.message });
     }
   });
 

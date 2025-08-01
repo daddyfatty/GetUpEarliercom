@@ -46,6 +46,39 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
     availability: 'In Stock',
     isPrime: true,
     asin: 'B076PR27Z1'
+  },
+  'B07TLP8DKC': {
+    title: 'CHIRP Wheel Foam Roller - Targeted Back & Neck Pain Relief, Muscle Massage, Trigger Point Therapy',
+    description: 'INNOVATIVE & FUNCTIONAL DESIGN: Experience targeted muscle relief with this high-density foam roller, perfect for deep tissue massage and easing back pain. Chirp Wheel+ is designed with trigger points that target muscles along the spine.',
+    image: 'https://m.media-amazon.com/images/I/71q9+Nxk6tL._AC_SY300_SX300_.jpg',
+    price: '$49.99',
+    rating: 4.4,
+    reviews: 21476,
+    availability: 'In Stock',
+    isPrime: true,
+    asin: 'B07TLP8DKC'
+  },
+  'B0789V9Q39': {
+    title: 'Gaiam Yoga Block - Supportive Latex-Free EVA Foam Soft Non-Slip Surface for Yoga, Pilates, Meditation',
+    description: 'YOGA ESSENTIAL: This yoga block provides the stability and support needed to maintain poses and increase strength, flexibility, and balance.',
+    image: 'https://m.media-amazon.com/images/I/61P9XY6VJXL._AC_SL1200_.jpg',
+    price: '$12.98',
+    rating: 4.6,
+    reviews: 24847,
+    availability: 'In Stock',
+    isPrime: true,
+    asin: 'B0789V9Q39'
+  },
+  'B0848PNH1J': {
+    title: 'CHIRP Wheel+ Back Roller - Deep Tissue Trigger Point Massage - 12" Foam Roller for Back Pain Relief',
+    description: 'THE ORIGINAL CHIRP WHEEL: The patented spinal canal design puts 4x less pressure on your spine than traditional foam rollers while still providing the same massage and pressure to the surrounding muscles.',
+    image: 'https://m.media-amazon.com/images/I/71FhczYCRlL._AC_SL1500_.jpg',
+    price: '$59.95',
+    rating: 4.4,
+    reviews: 23891,
+    availability: 'In Stock',
+    isPrime: true,
+    asin: 'B0848PNH1J'
   }
 };
 

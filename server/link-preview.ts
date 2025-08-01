@@ -83,3 +83,14 @@ export async function getCachedLinkPreview(url: string): Promise<LinkPreviewData
 
   return preview;
 }
+
+// Export function to clear cache for specific URLs or all cache
+export function clearLinkPreviewCache(url?: string): void {
+  if (url) {
+    linkPreviewCache.delete(url);
+    console.log(`Cache cleared for ${url}`);
+  } else {
+    linkPreviewCache.clear();
+    console.log('All link preview cache cleared');
+  }
+}
