@@ -236,32 +236,34 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
     
     // If no special content found, render the original content
     if (parts.length === 0) {
-      // If content contains HTML (like Amazon previews), render it directly
+      // If content contains HTML (like Amazon previews), extract and render properly
       if (containsHTML) {
-        return (
-          <div 
-            className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap prose prose-lg max-w-none
-              [&_.amazon-product-preview]:border [&_.amazon-product-preview]:rounded-lg [&_.amazon-product-preview]:p-4 
-              [&_.amazon-product-preview]:my-4 [&_.amazon-product-preview]:bg-gray-50 dark:[&_.amazon-product-preview]:bg-gray-800
-              [&_.amazon-product-preview_img]:w-20 [&_.amazon-product-preview_img]:h-20 [&_.amazon-product-preview_img]:object-cover 
-              [&_.amazon-product-preview_img]:rounded [&_.amazon-product-preview_h4]:font-semibold [&_.amazon-product-preview_h4]:text-lg 
-              [&_.amazon-product-preview_h4]:mb-1 [&_.amazon-product-preview_p]:text-sm [&_.amazon-product-preview_p]:text-gray-600 
-              dark:[&_.amazon-product-preview_p]:text-gray-400 [&_.amazon-product-preview_p]:mb-2
-              [&_.amazon-product-preview_a]:inline-block [&_.amazon-product-preview_a]:mt-2 [&_.amazon-product-preview_a]:bg-orange-500 
-              [&_.amazon-product-preview_a]:hover:bg-orange-600 [&_.amazon-product-preview_a]:text-white [&_.amazon-product-preview_a]:px-4 
-              [&_.amazon-product-preview_a]:py-2 [&_.amazon-product-preview_a]:rounded [&_.amazon-product-preview_a]:transition-colors
-              [&_.amazon-product-preview_.font-bold]:text-xl [&_.amazon-product-preview_.font-bold]:text-orange-600
-              [&_.amazon-product-preview_.text-yellow-400]:text-yellow-400"
-            dangerouslySetInnerHTML={{ __html: content.replace(/\n/g, '<br>') }}
-            onClick={(e) => {
-              // Handle clicks on markdown images
-              const target = e.target as HTMLImageElement;
-              if (target.tagName === 'IMG' && target.classList.contains('markdown-image')) {
-                onImageClick && onImageClick(target.src);
-              }
-            }}
-          />
-        );
+        // Extract Amazon product info from HTML
+        const amazonMatch = content.match(/<div class="amazon-product-preview[^>]*>[\s\S]*?href="([^"]+)"[\s\S]*?<h4[^>]*>([^<]+)<[\s\S]*?<\/div>/);
+        
+        if (amazonMatch) {
+          const [fullMatch, url, title] = amazonMatch;
+          const beforeContent = content.substring(0, content.indexOf(fullMatch));
+          const afterContent = content.substring(content.indexOf(fullMatch) + fullMatch.length);
+          
+          return (
+            <>
+              {beforeContent && (
+                <div 
+                  className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
+                  dangerouslySetInnerHTML={{ __html: beforeContent.replace(/\n/g, '<br>') }}
+                />
+              )}
+              <RealAmazonPreview url={url} title={title} />
+              {afterContent && (
+                <div 
+                  className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
+                  dangerouslySetInnerHTML={{ __html: afterContent.replace(/\n/g, '<br>') }}
+                />
+              )}
+            </>
+          );
+        }
       }
       
       // Process markdown formatting: bold first, then images, then URLs, then timecodes, then line breaks
