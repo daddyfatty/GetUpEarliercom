@@ -85,45 +85,7 @@ export function Navigation() {
 
   return (
     <>
-      {/* Desktop Header with Logo Left, Icons Right */}
-      <div className="hidden md:block bg-[hsl(var(--navy))]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <Link href="/">
-              <img 
-                src={logoPath} 
-                alt="Get Up Earlier" 
-                className="h-16 w-auto max-w-[400px] object-contain"
-              />
-            </Link>
-            
-            {/* Social Links */}
-            <div className="flex items-center space-x-4">
-              <a 
-                href="https://www.youtube.com/@getupearlier" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
-                title="YouTube Channel"
-              >
-                <SiYoutube className="h-5 w-5" />
-                <span className="text-sm font-medium">63k</span>
-              </a>
-              
-              <a 
-                href="https://www.facebook.com/groups/getupearlier" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
-                title="Join Facebook Group"
-              >
-                <SiFacebook className="h-5 w-5" />
-                <span className="text-sm font-medium">Group</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+
 
       {/* Sticky Navigation Bar */}
       <nav className={`bg-[hsl(var(--navy))] shadow-sm sticky top-0 z-50 transition-all duration-300 ${
