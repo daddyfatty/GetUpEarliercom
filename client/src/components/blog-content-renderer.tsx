@@ -26,6 +26,9 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
       return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">$1</a>');
     };
 
+    // Check if content contains HTML (like Amazon product previews)
+    const containsHTML = content.includes('<div class="amazon-product-preview">');
+
     // Function to process timecodes and make them clickable
     const processTimecodes = (text: string) => {
       if (!videoUrl) return text;
@@ -233,6 +236,23 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
     
     // If no special content found, render the original content
     if (parts.length === 0) {
+      // If content contains HTML (like Amazon previews), render it directly
+      if (containsHTML) {
+        return (
+          <div 
+            className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap [&>.amazon-product-preview]:my-6"
+            dangerouslySetInnerHTML={{ __html: content.replace(/\n/g, '<br>') }}
+            onClick={(e) => {
+              // Handle clicks on markdown images
+              const target = e.target as HTMLImageElement;
+              if (target.tagName === 'IMG' && target.classList.contains('markdown-image')) {
+                onImageClick && onImageClick(target.src);
+              }
+            }}
+          />
+        );
+      }
+      
       // Process markdown formatting: bold first, then images, then URLs, then timecodes, then line breaks
       const processedContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(content)))).replace(/\n/g, '<br>');
       return (
