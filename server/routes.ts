@@ -34,7 +34,7 @@ if (STRIPE_CONFIGURED) {
   try {
     import("stripe").then((Stripe) => {
       stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
-        apiVersion: "2023-10-16",
+        apiVersion: "2025-05-28.basil",
       });
       console.log("Stripe configured successfully");
     }).catch((error) => {
