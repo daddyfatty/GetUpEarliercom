@@ -81,20 +81,20 @@ export function Navigation() {
 
   return (
     <>
-      {/* Desktop Header with Centered Logo */}
+      {/* Desktop Header with Logo Left, Icons Right */}
       <div className="hidden md:block bg-[hsl(var(--navy))]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center items-center">
+          <div className="flex justify-between items-center py-4">
             <Link href="/">
               <img 
                 src={logoPath} 
                 alt="Get Up Earlier" 
-                className="h-24 w-auto max-w-[700px] object-contain"
+                className="h-16 w-auto max-w-[400px] object-contain"
               />
             </Link>
             
             {/* Social Links */}
-            <div className="flex items-center space-x-4 ml-8">
+            <div className="flex items-center space-x-4">
               <a 
                 href="https://www.youtube.com/@getupearlier" 
                 target="_blank" 
