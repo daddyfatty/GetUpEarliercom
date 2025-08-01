@@ -26,8 +26,8 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
       return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">$1</a>');
     };
 
-    // Check if content contains HTML (like Amazon product previews)
-    const containsHTML = content.includes('<div class="amazon-product-preview');
+    // Check if content contains Amazon product markers
+    const amazonProductRegex = /\[AMAZON_PRODUCT:([^:]+):([^\]]+)\]/g;
 
     // Function to process timecodes and make them clickable
     const processTimecodes = (text: string) => {
@@ -236,34 +236,71 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
     
     // If no special content found, render the original content
     if (parts.length === 0) {
-      // If content contains HTML (like Amazon previews), extract and render properly
-      if (containsHTML) {
-        // Extract Amazon product info from HTML
-        const amazonMatch = content.match(/<div class="amazon-product-preview[^>]*>[\s\S]*?href="([^"]+)"[\s\S]*?<h4[^>]*>([^<]+)<[\s\S]*?<\/div>/);
+      // Check for Amazon product markers
+      const amazonMatches = [];
+      let match;
+      amazonProductRegex.lastIndex = 0;
+      while ((match = amazonProductRegex.exec(content)) !== null) {
+        amazonMatches.push({
+          fullMatch: match[0],
+          url: match[1],
+          title: match[2],
+          index: match.index
+        });
+      }
+      
+      if (amazonMatches.length > 0) {
+        const contentParts = [];
+        let lastIndex = 0;
         
-        if (amazonMatch) {
-          const [fullMatch, url, title] = amazonMatch;
-          const beforeContent = content.substring(0, content.indexOf(fullMatch));
-          const afterContent = content.substring(content.indexOf(fullMatch) + fullMatch.length);
+        amazonMatches.forEach((amazonMatch, idx) => {
+          // Add content before this Amazon product
+          if (amazonMatch.index > lastIndex) {
+            const beforeContent = content.substring(lastIndex, amazonMatch.index);
+            const processedContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(beforeContent)))).replace(/\n/g, '<br>');
+            contentParts.push(
+              <div 
+                key={`before-${idx}`}
+                className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
+                dangerouslySetInnerHTML={{ __html: processedContent }}
+                onClick={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (target.tagName === 'IMG' && target.classList.contains('markdown-image')) {
+                    onImageClick && onImageClick(target.src);
+                  }
+                }}
+              />
+            );
+          }
           
-          return (
-            <>
-              {beforeContent && (
-                <div 
-                  className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
-                  dangerouslySetInnerHTML={{ __html: beforeContent.replace(/\n/g, '<br>') }}
-                />
-              )}
-              <RealAmazonPreview url={url} title={title} />
-              {afterContent && (
-                <div 
-                  className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
-                  dangerouslySetInnerHTML={{ __html: afterContent.replace(/\n/g, '<br>') }}
-                />
-              )}
-            </>
+          // Add the Amazon product
+          contentParts.push(
+            <RealAmazonPreview key={`amazon-${idx}`} url={amazonMatch.url} title={amazonMatch.title} />
+          );
+          
+          lastIndex = amazonMatch.index + amazonMatch.fullMatch.length;
+        });
+        
+        // Add remaining content
+        if (lastIndex < content.length) {
+          const afterContent = content.substring(lastIndex);
+          const processedContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(afterContent)))).replace(/\n/g, '<br>');
+          contentParts.push(
+            <div 
+              key="after"
+              className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
+              dangerouslySetInnerHTML={{ __html: processedContent }}
+              onClick={(e) => {
+                const target = e.target as HTMLImageElement;
+                if (target.tagName === 'IMG' && target.classList.contains('markdown-image')) {
+                  onImageClick && onImageClick(target.src);
+                }
+              }}
+            />
           );
         }
+        
+        return <>{contentParts}</>;
       }
       
       // Process markdown formatting: bold first, then images, then URLs, then timecodes, then line breaks

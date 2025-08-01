@@ -47,31 +47,11 @@ export async function processAmazonLinksInContent(content: string): Promise<stri
         // Add to Amazon products page if not already there
         await addToAmazonPage(link.url, linkPreview);
         
-        // Replace plain link with rich preview in content
-        const richLinkHtml = `
-<div class="amazon-product-preview border rounded-lg p-4 my-4 bg-gray-50 dark:bg-gray-800">
-  <div class="flex gap-4">
-    <img src="${linkPreview.image}" alt="${linkPreview.title}" class="w-20 h-20 object-cover rounded" />
-    <div class="flex-1">
-      <h4 class="font-semibold text-lg mb-1">${linkPreview.title}</h4>
-      <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">${linkPreview.description}</p>
-      <div class="flex items-center gap-4">
-        <span class="font-bold text-xl text-orange-600">${linkPreview.price}</span>
-        <div class="flex items-center gap-1">
-          <span class="text-yellow-400">★</span>
-          <span class="text-sm">${linkPreview.rating} (${linkPreview.reviews.toLocaleString()} reviews)</span>
-        </div>
-      </div>
-      <a href="${link.url}" target="_blank" rel="noopener noreferrer" 
-         class="inline-block mt-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded transition-colors">
-        View on Amazon
-      </a>
-    </div>
-  </div>
-</div>`;
+        // Replace plain link with a marker for frontend to process
+        const amazonMarker = `[AMAZON_PRODUCT:${link.url}:${linkPreview.title}]`;
         
-        // Replace the plain link with rich preview
-        processedContent = processedContent.replace(link.url, richLinkHtml);
+        // Replace the plain link with marker
+        processedContent = processedContent.replace(link.url, amazonMarker);
       }
     } catch (error) {
       console.error('Error processing Amazon link:', link.url, error);
