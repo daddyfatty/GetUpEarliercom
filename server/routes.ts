@@ -81,6 +81,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use('/uploads', express.static(uploadsDir)); // Serve uploaded files
   app.use(express.json({ limit: "50mb" }));
   
+  // Helper function to bump Hartford Marathon Training Log to top of blog
+  const bumpTrainingLogBlogPost = async () => {
+    try {
+      // Find the Hartford Marathon Training Log blog post
+      const hartfordBlogPost = await db.select()
+        .from(blogPosts)
+        .where(eq(blogPosts.title, 'Hartford Marathon Training Log 2025'))
+        .limit(1);
+      
+      if (hartfordBlogPost.length > 0) {
+        // Update the publishedDate to current timestamp to bump it to the top
+        await db.update(blogPosts)
+          .set({ 
+            publishedDate: new Date().toISOString().split('T')[0] // Today's date
+          })
+          .where(eq(blogPosts.id, hartfordBlogPost[0].id));
+        
+        console.log('Hartford Marathon Training Log bumped to top of blog');
+      }
+    } catch (error) {
+      console.error('Error bumping training log blog post:', error);
+    }
+  };
+  
   // Authentication routes
   app.post("/api/auth/login", async (req, res) => {
     try {
@@ -602,6 +626,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/training-log", async (req, res) => {
     try {
       const entry = await storage.createTrainingLogEntry(req.body);
+      
+      // Bump the Hartford Marathon Training Log blog post to the top
+      await bumpTrainingLogBlogPost();
+      
       res.status(201).json(entry);
     } catch (error) {
       console.error('Error creating training log entry:', error);
@@ -616,6 +644,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!entry) {
         return res.status(404).json({ error: 'Training log entry not found' });
       }
+      
+      // Bump the Hartford Marathon Training Log blog post to the top
+      await bumpTrainingLogBlogPost();
+      
       res.json(entry);
     } catch (error) {
       console.error('Error updating training log entry:', error);
@@ -770,6 +802,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/training-log", async (req, res) => {
     try {
       const entry = await storage.createTrainingLogEntry(req.body);
+      
+      // Bump the Hartford Marathon Training Log blog post to the top
+      await bumpTrainingLogBlogPost();
+      
       res.json(entry);
     } catch (error: any) {
       console.error("Error creating training log entry:", error);
