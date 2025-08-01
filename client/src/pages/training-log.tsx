@@ -36,18 +36,31 @@ export default function TrainingLog() {
   let parsedEntries: ParsedTrainingEntry[] = [];
   
   if (rawEntries && rawEntries.length > 0) {
+    console.log('Raw entries found:', rawEntries.length);
     const hartfordLog = rawEntries.find(entry => entry.title === 'Hartford Marathon Training Log 2025');
+    console.log('Hartford log found:', !!hartfordLog);
     if (hartfordLog && hartfordLog.content) {
+      console.log('Content length:', hartfordLog.content.length);
+      console.log('Content preview:', hartfordLog.content.substring(0, 100));
       try {
         const contentObj = JSON.parse(hartfordLog.content);
+        console.log('Parsed content object:', contentObj);
         if (contentObj.entries && Array.isArray(contentObj.entries)) {
           parsedEntries = contentObj.entries;
+          console.log('Parsed entries count:', parsedEntries.length);
           console.log('First entry structure:', parsedEntries[0]);
+        } else {
+          console.error('No entries array found in parsed content');
         }
       } catch (error) {
         console.error('Error parsing training log content:', error);
+        console.error('Content that failed to parse:', hartfordLog.content.substring(0, 200));
       }
+    } else {
+      console.error('No hartford log or content found');
     }
+  } else {
+    console.error('No raw entries found');
   }
 
   // Hartford Marathon countdown
