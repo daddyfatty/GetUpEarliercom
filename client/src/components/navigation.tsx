@@ -120,19 +120,6 @@ export function Navigation() {
                 <SiFacebook className="h-5 w-5" />
                 <span className="text-sm font-medium">Group</span>
               </a>
-              
-              <Link 
-                href="/amazon"
-                className="text-white hover:text-[hsl(var(--orange))] transition-colors flex items-center space-x-1"
-                title="Our Picks"
-              >
-                <img 
-                  src="/attached_assets/aonly_1753878383025.png" 
-                  alt="Amazon" 
-                  className="h-5 w-auto object-contain"
-                />
-                <span className="text-sm font-medium">Picks</span>
-              </Link>
             </div>
           </div>
         </div>
