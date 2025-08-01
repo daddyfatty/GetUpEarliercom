@@ -70,11 +70,25 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
       return text.replace(markdownBoldRegex, '<strong class="font-bold text-gray-800 dark:text-gray-200">$1</strong>');
     };
     
-    // Find all Amazon links
+    // Find all Amazon links and markers
     const amazonMatches = [];
     let match;
+    
+    // First find regular Amazon links
     amazonLinkRegex.lastIndex = 0;
     while ((match = amazonLinkRegex.exec(content)) !== null) {
+      amazonMatches.push({
+        start: match.index,
+        end: match.index + match[0].length,
+        url: match[1],
+        title: match[2],
+        type: 'amazon'
+      });
+    }
+    
+    // Then find Amazon product markers
+    amazonProductRegex.lastIndex = 0;
+    while ((match = amazonProductRegex.exec(content)) !== null) {
       amazonMatches.push({
         start: match.index,
         end: match.index + match[0].length,
