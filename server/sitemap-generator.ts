@@ -1,8 +1,7 @@
 import { recipeService } from './recipeService';
 import { workoutService } from './workoutService';
-import { 
-  getAllBlogPosts as cmsGetAllBlogPosts
-} from './blog-cms';
+import { db } from './db';
+import { blogPosts } from '../shared/schema';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -100,10 +99,10 @@ export async function generateSitemap(): Promise<string> {
       });
     });
     
-    // Fetch and add blog posts
+    // Fetch and add blog posts directly from database
     console.log('Fetching blog posts for sitemap...');
-    const blogPosts = await cmsGetAllBlogPosts();
-    blogPosts.forEach((post: any) => {
+    const blogPostsData = await db.select().from(blogPosts);
+    blogPostsData.forEach((post: any) => {
       const slug = post.slug || slugify(post.title);
       urls.push({
         loc: `/blog/${slug}`,
@@ -112,7 +111,7 @@ export async function generateSitemap(): Promise<string> {
         priority: 0.7
       });
     });
-    console.log(`Added ${blogPosts.length} blog posts to sitemap`);
+    console.log(`Added ${blogPostsData.length} blog posts to sitemap`);
     
     // Fetch and add recipes
     console.log('Fetching recipes for sitemap...');
