@@ -49,6 +49,7 @@ const staticPages: SitemapUrl[] = [
 const blogCategories = [
   'running', 'nutrition', 'training', 'marathon-training', 'marathon-training-log',
   'inspiration', 'health', 'fitness', 'strength-training', 'yoga', 'ai',
+  'workouts-challenges', 'ironmaster-dumbbells',
   '5k', '10k', 'half-marathon', 'marathon', 'mobility', 'lower-back-pain',
   'granola', 'recipes', 'strava', 'tips'
 ];
