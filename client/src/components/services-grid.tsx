@@ -125,9 +125,9 @@ export function ServicesGrid({
               } else if (showReadMore && service.title === "Accountability Coaching") {
                 setLocation("/services/accountability-coaching");
               } else if (showReadMore && service.title === "Private Yoga") {
-                setLocation("/services/private-yoga");
+                window.open("https://ericaleebaker.com", "_blank");
               } else if (showReadMore && service.title === "Small Group Yoga") {
-                setLocation("/services/small-group-yoga");
+                window.open("https://ericaleebaker.com", "_blank");
               }
             }}
           >
@@ -248,7 +248,7 @@ export function ServicesGrid({
                     className="text-lg px-6 py-3 bg-white text-[hsl(var(--navy))] border-2 border-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))] hover:text-white hover:scale-[1.02] transition-all duration-300 font-semibold shadow-lg"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setLocation("/services/private-yoga");
+                      window.open("https://ericaleebaker.com", "_blank");
                     }}
                   >
                     Learn More →
@@ -262,7 +262,7 @@ export function ServicesGrid({
                     className="text-lg px-6 py-3 bg-white text-[hsl(var(--navy))] border-2 border-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))] hover:text-white hover:scale-[1.02] transition-all duration-300 font-semibold shadow-lg"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setLocation("/services/small-group-yoga");
+                      window.open("https://ericaleebaker.com", "_blank");
                     }}
                   >
                     Learn More →
