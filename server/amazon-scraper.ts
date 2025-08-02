@@ -199,6 +199,11 @@ export async function extractAmazonProductData(url: string): Promise<AmazonProdu
     
     if (!response.ok) {
       console.log('Failed to fetch product page:', response.status);
+      // If we have known data for this ASIN, use it as fallback
+      if (KNOWN_PRODUCTS[asin]) {
+        console.log('Using known product data as fallback for ASIN:', asin);
+        return KNOWN_PRODUCTS[asin];
+      }
       return null;
     }
     
@@ -275,6 +280,14 @@ export async function extractAmazonProductData(url: string): Promise<AmazonProdu
 export async function resolveAmazonUrl(url: string): Promise<string> {
   if (!url.includes('amzn.to/')) {
     return url;
+  }
+  
+  // First check if we have a known mapping for this short URL
+  const shortCode = url.match(/amzn\.to\/([A-Za-z0-9]+)/)?.[1];
+  if (shortCode && SHORT_URL_TO_ASIN[shortCode]) {
+    const knownAsin = SHORT_URL_TO_ASIN[shortCode];
+    // Return a proper Amazon URL with the known ASIN
+    return `https://www.amazon.com/dp/${knownAsin}`;
   }
   
   try {
