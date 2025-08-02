@@ -1,5 +1,6 @@
 import * as cheerio from 'cheerio';
 import { extractAmazonProductData, resolveAmazonUrl } from './amazon-scraper';
+import { downloadAndSaveImage, getLocalImageForAsin } from './download-image';
 
 export interface LinkPreviewData {
   title: string;
@@ -25,11 +26,22 @@ export async function fetchAmazonLinkPreview(url: string): Promise<LinkPreviewDa
     const productData = await extractAmazonProductData(actualUrl);
     
     if (productData) {
+      // Extract ASIN from the product data
+      const asin = productData.asin || actualUrl.match(/\/dp\/([A-Z0-9]{10})/i)?.[1] || '';
+      
+      // Check if we have a local image already
+      let localImage = getLocalImageForAsin(asin);
+      
+      // If not, download and save it
+      if (!localImage && productData.image && asin) {
+        localImage = await downloadAndSaveImage(productData.image, asin);
+      }
+      
       // Convert the product data to our LinkPreviewData format
       const linkPreview: LinkPreviewData = {
         title: productData.title,
         description: productData.description,
-        image: productData.image,
+        image: localImage || productData.image, // Use local image if available
         price: productData.price,
         rating: productData.rating,
         reviews: productData.reviews,
@@ -38,7 +50,7 @@ export async function fetchAmazonLinkPreview(url: string): Promise<LinkPreviewDa
         url
       };
       
-      console.log('Extracted link preview:', linkPreview);
+      console.log('Extracted link preview with local image:', linkPreview);
       return linkPreview;
     }
     
