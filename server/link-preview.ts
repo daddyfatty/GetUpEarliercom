@@ -67,20 +67,9 @@ const linkPreviewCache = new Map<string, { data: LinkPreviewData, timestamp: num
 const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
 
 export async function getCachedLinkPreview(url: string): Promise<LinkPreviewData | null> {
-  const cached = linkPreviewCache.get(url);
-  
-  // Check if cache is still valid
-  if (cached && (Date.now() - cached.timestamp) < CACHE_DURATION) {
-    console.log(`Using cached preview for ${url}`);
-    return cached.data;
-  }
-
-  console.log(`Fetching fresh preview for ${url}`);
+  // TEMPORARILY DISABLED CACHE TO FIX IMAGE ISSUES
+  console.log(`Fetching fresh preview for ${url} (cache disabled)`);
   const preview = await fetchAmazonLinkPreview(url);
-  if (preview) {
-    linkPreviewCache.set(url, { data: preview, timestamp: Date.now() });
-  }
-
   return preview;
 }
 
