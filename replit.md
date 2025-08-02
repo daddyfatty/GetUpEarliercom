@@ -54,10 +54,19 @@ When adding Amazon links to content:
 - Shows as inline clickable link in training log
 - Automatically adds to /amazon page
 
+### Adding New Products with Images:
+1. Add the Amazon link to your content using the format above
+2. Provide the product image when adding the link
+3. The system will:
+   - Extract ASIN from the Amazon URL
+   - Save the image as `/attached_assets/amazon_ASIN_productname.jpg`
+   - Add product data to `server/amazon-scraper.ts` KNOWN_PRODUCTS
+   - Display with full product preview
+
 ### Key Features:
 - All Amazon links from any content source automatically appear on /amazon page
-- Link preview system fetches current product data (cached for 30 minutes)
-- Future enhancement: /amazon page will support categorization
+- Product data is stored locally to avoid Amazon blocking issues
+- Images must be provided by user due to Amazon's anti-scraping measures
 
 ## External Dependencies
 
