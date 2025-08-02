@@ -217,8 +217,8 @@ app.use((req, res, next) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
 
+    console.error('Express error handler:', err);
     res.status(status).json({ message });
-    throw err;
   });
 
   // importantly only setup vite in development and after
@@ -248,7 +248,8 @@ app.use((req, res, next) => {
       console.log('Sitemap generated successfully on startup');
     } catch (error) {
       console.error('Failed to generate sitemap on startup:', error);
-      // Don't crash the server if sitemap generation fails
+      console.error('Error details:', error);
+      // Don't crash the server if sitemap generation fails - continue running
     }
   });
 })();
