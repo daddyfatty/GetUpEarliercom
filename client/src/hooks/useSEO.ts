@@ -80,7 +80,7 @@ export const useSEO = (pageType: string, data: SEOData = {}) => {
 
       switch (pageType) {
         case 'homepage':
-          title = `${businessConfig.name} - Professional Fitness & Nutrition Coaching`;
+          title = `Get Up Earlier | Strength & Nutrition`;
           description = `Transform your health with professional strength training and nutrition coaching. Clean eating recipes, workout libraries, and marathon training guidance by ${businessConfig.author}.`;
           structuredData = generateLocalBusinessSchema(businessConfig);
           keywords = ['fitness coaching', 'nutrition coaching', 'strength training', 'marathon training', 'clean eating', 'supplement reviews'];
