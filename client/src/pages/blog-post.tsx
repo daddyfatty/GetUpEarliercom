@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Clock, User, Calendar, Edit, Play, Expand } from "lucide-react";
 import { HeroGradient } from "@/components/hero-gradient";
 import { BlogContentRenderer } from "@/components/blog-content-renderer";
-import { SEO } from "@/components/seo";
+import { useSEO } from "@/hooks/useSEO";
 
 import MarathonCountdown from "@/components/marathon-countdown";
 import { useState, useEffect } from "react";
@@ -94,6 +94,19 @@ export default function BlogPost() {
   // Check if this is a training log entry by looking for training log categories
   const isTrainingLogEntry = post?.categories?.some(cat => 
     cat.includes('Marathon Training Log') || cat.includes('Training Log')
+  );
+
+  // SEO Integration - Run appropriate SEO based on post type
+  useSEO(
+    isTrainingLogEntry ? 'training-log' : 'blog',
+    post ? {
+      title: post.title,
+      description: post.excerpt || post.content.substring(0, 160),
+      image: post.imageUrl,
+      author: post.author,
+      publishedDate: post.publishedDate,
+      keywords: post.categories || [post.category].filter(Boolean)
+    } : {}
   );
 
   // Try to fetch training log data if this is a training log entry
@@ -218,15 +231,7 @@ export default function BlogPost() {
 
     return (
       <div className="min-h-screen bg-gradient-to-b from-[#0039A6] via-[#0039A6] to-[#0039A6] text-white">
-        <SEO 
-          title="Hartford Marathon Training Log 2025 - Get Up Earlier"
-          description="Follow Michael Baker's comprehensive Hartford Marathon training journey with detailed workout logs, nutrition insights, and race preparation strategies."
-          keywords="Hartford Marathon training, marathon training log, running, Michael Baker, training diary, race preparation"
-          url={`/blog/${slug}`}
-          image="/hartford-marathon-featured-image.jpg"
-          type="article"
-          canonical={`https://www.getupearlier.com/blog/${slug}`}
-        />
+
         {/* Featured Image with Countdown Overlay */}
         <div className="w-full mb-6 relative">
           <img 
@@ -422,15 +427,7 @@ export default function BlogPost() {
   // Regular Blog Post Template
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
-      <SEO 
-        title={`${post.title} - Get Up Earlier Blog`}
-        description={post.excerpt || post.content.substring(0, 160)}
-        keywords={`${post.categories?.join(', ')}, ${post.category}, fitness, nutrition, training, Michael Baker`}
-        url={`/blog/${slug}`}
-        image={post.imageUrl || "/og-image.jpg"}
-        type="article"
-        canonical={`https://www.getupearlier.com/blog/${slug}`}
-      />
+
       {/* Full-width Hero Gradient Header Section - No gaps */}
       <HeroGradient className="text-white">
         <div className="py-20 px-4 sm:px-6 lg:px-8">

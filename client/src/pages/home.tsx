@@ -13,7 +13,7 @@ import { Clock, TrendingUp, Users, Star, ChefHat, Dumbbell, ArrowRight, Calendar
 import type { Recipe, BlogPost } from "@shared/schema";
 import gymImagePath from "@assets/download - 2025-06-20T164725.183_1750452478509.png";
 import { useEffect, useState } from "react";
-import { SEO } from "@/components/seo";
+import { useSEO } from "@/hooks/useSEO";
 
 function LatestBlogCard() {
   const { data: blogPosts = [] } = useQuery<BlogPost[]>({
@@ -78,6 +78,8 @@ function LatestBlogCard() {
 }
 
 export default function Home() {
+  useSEO('homepage');
+
   const { data: recipes = [] } = useQuery<Recipe[]>({
     queryKey: ["/api/recipes"],
   });
@@ -121,13 +123,6 @@ export default function Home() {
 
   return (
     <div className="w-full">
-      <SEO 
-        title="Get Up Earlier Strength & Nutrition Coaching"
-        description="Transform your health with personalized strength training, nutrition coaching, and accountability support. Michael Baker helps you build lasting healthy habits and achieve real fitness results in Orange, CT or virtually anywhere."
-        keywords="personal training, nutrition coaching, accountability coaching, fitness, strength training, healthy habits, marathon training, yoga, wellness, Michael Baker"
-        url="/"
-        canonical="https://www.getupearlier.com/"
-      />
       <HeroSection />
       {/* Four-Card Two-Column Section */}
       <section className="py-4 sm:py-8 bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white">

@@ -7,8 +7,7 @@ import { CredentialsBand } from "@/components/credentials-band";
 import { ServicesGrid } from "@/components/services-grid";
 import { PermanentClassSchedule } from "@/components/permanent-class-schedule";
 import { ArrowLeft, Award, Calendar, Users, Heart, Target, Dumbbell, Zap, User, ChevronDown, ChevronUp } from "lucide-react";
-import { SEO } from "@/components/seo";
-import { Schema } from "@/components/schema";
+import { useSEO } from "@/hooks/useSEO";
 
 import headshotPath from "@assets/678ab404c229cf3cdfa5e86c_download-2024-08-16T133456.440-1024x1024-p-800_1749491757995.jpg";
 import ericaPath from "@assets/678ab3d4caec71062e65470f_erddd_1749497849578.jpg";
@@ -26,6 +25,8 @@ import ericaYogaPose from "@assets/download - 2025-06-23T105914.482_175069077393
 import michaelHeadshot from "@assets/download - 2025-06-23T105909.352_1750690773932.png";
 
 export default function About() {
+  useSEO('about');
+  
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   const toggleSection = (section: string) => {
@@ -36,23 +37,6 @@ export default function About() {
 
   return (
     <>
-      <SEO 
-        title="About Get Up Earlier - Meet Michael Baker & Erica Baker"
-        description="Meet the team behind Get Up Earlier. Michael Baker brings years of experience in personal training and nutrition coaching, while Erica Baker specializes in yoga instruction. Discover our proven approach to helping clients achieve lasting health and fitness transformation."
-        keywords="Michael Baker, Erica Baker, personal trainer, nutrition coach, yoga instructor, Orange CT, about us"
-        url="/about"
-      />
-      <Schema 
-        type="person"
-        data={{
-          name: "Michael Baker",
-          description: "Certified personal trainer, nutrition coach, and marathon coach specializing in strength training, healthy habits, and comprehensive wellness coaching."
-        }}
-      />
-      <Schema 
-        type="organization"
-        data={{}}
-      />
       <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="container mx-auto px-4 py-12">
         {/* Header */}

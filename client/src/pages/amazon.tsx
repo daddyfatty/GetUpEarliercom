@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { HeroGradient } from "@/components/hero-gradient";
-import { SEO } from "@/components/seo";
+import { useSEO } from "@/hooks/useSEO";
 import { useState, useEffect } from "react";
 
 interface AmazonProduct {
@@ -107,6 +107,8 @@ function ProductCard({ product }: { product: AmazonProduct }) {
 }
 
 export default function AmazonProductsPage() {
+  useSEO('amazon');
+  
   const [products, setProducts] = useState<AmazonProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [singleIngredientProducts, setSingleIngredientProducts] = useState<AmazonProduct[]>([]);
@@ -309,15 +311,7 @@ export default function AmazonProductsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white">
-      <SEO 
-        title="Amazon Product Recommendations - Get Up Earlier"
-        description="Discover Michael Baker's curated Amazon product recommendations for fitness, nutrition, and wellness. Quality gear tested and approved by a certified trainer."
-        keywords="Amazon products, fitness gear, nutrition supplements, workout equipment, running gear, yoga props, training accessories"
-        url="/amazon"
-        image="/og-image.jpg"
-        type="website"
-        canonical="https://www.getupearlier.com/amazon"
-      />
+
       {/* Hero Section */}
       <HeroGradient className="text-white">
         <div className="py-20 px-4 sm:px-6 lg:px-8">

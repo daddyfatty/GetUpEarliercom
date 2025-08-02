@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Navigation } from "@/components/navigation";
 import { SiteFooter } from "@/components/site-footer";
+import { SEOProvider } from "@/components/SEOProvider";
 import Home from "@/pages/home";
 import Recipes from "@/pages/recipes";
 import RecipeDetail from "@/pages/recipe-detail";
@@ -120,10 +121,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+        <SEOProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </SEOProvider>
       </HelmetProvider>
     </QueryClientProvider>
   );
