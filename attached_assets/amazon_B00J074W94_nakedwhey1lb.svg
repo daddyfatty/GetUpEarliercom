@@ -1,0 +1,7 @@
+<svg width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="300" fill="#f8f8f8"/>
+  <rect x="50" y="50" width="200" height="200" fill="#e0e0e0" rx="10"/>
+  <text x="150" y="140" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#333">NAKED WHEY</text>
+  <text x="150" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#666">1LB Grass Fed</text>
+  <text x="150" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#888">Protein Powder</text>
+</svg>

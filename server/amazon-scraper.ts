@@ -94,7 +94,7 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
   'B01M1EXQY4': {
     title: 'NAKED nutrition Pea Protein Isolate from North American Farms - 2lb Bulk',
     description: 'Premium Pea Protein - Clean pea protein with only one ingredient: Yellow Pea Protein sourced from farms in USA and Canada. No artificial sweeteners, flavors, or colors.',
-    image: 'https://m.media-amazon.com/images/I/61MwS1wOhmL._AC_SX679_.jpg',
+    image: '/attached_assets/amazon_B00J074W94_nakedwhey1lb.svg',
     price: '$37.99',
     rating: 4.3,
     reviews: 1852,
@@ -105,7 +105,7 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
   'B00J074W94': {
     title: 'NAKED WHEY 1LB 100% Grass Fed Unflavored Whey Protein Powder',
     description: '100% GRASS FED WHEY PROTEIN POWDER from dairy cows that graze on pastures in California and Idaho. NO rBGH or rBST, GMO-FREE. Naked Whey is unflavored and contains no artificial or natural sweeteners, colors, or flavors.',
-    image: 'https://m.media-amazon.com/images/I/61MwS1wOhmL._AC_SX300_SY300_.jpg',
+    image: '/attached_assets/amazon_B00J074W94_nakedwhey1lb.svg',
     price: '$19.99',
     rating: 4.4,
     reviews: 15234,
@@ -116,7 +116,7 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
   'B01M4OM1RN': {
     title: 'Vital Proteins Collagen Peptides Powder, Promotes Hair, Nail, Skin, Bone and Joint Health',
     description: 'Collagen Peptides Powder: Sourced from grass-fed, pasture-raised bovine to ensure a high quality and sustainable source of this powerful ingredient. Original Collagen Peptides formula.',
-    image: 'https://m.media-amazon.com/images/I/61HEKRHm+gL._AC_SX300_SY300_.jpg',
+    image: '/attached_assets/amazon_B00J074W94_nakedwhey1lb.svg',
     price: '$24.99',
     rating: 4.4,
     reviews: 87653,
@@ -127,7 +127,7 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
   'B00E9M4XEE': {
     title: 'Optimum Nutrition Micronized Creatine Monohydrate Powder, Unflavored, Keto Friendly',
     description: '5g OF PURE CREATINE MONOHYDRATE PER SERVING – Supports increases in energy, endurance and recovery.',
-    image: 'https://m.media-amazon.com/images/I/71sA5KSq86L._AC_SX300_SY300_.jpg',
+    image: '/attached_assets/amazon_B00J074W94_nakedwhey1lb.svg',
     price: '$19.99',
     rating: 4.4,
     reviews: 36789,
@@ -138,7 +138,7 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
   'B00J074W7W': {
     title: 'NAKED WHEY 5LB 100% Grass Fed Unflavored Whey Protein Powder - US Farms',
     description: '100% GRASS FED WHEY PROTEIN POWDER from dairy cows that graze on pastures in California and Idaho. NO rBGH or rBST, GMO-FREE. Naked Whey is unflavored and contains no artificial or natural sweeteners, colors, or flavors.',
-    image: 'https://m.media-amazon.com/images/I/61U9v1XWISL._AC_SX300_SY300_.jpg',
+    image: '/attached_assets/amazon_B00J074W94_nakedwhey1lb.svg',
     price: '$94.99',
     rating: 4.4,
     reviews: 15234,
