@@ -38,7 +38,7 @@ Key database schemas include: Users, Recipes, Workouts, Goals, Food Entries, Tra
 - **Subscription System**: Tiered access with payment gateway integration.
 - **Blog System**: YouTube video integration with authentic data extraction, SEO-friendly slugs, dynamic category management (mega menu), and social media sharing functionality with server-side meta tag injection. Blog posts are primarily attributed to Michael Baker.
 - **Training Log**: A continuous page for training log entries, where new entries are added to the top. Each entry adheres to a specific template with an entry header, training metrics (for run entries), an info bar, and rich content (authentic user text, gallery images with lightbox, Amazon product links with rich previews, YouTube/website URLs). SQL updates are used to add new entries to the top of an existing array.
-- **SEO**: Comprehensive sitemap.xml and robots.txt configurations are maintained, requiring updates with new content. Server-side rendering middleware injects Open Graph tags for social media.
+- **SEO**: Comprehensive SEO framework with automated sitemap.xml generation that updates on each deployment, robots.txt configuration, and server-side rendering middleware that injects Open Graph tags for social media. Sitemap automatically includes all blog posts, recipes, and workouts with proper lastmod dates.
 
 ## Amazon Product Integration Workflow
 

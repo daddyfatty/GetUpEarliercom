@@ -4,6 +4,7 @@ import { setupVite, serveStatic, log } from "./vite";
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { saveSitemapToDisk } from "./sitemap-generator";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -237,7 +238,17 @@ app.use((req, res, next) => {
     port,
     host: "0.0.0.0",
     reusePort: true,
-  }, () => {
+  }, async () => {
     log(`serving on port ${port}`);
+    
+    // Generate sitemap on server startup (for deployments)
+    try {
+      console.log('Generating sitemap on server startup...');
+      await saveSitemapToDisk();
+      console.log('Sitemap generated successfully on startup');
+    } catch (error) {
+      console.error('Failed to generate sitemap on startup:', error);
+      // Don't crash the server if sitemap generation fails
+    }
   });
 })();

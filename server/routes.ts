@@ -858,10 +858,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // SEO routes
-  app.get("/sitemap.xml", (req, res) => {
-    res.header('Content-Type', 'application/xml');
-    res.header('Cache-Control', 'public, max-age=3600'); // Cache for 1 hour
-    res.sendFile(path.join(process.cwd(), 'public/sitemap.xml'));
+  app.get("/sitemap.xml", async (req, res) => {
+    try {
+      res.header('Content-Type', 'application/xml');
+      res.header('Cache-Control', 'public, max-age=3600'); // Cache for 1 hour
+      
+      const sitemapPath = path.join(process.cwd(), 'public/sitemap.xml');
+      
+      // Check if sitemap exists, if not generate it
+      if (!fs.existsSync(sitemapPath)) {
+        console.log('Sitemap not found, generating...');
+        const { saveSitemapToDisk } = await import('./sitemap-generator.js');
+        await saveSitemapToDisk();
+      }
+      
+      res.sendFile(sitemapPath);
+    } catch (error) {
+      console.error('Error serving sitemap:', error);
+      res.status(500).send('Error generating sitemap');
+    }
   });
 
   app.get("/robots.txt", (req, res) => {
