@@ -102,6 +102,17 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
     isPrime: true,
     asin: 'B00XQ2XGAA'
   },
+  'B0B9YMNYWK': {
+    title: 'NAKED Pure Micronized Creatine Monohydrate Powder - Unflavored, 500g, 1.1lb Bulk - Vegan, Non-GMO, Gluten-Free, Soy-Free. No Fillers, Supports Muscle Growth & Strength - 100 Servings',
+    description: '100% Premium Creatine Monohydrate with nothing to hide. Unflavored. 14,339 ratings. 100+ bought in past month.',
+    image: '/attached_assets/amazon_B0B9YMNYWK_naked_creatine.jpg',
+    price: '$22.99',
+    rating: 4.7,
+    reviews: 14339,
+    availability: 'In Stock',
+    isPrime: true,
+    asin: 'B0B9YMNYWK'
+  },
   'B07XYYBHFT': {
     title: 'Gaiam Yoga Block - Supportive Latex-Free EVA Foam Soft Non-Slip Surface for Yoga, Pilates, Meditation',
     description: 'YOGA ESSENTIAL: This yoga block provides the stability and support needed to maintain poses and increase strength, flexibility, and balance. Made from supportive latex-free EVA foam.',
