@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal SEO Framework - Copy Code</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2563eb;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 10px;
+        }
+        .copy-section {
+            margin: 30px 0;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .copy-header {
+            background: #f9fafb;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+        .copy-header h3 {
+            margin: 0;
+            color: #374151;
+        }
+        .copy-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: auto;
+        }
+        .copy-btn:hover {
+            background: #1d4ed8;
+        }
+        .copy-btn.copied {
+            background: #059669;
+        }
+        pre {
+            margin: 0;
+            padding: 20px;
+            background: #1f2937;
+            color: #f9fafb;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .steps {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .step {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .highlight {
+            background: #fef3c7;
+            padding: 15px;
+            border-left: 4px solid #f59e0b;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Universal SEO Framework for Replit Projects</h1>
+        
+        <div class="highlight">
+            <strong>Production-Tested Implementation</strong><br>
+            Complete SEO system with automated sitemap generation, meta tags, structured data, and social media optimization. Copy the code below into your Replit project for instant SEO.
+        </div>
+
+        <div class="steps">
+            <h3>Quick Setup Steps:</h3>
+            <div class="step">1. Install: <code>npm install react-helmet-async</code></div>
+            <div class="step">2. Copy each file below into your project</div> 
+            <div class="step">3. Update seo-config.ts with your business details</div>
+            <div class="step">4. Add SEO components to your pages</div>
+            <div class="step">5. Deploy and get automatic sitemap generation</div>
+        </div>
+
+        <!-- SEOMetaHead Component -->
+        <div class="copy-section">
+            <div class="copy-header">
+                <h3>📄 client/src/components/SEOMetaHead.tsx</h3>
+                <button class="copy-btn" onclick="copyToClipboard('seo-meta-head')">Copy Code</button>
+            </div>
+            <pre id="seo-meta-head">// client/src/components/SEOMetaHead.tsx
+import { Helmet } from 'react-helmet-async';
+import { seoConfig } from '../config/seo-config';
+
+interface SEOMetaHeadProps {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article' | 'business.business';
+  keywords?: string[];
+  structuredData?: any;
+  noIndex?: boolean;
+}
+
+export const SEOMetaHead = ({
+  title,
+  description,
+  canonical,
+  ogImage,
+  ogType = 'website',
+  keywords = [],
+  structuredData,
+  noIndex = false
+}: SEOMetaHeadProps) => {
+  const finalTitle = title ? `${title} | ${seoConfig.siteName}` : seoConfig.defaultTitle;
+  const finalDescription = description || seoConfig.defaultDescription;
+  const finalImage = ogImage || seoConfig.defaultImage;
+  const finalCanonical = canonical ? `${seoConfig.baseUrl}${canonical}` : undefined;
+
+  return (
+    &lt;Helmet&gt;
+      {/* Title */}
+      &lt;title&gt;{finalTitle}&lt;/title&gt;
+      
+      {/* Meta Tags */}
+      &lt;meta name="description" content={finalDescription} /&gt;
+      {keywords.length > 0 && &lt;meta name="keywords" content={keywords.join(', ')} /&gt;}
+      {noIndex && &lt;meta name="robots" content="noindex,nofollow" /&gt;}
+      
+      {/* Canonical URL */}
+      {finalCanonical && &lt;link rel="canonical" href={finalCanonical} /&gt;}
+      
+      {/* Open Graph */}
+      &lt;meta property="og:title" content={finalTitle} /&gt;
+      &lt;meta property="og:description" content={finalDescription} /&gt;
+      &lt;meta property="og:image" content={finalImage} /&gt;
+      &lt;meta property="og:type" content={ogType} /&gt;
+      &lt;meta property="og:site_name" content={seoConfig.siteName} /&gt;
+      
+      {/* Twitter Cards */}
+      &lt;meta name="twitter:card" content="summary_large_image" /&gt;
+      &lt;meta name="twitter:title" content={finalTitle} /&gt;
+      &lt;meta name="twitter:description" content={finalDescription} /&gt;
+      &lt;meta name="twitter:image" content={finalImage} /&gt;
+      
+      {/* Structured Data */}
+      {structuredData && (
+        &lt;script type="application/ld+json"&gt;
+          {JSON.stringify(structuredData)}
+        &lt;/script&gt;
+      )}
+    &lt;/Helmet&gt;
+  );
+};</pre>
+        </div>
+
+        <!-- SEO Config -->
+        <div class="copy-section">
+            <div class="copy-header">
+                <h3>⚙️ client/src/config/seo-config.ts</h3>
+                <button class="copy-btn" onclick="copyToClipboard('seo-config')">Copy Code</button>
+            </div>
+            <pre id="seo-config">// client/src/config/seo-config.ts
+export const seoConfig = {
+  siteName: "Your Business Name",
+  baseUrl: "https://yourdomain.com",
+  defaultTitle: "Your Business Name - Primary Service in Primary Location",
+  defaultDescription: "Your business description with location and services. Keep under 155 characters.",
+  defaultImage: "https://yourdomain.com/og-image.jpg",
+  
+  // Business Info for Schema
+  businessInfo: {
+    name: "Your Business Name",
+    description: "Your business description",
+    url: "https://yourdomain.com",
+    telephone: "+1-555-123-4567",
+    email: "contact@yourbusiness.com",
+    address: {
+      streetAddress: "123 Main St",
+      addressLocality: "Your City",
+      addressRegion: "Your State",
+      postalCode: "12345",
+      addressCountry: "US"
+    },
+    geo: {
+      latitude: "40.7128",
+      longitude: "-74.0060"
+    },
+    priceRange: "$$",
+    areaServed: ["City 1", "City 2", "City 3"]
+  }
+};
+
+// Page-specific SEO templates
+export const seoTemplates = {
+  homepage: {
+    title: `${seoConfig.businessInfo.name} - Primary Service in Primary Location`,
+    description: `Professional services in your area. Contact us today for consultation.`
+  },
+  
+  about: {
+    title: `About ${seoConfig.businessInfo.name}`,
+    description: `Learn about our team and expertise in providing quality services.`
+  },
+  
+  contact: {
+    title: `Contact ${seoConfig.businessInfo.name}`,
+    description: `Get in touch with ${seoConfig.businessInfo.name}. Call ${seoConfig.businessInfo.telephone} or visit our location.`
+  },
+  
+  // Dynamic templates for content
+  blogPost: (post: any) => ({
+    title: post.title,
+    description: post.excerpt || post.description,
+    ogImage: post.imageUrl,
+    canonical: `/blog/${post.slug}`,
+    keywords: post.tags?.split(',') || []
+  }),
+  
+  recipe: (recipe: any) => ({
+    title: `${recipe.title} Recipe`,
+    description: recipe.description,
+    ogImage: recipe.imageUrl,
+    canonical: `/recipes/${recipe.slug}`,
+    keywords: ['recipe', 'cooking', ...(recipe.tags?.split(',') || [])]
+  }),
+  
+  workout: (workout: any) => ({
+    title: `${workout.title} Workout`,
+    description: workout.description,
+    ogImage: workout.imageUrl,
+    canonical: `/workouts/${workout.slug}`,
+    keywords: ['workout', 'fitness', ...(workout.tags?.split(',') || [])]
+  })
+};</pre>
+        </div>
+
+        <!-- useSEO Hook -->
+        <div class="copy-section">
+            <div class="copy-header">
+                <h3>🎣 client/src/hooks/useSEO.tsx</h3>
+                <button class="copy-btn" onclick="copyToClipboard('use-seo')">Copy Code</button>
+            </div>
+            <pre id="use-seo">// client/src/hooks/useSEO.tsx
+import { SEOMetaHead } from '../components/SEOMetaHead';
+import { seoTemplates, seoConfig } from '../config/seo-config';
+
+export const useSEO = (pageType: string, dynamicData?: any) => {
+  let seoData: any = {};
+
+  // Get SEO data based on page type
+  switch (pageType) {
+    case 'homepage':
+      seoData = seoTemplates.homepage;
+      break;
+    case 'about':
+      seoData = seoTemplates.about;
+      break;
+    case 'contact':
+      seoData = seoTemplates.contact;
+      break;
+    case 'blog-post':
+      seoData = dynamicData ? seoTemplates.blogPost(dynamicData) : {};
+      break;
+    case 'recipe':
+      seoData = dynamicData ? seoTemplates.recipe(dynamicData) : {};
+      break;
+    case 'workout':
+      seoData = dynamicData ? seoTemplates.workout(dynamicData) : {};
+      break;
+    default:
+      seoData = {
+        title: `${pageType.charAt(0).toUpperCase() + pageType.slice(1)} | ${seoConfig.siteName}`,
+        description: seoConfig.defaultDescription
+      };
+  }
+
+  // Add structured data for business pages
+  if (pageType === 'homepage' || pageType === 'about') {
+    seoData.structuredData = {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": seoConfig.businessInfo.name,
+      "description": seoConfig.businessInfo.description,
+      "url": seoConfig.businessInfo.url,
+      "telephone": seoConfig.businessInfo.telephone,
+      "email": seoConfig.businessInfo.email,
+      "address": {
+        "@type": "PostalAddress",
+        ...seoConfig.businessInfo.address
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": seoConfig.businessInfo.geo.latitude,
+        "longitude": seoConfig.businessInfo.geo.longitude
+      },
+      "priceRange": seoConfig.businessInfo.priceRange,
+      "areaServed": seoConfig.businessInfo.areaServed
+    };
+  }
+
+  return seoData;
+};
+
+// Component wrapper for easy use
+export const SEOWrapper = ({ pageType, dynamicData, children }: {
+  pageType: string;
+  dynamicData?: any;
+  children: React.ReactNode;
+}) => {
+  const seoData = useSEO(pageType, dynamicData);
+  
+  return (
+    &lt;&gt;
+      &lt;SEOMetaHead {...seoData} /&gt;
+      {children}
+    &lt;/&gt;
+  );
+};</pre>
+        </div>
+
+        <!-- Sitemap Generator -->
+        <div class="copy-section">
+            <div class="copy-header">
+                <h3>🗺️ server/sitemap-generator.ts</h3>
+                <button class="copy-btn" onclick="copyToClipboard('sitemap-generator')">Copy Code</button>
+            </div>
+            <pre id="sitemap-generator">// server/sitemap-generator.ts
+import { db } from './db';
+import { blogPosts, recipes, workouts } from '../shared/schema';
+import fs from 'fs';
+import path from 'path';
+
+interface SitemapUrl {
+  loc: string;
+  lastmod?: string;
+  changefreq?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+  priority?: number;
+}
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+export async function generateSitemap(): Promise&lt;void&gt; {
+  console.log('Generating dynamic sitemap...');
+  
+  const baseUrl = process.env.BASE_URL || 'https://yourdomain.com';
+  const urls: SitemapUrl[] = [];
+
+  // Static pages
+  const staticPages = [
+    { loc: '/', changefreq: 'daily' as const, priority: 1.0 },
+    { loc: '/about', changefreq: 'monthly' as const, priority: 0.8 },
+    { loc: '/contact', changefreq: 'monthly' as const, priority: 0.8 },
+    { loc: '/blog', changefreq: 'daily' as const, priority: 0.9 },
+    // Add your static pages here
+  ];
+
+  staticPages.forEach(page => {
+    urls.push({
+      loc: page.loc,
+      lastmod: new Date().toISOString().split('T')[0],
+      changefreq: page.changefreq,
+      priority: page.priority
+    });
+  });
+
+  try {
+    // Fetch and add blog posts directly from database
+    console.log('Fetching blog posts for sitemap...');
+    const blogPostsData = await db.select().from(blogPosts);
+    blogPostsData.forEach((post: any) => {
+      const slug = post.slug || slugify(post.title);
+      urls.push({
+        loc: `/blog/${slug}`,
+        lastmod: post.publishedDate ? new Date(post.publishedDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+        changefreq: 'monthly',
+        priority: 0.7
+      });
+    });
+    console.log(`Added ${blogPostsData.length} blog posts to sitemap`);
+
+    // Add recipes if you have them
+    const recipesData = await db.select().from(recipes);
+    recipesData.forEach((recipe: any) => {
+      const slug = recipe.slug || slugify(recipe.title);
+      urls.push({
+        loc: `/recipes/${slug}`,
+        lastmod: recipe.createdAt ? new Date(recipe.createdAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+        changefreq: 'monthly',
+        priority: 0.6
+      });
+    });
+
+    // Add workouts if you have them
+    const workoutsData = await db.select().from(workouts);
+    workoutsData.forEach((workout: any) => {
+      const slug = workout.slug || slugify(workout.title);
+      urls.push({
+        loc: `/workouts/${slug}`,
+        lastmod: workout.createdAt ? new Date(workout.createdAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+        changefreq: 'monthly',
+        priority: 0.6
+      });
+    });
+
+  } catch (error) {
+    console.error('Error fetching content for sitemap:', error);
+  }
+
+  // Generate XML
+  const xmlContent = `&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"&gt;
+${urls.map(url => `  &lt;url&gt;
+    &lt;loc&gt;${baseUrl}${url.loc}&lt;/loc&gt;
+    ${url.lastmod ? `&lt;lastmod&gt;${url.lastmod}&lt;/lastmod&gt;` : ''}
+    ${url.changefreq ? `&lt;changefreq&gt;${url.changefreq}&lt;/changefreq&gt;` : ''}
+    ${url.priority !== undefined ? `&lt;priority&gt;${url.priority}&lt;/priority&gt;` : ''}
+  &lt;/url&gt;`).join('\n')}
+&lt;/urlset&gt;`;
+
+  // Save sitemap
+  const publicDir = path.join(process.cwd(), 'public');
+  if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir, { recursive: true });
+  }
+  
+  const sitemapPath = path.join(publicDir, 'sitemap.xml');
+  fs.writeFileSync(sitemapPath, xmlContent);
+  
+  console.log(`Generated sitemap with ${urls.length} URLs`);
+  console.log(`Sitemap saved to ${sitemapPath}`);
+}
+
+// Auto-generate on server startup
+if (import.meta.url === `file://${process.argv[1]}`) {
+  generateSitemap()
+    .then(() => {
+      console.log('Sitemap generation completed successfully!');
+      process.exit(0);
+    })
+    .catch((error) => {
+      console.error('Error generating sitemap:', error);
+      process.exit(1);
+    });
+}</pre>
+        </div>
+
+        <!-- Server Integration -->
+        <div class="copy-section">
+            <div class="copy-header">
+                <h3>🔧 Add to server/index.ts</h3>
+                <button class="copy-btn" onclick="copyToClipboard('server-integration')">Copy Code</button>
+            </div>
+            <pre id="server-integration">// Add this to your server/index.ts
+import { generateSitemap } from './sitemap-generator';
+import express from 'express';
+import path from 'path';
+
+// Generate sitemap on server startup
+console.log('Generating sitemap on server startup...');
+generateSitemap().then(() => {
+  console.log('Sitemap generated successfully on startup');
+}).catch((error) => {
+  console.error('Error generating sitemap on startup:', error);
+});
+
+// Serve sitemap.xml
+app.use('/sitemap.xml', express.static(path.join(process.cwd(), 'public/sitemap.xml')));</pre>
+        </div>
+
+        <!-- App Integration -->
+        <div class="copy-section">
+            <div class="copy-header">
+                <h3>📱 Add to client/src/App.tsx</h3>
+                <button class="copy-btn" onclick="copyToClipboard('app-integration')">Copy Code</button>
+            </div>
+            <pre id="app-integration">// Add to your client/src/App.tsx
+import { HelmetProvider } from 'react-helmet-async';
+
+// Wrap your app
+function App() {
+  return (
+    &lt;HelmetProvider&gt;
+      {/* Your existing app content */}
+    &lt;/HelmetProvider&gt;
+  );
+}</pre>
+        </div>
+
+        <!-- Usage Example -->
+        <div class="copy-section">
+            <div class="copy-header">
+                <h3>💡 Usage Example</h3>
+                <button class="copy-btn" onclick="copyToClipboard('usage-example')">Copy Code</button>
+            </div>
+            <pre id="usage-example">// Example: Using SEO in your pages
+import { useSEO } from '../hooks/useSEO';
+import { SEOMetaHead } from '../components/SEOMetaHead';
+
+const HomePage = () => {
+  const seoData = useSEO('homepage');
+  
+  return (
+    &lt;&gt;
+      &lt;SEOMetaHead {...seoData} /&gt;
+      &lt;div&gt;Your page content&lt;/div&gt;
+    &lt;/&gt;
+  );
+};
+
+const BlogPost = ({ post }) => {
+  const seoData = useSEO('blog-post', post);
+  
+  return (
+    &lt;&gt;
+      &lt;SEOMetaHead {...seoData} /&gt;
+      &lt;article&gt;
+        &lt;h1&gt;{post.title}&lt;/h1&gt;
+        &lt;div&gt;{post.content}&lt;/div&gt;
+      &lt;/article&gt;
+    &lt;/&gt;
+  );
+};</pre>
+        </div>
+
+        <div class="highlight">
+            <strong>✅ Production Results:</strong><br>
+            • Complete sitemap.xml with all content<br>
+            • Dynamic meta tags for every page<br>
+            • Structured data for business info<br>
+            • Open Graph tags for social sharing<br>
+            • Automatic updates on deployment<br>
+            • Search engine ready
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            // Create temporary textarea
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            
+            // Select and copy text
+            textarea.select();
+            document.execCommand('copy');
+            
+            // Remove temporary textarea
+            document.body.removeChild(textarea);
+            
+            // Update button
+            const button = element.parentElement.querySelector('.copy-btn');
+            const originalText = button.textContent;
+            button.textContent = '✓ Copied!';
+            button.classList.add('copied');
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.classList.remove('copied');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
