@@ -91,6 +91,17 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
     isPrime: true,
     asin: 'B06XX65GS1'
   },
+  'B00XQ2XGAA': {
+    title: 'Sports Research Collagen Peptides for Women & Men, Unflavored, 16 oz., Hydrolyzed Type I & III Collagen Powder Protein Supplement for Healthy Skin, Nails, Bones & Joints',
+    description: '11G Collagen Per Serving - Sports Research Collagen Peptides supports hair, skin, nails & joints. Gluten-Free, Non-GMO, Hydrolyzed Type I & III.',
+    image: '/attached_assets/amazon_B00XQ2XGAA_collagen_peptides.jpg',
+    price: '$32.95',
+    rating: 4.4,
+    reviews: 122844,
+    availability: 'In Stock',
+    isPrime: true,
+    asin: 'B00XQ2XGAA'
+  },
   'B07XYYBHFT': {
     title: 'Gaiam Yoga Block - Supportive Latex-Free EVA Foam Soft Non-Slip Surface for Yoga, Pilates, Meditation',
     description: 'YOGA ESSENTIAL: This yoga block provides the stability and support needed to maintain poses and increase strength, flexibility, and balance. Made from supportive latex-free EVA foam.',
