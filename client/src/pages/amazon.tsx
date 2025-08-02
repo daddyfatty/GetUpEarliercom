@@ -37,8 +37,10 @@ export default function AmazonProductsPage() {
           const pattern1 = /<span[^>]*class="amazon-link"[^>]*data-url="([^"]*)"/g;
           // Pattern 2: <span class=\"amazon-link\" data-url=\"URL\"> (escaped quotes)
           const pattern2 = /<span class=\\"amazon-link\\" data-url=\\"([^\\"]*)\\"/g;
-          // Pattern 3: Direct Amazon URLs in text
-          const pattern3 = /https?:\/\/(amzn\.to\/[^\s<>"]*|amazon\.com\/[^\s<>"]*)/g;
+          // Pattern 3: Direct Amazon URLs in text (exclude AMAZON_PRODUCT markers)
+          const pattern3 = /(?<!\[AMAZON_PRODUCT:)https?:\/\/(amzn\.to\/[^\s<>"]*|amazon\.com\/[^\s<>"]*)/g;
+          // Pattern 4: Extract URLs from AMAZON_PRODUCT markers
+          const pattern4 = /\[AMAZON_PRODUCT:(https?:\/\/[^:]+):[^\]]+\]/g;
           
           let match;
           
@@ -57,6 +59,12 @@ export default function AmazonProductsPage() {
           
           while ((match = pattern3.exec(content)) !== null) {
             urls.add(match[0]);
+          }
+          
+          while ((match = pattern4.exec(content)) !== null) {
+            if (match[1] && (match[1].includes('amzn.to') || match[1].includes('amazon.com'))) {
+              urls.add(match[1]);
+            }
           }
           
           return Array.from(urls);
