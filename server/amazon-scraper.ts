@@ -94,7 +94,7 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
   'B01M1EXQY4': {
     title: 'NAKED nutrition Pea Protein Isolate from North American Farms - 2lb Bulk',
     description: 'Premium Pea Protein - Clean pea protein with only one ingredient: Yellow Pea Protein sourced from farms in USA and Canada. No artificial sweeteners, flavors, or colors.',
-    image: 'https://m.media-amazon.com/images/I/71RPsR+hZpL._AC_SX300_SY300_.jpg',
+    image: 'https://m.media-amazon.com/images/I/61VzWMCBa4L._AC_SX300_SY300_.jpg',
     price: '$37.99',
     rating: 4.3,
     reviews: 1852,
@@ -105,7 +105,7 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
   'B00J074W94': {
     title: 'NAKED WHEY 1LB 100% Grass Fed Unflavored Whey Protein Powder',
     description: '100% GRASS FED WHEY PROTEIN POWDER from dairy cows that graze on pastures in California and Idaho. NO rBGH or rBST, GMO-FREE. Naked Whey is unflavored and contains no artificial or natural sweeteners, colors, or flavors.',
-    image: 'https://m.media-amazon.com/images/I/61H8Y1bJy7L._AC_SX300_SY300_.jpg',
+    image: 'https://m.media-amazon.com/images/I/61AHlbOJEAL._AC_SX300_SY300_.jpg',
     price: '$19.99',
     rating: 4.4,
     reviews: 15234,
@@ -138,7 +138,7 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
   'B00J074W7W': {
     title: 'NAKED WHEY 5LB 100% Grass Fed Unflavored Whey Protein Powder - US Farms',
     description: '100% GRASS FED WHEY PROTEIN POWDER from dairy cows that graze on pastures in California and Idaho. NO rBGH or rBST, GMO-FREE. Naked Whey is unflavored and contains no artificial or natural sweeteners, colors, or flavors.',
-    image: 'https://m.media-amazon.com/images/I/61c-E3BqYSL._AC_SX300_SY300_.jpg',
+    image: 'https://m.media-amazon.com/images/I/61BmVLh6OIL._AC_SX300_SY300_.jpg',
     price: '$94.99',
     rating: 4.4,
     reviews: 15234,
