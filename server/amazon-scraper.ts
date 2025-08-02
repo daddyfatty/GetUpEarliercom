@@ -69,6 +69,17 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
     isPrime: true,
     asin: 'B0789V9Q39'
   },
+  'B06XS38TDV': {
+    title: 'Terrasoul Superfoods Organic Pea Protein (Unflavored, Smooth Texture), 1.5 Pounds',
+    description: 'Premium Pea Protein - Clean pea protein with only one ingredient: Yellow Pea Protein sourced from farms in USA and Canada. No artificial sweeteners, flavors, or colors.',
+    image: '/attached_assets/amazon_B06XS38TDV_terrasoul_pea_protein.jpg',
+    price: '$19.99',
+    rating: 4.5,
+    reviews: 1247,
+    availability: 'In Stock',
+    isPrime: true,
+    asin: 'B06XS38TDV'
+  },
   'B07XYYBHFT': {
     title: 'Gaiam Yoga Block - Supportive Latex-Free EVA Foam Soft Non-Slip Surface for Yoga, Pilates, Meditation',
     description: 'YOGA ESSENTIAL: This yoga block provides the stability and support needed to maintain poses and increase strength, flexibility, and balance. Made from supportive latex-free EVA foam.',
