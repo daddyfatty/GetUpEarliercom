@@ -246,10 +246,6 @@ export function ServicesGrid({
                   <Button 
                     size="lg" 
                     className="text-lg px-6 py-3 bg-white text-[hsl(var(--navy))] border-2 border-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))] hover:text-white hover:scale-[1.02] transition-all duration-300 font-semibold shadow-lg"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      window.open("https://ericaleebaker.com", "_blank");
-                    }}
                   >
                     Learn More →
                   </Button>
@@ -260,10 +256,6 @@ export function ServicesGrid({
                   <Button 
                     size="lg" 
                     className="text-lg px-6 py-3 bg-white text-[hsl(var(--navy))] border-2 border-[hsl(var(--navy))] hover:bg-[hsl(var(--navy))] hover:text-white hover:scale-[1.02] transition-all duration-300 font-semibold shadow-lg"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      window.open("https://ericaleebaker.com", "_blank");
-                    }}
                   >
                     Learn More →
                   </Button>
