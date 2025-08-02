@@ -244,7 +244,19 @@ export default function AmazonProductsPage() {
         });
 
         const productData = await Promise.all(productPromises);
-        const validProducts = productData.filter(product => product && product.title);
+        
+        // Filter out the 5 specific products that need to be removed
+        const excludedASINs = ['B01M1EXQY4', 'B00J074W94', 'B00J074W7W', 'B01M4OM1RN', 'B00E9M4XEE'];
+        const validProducts = productData.filter(product => {
+          if (!product || !product.title) return false;
+          
+          // Check if the product URL contains any of the excluded ASINs
+          const isExcluded = excludedASINs.some(asin => 
+            product.url?.includes(asin) || product.image?.includes(asin)
+          );
+          
+          return !isExcluded;
+        });
         
         // Categorize products
         const singleIngredient: AmazonProduct[] = [];
