@@ -114,9 +114,15 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
           <div className="w-full sm:w-32 h-32 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden flex-shrink-0 p-2">
             {preview.image ? (
               <img 
-                src={`${preview.image}?t=${Date.now()}`}
+                src={`/api/proxy-image?url=${encodeURIComponent(preview.image)}`}
                 alt={preview.title}
                 className="w-full h-full object-contain"
+                onError={(e) => {
+                  console.error('Failed to load product image:', preview.image);
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  target.parentElement!.innerHTML = '<div class="w-full h-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center"><svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></div>';
+                }}
               />
             ) : (
               <div className="w-full h-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center">

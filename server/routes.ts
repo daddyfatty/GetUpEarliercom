@@ -1619,6 +1619,56 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Image proxy endpoint to handle CORS issues with external images
+  app.get("/api/proxy-image", async (req, res) => {
+    try {
+      const { url } = req.query;
+      
+      if (!url || typeof url !== 'string') {
+        return res.status(400).json({ message: "URL is required" });
+      }
+
+      // Only allow proxying images from trusted domains
+      const allowedDomains = [
+        'https://m.media-amazon.com',
+        'https://images-na.ssl-images-amazon.com',
+        'https://www.amazon.com'
+      ];
+      
+      const isAllowed = allowedDomains.some(domain => url.startsWith(domain));
+      if (!isAllowed) {
+        return res.status(403).json({ message: "Domain not allowed" });
+      }
+
+      // Fetch the image
+      const response = await fetch(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+          'Accept': 'image/webp,image/apng,image/*,*/*;q=0.8',
+        }
+      });
+
+      if (!response.ok) {
+        return res.status(response.status).json({ message: "Failed to fetch image" });
+      }
+
+      // Get content type
+      const contentType = response.headers.get('content-type') || 'image/jpeg';
+      
+      // Set appropriate headers
+      res.setHeader('Content-Type', contentType);
+      res.setHeader('Cache-Control', 'public, max-age=86400'); // Cache for 24 hours
+      
+      // Stream the image data
+      const buffer = await response.arrayBuffer();
+      res.send(Buffer.from(buffer));
+      
+    } catch (error: any) {
+      console.error('Error proxying image:', error);
+      res.status(500).json({ message: 'Failed to proxy image: ' + error.message });
+    }
+  });
+
   // Amazon products API endpoint
   app.get("/api/amazon-products", async (req, res) => {
     try {
