@@ -80,6 +80,17 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
     isPrime: true,
     asin: 'B06XS38TDV'
   },
+  'B06XX65GS1': {
+    title: 'Raw Grass Fed Whey - Happy Healthy Cows, COLD PROCESSED Undenatured 100% Grass Fed Whey Protein Powder, RBGH/rBST Free + NON-GMO + Unflavored + Gluten Free, 5LB',
+    description: 'Only 1 Ingredient: 100% pure grass-fed whey. Happy cows graze all open pastures year-round. Sourced 100% from US sustainable farms. rBGH/rBST hormone free. Processed at low temperatures. Processed without acid or bleach.',
+    image: '/attached_assets/amazon_B06XX65GS1_grassfedwhey5lb.jpg',
+    price: '$84.19',
+    rating: 4.4,
+    reviews: 1805,
+    availability: 'In Stock',
+    isPrime: true,
+    asin: 'B06XX65GS1'
+  },
   'B07XYYBHFT': {
     title: 'Gaiam Yoga Block - Supportive Latex-Free EVA Foam Soft Non-Slip Surface for Yoga, Pilates, Meditation',
     description: 'YOGA ESSENTIAL: This yoga block provides the stability and support needed to maintain poses and increase strength, flexibility, and balance. Made from supportive latex-free EVA foam.',
