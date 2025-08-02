@@ -72,7 +72,7 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
   'B06XS38TDV': {
     title: 'Terrasoul Superfoods Organic Pea Protein (Unflavored, Smooth Texture), 1.5 Pounds',
     description: 'Premium Pea Protein - Clean pea protein with only one ingredient: Yellow Pea Protein sourced from farms in USA and Canada. No artificial sweeteners, flavors, or colors.',
-    image: '/attached_assets/amazon_B06XS38TDV_terrasoul_pea_protein.jpg',
+    image: '/attached_assets/terrasoul_pea_protein.jpg',
     price: '$19.99',
     rating: 4.5,
     reviews: 1247,
