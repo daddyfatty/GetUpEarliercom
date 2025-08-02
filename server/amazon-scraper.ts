@@ -148,7 +148,26 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
   }
 };
 
+// Map of short URLs to ASINs for fallback
+const SHORT_URL_TO_ASIN: Record<string, string> = {
+  '43BqldK': 'B01M1EXQY4', // Pea Protein Isolate
+  '43E9B5r': 'B00J074W94', // Grass Fed Whey 1lb
+  '3HdeJGa': 'B00J074W7W', // Grass Fed Whey 5lb
+  '4k7y0ay': 'B01M4OM1RN', // Collagen Peptides
+  '4kBn1G2': 'B00E9M4XEE'  // Creatine Monohydrate
+};
+
 export async function extractAmazonProductData(url: string): Promise<AmazonProduct | null> {
+  // First check if this is a short URL we know
+  const shortCode = url.match(/amzn\.to\/([A-Za-z0-9]+)/)?.[1];
+  if (shortCode && SHORT_URL_TO_ASIN[shortCode]) {
+    const knownAsin = SHORT_URL_TO_ASIN[shortCode];
+    if (KNOWN_PRODUCTS[knownAsin]) {
+      console.log('Using known product data for short URL:', shortCode, '-> ASIN:', knownAsin);
+      return KNOWN_PRODUCTS[knownAsin];
+    }
+  }
+  
   // Extract ASIN from URL
   const asinMatch = url.match(/\/dp\/([A-Z0-9]{10})/i) || url.match(/\/gp\/product\/([A-Z0-9]{10})/i);
   if (!asinMatch) {
