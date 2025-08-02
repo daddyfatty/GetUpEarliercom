@@ -94,7 +94,7 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
   'B01M1EXQY4': {
     title: 'NAKED nutrition Pea Protein Isolate from North American Farms - 2lb Bulk',
     description: 'Premium Pea Protein - Clean pea protein with only one ingredient: Yellow Pea Protein sourced from farms in USA and Canada. No artificial sweeteners, flavors, or colors.',
-    image: 'https://m.media-amazon.com/images/I/61xPu-mFxML._AC_SX300_SY300_.jpg',
+    image: 'https://m.media-amazon.com/images/I/71VmUj7e3wL._AC_SY300_SX300_.jpg',
     price: '$37.99',
     rating: 4.3,
     reviews: 1852,
