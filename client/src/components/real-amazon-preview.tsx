@@ -25,7 +25,7 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
     queryKey: ['/api/link-preview', url],
     queryFn: async () => {
       try {
-        const response = await fetch(`/api/link-preview?url=${encodeURIComponent(url)}`);
+        const response = await fetch(`/api/link-preview?url=${encodeURIComponent(url)}&t=${Date.now()}`);
         if (!response.ok) {
           console.warn(`Failed to fetch preview for ${url}: ${response.status}`);
           return null;
