@@ -117,11 +117,6 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
                 src={`${preview.image}?t=${Date.now()}`}
                 alt={preview.title}
                 className="w-full h-full object-contain"
-                onError={(e) => {
-                  // Fallback to a placeholder if image fails to load
-                  const target = e.target as HTMLImageElement;
-                  target.src = "/attached_assets/20250702_065601_1751710941826.jpg";
-                }}
               />
             ) : (
               <div className="w-full h-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
