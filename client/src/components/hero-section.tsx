@@ -28,7 +28,7 @@ export function HeroSection() {
           <div className="flex flex-col justify-between pt-4 sm:pt-8 h-full">
             <div className="flex-1 flex flex-col justify-center">
               <p className="text-sm text-blue-200 mb-2 sm:mb-3 tracking-wider uppercase">
-                Get Up Earlier Strength & Nutrition
+                Get Up Earlier | Strength & Nutrition
               </p>
               <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight mb-6 sm:mb-8 font-brand">
                 Bridging the gap from inactivity and poor diet to strength and healthy habits
