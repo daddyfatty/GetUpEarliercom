@@ -4,6 +4,11 @@ import crypto from 'crypto';
 
 export async function downloadAndSaveImage(imageUrl: string, asin: string): Promise<string | null> {
   try {
+    // If it's already a local file, just return it
+    if (imageUrl.startsWith('/attached_assets/')) {
+      return imageUrl;
+    }
+    
     // Create a filename based on ASIN
     const fileName = `amazon_${asin}_${Date.now()}.jpg`;
     const filePath = path.join(process.cwd(), 'attached_assets', fileName);
