@@ -36,7 +36,7 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
         return null;
       }
     },
-    staleTime: 1000 * 60 * 30, // Cache for 30 minutes
+    staleTime: 0, // No caching - always fetch fresh data
     retry: 1,
     throwOnError: false
   });
@@ -114,7 +114,7 @@ export function RealAmazonPreview({ url, title }: RealAmazonPreviewProps) {
           <div className="w-full sm:w-32 h-32 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden flex-shrink-0 p-2">
             {preview.image ? (
               <img 
-                src={preview.image}
+                src={`${preview.image}?t=${Date.now()}`}
                 alt={preview.title}
                 className="w-full h-full object-contain"
                 onError={(e) => {
