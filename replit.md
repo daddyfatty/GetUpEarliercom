@@ -40,6 +40,25 @@ Key database schemas include: Users, Recipes, Workouts, Goals, Food Entries, Tra
 - **Training Log**: A continuous page for training log entries, where new entries are added to the top. Each entry adheres to a specific template with an entry header, training metrics (for run entries), an info bar, and rich content (authentic user text, gallery images with lightbox, Amazon product links with rich previews, YouTube/website URLs). SQL updates are used to add new entries to the top of an existing array.
 - **SEO**: Comprehensive sitemap.xml and robots.txt configurations are maintained, requiring updates with new content. Server-side rendering middleware injects Open Graph tags for social media.
 
+## Amazon Product Integration Workflow
+
+When adding Amazon links to content:
+
+### For Blog Posts:
+- Use format: `[AMAZON_PRODUCT:https://amzn.to/CODE:Product Title]`
+- Displays as full product card with image, price, rating, availability
+- Automatically adds to /amazon page
+
+### For Training Log Entries:
+- Use format: `<span class="amazon-link" data-url="https://amzn.to/CODE">Product Name</span>`
+- Shows as inline clickable link in training log
+- Automatically adds to /amazon page
+
+### Key Features:
+- All Amazon links from any content source automatically appear on /amazon page
+- Link preview system fetches current product data (cached for 30 minutes)
+- Future enhancement: /amazon page will support categorization
+
 ## External Dependencies
 
 ### Payment Processing
