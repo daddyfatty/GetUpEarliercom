@@ -196,8 +196,8 @@ export async function saveSitemapToDisk(): Promise<void> {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Check if this is the main module being executed
-const isMainModule = process.argv[1] === __filename;
+// Check if this is the main module being executed directly via command line
+const isMainModule = process.argv[1] && process.argv[1].endsWith('sitemap-generator.ts');
 
 if (isMainModule) {
   console.log('Generating sitemap...');
