@@ -113,6 +113,17 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
     isPrime: true,
     asin: 'B0B9YMNYWK'
   },
+  'B071ZDDNBY': {
+    title: 'NAKED Grass Fed Whey Protein Powder - Only 1 Ingredient, 100% Grass Fed Whey Protein with Nothing to Hide, 1LB',
+    description: '100% Premium Grass-Fed Whey with nothing to hide. Only one ingredient: Non-denatured grass fed whey protein powder from happy pasture-raised cows. No GMOs, soy, gluten, or rBGH.',
+    image: '/attached_assets/amazon_B071ZDDNBY_nakedwhey1lb.jpg',
+    price: '$26.99',
+    rating: 4.5,
+    reviews: 26457,
+    availability: 'In Stock',
+    isPrime: true,
+    asin: 'B071ZDDNBY'
+  },
   'B07XYYBHFT': {
     title: 'Gaiam Yoga Block - Supportive Latex-Free EVA Foam Soft Non-Slip Surface for Yoga, Pilates, Meditation',
     description: 'YOGA ESSENTIAL: This yoga block provides the stability and support needed to maintain poses and increase strength, flexibility, and balance. Made from supportive latex-free EVA foam.',
