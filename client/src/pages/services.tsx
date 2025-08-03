@@ -144,7 +144,7 @@ export default function Services() {
         "Ideal for All Levels: Suitable for beginners through advanced practitioners, with modifications and challenges to suit everyone",
         "Private One-on-One Instruction: Personal attention from experienced instructors, enhancing your practice through detailed guidance and support"
       ],
-      buttonText: "Book Session",
+      buttonText: "Visit EricaLeeBaker.com",
       isPopular: false,
       backgroundColor: "bg-orange-50",
       textColor: "text-gray-900",
@@ -162,7 +162,7 @@ export default function Services() {
         "Vinyasa Flow Practice",
         "Personalized Instruction"
       ],
-      buttonText: "Book Session",
+      buttonText: "Visit EricaLeeBaker.com",
       isPopular: false,
       backgroundColor: "bg-orange-50",
       textColor: "text-gray-900",
@@ -256,9 +256,9 @@ export default function Services() {
                       } else if (pkg.title === "1-on-1 Running Coaching Session") {
                         window.location.href = "/services/certified-running-coaching";
                       } else if (pkg.title === "1-on-1 Private Yoga with Erica") {
-                        window.location.href = "/services/private-yoga";
+                        window.open("https://ericaleebaker.com", "_blank");
                       } else if (pkg.title === "Small Group Yoga with Erica") {
-                        window.location.href = "/services/small-group-yoga";
+                        window.open("https://ericaleebaker.com", "_blank");
                       }
                     } else {
                       window.location.href = "/contact";
