@@ -127,7 +127,10 @@ export default function About() {
 
         {/* ERICA SECTION */}
         <section id="erica" className="max-w-7xl mx-auto mb-16">
-          <Card className="bg-gradient-to-br from-green-50 via-white to-green-50 dark:from-gray-800 dark:to-gray-900 border-0 shadow-2xl overflow-hidden">
+          <Card 
+            className="bg-gradient-to-br from-green-50 via-white to-green-50 dark:from-gray-800 dark:to-gray-900 border-0 shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-3xl hover:scale-[1.02]"
+            onClick={() => window.open("https://ericaleebaker.com", "_blank")}
+          >
             <CardContent className="p-0">
               <div className="grid lg:grid-cols-5 gap-0">
                 {/* Left Side - Photo and Basic Info */}
@@ -154,11 +157,15 @@ export default function About() {
                   
 
                   
-                  <Link href="/contact">
-                    <Button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-gray-800 dark:text-white border-white/30 px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105">
-                      Let's Work Together →
-                    </Button>
-                  </Link>
+                  <Button 
+                    className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-gray-800 dark:text-white border-white/30 px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open("https://ericaleebaker.com", "_blank");
+                    }}
+                  >
+                    Visit EricaLeeBaker.com →
+                  </Button>
                 </div>
 
                 {/* Right Side - Story */}
