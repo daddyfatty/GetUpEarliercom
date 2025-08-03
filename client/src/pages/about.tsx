@@ -128,7 +128,7 @@ export default function About() {
         {/* ERICA SECTION */}
         <section id="erica" className="max-w-7xl mx-auto mb-16">
           <Card 
-            className="bg-gradient-to-br from-green-50 via-white to-green-50 dark:from-gray-800 dark:to-gray-900 border-0 shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-3xl hover:scale-[1.02]"
+            className="bg-[#EAF1ED] dark:from-gray-800 dark:to-gray-900 border-0 shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-3xl hover:scale-[1.02]"
             onClick={() => window.open("https://ericaleebaker.com", "_blank")}
           >
             <CardContent className="p-0">
