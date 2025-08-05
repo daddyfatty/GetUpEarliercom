@@ -108,12 +108,15 @@ export class DatabaseStorage implements IStorage {
       const existingUser = await this.getUser("dev_user_1");
       if (!existingUser) {
         console.log("Creating development user in database...");
-        await this.createUser({
-          id: "dev_user_1",
-          email: "michael@getupeariler.com",
-          firstName: "Michael",
-          lastName: "Baker"
-        });
+        const [newUser] = await db
+          .insert(users)
+          .values({
+            id: "dev_user_1",
+            email: "michael@getupeariler.com",
+            firstName: "Michael",
+            lastName: "Baker"
+          })
+          .returning();
         console.log("Development user created successfully");
       }
     } catch (error) {
@@ -147,11 +150,7 @@ export class DatabaseStorage implements IStorage {
     try {
       const [user] = await db
         .insert(users)
-        .values({
-          ...insertUser,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        })
+        .values(insertUser)
         .returning();
       return user;
     } catch (error) {

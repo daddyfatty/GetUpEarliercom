@@ -106,24 +106,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   };
   
-  // Authentication routes
+  // Authentication routes (simplified for now)
   app.post("/api/auth/login", async (req, res) => {
     try {
-      const { email, password } = req.body;
+      const { email } = req.body;
       
-      if (!email || !password) {
-        return res.status(400).json({ message: "Email and password are required" });
+      if (!email) {
+        return res.status(400).json({ message: "Email is required" });
       }
 
       const user = await storage.getUserByEmail(email);
       
-      if (!user || user.password !== password) {
-        return res.status(401).json({ message: "Invalid credentials" });
+      if (!user) {
+        return res.status(401).json({ message: "User not found" });
       }
 
-      // In a real app, you'd use proper session management or JWT
-      const { password: _, ...userWithoutPassword } = user;
-      res.json({ user: userWithoutPassword });
+      res.json({ user });
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
     }
@@ -133,14 +131,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userData = insertUserSchema.parse(req.body);
       
-      const existingUser = await storage.getUserByEmail(userData.email);
-      if (existingUser) {
-        return res.status(400).json({ message: "User already exists" });
+      if (userData.email) {
+        const existingUser = await storage.getUserByEmail(userData.email);
+        if (existingUser) {
+          return res.status(400).json({ message: "User already exists" });
+        }
       }
 
       const user = await storage.createUser(userData);
-      const { password: _, ...userWithoutPassword } = user;
-      res.status(201).json({ user: userWithoutPassword });
+      res.status(201).json({ user });
     } catch (error) {
       res.status(400).json({ message: "Invalid user data" });
     }
@@ -445,7 +444,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { userId, date, glasses } = req.body;
       const dateObj = new Date(date);
-      const intake = await storage.updateWaterIntake(userId, dateObj, glasses);
+      const intake = await storage.createWaterIntake({
+        userId: userId.toString(),
+        date: dateObj,
+        glasses: glasses || 0
+      });
       res.json(intake);
     } catch (error) {
       res.status(400).json({ message: "Failed to update water intake" });
@@ -514,9 +517,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
     try {
       const { plan, userId } = req.body;
-      const user = await storage.getUser(userId || 1); // Default to user 1 for demo
+      const user = await storage.getUser(userId || "dev_user_1"); // Default to dev user for demo
 
-      if (!user.email) {
+      if (!user || !user.email) {
         throw new Error('No user email on file');
       }
 
@@ -527,7 +530,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else {
         customer = await stripe.customers.create({
           email: user.email,
-          name: user.username,
+          name: `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.email,
         });
         
         // Update user with Stripe customer ID
@@ -550,10 +553,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       // Update user subscription info
-      await storage.updateUser(user.id, { 
-        stripeSubscriptionId: subscription.id,
-        subscriptionTier: plan 
-      });
+      if (user) {
+        await storage.updateUser(user.id, { 
+          stripeSubscriptionId: subscription.id,
+          subscriptionTier: plan 
+        });
+      }
 
       res.json({
         subscriptionId: subscription.id,
@@ -1027,7 +1032,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Meal plan routes
   app.get("/api/users/:userId/meal-plans", async (req, res) => {
     try {
-      const userId = req.params.userId;
+      const userId = parseInt(req.params.userId);
       const mealPlans = await storage.getUserMealPlans(userId);
       res.json(mealPlans);
     } catch (error: any) {
@@ -1046,7 +1051,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const mealPlan = await storage.createMealPlan({
-        userId,
+        userId: parseInt(userId),
         name: name || "My Meal Plan",
         date: new Date(date),
       });
