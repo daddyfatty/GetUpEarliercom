@@ -122,6 +122,7 @@ export async function initializeBlogCMS() {
       
       const blogPostData = {
         id: post.id,
+        slug: post.slug,
         title: post.title,
         category: post.category,
         tags: post.tags.join(','), // Convert array to comma-separated string
