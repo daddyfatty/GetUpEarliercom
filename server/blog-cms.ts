@@ -19,6 +19,21 @@ function normalizeTags(tags: string | string[] | undefined): string | undefined 
 // Clean blog posts from the scraper - authentic content from GetUpEarlier.com
 const cleanBlogPosts = [
   {
+    id: 'hartford-marathon-training-log-2025',
+    title: 'Hartford Marathon Training Log 2025',
+    slug: 'hartford-marathon-training-log-2025',
+    content: 'Training for the Hartford Marathon 2025. This is my comprehensive training log documenting the journey from base building through race day. Following a structured approach with progressive mileage, speed work, and recovery protocols.\n\nThis training cycle focuses on consistency, injury prevention, and smart progression. Each week builds systematically toward the goal of completing Hartford Marathon in optimal condition.',
+    excerpt: 'Training for the Hartford Marathon 2025 - comprehensive training log documenting the journey from base building through race day.',
+    category: 'Running',
+    tags: ['marathon-training', 'hartford-marathon', 'running', 'training-log'],
+    author: 'Michael Baker',
+    publishedDate: '2025-01-05T12:00:00.000Z',
+    imageUrl: '/attached_assets/hartford-marathon-2024-start_1752664876322.jpg',
+    videoUrl: null,
+    isVideo: false,
+    status: 'published'
+  },
+  {
     id: 'hit-a-new-strength-pr-of-100lbs-dumbbells-x-8-reps-50-years-old-5-7-165lbs-ironmasterpro',
     title: 'Hit a new strength PR of 100lbs dumbbells x 8 reps | 50 years old 5\' 7" 165lbs @IronmasterPro',
     slug: 'hit-a-new-strength-pr-of-100lbs-dumbbells-x-8-reps-50-years-old-5-7-165lbs-ironmasterpro',
