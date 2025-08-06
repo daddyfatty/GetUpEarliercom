@@ -25,6 +25,58 @@ app.use('/assets', express.static('public/assets'));
 // Serve root-level public files (like featured images)
 app.use(express.static('public'));
 
+// Middleware to inject meta tags for homepage (only for social media crawlers)
+app.get('/', (req, res, next) => {
+  const userAgent = req.get('User-Agent') || '';
+  
+  // Check if this is a social media crawler/bot
+  const isCrawler = /bot|crawler|spider|scraper|facebook|twitter|linkedin|whatsapp|telegram|discord|slack/i.test(userAgent);
+  
+  if (isCrawler) {
+    const title = "Get Up Earlier - Personal Training & Nutrition Coaching";
+    const description = "Transform your health with personalized training, nutrition coaching, and clean eating recipes. Marathon training logs, workout libraries, and accountability coaching to help you get up earlier and live stronger.";
+    const image = `${req.protocol}://${req.get('host')}/get-up-earlier-og-image.jpg`;
+    const url = `${req.protocol}://${req.get('host')}/`;
+    
+    // Read the default HTML and inject meta tags
+    let htmlPath;
+    if (app.get("env") === "development") {
+      htmlPath = path.join(__dirname, '../client/index.html');
+    } else {
+      htmlPath = path.join(__dirname, '../dist/public/index.html');
+    }
+    
+    if (fs.existsSync(htmlPath)) {
+      let html = fs.readFileSync(htmlPath, 'utf8');
+      
+      // Inject meta tags into the head
+      const metaTags = `
+        <title>${title}</title>
+        <meta name="description" content="${description}">
+        <meta name="keywords" content="personal training, nutrition coaching, marathon training, clean eating recipes, workout library, fitness coaching, accountability coaching, health transformation">
+        <meta property="og:title" content="${title}">
+        <meta property="og:description" content="${description}">
+        <meta property="og:image" content="${image}">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:url" content="${url}">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="Get Up Earlier">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="${title}">
+        <meta name="twitter:description" content="${description}">
+        <meta name="twitter:image" content="${image}">
+      `;
+      
+      html = html.replace('<title>Get Up Earlier - Health & Fitness App</title>', metaTags);
+      res.send(html);
+      return;
+    }
+  }
+  
+  next();
+});
+
 // Middleware to inject meta tags for alcohol calculator page (only for social media crawlers)
 app.get('/alcohol-calculator', (req, res, next) => {
   const userAgent = req.get('User-Agent') || '';
