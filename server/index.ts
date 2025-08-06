@@ -35,7 +35,7 @@ app.get('/', (req, res, next) => {
   if (isCrawler) {
     const title = "Get Up Earlier - Personal Training & Nutrition Coaching";
     const description = "Transform your health with personalized training, nutrition coaching, and clean eating recipes. Marathon training logs, workout libraries, and accountability coaching to help you get up earlier and live stronger.";
-    const image = `${req.protocol}://${req.get('host')}/get-up-earlier-og-image.jpg`;
+    const image = `${req.protocol}://${req.get('host')}/og-image.jpg`;
     const url = `${req.protocol}://${req.get('host')}/`;
     
     // Read the default HTML and inject meta tags
