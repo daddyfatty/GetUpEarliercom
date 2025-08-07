@@ -316,10 +316,15 @@ export class DatabaseStorage implements IStorage {
 
   async createBlogPost(post: InsertBlogPost): Promise<BlogPost> {
     try {
-      // Ensure new blog posts always appear at the top by setting current date if not provided
+      // AUTO-BUMP WORKFLOW: Ensure new blog posts ALWAYS appear at the top
+      // Set to tomorrow's date to guarantee it's newer than any existing post
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const tomorrowDate = tomorrow.toISOString().split('T')[0]; // YYYY-MM-DD format
+      
       const postWithDate = {
         ...post,
-        publishedDate: post.publishedDate || new Date().toISOString().split('T')[0] // YYYY-MM-DD format
+        publishedDate: tomorrowDate // Always use tomorrow's date to ensure top position
       };
       
       console.log("Creating blog post with values:", JSON.stringify(postWithDate, null, 2));

@@ -10,10 +10,11 @@ YouTube Blog System: Always extract authentic YouTube video data (title, descrip
 Blog Authorship: All blogs and videos are by Michael Baker (not "Get Up Earlier") and all author mentions should link to his profile about page.
 Design Preference: When user requests "Dark Gradient" styling, use the hero-gradient class which creates the stunning multi-layered gradient effect with dark navy/blue base, purple/magenta bands, royal blues, and bright orange horizon with breathing animation - this is the preferred gradient for all headers and special sections.
 Blog and Training Log Auto-Bump Workflow: 
-- ALWAYS ensure new blog posts automatically appear at the top by setting published_date to current date
-- ALWAYS ensure the Hartford Marathon Training Log 2025 blog post is the top post whenever it's mentioned or updated. Set published_date to current date in the database to bump it to the top. This happens frequently and should be automatic.
-- ALWAYS ensure new training log entries are added to the TOP of the existing entries array (not appended to the bottom)
-- When creating any new blog content or training log entry, automatically set current date to ensure proper sorting
+- NEW BLOG POSTS: Automatically set publishedDate to TOMORROW'S date to guarantee they appear at the top, regardless of existing post dates
+- HARTFORD MARATHON TRAINING LOG: When updated with new entries, bump publishedDate to current date to move to top (unless a newer blog post exists)
+- TRAINING LOG ENTRIES: Always add new entries to the TOP of the existing entries array (not appended to the bottom)  
+- AUTO-BUMP SYSTEM: createBlogPost function automatically uses tomorrow's date to ensure new posts always appear first
+- NO FUTURE DATES: Blog posts should not have dates beyond 1 day in the future to maintain chronological integrity
 
 ## System Architecture
 
