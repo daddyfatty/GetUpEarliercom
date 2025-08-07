@@ -15,15 +15,43 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
     const amazonLinkRegex = /<span(?:\s+class="amazon-link")?\s*data-url="([^"]+)">([^<]+)<\/span>/g;
     const galleryRegex = /<div class="gallery-grid">([\s\S]*?)<\/div>/g;
     
-    // Function to convert URLs to clickable links (only for plain text content)
+    // Function to convert URLs to clickable links and YouTube URLs to video embeds (only for plain text content)
     const convertUrlsToLinks = (text: string) => {
       // Only process if the text doesn't contain any HTML tags at all
       if (text.includes('<') || text.includes('>')) {
         return text; // Return unchanged if it contains HTML
       }
-      // Match URLs that appear after text or on their own lines
+      
+      // First handle YouTube URLs and convert them to embeds
+      const youtubeRegex = /(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#\s]+)(?:[^\s]*)?)/g;
+      text = text.replace(youtubeRegex, (match, fullUrl, videoId) => {
+        // Extract timestamp if present
+        const timestampMatch = fullUrl.match(/[?&]t=(\d+)(?:s)?/);
+        const startTime = timestampMatch ? `?start=${timestampMatch[1]}` : '';
+        
+        return `<div class="youtube-embed my-6">
+          <iframe 
+            width="100%" 
+            height="315" 
+            src="https://www.youtube.com/embed/${videoId}${startTime}" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen
+            style="max-width: 560px; margin: 0 auto; display: block;"
+          ></iframe>
+        </div>`;
+      });
+      
+      // Then handle other URLs as regular links
       const urlRegex = /(https?:\/\/[^\s]+)/g;
-      return text.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">$1</a>');
+      return text.replace(urlRegex, (match) => {
+        // Skip if it's already been converted to a YouTube embed
+        if (match.includes('youtube.com') || match.includes('youtu.be')) {
+          return match; // Already handled by YouTube regex
+        }
+        return `<a href="${match}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">${match}</a>`;
+      });
     };
 
     // Check if content contains Amazon product markers
