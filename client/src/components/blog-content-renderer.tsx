@@ -23,10 +23,10 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
       }
       
       // First handle YouTube URLs and convert them to embeds
-      const youtubeRegex = /(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#\s]+)(?:[^\s]*)?)/g;
+      const youtubeRegex = /(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]+)(?:[^\s\n]*)?)/g;
       text = text.replace(youtubeRegex, (match, fullUrl, videoId) => {
-        // Extract timestamp if present
-        const timestampMatch = fullUrl.match(/[?&]t=(\d+)(?:s)?/);
+        // Extract timestamp if present in various formats
+        const timestampMatch = match.match(/[?&]t=(\d+)(?:s)?/) || match.match(/[?&]start=(\d+)/);
         const startTime = timestampMatch ? `?start=${timestampMatch[1]}` : '';
         
         return `<div class="youtube-embed my-6">
@@ -43,12 +43,12 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
         </div>`;
       });
       
-      // Then handle other URLs as regular links
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      // Then handle other URLs as regular links (but skip YouTube URLs)
+      const urlRegex = /(https?:\/\/[^\s\n]+)/g;
       return text.replace(urlRegex, (match) => {
-        // Skip if it's already been converted to a YouTube embed
-        if (match.includes('youtube.com') || match.includes('youtu.be')) {
-          return match; // Already handled by YouTube regex
+        // Skip if it's a YouTube URL (already processed) or contains iframe (already converted)
+        if (match.includes('youtube.com') || match.includes('youtu.be') || text.includes('<iframe')) {
+          return match; // Already handled by YouTube regex or contains embeds
         }
         return `<a href="${match}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">${match}</a>`;
       });
