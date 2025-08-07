@@ -105,7 +105,7 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
   'B0B9YMNYWK': {
     title: 'NAKED Pure Micronized Creatine Monohydrate Powder - Unflavored, 500g, 1.1lb Bulk - Vegan, Non-GMO, Gluten-Free, Soy-Free. No Fillers, Supports Muscle Growth & Strength - 100 Servings',
     description: '100% Premium Creatine Monohydrate with nothing to hide. Unflavored. 14,339 ratings. 100+ bought in past month.',
-    image: '/attached_assets/amazon_B0B9YMNYWK_naked_creatine.jpg',
+    image: '/attached_assets/amazon_B0B9YMNYWK_naked_creatine.png',
     price: '$22.99',
     rating: 4.7,
     reviews: 14339,
