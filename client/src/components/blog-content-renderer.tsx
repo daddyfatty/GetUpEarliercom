@@ -14,41 +14,21 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
     const parts = [];
     const amazonLinkRegex = /<span(?:\s+class="amazon-link")?\s*data-url="([^"]+)">([^<]+)<\/span>/g;
     const galleryRegex = /<div class="gallery-grid">([\s\S]*?)<\/div>/g;
+    const youtubeRegex = /(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})(?:[^\s\n]*)?)/g;
     
-    // Function to convert URLs to clickable links and YouTube URLs to video embeds (only for plain text content)
+    // Function to convert URLs to clickable links (only for plain text content, YouTube URLs are handled separately)
     const convertUrlsToLinks = (text: string) => {
       // Only process if the text doesn't contain any HTML tags at all
       if (text.includes('<') || text.includes('>')) {
         return text; // Return unchanged if it contains HTML
       }
       
-      // First handle YouTube URLs and convert them to embeds
-      const youtubeRegex = /(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]+)(?:[^\s\n]*)?)/g;
-      text = text.replace(youtubeRegex, (match, fullUrl, videoId) => {
-        // Extract timestamp if present in various formats
-        const timestampMatch = match.match(/[?&]t=(\d+)(?:s)?/) || match.match(/[?&]start=(\d+)/);
-        const startTime = timestampMatch ? `?start=${timestampMatch[1]}` : '';
-        
-        return `<div class="youtube-embed my-6">
-          <iframe 
-            width="100%" 
-            height="315" 
-            src="https://www.youtube.com/embed/${videoId}${startTime}" 
-            title="YouTube video player" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            allowfullscreen
-            style="max-width: 560px; margin: 0 auto; display: block;"
-          ></iframe>
-        </div>`;
-      });
-      
-      // Then handle other URLs as regular links (but skip YouTube URLs)
+      // Convert URLs to links (but skip YouTube URLs since they're handled separately as embedded videos)
       const urlRegex = /(https?:\/\/[^\s\n]+)/g;
       return text.replace(urlRegex, (match) => {
-        // Skip if it's a YouTube URL (already processed) or contains iframe (already converted)
-        if (match.includes('youtube.com') || match.includes('youtu.be') || text.includes('<iframe')) {
-          return match; // Already handled by YouTube regex or contains embeds
+        // Skip YouTube URLs - they're processed as embedded videos
+        if (match.includes('youtube.com') || match.includes('youtu.be')) {
+          return match; // Don't convert to link, will be embedded as video
         }
         return `<a href="${match}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">${match}</a>`;
       });
@@ -152,8 +132,28 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
       }
     }
     
+    // Find all YouTube videos
+    const youtubeMatches = [];
+    youtubeRegex.lastIndex = 0;
+    while ((match = youtubeRegex.exec(content)) !== null) {
+      const fullUrl = match[1];
+      const videoId = match[2];
+      
+      // Extract timestamp if present
+      const timestampMatch = fullUrl.match(/[?&]t=(\d+)(?:s)?/) || fullUrl.match(/[?&]start=(\d+)/);
+      const startTime = timestampMatch ? `?start=${timestampMatch[1]}` : '';
+      
+      youtubeMatches.push({
+        start: match.index,
+        end: match.index + match[0].length,
+        videoId,
+        startTime,
+        type: 'youtube'
+      });
+    }
+    
     // Combine and sort all matches
-    const allMatches = [...amazonMatches, ...galleryMatches].sort((a, b) => a.start - b.start);
+    const allMatches = [...amazonMatches, ...galleryMatches, ...youtubeMatches].sort((a, b) => a.start - b.start);
     
     let lastIndex = 0;
     
@@ -190,6 +190,21 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
             url={match.url}
             title={match.title}
           />
+        );
+      } else if (match.type === 'youtube') {
+        parts.push(
+          <div key={`youtube-${match.start}`} className="youtube-embed my-6">
+            <iframe 
+              width="100%" 
+              height="315" 
+              src={`https://www.youtube.com/embed/${match.videoId}${match.startTime}`}
+              title="YouTube video player" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowFullScreen
+              style={{ maxWidth: '560px', margin: '0 auto', display: 'block' }}
+            />
+          </div>
         );
       } else if (match.type === 'gallery') {
         // Determine layout based on image count
