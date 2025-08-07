@@ -316,8 +316,14 @@ export class DatabaseStorage implements IStorage {
 
   async createBlogPost(post: InsertBlogPost): Promise<BlogPost> {
     try {
-      console.log("Creating blog post with values:", JSON.stringify(post, null, 2));
-      const [newPost] = await db.insert(blogPosts).values(post).returning();
+      // Ensure new blog posts always appear at the top by setting current date if not provided
+      const postWithDate = {
+        ...post,
+        publishedDate: post.publishedDate || new Date().toISOString().split('T')[0] // YYYY-MM-DD format
+      };
+      
+      console.log("Creating blog post with values:", JSON.stringify(postWithDate, null, 2));
+      const [newPost] = await db.insert(blogPosts).values(postWithDate).returning();
       return newPost;
     } catch (error) {
       console.error("Error creating blog post:", error);

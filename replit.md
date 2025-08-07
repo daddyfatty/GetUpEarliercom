@@ -9,7 +9,11 @@ Content creation: Use only user's authentic words - never write additional conte
 YouTube Blog System: Always extract authentic YouTube video data (title, description, thumbnail) with links intact. Never use placeholder or synthetic content. New blog posts automatically appear at top of blog page and homepage (sorted by publishedDate descending).
 Blog Authorship: All blogs and videos are by Michael Baker (not "Get Up Earlier") and all author mentions should link to his profile about page.
 Design Preference: When user requests "Dark Gradient" styling, use the hero-gradient class which creates the stunning multi-layered gradient effect with dark navy/blue base, purple/magenta bands, royal blues, and bright orange horizon with breathing animation - this is the preferred gradient for all headers and special sections.
-Hartford Marathon Training Log Priority: ALWAYS ensure the Hartford Marathon Training Log 2025 blog post is the top post whenever it's mentioned or updated. Set published_date to current date in the database to bump it to the top. This happens frequently and should be automatic.
+Blog and Training Log Auto-Bump Workflow: 
+- ALWAYS ensure new blog posts automatically appear at the top by setting published_date to current date
+- ALWAYS ensure the Hartford Marathon Training Log 2025 blog post is the top post whenever it's mentioned or updated. Set published_date to current date in the database to bump it to the top. This happens frequently and should be automatic.
+- ALWAYS ensure new training log entries are added to the TOP of the existing entries array (not appended to the bottom)
+- When creating any new blog content or training log entry, automatically set current date to ensure proper sorting
 
 ## System Architecture
 
