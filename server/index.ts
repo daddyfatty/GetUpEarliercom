@@ -34,7 +34,7 @@ app.get('/', (req, res, next) => {
   
   if (isCrawler) {
     const title = "Get Up Earlier - Personal Training & Nutrition Coaching";
-    const description = "Transform your health with personalized training, nutrition coaching, and clean eating recipes. Marathon training logs, workout libraries, and accountability coaching to help you get up earlier and live stronger.";
+    const description = "1-on-1 Strength Training, Nutrition, Running, Yoga & Accountability Coaching Orange, CT or Virtual Anywhere";
     const image = `${req.protocol}://${req.get('host')}/get-up-earlier-og-image.jpg`;
     const url = `${req.protocol}://${req.get('host')}/`;
     
