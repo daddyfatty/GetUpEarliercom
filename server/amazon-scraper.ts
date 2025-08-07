@@ -180,12 +180,12 @@ const KNOWN_PRODUCTS: Record<string, AmazonProduct> = {
     asin: 'B01M4OM1RN'
   },
   'B00E9M4XEE': {
-    title: 'Optimum Nutrition Micronized Creatine Monohydrate Powder, Unflavored, Keto Friendly',
-    description: '5g OF PURE CREATINE MONOHYDRATE PER SERVING – Supports increases in energy, endurance and recovery.',
-    image: 'https://m.media-amazon.com/images/I/71sA5KSq86L._AC_SX300_SY300_.jpg',
+    title: 'Single ingredient Naked Pure Creatine Monohydrate Powder',
+    description: '100% PURE CREATINE MONOHYDRATE: Contains only one ingredient: creatine monohydrate. No artificial sweeteners, flavors, colors, or any other additives.',
+    image: '/attached_assets/amazon_B00E9M4XEE_creatine.png',
     price: '$19.99',
-    rating: 4.4,
-    reviews: 36789,
+    rating: 4.6,
+    reviews: 42391,
     availability: 'In Stock',
     isPrime: true,
     asin: 'B00E9M4XEE'
@@ -209,7 +209,8 @@ const SHORT_URL_TO_ASIN: Record<string, string> = {
   '43E9B5r': 'B00J074W94', // Grass Fed Whey 1lb
   '3HdeJGa': 'B00J074W7W', // Grass Fed Whey 5lb
   '4k7y0ay': 'B01M4OM1RN', // Collagen Peptides
-  '4kBn1G2': 'B00E9M4XEE'  // Creatine Monohydrate
+  '4kBn1G2': 'B00E9M4XEE', // Creatine Monohydrate
+  '4lqxTrx': 'B00E9M4XEE'  // Single ingredient Naked Pure Creatine
 };
 
 export async function extractAmazonProductData(url: string): Promise<AmazonProduct | null> {
