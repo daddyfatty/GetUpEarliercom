@@ -10,6 +10,15 @@ interface BlogContentRendererProps {
 export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogContentRendererProps) {
   if (!content) return null;
 
+  // Preprocess content to handle literal escape sequences
+  const preprocessContent = (text: string) => {
+    return text
+      .replace(/\\n\\n/g, '\n\n')  // Convert literal \n\n to actual double newlines
+      .replace(/\\n/g, '\n');      // Convert literal \n to actual newlines
+  };
+
+  const processedContent = preprocessContent(content);
+
   const renderContent = () => {
     const parts = [];
     const amazonLinkRegex = /<span(?:\s+class="amazon-link")?\s*data-url="([^"]+)">([^<]+)<\/span>/g;
@@ -34,7 +43,7 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
       });
     };
 
-    // Check if content contains Amazon product markers
+    // Check if processedContent contains Amazon product markers
     const amazonProductRegex = /\[AMAZON_PRODUCT:(https?:\/\/[^:]+):([^\]]+)\]/g;
 
     // Function to process timecodes and make them clickable
@@ -84,7 +93,7 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
     
     // First find regular Amazon links
     amazonLinkRegex.lastIndex = 0;
-    while ((match = amazonLinkRegex.exec(content)) !== null) {
+    while ((match = amazonLinkRegex.exec(processedContent)) !== null) {
       amazonMatches.push({
         start: match.index,
         end: match.index + match[0].length,
@@ -96,7 +105,7 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
     
     // Then find Amazon product markers
     amazonProductRegex.lastIndex = 0;
-    while ((match = amazonProductRegex.exec(content)) !== null) {
+    while ((match = amazonProductRegex.exec(processedContent)) !== null) {
       amazonMatches.push({
         start: match.index,
         end: match.index + match[0].length,
@@ -109,7 +118,7 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
     // Find all galleries
     const galleryMatches = [];
     galleryRegex.lastIndex = 0;
-    while ((match = galleryRegex.exec(content)) !== null) {
+    while ((match = galleryRegex.exec(processedContent)) !== null) {
       const galleryContent = match[1];
       const imageRegex = /<img src="([^"]+)" alt="([^"]*)" class="gallery-image" \/>/g;
       const images = [];
@@ -135,7 +144,7 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
     // Find all YouTube videos
     const youtubeMatches = [];
     youtubeRegex.lastIndex = 0;
-    while ((match = youtubeRegex.exec(content)) !== null) {
+    while ((match = youtubeRegex.exec(processedContent)) !== null) {
       const fullUrl = match[1];
       const videoId = match[2];
       
@@ -161,15 +170,15 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
     allMatches.forEach((match, index) => {
       // Add content before this match
       if (match.start > lastIndex) {
-        const beforeContent = content.substring(lastIndex, match.start);
+        const beforeContent = processedContent.substring(lastIndex, match.start);
         if (beforeContent.trim()) {
           // Process markdown formatting: bold first, then images, then URLs, then line breaks
-          const processedContent = processMarkdownImages(processMarkdownBold(convertUrlsToLinks(beforeContent))).replace(/\n/g, '<br>');
+          const processedBeforeContent = processMarkdownImages(processMarkdownBold(convertUrlsToLinks(beforeContent))).replace(/\n/g, '<br>');
           parts.push(
             <div 
               key={`content-${lastIndex}`}
               className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
-              dangerouslySetInnerHTML={{ __html: processedContent }}
+              dangerouslySetInnerHTML={{ __html: processedBeforeContent }}
               onClick={(e) => {
                 // Handle clicks on markdown images
                 const target = e.target as HTMLImageElement;
@@ -269,16 +278,16 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
     });
     
     // Add remaining content
-    if (lastIndex < content.length) {
-      const remainingContent = content.substring(lastIndex);
+    if (lastIndex < processedContent.length) {
+      const remainingContent = processedContent.substring(lastIndex);
       if (remainingContent.trim()) {
         // Process markdown formatting: bold first, then images, then URLs, then timecodes, then line breaks
-        const processedContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(remainingContent)))).replace(/\n/g, '<br>');
+        const processedRemainingContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(remainingContent)))).replace(/\n/g, '<br>');
         parts.push(
           <span 
             key={`remaining-${lastIndex}`}
             className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
-            dangerouslySetInnerHTML={{ __html: processedContent }}
+            dangerouslySetInnerHTML={{ __html: processedRemainingContent }}
             onClick={(e) => {
               // Handle clicks on markdown images
               const target = e.target as HTMLImageElement;
@@ -297,7 +306,7 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
       const amazonMatches = [];
       let match;
       amazonProductRegex.lastIndex = 0;
-      while ((match = amazonProductRegex.exec(content)) !== null) {
+      while ((match = amazonProductRegex.exec(processedContent)) !== null) {
         amazonMatches.push({
           fullMatch: match[0],
           url: match[1],
@@ -313,13 +322,13 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
         amazonMatches.forEach((amazonMatch, idx) => {
           // Add content before this Amazon product
           if (amazonMatch.index > lastIndex) {
-            const beforeContent = content.substring(lastIndex, amazonMatch.index);
-            const processedContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(beforeContent)))).replace(/\n/g, '<br>');
+            const beforeContent = processedContent.substring(lastIndex, amazonMatch.index);
+            const processedBeforeContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(beforeContent)))).replace(/\n/g, '<br>');
             contentParts.push(
               <div 
                 key={`before-${idx}`}
                 className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
-                dangerouslySetInnerHTML={{ __html: processedContent }}
+                dangerouslySetInnerHTML={{ __html: processedBeforeContent }}
                 onClick={(e) => {
                   const target = e.target as HTMLImageElement;
                   if (target.tagName === 'IMG' && target.classList.contains('markdown-image')) {
@@ -339,14 +348,14 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
         });
         
         // Add remaining content
-        if (lastIndex < content.length) {
-          const afterContent = content.substring(lastIndex);
-          const processedContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(afterContent)))).replace(/\n/g, '<br>');
+        if (lastIndex < processedContent.length) {
+          const afterContent = processedContent.substring(lastIndex);
+          const processedAfterContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(afterContent)))).replace(/\n/g, '<br>');
           contentParts.push(
             <div 
               key="after"
               className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
-              dangerouslySetInnerHTML={{ __html: processedContent }}
+              dangerouslySetInnerHTML={{ __html: processedAfterContent }}
               onClick={(e) => {
                 const target = e.target as HTMLImageElement;
                 if (target.tagName === 'IMG' && target.classList.contains('markdown-image')) {
@@ -361,11 +370,11 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
       }
       
       // Process markdown formatting: bold first, then images, then URLs, then timecodes, then line breaks
-      const processedContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(content)))).replace(/\n/g, '<br>');
+      const processedFinalContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(processedContent)))).replace(/\n/g, '<br>');
       return (
         <div 
           className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
-          dangerouslySetInnerHTML={{ __html: processedContent }}
+          dangerouslySetInnerHTML={{ __html: processedFinalContent }}
           onClick={(e) => {
             // Handle clicks on markdown images
             const target = e.target as HTMLImageElement;
