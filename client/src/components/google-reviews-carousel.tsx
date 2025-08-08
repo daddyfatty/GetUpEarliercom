@@ -30,10 +30,29 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [expandedReviews, setExpandedReviews] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     fetchGoogleReviews();
   }, [placeId]);
+
+  // Helper function to truncate text to specified word count
+  const truncateText = (text: string, wordLimit: number = 40) => {
+    const words = text.split(' ');
+    if (words.length <= wordLimit) return { text, isTruncated: false };
+    return { text: words.slice(0, wordLimit).join(' '), isTruncated: true };
+  };
+
+  // Toggle expanded state for a review
+  const toggleExpanded = (reviewIndex: number) => {
+    const newExpanded = new Set(expandedReviews);
+    if (newExpanded.has(reviewIndex)) {
+      newExpanded.delete(reviewIndex);
+    } else {
+      newExpanded.add(reviewIndex);
+    }
+    setExpandedReviews(newExpanded);
+  };
 
   // Additional testimonials to supplement Google reviews
   const additionalTestimonials: GoogleReview[] = [
@@ -221,8 +240,13 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
       {/* Reviews Carousel */}
       <div className="relative">
         <div className={`flex gap-4 overflow-hidden mx-12 transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
-          {placeDetails.reviews.slice(currentReview, currentReview + 3).map((review, index) => (
-            <div key={`${currentReview}-${index}`} className="flex-1 min-w-0 rounded-lg p-4">
+          {placeDetails.reviews.slice(currentReview, currentReview + 3).map((review, index) => {
+            const globalIndex = currentReview + index;
+            const { text: truncatedText, isTruncated } = truncateText(review.text);
+            const isExpanded = expandedReviews.has(globalIndex);
+            
+            return (
+            <div key={`${currentReview}-${index}`} className="flex-1 min-w-0 rounded-lg p-4 h-auto min-h-[280px] flex flex-col">
               {/* Review Header */}
               <div className="flex items-start gap-3 mb-3">
                 <img
@@ -259,13 +283,25 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
               </div>
 
               {/* Review Text */}
-              <p className="text-white/90 text-sm leading-relaxed">
-                {review.text}
-              </p>
-
+              <div className="flex-1">
+                <p className="text-white/90 text-sm leading-relaxed mb-2">
+                  {isExpanded ? review.text : truncatedText}
+                  {isTruncated && !isExpanded && '...'}
+                </p>
+                
+                {isTruncated && (
+                  <button
+                    onClick={() => toggleExpanded(globalIndex)}
+                    className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors"
+                  >
+                    {isExpanded ? 'Read less' : 'Read more'}
+                  </button>
+                )}
+              </div>
 
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Navigation Arrows */}
