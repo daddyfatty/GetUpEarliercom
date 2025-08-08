@@ -38,6 +38,15 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
   // Additional testimonials to supplement Google reviews
   const additionalTestimonials: GoogleReview[] = [
     {
+      author_name: "James McNiff",
+      text: "Let me just say Mike definitely knows what he doing. I'm 48 years old and when I first started I couldn't do one push up or a pull up because of an old shoulder injury. This past week I was able to do 30 pull ups and 130 pushups in 25 minutes after a couple months training. If you are looking to get back into shape and need help I would 10000% work with Mike. Can't wait for my next session!",
+      rating: 5,
+      profile_photo_url: "/attached_assets/download - 2025-08-08T053258.626_1754645586619.png",
+      relative_time_description: "a day ago",
+      language: "en",
+      time: Date.now() - 1 * 24 * 60 * 60 * 1000 // 1 day ago
+    },
+    {
       author_name: "Marisol Cummings",
       text: "Peep the upper body strength on my sunrise snorkel on this first day of being 54! Managed to pull my ass in and out of this boat with no problems! Thanks Coach ❣️That's Saudi Arabia Mountains behind me 🙏🏾 I'm in the Gulf of Aqaba.",
       rating: 5,
