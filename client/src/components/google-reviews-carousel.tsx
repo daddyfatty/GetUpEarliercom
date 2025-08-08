@@ -250,7 +250,7 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
               </div>
 
               {/* Review Text */}
-              <p className="text-white/90 text-sm leading-relaxed line-clamp-4">
+              <p className="text-white/90 text-sm leading-relaxed">
                 {review.text}
               </p>
 
