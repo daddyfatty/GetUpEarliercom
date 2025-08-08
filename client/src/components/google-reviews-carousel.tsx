@@ -38,6 +38,15 @@ export default function GoogleReviewsCarousel({ placeId, className = "" }: Googl
   // Additional testimonials to supplement Google reviews
   const additionalTestimonials: GoogleReview[] = [
     {
+      author_name: "Casey Bjorkdahl",
+      text: "I've been training with Mike for close to a year now and have seen great results. My strength has increased exponentially, and I feel better overall with my body and mentally. He not only helps you become stronger, but he also coaches you on diet when you ask. If anyone is stuck in a rut or doing the same old routine without getting the results you were hoping for. Then I would recommend working with Mike. Thats what I did, and it paid off.",
+      rating: 5,
+      profile_photo_url: "/attached_assets/download - 2025-08-08T112056.096_1754666478414.png",
+      relative_time_description: "a few hours ago",
+      language: "en",
+      time: Date.now() - 2 * 60 * 60 * 1000 // 2 hours ago
+    },
+    {
       author_name: "James McNiff",
       text: "Let me just say Mike definitely knows what he doing. I'm 48 years old and when I first started I couldn't do one push up or a pull up because of an old shoulder injury. This past week I was able to do 30 pull ups and 130 pushups in 25 minutes after a couple months training. If you are looking to get back into shape and need help I would 10000% work with Mike. Can't wait for my next session!",
       rating: 5,
