@@ -124,6 +124,35 @@ export default function Home() {
   return (
     <div className="w-full">
       <HeroSection />
+      
+      {/* Combined Reviews Section */}
+      <section className="relative bg-[hsl(var(--navy))] overflow-hidden">
+        {/* Large Background Star */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <svg 
+            className="w-[1200px] h-[1200px] text-white/3 fill-current transition-transform duration-100 ease-out" 
+            style={{ transform: `rotate(${starRotation}deg)` }}
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+          </svg>
+        </div>
+        
+        <div className="relative z-10 py-16">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-white mb-4">What Our Clients Say</h2>
+              <p className="text-xl text-blue-100">Real Google reviews from real transformations</p>
+            </div>
+            <GoogleReviewsCarousel placeId="ChIJLQqz6P516IkRwqYD22g-_m8" />
+          </div>
+        </div>
+      </section>
+      
+      {/* Credentials Band */}
+      <CredentialsBand />
+      
       {/* Four-Card Two-Column Section */}
       <section className="py-4 sm:py-8 bg-gradient-to-b from-[#BCDCEC] via-[#E8F4F8] to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -356,32 +385,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* Combined Reviews Section */}
-      <section className="relative bg-[hsl(var(--navy))] overflow-hidden">
-        {/* Large Background Star */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <svg 
-            className="w-[1200px] h-[1200px] text-white/3 fill-current transition-transform duration-100 ease-out" 
-            style={{ transform: `rotate(${starRotation}deg)` }}
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-          </svg>
-        </div>
-        
-        <div className="relative z-10 py-16">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-white mb-4">What Our Clients Say</h2>
-              <p className="text-xl text-blue-100">Real Google reviews from real transformations</p>
-            </div>
-            <GoogleReviewsCarousel placeId="ChIJLQqz6P516IkRwqYD22g-_m8" />
-          </div>
-        </div>
-      </section>
-      {/* Credentials Band */}
-      <CredentialsBand />
       <BookPromotion />
     </div>
   );
