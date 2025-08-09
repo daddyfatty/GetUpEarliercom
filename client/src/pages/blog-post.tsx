@@ -602,7 +602,17 @@ export default function BlogPost() {
             <div className="mb-8">
               <div className="aspect-video w-full bg-black rounded-lg overflow-hidden shadow-lg">
                 <iframe
-                  src={post.videoUrl}
+                  src={(() => {
+                    // Convert YouTube watch URL to embed URL
+                    if (post.videoUrl.includes('youtube.com/watch?v=')) {
+                      const videoId = post.videoUrl.split('v=')[1]?.split('&')[0];
+                      return `https://www.youtube.com/embed/${videoId}`;
+                    } else if (post.videoUrl.includes('youtu.be/')) {
+                      const videoId = post.videoUrl.split('youtu.be/')[1]?.split('?')[0];
+                      return `https://www.youtube.com/embed/${videoId}`;
+                    }
+                    return post.videoUrl; // Already in embed format or other video source
+                  })()}
                   title={post.title}
                   className="w-full h-full border-0"
                   allowFullScreen
