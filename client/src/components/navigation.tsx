@@ -264,9 +264,9 @@ export function Navigation() {
                     <ChevronDown className="ml-1 h-3 w-3" />
                   </div>
                   <div className="absolute top-full left-0 -mt-[1px] pt-[1px] invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 z-50">
-                    <div className="bg-gradient-to-br from-white via-orange-50 to-orange-100 dark:from-gray-800 dark:to-gray-900 shadow-2xl rounded-lg border-2 border-orange-300 dark:border-gray-700 mt-1 min-w-[620px] overflow-hidden">
+                    <div className="bg-gradient-to-br from-white via-blue-50 to-sky-100 dark:from-gray-800 dark:to-gray-900 shadow-2xl rounded-lg border-2 border-blue-300 dark:border-gray-700 mt-1 min-w-[620px] overflow-hidden">
                       <Link href="/blog" className="block relative overflow-hidden group/all">
-                        <div className="absolute inset-0 bg-gradient-to-r from-orange-500 via-orange-550 to-orange-600"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600"></div>
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover/all:translate-x-full transition-transform duration-500"></div>
                         <div className="relative px-6 py-5 flex items-center justify-between group-hover/all:translate-x-1 transition-transform">
                           <span className="font-bold text-white text-lg flex items-center">
@@ -282,22 +282,22 @@ export function Navigation() {
                       </Link>
                       {topCategories.length > 0 && (
                         <>
-                          <div className="px-6 py-3 bg-gradient-to-r from-orange-100 to-orange-50 dark:from-gray-800 dark:to-gray-800/50 border-b border-orange-200/50 dark:border-gray-700">
-                            <span className="text-xs font-bold text-orange-700 dark:text-orange-400 uppercase tracking-wider">
-                              Top Categories
+                          <div className="px-6 py-3 bg-gradient-to-r from-sky-100 via-blue-100 to-indigo-100 dark:from-gray-800 dark:to-gray-800/50 border-b border-blue-200/50 dark:border-gray-700">
+                            <span className="text-xs font-bold text-blue-700 dark:text-blue-400 uppercase tracking-wider flex items-center">
+                              <span className="mr-2">✨</span> Top Categories
                             </span>
                           </div>
-                          <div className="grid grid-cols-2 gap-x-8 gap-y-2 px-6 py-5 bg-white/50 dark:bg-gray-900/50">
+                          <div className="grid grid-cols-2 gap-x-10 gap-y-2 px-6 py-5 bg-gradient-to-br from-white via-sky-50/30 to-blue-50/30 dark:from-gray-900/50 dark:to-gray-800/50">
                             {topCategories.map((category: { name: string; count: number }) => (
                               <Link 
                                 key={category.name} 
                                 href={`/category/${encodeURIComponent(category.name.toLowerCase())}`} 
-                                className="group/item flex items-center justify-between py-2.5 px-3 rounded-lg hover:bg-orange-200/50 dark:hover:bg-gray-700 transition-all hover:shadow-md"
+                                className="group/item flex items-center justify-between py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-sky-100 hover:to-blue-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-blue-200 dark:hover:border-gray-600"
                               >
-                                <span className="capitalize text-sm font-semibold text-gray-800 dark:text-gray-300 group-hover/item:text-orange-700 dark:group-hover/item:text-orange-400 whitespace-nowrap">
+                                <span className="capitalize text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-blue-700 dark:group-hover/item:text-blue-400 whitespace-nowrap">
                                   {category.name.replace(/-/g, ' ')}
                                 </span>
-                                <span className="text-xs font-bold text-white bg-gradient-to-r from-orange-500 to-orange-600 px-2.5 py-1 rounded-full ml-4 shadow-sm">
+                                <span className="text-xs font-bold text-white bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 px-3 py-1.5 rounded-full ml-4 shadow-md">
                                   {category.count}
                                 </span>
                               </Link>
