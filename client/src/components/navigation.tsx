@@ -11,6 +11,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Menu, Bell, User, LogOut, ChevronDown, ChevronRight, Mail } from "lucide-react";
 import { SiFacebook, SiYoutube } from "react-icons/si";
+import { useQuery } from "@tanstack/react-query";
 import logoPath from "@assets/AI-Wintrer-Runner5_1754078126180.png";
 
 export function Navigation() {
@@ -23,9 +24,20 @@ export function Navigation() {
   const [isCalculatorsOpen, setIsCalculatorsOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isBlogDropdownOpen, setIsBlogDropdownOpen] = useState(false);
   const { user, isAuthenticated, login, logout } = useAuth();
   const isAdmin = user?.email === "admin@getupear.lier.com";
   const { toast } = useToast();
+  
+  // Fetch top categories for blog dropdown
+  const { data: topCategories = [] } = useQuery({
+    queryKey: ['/api/blog/categories/top'],
+    queryFn: async () => {
+      const response = await fetch('/api/blog/categories/top?limit=10');
+      if (!response.ok) throw new Error('Failed to fetch categories');
+      return response.json();
+    }
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -238,18 +250,51 @@ export function Navigation() {
                   </span>
                 </Link>
                 
-                {/* Blog */}
-                <Link href="/blog">
-                  <span
-                    className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
-                      location === "/blog"
-                        ? "text-[hsl(var(--orange))] bg-white/10"
-                        : "text-white hover:text-[hsl(var(--orange))]"
-                    }`}
+                {/* Blog with Dropdown */}
+                <DropdownMenu open={isBlogDropdownOpen} onOpenChange={setIsBlogDropdownOpen}>
+                  <DropdownMenuTrigger asChild>
+                    <div
+                      className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                        location.startsWith("/blog") || location.startsWith("/category")
+                          ? "text-[hsl(var(--orange))] bg-white/10"
+                          : "text-white hover:text-[hsl(var(--orange))]"
+                      }`}
+                      onMouseEnter={() => setIsBlogDropdownOpen(true)}
+                      onMouseLeave={() => setIsBlogDropdownOpen(false)}
+                    >
+                      Blog
+                      <ChevronDown className="ml-1 h-3 w-3" />
+                    </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent 
+                    className="w-56 bg-white dark:bg-gray-800 shadow-lg"
+                    onMouseEnter={() => setIsBlogDropdownOpen(true)}
+                    onMouseLeave={() => setIsBlogDropdownOpen(false)}
                   >
-                    Blog
-                  </span>
-                </Link>
+                    <DropdownMenuItem asChild>
+                      <Link href="/blog" className="cursor-pointer">
+                        <span className="font-medium">All Posts</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    {topCategories.length > 0 && (
+                      <>
+                        <div className="px-2 py-1.5 text-xs font-semibold text-gray-500 dark:text-gray-400">
+                          TOP CATEGORIES
+                        </div>
+                        {topCategories.map((category: { name: string; count: number }) => (
+                          <DropdownMenuItem key={category.name} asChild>
+                            <Link href={`/category/${encodeURIComponent(category.name.toLowerCase())}`} className="cursor-pointer">
+                              <div className="w-full flex justify-between items-center">
+                                <span className="capitalize">{category.name.replace(/-/g, ' ')}</span>
+                                <span className="text-xs text-gray-500 dark:text-gray-400">({category.count})</span>
+                              </div>
+                            </Link>
+                          </DropdownMenuItem>
+                        ))}
+                      </>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 
                 {/* Recipes */}
                 <Link href="/recipes">
@@ -520,18 +565,51 @@ export function Navigation() {
                       </span>
                     </Link>
                     
-                    {/* Blog */}
-                    <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)}>
-                      <span
-                        className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading flex items-center ${
-                          location === "/blog"
-                            ? "text-[hsl(var(--orange))] bg-orange-50"
-                            : "text-gray-900 hover:text-[hsl(var(--orange))]"
-                        }`}
-                      >
-                        Blog
-                      </span>
-                    </Link>
+                    {/* Blog with Categories */}
+                    <Collapsible>
+                      <CollapsibleTrigger className="flex items-center justify-between w-full px-3 py-2 text-left">
+                        <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="flex-1">
+                          <span
+                            className={`block text-base font-medium transition-colors cursor-pointer uppercase font-heading ${
+                              location.startsWith("/blog") || location.startsWith("/category")
+                                ? "text-[hsl(var(--orange))]"
+                                : "text-gray-900 hover:text-[hsl(var(--orange))]"
+                            }`}
+                          >
+                            Blog
+                          </span>
+                        </Link>
+                        <ChevronDown className="h-4 w-4 text-gray-500" />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="space-y-1 mt-2">
+                        <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)}>
+                          <span className="block px-6 py-2 text-sm text-gray-600 hover:text-[hsl(var(--orange))] hover:bg-orange-50 rounded-md cursor-pointer">
+                            All Posts
+                          </span>
+                        </Link>
+                        {topCategories.length > 0 && (
+                          <>
+                            <div className="px-6 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                              Top Categories
+                            </div>
+                            {topCategories.map((category: { name: string; count: number }) => (
+                              <Link 
+                                key={category.name} 
+                                href={`/category/${encodeURIComponent(category.name.toLowerCase())}`} 
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                <span className="block px-6 py-2 text-sm text-gray-600 hover:text-[hsl(var(--orange))] hover:bg-orange-50 rounded-md cursor-pointer">
+                                  <div className="flex justify-between items-center">
+                                    <span className="capitalize">{category.name.replace(/-/g, ' ')}</span>
+                                    <span className="text-xs text-gray-400">({category.count})</span>
+                                  </div>
+                                </span>
+                              </Link>
+                            ))}
+                          </>
+                        )}
+                      </CollapsibleContent>
+                    </Collapsible>
                     
                     {/* Recipes */}
                     <Link href="/recipes" onClick={() => setIsMobileMenuOpen(false)}>

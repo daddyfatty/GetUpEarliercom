@@ -586,6 +586,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: 'Failed to fetch blog post' });
     }
   });
+  
+  // Get top categories by post count
+  app.get("/api/blog/categories/top", async (req, res) => {
+    try {
+      const limit = parseInt(req.query.limit as string) || 10;
+      const posts = await storage.getAllBlogPosts();
+      
+      // Count posts per category
+      const categoryCount: Record<string, number> = {};
+      
+      for (const post of posts) {
+        // Check both category and categories fields
+        if (post.category) {
+          categoryCount[post.category] = (categoryCount[post.category] || 0) + 1;
+        }
+        if (post.categories && Array.isArray(post.categories)) {
+          for (const cat of post.categories) {
+            categoryCount[cat] = (categoryCount[cat] || 0) + 1;
+          }
+        }
+      }
+      
+      // Sort by count and take top N
+      const topCategories = Object.entries(categoryCount)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, limit)
+        .map(([name, count]) => ({ name, count }));
+      
+      res.json(topCategories);
+    } catch (error) {
+      console.error('Error fetching top categories:', error);
+      res.status(500).json({ error: 'Failed to fetch top categories' });
+    }
+  });
+  
   app.post("/api/blog", cmsCreateBlogPost);
   app.put("/api/blog/:id", cmsUpdateBlogPost);
   app.delete("/api/blog/:id", cmsDeleteBlogPost);
