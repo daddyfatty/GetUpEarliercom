@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { saveSitemapToDisk } from "./sitemap-generator";
+import { pool } from './db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -180,9 +181,6 @@ app.get('/calorie-calculator-clean', (req, res, next) => {
   next();
 });
 
-// Import database for blog post fetching
-import pool from './db';
-
 // Middleware to inject meta tags for blog posts (only for social media crawlers)
 app.get('/blog/:slug', async (req, res, next) => {
   const userAgent = req.get('User-Agent') || '';
@@ -194,6 +192,9 @@ app.get('/blog/:slug', async (req, res, next) => {
     const { slug } = req.params;
     
     try {
+      // Import pool from db
+      const { pool } = await import('./db.js');
+      
       // Fetch blog post data from database
       const result = await pool.query(
         'SELECT title, description, image_url, content FROM blog_posts WHERE slug = $1',

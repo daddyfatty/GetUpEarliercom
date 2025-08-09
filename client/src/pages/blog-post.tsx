@@ -97,15 +97,54 @@ export default function BlogPost() {
   );
 
   // SEO Integration - Run appropriate SEO based on post type
+  // Enhanced SEO for detox/cleanse blog post
+  const getSEODescription = () => {
+    if (!post) return '';
+    
+    // Special SEO description for detox post
+    if (post.slug === 'no-such-thing-as-detox-cleanse') {
+      return 'Learn the truth about detox cleanses. Real food is your body\'s natural cleanse - no expensive juices or pills needed. Discover how to eat clean with whole foods that have simple ingredients you can pronounce.';
+    }
+    
+    return post.excerpt || post.content.substring(0, 160).replace(/[#*\[\]]/g, '');
+  };
+
+  const getSEOKeywords = () => {
+    if (!post) return [];
+    
+    // Enhanced keywords for detox post
+    if (post.slug === 'no-such-thing-as-detox-cleanse') {
+      return [
+        'detox cleanse truth',
+        'clean eating',
+        'whole foods',
+        'real food diet',
+        'natural detox',
+        'avoid processed foods',
+        'healthy eating',
+        'nutrition coaching',
+        'food toxins',
+        'clean ingredients',
+        ...(post.categories || [])
+      ];
+    }
+    
+    return post.categories || [post.category].filter(Boolean);
+  };
+
   useSEO(
     isTrainingLogEntry ? 'training-log' : 'blog',
     post ? {
-      title: post.title,
-      description: post.excerpt || post.content.substring(0, 160),
+      title: post.slug === 'no-such-thing-as-detox-cleanse' 
+        ? 'No Such Thing as Detox Cleanse - The Truth About Clean Eating | Get Up Earlier'
+        : post.title,
+      description: getSEODescription(),
       image: post.imageUrl,
       author: post.author,
       publishedDate: post.publishedDate,
-      keywords: post.categories || [post.category].filter(Boolean)
+      keywords: getSEOKeywords(),
+      ogType: 'article',
+      canonicalUrl: `https://getupearlier.com/blog/${post.slug}`
     } : {}
   );
 
