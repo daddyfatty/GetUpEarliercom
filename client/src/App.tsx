@@ -96,7 +96,7 @@ function Router() {
         <Route path="/services/private-yoga" component={PrivateYoga} />
         <Route path="/services/small-group-yoga" component={SmallGroupYoga} />
           <Route path="/contact" component={Contact} />
-          <Route path="/team/michael" component={TeamMichael} />
+          <Route path="/team/michael" component={About} />
           <Route path="/team/erica" component={TeamErica} />
           <Route path="/profile" component={Profile} />
           <Route path="/favorites" component={Favorites} />

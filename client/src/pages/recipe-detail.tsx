@@ -543,7 +543,7 @@ export default function RecipeDetail() {
                   
                   {/* Author Attribution */}
                   {(recipe as any).authorId && (recipe as any).authorName && (recipe as any).authorPhoto && (
-                    <Link href={`/team/${(recipe as any).authorId}`} className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+                    <Link href="/about" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
                       <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-amber-200 dark:border-amber-600">
                         <img 
                           src={(recipe as any).authorPhoto} 

@@ -38,7 +38,7 @@ export default function Team() {
           <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-stretch">
             
             {/* Michael Baker */}
-            <Link href="/team/michael">
+            <Link href="/about">
               <Card className="cursor-pointer transition-all duration-300 hover:shadow-2xl hover:scale-105 group bg-white/70 backdrop-blur-sm border-0 shadow-xl overflow-hidden h-full flex flex-col">
                 <div className="relative flex-1 flex flex-col">
                   {/* Gradient overlay */}
