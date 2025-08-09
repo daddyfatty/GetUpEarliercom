@@ -263,31 +263,43 @@ export function Navigation() {
                     Blog
                     <ChevronDown className="ml-1 h-3 w-3" />
                   </div>
-                  <div className="absolute top-full left-0 -mt-[1px] pt-[1px] invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200">
-                    <div className="bg-white dark:bg-gray-800 shadow-xl rounded-md border border-gray-200 dark:border-gray-700 mt-1 min-w-[400px]">
-                      <Link href="/blog" className="block px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-b border-gray-200 dark:border-gray-700">
-                        <span className="font-medium text-gray-900 dark:text-white">All Posts</span>
+                  <div className="absolute top-full left-0 -mt-[1px] pt-[1px] invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 z-50">
+                    <div className="bg-gradient-to-br from-white via-orange-50 to-orange-100 dark:from-gray-800 dark:to-gray-900 shadow-2xl rounded-lg border-2 border-orange-300 dark:border-gray-700 mt-1 min-w-[620px] overflow-hidden">
+                      <Link href="/blog" className="block relative overflow-hidden group/all">
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-500 via-orange-550 to-orange-600"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover/all:translate-x-full transition-transform duration-500"></div>
+                        <div className="relative px-6 py-5 flex items-center justify-between group-hover/all:translate-x-1 transition-transform">
+                          <span className="font-bold text-white text-lg flex items-center">
+                            <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                            </svg>
+                            View All Blog Posts
+                          </span>
+                          <svg className="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                          </svg>
+                        </div>
                       </Link>
                       {topCategories.length > 0 && (
                         <>
-                          <div className="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                            Top Categories
+                          <div className="px-6 py-3 bg-gradient-to-r from-orange-100 to-orange-50 dark:from-gray-800 dark:to-gray-800/50 border-b border-orange-200/50 dark:border-gray-700">
+                            <span className="text-xs font-bold text-orange-700 dark:text-orange-400 uppercase tracking-wider">
+                              Top Categories
+                            </span>
                           </div>
-                          <div className="grid grid-cols-2 gap-x-4 px-4 pb-3">
+                          <div className="grid grid-cols-2 gap-x-8 gap-y-2 px-6 py-5 bg-white/50 dark:bg-gray-900/50">
                             {topCategories.map((category: { name: string; count: number }) => (
                               <Link 
                                 key={category.name} 
                                 href={`/category/${encodeURIComponent(category.name.toLowerCase())}`} 
-                                className="block py-2 hover:text-[hsl(var(--orange))] transition-colors"
+                                className="group/item flex items-center justify-between py-2.5 px-3 rounded-lg hover:bg-orange-200/50 dark:hover:bg-gray-700 transition-all hover:shadow-md"
                               >
-                                <div className="flex justify-between items-center">
-                                  <span className="capitalize text-sm text-gray-700 dark:text-gray-300">
-                                    {category.name.replace(/-/g, ' ')}
-                                  </span>
-                                  <span className="text-xs text-gray-400 dark:text-gray-500 ml-2">
-                                    {category.count}
-                                  </span>
-                                </div>
+                                <span className="capitalize text-sm font-semibold text-gray-800 dark:text-gray-300 group-hover/item:text-orange-700 dark:group-hover/item:text-orange-400 whitespace-nowrap">
+                                  {category.name.replace(/-/g, ' ')}
+                                </span>
+                                <span className="text-xs font-bold text-white bg-gradient-to-r from-orange-500 to-orange-600 px-2.5 py-1 rounded-full ml-4 shadow-sm">
+                                  {category.count}
+                                </span>
                               </Link>
                             ))}
                           </div>
