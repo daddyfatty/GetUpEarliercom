@@ -194,7 +194,7 @@ app.get('/blog/:slug', async (req, res, next) => {
       
       // Fetch blog post data from database
       const result = await pool.query(
-        'SELECT title, excerpt, content, featured_image_url FROM blog_posts WHERE slug = $1',
+        'SELECT title, excerpt, content, image_url FROM blog_posts WHERE slug = $1',
         [slug]
       );
       
@@ -226,7 +226,7 @@ app.get('/blog/:slug', async (req, res, next) => {
             if (description.length === 160) description += '...';
           }
           
-          imageUrl = post.featured_image_url || '/get-up-earlier-og-image.jpg';
+          imageUrl = post.image_url || '/get-up-earlier-og-image.jpg';
         }
         
         // Use featured image with full URL
