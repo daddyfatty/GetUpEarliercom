@@ -590,13 +590,286 @@ export default function BlogPost() {
           {/* Article Content */}
           <div className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg border border-gray-200 dark:border-gray-700">
             <div className="prose prose-lg max-w-none dark:prose-invert">
-              <BlogContentRenderer 
-                content={post.content} 
-                onImageClick={(imageSrc) => {
-                  setLightboxImage(imageSrc);
-                  setLightboxOpen(true);
-                }} 
-              />
+              {/* For detox post, split content and add gallery in middle */}
+              {post.slug === 'no-such-thing-as-detox-cleanse' ? (
+                <>
+                  {/* First half of content */}
+                  <BlogContentRenderer 
+                    content={post.content.split('This is how you cleanse toxins.')[0]} 
+                    onImageClick={(imageSrc) => {
+                      setLightboxImage(imageSrc);
+                      setLightboxOpen(true);
+                    }} 
+                  />
+                  
+                  {/* Real Food Gallery - Halfway through */}
+                  <div className="my-8 -mx-8 px-8">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Real Food Gallery</h2>
+                    <p className="text-gray-600 dark:text-gray-400 mb-6">
+                      Examples of real, whole foods with simple ingredients you can actually pronounce:
+                    </p>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                      {/* Homemade Granola */}
+                      <div 
+                        className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                        onClick={() => {
+                          setLightboxImage("/attached_assets/download - 2025-08-09T060535.929_1754737651717.png");
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src="/attached_assets/download - 2025-08-09T060535.929_1754737651717.png"
+                          alt="Homemade granola chunk with real ingredients"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                          <p className="text-white text-sm font-semibold">Homemade Granola</p>
+                        </div>
+                      </div>
+
+                      {/* Rotisserie Chicken */}
+                      <div 
+                        className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                        onClick={() => {
+                          setLightboxImage("/attached_assets/download - 2025-08-09T060518.457_1754737651717.png");
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src="/attached_assets/download - 2025-08-09T060518.457_1754737651717.png"
+                          alt="Fresh shredded rotisserie chicken"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                          <p className="text-white text-sm font-semibold">Rotisserie Chicken</p>
+                        </div>
+                      </div>
+
+                      {/* Chicken Salad */}
+                      <div 
+                        className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                        onClick={() => {
+                          setLightboxImage("/attached_assets/download - 2025-08-09T060514.102_1754737651717.png");
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src="/attached_assets/download - 2025-08-09T060514.102_1754737651717.png"
+                          alt="Fresh chicken salad with bacon and vegetables"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                          <p className="text-white text-sm font-semibold">Chicken & Veggies</p>
+                        </div>
+                      </div>
+
+                      {/* Ground Turkey Rice Bowl */}
+                      <div 
+                        className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                        onClick={() => {
+                          setLightboxImage("/attached_assets/download - 2025-08-09T060510.193_1754737651718.png");
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src="/attached_assets/download - 2025-08-09T060510.193_1754737651718.png"
+                          alt="Ground turkey over rice with tomatoes"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                          <p className="text-white text-sm font-semibold">Turkey Rice Bowl</p>
+                        </div>
+                      </div>
+
+                      {/* Shrimp & Cauliflower Rice */}
+                      <div 
+                        className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                        onClick={() => {
+                          setLightboxImage("/attached_assets/download - 2025-08-09T060506.194_1754737651718.png");
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src="/attached_assets/download - 2025-08-09T060506.194_1754737651718.png"
+                          alt="Shrimp with cauliflower rice and fresh salad"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                          <p className="text-white text-sm font-semibold">Shrimp & Cauliflower</p>
+                        </div>
+                      </div>
+
+                      {/* Wild Caught Tuna */}
+                      <div 
+                        className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                        onClick={() => {
+                          setLightboxImage("/attached_assets/download - 2025-08-09T060502.391_1754737651718.png");
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src="/attached_assets/download - 2025-08-09T060502.391_1754737651718.png"
+                          alt="Wild caught albacore tuna - clean protein"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                          <p className="text-white text-sm font-semibold">Wild Caught Tuna</p>
+                        </div>
+                      </div>
+
+                      {/* Fresh Eggs & Steak */}
+                      <div 
+                        className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                        onClick={() => {
+                          setLightboxImage("/attached_assets/download - 2025-08-09T060457.927_1754737651718.png");
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src="/attached_assets/download - 2025-08-09T060457.927_1754737651718.png"
+                          alt="Fresh eggs and grass-fed steak from Aldi"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                          <p className="text-white text-sm font-semibold">Eggs & Steak</p>
+                        </div>
+                      </div>
+
+                      {/* Grilled Chicken 164°F */}
+                      <div 
+                        className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                        onClick={() => {
+                          setLightboxImage("/attached_assets/download - 2025-08-09T060453.441_1754737651719.png");
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src="/attached_assets/download - 2025-08-09T060453.441_1754737651719.png"
+                          alt="Perfectly grilled chicken at 164°F"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                          <p className="text-white text-sm font-semibold">Grilled Chicken</p>
+                        </div>
+                      </div>
+
+                      {/* Vegetable Soup */}
+                      <div 
+                        className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                        onClick={() => {
+                          setLightboxImage("/attached_assets/download - 2025-08-09T060448.950_1754737651719.png");
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src="/attached_assets/download - 2025-08-09T060448.950_1754737651719.png"
+                          alt="Homemade vegetable soup with kale and carrots"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                          <p className="text-white text-sm font-semibold">Vegetable Soup</p>
+                        </div>
+                      </div>
+
+                      {/* Kale Soup */}
+                      <div 
+                        className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                        onClick={() => {
+                          setLightboxImage("/attached_assets/download - 2025-08-09T060444.950_1754737651719.png");
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src="/attached_assets/download - 2025-08-09T060444.950_1754737651719.png"
+                          alt="Fresh kale soup with vegetables"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                          <p className="text-white text-sm font-semibold">Kale Soup</p>
+                        </div>
+                      </div>
+
+                      {/* Ice Cream Ingredients */}
+                      <div 
+                        className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                        onClick={() => {
+                          setLightboxImage("/attached_assets/download - 2025-08-09T060440.641_1754737651719.png");
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src="/attached_assets/download - 2025-08-09T060440.641_1754737651719.png"
+                          alt="Real ingredients for homemade ice cream"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                          <p className="text-white text-sm font-semibold">Real Ice Cream Ingredients</p>
+                        </div>
+                      </div>
+
+                      {/* Homemade Ice Cream */}
+                      <div 
+                        className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                        onClick={() => {
+                          setLightboxImage("/attached_assets/download - 2025-08-09T060436.349_1754737651720.png");
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src="/attached_assets/download - 2025-08-09T060436.349_1754737651720.png"
+                          alt="Homemade ice cream with real ingredients"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                          <p className="text-white text-sm font-semibold">Homemade Ice Cream</p>
+                        </div>
+                      </div>
+
+                      {/* Salmon & Eggs */}
+                      <div 
+                        className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group relative bg-gray-100 dark:bg-gray-700"
+                        onClick={() => {
+                          setLightboxImage("/attached_assets/download - 2025-08-09T060425.950_1754737651720.png");
+                          setLightboxOpen(true);
+                        }}
+                      >
+                        <img
+                          src="/attached_assets/download - 2025-08-09T060425.950_1754737651720.png"
+                          alt="Fresh salmon and organic eggs"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                          <p className="text-white text-sm font-semibold">Salmon & Eggs</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                      <p className="text-sm text-blue-900 dark:text-blue-100">
+                        <strong>Remember:</strong> Real food doesn't need a long ingredient list. If it grew from the ground, walked, swam, or flew - it's real food. 
+                        These whole foods are naturally free from artificial colors, preservatives, and mysterious chemicals.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Second half of content */}
+                  <BlogContentRenderer 
+                    content={'This is how you cleanse toxins.' + (post.content.split('This is how you cleanse toxins.')[1] || '')} 
+                    onImageClick={(imageSrc) => {
+                      setLightboxImage(imageSrc);
+                      setLightboxOpen(true);
+                    }} 
+                  />
+                </>
+              ) : (
+                /* Regular content for other posts */
+                <BlogContentRenderer 
+                  content={post.content} 
+                  onImageClick={(imageSrc) => {
+                    setLightboxImage(imageSrc);
+                    setLightboxOpen(true);
+                  }} 
+                />
+              )}
             </div>
           </div>
 
