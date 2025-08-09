@@ -333,14 +333,15 @@ export function Navigation() {
                 {/* Contact - Email Icon */}
                 <Link href="/contact">
                   <span
-                    className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer flex items-center ${
+                    className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
                       location === "/contact"
                         ? "text-[hsl(var(--orange))] bg-white/10"
                         : "text-white hover:text-[hsl(var(--orange))]"
                     }`}
                     title="Contact Us"
                   >
-                    <Mail className="h-5 w-5" />
+                    <Mail className="h-5 w-5 mr-2" />
+                    Contact
                   </span>
                 </Link>
               </div>
