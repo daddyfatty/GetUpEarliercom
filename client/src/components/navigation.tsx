@@ -261,8 +261,8 @@ export function Navigation() {
                     }`}
                   >
                     Recipes
-                    <span className="ml-1 text-[10px] bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
-                      BETA
+                    <span className="ml-1 text-[8px] bg-gray-500/50 text-gray-200 px-1 py-0 rounded font-normal">
+                      beta
                     </span>
                   </span>
                 </Link>
@@ -277,8 +277,8 @@ export function Navigation() {
                     }`}
                   >
                     Workouts & Challenges
-                    <span className="ml-1 text-[10px] bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
-                      BETA
+                    <span className="ml-1 text-[8px] bg-gray-500/50 text-gray-200 px-1 py-0 rounded font-normal">
+                      beta
                     </span>
                   </span>
                 </Link>
@@ -296,8 +296,8 @@ export function Navigation() {
                       }`}
                     >
                       Calculators
-                      <span className="ml-1 text-[10px] bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
-                        BETA
+                      <span className="ml-1 text-[8px] bg-gray-500/50 text-gray-200 px-1 py-0 rounded font-normal">
+                        beta
                       </span>
                       <ChevronDown className="ml-1 h-4 w-4" />
                     </span>
@@ -543,8 +543,8 @@ export function Navigation() {
                         }`}
                       >
                         Recipes
-                        <span className="ml-2 text-[10px] bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
-                          BETA
+                        <span className="ml-2 text-[8px] bg-gray-500/50 text-gray-600 px-1 py-0 rounded font-normal">
+                          beta
                         </span>
                       </span>
                     </Link>
@@ -559,8 +559,8 @@ export function Navigation() {
                         }`}
                       >
                         Workouts & Challenges
-                        <span className="ml-2 text-[10px] bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
-                          BETA
+                        <span className="ml-2 text-[8px] bg-gray-500/50 text-gray-600 px-1 py-0 rounded font-normal">
+                          beta
                         </span>
                       </span>
                     </Link>
@@ -587,8 +587,8 @@ export function Navigation() {
                       <CollapsibleTrigger className="flex items-center justify-between w-full px-3 py-2 text-left border-t pt-4">
                         <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider flex items-center">
                           Calculators
-                          <span className="ml-2 text-[10px] bg-orange-500 text-white px-1 py-0.5 rounded-sm font-normal">
-                            BETA
+                          <span className="ml-2 text-[8px] bg-gray-500/50 text-gray-600 px-1 py-0 rounded font-normal">
+                            beta
                           </span>
                         </span>
                         <ChevronRight className={`h-4 w-4 transition-transform ${isCalculatorsOpen ? 'rotate-90' : ''}`} />
