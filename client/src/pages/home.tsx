@@ -143,7 +143,6 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-white mb-4">What Our Clients Say</h2>
-              <p className="text-xl text-blue-100">Real Google reviews from real transformations</p>
             </div>
             <GoogleReviewsCarousel placeId="ChIJLQqz6P516IkRwqYD22g-_m8" />
           </div>
