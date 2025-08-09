@@ -181,15 +181,12 @@ app.get('/calorie-calculator-clean', (req, res, next) => {
   next();
 });
 
-// Middleware to inject meta tags for blog posts (only for social media crawlers)
+// Middleware to inject meta tags for blog posts
 app.get('/blog/:slug', async (req, res, next) => {
-  const userAgent = req.get('User-Agent') || '';
+  const { slug } = req.params;
   
-  // Check if this is a social media crawler/bot
-  const isCrawler = /bot|crawler|spider|scraper|facebook|twitter|linkedin|whatsapp|telegram|discord|slack/i.test(userAgent);
-  
-  if (isCrawler) {
-    const { slug } = req.params;
+  // Always inject meta tags for blog posts
+  if (slug) {
     
     try {
       // Import pool from db
@@ -197,32 +194,42 @@ app.get('/blog/:slug', async (req, res, next) => {
       
       // Fetch blog post data from database
       const result = await pool.query(
-        'SELECT title, description, image_url, content FROM blog_posts WHERE slug = $1',
+        'SELECT title, excerpt, content, featured_image_url FROM blog_posts WHERE slug = $1',
         [slug]
       );
       
       if (result.rows.length > 0) {
         const post = result.rows[0];
         
-        // Clean title and add site name
-        const title = `${post.title} | Get Up Earlier Strength & Nutrition`;
+        // Special handling for detox blog post
+        let title, description, imageUrl;
         
-        // Use description or truncated content
-        let description = post.description || '';
-        if (!description && post.content) {
-          // Remove markdown syntax and truncate content for description
-          description = post.content
-            .replace(/!\[.*?\]\(.*?\)/g, '') // Remove images
-            .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Remove links
-            .replace(/[#*_`]/g, '') // Remove markdown formatting
-            .replace(/\n+/g, ' ') // Replace newlines with spaces
-            .substring(0, 160)
-            .trim();
-          if (description.length === 160) description += '...';
+        if (slug === 'no-such-thing-as-detox-cleanse') {
+          title = 'No Such Thing as Detox Cleanse - The Truth About Clean Eating | Get Up Earlier';
+          description = "Learn the truth about detox cleanses. Real food is your body's natural cleanse - no expensive juices or pills needed. Discover how to eat clean with whole foods that have simple ingredients you can pronounce.";
+          imageUrl = '/attached_assets/download - 2025-08-09T060356.669_1754735759905.png';
+        } else {
+          // Clean title and add site name
+          title = `${post.title} | Get Up Earlier Strength & Nutrition`;
+          
+          // Use excerpt or truncated content
+          description = post.excerpt || '';
+          if (!description && post.content) {
+            // Remove markdown syntax and truncate content for description
+            description = post.content
+              .replace(/!\[.*?\]\(.*?\)/g, '') // Remove images
+              .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Remove links
+              .replace(/[#*_`]/g, '') // Remove markdown formatting
+              .replace(/\n+/g, ' ') // Replace newlines with spaces
+              .substring(0, 160)
+              .trim();
+            if (description.length === 160) description += '...';
+          }
+          
+          imageUrl = post.featured_image_url || '/get-up-earlier-og-image.jpg';
         }
         
         // Use featured image with full URL
-        const imageUrl = post.image_url || '/get-up-earlier-og-image.jpg';
         const image = imageUrl.startsWith('http') 
           ? imageUrl 
           : `${req.protocol}://${req.get('host')}${imageUrl}`;
