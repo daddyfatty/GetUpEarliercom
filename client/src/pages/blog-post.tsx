@@ -12,6 +12,10 @@ import { useState, useEffect } from "react";
 
 
 
+import download___2025_08_09T150441_869 from "@assets/download - 2025-08-09T150441.869.png";
+
+
+
 interface BlogPost {
   id: string;
   slug: string;
@@ -465,7 +469,6 @@ export default function BlogPost() {
   // Regular Blog Post Template
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
-
       {/* Full-width Hero Gradient Header Section - No gaps */}
       <HeroGradient className="text-white">
         <div className="py-20 px-4 sm:px-6 lg:px-8">
@@ -629,7 +632,7 @@ export default function BlogPost() {
             <div className="mb-8">
               <div className="w-full bg-black rounded-lg overflow-hidden shadow-lg">
                 <img
-                  src={post.imageUrl}
+                  src={download___2025_08_09T150441_869}
                   alt={post.title}
                   className="w-full h-auto object-contain"
                 />
@@ -912,13 +915,13 @@ export default function BlogPost() {
                 </>
               ) : (
                 /* Regular content for other posts */
-                <BlogContentRenderer 
+                (<BlogContentRenderer 
                   content={post.content} 
                   onImageClick={(imageSrc) => {
                     setLightboxImage(imageSrc);
                     setLightboxOpen(true);
                   }} 
-                />
+                />)
               )}
             </div>
           </div>
@@ -1003,8 +1006,6 @@ export default function BlogPost() {
           </div>
         </div>
       )}
-      
-
     </div>
   );
 }
