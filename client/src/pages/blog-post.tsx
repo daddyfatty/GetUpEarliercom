@@ -581,8 +581,7 @@ export default function BlogPost() {
                 <img
                   src={post.imageUrl}
                   alt={post.title}
-                  className="w-full h-auto object-cover"
-                  style={{ maxHeight: '600px' }}
+                  className="w-full h-auto object-contain"
                 />
               </div>
             </div>
