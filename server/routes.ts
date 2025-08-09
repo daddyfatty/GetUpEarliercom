@@ -1032,7 +1032,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Meal plan routes
   app.get("/api/users/:userId/meal-plans", async (req, res) => {
     try {
-      const userId = parseInt(req.params.userId);
+      const userId = req.params.userId;
       const mealPlans = await storage.getUserMealPlans(userId);
       res.json(mealPlans);
     } catch (error: any) {
@@ -1051,7 +1051,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const mealPlan = await storage.createMealPlan({
-        userId: parseInt(userId),
+        userId: userId,
         name: name || "My Meal Plan",
         date: new Date(date),
       });
@@ -1149,13 +1149,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Store weights in their original units for simplicity
       const profileData = {
-        age: age ? parseInt(age) : null,
-        sex: sex || null,
-        height: height ? parseInt(height) : null,
-        currentWeight: currentWeight ? parseFloat(currentWeight) : null,
-        desiredWeight: desiredWeight ? parseFloat(desiredWeight) : null,
-        activityLevel: activityLevel || null,
-        goal: goal || null,
+        age: age ? parseInt(age) : undefined,
+        sex: sex || undefined,
+        height: height ? parseInt(height) : undefined,
+        currentWeight: currentWeight ? parseFloat(currentWeight) : undefined,
+        desiredWeight: desiredWeight ? parseFloat(desiredWeight) : undefined,
+        activityLevel: activityLevel || undefined,
+        goal: goal || undefined,
         unitSystem: unitSystem || 'imperial',
         macroProfile: macroProfile || 'balanced'
       };
@@ -1188,7 +1188,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log("Profile API: Creating new development user...");
         user = await storage.createUser({
           id: developmentUserId,
-          email: "developer@getupear.lier.com",
+          email: "developer@getupearlier.com",
           firstName: "Developer",
           lastName: "User"
         });

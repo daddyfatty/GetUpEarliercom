@@ -71,10 +71,13 @@ export interface IStorage {
   isWorkoutFavorited(userId: string, workoutId: number): Promise<boolean>;
 
   // Meal plan methods
-  getUserMealPlans(userId: number): Promise<MealPlan[]>;
+  getUserMealPlans(userId: string): Promise<MealPlan[]>;
   createMealPlan(mealPlan: InsertMealPlan): Promise<MealPlan>;
+  getMealPlan(id: number): Promise<MealPlan | undefined>;
+  deleteMealPlan(id: number): Promise<boolean>;
   getMealPlanRecipes(mealPlanId: number): Promise<(MealPlanRecipe & { recipe: Recipe })[]>;
   addRecipeToMealPlan(mealPlanId: number, recipeId: number, mealType: string): Promise<MealPlanRecipe>;
+  removeRecipeFromMealPlan(mealPlanId: number, recipeId: number): Promise<boolean>;
 
   // Calculator results methods
   getUserCalculatorResults(userId: string): Promise<CalculatorResult[]>;
@@ -276,10 +279,94 @@ export class DatabaseStorage implements IStorage {
   async removeFavoriteWorkout(userId: string, workoutId: number): Promise<boolean> { return false; }
   async isWorkoutFavorited(userId: string, workoutId: number): Promise<boolean> { return false; }
 
-  async getUserMealPlans(userId: number): Promise<MealPlan[]> { return []; }
-  async createMealPlan(mealPlan: InsertMealPlan): Promise<MealPlan> { throw new Error("Not implemented"); }
-  async getMealPlanRecipes(mealPlanId: number): Promise<(MealPlanRecipe & { recipe: Recipe })[]> { return []; }
-  async addRecipeToMealPlan(mealPlanId: number, recipeId: number, mealType: string): Promise<MealPlanRecipe> { throw new Error("Not implemented"); }
+  async getUserMealPlans(userId: string): Promise<MealPlan[]> {
+    try {
+      const userMealPlans = await db.select().from(mealPlans).where(eq(mealPlans.userId, userId));
+      return userMealPlans;
+    } catch (error) {
+      console.error("Error getting user meal plans:", error);
+      return [];
+    }
+  }
+
+  async createMealPlan(mealPlan: InsertMealPlan): Promise<MealPlan> {
+    try {
+      const [newMealPlan] = await db.insert(mealPlans).values(mealPlan).returning();
+      return newMealPlan;
+    } catch (error) {
+      console.error("Error creating meal plan:", error);
+      throw error;
+    }
+  }
+
+  async getMealPlan(id: number): Promise<MealPlan | undefined> {
+    try {
+      const [mealPlan] = await db.select().from(mealPlans).where(eq(mealPlans.id, id));
+      return mealPlan || undefined;
+    } catch (error) {
+      console.error("Error getting meal plan:", error);
+      return undefined;
+    }
+  }
+
+  async deleteMealPlan(id: number): Promise<boolean> {
+    try {
+      // First delete associated recipes
+      await db.delete(mealPlanRecipes).where(eq(mealPlanRecipes.mealPlanId, id));
+      // Then delete the meal plan
+      const result = await db.delete(mealPlans).where(eq(mealPlans.id, id));
+      return result.rowCount !== null && result.rowCount > 0;
+    } catch (error) {
+      console.error("Error deleting meal plan:", error);
+      return false;
+    }
+  }
+
+  async getMealPlanRecipes(mealPlanId: number): Promise<(MealPlanRecipe & { recipe: Recipe })[]> {
+    try {
+      const planRecipes = await db
+        .select()
+        .from(mealPlanRecipes)
+        .leftJoin(recipes, eq(mealPlanRecipes.recipeId, recipes.id))
+        .where(eq(mealPlanRecipes.mealPlanId, mealPlanId));
+      
+      return planRecipes.map(row => ({
+        ...row.meal_plan_recipes,
+        recipe: row.recipes!
+      }));
+    } catch (error) {
+      console.error("Error getting meal plan recipes:", error);
+      return [];
+    }
+  }
+
+  async addRecipeToMealPlan(mealPlanId: number, recipeId: number, mealType: string): Promise<MealPlanRecipe> {
+    try {
+      const [newMealPlanRecipe] = await db
+        .insert(mealPlanRecipes)
+        .values({ mealPlanId, recipeId, mealType })
+        .returning();
+      return newMealPlanRecipe;
+    } catch (error) {
+      console.error("Error adding recipe to meal plan:", error);
+      throw error;
+    }
+  }
+
+  async removeRecipeFromMealPlan(mealPlanId: number, recipeId: number): Promise<boolean> {
+    try {
+      const result = await db
+        .delete(mealPlanRecipes)
+        .where(and(
+          eq(mealPlanRecipes.mealPlanId, mealPlanId),
+          eq(mealPlanRecipes.recipeId, recipeId)
+        ));
+      return result.rowCount !== null && result.rowCount > 0;
+    } catch (error) {
+      console.error("Error removing recipe from meal plan:", error);
+      return false;
+    }
+  }
 
   // Blog CMS methods
   async getAllBlogPosts(): Promise<BlogPost[]> {
