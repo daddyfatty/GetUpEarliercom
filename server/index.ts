@@ -180,49 +180,90 @@ app.get('/calorie-calculator-clean', (req, res, next) => {
   next();
 });
 
-// Middleware to inject meta tags for training log page (only for social media crawlers)
-app.get('/blog/hartford-marathon-training-log-2025', (req, res, next) => {
+// Import database for blog post fetching
+import pool from './db';
+
+// Middleware to inject meta tags for blog posts (only for social media crawlers)
+app.get('/blog/:slug', async (req, res, next) => {
   const userAgent = req.get('User-Agent') || '';
   
   // Check if this is a social media crawler/bot
   const isCrawler = /bot|crawler|spider|scraper|facebook|twitter|linkedin|whatsapp|telegram|discord|slack/i.test(userAgent);
   
   if (isCrawler) {
-    const title = "Hartford Marathon Training Log 2025 - Get Up Earlier";
-    const description = "Follow Michael Baker's comprehensive Hartford Marathon training journey with detailed workout logs, nutrition insights, and race preparation strategies.";
-    const image = `${req.protocol}://${req.get('host')}/hartford-marathon-featured-image.jpg`;
-    const url = `${req.protocol}://${req.get('host')}/blog/hartford-marathon-training-log-2025`;
+    const { slug } = req.params;
     
-    // Read the default HTML and inject meta tags
-    let htmlPath;
-    if (app.get("env") === "development") {
-      htmlPath = path.join(__dirname, '../client/index.html');
-    } else {
-      htmlPath = path.join(__dirname, '../dist/public/index.html');
-    }
-    
-    if (fs.existsSync(htmlPath)) {
-      let html = fs.readFileSync(htmlPath, 'utf8');
+    try {
+      // Fetch blog post data from database
+      const result = await pool.query(
+        'SELECT title, description, image_url, content FROM blog_posts WHERE slug = $1',
+        [slug]
+      );
       
-      // Inject meta tags into the head
-      const metaTags = `
-        <title>${title}</title>
-        <meta name="description" content="${description}">
-        <meta property="og:title" content="${title}">
-        <meta property="og:description" content="${description}">
-        <meta property="og:image" content="${image}">
-        <meta property="og:url" content="${url}">
-        <meta property="og:type" content="article">
-        <meta property="og:site_name" content="Get Up Earlier">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="${title}">
-        <meta name="twitter:description" content="${description}">
-        <meta name="twitter:image" content="${image}">
-      `;
-      
-      html = html.replace('<title>Get Up Earlier - Health & Fitness App</title>', metaTags);
-      res.send(html);
-      return;
+      if (result.rows.length > 0) {
+        const post = result.rows[0];
+        
+        // Clean title and add site name
+        const title = `${post.title} | Get Up Earlier Strength & Nutrition`;
+        
+        // Use description or truncated content
+        let description = post.description || '';
+        if (!description && post.content) {
+          // Remove markdown syntax and truncate content for description
+          description = post.content
+            .replace(/!\[.*?\]\(.*?\)/g, '') // Remove images
+            .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Remove links
+            .replace(/[#*_`]/g, '') // Remove markdown formatting
+            .replace(/\n+/g, ' ') // Replace newlines with spaces
+            .substring(0, 160)
+            .trim();
+          if (description.length === 160) description += '...';
+        }
+        
+        // Use featured image with full URL
+        const imageUrl = post.image_url || '/get-up-earlier-og-image.jpg';
+        const image = imageUrl.startsWith('http') 
+          ? imageUrl 
+          : `${req.protocol}://${req.get('host')}${imageUrl}`;
+        
+        const url = `${req.protocol}://${req.get('host')}/blog/${slug}`;
+        
+        // Read the default HTML and inject meta tags
+        let htmlPath;
+        if (app.get("env") === "development") {
+          htmlPath = path.join(__dirname, '../client/index.html');
+        } else {
+          htmlPath = path.join(__dirname, '../dist/public/index.html');
+        }
+        
+        if (fs.existsSync(htmlPath)) {
+          let html = fs.readFileSync(htmlPath, 'utf8');
+          
+          // Inject meta tags into the head
+          const metaTags = `
+            <title>${title}</title>
+            <meta name="description" content="${description}">
+            <meta property="og:title" content="${title}">
+            <meta property="og:description" content="${description}">
+            <meta property="og:image" content="${image}">
+            <meta property="og:image:width" content="1200">
+            <meta property="og:image:height" content="630">
+            <meta property="og:url" content="${url}">
+            <meta property="og:type" content="article">
+            <meta property="og:site_name" content="Get Up Earlier Strength & Nutrition">
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:title" content="${title}">
+            <meta name="twitter:description" content="${description}">
+            <meta name="twitter:image" content="${image}">
+          `;
+          
+          html = html.replace('<title>Get Up Earlier - Health & Fitness App</title>', metaTags);
+          res.send(html);
+          return;
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching blog post for meta tags:', error);
     }
   }
   
