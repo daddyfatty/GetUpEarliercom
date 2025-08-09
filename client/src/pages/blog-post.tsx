@@ -502,7 +502,7 @@ export default function BlogPost() {
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 leading-tight max-w-4xl mx-auto">
               {post.title === "Why drop sets on incline dumbbell presses (@dr.mike.israetel approved)" 
                 ? "Why Drop Sets on Incline Dumbbell Presses - Dr. Mike Israetel approved? ‪@RenaissancePeriodization"
-                : post.title === "Marathon Training Tip for HOT long runs"
+                : post.title === "Marathon Training Tip for HOT long runs: FROZEN SOFT FLASK"
                 ? "Marathon Training Tip for HOT long runs: FROZEN SOFT FLASK"
                 : post.title}
             </h1>

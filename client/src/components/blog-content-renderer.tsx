@@ -319,13 +319,6 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
         const contentParts = [];
         let lastIndex = 0;
         
-        // Test to ensure content area is working
-        contentParts.push(
-          <div key="test" className="p-4 bg-blue-100 text-blue-900 mb-4 rounded">
-            TEST: Content should appear here. Amazon products found: {amazonMatches.length}
-          </div>
-        );
-        
         amazonMatches.forEach((amazonMatch, idx) => {
           // Add content before this Amazon product
           if (amazonMatch.index > lastIndex) {
