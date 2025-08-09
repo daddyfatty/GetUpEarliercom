@@ -9,7 +9,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
-import { Menu, Bell, User, LogOut, ChevronDown, ChevronRight } from "lucide-react";
+import { Menu, Bell, User, LogOut, ChevronDown, ChevronRight, Mail } from "lucide-react";
 import { SiFacebook, SiYoutube } from "react-icons/si";
 import logoPath from "@assets/AI-Wintrer-Runner5_1754078126180.png";
 
@@ -56,7 +56,6 @@ export function Navigation() {
 
   const aboutItems = [
     { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
   ];
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -226,32 +225,18 @@ export function Navigation() {
                   </span>
                 </Link>
                 
-                {/* About Dropdown */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <span
-                      className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
-                        aboutItems.some(item => location === item.href)
-                          ? "text-[hsl(var(--orange))] bg-white/10"
-                          : "text-white hover:text-[hsl(var(--orange))]"
-                      }`}
-                    >
-                      About
-                      <ChevronDown className="ml-1 h-4 w-4" />
-                    </span>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="center" className="bg-white border border-gray-200 shadow-lg">
-                    {aboutItems.map((item) => (
-                      <DropdownMenuItem key={item.href} asChild>
-                        <Link href={item.href}>
-                          <span className="font-medium text-gray-900 hover:text-[hsl(var(--orange))] cursor-pointer w-full">
-                            {item.label}
-                          </span>
-                        </Link>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                {/* About */}
+                <Link href="/about">
+                  <span
+                    className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                      location === "/about"
+                        ? "text-[hsl(var(--orange))] bg-white/10"
+                        : "text-white hover:text-[hsl(var(--orange))]"
+                    }`}
+                  >
+                    About
+                  </span>
+                </Link>
                 
                 {/* Blog */}
                 <Link href="/blog">
@@ -344,6 +329,20 @@ export function Navigation() {
                     </span>
                   </Link>
                 )}
+                
+                {/* Contact - Email Icon */}
+                <Link href="/contact">
+                  <span
+                    className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer flex items-center ${
+                      location === "/contact"
+                        ? "text-[hsl(var(--orange))] bg-white/10"
+                        : "text-white hover:text-[hsl(var(--orange))]"
+                    }`}
+                    title="Contact Us"
+                  >
+                    <Mail className="h-5 w-5" />
+                  </span>
+                </Link>
               </div>
             </div>
 
@@ -507,30 +506,18 @@ export function Navigation() {
                       </span>
                     </Link>
                     
-                    {/* About Collapsible Section */}
-                    <Collapsible open={isAboutOpen} onOpenChange={setIsAboutOpen}>
-                      <CollapsibleTrigger className="flex items-center justify-between w-full px-3 py-2 text-left">
-                        <span className="text-base font-medium text-gray-900 uppercase font-heading">
-                          About
-                        </span>
-                        <ChevronRight className={`h-4 w-4 transition-transform ${isAboutOpen ? 'rotate-90' : ''}`} />
-                      </CollapsibleTrigger>
-                      <CollapsibleContent className="space-y-1 mt-2">
-                        {aboutItems.map((item) => (
-                          <Link key={item.href} href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
-                            <span
-                              className={`block px-6 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading ${
-                                location === item.href
-                                  ? "text-[hsl(var(--orange))] bg-orange-50"
-                                  : "text-gray-600 hover:text-[hsl(var(--orange))]"
-                              }`}
-                            >
-                              {item.label}
-                            </span>
-                          </Link>
-                        ))}
-                      </CollapsibleContent>
-                    </Collapsible>
+                    {/* About */}
+                    <Link href="/about" onClick={() => setIsMobileMenuOpen(false)}>
+                      <span
+                        className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading flex items-center ${
+                          location === "/about"
+                            ? "text-[hsl(var(--orange))] bg-orange-50"
+                            : "text-gray-900 hover:text-[hsl(var(--orange))]"
+                        }`}
+                      >
+                        About
+                      </span>
+                    </Link>
                     
                     {/* Blog */}
                     <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)}>
@@ -622,28 +609,19 @@ export function Navigation() {
                       </CollapsibleContent>
                     </Collapsible>
 
-                    {/* About Collapsible Section */}
-                    <Collapsible open={isAboutOpen} onOpenChange={setIsAboutOpen}>
-                      <CollapsibleTrigger className="flex items-center justify-between w-full px-3 py-2 text-left border-t pt-4">
-                        <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">About</span>
-                        <ChevronRight className={`h-4 w-4 transition-transform ${isAboutOpen ? 'rotate-90' : ''}`} />
-                      </CollapsibleTrigger>
-                      <CollapsibleContent className="space-y-1 mt-2">
-                        {aboutItems.map((item) => (
-                          <Link key={item.href} href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
-                            <span
-                              className={`block px-6 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading ${
-                                location === item.href
-                                  ? "text-[hsl(var(--orange))] bg-orange-50"
-                                  : "text-gray-600 hover:text-[hsl(var(--orange))]"
-                              }`}
-                            >
-                              {item.label}
-                            </span>
-                          </Link>
-                        ))}
-                      </CollapsibleContent>
-                    </Collapsible>
+                    {/* Contact with Email Icon */}
+                    <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+                      <span
+                        className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading flex items-center border-t pt-4 ${
+                          location === "/contact"
+                            ? "text-[hsl(var(--orange))] bg-orange-50"
+                            : "text-gray-900 hover:text-[hsl(var(--orange))]"
+                        }`}
+                      >
+                        <Mail className="h-5 w-5 mr-2" />
+                        Contact
+                      </span>
+                    </Link>
 
 
 
