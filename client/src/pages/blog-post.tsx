@@ -143,8 +143,7 @@ export default function BlogPost() {
       author: post.author,
       publishedDate: post.publishedDate,
       keywords: getSEOKeywords(),
-      ogType: 'article',
-      canonicalUrl: `https://getupearlier.com/blog/${post.slug}`
+      type: 'article'
     } : {}
   );
 
