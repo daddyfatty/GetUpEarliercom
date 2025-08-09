@@ -211,7 +211,7 @@ export function Navigation() {
 
             {/* Desktop Navigation Menu */}
             <div className="flex items-center justify-center flex-1">
-              <div className="flex items-baseline justify-center space-x-3 lg:space-x-4">
+              <div className="flex items-center justify-center space-x-3 lg:space-x-4">
                 {/* 1-on-1 Services */}
                 <Link href="/services">
                   <span
