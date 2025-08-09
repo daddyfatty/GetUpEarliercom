@@ -16,6 +16,10 @@ import download___2025_08_09T150441_869 from "@assets/download - 2025-08-09T1504
 
 
 
+import frozen from "@assets/frozen.jpg";
+
+
+
 interface BlogPost {
   id: string;
   slug: string;
@@ -632,7 +636,7 @@ export default function BlogPost() {
             <div className="mb-8">
               <div className="w-full bg-black rounded-lg overflow-hidden shadow-lg">
                 <img
-                  src={download___2025_08_09T150441_869}
+                  src={frozen}
                   alt={post.title}
                   className="w-full h-auto object-contain"
                 />
