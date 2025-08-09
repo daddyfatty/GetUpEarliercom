@@ -503,7 +503,7 @@ export default function BlogPost() {
               {post.title === "Why drop sets on incline dumbbell presses (@dr.mike.israetel approved)" 
                 ? "Why Drop Sets on Incline Dumbbell Presses - Dr. Mike Israetel approved? ‪@RenaissancePeriodization"
                 : post.title === "Marathon Training Tip for HOT long runs"
-                ? "Marathon Training Tip for HOT long runs: Soft Flask"
+                ? "Marathon Training Tip for HOT long runs: FROZEN SOFT FLASK"
                 : post.title}
             </h1>
             
