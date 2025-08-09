@@ -211,11 +211,11 @@ export function Navigation() {
 
             {/* Desktop Navigation Menu */}
             <div className="flex items-center justify-center flex-1">
-              <div className="flex items-baseline justify-center space-x-6 lg:space-x-8">
+              <div className="flex items-baseline justify-center space-x-3 lg:space-x-4">
                 {/* 1-on-1 Services */}
                 <Link href="/services">
                   <span
-                    className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                    className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
                       location === "/services"
                         ? "text-[hsl(var(--orange))] bg-white/10"
                         : "text-white hover:text-[hsl(var(--orange))]"
@@ -228,7 +228,7 @@ export function Navigation() {
                 {/* About */}
                 <Link href="/about">
                   <span
-                    className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                    className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
                       location === "/about"
                         ? "text-[hsl(var(--orange))] bg-white/10"
                         : "text-white hover:text-[hsl(var(--orange))]"
@@ -241,7 +241,7 @@ export function Navigation() {
                 {/* Blog */}
                 <Link href="/blog">
                   <span
-                    className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                    className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
                       location === "/blog"
                         ? "text-[hsl(var(--orange))] bg-white/10"
                         : "text-white hover:text-[hsl(var(--orange))]"
@@ -254,7 +254,7 @@ export function Navigation() {
                 {/* Recipes */}
                 <Link href="/recipes">
                   <span
-                    className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                    className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
                       location === "/recipes"
                         ? "text-[hsl(var(--orange))] bg-white/10"
                         : "text-white hover:text-[hsl(var(--orange))]"
@@ -270,7 +270,7 @@ export function Navigation() {
                 {/* Workouts & Challenges */}
                 <Link href="/workouts">
                   <span
-                    className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                    className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
                       location === "/workouts"
                         ? "text-[hsl(var(--orange))] bg-white/10"
                         : "text-white hover:text-[hsl(var(--orange))]"
@@ -289,7 +289,7 @@ export function Navigation() {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <span
-                      className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                      className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
                         calculatorItems.some(item => location === item.href)
                           ? "text-[hsl(var(--orange))] bg-white/10"
                           : "text-white hover:text-[hsl(var(--orange))]"
@@ -319,7 +319,7 @@ export function Navigation() {
                 {isAdmin && (
                   <Link href="/admin">
                     <span
-                      className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                      className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
                         location === "/admin"
                           ? "text-[hsl(var(--orange))] bg-white/10"
                           : "text-white hover:text-[hsl(var(--orange))]"
@@ -333,7 +333,7 @@ export function Navigation() {
                 {/* Contact - Email Icon */}
                 <Link href="/contact">
                   <span
-                    className={`px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                    className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
                       location === "/contact"
                         ? "text-[hsl(var(--orange))] bg-white/10"
                         : "text-white hover:text-[hsl(var(--orange))]"
