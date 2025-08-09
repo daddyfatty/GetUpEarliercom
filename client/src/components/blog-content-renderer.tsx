@@ -319,24 +319,33 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
         const contentParts = [];
         let lastIndex = 0;
         
+        // Test to ensure content area is working
+        contentParts.push(
+          <div key="test" className="p-4 bg-blue-100 text-blue-900 mb-4 rounded">
+            TEST: Content should appear here. Amazon products found: {amazonMatches.length}
+          </div>
+        );
+        
         amazonMatches.forEach((amazonMatch, idx) => {
           // Add content before this Amazon product
           if (amazonMatch.index > lastIndex) {
             const beforeContent = processedContent.substring(lastIndex, amazonMatch.index);
-            const processedBeforeContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(beforeContent)))).replace(/\n/g, '<br>');
-            contentParts.push(
-              <div 
-                key={`before-${idx}`}
-                className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
-                dangerouslySetInnerHTML={{ __html: processedBeforeContent }}
-                onClick={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  if (target.tagName === 'IMG' && target.classList.contains('markdown-image')) {
-                    onImageClick && onImageClick(target.src);
-                  }
-                }}
-              />
-            );
+            if (beforeContent.trim()) {
+              const processedBeforeContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(beforeContent)))).replace(/\n/g, '<br>');
+              contentParts.push(
+                <div 
+                  key={`before-${idx}`}
+                  className="text-gray-900 dark:text-gray-100 whitespace-pre-wrap mb-6 text-lg leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: processedBeforeContent }}
+                  onClick={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    if (target.tagName === 'IMG' && target.classList.contains('markdown-image')) {
+                      onImageClick && onImageClick(target.src);
+                    }
+                  }}
+                />
+              );
+            }
           }
           
           // Add the Amazon product
@@ -350,20 +359,22 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
         // Add remaining content
         if (lastIndex < processedContent.length) {
           const afterContent = processedContent.substring(lastIndex);
-          const processedAfterContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(afterContent)))).replace(/\n/g, '<br>');
-          contentParts.push(
-            <div 
-              key="after"
-              className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
-              dangerouslySetInnerHTML={{ __html: processedAfterContent }}
-              onClick={(e) => {
-                const target = e.target as HTMLImageElement;
-                if (target.tagName === 'IMG' && target.classList.contains('markdown-image')) {
-                  onImageClick && onImageClick(target.src);
-                }
-              }}
-            />
-          );
+          if (afterContent.trim()) {
+            const processedAfterContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(afterContent)))).replace(/\n/g, '<br>');
+            contentParts.push(
+              <div 
+                key="after"
+                className="text-gray-900 dark:text-gray-100 whitespace-pre-wrap mt-6 text-lg leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: processedAfterContent }}
+                onClick={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (target.tagName === 'IMG' && target.classList.contains('markdown-image')) {
+                    onImageClick && onImageClick(target.src);
+                  }
+                }}
+              />
+            );
+          }
         }
         
         return <>{contentParts}</>;
