@@ -593,27 +593,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const limit = parseInt(req.query.limit as string) || 10;
       const posts = await storage.getAllBlogPosts();
       
-      // Count posts per category
+      // Count posts per category (using a Set per post to avoid double-counting)
       const categoryCount: Record<string, number> = {};
       
       for (const post of posts) {
-        // Check both category and categories fields
-        if (post.category) {
-          categoryCount[post.category] = (categoryCount[post.category] || 0) + 1;
+        // Use a Set to track unique categories for this post
+        const postCategories = new Set<string>();
+        
+        // Add category field if present
+        if (post.category && typeof post.category === 'string' && post.category.trim()) {
+          postCategories.add(post.category.toLowerCase().trim());
         }
+        
+        // Add categories array if present
         if (post.categories && Array.isArray(post.categories)) {
           for (const cat of post.categories) {
-            categoryCount[cat] = (categoryCount[cat] || 0) + 1;
+            if (typeof cat === 'string' && cat.trim()) {
+              postCategories.add(cat.toLowerCase().trim());
+            }
           }
+        }
+        
+        // Count each unique category for this post only once
+        for (const cat of postCategories) {
+          categoryCount[cat] = (categoryCount[cat] || 0) + 1;
         }
       }
       
-      // Sort by count and take top N
+      // Sort by count and take top N, formatting the name for display
       const topCategories = Object.entries(categoryCount)
+        .filter(([name, count]) => count > 0) // Only include categories with posts
         .sort((a, b) => b[1] - a[1])
         .slice(0, limit)
-        .map(([name, count]) => ({ name, count }));
+        .map(([name, count]) => ({ 
+          name: name.charAt(0).toUpperCase() + name.slice(1), // Capitalize first letter
+          count 
+        }));
       
+      console.log(`Top categories: ${JSON.stringify(topCategories)}`);
       res.json(topCategories);
     } catch (error) {
       console.error('Error fetching top categories:', error);
