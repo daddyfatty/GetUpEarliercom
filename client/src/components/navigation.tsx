@@ -251,50 +251,51 @@ export function Navigation() {
                 </Link>
                 
                 {/* Blog with Dropdown */}
-                <DropdownMenu open={isBlogDropdownOpen} onOpenChange={setIsBlogDropdownOpen}>
-                  <DropdownMenuTrigger asChild>
-                    <div
-                      className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
-                        location.startsWith("/blog") || location.startsWith("/category")
-                          ? "text-[hsl(var(--orange))] bg-white/10"
-                          : "text-white hover:text-[hsl(var(--orange))]"
-                      }`}
-                      onMouseEnter={() => setIsBlogDropdownOpen(true)}
-                      onMouseLeave={() => setIsBlogDropdownOpen(false)}
-                    >
-                      Blog
-                      <ChevronDown className="ml-1 h-3 w-3" />
-                    </div>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent 
-                    className="w-56 bg-white dark:bg-gray-800 shadow-lg"
-                    onMouseEnter={() => setIsBlogDropdownOpen(true)}
-                    onMouseLeave={() => setIsBlogDropdownOpen(false)}
+                <div className="relative group">
+                  <div
+                    className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                      location.startsWith("/blog") || location.startsWith("/category")
+                        ? "text-[hsl(var(--orange))] bg-white/10"
+                        : "text-white hover:text-[hsl(var(--orange))]"
+                    }`}
+                    onClick={() => window.location.href = '/blog'}
                   >
-                    <DropdownMenuItem asChild>
-                      <Link href="/blog" className="cursor-pointer">
-                        <span className="font-medium">All Posts</span>
+                    Blog
+                    <ChevronDown className="ml-1 h-3 w-3" />
+                  </div>
+                  <div className="absolute top-full left-0 -mt-[1px] pt-[1px] invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200">
+                    <div className="bg-white dark:bg-gray-800 shadow-xl rounded-md border border-gray-200 dark:border-gray-700 mt-1 min-w-[400px]">
+                      <Link href="/blog" className="block px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-b border-gray-200 dark:border-gray-700">
+                        <span className="font-medium text-gray-900 dark:text-white">All Posts</span>
                       </Link>
-                    </DropdownMenuItem>
-                    {topCategories.length > 0 && (
-                      <>
-                        <div className="px-2 py-1.5 text-xs font-semibold text-gray-500 dark:text-gray-400">
-                          TOP CATEGORIES
-                        </div>
-                        {topCategories.map((category: { name: string; count: number }) => (
-                          <DropdownMenuItem key={category.name} asChild>
-                            <Link href={`/category/${encodeURIComponent(category.name.toLowerCase())}`} className="cursor-pointer">
-                              <div className="w-full flex justify-between items-center">
-                                <span className="capitalize">{category.name.replace(/-/g, ' ')}</span>
-                                <span className="text-xs text-gray-500 dark:text-gray-400">({category.count})</span>
-                              </div>
-                            </Link>
-                          </DropdownMenuItem>
-                        ))}
-                      </>
-                    )}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                      {topCategories.length > 0 && (
+                        <>
+                          <div className="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Top Categories
+                          </div>
+                          <div className="grid grid-cols-2 gap-x-4 px-4 pb-3">
+                            {topCategories.map((category: { name: string; count: number }) => (
+                              <Link 
+                                key={category.name} 
+                                href={`/category/${encodeURIComponent(category.name.toLowerCase())}`} 
+                                className="block py-2 hover:text-[hsl(var(--orange))] transition-colors"
+                              >
+                                <div className="flex justify-between items-center">
+                                  <span className="capitalize text-sm text-gray-700 dark:text-gray-300">
+                                    {category.name.replace(/-/g, ' ')}
+                                  </span>
+                                  <span className="text-xs text-gray-400 dark:text-gray-500 ml-2">
+                                    {category.count}
+                                  </span>
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
                 
                 {/* Recipes */}
                 <Link href="/recipes">
