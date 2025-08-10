@@ -13,7 +13,7 @@ export function PrivateBoutiqueSection() {
   };
 
   return (
-    <section id="studio" className="max-w-6xl mx-auto mb-16">
+    <section id="studio" className="max-w-6xl mx-auto mb-16 pt-16">
       <div className="max-w-6xl mx-auto">
         <div className="text-left mb-8">
           <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
