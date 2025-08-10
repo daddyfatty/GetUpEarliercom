@@ -260,61 +260,71 @@ export function Navigation() {
                         </span>
                       </div>
                       <div className="grid grid-cols-2 gap-x-10 gap-y-2 px-6 py-5 bg-gradient-to-br from-white via-purple-50/30 to-violet-50/30 dark:from-gray-900/50 dark:to-gray-800/50">
-                        {/* Column 1 - Training Services */}
+                        {/* Column 1 */}
                         <Link 
-                          href="/services#personal-training" 
+                          href="/services/personal-strength-training" 
                           className="group/item py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-purple-100 hover:to-violet-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-purple-200 dark:hover:border-gray-600"
                         >
                           <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-purple-700 dark:group-hover/item:text-purple-400 whitespace-nowrap">
-                            Personal Training (In-Person)
+                            1-on-1 Personal Strength Training
                           </span>
                         </Link>
                         
                         <Link 
-                          href="/services#online-coaching" 
+                          href="/services/virtual-nutrition-coaching" 
                           className="group/item py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-purple-100 hover:to-violet-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-purple-200 dark:hover:border-gray-600"
                         >
                           <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-purple-700 dark:group-hover/item:text-purple-400 whitespace-nowrap">
-                            Online Coaching (Virtual)
+                            Virtual Nutrition Coaching
                           </span>
                         </Link>
                         
                         <Link 
-                          href="/services#marathon-training" 
+                          href="/services/accountability-coaching" 
                           className="group/item py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-purple-100 hover:to-violet-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-purple-200 dark:hover:border-gray-600"
                         >
                           <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-purple-700 dark:group-hover/item:text-purple-400 whitespace-nowrap">
-                            Marathon Training Programs
+                            Accountability Coaching
                           </span>
                         </Link>
                         
+                        {/* Column 2 */}
                         <Link 
-                          href="/services#nutrition-coaching" 
+                          href="/services/certified-running-coaching" 
                           className="group/item py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-purple-100 hover:to-violet-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-purple-200 dark:hover:border-gray-600"
                         >
                           <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-purple-700 dark:group-hover/item:text-purple-400 whitespace-nowrap">
-                            Nutrition Coaching
+                            Certified Running Coaching
                           </span>
                         </Link>
                         
-                        {/* Column 2 - Specialized Services */}
-                        <Link 
-                          href="/services#group-fitness" 
+                        <a 
+                          href="https://EricaLeeBaker.com" 
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="group/item py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-purple-100 hover:to-violet-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-purple-200 dark:hover:border-gray-600"
                         >
-                          <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-purple-700 dark:group-hover/item:text-purple-400 whitespace-nowrap">
-                            Small Group Training
+                          <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-purple-700 dark:group-hover/item:text-purple-400 whitespace-nowrap flex items-center">
+                            Private Yoga
+                            <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
                           </span>
-                        </Link>
+                        </a>
                         
-                        <Link 
-                          href="/services#accountability" 
+                        <a 
+                          href="https://EricaLeeBaker.com" 
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="group/item py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-purple-100 hover:to-violet-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-purple-200 dark:hover:border-gray-600"
                         >
-                          <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-purple-700 dark:group-hover/item:text-purple-400 whitespace-nowrap">
-                            Accountability Programs
+                          <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-purple-700 dark:group-hover/item:text-purple-400 whitespace-nowrap flex items-center">
+                            Small Group Yoga
+                            <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
                           </span>
-                        </Link>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -660,36 +670,42 @@ export function Navigation() {
                         <div className="px-6 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                           Coaching Services
                         </div>
-                        <Link href="/services#personal-training" onClick={() => setIsMobileMenuOpen(false)}>
+                        <Link href="/services/personal-strength-training" onClick={() => setIsMobileMenuOpen(false)}>
                           <span className="block px-6 py-2 text-sm text-gray-600 hover:text-purple-700 hover:bg-purple-50 rounded-md cursor-pointer">
-                            Personal Training (In-Person)
+                            1-on-1 Personal Strength Training
                           </span>
                         </Link>
-                        <Link href="/services#online-coaching" onClick={() => setIsMobileMenuOpen(false)}>
+                        <Link href="/services/virtual-nutrition-coaching" onClick={() => setIsMobileMenuOpen(false)}>
                           <span className="block px-6 py-2 text-sm text-gray-600 hover:text-purple-700 hover:bg-purple-50 rounded-md cursor-pointer">
-                            Online Coaching (Virtual)
+                            Virtual Nutrition Coaching
                           </span>
                         </Link>
-                        <Link href="/services#marathon-training" onClick={() => setIsMobileMenuOpen(false)}>
+                        <Link href="/services/accountability-coaching" onClick={() => setIsMobileMenuOpen(false)}>
                           <span className="block px-6 py-2 text-sm text-gray-600 hover:text-purple-700 hover:bg-purple-50 rounded-md cursor-pointer">
-                            Marathon Training Programs
+                            Accountability Coaching
                           </span>
                         </Link>
-                        <Link href="/services#nutrition-coaching" onClick={() => setIsMobileMenuOpen(false)}>
+                        <Link href="/services/certified-running-coaching" onClick={() => setIsMobileMenuOpen(false)}>
                           <span className="block px-6 py-2 text-sm text-gray-600 hover:text-purple-700 hover:bg-purple-50 rounded-md cursor-pointer">
-                            Nutrition Coaching
+                            Certified Running Coaching
                           </span>
                         </Link>
-                        <Link href="/services#group-fitness" onClick={() => setIsMobileMenuOpen(false)}>
-                          <span className="block px-6 py-2 text-sm text-gray-600 hover:text-purple-700 hover:bg-purple-50 rounded-md cursor-pointer">
-                            Small Group Training
+                        <a href="https://EricaLeeBaker.com" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)}>
+                          <span className="block px-6 py-2 text-sm text-gray-600 hover:text-purple-700 hover:bg-purple-50 rounded-md cursor-pointer flex items-center">
+                            Private Yoga
+                            <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
                           </span>
-                        </Link>
-                        <Link href="/services#accountability" onClick={() => setIsMobileMenuOpen(false)}>
-                          <span className="block px-6 py-2 text-sm text-gray-600 hover:text-purple-700 hover:bg-purple-50 rounded-md cursor-pointer">
-                            Accountability Programs
+                        </a>
+                        <a href="https://EricaLeeBaker.com" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)}>
+                          <span className="block px-6 py-2 text-sm text-gray-600 hover:text-purple-700 hover:bg-purple-50 rounded-md cursor-pointer flex items-center">
+                            Small Group Yoga
+                            <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                            </svg>
                           </span>
-                        </Link>
+                        </a>
                       </CollapsibleContent>
                     </Collapsible>
                     
