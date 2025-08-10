@@ -86,7 +86,8 @@ export function HeroSection() {
                 {/* View All Services Button */}
                 <Link href="/services">
                   <Button 
-                    className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg transform hover:scale-105 transition-all duration-200"
+                    className="w-full mt-4 text-white font-semibold shadow-lg transform hover:scale-105 transition-all duration-200 hover:opacity-90"
+                    style={{ backgroundColor: '#39298A' }}
                   >
                     <Users className="h-5 w-5 mr-2" />
                     View All Services
