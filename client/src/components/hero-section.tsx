@@ -29,7 +29,7 @@ export function HeroSection() {
               <div className="bg-blue-900/20 backdrop-blur-sm border border-blue-400/20 rounded-2xl p-6 shadow-2xl">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <Link href="/services/personal-strength-training" className="group">
-                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-blue-400/50">
+                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-800/40 hover:border-blue-400/50">
                       <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                         1-on-1 Personal Strength Training
                       </span>
@@ -37,7 +37,7 @@ export function HeroSection() {
                   </Link>
                   
                   <Link href="/services/virtual-nutrition-coaching" className="group">
-                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-blue-400/50">
+                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-800/40 hover:border-blue-400/50">
                       <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                         Virtual Nutrition Coaching
                       </span>
@@ -45,7 +45,7 @@ export function HeroSection() {
                   </Link>
                   
                   <Link href="/services/accountability-coaching" className="group">
-                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-blue-400/50">
+                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-800/40 hover:border-blue-400/50">
                       <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                         Accountability Coaching
                       </span>
@@ -53,7 +53,7 @@ export function HeroSection() {
                   </Link>
                   
                   <Link href="/services/certified-running-coaching" className="group">
-                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-blue-400/50">
+                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-800/40 hover:border-blue-400/50">
                       <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                         Certified Running Coaching
                       </span>
@@ -61,7 +61,7 @@ export function HeroSection() {
                   </Link>
                   
                   <Link href="https://EricaLeeBaker.com" target="_blank" className="group">
-                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-blue-400/50">
+                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-800/40 hover:border-blue-400/50">
                       <div className="flex items-center justify-between">
                         <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                           Private Yoga
@@ -72,7 +72,7 @@ export function HeroSection() {
                   </Link>
                   
                   <Link href="https://EricaLeeBaker.com" target="_blank" className="group">
-                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-blue-400/50">
+                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-800/40 hover:border-blue-400/50">
                       <div className="flex items-center justify-between">
                         <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                           Small Group Yoga
