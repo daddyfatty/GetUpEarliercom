@@ -19,16 +19,16 @@ export function MichaelAboutBlock() {
                 />
               </div>
               
-              <h2 className="text-4xl font-bold mb-4 text-white">
+              <h2 className="text-3xl font-bold mb-4 text-white">
                 Michael Baker
               </h2>
               
               <div className="space-y-2 mb-6">
-                <p className="text-blue-100 text-3xl font-medium">Certified Personal Trainer</p>
-                <p className="text-blue-100 text-3xl font-medium">Integrative Nutrition Health Coach</p>
-                <p className="text-blue-100 text-3xl font-medium">Running Coach & Yoga Teacher</p>
-                <p className="text-blue-100 text-3xl font-medium">25 Year Digital Professional</p>
-                <p className="text-blue-100 text-3xl font-medium">Lifelong Fitness Practitioner</p>
+                <p className="text-blue-100 text-lg font-medium">Certified Personal Trainer</p>
+                <p className="text-blue-100 text-lg font-medium">Integrative Nutrition Health Coach</p>
+                <p className="text-blue-100 text-lg font-medium">Running Coach & Yoga Teacher</p>
+                <p className="text-blue-100 text-lg font-medium">25 Year Digital Professional</p>
+                <p className="text-blue-100 text-lg font-medium">Lifelong Fitness Practitioner</p>
               </div>
               
 
