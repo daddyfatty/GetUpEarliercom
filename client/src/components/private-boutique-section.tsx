@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { Link } from "wouter";
 
 // Gym/Yoga Space Images
 import gymSpace from "@assets/download - 2025-06-23T105919.083_1750690773931.png";
@@ -25,20 +26,24 @@ export function PrivateBoutiqueSection() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 mb-8">
-          <div className="rounded-lg overflow-hidden shadow-lg">
-            <img 
-              src={gymSpace} 
-              alt="Private Strength Training Studio" 
-              className="w-full h-64 object-cover"
-            />
-          </div>
-          <div className="rounded-lg overflow-hidden shadow-lg">
-            <img 
-              src={yogaSpace} 
-              alt="Dedicated Pristine Yoga Space" 
-              className="w-full h-64 object-cover"
-            />
-          </div>
+          <Link href="/services">
+            <div className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105">
+              <img 
+                src={gymSpace} 
+                alt="Private Strength Training Studio" 
+                className="w-full h-64 object-cover hover:brightness-110 transition-all duration-300"
+              />
+            </div>
+          </Link>
+          <Link href="/services">
+            <div className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105">
+              <img 
+                src={yogaSpace} 
+                alt="Dedicated Pristine Yoga Space" 
+                className="w-full h-64 object-cover hover:brightness-110 transition-all duration-300"
+              />
+            </div>
+          </Link>
         </div>
 
         {/* Expandable Sections */}
