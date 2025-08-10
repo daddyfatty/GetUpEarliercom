@@ -224,18 +224,143 @@ export function Navigation() {
             {/* Desktop Navigation Menu */}
             <div className="flex items-center justify-center flex-1">
               <div className="flex items-center justify-center space-x-3 lg:space-x-4">
-                {/* 1-on-1 Services */}
-                <Link href="/services">
-                  <span
+                {/* 1-on-1 Services with Dropdown */}
+                <div className="relative group">
+                  <div
                     className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
                       location === "/services"
                         ? "text-[hsl(var(--orange))] bg-white/10"
                         : "text-white hover:text-[hsl(var(--orange))]"
                     }`}
+                    onClick={() => window.location.href = '/services'}
                   >
                     1-on-1 Services
-                  </span>
-                </Link>
+                    <ChevronDown className="ml-1 h-3 w-3" />
+                  </div>
+                  <div className="absolute top-full left-0 -mt-[1px] pt-[1px] invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 z-50">
+                    <div className="bg-gradient-to-br from-white via-blue-50 to-sky-100 dark:from-gray-800 dark:to-gray-900 shadow-2xl rounded-lg border-2 border-blue-300 dark:border-gray-700 mt-1 min-w-[620px] overflow-hidden">
+                      <Link href="/services" className="block relative overflow-hidden group/all">
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-500 via-orange-600 to-red-600"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover/all:translate-x-full transition-transform duration-500"></div>
+                        <div className="relative px-6 py-5 flex items-center justify-between group-hover/all:translate-x-1 transition-transform">
+                          <span className="font-bold text-white text-lg flex items-center">
+                            <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                            View All Services
+                          </span>
+                          <svg className="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                          </svg>
+                        </div>
+                      </Link>
+                      <div className="px-6 py-3 bg-gradient-to-r from-orange-100 via-orange-100 to-red-100 dark:from-gray-800 dark:to-gray-800/50 border-b border-orange-200/50 dark:border-gray-700">
+                        <span className="text-xs font-bold text-orange-700 dark:text-orange-400 uppercase tracking-wider flex items-center">
+                          <span className="mr-2">💪</span> Coaching Services
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-x-10 gap-y-2 px-6 py-5 bg-gradient-to-br from-white via-orange-50/30 to-red-50/30 dark:from-gray-900/50 dark:to-gray-800/50">
+                        {/* Column 1 - Training Services */}
+                        <Link 
+                          href="/services#personal-training" 
+                          className="group/item flex items-center justify-between py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-orange-100 hover:to-red-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-orange-200 dark:hover:border-gray-600"
+                        >
+                          <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-orange-700 dark:group-hover/item:text-orange-400 whitespace-nowrap">
+                            Personal Training (In-Person)
+                          </span>
+                          <span className="text-xs font-bold text-white bg-gradient-to-r from-orange-500 via-orange-600 to-red-600 px-3 py-1.5 rounded-full ml-4 shadow-md">
+                            1-on-1
+                          </span>
+                        </Link>
+                        
+                        <Link 
+                          href="/services#online-coaching" 
+                          className="group/item flex items-center justify-between py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-orange-100 hover:to-red-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-orange-200 dark:hover:border-gray-600"
+                        >
+                          <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-orange-700 dark:group-hover/item:text-orange-400 whitespace-nowrap">
+                            Online Coaching (Virtual)
+                          </span>
+                          <span className="text-xs font-bold text-white bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 px-3 py-1.5 rounded-full ml-4 shadow-md">
+                            Remote
+                          </span>
+                        </Link>
+                        
+                        <Link 
+                          href="/services#marathon-training" 
+                          className="group/item flex items-center justify-between py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-orange-100 hover:to-red-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-orange-200 dark:hover:border-gray-600"
+                        >
+                          <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-orange-700 dark:group-hover/item:text-orange-400 whitespace-nowrap">
+                            Marathon Training Programs
+                          </span>
+                          <span className="text-xs font-bold text-white bg-gradient-to-r from-green-500 via-green-600 to-teal-600 px-3 py-1.5 rounded-full ml-4 shadow-md">
+                            Running
+                          </span>
+                        </Link>
+                        
+                        <Link 
+                          href="/services#nutrition-coaching" 
+                          className="group/item flex items-center justify-between py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-orange-100 hover:to-red-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-orange-200 dark:hover:border-gray-600"
+                        >
+                          <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-orange-700 dark:group-hover/item:text-orange-400 whitespace-nowrap">
+                            Nutrition Coaching
+                          </span>
+                          <span className="text-xs font-bold text-white bg-gradient-to-r from-purple-500 via-purple-600 to-pink-600 px-3 py-1.5 rounded-full ml-4 shadow-md">
+                            Nutrition
+                          </span>
+                        </Link>
+                        
+                        {/* Column 2 - Specialized Services */}
+                        <Link 
+                          href="/services#group-fitness" 
+                          className="group/item flex items-center justify-between py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-orange-100 hover:to-red-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-orange-200 dark:hover:border-gray-600"
+                        >
+                          <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-orange-700 dark:group-hover/item:text-orange-400 whitespace-nowrap">
+                            Small Group Training
+                          </span>
+                          <span className="text-xs font-bold text-white bg-gradient-to-r from-yellow-500 via-yellow-600 to-orange-600 px-3 py-1.5 rounded-full ml-4 shadow-md">
+                            Group
+                          </span>
+                        </Link>
+                        
+                        <Link 
+                          href="/services#accountability" 
+                          className="group/item flex items-center justify-between py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-orange-100 hover:to-red-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-orange-200 dark:hover:border-gray-600"
+                        >
+                          <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-orange-700 dark:group-hover/item:text-orange-400 whitespace-nowrap">
+                            Accountability Programs
+                          </span>
+                          <span className="text-xs font-bold text-white bg-gradient-to-r from-indigo-500 via-indigo-600 to-purple-600 px-3 py-1.5 rounded-full ml-4 shadow-md">
+                            Support
+                          </span>
+                        </Link>
+                        
+                        <Link 
+                          href="/services#meal-planning" 
+                          className="group/item flex items-center justify-between py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-orange-100 hover:to-red-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-orange-200 dark:hover:border-gray-600"
+                        >
+                          <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-orange-700 dark:group-hover/item:text-orange-400 whitespace-nowrap">
+                            Custom Meal Planning
+                          </span>
+                          <span className="text-xs font-bold text-white bg-gradient-to-r from-teal-500 via-teal-600 to-green-600 px-3 py-1.5 rounded-full ml-4 shadow-md">
+                            Meals
+                          </span>
+                        </Link>
+                        
+                        <Link 
+                          href="/services#workout-plans" 
+                          className="group/item flex items-center justify-between py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-orange-100 hover:to-red-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-orange-200 dark:hover:border-gray-600"
+                        >
+                          <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-orange-700 dark:group-hover/item:text-orange-400 whitespace-nowrap">
+                            Custom Workout Plans
+                          </span>
+                          <span className="text-xs font-bold text-white bg-gradient-to-r from-red-500 via-red-600 to-rose-600 px-3 py-1.5 rounded-full ml-4 shadow-md">
+                            Plans
+                          </span>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 
                 {/* About */}
                 <Link href="/about">
@@ -552,18 +677,97 @@ export function Navigation() {
                     )}
 
                     {/* Main Navigation */}
-                    {/* 1-on-1 Services */}
-                    <Link href="/services" onClick={() => setIsMobileMenuOpen(false)}>
-                      <span
-                        className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading flex items-center ${
-                          location === "/services"
-                            ? "text-[hsl(var(--orange))] bg-orange-50"
-                            : "text-gray-900 hover:text-[hsl(var(--orange))]"
-                        }`}
-                      >
-                        1-on-1 Services
-                      </span>
-                    </Link>
+                    {/* 1-on-1 Services with Collapsible */}
+                    <Collapsible>
+                      <CollapsibleTrigger className="flex items-center justify-between w-full px-3 py-2 text-left">
+                        <Link href="/services" onClick={() => setIsMobileMenuOpen(false)} className="flex-1">
+                          <span
+                            className={`block text-base font-medium transition-colors cursor-pointer uppercase font-heading ${
+                              location === "/services"
+                                ? "text-[hsl(var(--orange))]"
+                                : "text-gray-900 hover:text-[hsl(var(--orange))]"
+                            }`}
+                          >
+                            1-on-1 Services
+                          </span>
+                        </Link>
+                        <ChevronDown className="h-4 w-4 text-gray-500" />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="space-y-1 mt-2">
+                        <Link href="/services" onClick={() => setIsMobileMenuOpen(false)}>
+                          <span className="block px-6 py-2 text-sm text-gray-600 hover:text-[hsl(var(--orange))] hover:bg-orange-50 rounded-md cursor-pointer font-semibold">
+                            View All Services
+                          </span>
+                        </Link>
+                        <div className="px-6 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                          Coaching Services
+                        </div>
+                        <Link href="/services#personal-training" onClick={() => setIsMobileMenuOpen(false)}>
+                          <span className="block px-6 py-2 text-sm text-gray-600 hover:text-[hsl(var(--orange))] hover:bg-orange-50 rounded-md cursor-pointer">
+                            <div className="flex justify-between items-center">
+                              <span>Personal Training (In-Person)</span>
+                              <span className="text-xs text-orange-600 font-semibold">1-on-1</span>
+                            </div>
+                          </span>
+                        </Link>
+                        <Link href="/services#online-coaching" onClick={() => setIsMobileMenuOpen(false)}>
+                          <span className="block px-6 py-2 text-sm text-gray-600 hover:text-[hsl(var(--orange))] hover:bg-orange-50 rounded-md cursor-pointer">
+                            <div className="flex justify-between items-center">
+                              <span>Online Coaching (Virtual)</span>
+                              <span className="text-xs text-blue-600 font-semibold">Remote</span>
+                            </div>
+                          </span>
+                        </Link>
+                        <Link href="/services#marathon-training" onClick={() => setIsMobileMenuOpen(false)}>
+                          <span className="block px-6 py-2 text-sm text-gray-600 hover:text-[hsl(var(--orange))] hover:bg-orange-50 rounded-md cursor-pointer">
+                            <div className="flex justify-between items-center">
+                              <span>Marathon Training Programs</span>
+                              <span className="text-xs text-green-600 font-semibold">Running</span>
+                            </div>
+                          </span>
+                        </Link>
+                        <Link href="/services#nutrition-coaching" onClick={() => setIsMobileMenuOpen(false)}>
+                          <span className="block px-6 py-2 text-sm text-gray-600 hover:text-[hsl(var(--orange))] hover:bg-orange-50 rounded-md cursor-pointer">
+                            <div className="flex justify-between items-center">
+                              <span>Nutrition Coaching</span>
+                              <span className="text-xs text-purple-600 font-semibold">Nutrition</span>
+                            </div>
+                          </span>
+                        </Link>
+                        <Link href="/services#group-fitness" onClick={() => setIsMobileMenuOpen(false)}>
+                          <span className="block px-6 py-2 text-sm text-gray-600 hover:text-[hsl(var(--orange))] hover:bg-orange-50 rounded-md cursor-pointer">
+                            <div className="flex justify-between items-center">
+                              <span>Small Group Training</span>
+                              <span className="text-xs text-yellow-600 font-semibold">Group</span>
+                            </div>
+                          </span>
+                        </Link>
+                        <Link href="/services#accountability" onClick={() => setIsMobileMenuOpen(false)}>
+                          <span className="block px-6 py-2 text-sm text-gray-600 hover:text-[hsl(var(--orange))] hover:bg-orange-50 rounded-md cursor-pointer">
+                            <div className="flex justify-between items-center">
+                              <span>Accountability Programs</span>
+                              <span className="text-xs text-indigo-600 font-semibold">Support</span>
+                            </div>
+                          </span>
+                        </Link>
+                        <Link href="/services#meal-planning" onClick={() => setIsMobileMenuOpen(false)}>
+                          <span className="block px-6 py-2 text-sm text-gray-600 hover:text-[hsl(var(--orange))] hover:bg-orange-50 rounded-md cursor-pointer">
+                            <div className="flex justify-between items-center">
+                              <span>Custom Meal Planning</span>
+                              <span className="text-xs text-teal-600 font-semibold">Meals</span>
+                            </div>
+                          </span>
+                        </Link>
+                        <Link href="/services#workout-plans" onClick={() => setIsMobileMenuOpen(false)}>
+                          <span className="block px-6 py-2 text-sm text-gray-600 hover:text-[hsl(var(--orange))] hover:bg-orange-50 rounded-md cursor-pointer">
+                            <div className="flex justify-between items-center">
+                              <span>Custom Workout Plans</span>
+                              <span className="text-xs text-red-600 font-semibold">Plans</span>
+                            </div>
+                          </span>
+                        </Link>
+                      </CollapsibleContent>
+                    </Collapsible>
                     
                     {/* About */}
                     <Link href="/about" onClick={() => setIsMobileMenuOpen(false)}>
