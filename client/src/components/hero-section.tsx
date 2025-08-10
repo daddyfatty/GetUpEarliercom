@@ -19,7 +19,7 @@ export function HeroSection() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/services" className="w-full sm:w-auto">
                   <Button 
-                    className="w-full bg-[hsl(var(--coaching-primary))] hover:bg-[hsl(var(--coaching-primary))]/90 text-white font-semibold px-8 py-4 text-lg"
+                    className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-4 text-lg shadow-lg"
                   >
                     Services
                   </Button>
