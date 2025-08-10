@@ -53,7 +53,7 @@ export function HeroSection() {
               </p>
               <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 shadow-2xl">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <Link href="/personal-strength-training" className="group">
+                  <Link href="/services/personal-strength-training" className="group">
                     <div className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-white/10 hover:border-purple-400/30">
                       <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
                         1-on-1 Personal Strength Training
@@ -61,7 +61,7 @@ export function HeroSection() {
                     </div>
                   </Link>
                   
-                  <Link href="/virtual-nutrition-coaching" className="group">
+                  <Link href="/services/virtual-nutrition-coaching" className="group">
                     <div className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-white/10 hover:border-purple-400/30">
                       <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
                         Virtual Nutrition Coaching
@@ -69,7 +69,7 @@ export function HeroSection() {
                     </div>
                   </Link>
                   
-                  <Link href="/accountability-coaching" className="group">
+                  <Link href="/services/accountability-coaching" className="group">
                     <div className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-white/10 hover:border-purple-400/30">
                       <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
                         Accountability Coaching
@@ -77,7 +77,7 @@ export function HeroSection() {
                     </div>
                   </Link>
                   
-                  <Link href="/certified-running-coaching" className="group">
+                  <Link href="/services/certified-running-coaching" className="group">
                     <div className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-white/10 hover:border-purple-400/30">
                       <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
                         Certified Running Coaching
