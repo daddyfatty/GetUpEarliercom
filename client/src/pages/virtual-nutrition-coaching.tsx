@@ -46,7 +46,6 @@ export default function VirtualNutritionCoaching() {
           </div>
         </div>
       </HeroGradient>
-
       {/* Main Content */}
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
@@ -96,9 +95,7 @@ export default function VirtualNutritionCoaching() {
                     <Video className="h-8 w-8 text-blue-600 mr-3" />
                     <h3 className="text-xl font-semibold text-gray-900">Virtual Sessions</h3>
                   </div>
-                  <p className="text-gray-600">
-                    Weekly 45-minute video calls to review progress, troubleshoot challenges, and adjust your plan as needed.
-                  </p>
+                  <p className="text-gray-600">Weekly 30-minute video calls to review progress, troubleshoot challenges, and adjust your plan as needed.</p>
                 </CardContent>
               </Card>
 
@@ -178,7 +175,6 @@ export default function VirtualNutritionCoaching() {
           </div>
         </div>
       </div>
-
       {/* Michael About Block */}
       <MichaelAboutBlock />
     </div>
