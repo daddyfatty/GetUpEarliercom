@@ -16,32 +16,7 @@ export function HeroSection() {
               <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight mb-6 sm:mb-8 font-brand">
                 Bridging the gap from inactivity and poor diet to strength and healthy habits
               </h1>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/services" className="w-full sm:w-auto">
-                  <Button 
-                    className="w-full text-white font-semibold px-8 py-4 text-lg shadow-lg hover:opacity-90"
-                    style={{ backgroundColor: '#7C3AED' }}
-                  >
-                    Services
-                  </Button>
-                </Link>
-                <Link href="/recipes" className="w-full sm:w-auto">
-                  <Button 
-                    className="w-full font-semibold text-white hover:opacity-90 border-2 border-transparent px-8 py-4 text-lg"
-                    style={{ backgroundColor: '#ef4444' }}
-                  >
-                    Recipes
-                  </Button>
-                </Link>
-                <Link href="/workouts" className="w-full sm:w-auto">
-                  <Button 
-                    className="w-full font-semibold text-black hover:opacity-90 px-8 py-4 text-lg"
-                    style={{ backgroundColor: '#B3D7E9' }}
-                  >
-                    Workouts & Challenges
-                  </Button>
-                </Link>
-              </div>
+
             </div>
           </div>
           
