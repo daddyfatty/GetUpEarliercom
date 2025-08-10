@@ -31,7 +31,7 @@ export function NavigationButtonsSection() {
               <Link href="/services" className="flex-1">
                 <Button 
                   className="w-full h-full text-white font-semibold px-8 py-4 text-lg shadow-lg hover:opacity-90 transition-all duration-200 min-h-[72px]"
-                  style={{ backgroundColor: '#7C3AED' }}
+                  style={{ backgroundColor: '#8B5CF6' }}
                 >
                   Services
                 </Button>
