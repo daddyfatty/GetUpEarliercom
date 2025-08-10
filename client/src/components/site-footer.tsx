@@ -1,32 +1,7 @@
 import { Link } from "wouter";
-import { Facebook, Youtube, Mail } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-
-declare global {
-  interface Window {
-    klaviyo: any;
-  }
-}
+import { Facebook, Youtube } from "lucide-react";
 
 export function SiteFooter() {
-  const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Klaviyo form submission backup
-    if (window.klaviyo) {
-      window.klaviyo.push(["identify", { $email: email }]);
-      window.klaviyo.push(["track", "Newsletter Signup", {}]);
-    }
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setEmail("");
-      setIsSubmitted(false);
-    }, 3000);
-  };
 
   return (
     <>
@@ -43,34 +18,7 @@ export function SiteFooter() {
             </p>
             
             {/* Klaviyo form container - will be populated if script loads */}
-            <div className="klaviyo-form-ULBmqZ w-full"></div>
-            
-            {/* Fallback form */}
-            {!isSubmitted ? (
-              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 mt-4">
-                <div className="flex-1 relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 bg-white/90 border-white/30 text-gray-900 placeholder:text-gray-500 h-12"
-                    required
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 h-12 shadow-lg"
-                >
-                  Subscribe
-                </Button>
-              </form>
-            ) : (
-              <div className="bg-green-500/20 border border-green-400/30 rounded-lg p-4 mt-4">
-                <p className="text-green-300 font-medium">✓ Thanks for subscribing! Check your email for confirmation.</p>
-              </div>
-            )}
+            <div className="klaviyo-form-ULBmqZ w-full" style={{minHeight: '120px'}}></div>
           </div>
           
           <p className="text-purple-200 text-sm">
