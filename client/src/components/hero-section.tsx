@@ -7,7 +7,7 @@ import { HeroGradient } from "@/components/hero-gradient";
 export function HeroSection() {
   return (
     <HeroGradient className="text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-8 pb-2 sm:pb-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start min-h-[400px] sm:min-h-[500px]">
           <div className="hidden lg:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-px h-80 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
           <div className="flex flex-col pt-8 sm:pt-12 h-full">
