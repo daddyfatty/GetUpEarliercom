@@ -15,65 +15,109 @@ import gymImagePath from "@assets/download - 2025-06-20T164725.183_1750452478509
 import { useEffect, useState } from "react";
 import { useSEO } from "@/hooks/useSEO";
 
-function LatestBlogCard() {
-  const { data: blogPosts = [] } = useQuery<BlogPost[]>({
-    queryKey: ["/api/blog"],
-  });
-
-  const latestPost = blogPosts[0];
+function ServicesCard() {
+  const services = [
+    {
+      title: "1-on-1 Personal Strength Training",
+      url: "/personal-strength-training",
+      external: false
+    },
+    {
+      title: "Virtual Nutrition Coaching",
+      url: "/virtual-nutrition-coaching", 
+      external: false
+    },
+    {
+      title: "Accountability Coaching",
+      url: "/accountability-coaching",
+      external: false
+    },
+    {
+      title: "Certified Running Coaching",
+      url: "/certified-running-coaching",
+      external: false
+    },
+    {
+      title: "Private Yoga",
+      url: "https://EricaLeeBaker.com",
+      external: true
+    },
+    {
+      title: "Small Group Yoga",
+      url: "https://EricaLeeBaker.com",
+      external: true
+    }
+  ];
 
   return (
-    <Link href={latestPost ? `/blog/${latestPost.slug}` : "/blog"} className="block h-full">
-      <div className="bg-white border-2 border-green-200 p-6 rounded-2xl shadow-lg h-full flex flex-col hover:shadow-xl hover:border-green-300 transition-all duration-200 cursor-pointer">
-        <div className="mb-4">
-          <div className="inline-block bg-green-600/10 text-green-600 px-3 py-1 rounded-full text-sm font-medium mb-2">
-            Latest Blog
+    <div className="bg-[hsl(var(--navy))] rounded-2xl shadow-lg h-full flex flex-col p-6">
+      <div className="mb-6">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="p-2 bg-purple-500/20 rounded-lg">
+            <Users className="w-5 h-5 text-purple-300" />
           </div>
-          <h2 className="text-2xl font-bold text-green-600 mb-2">Latest Blog</h2>
-          <p className="text-gray-600 mb-2 text-[14px]">Health, fitness, and nutrition insights</p>
-          <div className="bg-green-100 text-green-700 px-3 py-1 rounded-full inline-block text-sm font-medium">
-            <BookOpen className="inline w-4 h-4 mr-1" />
-            New posts added regularly!
-          </div>
+          <span className="text-purple-300 text-sm font-medium uppercase tracking-wider">Coaching Services</span>
         </div>
-        
-        <div className="flex-1 flex flex-col">
-          {latestPost ? (
-            <div className="mb-4">
-              {latestPost.imageUrl && (
-                <img 
-                  src={latestPost.imageUrl}
-                  alt={latestPost.title}
-                  className="w-full h-72 object-cover rounded-lg mb-4 border border-green-200"
-                />
-              )}
-              <h3 className="font-bold text-gray-900 mb-2 text-lg leading-tight">
-                {latestPost.title}
-              </h3>
-              <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
-                {latestPost.excerpt}
-              </p>
-            </div>
-          ) : (
-            <div className="mb-4 text-center text-gray-500">
-              <BookOpen className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-              <p>Loading latest blog post...</p>
-            </div>
-          )}
-        </div>
-        
-        <div className="mt-auto">
-          <Button 
-            size="lg" 
-            className="w-full font-semibold text-white bg-green-600 hover:bg-green-700 shadow-lg transform hover:scale-105 transition-all duration-200"
-          >
-            <BookOpen className="h-5 w-5 mr-2" />
-            Read Full Post
-            <ArrowRight className="h-4 w-4 ml-2" />
-          </Button>
+        <h2 className="text-2xl font-bold text-white mb-2">Transform Your Health</h2>
+        <p className="text-blue-100 text-sm">Personalized coaching tailored to your goals</p>
+      </div>
+      
+      <div className="flex-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {services.map((service) => (
+            <Link
+              key={service.title}
+              href={service.url}
+              target={service.external ? "_blank" : undefined}
+              className="group"
+            >
+              <div className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-white/10 hover:border-purple-400/30">
+                <div className="flex items-center justify-between">
+                  <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
+                    {service.title}
+                  </span>
+                  {service.external && (
+                    <ExternalLink className="w-4 h-4 text-purple-300 opacity-50 group-hover:opacity-100 transition-opacity" />
+                  )}
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
-    </Link>
+      
+      <div className="mt-6 space-y-3">
+        <Link href="/services">
+          <Button 
+            size="lg" 
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold shadow-lg transform hover:scale-105 transition-all duration-200"
+          >
+            <Users className="h-5 w-5 mr-2" />
+            View All Services
+            <ArrowRight className="h-4 w-4 ml-2" />
+          </Button>
+        </Link>
+        
+        {/* Facebook Button */}
+        <a 
+          href="https://www.facebook.com/profile.php?id=61552522390973" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="block"
+        >
+          <Button 
+            size="lg" 
+            variant="outline"
+            className="w-full bg-white/10 hover:bg-white/20 text-white border-white/20 hover:border-white/30 font-semibold shadow-lg transform hover:scale-105 transition-all duration-200"
+          >
+            <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            Follow on Facebook
+          </Button>
+        </a>
+      </div>
+    </div>
   );
 }
 
