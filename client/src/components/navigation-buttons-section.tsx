@@ -8,7 +8,7 @@ export function NavigationButtonsSection() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-6 items-stretch">
           {/* Facebook Group Section - Left Side */}
-          <div className="w-full lg:w-80 lg:flex-shrink-0">
+          <div className="w-full lg:w-96 lg:flex-shrink-0">
             <div 
               className="bg-white/10 backdrop-blur-sm border border-white/20 p-4 rounded-xl shadow-lg cursor-pointer hover:bg-white/20 hover:scale-105 transition-all duration-300 transform h-full flex items-center"
               onClick={() => window.open('https://www.facebook.com/groups/getupearlier', '_blank')}
