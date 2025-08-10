@@ -6,6 +6,7 @@ import { CredentialsBand } from "@/components/credentials-band";
 import { ClientReviews } from "@/components/client-reviews";
 import { GoogleReviews } from "@/components/google-reviews";
 import GoogleReviewsCarousel from "@/components/google-reviews-carousel";
+import { PrivateBoutiqueSection } from "@/components/private-boutique-section";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
@@ -230,6 +231,9 @@ export default function Home() {
   return (
     <div className="w-full">
       <HeroSection />
+      
+      {/* Private Boutique Section */}
+      <PrivateBoutiqueSection />
       
       {/* Combined Reviews Section */}
       <section className="relative bg-[hsl(var(--navy))] overflow-hidden">

@@ -19,7 +19,8 @@ export function HeroSection() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/services" className="w-full sm:w-auto">
                   <Button 
-                    className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-4 text-lg shadow-lg"
+                    className="w-full text-white font-semibold px-8 py-4 text-lg shadow-lg hover:opacity-90"
+                    style={{ backgroundColor: '#7C3AED' }}
                   >
                     Services
                   </Button>
