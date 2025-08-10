@@ -1,25 +1,10 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Trophy, Users, Dumbbell, ChefHat } from "lucide-react";
+import { Trophy, Users, Dumbbell, ChefHat, ExternalLink } from "lucide-react";
 import { SiFacebook } from "react-icons/si";
 import { HeroGradient } from "@/components/hero-gradient";
-import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
-import type { BlogPost } from "@shared/schema";
 
 export function HeroSection() {
-  const [randomPost, setRandomPost] = useState<BlogPost | null>(null);
-  
-  const { data: blogPosts } = useQuery<BlogPost[]>({
-    queryKey: ['/api/blog'],
-  });
-
-  useEffect(() => {
-    if (blogPosts && blogPosts.length > 0) {
-      const randomIndex = Math.floor(Math.random() * blogPosts.length);
-      setRandomPost(blogPosts[randomIndex]);
-    }
-  }, [blogPosts]);
   return (
     <HeroGradient className="text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
@@ -60,36 +45,80 @@ export function HeroSection() {
           </div>
           
           <div className="flex flex-col justify-start pt-4 sm:pt-8 space-y-3 sm:space-y-4 h-full">
-            {randomPost ? (
-              <div>
-                <p className="text-white/80 text-sm font-medium mb-4 uppercase tracking-wider">From the Blog:</p>
-                <Link href={`/blog/${randomPost.slug}`}>
-                  <div className="cursor-pointer hover:scale-105 transition-transform duration-300 relative">
-                    <div className="w-full h-96 overflow-hidden rounded-2xl shadow-2xl">
-                      <img 
-                        src={randomPost.imageUrl || '/api/placeholder/600/400'} 
-                        alt={randomPost.title}
-                        className="w-full h-full object-cover"
-                      />
-                      {/* 50% black overlay */}
-                      <div className="absolute inset-0 bg-black/50 rounded-2xl"></div>
+            {/* Services Grid */}
+            <div>
+              <p className="text-purple-300 text-sm font-medium mb-4 uppercase tracking-wider flex items-center gap-2">
+                <Users className="w-4 h-4" />
+                Coaching Services
+              </p>
+              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 shadow-2xl">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <Link href="/personal-strength-training" className="group">
+                    <div className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-white/10 hover:border-purple-400/30">
+                      <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
+                        1-on-1 Personal Strength Training
+                      </span>
                     </div>
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-2xl">
-                      <h3 className="text-white text-xl font-bold leading-tight">
-                        {randomPost.title}
-                      </h3>
+                  </Link>
+                  
+                  <Link href="/virtual-nutrition-coaching" className="group">
+                    <div className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-white/10 hover:border-purple-400/30">
+                      <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
+                        Virtual Nutrition Coaching
+                      </span>
                     </div>
-                  </div>
+                  </Link>
+                  
+                  <Link href="/accountability-coaching" className="group">
+                    <div className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-white/10 hover:border-purple-400/30">
+                      <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
+                        Accountability Coaching
+                      </span>
+                    </div>
+                  </Link>
+                  
+                  <Link href="/certified-running-coaching" className="group">
+                    <div className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-white/10 hover:border-purple-400/30">
+                      <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
+                        Certified Running Coaching
+                      </span>
+                    </div>
+                  </Link>
+                  
+                  <Link href="https://EricaLeeBaker.com" target="_blank" className="group">
+                    <div className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-white/10 hover:border-purple-400/30">
+                      <div className="flex items-center justify-between">
+                        <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
+                          Private Yoga
+                        </span>
+                        <ExternalLink className="w-4 h-4 text-purple-300 opacity-50 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                    </div>
+                  </Link>
+                  
+                  <Link href="https://EricaLeeBaker.com" target="_blank" className="group">
+                    <div className="bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-white/10 hover:border-purple-400/30">
+                      <div className="flex items-center justify-between">
+                        <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
+                          Small Group Yoga
+                        </span>
+                        <ExternalLink className="w-4 h-4 text-purple-300 opacity-50 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+                
+                {/* View All Services Button */}
+                <Link href="/services">
+                  <Button 
+                    className="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold shadow-lg transform hover:scale-105 transition-all duration-200"
+                  >
+                    <Users className="h-5 w-5 mr-2" />
+                    View All Services
+                  </Button>
                 </Link>
               </div>
-            ) : (
-              <div className="rounded-2xl shadow-2xl w-full h-96 bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-2"></div>
-                  <p className="text-white/70">Loading blog post...</p>
-                </div>
-              </div>
-            )}
+            </div>
             
             {/* Facebook Group Section */}
             <div>
