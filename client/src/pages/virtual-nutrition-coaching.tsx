@@ -117,7 +117,7 @@ export default function VirtualNutritionCoaching() {
                     <User className="h-8 w-8 text-orange-600 mr-3" />
                     <h3 className="text-xl font-semibold text-gray-900">Ongoing Support</h3>
                   </div>
-                  <p className="text-gray-600">Text based access to ask questions, share victories, and get guidance between sessions</p>
+                  <p className="text-gray-600">Text based access to ask questions, share victories, and get guidance between sessions.</p>
                 </CardContent>
               </Card>
             </div>
