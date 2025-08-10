@@ -1,7 +1,26 @@
 import { Link } from "wouter";
-import { Facebook, Youtube } from "lucide-react";
+import { Facebook, Youtube, Mail } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export function SiteFooter() {
+  const [email, setEmail] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Submit to Klaviyo if available
+    if ((window as any).klaviyo) {
+      (window as any).klaviyo.push(["identify", { $email: email }]);
+      (window as any).klaviyo.push(["track", "Newsletter Signup", {}]);
+    }
+    setIsSubmitted(true);
+    setTimeout(() => {
+      setEmail("");
+      setIsSubmitted(false);
+    }, 3000);
+  };
 
   return (
     <>
@@ -17,8 +36,32 @@ export function SiteFooter() {
               Join 1000+ adults over 40 years old for weekly actionable tips on strength & muscle, health, work-from-home optimization, and healthy habits for your busy schedule.
             </p>
             
-            {/* Klaviyo form container - will be populated if script loads */}
-            <div className="klaviyo-form-ULBmqZ w-full" style={{minHeight: '120px'}}></div>
+            {/* Newsletter Form */}
+            {!isSubmitted ? (
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+                <div className="flex-1 relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="pl-10 bg-white/90 border-white/30 text-gray-900 placeholder:text-gray-500 h-12"
+                    required
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 h-12 shadow-lg"
+                >
+                  Join The List
+                </Button>
+              </form>
+            ) : (
+              <div className="bg-green-500/20 border border-green-400/30 rounded-lg p-4">
+                <p className="text-green-300 font-medium">✓ Thanks for subscribing! Check your email for confirmation.</p>
+              </div>
+            )}
           </div>
           
           <p className="text-purple-200 text-sm">
