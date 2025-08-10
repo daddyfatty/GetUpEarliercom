@@ -12,7 +12,7 @@ export function HeroSection() {
           <div className="hidden lg:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-px h-80 bg-gradient-to-b from-transparent via-white/20 to-transparent"></div>
           <div className="flex flex-col pt-8 sm:pt-12 h-full">
             <div className="flex flex-col">
-              <p className="text-sm text-blue-200 mb-2 tracking-wider uppercase">Get Up Earlier | Strength & Nutrition age 40+</p>
+              <p className="text-sm text-blue-300 mb-2 tracking-wider uppercase">Get Up Earlier | Strength & Nutrition age 40+</p>
               <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight font-brand">
                 Bridging the gap from inactivity and poor diet to strength and healthy habits
               </h1>
@@ -22,62 +22,62 @@ export function HeroSection() {
           <div className="flex flex-col pt-8 sm:pt-12 h-full">
             {/* Services Grid */}
             <div>
-              <p className="text-purple-300 text-sm font-medium mb-2 uppercase tracking-wider flex items-center gap-2">
+              <p className="text-blue-300 text-sm font-medium mb-2 uppercase tracking-wider flex items-center gap-2">
                 <Users className="w-4 h-4" />
                 Coaching Services
               </p>
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 shadow-2xl">
+              <div className="bg-blue-900/20 backdrop-blur-sm border border-blue-400/20 rounded-2xl p-6 shadow-2xl">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <Link href="/services/personal-strength-training" className="group">
-                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-purple-400/30">
-                      <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
+                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-blue-400/50">
+                      <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                         1-on-1 Personal Strength Training
                       </span>
                     </div>
                   </Link>
                   
                   <Link href="/services/virtual-nutrition-coaching" className="group">
-                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-purple-400/30">
-                      <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
+                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-blue-400/50">
+                      <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                         Virtual Nutrition Coaching
                       </span>
                     </div>
                   </Link>
                   
                   <Link href="/services/accountability-coaching" className="group">
-                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-purple-400/30">
-                      <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
+                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-blue-400/50">
+                      <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                         Accountability Coaching
                       </span>
                     </div>
                   </Link>
                   
                   <Link href="/services/certified-running-coaching" className="group">
-                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-purple-400/30">
-                      <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
+                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-blue-400/50">
+                      <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                         Certified Running Coaching
                       </span>
                     </div>
                   </Link>
                   
                   <Link href="https://EricaLeeBaker.com" target="_blank" className="group">
-                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-purple-400/30">
+                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-blue-400/50">
                       <div className="flex items-center justify-between">
-                        <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
+                        <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                           Private Yoga
                         </span>
-                        <ExternalLink className="w-4 h-4 text-purple-300 opacity-50 group-hover:opacity-100 transition-opacity" />
+                        <ExternalLink className="w-4 h-4 text-blue-300 opacity-50 group-hover:opacity-100 transition-opacity" />
                       </div>
                     </div>
                   </Link>
                   
                   <Link href="https://EricaLeeBaker.com" target="_blank" className="group">
-                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-purple-400/30">
+                    <div className="bg-slate-900/90 hover:bg-slate-800/90 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-700/30 hover:border-blue-400/50">
                       <div className="flex items-center justify-between">
-                        <span className="text-white font-medium text-sm group-hover:text-purple-200 transition-colors">
+                        <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                           Small Group Yoga
                         </span>
-                        <ExternalLink className="w-4 h-4 text-purple-300 opacity-50 group-hover:opacity-100 transition-opacity" />
+                        <ExternalLink className="w-4 h-4 text-blue-300 opacity-50 group-hover:opacity-100 transition-opacity" />
                       </div>
                     </div>
                   </Link>
@@ -86,7 +86,7 @@ export function HeroSection() {
                 {/* View All Services Button */}
                 <Link href="/services">
                   <Button 
-                    className="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold shadow-lg transform hover:scale-105 transition-all duration-200"
+                    className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg transform hover:scale-105 transition-all duration-200"
                   >
                     <Users className="h-5 w-5 mr-2" />
                     View All Services
