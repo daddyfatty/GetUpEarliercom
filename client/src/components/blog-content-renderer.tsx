@@ -239,60 +239,19 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
           </div>
         );
       } else if (match.type === 'gallery' && match.images && match.images.length > 0) {
-        // Determine layout based on image count
-        const imageCount = match.images.length;
-        
+        // Display all images full size, one after another
         parts.push(
-          <div key={`gallery-${match.start}`} className="my-8 w-full">
-            {imageCount === 1 ? (
-              // Single image - full width
-              <div 
-                className="cursor-pointer hover:shadow-xl transition-shadow group relative w-full"
-                onClick={() => onImageClick && onImageClick(match.images[0]?.src || '')}
-              >
+          <div key={`gallery-${match.start}`} className="my-8 w-full space-y-6">
+            {match.images.map((image, imgIndex) => (
+              <div key={`gallery-img-${imgIndex}`} className="w-full">
                 <img
-                  src={match.images[0]?.src || ''}
-                  alt={match.images[0]?.alt || ''}
-                  className="w-full h-auto object-cover rounded-lg"
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full h-auto object-contain rounded-lg shadow-lg"
+                  loading="lazy"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center rounded-lg">
-                  <div className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4m-4 0l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                    </svg>
-                  </div>
-                </div>
               </div>
-            ) : (
-              // Multiple images - Dynamic column layout based on image count
-              <div className={`grid gap-4 w-full ${
-                imageCount === 2 ? 'grid-cols-2' : 
-                imageCount === 3 ? 'grid-cols-3' : 
-                'grid-cols-2 md:grid-cols-4'
-              }`}>
-                {match.images.map((image, imgIndex) => (
-                  <div 
-                    key={`gallery-img-${imgIndex}`}
-                    className="cursor-pointer hover:shadow-xl transition-all duration-300 group relative aspect-auto overflow-hidden rounded-lg shadow-lg"
-                    onClick={() => onImageClick && onImageClick(image.src)}
-                  >
-                    <img
-                      src={image.src}
-                      alt={image.alt}
-                      className="w-full h-auto object-contain group-hover:opacity-90 transition-opacity"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center rounded-lg">
-                      <div className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4m-4 0l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            ))}
           </div>
         );
       }
