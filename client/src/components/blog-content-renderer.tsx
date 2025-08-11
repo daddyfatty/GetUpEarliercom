@@ -117,6 +117,8 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
     
     // Find all galleries
     const galleryMatches = [];
+    
+    // First check for existing gallery format
     galleryRegex.lastIndex = 0;
     while ((match = galleryRegex.exec(processedContent)) !== null) {
       const galleryContent = match[1];
@@ -130,6 +132,27 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
           alt: imageMatch[2]
         });
       }
+      
+      if (images.length > 0) {
+        galleryMatches.push({
+          start: match.index,
+          end: match.index + match[0].length,
+          images,
+          type: 'gallery'
+        });
+      }
+    }
+    
+    // Also check for [GALLERY_START]...[GALLERY_END] format
+    const simpleGalleryRegex = /\[GALLERY_START\]([\s\S]*?)\[GALLERY_END\]/g;
+    simpleGalleryRegex.lastIndex = 0;
+    while ((match = simpleGalleryRegex.exec(processedContent)) !== null) {
+      const galleryContent = match[1];
+      const imageLines = galleryContent.split('\n').filter(line => line.trim() && line.includes('/'));
+      const images = imageLines.map((line, index) => ({
+        src: line.trim(),
+        alt: `Gallery image ${index + 1}`
+      }));
       
       if (images.length > 0) {
         galleryMatches.push({
@@ -192,7 +215,7 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
       }
       
       // Add the match component
-      if (match.type === 'amazon') {
+      if (match.type === 'amazon' && match.url && match.title) {
         parts.push(
           <RealAmazonPreview
             key={`amazon-${match.start}`}
@@ -215,7 +238,7 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
             />
           </div>
         );
-      } else if (match.type === 'gallery') {
+      } else if (match.type === 'gallery' && match.images && match.images.length > 0) {
         // Determine layout based on image count
         const imageCount = match.images.length;
         
@@ -225,11 +248,11 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
               // Single image - full width
               <div 
                 className="cursor-pointer hover:shadow-xl transition-shadow group relative w-full"
-                onClick={() => onImageClick && onImageClick(match.images[0].src)}
+                onClick={() => onImageClick && onImageClick(match.images[0]?.src || '')}
               >
                 <img
-                  src={match.images[0].src}
-                  alt={match.images[0].alt}
+                  src={match.images[0]?.src || ''}
+                  alt={match.images[0]?.alt || ''}
                   className="w-full h-auto object-cover rounded-lg"
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center rounded-lg">
@@ -247,7 +270,7 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
                 imageCount === 3 ? 'grid-cols-3' : 
                 'grid-cols-2 md:grid-cols-4'
               }`}>
-                {match.images?.map((image, imgIndex) => (
+                {match.images.map((image, imgIndex) => (
                   <div 
                     key={`gallery-img-${imgIndex}`}
                     className="cursor-pointer hover:shadow-xl transition-all duration-300 group relative aspect-auto overflow-hidden rounded-lg shadow-lg"
