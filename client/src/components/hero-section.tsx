@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Trophy, Users, Dumbbell, ChefHat, ExternalLink } from "lucide-react";
+import { Trophy, Users, Dumbbell, ChefHat, ExternalLink, Zap, Heart, Target, User } from "lucide-react";
 import { SiFacebook } from "react-icons/si";
 import { HeroGradient } from "@/components/hero-gradient";
 
@@ -29,54 +29,72 @@ export function HeroSection() {
               <div className="bg-blue-900/20 backdrop-blur-sm border border-blue-400/20 rounded-2xl p-6 shadow-2xl">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <Link href="/services/personal-strength-training" className="group">
-                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
-                      <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
-                        1-on-1 Personal Strength Training
-                      </span>
+                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-5 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
+                      <div className="flex items-center gap-3">
+                        <Zap className="w-8 h-8 text-blue-500 flex-shrink-0" style={{width: '35px', height: '35px'}} />
+                        <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
+                          1-on-1 Personal Strength Training
+                        </span>
+                      </div>
                     </div>
                   </Link>
                   
                   <Link href="/services/virtual-nutrition-coaching" className="group">
-                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
-                      <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
-                        Virtual Nutrition Coaching
-                      </span>
+                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-5 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
+                      <div className="flex items-center gap-3">
+                        <Heart className="w-8 h-8 text-green-500 flex-shrink-0" style={{width: '35px', height: '35px'}} />
+                        <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
+                          Virtual Nutrition Coaching
+                        </span>
+                      </div>
                     </div>
                   </Link>
                   
                   <Link href="/services/accountability-coaching" className="group">
-                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
-                      <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
-                        Accountability Coaching
-                      </span>
+                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-5 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
+                      <div className="flex items-center gap-3">
+                        <Target className="w-8 h-8 text-red-500 flex-shrink-0" style={{width: '35px', height: '35px'}} />
+                        <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
+                          Accountability Coaching
+                        </span>
+                      </div>
                     </div>
                   </Link>
                   
                   <Link href="/services/certified-running-coaching" className="group">
-                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
-                      <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
-                        Certified Running Coaching
-                      </span>
+                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-5 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
+                      <div className="flex items-center gap-3">
+                        <Users className="w-8 h-8 text-purple-500 flex-shrink-0" style={{width: '35px', height: '35px'}} />
+                        <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
+                          Certified Running Coaching
+                        </span>
+                      </div>
                     </div>
                   </Link>
                   
                   <Link href="https://EricaLeeBaker.com" target="_blank" className="group">
-                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
+                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-5 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
                       <div className="flex items-center justify-between">
-                        <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
-                          Private Yoga
-                        </span>
+                        <div className="flex items-center gap-3">
+                          <Dumbbell className="w-8 h-8 text-blue-500 flex-shrink-0" style={{width: '35px', height: '35px'}} />
+                          <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
+                            Private Yoga
+                          </span>
+                        </div>
                         <ExternalLink className="w-4 h-4 text-blue-300 opacity-50 group-hover:opacity-100 transition-opacity" />
                       </div>
                     </div>
                   </Link>
                   
                   <Link href="https://EricaLeeBaker.com" target="_blank" className="group">
-                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-4 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
+                    <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-5 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
                       <div className="flex items-center justify-between">
-                        <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
-                          Small Group Yoga
-                        </span>
+                        <div className="flex items-center gap-3">
+                          <User className="w-8 h-8 text-pink-500 flex-shrink-0" style={{width: '35px', height: '35px'}} />
+                          <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
+                            Small Group Yoga
+                          </span>
+                        </div>
                         <ExternalLink className="w-4 h-4 text-blue-300 opacity-50 group-hover:opacity-100 transition-opacity" />
                       </div>
                     </div>
