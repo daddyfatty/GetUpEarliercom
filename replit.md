@@ -10,6 +10,7 @@ YouTube Blog System: Always extract authentic YouTube video data (title, descrip
 Blog Authorship: All blogs and videos are by Michael Baker (not "Get Up Earlier") and all author mentions should link to his profile about page.
 Routing: All Michael Baker references and /team/michael routes redirect to /about page. Recipe templates link author name to /about.
 Design Preference: When user requests "Dark Gradient" styling, use the hero-gradient class which creates the stunning multi-layered gradient effect with dark navy/blue base, purple/magenta bands, royal blues, and bright orange horizon with breathing animation - this is the preferred gradient for all headers and special sections.
+Service Buttons: Hero section coaching service buttons display 35x35 authentic featured images from each service page rather than generic icons. This creates visual connection between homepage and service pages with real photos (gym equipment, nutrition coaching, hiking, running, yoga).
 Blog and Training Log Auto-Bump Workflow: 
 - ALWAYS ensure new blog posts automatically appear at the top by setting published_date to current date
 - ALWAYS ensure the Hartford Marathon Training Log 2025 blog post is the top post whenever it's mentioned or updated. Set published_date to current date in the database to bump it to the top. This happens frequently and should be automatic.
