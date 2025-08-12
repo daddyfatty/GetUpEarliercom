@@ -31,7 +31,12 @@ export function HeroSection() {
                   <Link href="/services/personal-strength-training" className="group">
                     <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-5 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
                       <div className="flex items-center gap-3">
-                        <Zap className="w-8 h-8 text-blue-500 flex-shrink-0" style={{width: '35px', height: '35px'}} />
+                        <img 
+                          src="/attached_assets/download - 2025-06-20T164725.183_1750453386689.png" 
+                          alt="Personal Training" 
+                          className="w-8 h-8 rounded-md object-cover flex-shrink-0 border border-gray-600"
+                          style={{width: '35px', height: '35px'}} 
+                        />
                         <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                           1-on-1 Personal Strength Training
                         </span>
@@ -42,7 +47,12 @@ export function HeroSection() {
                   <Link href="/services/virtual-nutrition-coaching" className="group">
                     <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-5 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
                       <div className="flex items-center gap-3">
-                        <Heart className="w-8 h-8 text-green-500 flex-shrink-0" style={{width: '35px', height: '35px'}} />
+                        <img 
+                          src="/assets/download - 2025-06-20T170333.649_1750453429860.png" 
+                          alt="Nutrition Coaching" 
+                          className="w-8 h-8 rounded-md object-cover flex-shrink-0 border border-gray-600"
+                          style={{width: '35px', height: '35px'}} 
+                        />
                         <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                           Virtual Nutrition Coaching
                         </span>
@@ -53,7 +63,12 @@ export function HeroSection() {
                   <Link href="/services/accountability-coaching" className="group">
                     <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-5 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
                       <div className="flex items-center gap-3">
-                        <Target className="w-8 h-8 text-red-500 flex-shrink-0" style={{width: '35px', height: '35px'}} />
+                        <img 
+                          src="/assets/678aad8cfd0dcde677a14418_hike2-p-800_1750453452584.jpg" 
+                          alt="Accountability Coaching" 
+                          className="w-8 h-8 rounded-md object-cover flex-shrink-0 border border-gray-600"
+                          style={{width: '35px', height: '35px'}} 
+                        />
                         <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                           Accountability Coaching
                         </span>
@@ -64,7 +79,12 @@ export function HeroSection() {
                   <Link href="/services/certified-running-coaching" className="group">
                     <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-5 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
                       <div className="flex items-center gap-3">
-                        <Users className="w-8 h-8 text-purple-500 flex-shrink-0" style={{width: '35px', height: '35px'}} />
+                        <img 
+                          src="/attached_assets/download - 2025-06-20T170430.001_1750453483739.png" 
+                          alt="Running Coaching" 
+                          className="w-8 h-8 rounded-md object-cover flex-shrink-0 border border-gray-600"
+                          style={{width: '35px', height: '35px'}} 
+                        />
                         <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                           Certified Running Coaching
                         </span>
@@ -76,7 +96,12 @@ export function HeroSection() {
                     <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-5 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <Dumbbell className="w-8 h-8 text-blue-500 flex-shrink-0" style={{width: '35px', height: '35px'}} />
+                          <img 
+                            src="/assets/download - 2025-06-20T170516.226_1750453530152.png" 
+                            alt="Private Yoga" 
+                            className="w-8 h-8 rounded-md object-cover flex-shrink-0 border border-gray-600"
+                            style={{width: '35px', height: '35px'}} 
+                          />
                           <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                             Private Yoga
                           </span>
@@ -90,7 +115,12 @@ export function HeroSection() {
                     <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-5 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <User className="w-8 h-8 text-pink-500 flex-shrink-0" style={{width: '35px', height: '35px'}} />
+                          <img 
+                            src="/assets/download - 2025-06-20T170538.818_1750453554236.png" 
+                            alt="Small Group Yoga" 
+                            className="w-8 h-8 rounded-md object-cover flex-shrink-0 border border-gray-600"
+                            style={{width: '35px', height: '35px'}} 
+                          />
                           <span className="text-white font-medium text-sm group-hover:text-blue-200 transition-colors">
                             Small Group Yoga
                           </span>
