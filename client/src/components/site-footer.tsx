@@ -230,7 +230,7 @@ export function SiteFooter() {
                   </svg>
                 </div>
                 <a 
-                  href="https://webmbd.com" 
+                  href="https://michaelbakerdigital.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-gray-500 hover:text-blue-400 transition-colors text-xs"
