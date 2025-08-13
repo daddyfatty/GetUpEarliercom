@@ -21,12 +21,12 @@ export default function PersonalStrengthTraining() {
             </Link>
             
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-              Personal Strength<br className="hidden sm:block" />
-              <span className="text-purple-300">Training</span>
+              Strength Training<br className="hidden sm:block" />
+              <span className="text-purple-300">for Life</span>
             </h1>
             
             <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8">
-              Comprehensive strength training tailored to your fitness level and goals
+              Building strength, confidence, and independence at every age
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
@@ -57,11 +57,19 @@ export default function PersonalStrengthTraining() {
               <div className="md:col-span-2">
                 <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
                   <p>
-                    I believe in "lifting heavy things" with high intensity at least twice per week. I focus on traditional compound exercises, drop sets, body-weight strength training, and physical outdoor work like running, hiking, and basic calisthenics, along with increasing flexibility through customized yoga-style stretches. All supported and built on truly understanding and implementing "clean eating."
+                    The underlying goal of strength training is to remain independent for life. In your 30s, 40s, and even 50s it is easy to think that independence will always be there, but strength fades faster than most people realize unless you train for it. Use it or lose it is true. No assistance to do the normal day-to-day things, stand up easily, carry groceries, open bottles, stay active, play with your kids and grandkids. Strength training builds not just muscle, but confidence, capability, and vibrance at every age.
                   </p>
                   
                   <p>
-                    I'm here to help you break free from inactivity, your gym rut, or advance your fitness. You need a push in the right direction and accountability.
+                    I believe in lifting heavy things with high intensity at least twice per week. I focus on traditional compound exercises, drop sets, body-weight strength training, and physical outdoor work like running, hiking, and calisthenics, along with increasing flexibility through customized yoga-style stretches. All supported and built on truly understanding and implementing clean eating.
+                  </p>
+                  
+                  <p>
+                    While my own marathon training or strength achievements might seem extreme, I am not trying to turn anyone into a bodybuilder or marathon runner. Especially beyond 40, 50, 60, and 70 years old, these things are possible and my goal is to inspire and help people make realistic, sustainable changes that keep them strong and active for decades to come.
+                  </p>
+                  
+                  <p>
+                    I am here to help you break free from inactivity, your gym rut, or take your fitness to the next level. You need a push in the right direction and accountability.
                   </p>
                   
                   <p>
