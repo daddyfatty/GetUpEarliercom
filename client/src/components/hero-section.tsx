@@ -24,7 +24,7 @@ export function HeroSection() {
             <div>
               <p className="text-blue-300 text-sm font-medium mb-2 uppercase tracking-wider flex items-center gap-2">
                 <Users className="w-4 h-4" />
-                Coaching Services
+                1-on-1 Services
               </p>
               <div className="bg-blue-900/20 backdrop-blur-sm border border-blue-400/20 rounded-2xl p-6 shadow-2xl">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
