@@ -21,12 +21,12 @@ export default function PersonalStrengthTraining() {
             </Link>
             
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-              Strength Training<br className="hidden sm:block" />
-              <span className="text-purple-300">for Life</span>
+              1-on-1 Personal Strength<br className="hidden sm:block" />
+              <span className="text-purple-300">Training</span>
             </h1>
             
             <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8">
-              Building strength, confidence, and independence at every age
+              Comprehensive strength training tailored to your fitness level and goals
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
@@ -53,6 +53,7 @@ export default function PersonalStrengthTraining() {
           
           {/* Philosophy Section */}
           <div className="mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Strength Training for Life</h2>
             <div className="grid md:grid-cols-3 gap-8 items-start">
               <div className="md:col-span-2">
                 <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
