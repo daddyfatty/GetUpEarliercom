@@ -53,7 +53,7 @@ export default function PersonalStrengthTraining() {
           
           {/* Philosophy Section */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Strength Training for Life</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8">Strength Training for Life</h2>
             <div className="grid md:grid-cols-3 gap-8 items-start">
               <div className="md:col-span-2">
                 <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
