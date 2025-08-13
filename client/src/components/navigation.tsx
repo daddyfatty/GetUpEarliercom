@@ -417,32 +417,65 @@ export function Navigation() {
                 
 
                 
-                {/* Calculators Dropdown */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <span
-                      className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
-                        calculatorItems.some(item => location === item.href)
-                          ? "text-[hsl(var(--orange))] bg-white/10"
-                          : "text-white hover:text-[hsl(var(--orange))]"
-                      }`}
-                    >
-                      Calculators
-                      <ChevronDown className="ml-1 h-4 w-4" />
-                    </span>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="center" className="bg-white border border-gray-200 shadow-lg">
-                    {calculatorItems.map((item) => (
-                      <DropdownMenuItem key={item.href} asChild>
-                        <Link href={item.href}>
-                          <span className="font-medium text-gray-900 hover:text-[hsl(var(--orange))] cursor-pointer w-full">
-                            {item.label}
-                          </span>
+                {/* Calculators with Hover Dropdown */}
+                <div className="relative group">
+                  <div
+                    className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                      calculatorItems.some(item => location === item.href)
+                        ? "text-[hsl(var(--orange))] bg-white/10"
+                        : "text-white hover:text-[hsl(var(--orange))]"
+                    }`}
+                  >
+                    Calculators
+                    <ChevronDown className="ml-1 h-4 w-4" />
+                  </div>
+                  
+                  {/* Mega Menu */}
+                  <div className="absolute left-1/2 transform -translate-x-1/2 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                    <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl overflow-hidden min-w-[400px]">
+                      <div className="px-6 py-3 bg-gradient-to-r from-green-100 via-emerald-100 to-teal-100 dark:from-gray-800 dark:to-gray-800/50 border-b border-green-200/50 dark:border-gray-700">
+                        <span className="text-xs font-bold text-green-700 dark:text-green-400 uppercase tracking-wider flex items-center">
+                          <span className="mr-2">🧮</span> Health Calculators
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-1 gap-2 px-6 py-5 bg-gradient-to-br from-white via-green-50/30 to-emerald-50/30 dark:from-gray-900/50 dark:to-gray-800/50">
+                        <Link 
+                          href="/calorie-calculator" 
+                          className="group/item py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-green-100 hover:to-emerald-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-green-200 dark:hover:border-gray-600"
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-green-700 dark:group-hover/item:text-green-400">
+                              Calorie Calculator
+                            </span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400 group-hover/item:text-green-600 dark:group-hover/item:text-green-300">
+                              Daily needs
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 group-hover/item:text-green-600 dark:group-hover/item:text-green-300">
+                            Calculate your daily calorie requirements
+                          </p>
                         </Link>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                        
+                        <Link 
+                          href="/alcohol-calculator" 
+                          className="group/item py-3 px-4 rounded-lg bg-white/60 dark:bg-gray-800/30 hover:bg-gradient-to-r hover:from-green-100 hover:to-emerald-100 dark:hover:from-gray-700 dark:hover:to-gray-700/50 transition-all hover:shadow-lg hover:scale-[1.02] border border-transparent hover:border-green-200 dark:hover:border-gray-600"
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-bold text-gray-800 dark:text-gray-300 group-hover/item:text-green-700 dark:group-hover/item:text-green-400">
+                              Alcohol Weight Gain Calculator
+                            </span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400 group-hover/item:text-green-600 dark:group-hover/item:text-green-300">
+                              Impact tracker
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 group-hover/item:text-green-600 dark:group-hover/item:text-green-300">
+                            See how alcohol affects your weight goals
+                          </p>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 
                 {/* Recipes */}
                 <Link href="/recipes">
