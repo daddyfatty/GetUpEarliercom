@@ -482,7 +482,6 @@ export default function Home() {
               </div>
               <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">50+</div>
               <div className="text-gray-600 dark:text-gray-300">Clean & Lean Recipes</div>
-              <div className="text-xs text-orange-500 font-medium mt-1">BETA COMING SOON</div>
             </div>
             
             <div className="p-6">
@@ -491,7 +490,6 @@ export default function Home() {
               </div>
               <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">100+</div>
               <div className="text-gray-600 dark:text-gray-300">Workouts & Challenges</div>
-              <div className="text-xs text-orange-500 font-medium mt-1">BETA COMING SOON</div>
             </div>
           </div>
         </div>
