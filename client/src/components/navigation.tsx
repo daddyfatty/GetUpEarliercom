@@ -60,9 +60,9 @@ export function Navigation() {
   const navItems = [
     { href: "/services", label: "1-on-1 Services" },
     { href: "/blog", label: "Blog" },
-    { href: "/recipes", label: "Recipes" },
     { href: "/workouts", label: "Workouts & Challenges" },
     { href: "/amazon", label: "Our Picks", icon: "amazon" },
+    { href: "/recipes", label: "Recipes", beta: true },
     ...(isAdmin ? [{ href: "/admin", label: "Admin" }] : []),
   ];
 
@@ -402,19 +402,6 @@ export function Navigation() {
                   </div>
                 </div>
                 
-                {/* Recipes */}
-                <Link href="/recipes">
-                  <span
-                    className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
-                      location === "/recipes"
-                        ? "text-[hsl(var(--orange))] bg-white/10"
-                        : "text-white hover:text-[hsl(var(--orange))]"
-                    }`}
-                  >
-                    Recipes
-                  </span>
-                </Link>
-                
                 {/* Workouts & Challenges */}
                 <Link href="/workouts">
                   <span
@@ -457,6 +444,22 @@ export function Navigation() {
                   </DropdownMenuContent>
                 </DropdownMenu>
                 
+                {/* Recipes */}
+                <Link href="/recipes">
+                  <span
+                    className={`px-2 py-2 rounded-md text-sm lg:text-base font-medium transition-colors cursor-pointer uppercase font-heading whitespace-nowrap flex items-center ${
+                      location === "/recipes"
+                        ? "text-[hsl(var(--orange))] bg-white/10"
+                        : "text-white hover:text-[hsl(var(--orange))]"
+                    }`}
+                  >
+                    Recipes
+                    <span className="ml-1 text-[8px] bg-gray-500/50 text-gray-200 px-1 py-0 rounded font-normal">
+                      beta
+                    </span>
+                  </span>
+                </Link>
+
                 {/* Admin (if applicable) */}
                 {isAdmin && (
                   <Link href="/admin">
@@ -759,19 +762,6 @@ export function Navigation() {
                       </CollapsibleContent>
                     </Collapsible>
                     
-                    {/* Recipes */}
-                    <Link href="/recipes" onClick={() => setIsMobileMenuOpen(false)}>
-                      <span
-                        className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading flex items-center ${
-                          location === "/recipes"
-                            ? "text-[hsl(var(--orange))] bg-orange-50"
-                            : "text-gray-900 hover:text-[hsl(var(--orange))]"
-                        }`}
-                      >
-                        Recipes
-                      </span>
-                    </Link>
-                    
                     {/* Workouts */}
                     <Link href="/workouts" onClick={() => setIsMobileMenuOpen(false)}>
                       <span
@@ -826,6 +816,22 @@ export function Navigation() {
                         ))}
                       </CollapsibleContent>
                     </Collapsible>
+
+                    {/* Recipes */}
+                    <Link href="/recipes" onClick={() => setIsMobileMenuOpen(false)}>
+                      <span
+                        className={`block px-3 py-2 rounded-md text-base font-medium transition-colors cursor-pointer uppercase font-heading flex items-center border-t pt-4 ${
+                          location === "/recipes"
+                            ? "text-[hsl(var(--orange))] bg-orange-50"
+                            : "text-gray-900 hover:text-[hsl(var(--orange))]"
+                        }`}
+                      >
+                        Recipes
+                        <span className="ml-2 text-[8px] bg-gray-500/50 text-gray-600 px-1 py-0 rounded font-normal">
+                          beta
+                        </span>
+                      </span>
+                    </Link>
 
                     {/* Contact with Email Icon */}
                     <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
