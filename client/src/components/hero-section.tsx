@@ -92,7 +92,7 @@ export function HeroSection() {
                     </div>
                   </Link>
                   
-                  <Link href="https://EricaLeeBaker.com" target="_blank" className="group">
+                  <a href="https://EricaLeeBaker.com" target="_blank" rel="noopener noreferrer" className="group">
                     <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-5 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
@@ -109,9 +109,9 @@ export function HeroSection() {
                         <ExternalLink className="w-4 h-4 text-blue-300 opacity-50 group-hover:opacity-100 transition-opacity" />
                       </div>
                     </div>
-                  </Link>
+                  </a>
                   
-                  <Link href="https://EricaLeeBaker.com" target="_blank" className="group">
+                  <a href="https://EricaLeeBaker.com" target="_blank" rel="noopener noreferrer" className="group">
                     <div className="bg-slate-950/95 hover:bg-slate-900/95 backdrop-blur-sm rounded-lg p-5 transition-all duration-200 cursor-pointer border border-slate-600/50 hover:border-blue-400/50">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
@@ -128,7 +128,7 @@ export function HeroSection() {
                         <ExternalLink className="w-4 h-4 text-blue-300 opacity-50 group-hover:opacity-100 transition-opacity" />
                       </div>
                     </div>
-                  </Link>
+                  </a>
                 </div>
                 
                 {/* View All Services Button */}
