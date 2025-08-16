@@ -3,6 +3,13 @@
 ## Overview
 "Get Up Earlier" is a web application designed for personal training, nutrition, and accountability coaching. It aims to help users transition to healthier lifestyles through clean eating recipes, workout libraries, and coaching services, ultimately improving strength and healthy habits.
 
+## Recent Issues (August 16, 2025)
+- Recurring React plugin preamble detection error causing blank page displays
+- Content successfully saves to database but frontend rendering fails intermittently  
+- Hartford Marathon Training Log August 16th entry (22-mile Bethany run) saved at position #1
+- Backend API calls working correctly, data loading properly
+- User extremely frustrated with technical difficulties preventing content verification
+
 ## User Preferences
 Preferred communication style: Simple, everyday language.
 Content creation: Use only user's authentic words - never write additional content unless specifically asked.
