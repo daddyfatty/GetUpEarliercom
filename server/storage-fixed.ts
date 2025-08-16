@@ -484,37 +484,91 @@ export class DatabaseStorage implements IStorage {
         .limit(1);
       
       if (existingEntry.length > 0) {
-        // Update the existing entry by appending new content and updating timestamp
+        // Parse existing content to get entries array
         const existing = existingEntry[0];
-        const newContent = `${existing.content}\n\n---\n\n## Training Log Entry #${entry.entryNumber} - ${entry.date}\n\n${entry.content}`;
+        let existingEntries = [];
         
-        // Combine images from existing and new entry
-        const combinedImages = [
-          ...(existing.images || []),
-          ...(entry.images || [])
+        try {
+          const parsedContent = JSON.parse(existing.content);
+          existingEntries = parsedContent.entries || [];
+        } catch (parseError) {
+          console.error("Error parsing existing content, starting fresh:", parseError);
+          existingEntries = [];
+        }
+        
+        // Create new training entry object
+        const newTrainingEntry = {
+          entryNumber: entry.entryNumber,
+          title: entry.title,
+          subtitle: `-Training Entry #${entry.entryNumber}`,
+          date: entry.date,
+          workoutType: entry.categories?.[0] || "Training",
+          metrics: {
+            distance: entry.distance,
+            pace: entry.pace,
+            time: entry.time
+          },
+          content: entry.content,
+          images: entry.images || [],
+          videoUrl: null
+        };
+        
+        // Add new entry to the beginning of the array (newest first)
+        const updatedEntries = [newTrainingEntry, ...existingEntries];
+        
+        // Create updated JSON content
+        const updatedContent = JSON.stringify({ entries: updatedEntries });
+        
+        // Combine all images
+        const allImages = [
+          ...(entry.images || []),
+          ...(existing.images || [])
         ];
         
         const [updatedEntry] = await db
           .update(trainingLogEntries)
           .set({
-            content: newContent,
-            images: combinedImages,
-            updatedAt: new Date(), // This will bump it to the top
-            createdAt: new Date()  // Update this too to ensure it's the newest
+            content: updatedContent,
+            images: allImages,
+            updatedAt: new Date(),
+            createdAt: new Date()
           })
           .where(eq(trainingLogEntries.id, existing.id))
           .returning();
         
-        console.log("Updated existing Hartford Marathon Training Log 2025");
+        console.log(`Added training entry #${entry.entryNumber} to Hartford Marathon Training Log 2025`);
+        console.log(`Total entries now: ${updatedEntries.length}`);
         return updatedEntry;
       } else {
         // Create new entry if Hartford Marathon Training Log 2025 doesn't exist
+        const newTrainingEntry = {
+          entryNumber: entry.entryNumber,
+          title: entry.title,
+          subtitle: `-Training Entry #${entry.entryNumber}`,
+          date: entry.date,
+          workoutType: entry.categories?.[0] || "Training",
+          metrics: {
+            distance: entry.distance,
+            pace: entry.pace,
+            time: entry.time
+          },
+          content: entry.content,
+          images: entry.images || [],
+          videoUrl: null
+        };
+        
+        const initialContent = JSON.stringify({ entries: [newTrainingEntry] });
+        
         const [newEntry] = await db.insert(trainingLogEntries).values({
           ...entry,
+          title: 'Hartford Marathon Training Log 2025', // Always use the standard title
+          content: initialContent,
           id: crypto.randomUUID(),
           createdAt: new Date(),
           updatedAt: new Date()
         }).returning();
+        
+        console.log("Created new Hartford Marathon Training Log 2025 with first entry");
         return newEntry;
       }
     } catch (error) {
