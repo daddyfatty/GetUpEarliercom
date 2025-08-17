@@ -83,9 +83,13 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
 
     // Function to process markdown headers
     const processMarkdownHeaders = (text: string) => {
+      // Process # headers (h1)
+      text = text.replace(/^# (.+)$/gm, '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mt-8 mb-6">$1</h1>');
       // Process ## headers (h2)
-      const headerRegex = /^## (.+)$/gm;
-      return text.replace(headerRegex, '<h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">$1</h2>');
+      text = text.replace(/^## (.+)$/gm, '<h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">$1</h2>');
+      // Process ### headers (h3)
+      text = text.replace(/^### (.+)$/gm, '<h3 class="text-xl font-bold text-gray-900 dark:text-white mt-6 mb-3">$1</h3>');
+      return text;
     };
 
     // Function to process markdown bold formatting
@@ -342,7 +346,7 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
         if (lastIndex < processedContent.length) {
           const afterContent = processedContent.substring(lastIndex);
           if (afterContent.trim()) {
-            const processedAfterContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(afterContent)))).replace(/\n/g, '<br>');
+            const processedAfterContent = processTimecodes(processMarkdownImages(processMarkdownBold(processMarkdownHeaders(convertUrlsToLinks(afterContent))))).replace(/\n/g, '<br>');
             contentParts.push(
               <div 
                 key="after"
@@ -362,8 +366,8 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
         return <>{contentParts}</>;
       }
       
-      // Process markdown formatting: bold first, then images, then URLs, then timecodes, then line breaks
-      const processedFinalContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(processedContent)))).replace(/\n/g, '<br>');
+      // Process markdown formatting: headers first, then bold, then images, then URLs, then timecodes, then line breaks
+      const processedFinalContent = processTimecodes(processMarkdownImages(processMarkdownBold(processMarkdownHeaders(convertUrlsToLinks(processedContent))))).replace(/\n/g, '<br>');
       return (
         <div 
           className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap"
