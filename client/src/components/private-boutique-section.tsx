@@ -14,13 +14,13 @@ export function PrivateBoutiqueSection() {
   };
 
   return (
-    <section id="studio" className="max-w-6xl mx-auto mb-16 pt-16">
-      <div className="max-w-6xl mx-auto">
+    <section id="studio" className="w-full bg-gradient-to-b from-sky-100 to-white py-16 mb-16">
+      <div className="max-w-6xl mx-auto px-4">
         <div className="text-left mb-8">
-          <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <h3 className="text-3xl font-bold text-gray-900 mb-2">
             In-Home Private Boutique
           </h3>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
+          <p className="text-xl text-gray-600">
             Fitness Space Orange, CT
           </p>
         </div>
@@ -48,10 +48,10 @@ export function PrivateBoutiqueSection() {
 
         {/* Expandable Sections */}
         <div className="space-y-4">
-          <div className="border border-gray-200 rounded-lg">
+          <div className="bg-white border border-gray-200 rounded-lg shadow-md">
             <button
               onClick={() => toggleSection('private-studio')}
-              className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+              className="w-full px-6 py-4 text-left flex items-center justify-between bg-white hover:bg-gray-50 transition-colors rounded-t-lg"
             >
               <span className="font-semibold text-gray-900">01. Private Strength Training Studio</span>
               {expandedSection === 'private-studio' ? 
@@ -60,7 +60,7 @@ export function PrivateBoutiqueSection() {
               }
             </button>
             {expandedSection === 'private-studio' && (
-              <div className="px-6 pb-4">
+              <div className="px-6 pb-4 bg-white rounded-b-lg">
                 <p className="text-gray-600">
                   Experience personalized training in a distraction-free private gym equipped with the 
                   essentials. Our studio includes a power rack, pulley systems, free weights, and a Rogue 
@@ -71,10 +71,10 @@ export function PrivateBoutiqueSection() {
             )}
           </div>
 
-          <div className="border border-gray-200 rounded-lg">
+          <div className="bg-white border border-gray-200 rounded-lg shadow-md">
             <button
               onClick={() => toggleSection('yoga-space')}
-              className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+              className="w-full px-6 py-4 text-left flex items-center justify-between bg-white hover:bg-gray-50 transition-colors rounded-t-lg"
             >
               <span className="font-semibold text-gray-900">02. Dedicated Pristine Yoga Space</span>
               {expandedSection === 'yoga-space' ? 
@@ -83,7 +83,7 @@ export function PrivateBoutiqueSection() {
               }
             </button>
             {expandedSection === 'yoga-space' && (
-              <div className="px-6 pb-4">
+              <div className="px-6 pb-4 bg-white rounded-b-lg">
                 <p className="text-gray-600">
                   Step into our tranquil yoga space designed for ultimate comfort and focus. This dedicated 
                   room offers a peaceful environment for private yoga sessions, meditation, and stretching practices. 
@@ -94,10 +94,10 @@ export function PrivateBoutiqueSection() {
             )}
           </div>
 
-          <div className="border border-gray-200 rounded-lg">
+          <div className="bg-white border border-gray-200 rounded-lg shadow-md">
             <button
               onClick={() => toggleSection('instructors')}
-              className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+              className="w-full px-6 py-4 text-left flex items-center justify-between bg-white hover:bg-gray-50 transition-colors rounded-t-lg"
             >
               <span className="font-semibold text-gray-900">03. Certified, Seasoned Instructors</span>
               {expandedSection === 'instructors' ? 
@@ -106,7 +106,7 @@ export function PrivateBoutiqueSection() {
               }
             </button>
             {expandedSection === 'instructors' && (
-              <div className="px-6 pb-4">
+              <div className="px-6 pb-4 bg-white rounded-b-lg">
                 <p className="text-gray-600">
                   Work with experienced professionals who bring decades of expertise to your fitness journey. 
                   Our certified trainers and yoga instructors combine technical knowledge with personalized 
