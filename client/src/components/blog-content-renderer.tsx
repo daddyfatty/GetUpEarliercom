@@ -81,6 +81,13 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
       });
     };
 
+    // Function to process markdown headers
+    const processMarkdownHeaders = (text: string) => {
+      // Process ## headers (h2)
+      const headerRegex = /^## (.+)$/gm;
+      return text.replace(headerRegex, '<h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">$1</h2>');
+    };
+
     // Function to process markdown bold formatting
     const processMarkdownBold = (text: string) => {
       const markdownBoldRegex = /\*\*([^*]+)\*\*/g;
@@ -195,8 +202,8 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
       if (match.start > lastIndex) {
         const beforeContent = processedContent.substring(lastIndex, match.start);
         if (beforeContent.trim()) {
-          // Process markdown formatting: bold first, then images, then URLs, then line breaks
-          const processedBeforeContent = processMarkdownImages(processMarkdownBold(convertUrlsToLinks(beforeContent))).replace(/\n/g, '<br>');
+          // Process markdown formatting: headers first, then bold, then images, then URLs, then line breaks
+          const processedBeforeContent = processMarkdownImages(processMarkdownBold(processMarkdownHeaders(convertUrlsToLinks(beforeContent)))).replace(/\n/g, '<br>');
           parts.push(
             <div 
               key={`content-${lastIndex}`}
@@ -263,8 +270,8 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
     if (lastIndex < processedContent.length) {
       const remainingContent = processedContent.substring(lastIndex);
       if (remainingContent.trim()) {
-        // Process markdown formatting: bold first, then images, then URLs, then timecodes, then line breaks
-        const processedRemainingContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(remainingContent)))).replace(/\n/g, '<br>');
+        // Process markdown formatting: headers first, then bold, then images, then URLs, then timecodes, then line breaks
+        const processedRemainingContent = processTimecodes(processMarkdownImages(processMarkdownBold(processMarkdownHeaders(convertUrlsToLinks(remainingContent))))).replace(/\n/g, '<br>');
         parts.push(
           <span 
             key={`remaining-${lastIndex}`}
@@ -306,7 +313,7 @@ export function BlogContentRenderer({ content, onImageClick, videoUrl }: BlogCon
           if (amazonMatch.index > lastIndex) {
             const beforeContent = processedContent.substring(lastIndex, amazonMatch.index);
             if (beforeContent.trim()) {
-              const processedBeforeContent = processTimecodes(processMarkdownImages(processMarkdownBold(convertUrlsToLinks(beforeContent)))).replace(/\n/g, '<br>');
+              const processedBeforeContent = processTimecodes(processMarkdownImages(processMarkdownBold(processMarkdownHeaders(convertUrlsToLinks(beforeContent))))).replace(/\n/g, '<br>');
               contentParts.push(
                 <div 
                   key={`before-${idx}`}
