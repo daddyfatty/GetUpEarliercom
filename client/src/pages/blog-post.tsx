@@ -642,7 +642,7 @@ export default function BlogPost() {
             <div className="mb-8">
               <div className="w-full bg-black rounded-lg overflow-hidden shadow-lg">
                 <img
-                  src={download___2025_08_09T060356_669}
+                  src={post.imageUrl}
                   alt={post.title}
                   className="w-full h-auto object-contain"
                 />
