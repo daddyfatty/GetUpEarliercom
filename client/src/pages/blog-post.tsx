@@ -510,6 +510,8 @@ export default function BlogPost() {
                 ? "Marathon Training Tip for HOT long runs: FROZEN SOFT FLASK"
                 : post.title === "Marathon Training Tip for HOT long runs: Soft Flask"
                 ? "Marathon Training Tip for HOT long runs: Frozen Soft Flask"
+                : post.title === "Marathon, Runners & Fitness Quotes - Motivation for Your Training Journey"
+                ? "Running & Fitness Quotes - Motivation for Your Training Journey"
                 : post.title}
             </h1>
             
