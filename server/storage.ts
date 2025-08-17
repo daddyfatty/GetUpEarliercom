@@ -89,6 +89,21 @@ export interface IStorage {
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   updateBlogPost(id: string, updates: Partial<BlogPost>): Promise<BlogPost | undefined>;
   deleteBlogPost(id: string): Promise<boolean>;
+  
+  // Initialize blog posts with updated marathon quotes title
+  private async initializeBlogPosts() {
+    try {
+      // Check if marathon-runners-fitness-quotes post exists and update title if needed
+      const marathonQuotesPost = await this.getBlogPost("marathon-runners-fitness-quotes");
+      if (marathonQuotesPost && marathonQuotesPost.title === "Marathon, Runners & Fitness Quotes - Motivation for Your Training Journey") {
+        await this.updateBlogPost("marathon-runners-fitness-quotes", {
+          title: "Running & Fitness Quotes - Motivation for Your Training Journey"
+        });
+      }
+    } catch (error) {
+      console.error("Error initializing blog posts:", error);
+    }
+  }
 }
 
 export class DatabaseStorage implements IStorage {
@@ -96,6 +111,7 @@ export class DatabaseStorage implements IStorage {
   constructor() {
     // Database storage doesn't need in-memory maps or seeding
     this.initializeDatabase();
+    this.initializeBlogPosts();
   }
 
   private async initializeDatabase() {
