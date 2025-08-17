@@ -1,20 +1,25 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 
 // Gym/Yoga Space Images
 import gymSpace from "@assets/download - 2025-06-23T105919.083_1750690773931.png";
 import yogaSpace from "@assets/download - 2025-06-23T105922.235_1750690773931.png";
 
 export function PrivateBoutiqueSection() {
+  const [location] = useLocation();
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
+  const isHomePage = location === '/';
 
   const toggleSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section);
   };
 
   return (
-    <section id="studio" className="w-full bg-gradient-to-b from-sky-100 to-white py-16 mb-16">
+    <section 
+      id="studio" 
+      className={`w-full py-16 mb-16 ${isHomePage ? 'bg-gradient-to-b from-sky-100 to-white' : ''}`}
+    >
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-left mb-8">
           <h3 className="text-3xl font-bold text-gray-900 mb-2">
