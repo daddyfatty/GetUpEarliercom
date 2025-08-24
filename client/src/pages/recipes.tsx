@@ -67,8 +67,9 @@ export default function Recipes() {
       if (searchQuery) params.append("search", searchQuery);
       if (categoryFilter !== "all") params.append("category", categoryFilter);
       if (dietFilter !== "all") params.append("dietType", dietFilter);
+      params.append("t", Date.now().toString()); // Add timestamp properly
       
-      const response = await fetch(`/api/recipes?${params.toString()}?t=${Date.now()}`);
+      const response = await fetch(`/api/recipes?${params.toString()}`);
       if (!response.ok) throw new Error("Failed to fetch recipes");
       const data = await response.json();
       return data;
